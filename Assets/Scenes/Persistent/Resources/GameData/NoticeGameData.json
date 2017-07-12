@@ -1,0 +1,84 @@
+{
+  "m_noticeList" : [
+    {
+      "m_stardate" : "4620-01-01",
+      "m_message" : "You are about to embark on your first mission.  In your bank account you will find the amount of 12,000 monetary units (M.U.).  This money is to be spent training your crew, configuring your ship, and purchasing any necessary materials.\nOf course you may wish to leave some portion of this in the bank to earn interest.  This is acceptable.  At this stage of the operation our primary goal is to gather information.  Consequently, your objectives are -\n    1. Seek out and explore strange new worlds\n    2. Boldly go where no man has gone before\n    3. Establish contact with any sentients\n    4. Capture and bring back non-sentient lifeforms\n    5. Record alien lifeform data\n    6. Bring back alien artifacts\n    7. Bring back any valuable minerals (including endurium)\n    8. Keep from getting brutally killed\nWe have little information to offer concerning what you might find.  We suggest however, that you avoid the area of space around the coordinates 135, 84 since that is where we lost contact with two of our earlier ships.\nScout reports indicate a high density of minerals in the mountainous regions of the innermost planet of our system.\nFurther, we have found information that leads us to believe that there may be some ruins of the old empire at coordinates 17N x 162E on the second planet of the neighboring K-class system.\nWe have also received some indication of alien activity in the system 175, 94.\nGood luck, and a safe return."
+    },
+    {
+      "m_stardate" : "4620-01-02",
+      "m_message" : "It is necessary to give you some unpleasant news.  You may have been aware that for the last several years scientists have been observing anomalous fluctuations in the radiation levels of our sun.\nWhile you have been away it has been ascertained that the stability of our sun is definitely deteriorating.  How much time we have until there is a fatally large flare, we are still not sure, but there is little doubt that this will eventually occur.\nAs yet, we have no clue as to the cause of this instability.  Therefore, we must assume there is nothing we can do to change the situation.  In view of this the only option available to us is to get as many colonists off of arth as we can.\nYou can be invaluable to us in this.  First we need endurium to power the ships we will build.  We will pay well for any that you can bring back.  Secondly, we need to know where to send the colonists.\nAs you may have already discovered, your ship is equipped with homing drones which you may use to log your recommendations.  This is so that we can move the colonists out as quickly as possible.\nIn addition, a sensor has been installed which will inform you of the stellar condition upon entering a system.  Your ship computer will inform you in the event that a flare is imminent.\nWe advise caution while in systems which are more than slightly unstable.  Being caught in a solar flare would certainly be fatal.\nIn your manual we have outlined the criteria which will be important in your evaluation of viable colony worlds.  You will be rewarded for recommendations of valuable planets and penalized recommendations of planets which turn out to be uninhabitable.\nConsider carefully before logging a planet."
+    },
+    {
+      "m_stardate" : "4620-01-03",
+      "m_message" : "To all captains - one of our ships was just destroyed by what reports indicate to be androids approximately 20 sectors directly coreward of Arth.  When passing through this area proceed with caution."
+    },
+    {
+      "m_stardate" : "4620-01-05",
+      "m_message" : "We have received reports of an area outward and downspin of Arth about 40 sectors distant.  There is a constellation here in the shape of a cross which seems to mark a nexus of continuum fluxes.\nWe suggest however, that unless you are properly prepared you avoid this area since we have already lost several ships in this vicinity."
+    },
+    {
+      "m_stardate" : "4620-01-08",
+      "m_message" : "A big congratulations to commander Topiphophex and his mate.  They just hatched 16 new larvae.  Way to go Topi!"
+    },
+    {
+      "m_stardate" : "4620-01-10",
+      "m_message" : "One of our ships has stumbled across some ruins on the third planet of our own system.  There is evidence that there may be more.  This may be worth investigating."
+    },
+    {
+      "m_stardate" : "4620-01-12",
+      "m_message" : "Xenon, where’s my money?  Borno."
+    },
+    {
+      "m_stardate" : "4620-01-14",
+      "m_message" : "Scientists have ascertained that the cause of the instabilities in our sun are external to the star.  The rate of the deterioration is increasing.  There is a possibility that some other race may have some clue as to the cause.\nOur situation appears increasingly dire."
+    },
+    {
+      "m_stardate" : "4620-01-18",
+      "m_message" : "We have compiled a list of some of the nearby fluxes from data that has been brought back by the exploration vessels.  This may be of use to you.  Here are some link pairs -\n    128, 105 - 146, 112\n    126, 87 - 173, 88\n    148, 166 - 170, 93\n    104, 82 - 118, 107"
+    },
+    {
+      "m_stardate" : "4620-01-23",
+      "m_message" : "Highly qualified female thrynn, Ihsss T’larra, seeks employment on outgoing exploration vessel.  Extensive experience on board the ISS Intrepid and has a class 5 navigator’s rating."
+    },
+    {
+      "m_stardate" : "4620-02-01",
+      "m_message" : "Borno, meet me on Regulon 7 on the 15th.  You know where.  You’ll get your money.  Xenon."
+    },
+    {
+      "m_stardate" : "4620-02-10",
+      "m_message" : "One of our ships has reported that the Thrynn have offered to buy artifacts from them at inflated rates.  We urge you not to do this.\nInasmuch as it may further relations with them, this is understandable, but we do not wish to sacrifice what we might be able to learn from these artifacts."
+    },
+    {
+      "m_stardate" : "4620-02-18",
+      "m_message" : "We have just lost another of our ships.  This time it was at the coordinates 192, 152.  Any ships in this area may wish to investigate, but we advise extreme caution."
+    },
+    {
+      "m_stardate" : "4620-02-20",
+      "m_message" : "Due to an increased demand resulting from stepped up colonization efforts, the price of endurium has been raised to 1500 M.U. per cubic meter."
+    },
+    {
+      "m_stardate" : "4620-03-06",
+      "m_message" : "We have received to date, many reports which indicate that minimial or no life exists coreward of here.  Any ships acquiring more information are instructed to report on this immediately."
+    },
+    {
+      "m_stardate" : "4620-03-25",
+      "m_message" : "Used \"teleportal\" matter-mitter.  Almost perfect condition.  Fine for short distance teleportation, and relatively safe for longer jumps.  13,000 or best offer.  Will consider trade for family sized neutron scooter.  See Guido."
+    },
+    {
+      "m_stardate" : "4620-04-15",
+      "m_message" : "Xenon, I was there, where were you?  Borno."
+    },
+    {
+      "m_stardate" : "4620-05-06",
+      "m_message" : "Elowan hermaphrodite seeks XB-STP W-VO for fun and companionship.  Must be well-leaved and enjoy 4-D senso-rama and moon hopping.  Send hologram."
+    },
+    {
+      "m_stardate" : "4620-05-15",
+      "m_message" : "The price of endurium has once again been raised.  It is now 2000 M.U. per cubic meter for everyone but the interstel corporate heads and their families.  For them there is a special reduced rate of 50 M.U. per cubic meter."
+    },
+    {
+      "m_stardate" : "4620-06-13",
+      "m_message" : "Borno, gone relativistic.  See you in a hundred years.  Xenon."
+    }
+  ]
+}

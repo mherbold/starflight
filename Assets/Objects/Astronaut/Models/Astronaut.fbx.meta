@@ -1,0 +1,484 @@
+fileFormatVersion: 2
+guid: ea9f25d90fc19804a9045d51489e2a9c
+timeCreated: 1496974167
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Astronaut Mesh
+    100004: AstronautHead
+    100006: AstronautLCalf
+    100008: AstronautLCollarbone
+    100010: AstronautLFoot
+    100012: AstronautLForearm
+    100014: AstronautLPalm
+    100016: AstronautLThigh
+    100018: AstronautLUpperarm
+    100020: AstronautNeck1
+    100022: AstronautNeck2
+    100024: AstronautPelvis
+    100026: AstronautRCalf
+    100028: AstronautRCollarbone
+    100030: AstronautRFoot
+    100032: AstronautRForearm
+    100034: AstronautRibcage
+    100036: AstronautRPalm
+    100038: AstronautRThigh
+    100040: AstronautRUpperarm
+    100042: AstronautSpine1
+    100044: AstronautSpine2
+    100046: AstronautSpine3
+    100048: AstronautSpine4
+    400000: //RootNode
+    400002: Astronaut Mesh
+    400004: AstronautHead
+    400006: AstronautLCalf
+    400008: AstronautLCollarbone
+    400010: AstronautLFoot
+    400012: AstronautLForearm
+    400014: AstronautLPalm
+    400016: AstronautLThigh
+    400018: AstronautLUpperarm
+    400020: AstronautNeck1
+    400022: AstronautNeck2
+    400024: AstronautPelvis
+    400026: AstronautRCalf
+    400028: AstronautRCollarbone
+    400030: AstronautRFoot
+    400032: AstronautRForearm
+    400034: AstronautRibcage
+    400036: AstronautRPalm
+    400038: AstronautRThigh
+    400040: AstronautRUpperarm
+    400042: AstronautSpine1
+    400044: AstronautSpine2
+    400046: AstronautSpine3
+    400048: AstronautSpine4
+    2300000: AstronautHead
+    2300002: AstronautLCalf
+    2300004: AstronautLCollarbone
+    2300006: AstronautLFoot
+    2300008: AstronautLForearm
+    2300010: AstronautLPalm
+    2300012: AstronautLThigh
+    2300014: AstronautLUpperarm
+    2300016: AstronautNeck1
+    2300018: AstronautNeck2
+    2300020: AstronautPelvis
+    2300022: AstronautRCalf
+    2300024: AstronautRCollarbone
+    2300026: AstronautRFoot
+    2300028: AstronautRForearm
+    2300030: AstronautRibcage
+    2300032: AstronautRPalm
+    2300034: AstronautRThigh
+    2300036: AstronautRUpperarm
+    2300038: AstronautSpine1
+    2300040: AstronautSpine2
+    2300042: AstronautSpine3
+    2300044: AstronautSpine4
+    3300000: AstronautHead
+    3300002: AstronautLCalf
+    3300004: AstronautLCollarbone
+    3300006: AstronautLFoot
+    3300008: AstronautLForearm
+    3300010: AstronautLPalm
+    3300012: AstronautLThigh
+    3300014: AstronautLUpperarm
+    3300016: AstronautNeck1
+    3300018: AstronautNeck2
+    3300020: AstronautPelvis
+    3300022: AstronautRCalf
+    3300024: AstronautRCollarbone
+    3300026: AstronautRFoot
+    3300028: AstronautRForearm
+    3300030: AstronautRibcage
+    3300032: AstronautRPalm
+    3300034: AstronautRThigh
+    3300036: AstronautRUpperarm
+    3300038: AstronautSpine1
+    3300040: AstronautSpine2
+    3300042: AstronautSpine3
+    3300044: AstronautSpine4
+    4300000: Astronaut Mesh
+    4300002: AstronautPelvis
+    4300004: AstronautLThigh
+    4300006: AstronautLCalf
+    4300008: AstronautLFoot
+    4300010: AstronautRThigh
+    4300012: AstronautRCalf
+    4300014: AstronautRFoot
+    4300016: AstronautSpine1
+    4300018: AstronautSpine2
+    4300020: AstronautSpine3
+    4300022: AstronautSpine4
+    4300024: AstronautRibcage
+    4300026: AstronautLCollarbone
+    4300028: AstronautLUpperarm
+    4300030: AstronautLForearm
+    4300032: AstronautLPalm
+    4300034: AstronautRCollarbone
+    4300036: AstronautRUpperarm
+    4300038: AstronautRForearm
+    4300040: AstronautRPalm
+    4300042: AstronautNeck1
+    4300044: AstronautNeck2
+    4300046: AstronautHead
+    9500000: //RootNode
+    13700000: Astronaut Mesh
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 2
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human:
+    - boneName: AstronautPelvis
+      humanName: Hips
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: AstronautLThigh
+      humanName: LeftUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: AstronautRThigh
+      humanName: RightUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: AstronautLCalf
+      humanName: LeftLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: AstronautRCalf
+      humanName: RightLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: AstronautLFoot
+      humanName: LeftFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: AstronautRFoot
+      humanName: RightFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: AstronautSpine1
+      humanName: Spine
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: AstronautSpine2
+      humanName: Chest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: AstronautNeck1
+      humanName: Neck
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: AstronautHead
+      humanName: Head
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: AstronautLCollarbone
+      humanName: LeftShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: AstronautRCollarbone
+      humanName: RightShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: AstronautLUpperarm
+      humanName: LeftUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: AstronautRUpperarm
+      humanName: RightUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: AstronautLForearm
+      humanName: LeftLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: AstronautRForearm
+      humanName: RightLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: AstronautLPalm
+      humanName: LeftHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: AstronautRPalm
+      humanName: RightHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: AstronautSpine3
+      humanName: UpperChest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    skeleton:
+    - name: Astronaut(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Astronaut Mesh
+      parentName: Astronaut(Clone)
+      position: {x: -0, y: 0, z: 0.03959057}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 0.01953125, y: 0.01953125, z: 0.01953125}
+    - name: AstronautPelvis
+      parentName: Astronaut(Clone)
+      position: {x: 0.000000153547, y: 2.95769, z: -0.231007}
+      rotation: {x: 0.49912268, y: -0.50086725, z: -0.49913114, w: 0.5008759}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1}
+    - name: AstronautLThigh
+      parentName: AstronautPelvis
+      position: {x: -0.068991184, y: 0.051861897, z: 0.33419874}
+      rotation: {x: -0.05486809, y: 0.99516183, z: -0.013411566, w: 0.08039012}
+      scale: {x: 0.9999994, y: 1.0000001, z: 1.0000004}
+    - name: AstronautLCalf
+      parentName: AstronautLThigh
+      position: {x: -1.1833879, y: 0.0000003427267, z: 0.00000023841858}
+      rotation: {x: -0.000067865534, y: 0.00024865405, z: 0.10203464, w: 0.99478084}
+      scale: {x: 0.9999999, y: 1.0000004, z: 1.0000004}
+    - name: AstronautLFoot
+      parentName: AstronautLCalf
+      position: {x: -1.7827148, y: 0, z: 0}
+      rotation: {x: -0.055908058, y: 0.058511745, z: -0.6505314, w: 0.7551553}
+      scale: {x: 0.9999988, y: 1.0000006, z: 1.0000002}
+    - name: AstronautRThigh
+      parentName: AstronautPelvis
+      position: {x: -0.06899071, y: 0.051861867, z: -0.33420005}
+      rotation: {x: -0.054761574, y: 0.9951558, z: 0.014367193, w: -0.08037215}
+      scale: {x: 1.000001, y: 0.99999976, z: 0.9999995}
+    - name: AstronautRCalf
+      parentName: AstronautRThigh
+      position: {x: -1.1833874, y: 0.00000023841858, z: -0.00000011920929}
+      rotation: {x: 0.000968747, y: -0.00011671874, z: 0.102075145, w: 0.99477625}
+      scale: {x: 0.9999998, y: 1.0000017, z: 1.0000018}
+    - name: AstronautRFoot
+      parentName: AstronautRCalf
+      position: {x: -1.7827148, y: -0.000000014901161, z: 0}
+      rotation: {x: 0.055739243, y: -0.058955982, z: -0.6504059, w: 0.7552414}
+      scale: {x: 0.9999989, y: 1.0000014, z: 1.0000005}
+    - name: AstronautSpine1
+      parentName: AstronautPelvis
+      position: {x: -0.14659, y: -0.011215672, z: -0.000000027835085}
+      rotation: {x: 0.000000008536099, y: -0.00000003985563, z: -0.14865483, w: 0.98888916}
+      scale: {x: 1.0000005, y: 1.0000005, z: 1}
+    - name: AstronautSpine2
+      parentName: AstronautSpine1
+      position: {x: -0.422117, y: 0, z: 0}
+      rotation: {x: -0.000000008737153, y: 0.00000004640362, z: 0.17011699, w: 0.98542386}
+      scale: {x: 1.0000006, y: 1.0000006, z: 1.0000001}
+    - name: AstronautSpine3
+      parentName: AstronautSpine2
+      position: {x: -0.35958695, y: -0.000000007450581, z: 4.5474735e-13}
+      rotation: {x: -7.1788914e-10, y: 0.000000006379406, z: 0.084689796, w: 0.9964074}
+      scale: {x: 1.0000005, y: 1.0000006, z: 1.0000001}
+    - name: AstronautSpine4
+      parentName: AstronautSpine3
+      position: {x: -0.38642168, y: -0.00000011920929, z: 0}
+      rotation: {x: -1.7914216e-10, y: -0.00000001630467, z: -0.08689421, w: 0.99621755}
+      scale: {x: 1.0000002, y: 1.0000005, z: 1}
+    - name: AstronautRibcage
+      parentName: AstronautSpine4
+      position: {x: -0.5207157, y: -0.000000014901161, z: 0}
+      rotation: {x: 4.5619628e-10, y: 0.000000022469802, z: -0.021270754, w: 0.99977374}
+      scale: {x: 0.999999, y: 0.99999875, z: 0.99999976}
+    - name: AstronautNeck1
+      parentName: AstronautRibcage
+      position: {x: -0.002547264, y: -0.011215687, z: -0.000000021539108}
+      rotation: {x: 3.9068103e-11, y: 0.0000000108760085, z: -2.2737414e-13, w: 1}
+      scale: {x: 0.9999999, y: 1, z: 0.99999994}
+    - name: AstronautNeck2
+      parentName: AstronautNeck1
+      position: {x: -0.22344017, y: 0, z: 0}
+      rotation: {x: -4.5732152e-14, y: 2.5995723e-27, z: -5.6843426e-14, w: 1}
+      scale: {x: 0.9999999, y: 1, z: 0.99999994}
+    - name: AstronautHead
+      parentName: AstronautNeck2
+      position: {x: -0.2234397, y: 0, z: 0}
+      rotation: {x: 8.6376257e-13, y: -2.1316279e-14, z: 5.6843412e-14, w: 1}
+      scale: {x: 1.0000001, y: 1, z: 1.0000001}
+    - name: AstronautLCollarbone
+      parentName: AstronautRibcage
+      position: {x: 0.055673122, y: 0.32555273, z: 0.09658412}
+      rotation: {x: 0.055140622, y: 0.65939534, z: 0.1451818, w: 0.7355811}
+      scale: {x: 1, y: 1.000001, z: 0.99999964}
+    - name: AstronautLUpperarm
+      parentName: AstronautLCollarbone
+      position: {x: -0.6677964, y: 0, z: 0.00000047683716}
+      rotation: {x: 0.13888381, y: 0.040739905, z: -0.13277693, w: 0.9805212}
+      scale: {x: 1.0000008, y: 0.9999992, z: 1.0000002}
+    - name: AstronautLForearm
+      parentName: AstronautLUpperarm
+      position: {x: -1.0386888, y: 0.000000059604645, z: 0}
+      rotation: {x: 0.06977617, y: -0.005760658, z: -0.05392425, w: 0.9960875}
+      scale: {x: 0.99999726, y: 1.0000032, z: 0.9999995}
+    - name: AstronautLPalm
+      parentName: AstronautLForearm
+      position: {x: -0.8852885, y: 0, z: 0.00000047683716}
+      rotation: {x: -0.81583434, y: 0.00387711, z: 0.0031199837, w: 0.57826424}
+      scale: {x: 0.9999995, y: 0.999995, z: 1.000007}
+    - name: AstronautRCollarbone
+      parentName: AstronautRibcage
+      position: {x: 0.055673122, y: 0.32555276, z: -0.09658414}
+      rotation: {x: -0.055140626, y: -0.65939534, z: 0.14518179, w: 0.7355811}
+      scale: {x: 0.9999994, y: 0.9999993, z: 1.000001}
+    - name: AstronautRUpperarm
+      parentName: AstronautRCollarbone
+      position: {x: -0.6677965, y: 0.000000059604645, z: 0}
+      rotation: {x: -0.14145505, y: -0.048800774, z: -0.14280921, w: 0.9783734}
+      scale: {x: 1.0000008, y: 0.9999994, z: 1.0000007}
+    - name: AstronautRForearm
+      parentName: AstronautRUpperarm
+      position: {x: -1.0386889, y: -0.000000059604645, z: 0.00000047683716}
+      rotation: {x: -0.07154575, y: 0.0027107843, z: -0.041385297, w: 0.9965747}
+      scale: {x: 1.0000001, y: 0.99999714, z: 1.0000035}
+    - name: AstronautRPalm
+      parentName: AstronautRForearm
+      position: {x: -0.8852879, y: -0.00000011920929, z: 0}
+      rotation: {x: 0.79996616, y: -0.076985516, z: 0.049131617, w: 0.59305435}
+      scale: {x: 1.0000005, y: 1.0000011, z: 1}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 3
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

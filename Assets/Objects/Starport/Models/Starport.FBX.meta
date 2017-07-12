@@ -1,0 +1,178 @@
+fileFormatVersion: 2
+guid: a5b6fe2ba4eb23c48b41cff2182c627d
+timeCreated: 1496878147
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Main Hub
+    100002: Scene Camera
+    100004: Scene Camera.Target
+    100006: Skybox
+    100008: //RootNode
+    100010: Sun
+    100012: Sun.Target
+    100014: Starport
+    100016: Strobe 001
+    100018: Strobe 002
+    100020: Strobe 003
+    100022: Strobe 004
+    100024: Strobe 005
+    100026: Strobe 006
+    100028: Strobe 007
+    100030: Strobe 008
+    100032: Strobe 009
+    100034: Strobe 010
+    100036: Strobe 011
+    100038: Strobe 012
+    100040: Strobe 013
+    100042: Strobe 014
+    100044: Strobe 015
+    100046: Strobe 016
+    100048: Strobe 017
+    100050: Strobe 018
+    100052: Omni001
+    100054: Omni002
+    100056: Omni003
+    100058: Omni004
+    100060: Omni005
+    100062: Omni006
+    100064: Omni007
+    100066: Omni008
+    100068: Omni009
+    100070: Omni010
+    100072: Omni011
+    100074: Omni012
+    100076: Omni013
+    100078: Omni014
+    100080: Omni015
+    100082: Omni016
+    100084: Omni017
+    100086: Omni018
+    400000: Main Hub
+    400002: Scene Camera
+    400004: Scene Camera.Target
+    400006: Skybox
+    400008: //RootNode
+    400010: Sun
+    400012: Sun.Target
+    400014: Starport
+    400016: Strobe 001
+    400018: Strobe 002
+    400020: Strobe 003
+    400022: Strobe 004
+    400024: Strobe 005
+    400026: Strobe 006
+    400028: Strobe 007
+    400030: Strobe 008
+    400032: Strobe 009
+    400034: Strobe 010
+    400036: Strobe 011
+    400038: Strobe 012
+    400040: Strobe 013
+    400042: Strobe 014
+    400044: Strobe 015
+    400046: Strobe 016
+    400048: Strobe 017
+    400050: Strobe 018
+    400052: Omni001
+    400054: Omni002
+    400056: Omni003
+    400058: Omni004
+    400060: Omni005
+    400062: Omni006
+    400064: Omni007
+    400066: Omni008
+    400068: Omni009
+    400070: Omni010
+    400072: Omni011
+    400074: Omni012
+    400076: Omni013
+    400078: Omni014
+    400080: Omni015
+    400082: Omni016
+    400084: Omni017
+    400086: Omni018
+    2300000: Main Hub
+    2300002: Skybox
+    2300004: //RootNode
+    2300006: Starport
+    3300000: Main Hub
+    3300002: Skybox
+    3300004: //RootNode
+    3300006: Starport
+    4300000: Skybox
+    4300002: Main Hub
+    4300004: Starport
+    7400000: Take 001
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
