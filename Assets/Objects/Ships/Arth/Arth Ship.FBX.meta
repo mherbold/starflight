@@ -1,0 +1,356 @@
+fileFormatVersion: 2
+guid: e26148b8b7a13b64d93bc449d062d5a3
+timeCreated: 1500157268
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Barrel
+    100004: Barrel - Left
+    100006: Barrel - Right
+    100008: Barrel001
+    100010: Cargo Pods - Left
+    100012: Cargo Pods - Right
+    100014: Center Front
+    100016: Center Middle
+    100018: Center Rear
+    100020: Cockpit
+    100022: Laser
+    100024: Missile Launcher - Left
+    100026: Missile Launcher - Right
+    100028: Pod
+    100030: Pod 002
+    100032: Pod 003
+    100034: Pod 004
+    100036: Pod 005
+    100038: Pod 006
+    100040: Pod 007
+    100042: Pod 008
+    100044: Pod 009
+    100046: Pod 01
+    100048: Pod 010
+    100050: Pod 011
+    100052: Pod 012
+    100054: Pod 013
+    100056: Pod 014
+    100058: Pod 015
+    100060: Pod 016
+    100062: Pod Socket
+    100064: Pod Socket001
+    100066: Pod Socket002
+    100068: Pod Socket003
+    100070: Pod Socket004
+    100072: Pod Socket005
+    100074: Pod Socket006
+    100076: Pod Socket007
+    100078: Pod Socket008
+    100080: Pod Socket009
+    100082: Pod Socket010
+    100084: Pod Socket011
+    100086: Pod Socket012
+    100088: Pod Socket013
+    100090: Pod Socket014
+    100092: Pod Socket015
+    100094: Pod001
+    100096: Pod002
+    100098: Pod003
+    100100: Pod004
+    100102: Pod005
+    100104: Pod006
+    100106: Pod007
+    100108: Pod008
+    100110: Pod009
+    100112: Pod010
+    100114: Pod011
+    100116: Pod012
+    100118: Pod013
+    100120: Pod014
+    100122: Pod015
+    100124: Turret
+    100126: Turret 1
+    100128: Turret Base
+    100130: Turret Swivel
+    100132: Turret001
+    100134: Wing - Left
+    100136: Wing - Right
+    400000: //RootNode
+    400002: Barrel
+    400004: Barrel - Left
+    400006: Barrel - Right
+    400008: Barrel001
+    400010: Cargo Pods - Left
+    400012: Cargo Pods - Right
+    400014: Center Front
+    400016: Center Middle
+    400018: Center Rear
+    400020: Cockpit
+    400022: Laser
+    400024: Missile Launcher - Left
+    400026: Missile Launcher - Right
+    400028: Pod
+    400030: Pod 002
+    400032: Pod 003
+    400034: Pod 004
+    400036: Pod 005
+    400038: Pod 006
+    400040: Pod 007
+    400042: Pod 008
+    400044: Pod 009
+    400046: Pod 01
+    400048: Pod 010
+    400050: Pod 011
+    400052: Pod 012
+    400054: Pod 013
+    400056: Pod 014
+    400058: Pod 015
+    400060: Pod 016
+    400062: Pod Socket
+    400064: Pod Socket001
+    400066: Pod Socket002
+    400068: Pod Socket003
+    400070: Pod Socket004
+    400072: Pod Socket005
+    400074: Pod Socket006
+    400076: Pod Socket007
+    400078: Pod Socket008
+    400080: Pod Socket009
+    400082: Pod Socket010
+    400084: Pod Socket011
+    400086: Pod Socket012
+    400088: Pod Socket013
+    400090: Pod Socket014
+    400092: Pod Socket015
+    400094: Pod001
+    400096: Pod002
+    400098: Pod003
+    400100: Pod004
+    400102: Pod005
+    400104: Pod006
+    400106: Pod007
+    400108: Pod008
+    400110: Pod009
+    400112: Pod010
+    400114: Pod011
+    400116: Pod012
+    400118: Pod013
+    400120: Pod014
+    400122: Pod015
+    400124: Turret
+    400126: Turret 1
+    400128: Turret Base
+    400130: Turret Swivel
+    400132: Turret001
+    400134: Wing - Left
+    400136: Wing - Right
+    2300000: Barrel
+    2300002: Barrel - Left
+    2300004: Barrel - Right
+    2300006: Barrel001
+    2300008: Center Front
+    2300010: Center Middle
+    2300012: Center Rear
+    2300014: Cockpit
+    2300016: Pod
+    2300018: Pod Socket
+    2300020: Pod Socket001
+    2300022: Pod Socket002
+    2300024: Pod Socket003
+    2300026: Pod Socket004
+    2300028: Pod Socket005
+    2300030: Pod Socket006
+    2300032: Pod Socket007
+    2300034: Pod Socket008
+    2300036: Pod Socket009
+    2300038: Pod Socket010
+    2300040: Pod Socket011
+    2300042: Pod Socket012
+    2300044: Pod Socket013
+    2300046: Pod Socket014
+    2300048: Pod Socket015
+    2300050: Pod001
+    2300052: Pod002
+    2300054: Pod003
+    2300056: Pod004
+    2300058: Pod005
+    2300060: Pod006
+    2300062: Pod007
+    2300064: Pod008
+    2300066: Pod009
+    2300068: Pod010
+    2300070: Pod011
+    2300072: Pod012
+    2300074: Pod013
+    2300076: Pod014
+    2300078: Pod015
+    2300080: Turret
+    2300082: Turret 1
+    2300084: Turret Base
+    2300086: Turret Swivel
+    2300088: Turret001
+    2300090: Wing - Left
+    2300092: Wing - Right
+    3300000: Barrel
+    3300002: Barrel - Left
+    3300004: Barrel - Right
+    3300006: Barrel001
+    3300008: Center Front
+    3300010: Center Middle
+    3300012: Center Rear
+    3300014: Cockpit
+    3300016: Pod
+    3300018: Pod Socket
+    3300020: Pod Socket001
+    3300022: Pod Socket002
+    3300024: Pod Socket003
+    3300026: Pod Socket004
+    3300028: Pod Socket005
+    3300030: Pod Socket006
+    3300032: Pod Socket007
+    3300034: Pod Socket008
+    3300036: Pod Socket009
+    3300038: Pod Socket010
+    3300040: Pod Socket011
+    3300042: Pod Socket012
+    3300044: Pod Socket013
+    3300046: Pod Socket014
+    3300048: Pod Socket015
+    3300050: Pod001
+    3300052: Pod002
+    3300054: Pod003
+    3300056: Pod004
+    3300058: Pod005
+    3300060: Pod006
+    3300062: Pod007
+    3300064: Pod008
+    3300066: Pod009
+    3300068: Pod010
+    3300070: Pod011
+    3300072: Pod012
+    3300074: Pod013
+    3300076: Pod014
+    3300078: Pod015
+    3300080: Turret
+    3300082: Turret 1
+    3300084: Turret Base
+    3300086: Turret Swivel
+    3300088: Turret001
+    3300090: Wing - Left
+    3300092: Wing - Right
+    4300000: Center Rear
+    4300002: Center Middle
+    4300004: Center Front
+    4300006: Wing - Left
+    4300008: Cockpit
+    4300010: Wing - Right
+    4300012: Turret
+    4300014: Barrel
+    4300016: Turret001
+    4300018: Barrel001
+    4300020: Barrel - Left
+    4300022: Barrel - Right
+    4300024: Turret
+    4300026: Turret Base
+    4300028: Turret Swivel
+    4300030: Pod
+    4300032: Pod Socket
+    4300034: Pod001
+    4300036: Pod Socket001
+    4300038: Pod002
+    4300040: Pod Socket002
+    4300042: Pod003
+    4300044: Pod Socket003
+    4300046: Pod004
+    4300048: Pod Socket004
+    4300050: Pod005
+    4300052: Pod Socket005
+    4300054: Pod006
+    4300056: Pod Socket006
+    4300058: Pod007
+    4300060: Pod Socket007
+    4300062: Pod008
+    4300064: Pod Socket008
+    4300066: Pod Socket009
+    4300068: Pod009
+    4300070: Pod Socket010
+    4300072: Pod010
+    4300074: Pod Socket011
+    4300076: Pod011
+    4300078: Pod Socket012
+    4300080: Pod012
+    4300082: Pod Socket013
+    4300084: Pod013
+    4300086: Pod Socket014
+    4300088: Pod014
+    4300090: Pod Socket015
+    4300092: Pod015
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
