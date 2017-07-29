@@ -13,6 +13,7 @@ public class StarportController : MonoBehaviour
 	private PersonnelController m_personnelController;
 	private CrewAssignmentController m_crewAssignmentController;
 	private BankController m_bankController;
+	private ShipConfigurationController m_shipConfigurationController;
 	private PanelController m_currentUIController;
 	private bool m_haveFocus;
 
@@ -39,6 +40,9 @@ public class StarportController : MonoBehaviour
 
 		// get access to the bank controller
 		m_bankController = GetComponent<BankController>();
+
+		// get access to the bank controller
+		m_shipConfigurationController = GetComponent<ShipConfigurationController>();
 	}
 
 	// this is called by unity once at the start of the level
@@ -139,6 +143,11 @@ public class StarportController : MonoBehaviour
 			{
 				// give control to the bank controller
 				LoseFocus( m_bankController );
+			}
+			else if ( currentDoorName == "Ship Configuration" )
+			{
+				// give control to the ship configuration controller
+				LoseFocus( m_shipConfigurationController );
 			}
 		}
 	}
