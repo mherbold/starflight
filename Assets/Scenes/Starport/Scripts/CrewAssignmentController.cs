@@ -462,9 +462,6 @@ public class CrewAssignmentController : PanelController
 		rectTransform.offsetMin = m_baseSelectionOffsetMin + new Vector3( 0.0f, -offset, 0.0f );
 		rectTransform.offsetMax = m_baseSelectionOffsetMax + new Vector3( 0.0f, -offset, 0.0f );
 
-		// get access to the crew assignment player data
-		CrewAssignmentPlayerData crewAssignmentPlayerData = PersistentController.m_instance.m_playerData.m_crewAssignmentPlayerData;
-
 		// get access to the personnel player data
 		PersonnelPlayerData personnelPlayerData = PersistentController.m_instance.m_playerData.m_personnelPlayerData;
 
