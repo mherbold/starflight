@@ -74,6 +74,88 @@ ModelImporter:
     100132: Turret001
     100134: Wing - Left
     100136: Wing - Right
+    100138: Barrel 1
+    100140: Pod 02
+    100142: Pod 03
+    100144: Pod 04
+    100146: Pod 05
+    100148: Pod 06
+    100150: Pod 07
+    100152: Pod 08
+    100154: Pod 09
+    100156: Pod 1
+    100158: Pod 10
+    100160: Pod 10 1
+    100162: Pod 11
+    100164: Pod 11 1
+    100166: Pod 12
+    100168: Pod 12 1
+    100170: Pod 13
+    100172: Pod 13 1
+    100174: Pod 14
+    100176: Pod 14 1
+    100178: Pod 15
+    100180: Pod 15 1
+    100182: Pod 16
+    100184: Pod 2
+    100186: Pod 3
+    100188: Pod 4
+    100190: Pod 5
+    100192: Pod 6
+    100194: Pod 7
+    100196: Pod 8
+    100198: Pod 9
+    100200: Pod Socket 1
+    100202: Pod Socket 10
+    100204: Pod Socket 11
+    100206: Pod Socket 12
+    100208: Pod Socket 13
+    100210: Pod Socket 14
+    100212: Pod Socket 15
+    100214: Pod Socket 2
+    100216: Pod Socket 3
+    100218: Pod Socket 4
+    100220: Pod Socket 5
+    100222: Pod Socket 6
+    100224: Pod Socket 7
+    100226: Pod Socket 8
+    100228: Pod Socket 9
+    100230: Turret 2
+    100232: Laser Barrel - Left
+    100234: Laser Barrel - Right
+    100236: Laser Turret
+    100238: Laser Turret Base
+    100240: Laser Turret Swivel
+    100242: Missile Launcher Barrel - Left
+    100244: Missile Launcher Barrel - Right
+    100246: Missile Launcher Turret - Left
+    100248: Missile Launcher Turret - Right
+    100250: Pod Cube 01
+    100252: Pod Cube 02
+    100254: Pod Cube 03
+    100256: Pod Cube 04
+    100258: Pod Cube 05
+    100260: Pod Cube 06
+    100262: Pod Cube 07
+    100264: Pod Cube 08
+    100266: Pod Cube 09
+    100268: Pod Cube 10
+    100270: Pod Cube 11
+    100272: Pod Cube 12
+    100274: Pod Cube 13
+    100276: Pod Cube 14
+    100278: Pod Cube 15
+    100280: Pod Cube 16
+    100282: Pod Socket 01
+    100284: Pod Socket 02
+    100286: Pod Socket 03
+    100288: Pod Socket 04
+    100290: Pod Socket 05
+    100292: Pod Socket 06
+    100294: Pod Socket 07
+    100296: Pod Socket 08
+    100298: Pod Socket 09
+    100300: Pod Socket 16
     400000: //RootNode
     400002: Barrel
     400004: Barrel - Left
@@ -143,6 +225,88 @@ ModelImporter:
     400132: Turret001
     400134: Wing - Left
     400136: Wing - Right
+    400138: Barrel 1
+    400140: Pod 02
+    400142: Pod 03
+    400144: Pod 04
+    400146: Pod 05
+    400148: Pod 06
+    400150: Pod 07
+    400152: Pod 08
+    400154: Pod 09
+    400156: Pod 1
+    400158: Pod 10
+    400160: Pod 10 1
+    400162: Pod 11
+    400164: Pod 11 1
+    400166: Pod 12
+    400168: Pod 12 1
+    400170: Pod 13
+    400172: Pod 13 1
+    400174: Pod 14
+    400176: Pod 14 1
+    400178: Pod 15
+    400180: Pod 15 1
+    400182: Pod 16
+    400184: Pod 2
+    400186: Pod 3
+    400188: Pod 4
+    400190: Pod 5
+    400192: Pod 6
+    400194: Pod 7
+    400196: Pod 8
+    400198: Pod 9
+    400200: Pod Socket 1
+    400202: Pod Socket 10
+    400204: Pod Socket 11
+    400206: Pod Socket 12
+    400208: Pod Socket 13
+    400210: Pod Socket 14
+    400212: Pod Socket 15
+    400214: Pod Socket 2
+    400216: Pod Socket 3
+    400218: Pod Socket 4
+    400220: Pod Socket 5
+    400222: Pod Socket 6
+    400224: Pod Socket 7
+    400226: Pod Socket 8
+    400228: Pod Socket 9
+    400230: Turret 2
+    400232: Laser Barrel - Left
+    400234: Laser Barrel - Right
+    400236: Laser Turret
+    400238: Laser Turret Base
+    400240: Laser Turret Swivel
+    400242: Missile Launcher Barrel - Left
+    400244: Missile Launcher Barrel - Right
+    400246: Missile Launcher Turret - Left
+    400248: Missile Launcher Turret - Right
+    400250: Pod Cube 01
+    400252: Pod Cube 02
+    400254: Pod Cube 03
+    400256: Pod Cube 04
+    400258: Pod Cube 05
+    400260: Pod Cube 06
+    400262: Pod Cube 07
+    400264: Pod Cube 08
+    400266: Pod Cube 09
+    400268: Pod Cube 10
+    400270: Pod Cube 11
+    400272: Pod Cube 12
+    400274: Pod Cube 13
+    400276: Pod Cube 14
+    400278: Pod Cube 15
+    400280: Pod Cube 16
+    400282: Pod Socket 01
+    400284: Pod Socket 02
+    400286: Pod Socket 03
+    400288: Pod Socket 04
+    400290: Pod Socket 05
+    400292: Pod Socket 06
+    400294: Pod Socket 07
+    400296: Pod Socket 08
+    400298: Pod Socket 09
+    400300: Pod Socket 16
     2300000: Barrel
     2300002: Barrel - Left
     2300004: Barrel - Right
@@ -190,6 +354,73 @@ ModelImporter:
     2300088: Turret001
     2300090: Wing - Left
     2300092: Wing - Right
+    2300094: Barrel 1
+    2300096: Pod 1
+    2300098: Pod 10 1
+    2300100: Pod 11 1
+    2300102: Pod 12 1
+    2300104: Pod 13 1
+    2300106: Pod 14 1
+    2300108: Pod 15 1
+    2300110: Pod 2
+    2300112: Pod 3
+    2300114: Pod 4
+    2300116: Pod 5
+    2300118: Pod 6
+    2300120: Pod 7
+    2300122: Pod 8
+    2300124: Pod 9
+    2300126: Pod Socket 1
+    2300128: Pod Socket 10
+    2300130: Pod Socket 11
+    2300132: Pod Socket 12
+    2300134: Pod Socket 13
+    2300136: Pod Socket 14
+    2300138: Pod Socket 15
+    2300140: Pod Socket 2
+    2300142: Pod Socket 3
+    2300144: Pod Socket 4
+    2300146: Pod Socket 5
+    2300148: Pod Socket 6
+    2300150: Pod Socket 7
+    2300152: Pod Socket 8
+    2300154: Pod Socket 9
+    2300156: Turret 2
+    2300158: Laser Barrel - Left
+    2300160: Laser Barrel - Right
+    2300162: Laser Turret
+    2300164: Laser Turret Base
+    2300166: Laser Turret Swivel
+    2300168: Missile Launcher Barrel - Left
+    2300170: Missile Launcher Barrel - Right
+    2300172: Missile Launcher Turret - Left
+    2300174: Missile Launcher Turret - Right
+    2300176: Pod Cube 01
+    2300178: Pod Cube 02
+    2300180: Pod Cube 03
+    2300182: Pod Cube 04
+    2300184: Pod Cube 05
+    2300186: Pod Cube 06
+    2300188: Pod Cube 07
+    2300190: Pod Cube 08
+    2300192: Pod Cube 09
+    2300194: Pod Cube 10
+    2300196: Pod Cube 11
+    2300198: Pod Cube 12
+    2300200: Pod Cube 13
+    2300202: Pod Cube 14
+    2300204: Pod Cube 15
+    2300206: Pod Cube 16
+    2300208: Pod Socket 01
+    2300210: Pod Socket 02
+    2300212: Pod Socket 03
+    2300214: Pod Socket 04
+    2300216: Pod Socket 05
+    2300218: Pod Socket 06
+    2300220: Pod Socket 07
+    2300222: Pod Socket 08
+    2300224: Pod Socket 09
+    2300226: Pod Socket 16
     3300000: Barrel
     3300002: Barrel - Left
     3300004: Barrel - Right
@@ -237,6 +468,73 @@ ModelImporter:
     3300088: Turret001
     3300090: Wing - Left
     3300092: Wing - Right
+    3300094: Barrel 1
+    3300096: Pod 1
+    3300098: Pod 10 1
+    3300100: Pod 11 1
+    3300102: Pod 12 1
+    3300104: Pod 13 1
+    3300106: Pod 14 1
+    3300108: Pod 15 1
+    3300110: Pod 2
+    3300112: Pod 3
+    3300114: Pod 4
+    3300116: Pod 5
+    3300118: Pod 6
+    3300120: Pod 7
+    3300122: Pod 8
+    3300124: Pod 9
+    3300126: Pod Socket 1
+    3300128: Pod Socket 10
+    3300130: Pod Socket 11
+    3300132: Pod Socket 12
+    3300134: Pod Socket 13
+    3300136: Pod Socket 14
+    3300138: Pod Socket 15
+    3300140: Pod Socket 2
+    3300142: Pod Socket 3
+    3300144: Pod Socket 4
+    3300146: Pod Socket 5
+    3300148: Pod Socket 6
+    3300150: Pod Socket 7
+    3300152: Pod Socket 8
+    3300154: Pod Socket 9
+    3300156: Turret 2
+    3300158: Laser Barrel - Left
+    3300160: Laser Barrel - Right
+    3300162: Laser Turret
+    3300164: Laser Turret Base
+    3300166: Laser Turret Swivel
+    3300168: Missile Launcher Barrel - Left
+    3300170: Missile Launcher Barrel - Right
+    3300172: Missile Launcher Turret - Left
+    3300174: Missile Launcher Turret - Right
+    3300176: Pod Cube 01
+    3300178: Pod Cube 02
+    3300180: Pod Cube 03
+    3300182: Pod Cube 04
+    3300184: Pod Cube 05
+    3300186: Pod Cube 06
+    3300188: Pod Cube 07
+    3300190: Pod Cube 08
+    3300192: Pod Cube 09
+    3300194: Pod Cube 10
+    3300196: Pod Cube 11
+    3300198: Pod Cube 12
+    3300200: Pod Cube 13
+    3300202: Pod Cube 14
+    3300204: Pod Cube 15
+    3300206: Pod Cube 16
+    3300208: Pod Socket 01
+    3300210: Pod Socket 02
+    3300212: Pod Socket 03
+    3300214: Pod Socket 04
+    3300216: Pod Socket 05
+    3300218: Pod Socket 06
+    3300220: Pod Socket 07
+    3300222: Pod Socket 08
+    3300224: Pod Socket 09
+    3300226: Pod Socket 16
     4300000: Center Rear
     4300002: Center Middle
     4300004: Center Front
@@ -284,6 +582,47 @@ ModelImporter:
     4300088: Pod014
     4300090: Pod Socket015
     4300092: Pod015
+    4300094: Missile Launcher Turret - Left
+    4300096: Missile Launcher Barrel - Left
+    4300098: Laser Barrel - Left
+    4300100: Laser Turret
+    4300102: Laser Turret Base
+    4300104: Laser Turret Swivel
+    4300106: Pod Cube 01
+    4300108: Pod Socket 01
+    4300110: Missile Launcher Turret - Right
+    4300112: Missile Launcher Barrel - Right
+    4300114: Laser Barrel - Right
+    4300116: Pod Cube 03
+    4300118: Pod Socket 03
+    4300120: Pod Cube 05
+    4300122: Pod Socket 05
+    4300124: Pod Cube 07
+    4300126: Pod Socket 07
+    4300128: Pod Cube 09
+    4300130: Pod Socket 09
+    4300132: Pod Cube 11
+    4300134: Pod Socket 11
+    4300136: Pod Cube 13
+    4300138: Pod Socket 13
+    4300140: Pod Cube 15
+    4300142: Pod Socket 15
+    4300144: Pod Cube 02
+    4300146: Pod Socket 02
+    4300148: Pod Socket 04
+    4300150: Pod Cube 04
+    4300152: Pod Socket 06
+    4300154: Pod Cube 06
+    4300156: Pod Socket 08
+    4300158: Pod Cube 08
+    4300160: Pod Socket 10
+    4300162: Pod Cube 10
+    4300164: Pod Socket 12
+    4300166: Pod Cube 12
+    4300168: Pod Socket 14
+    4300170: Pod Cube 14
+    4300172: Pod Socket 16
+    4300174: Pod Cube 16
   materials:
     importMaterials: 1
     materialName: 0
