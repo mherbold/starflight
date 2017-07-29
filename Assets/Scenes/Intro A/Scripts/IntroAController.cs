@@ -35,7 +35,7 @@ public class IntroAController : MonoBehaviour
 		m_timer += Time.deltaTime;
 
 		// if we pressed the fire button then skip ahead
-		if ( m_inputManager.GetSubmitDown() )
+		if ( m_inputManager.GetSubmitDown( false ) )
 		{
 			if ( m_timer < m_secondPageTransitionStartTime )
 			{

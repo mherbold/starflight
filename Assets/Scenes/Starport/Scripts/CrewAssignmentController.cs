@@ -9,7 +9,7 @@ public class CrewAssignmentController : PanelController
 {
 	enum State
 	{
-		MainMenu, AssignPersonnel
+		MenuBar, AssignPersonnel
 	}
 
 	// public stuff we want to set using the editor
@@ -177,7 +177,7 @@ public class CrewAssignmentController : PanelController
 		// check if we have pressed the cancel button
 		if ( m_inputManager.GetCancelDown() )
 		{
-			SwitchToMainMenuState();
+			SwitchToMenuBarState();
 
 			GetComponent<UISoundController>().Play( UISoundController.UISound.Deactivate );
 		}
@@ -187,10 +187,7 @@ public class CrewAssignmentController : PanelController
 	public override void Show()
 	{
 		// reset the current state
-		SwitchToMainMenuState();
-
-		// view the first file
-		m_currentFileIndex = 0;
+		SwitchToMenuBarState();
 
 		// start the opening animation
 		StartOpeningUI();
@@ -216,7 +213,7 @@ public class CrewAssignmentController : PanelController
 		EventSystem.current.sendNavigationEvents = true;
 
 		// switch to the default view
-		SwitchToMainMenuState();
+		SwitchToMenuBarState();
 
 		// cancel the ui sounds
 		GetComponent<UISoundController>().CancelSounds();
@@ -247,10 +244,10 @@ public class CrewAssignmentController : PanelController
 	}
 
 	// call this to switch to the view file state
-	private void SwitchToMainMenuState()
+	private void SwitchToMenuBarState()
 	{
 		// change the current state
-		m_currentState = State.MainMenu;
+		m_currentState = State.MenuBar;
 
 		// hide the selection bar
 		m_selectionXform.SetActive( false );
@@ -398,7 +395,7 @@ public class CrewAssignmentController : PanelController
 		if ( !crewAssignmentPlayerData.IsAssigned( m_currentPositionIndex ) )
 		{
 			// automatically select the first personnel file
-			ChangeCurrentFileIndex( 0 );
+			ChangeCurrentFileIndex( 0, true );
 		}
 		else
 		{
@@ -416,10 +413,10 @@ public class CrewAssignmentController : PanelController
 		GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
 	}
 
-	private void ChangeCurrentFileIndex( int fileIndex )
+	private void ChangeCurrentFileIndex( int fileIndex, bool forceUpdate = false )
 	{
 		// don't do anything if we aren't changing the file index to a different one
-		if ( fileIndex != m_currentFileIndex )
+		if ( ( fileIndex != m_currentFileIndex ) || forceUpdate )
 		{
 			// update the current file index
 			m_currentFileIndex = fileIndex;
