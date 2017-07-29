@@ -442,7 +442,6 @@ public class PersonnelController : PanelController
 			gameObjectIsVisible[ (int) GameObjects.BioValuesText ] = true;
 		}
 
-
 		// if the previous button is currently selected and we are going to disable it, select the exit button
 		if ( !buttonIsInteractable[ (int) Buttons.PreviousButton ] )
 		{
@@ -451,7 +450,6 @@ public class PersonnelController : PanelController
 				m_exitButton.Select();
 			}
 		}
-
 
 		// if the next button is currently selected and we are going to disable it, select the exit button
 		if ( !buttonIsInteractable[ (int) Buttons.NextButton ] )
