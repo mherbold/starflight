@@ -80,5 +80,311 @@
       "m_stardate" : "4620-06-13",
       "m_message" : "Borno, gone relativistic.  See you in a hundred years.  Xenon."
     }
+  ],
+  "m_raceList" : [
+    {
+      "m_name" : "Human",
+      "m_scienceInitial" : 50,
+      "m_navigationInitial" : 30,
+      "m_engineeringInitial" : 30,
+      "m_communicationsInitial" : 30,
+      "m_medicineInitial" : 30,
+      "m_scienceMax" : 250,
+      "m_navigationMax" : 200,
+      "m_engineeringMax" : 200,
+      "m_communicationsMax" : 200,
+      "m_medicineMax" : 200,
+      "m_learningRate" : 9,
+      "m_durability" : 6,
+      "m_type" : "Mammalian",
+      "m_averageHeight" : "2.0 M",
+      "m_averageWeight" : "80 KG"
+    },
+    {
+      "m_name" : "Velox",
+      "m_scienceInitial" : 30,
+      "m_navigationInitial" : 50,
+      "m_engineeringInitial" : 50,
+      "m_communicationsInitial" : 0,
+      "m_medicineInitial" : 0,
+      "m_scienceMax" : 200,
+      "m_navigationMax" : 250,
+      "m_engineeringMax" : 250,
+      "m_communicationsMax" : 100,
+      "m_medicineMax" : 100,
+      "m_learningRate" : 6,
+      "m_durability" : 8,
+      "m_type" : "Insectoid",
+      "m_averageHeight" : "1.0 M",
+      "m_averageWeight" : "60 KG"
+    },
+    {
+      "m_name" : "Thrynn",
+      "m_scienceInitial" : 30,
+      "m_navigationInitial" : 30,
+      "m_engineeringInitial" : 30,
+      "m_communicationsInitial" : 50,
+      "m_medicineInitial" : 0,
+      "m_scienceMax" : 200,
+      "m_navigationMax" : 200,
+      "m_engineeringMax" : 200,
+      "m_communicationsMax" : 250,
+      "m_medicineMax" : 100,
+      "m_learningRate" : 7,
+      "m_durability" : 6,
+      "m_type" : "Reptilian",
+      "m_averageHeight" : "1.5 M",
+      "m_averageWeight" : "80 KG"
+    },
+    {
+      "m_name" : "Elowan",
+      "m_scienceInitial" : 10,
+      "m_navigationInitial" : 30,
+      "m_engineeringInitial" : 10,
+      "m_communicationsInitial" : 50,
+      "m_medicineInitial" : 50,
+      "m_scienceMax" : 150,
+      "m_navigationMax" : 200,
+      "m_engineeringMax" : 150,
+      "m_communicationsMax" : 250,
+      "m_medicineMax" : 250,
+      "m_learningRate" : 10,
+      "m_durability" : 2,
+      "m_type" : "Plant",
+      "m_averageHeight" : "2.5 M",
+      "m_averageWeight" : "40 KG"
+    },
+    {
+      "m_name" : "Android",
+      "m_scienceInitial" : 50,
+      "m_navigationInitial" : 150,
+      "m_engineeringInitial" : 100,
+      "m_communicationsInitial" : 0,
+      "m_medicineInitial" : 20,
+      "m_scienceMax" : 50,
+      "m_navigationMax" : 150,
+      "m_engineeringMax" : 100,
+      "m_communicationsMax" : 0,
+      "m_medicineMax" : 20,
+      "m_learningRate" : 0,
+      "m_durability" : 10,
+      "m_type" : "Synthetic",
+      "m_averageHeight" : "2.0 M",
+      "m_averageWeight" : "120 KG"
+    }
+  ],
+  "m_shipBasics" : {
+    "m_baseShipMass" : 50,
+    "m_cargoPodBuyPrice" : 500,
+    "m_cargoPodSellPrice" : 500,
+    "m_cargoPodMass" : 10
+  },
+  "m_enginesList" : [
+    {
+      "m_class" : 0,
+      "m_buyPrice" : 0,
+      "m_sellPrice" : 0,
+      "m_mass" : 0,
+      "m_baseAcceleration" : 0,
+      "m_accelerationMass" : 50,
+      "m_accelerationScale" : 0
+    },
+    {
+      "m_class" : 1,
+      "m_buyPrice" : 1000,
+      "m_sellPrice" : 900,
+      "m_mass" : 50,
+      "m_baseAcceleration" : 5,
+      "m_accelerationMass" : 100,
+      "m_accelerationScale" : 0.25
+    },
+    {
+      "m_class" : 2,
+      "m_buyPrice" : 8000,
+      "m_sellPrice" : 7600,
+      "m_mass" : 50,
+      "m_baseAcceleration" : 10,
+      "m_accelerationMass" : 100,
+      "m_accelerationScale" : 0.5
+    },
+    {
+      "m_class" : 3,
+      "m_buyPrice" : 20000,
+      "m_sellPrice" : 19000,
+      "m_mass" : 50,
+      "m_baseAcceleration" : 15,
+      "m_accelerationMass" : 100,
+      "m_accelerationScale" : 0.75
+    },
+    {
+      "m_class" : 4,
+      "m_buyPrice" : 40000,
+      "m_sellPrice" : 38000,
+      "m_mass" : 50,
+      "m_baseAcceleration" : 20,
+      "m_accelerationMass" : 100,
+      "m_accelerationScale" : 1
+    },
+    {
+      "m_class" : 5,
+      "m_buyPrice" : 100000,
+      "m_sellPrice" : 95200,
+      "m_mass" : 50,
+      "m_baseAcceleration" : 25,
+      "m_accelerationMass" : 100,
+      "m_accelerationScale" : 1.25
+    }
+  ],
+  "m_sheildingList" : [
+    {
+      "m_class" : 0,
+      "m_buyPrice" : 0,
+      "m_sellPrice" : 0,
+      "m_mass" : 0
+    },
+    {
+      "m_class" : 1,
+      "m_buyPrice" : 4000,
+      "m_sellPrice" : 3800,
+      "m_mass" : 5
+    },
+    {
+      "m_class" : 2,
+      "m_buyPrice" : 12000,
+      "m_sellPrice" : 11400,
+      "m_mass" : 5
+    },
+    {
+      "m_class" : 3,
+      "m_buyPrice" : 32000,
+      "m_sellPrice" : 30400,
+      "m_mass" : 5
+    },
+    {
+      "m_class" : 4,
+      "m_buyPrice" : 70000,
+      "m_sellPrice" : 66600,
+      "m_mass" : 5
+    },
+    {
+      "m_class" : 5,
+      "m_buyPrice" : 125000,
+      "m_sellPrice" : 119000,
+      "m_mass" : 5
+    }
+  ],
+  "m_armorList" : [
+    {
+      "m_class" : 0,
+      "m_buyPrice" : 0,
+      "m_sellPrice" : 0,
+      "m_mass" : 0
+    },
+    {
+      "m_class" : 1,
+      "m_buyPrice" : 1500,
+      "m_sellPrice" : 1400,
+      "m_mass" : 9
+    },
+    {
+      "m_class" : 2,
+      "m_buyPrice" : 3100,
+      "m_sellPrice" : 2900,
+      "m_mass" : 36
+    },
+    {
+      "m_class" : 3,
+      "m_buyPrice" : 6200,
+      "m_sellPrice" : 5900,
+      "m_mass" : 81
+    },
+    {
+      "m_class" : 4,
+      "m_buyPrice" : 12500,
+      "m_sellPrice" : 11900,
+      "m_mass" : 144
+    },
+    {
+      "m_class" : 5,
+      "m_buyPrice" : 25000,
+      "m_sellPrice" : 23800,
+      "m_mass" : 225
+    }
+  ],
+  "m_missileLauncherList" : [
+    {
+      "m_class" : 0,
+      "m_buyPrice" : 0,
+      "m_sellPrice" : 0,
+      "m_mass" : 0
+    },
+    {
+      "m_class" : 1,
+      "m_buyPrice" : 12000,
+      "m_sellPrice" : 11400,
+      "m_mass" : 5
+    },
+    {
+      "m_class" : 2,
+      "m_buyPrice" : 28000,
+      "m_sellPrice" : 26600,
+      "m_mass" : 5
+    },
+    {
+      "m_class" : 3,
+      "m_buyPrice" : 60000,
+      "m_sellPrice" : 57100,
+      "m_mass" : 5
+    },
+    {
+      "m_class" : 4,
+      "m_buyPrice" : 120000,
+      "m_sellPrice" : 114200,
+      "m_mass" : 5
+    },
+    {
+      "m_class" : 5,
+      "m_buyPrice" : 200000,
+      "m_sellPrice" : 190400,
+      "m_mass" : 5
+    }
+  ],
+  "m_laserCannonList" : [
+    {
+      "m_class" : 0,
+      "m_buyPrice" : 0,
+      "m_sellPrice" : 0,
+      "m_mass" : 0
+    },
+    {
+      "m_class" : 1,
+      "m_buyPrice" : 8000,
+      "m_sellPrice" : 7600,
+      "m_mass" : 5
+    },
+    {
+      "m_class" : 2,
+      "m_buyPrice" : 20000,
+      "m_sellPrice" : 19000,
+      "m_mass" : 5
+    },
+    {
+      "m_class" : 3,
+      "m_buyPrice" : 54000,
+      "m_sellPrice" : 51400,
+      "m_mass" : 5
+    },
+    {
+      "m_class" : 4,
+      "m_buyPrice" : 90000,
+      "m_sellPrice" : 85700,
+      "m_mass" : 5
+    },
+    {
+      "m_class" : 5,
+      "m_buyPrice" : 150000,
+      "m_sellPrice" : 142800,
+      "m_mass" : 5
+    }
   ]
 }

@@ -11,12 +11,10 @@ public class PersistentController : MonoBehaviour
 	public static bool m_skipIntro;
 
 	// public stuff we want to set using the editor
-	public string m_noticeGameDataFileName;
-	public string m_raceGameDataFileName;
+	public string m_gameDataFileName;
 	public string m_playerDataFileName;
 
-	public NoticeGameData m_noticeGameData;
-	public RaceGameData m_raceGameData;
+	public GameData m_gameData;
 	public PlayerData m_playerData;
 
 	public bool m_resetPlayerData;
@@ -76,14 +74,11 @@ public class PersistentController : MonoBehaviour
 	private void LoadGameData()
 	{
 		// load the notices game data
-		LoadGameDataFile( out m_noticeGameData, m_noticeGameDataFileName );
-
-		// load the races game data
-		LoadGameDataFile( out m_raceGameData, m_raceGameDataFileName );
+		LoadGameDataFile( out m_gameData, m_gameDataFileName );
 	}
 
 	// function to load game data from a file into an object
-	private void LoadGameDataFile<T>( out T gameData, string fileName ) where T : GameData
+	private void LoadGameDataFile<T>( out T gameData, string fileName ) where T : GameDataFile
 	{
 		// get the location of this game data file
 		string filePath = Path.Combine( "GameData", fileName );

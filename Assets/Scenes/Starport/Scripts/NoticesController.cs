@@ -66,8 +66,8 @@ public class NoticesController : MonoBehaviour
 		// get access to the player progress
 		PlayerData playerData = PersistentController.m_instance.m_playerData;
 
-		// get access to the notices game data
-		NoticeGameData noticesGameData = PersistentController.m_instance.m_noticeGameData;
+		// get access to the game data
+		GameData gameData = PersistentController.m_instance.m_gameData;
 
 		// update the stardate text
 		DateTime dateTime = DateTime.ParseExact( playerData.m_starflightPlayerData.m_currentStardate, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture );
@@ -76,9 +76,9 @@ public class NoticesController : MonoBehaviour
 		// figure out which notice we should be showing (current notice)
 		string earliestNewNoticeStardate = "9999-12-31";
 
-		for ( int i = 0; i < noticesGameData.m_noticeList.Length; i++ )
+		for ( int i = 0; i < gameData.m_noticeList.Length; i++ )
 		{
-			NoticeGameData.Notice notice = noticesGameData.m_noticeList[ i ];
+			Notice notice = gameData.m_noticeList[ i ];
 
 			if ( string.Compare( playerData.m_starflightPlayerData.m_currentStardate, notice.m_stardate ) >= 0 )
 			{
@@ -232,11 +232,11 @@ public class NoticesController : MonoBehaviour
 	// call this to show the next line of the current message
 	private void ShowNextLine()
 	{
-		// get access to the notices game data
-		NoticeGameData noticesGameData = PersistentController.m_instance.m_noticeGameData;
+		// get access to the game data
+		GameData gameData = PersistentController.m_instance.m_gameData;
 
 		// get the current notice
-		NoticeGameData.Notice currentNotice = noticesGameData.m_noticeList[ m_currentNoticeIndex ];
+		Notice currentNotice = gameData.m_noticeList[ m_currentNoticeIndex ];
 
 		// check if we are displaying the first line
 		if ( m_currentLine == 0 )

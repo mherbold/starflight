@@ -9,12 +9,12 @@ public class ShipConfigurationController : PanelController
 {
 	enum State
 	{
-		MenuBar
+		MenuBar, GiveName
 	}
 
 	enum GameObjects
 	{
-		GameObjectCount
+		OverlayPanel, NamePanel, GameObjectCount
 	}
 
 	// public stuff we want to set using the editor
@@ -23,6 +23,10 @@ public class ShipConfigurationController : PanelController
 	public Button m_repairButton;
 	public Button m_nameButton;
 	public Button m_exitButton;
+	public GameObject m_overlayPanel;
+	public GameObject m_namePanel;
+	public InputField m_nameInputField;
+	public TextMeshProUGUI m_currentConfigurationValues;
 
 	// private stuff we don't want the editor to see
 	private StarportController m_starportController;
@@ -130,7 +134,27 @@ public class ShipConfigurationController : PanelController
 		// update the screen
 		UpdateScreen();
 
+		// select the buy button
 		m_buyButton.Select();
+	}
+
+	// call this to switch to the give name state
+	private void SwitchToGiveNameState()
+	{
+		// deselect all the buttons
+		EventSystem.current.SetSelectedGameObject( null );
+
+		// change the current state
+		m_currentState = State.GiveName;
+
+		// update the screen
+		UpdateScreen();
+
+		// erase the current text input
+		m_nameInputField.text = PersistentController.m_instance.m_playerData.m_shipConfigurationPlayerData.m_name;
+
+		// select the text input by default
+		m_nameInputField.Select();
 	}
 
 	// call this whenever we change state or do something that would result in something changing on the screen
@@ -147,6 +171,13 @@ public class ShipConfigurationController : PanelController
 				UpdateScreenForMenuBarState( gameObjectIsVisible );
 				break;
 			}
+
+			// we are currently giving a name
+			case State.GiveName:
+			{
+				UpdateScreenForGiveNameState( gameObjectIsVisible );
+				break;
+			}
 		}
 
 		// enable or disable buttons now
@@ -159,11 +190,35 @@ public class ShipConfigurationController : PanelController
 		m_exitButton.interactable = enableButtons;
 
 		// show or hide game objects now
+		m_overlayPanel.gameObject.SetActive( gameObjectIsVisible[ (int) GameObjects.OverlayPanel ] );
+		m_namePanel.gameObject.SetActive( gameObjectIsVisible[ (int) GameObjects.NamePanel ] );
+
+		// get the ship configuration player data
+		ShipConfigurationPlayerData shipConfigurationPlayerData = PersistentController.m_instance.m_playerData.m_shipConfigurationPlayerData;
+
+		// update right panel text
+		m_currentConfigurationValues.text = shipConfigurationPlayerData.m_numCargoPods.ToString() + Environment.NewLine;
+		m_currentConfigurationValues.text += Environment.NewLine;
+		m_currentConfigurationValues.text += shipConfigurationPlayerData.GetEnginesClassString() + Environment.NewLine;
+		m_currentConfigurationValues.text += shipConfigurationPlayerData.GetSheildingClassString() + Environment.NewLine;
+		m_currentConfigurationValues.text += shipConfigurationPlayerData.GetArmorClassString() + Environment.NewLine;
+		m_currentConfigurationValues.text += shipConfigurationPlayerData.GetMissileLauncherClassString() + Environment.NewLine;
+		m_currentConfigurationValues.text += shipConfigurationPlayerData.GetLaserCannonClassString() + Environment.NewLine;
 	}
 
 	// update screen for the view file state
 	private void UpdateScreenForMenuBarState( bool[] gameObjectIsVisible )
 	{
+	}
+
+	// update screen for the give name state
+	private void UpdateScreenForGiveNameState( bool[] gameObjectIsVisible )
+	{
+		// show the overlay
+		gameObjectIsVisible[ (int) GameObjects.OverlayPanel ] = true;
+
+		// show the name panel
+		gameObjectIsVisible[ (int) GameObjects.NamePanel ] = true;
 	}
 
 	// this is called if we clicked on the buy button
@@ -190,6 +245,9 @@ public class ShipConfigurationController : PanelController
 	// this is called if we clicked on the name button
 	public void NameClicked()
 	{
+		// switch to the give name state
+		SwitchToGiveNameState();
+
 		// play a ui sound
 		GetComponent<UISoundController>().Play( UISoundController.UISound.Activate );
 	}
@@ -202,5 +260,21 @@ public class ShipConfigurationController : PanelController
 
 		// play a ui sound
 		GetComponent<UISoundController>().Play( UISoundController.UISound.Deactivate );
+	}
+
+	// this is called when we hit enter in the name input field
+	public void OnEndEdit()
+	{
+		// update the ship name in the player data
+		PersistentController.m_instance.m_playerData.m_shipConfigurationPlayerData.m_name = m_nameInputField.text;
+
+		// save the new ship name to disk
+		PersistentController.m_instance.SavePlayerData();
+
+		// switch to the menu bar state
+		SwitchToMenuBarState();
+
+		// play a ui sound
+		GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
 	}
 }

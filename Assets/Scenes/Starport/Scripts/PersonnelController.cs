@@ -607,7 +607,7 @@ public class PersonnelController : PanelController
 		buttonIsInteractable[ (int) Buttons.CancelButton ] = true;
 
 		// get the current race game data
-		RaceGameData.Race race = PersistentController.m_instance.m_raceGameData.m_raceList[ m_currentRaceIndex ];
+		Race race = PersistentController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
 
 		// update the skill values text to show the race's initial values
 		m_skillValuesText.text = "";
@@ -723,7 +723,7 @@ public class PersonnelController : PanelController
 	private void ShowRace( bool[] gameObjectIsVisible )
 	{
 		// get the current race game data
-		RaceGameData.Race race = PersistentController.m_instance.m_raceGameData.m_raceList[ m_currentRaceIndex ];
+		Race race = PersistentController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
 
 		// update the race name
 		m_raceNameText.text = race.m_name;
@@ -822,7 +822,7 @@ public class PersonnelController : PanelController
 			PersonnelPlayerData.Personnel personnel = playerData.m_personnelPlayerData.m_personnelList[ m_currentFileIndex ];
 
 			// get access to the race data for this personnel file
-			RaceGameData.Race race = PersistentController.m_instance.m_raceGameData.m_raceList[ m_currentRaceIndex ];
+			Race race = PersistentController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
 
 			// calculate the current skill and maximum skill points for the selected skill
 			int currentSkill = personnel.GetSkill( m_currentSkillIndex );
@@ -929,7 +929,7 @@ public class PersonnelController : PanelController
 			PersonnelPlayerData.Personnel personnel = playerData.m_personnelPlayerData.m_personnelList[ m_currentFileIndex ];
 
 			// get access to the race data for this personnel file
-			RaceGameData.Race race = PersistentController.m_instance.m_raceGameData.m_raceList[ m_currentRaceIndex ];
+			Race race = PersistentController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
 
 			// enable the train button only if the current personnel is not maxxed out
 			int maxTotalPoints = 0;
@@ -1028,7 +1028,7 @@ public class PersonnelController : PanelController
 	public void OnEndEdit()
 	{
 		// get the current race game data
-		RaceGameData.Race race = PersistentController.m_instance.m_raceGameData.m_raceList[ m_currentRaceIndex ];
+		Race race = PersistentController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
 
 		// create a new personnel file
 		PersonnelPlayerData.Personnel personnel = PersistentController.m_instance.m_playerData.m_personnelPlayerData.CreateNewPersonnel();

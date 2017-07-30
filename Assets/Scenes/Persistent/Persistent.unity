@@ -149,13 +149,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ff95d23817c8f440a63a702666625e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_noticeGameDataFileName: NoticeGameData
-  m_raceGameDataFileName: RaceGameData
+  m_gameDataFileName: Starflight Game Data
   m_playerDataFileName: PlayerData.bin
-  m_noticeGameData:
-    m_noticeList: []
-  m_raceGameData:
-    m_raceList: []
   m_playerData:
     m_starflightPlayerData:
       m_currentStardate: 
@@ -174,6 +169,14 @@ MonoBehaviour:
     m_bankPlayerData:
       m_currentBalance: 12000
       m_transactionList: []
+    m_shipConfigurationPlayerData:
+      m_name: 
+      m_numCargoPods: 0
+      m_enginesClass: 1
+      m_sheildingClass: 0
+      m_armorClass: 0
+      m_missileLauncherClass: 0
+      m_laserCannonClass: 0
   m_resetPlayerData: 0
 --- !u!114 &919755014
 MonoBehaviour:

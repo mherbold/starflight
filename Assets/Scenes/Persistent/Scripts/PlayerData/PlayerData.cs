@@ -11,6 +11,7 @@ public class PlayerData
 	public PersonnelPlayerData m_personnelPlayerData;
 	public CrewAssignmentPlayerData m_crewAssignmentPlayerData;
 	public BankPlayerData m_bankPlayerData;
+	public ShipConfigurationPlayerData m_shipConfigurationPlayerData;
 
 	// this resets our player progress to the new game state
 	public void Reset()
@@ -21,5 +22,6 @@ public class PlayerData
 		m_personnelPlayerData = new PersonnelPlayerData();
 		m_crewAssignmentPlayerData = new CrewAssignmentPlayerData();
 		m_bankPlayerData = new BankPlayerData();
+		m_shipConfigurationPlayerData = new ShipConfigurationPlayerData();
 	}
 }
