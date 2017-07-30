@@ -1,0 +1,311 @@
+
+                          NOT-IN-ALPHA LIST          2-03-85
+STARPORT
+--------                                                 DONE
+                                                         _____           
+ -) Hub graphics with working doors                      |   |   
+ -) Operations                                           |   |
+     -) The Interstel LOGO needs to be completed.        |   | * 
+     -) notices    (these  are  messages on a  bulliten  |   |
+                   board  that  are  triggered  by  the  |   |
+                   stardate.  They include include  the  |   |
+                   initial mission briefing messages,    |   |
+                   clues and helpful info, and humorous  |   |
+                   company personals)                    |   |
+     -) evaluation (these   are   evaluations  of   the  |   |
+                   players'recommendations  of   colony  |   |
+                   worlds.  For  each recommendation  a  |   |
+                   fine or bonus may be given. This      |   | 
+                   will be a major part of the game.)    |   |
+ -) Personnel                                            |   |
+    -) sillhouettes and non-essential race data in  the  |   |
+    crew files.                                          |   |
+    -)  a  DEAD blit that looks like a stamp that  gets  |   |
+    stamped over the files of dead crew members.         |   |
+                                                         |   |
+ -)  Trade Depot Display (some blank space needs to  be  |   | *
+  put at the end of the wrap-around list. In addition    |   |
+  the cursor routine should be modified so that the      |   |
+  cursor moves and the items only scroll when the cursor |   |
+  hits the top or bottom.)                               |   |
+                                                         |   |
+ -)  Crew Assignment ( The assignment slots  should  be  |   | *
+  blank until someone is assigned to the position.)      |   |
+                                                         |   |
+ -) Ship Configuration user instructions require clarifi-|   | *
+  cation, possibly some screen modification.             |   |
+STARSHIP                                                 |   |
+--------                                                 |   |
+ -)  Countdown launch sequence ( this is just a  count-  |   |
+     tdown in the main view screen)                      |   |
+ -) 3-D docking sequence (this is a canned sequence for  |   |
+    starport approach and departure. The image has been  |   |
+    digitized  and  the data entered.  It will  require  |   |
+    approx.  1-2 days programming but will only be  put  |   |
+    in if there is room.)                                |   |
+ -)  SECTOR MAP - Flight on the sector map will  appear  |   |
+    differently than in alpha                            |   |
+     -)  scale  (currently  a  9  x  15  cell  area  is  |   |
+    displayed,  ultimately  a scale closer to 3 x 5  or  |   |
+    smaller  will  be  shown with  fine  scrolling  and  |   |
+    `space  dust.  It will appear closer to the earlier  |   |
+    version of hyper-travel)                             |   | 
+     -) speed (movement across the view screen will      |   |
+    be accelerated and control enhanced.                 |   |
+     -) stars (stars will appear as larger circles)      |   |
+     -)  fluxes (fluxes will appear as  winking  specs-  |   |
+    they do not appear in alpha. When a flux is hit the  |   |
+    star-tunnel graphic (of earlier versions) will be    |   |
+    displayed.                                           |   |
+     -)  system-hyperspace  transition  (star  systems   |   |
+    will  blow  up and down as they did in the  earlier  |   |
+    version.)                                            |   |
+     -) encounters (encounters with aliens will be more  |   |
+    frequent  as ultimately these encounters will  move  |   |
+    towards  the player when they are within a  certain  |   |
+    range.  In  alpha the aliens in hyperspace  do  not  |   |
+    move at all.)                                        |   |
+    -) nebulae (these will appear much larger (with the  |   |
+    scale  change) and as irregular shapes rather  than  |   |
+    circles.  They  will ofcourse also be irregular  on  |   |
+    the Starmap.)                                        |   |
+ -)  Fuel (fuel usage is not yet implemented  in  space  |   |
+     travel)                                             |   |
+ -)  The  navigator option FTL will  be  replaced  with  |   | *
+     HYPERSPACE and the SUBLIGHT option will be removed. |   |
+     It will only be possible to drop out of Hyperspace  |   |
+     by entering a system or having an encounter.        |   |
+                                                         |   |
+-) SYSTEM LEVEL -                                        |   |
+     -) Aliens     (Aliens  will be placed and  visible  |   |
+                   at  this level and they will exhibit  |   |
+                   movement behavior)                    |   |
+     -) Temperature (Temperature of the ship-hull  will  |   |
+                   change within a star system based on  |   |
+                   the  star type and distance form it.  |   |
+                   This  will  be  a  consideration  in  |   |
+                   system maneuvering.)                  |   |
+     -)  Orbit      Orbit around a planet or star  will  |   | *
+                   occur  automatically upon  collision  |   |
+                   with  it  just like  in  Hyperspace.  |   |
+                   Departing  from  orbit is done  with  |   |
+                   the DE-ORBIT button of the Navigator  |   |
+     -)  Planets     When  planets are  generated  they  |   | *
+                   should be generated such that  their  |   |
+                   hydrosphere matches the planet color  |   |
+                   at  the  system level.  This is  not  |   |
+                   currently the case.                   |   |
+     -)  Movement  System movement needs to be modified  |   | *
+                   so  that  when the player takes  his  |   |
+                   finger  of the arrow keys  the  ship  |   |
+                   slows to a stop,  and when the arrow  |   |
+                   keys  are  pressed the flame  behind  |   |
+                   the  ship  is displayed (same as  in  |   |
+                   tactical  level).  In  addition  the  |   |
+                   speed  of the ship should be propor-  |   |   
+                   tional to the ship's acceleration.    |   |
+ -) STARMAP - The fuel estimate will be  working,  also  |   |
+     the  starmap  will  scroll  smoothly  rather  than  |   |
+    jumping  when  the cursor is moved off the  screen.  |   |
+    Flux lines will appear after they are traversed.     |   |
+    Also the ship needs to be plotted last so it will    |   | *
+    appear when in nebulas.                              |   |
+-) ENCOUNTERS-                                           |   |
+      -) SPACE COMBAT (this is a big one.  It includes   |   |
+                    all  weapons,   shields,damage  and  |   |
+                   movement at the Tactical  level.  It  |   |
+                   also  includes display of ship icons  |   |
+                   at all 3 scales of the tactical map,  |   |
+                   display of any planets in an orbital  |   |
+                   encounter,  and any special code for  |   |
+                   controlling weapons from the Crystal  |   |
+                   planet or Arth.)                      |   |
+ -) COMMUNICATIONS                                       |   |
+    -)  Graphics (pictures of aliens in the view screen  |   |
+        during communications.                           |   |
+    -)  Communications Special Actions (each  race  has  |   |
+        many  special actions they do during communica-  |   |
+        tions, both conditional on the players behavior  |   |
+        and  unconditional  [for  example  the   veloxi  |   |
+        always ask for tribute and the mechans will not  |   |
+        deal  with  you if there are no  humans  aboard  |   |
+        your  ship] Until these are put in the  aliens'  |   |
+        behavior  will not really be representative  of  |   |
+        the  final  game.  In addition alien  homeworld  |   |
+        phrases will not be accessed  for alpha.)        |   |
+    -)  Communications  modifications  (there  are   a   |   |
+        number of modifications planned.  To name a few  |   |
+        the  phrase  `incoming  message' along  with  a  |   |
+        sound effect will be presented during the  time  |   |
+        that  the  alien has decided to speak  and  the  |   |
+        phrase  is actually printed.  Another change is  |   |
+        that  `yes' and `no' will appear  whenever  the  |   |
+        player makes a yes or no answer. Alpha communi-  |   |
+        cations  will just serve to give a  feeling  of  |   |
+        this process.)                                   |   |
+    -)  Hailing:  Aliens do not currently hail when an   |   | *
+        encounter is  entered until the player puts up   |   |
+        the COMM OFF menu. Ultimately this will not be   |   |
+        the case.                                        |   |
+    -)   Current implementation of the  alien  language  |   | *         
+        generation  from  the alien syllabaries is  un-  |   |       
+        acceptable. A strategy other than truncation of  |   |
+        the  alien  words will need to be  found.  Also  |   |
+        garbage  characters are currently being put  up  |   |
+        on the screen.                                   |   |
+    -)   In alpha the COMM OFFicers skill AND  race  do  |   | *
+        not  affect the translation ability.  This will  |   |
+        need to be corrected.                            |   |
+-) SHIP FUNCTIONS                                        |   |
+  -) The word BRIDGE will be blue-white in color rather  |   | *
+     than white like the other Crew options.             |   |    
+  -) Captain                                             |   |
+       -) Items  (this  function is not  working  fully  |   |
+         yet)                                            |   |
+       -) Log  planet (the planet data records used  in  |   | 
+         evaluation                                      |   |
+         are  not  yet being creataed when a planet  is  |   |
+         logged.                                         |   |
+       -) Launch  (This is the reverse of  the  landing  |   |
+         sequence and it is not happening yet)           |   |
+       -)  The mercador map should be put up  when  the  |   | *          
+           LAND  option is selected.  Also Site  Select  |   |        
+           should be incorporated into the LAND function.|   | 
+  -) Science Officer                                     |   |
+       -) Sensor (silhouettes of the aliens are not yet  |   |
+         being  put  up  so  sensor  readings  are  not  |   |
+         possible. In additon the mass and temperatures  |   |
+         and compostions are not being given.            |   |
+       -) Analysis  ( the template is being put up  but  |   |
+         no data is being supplied yet.)                 |   |
+  -) Navigator (as mentioned under Combat,  maneuvering  |   |
+         is not yet working at the Tactical level. This  |   |
+         is only really necessary in a combat situation.)|   |
+       -) It will be necessary to get rid of the maneuv- |   | *
+         er  button and replace it with a DE-ORBIT       |   |
+         button for moving from orbit level to system    |   |
+         level.  It  will  also  be  necessary  to       |   | 
+         transfer control of the button movement to two  |   |
+         new  keys (perhaps A and Z) on  the  keyboard.  |   |
+         This  will  necessitate being able to do  ship  |   |
+         functions in Hyperspace.                        |   |
+      -) Raising and dropping the shields should immed-  |   | *
+         iately affect the Status display.               |   |
+      -) Shield Power needs to be displayed in the bar   |   | *
+         graphs for the ship in the Status display.      |   |
+      - Effects  of  the Navigators skill  on  spotting  |   | *
+        fluxes and on the Starmap and coordinates after  |   |
+        a flux jump need to be incorporated.             |   |
+  -) Communications   (Ultimately  the  consequence  of  |   |
+         launching  the  SOS  drone will  be  that  the  |   |
+         player  will  be hauled back to  starport  and  |   |
+         fined.  As of alpha the drone is launched  but  |   |
+         there is no effect.                             |   |
+  -) Doctor  ( Healing does not actually occur as there  |   |
+         is  not yet any way for the crew members to be  |   |
+         damaged.)                                       |   |
+  -) Engineer   (  Same as for Doctor  only  concerning  |   |
+         repairs.)                                       |   | 
+                                                         |   |
+PLANETSIDE                                               |   |
+----------                                               |   |
+ -) Landing  Sequence  (The landing  sequence  will  be  |   |
+         modified  to  include altitude information  in  |   |
+         the  3-d approach using black  wire-lines  and  |   |
+         possibly algorythmic shading.)                  |   |
+      -) In  addition there are some rough jumps in  it  |   | *
+         that need to be smoothed out.                   |   |
+      -)  If  time allows it will also be  modified  so  |   | *
+         that the final stages of the landing are        |   |
+         controlled by the player.                       |   |
+ -) Contour Representation                               |   |
+      -) Roughing (at all 3 levels of contour repre-     |   |
+         sentation the cell borders will be roughed)     |   |
+      -) Altitude  effect (The slope of the contour map  |   |
+         will effect the speed of the Terrain  Vehicle.  |   |
+         This gives the player a way to use the contour  |   |
+         information in navigation .)                    |   |
+      -) Speed (Terrain Vehicle speed will be increased) |   |
+ -) Lifeforms                                            |   |
+      -) Placement  (Lifeforms  will be placed only  on  |   |
+         land,   they  will  be  placed  according   to  |   |
+         altitude and region. In addition lifeforms for  |   |
+         the entire contour map [largest scale] will be  |   |
+         shown  as black dots.  Currently they are only  |   |
+         generated for a small area at a time.)          |   |    
+      -) Behavior (Lifeforms will move about [also  fly  |   |
+         and   float]  and  exhibit  other  interactive  |   |
+         behaviors with each other and the player)       |   |
+      -) Description (certain modifications are planned  |   | *
+         for the descriptions).                          |   |
+         One  of these modifications has to do with the  |   |       
+         height of the creatures.  The heights need  to  |   |        
+         be given in less specific terms so that if the  |   |
+         same  creature is LOOKed at twice it will have  |   |       
+         the same height. (as it is now the description  |   | 
+         will vary in other minor ways if this is done,  |   |
+         but  so  long as  the  different  descriptions  |   |
+         don't contradict each other this is desirable.  |   |
+         )  (It also sounds better less specific.) Also  |   |
+         the  height  range  for animals  needs  to  be  |   |
+         scaled down a little bit.                       |   |
+ -) Items (this will be changed so that only  lifeforms  |   | *
+         on  the same icon cell as the terrain  vehicle  |   |
+         or  one  immediately adjacent will  appear  in  |   |
+         this  list.  That way it will be  necessary to  |   |
+         drive  up to something to capture   or  record  |   |
+         it. Also the cursor should move up and down     |   |
+         and the items only scroll when the cursor hits  |   |
+         the top or bottom. For choosing what items you  |   |
+         wish to deal with we will also implement Tim's  |   |
+         icon selection plan.)                           |   |
+ -) Weapons (the laser and stunner are not yet working)  |   |
+ -) Artifacts,  Ruins, and Messages (these have not yet  |   |
+         been placed on the planets surface. Ruins have  |   |
+         accompanying descriptions.)                     |   |
+ -) Fuel (Fuel usage is not yet implemented              |   |
+ -) Planet Description (when nothing else is going  on,  |   |
+         a general      description of the planet,  the  |   |
+         temperature,  and the weather condition [which  |   |
+         affects movement speed] resides in the text     |   |
+         window.)                                        |   |
+                                                         |   |
+                                                         |   | 
+                                                         |   | 
+                                                         |   |
+                       ADDITIONAL ITEMS                  |   |
+                                                         |   |
+                                                         |   |
+                                                         |   |
+                                                         |   |
+                                                         |   |
+                                                         |   |
+                                                         |   |
+                                                         |   |
+                                                         |   |
+                                                         |   |
+                                                         |   |
+                                                         |   |
+                                                         |   |
+                                                         |   |
+                                                         |   |
+                                                         |   |
+                                                         |   |
+                                                         |   |
+                                                         |   |
+                                                         |   |
+                                                         |   |
+                                                         |   |
+                                                         |   |
+                                                         |   |
+                                                         |   |
+                                                         |   |
+                                                         |   |
+                                                         |   |
+                                                         |   |
+                                                         |   |
+                                                         |   |
+                                                         |   |
+                                                         |   |
+                                                         |   |
+

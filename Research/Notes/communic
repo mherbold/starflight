@@ -1,0 +1,135 @@
+ 
+Alien Movement and Weapon Behaviors
+-----------------------------------
+
+(weapons)
+
+FIRE-MISSILE         <-- ?IN-COMM FALSE ?ATTACKING FALSE ?START-ATTACKING-HOSTILE TRUE ?HOSTILE TRUE ?HAS-MISSILES TRUE
+FIRE-MISSILE         <-- ?IN-COMM FALSE ?ATTACKING FALSE ?FIGHT TRUE ?HAS-MISSILES TRUE
+FIRE-MISSILE         <-- ?IN-COMM FALSE ?ATTACKING TRUE ?HAS-MISSILES TRUE ?OK-TO-FIRE-MISS-AGAIN TRUE  
+FIRE-LASER           <-- ?IN-COMM FALSE ?ATTACKING FALSE ?START-ATTACKING-HOSTILE TRUE ?HOSTILE TRUE ?HAS-MISSILES FALSE 
+                         ?HAS-LASERS TRUE ?RANGE-SHORT TRUE
+FIRE-LASER           <-- ?IN-COMM FALSE ?ATTACKING FALSE ?FIGHT TRUE ?HAS-MISSILES FALSE ?HAS-LASERS TRUE ?RANGE-SHORT TRUE
+FIRE-LASER           <-- ?IN-COMM FALSE ?ATTACKING TRUE ?HAS-LASERS TRUE ?OK-TO-FIRE-MISS-AGAIN FALSE ? FIRE-LASER-NOW TRUE
+                         ?RANGE-SHORT TRUE   
+
+(movement)
+
+MOVE-AWAY            <-- ?IN-COMM FALSE ?HOSTILE FALSE ?OBSEQUIOUS FALSE ?FIGHT FALSE ?TERMINATED TRUE ?GO-NOW TRUE
+                     <-- ?MOVE-RATE>0 TRUE ?P-FIRED-MISSILE FALSE 
+MOVE-AWAY            <-- ?IN-COMM  FALSE ?OBSEQUIOUS TRUE  ?CAN-SURRENDER FALSE ? ?MOVE-RATE>0 TRUE 
+MOVE-AWAY            <-- ?IN-COMM FALSE ?NOTHINGS-HAPPENING TRUE ?MOVE-RATE>0 TRUE 
+MOVE-AWAY            <-- ?IN-COMM FALSE ?ATTACKING TRUE ?STOP-ATTACKING TRUE ?MOVE-RATE>0 
+APPROACH             <-- ?IN-COMM FALSE ?MOVE-RATE>0 TRUE ?OBSEQUIOUS FALSE ?RANGE-LONG TRUE 
+APPROACH             <-- ?IN-COMM FALSE ?MOVE-RATE>0 TRUE ?OBSEQUIOUS FALSE ?RANGE-MEDIUM TRUE ?HAS-LASERS TRUE 
+                         ?HAS-MISSILES FALSE
+
+                               if none of the above actions are done:
+
+MOVE-RANDOMLY        <-- ?IN-COMM FALSE ?MOVE-RATE>0 TRUE ?APPROACHING FALSE ?MOVING-AWAY FALSE  ?MOVE-NOW TRUE
+
+                               if this is not done then DO NOTHING
+
+Player Combat Behaviors
+-----------------------
+(weapons)
+
+FIRE MISSILES        <-- ?IN-COMBAT TRUE ?P-HAS-MISSILES TRUE ?P-FIRE-MISS-NOW TRUE ?MISSILES-DEAD FALSE
+FIRE LASERS          <-- ?IN-COMBAT TRUE ?P-HAS-LASERS TRUE ?P-FIRE-MISS-NOW FALSE ?P-FIRE-LASER-NOW TRUE ?LASERS-DEAD FALSE
+                         ?RANGE-SHORT TRUE
+(movement)
+
+APPROACH             <-- ?IN-COMBAT TRUE ?RANGE-LONG TRUE ?A-FIRED-MISSILE FALSE ?ENGINES-DEAD FALSE
+APPROACH             <-- ?IN-COMBAT TRUE ?RANGE-MED TRUE ?A-FIRED-MISSILE FALSE ?MOVE-RND-NOW FALSE ?APPROACHING-NOW TRUE
+                         ?ENGINES-DEAD FALSE
+MOVE RANDOMLY        <-- ?IN-COMBAT TRUE ?RANGE-LONG FALSE ?A-FIRED-MISSILE FALSE ?MOVE-RND-NOW TRUE ?ENGINES-DEAD FALSE
+EVASIVE              <-- ?IN-COMBAT TRUE ?A-FIRED-MISSILE TRUE ?ENGINES-DEAD FALSE
+
+                             if none of these are done then DO NOTHING
+
+
+
+Alien Auxillary Actions
+
+RAISE SHIELDS        <-- ?SHIELDS-UP FALSE ?FRIENDLY FALSE ?SURRENDER FALSE
+LOWER SHIELDS        <-- ?SHIELDS-UP TRUE ?FRIENDLY TRUE
+LOWER SHIELDS        <-- ?SHIELDS-UP TRUE ?SURRENDER TRUE
+ARM WEAPONS          <-- ?WEAPONS-ARMED FALSE ?FRIENDLY FALSE ?NEUTRAL FALSE ?SURRENDER FALSE
+DIS-ARM WEAPONS      <-- ?WEAPONS-ARMED TRUE ?HOSTILE FALSE ?OBSEQUIOUS FALSE ?FIGHT FALSE
+DIS-ARM WEAPONS      <-- ?WEAPONS-ARMED TRUE ?SURRENDER TRUE
+CALL FOR MORE SHIPS  <-- ?CALL TRUE ?CALLED FALSE ?RACE TRUE ?<3SHIPS TRUE ?FRIENDLY FALSE ?NEUTRAL FALSE ?SURRENDER FALSE 
+MORE SHIPS ARRIVE    <-- ?CALLED TRUE ?ARRIVE TRUE
+SCAN PLAYER'S SHIP   <-- ?RACE TRUE ?SCAN TRUE ?SCANNED FALSE
+
+
+
+?WORD DEFINITIONS
+
+Other Behaviors
+
+
+?ATTACKING : Set to true when the aliens fire a weapon. Is cleared
+          when communications are entered or when the aliens EDL
+          is in Friendly Neutral or Obsequious.
+?START-ATTACKING-HOSTILE : This is randomly true a small % of the
+          time such that over a period of a minute or so it will
+          be true 20% of the time.
+?HAS-MISSILES : Check alien ship record
+?HAS-LASERS : Check alien ship record
+?OK-TO-FIRE  : For each vessel in the encounter a check is made to
+MISS-AGAIN see whether it fires or not. Each vessel record includes
+           a firing rate. (Some constant * (10 - rate)) = the %
+           chance of firing on any given pass. The reason for the
+           constant is that the speed of the loop has yet to be
+           determined. The reason for the 10- is that in the records
+           3 is the fastest and 7 the slowest rather than the other way 
+           around. It should work out so that on the average the
+           no. of seconds between firing = the firing rate.
+?FIRE-LASER-NOW : Same thing as above only double the probability.
+?TERMINATED : Set to true when communications are terminated.
+          Cleared at the end of an encounter.
+?GO-NOW : A Random boolean with a fairly high probability
+?CAN-SURRENDER : True if surreneder flag in race record is YES 
+?NOTHING-HAPPENING : When communications are not occuring a counter
+          is continually incremented. If the counter reaches a certain
+          value this is set to true. If the aliens say something or
+          fire a weapon this counter is re-set to 0. When unaffected
+          it takes the counter about 2 minutes to reach its value.
+          ?NOTHING-HAPPENING is cleared at the end of an encounter.
+?STOP-ATTACKING : This is randomly true a very small percentage of the 
+          time such that over a period of a minute it will be true
+          about 5% of the time.
+?MOVE-RATE>0 : If there is more than one vessel in the encounter it
+          will never be the case that any of the vessels have a movement
+          rate of 0 (unless they have become debris ofcourse). If the
+          movement rate of the vessel involved is 0 then this is false. 
+?RANGE-LONG : Alien ships always stay within 10 cells of some center
+         point. Is this center point > 20 cells from the player?
+?P-FIRED-MISSILE : Is true if the player has fired a missile that has
+          not exploded yet.
+ 
+
+Combat Behaviors
+
+?IN-COMBAT : True if the player has hit the Navigator's COMBAT
+         option. It is cleared if the player hits MANEUVER or
+         if the playergoes to the Sector map.
+?P-HAS-MISSILES : Check player ship record
+?P-HAS-LASERS : Check player ship record
+?FIRE-MISS-NOW : Just as in ?FIRE-AGAIN for the aliens the player 
+         has a % chance of firing each time this is checked. It 
+         should work out so that he fires on the average of once 
+         every 4 or 5 seconds.
+?FIRE-LASER-NOW : Same as above only double the probability.
+?MISSILES-DEAD : If the player's missiles are inoperative this is 
+        true.
+?A-FIRED-MISSILE : True if the aliens fired a missile that hasn't 
+        exploded yet.
+?ENGINES-DEAD : True if the players engines are inoperative.
+
+?RANGE-MED : True if the center point of the aliens is between 7-20 cells
+        away from the player.
+?RANGE-SHORT : True if the center point is <7 cells from the player.
+?MOVE-RND-NOW : This is randomly true or false. There is a % chance of
+          it changing its state such that on th average of every 20
+          seconds or so it will do so.         

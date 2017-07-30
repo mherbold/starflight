@@ -1,0 +1,250 @@
+                    "\SOURCE" DIRECTORY FILES
+                             10-9-85
+
+ALPHABET CMP - Huffman symbol frequency table for Starflight
+ALPHRASE CMP - Communication phrase data
+ANALYSIS CMP - Science officer analysis overlay source
+ARTIFAX  CMP - Special artifact placement compiler
+ASSCREW  CMP - Starport crew assignment overlay source
+ATZERO   CMP - Divide by 0 interrupt mod for AT
+AUTOEXEC BAT - Auto-boot for Starflight
+AUXGRAPH CMP - Auxillary screen graphics source 
+BAKFLIT  CMP - Background task source ( ie. healing )
+BANK     CMP - Starport bank overlay
+BDISK    CMP - Initial B-Disk template
+BDISKB   CMP - BDISK with results of data compile
+BDISKC   BAK - Backup copy of final B-Disk
+BDISKC   CMP - Final B-Disk
+BEHAV-OV CMP - Planetside alien lifeform expert
+BLD0     BLK - THOUGHTT.COM build sequencer source
+BLD0     COM - THOUGHTT.COM build sequencer
+BLD1     BLK - Starflight file directory build sequencer source
+BLD1     COM - Starflight file directory build sequencer
+BLD2     BLK - Copy BDISKC.CMP from OCOMPILE.CMP (source)
+BLD2     COM - Copy BDISKC.CMP from OCOMPILE.CMP
+BLD3     BLK - Copy BDISKB.CMP from COMPILE.CMP (source)
+BLD3     COM - COpy BDISKB.CMP from COMPILE.CMP
+BLDBLD   BAT - Start batch file for complete build
+BLDCOMP  BAT - B-Disk data compile file assembler
+BLDCOMPZ CMP - B-Disk data compile final user instructions
+BLOCKS   BLK - Extended blocks copy word source
+BLT-OV   CMP - Plot hybrid compressed blts overlay source
+BSIGNAT  CMP - Image copy of Bdisk signature block ( where used?)
+BUTTONS  CMP - Ship console button function tasker source
+C2FILE   BLK - Old fractal, planet & lifeform simulation
+CAPTAIN  CMP - Captain crew function overlay
+CES      CMP - CES demo w/splash screen & slideshow
+CES0     CMP - CES slideshow
+CES1     CMP - CES sneak preview menu
+CES2     CMP - CES demo
+CHKFLIT  CMP - Pre-flight check overlay source
+CMAP     CMP - Map coloration parameter data compile
+CNFG     PIC - Starport ship configuration slide picture
+COMBLT   CMP - Compiles B-Disk communication & starport pictures
+COMM     CMP - Communication phrase data compiler source
+COMM-OV  CMP - Communications overlay source
+COMMSPEC CMP - Special communications overlay source
+COMPILE  CMP - File assembled by BLDCOMP.BAT
+COMPRESS BLK - Hu-Tucker & Mod 40 text compression source
+CONFIG   CMP - Starport ship configuration overlay
+CREW     PIC - Starport crew assignment slide picture
+DEBRIS   PIC - Silhouette of ship debris/wreckage
+DECODE   BLK - TOOL: 8086 disassembler source
+DECODER  BLK - Huffman decoder source
+DECOMP   BLK - TOOL: Forthought decompiler
+DEHUFF   BLK - Huffman decoder source
+DEHUFF   CMP - Huffman decoder source
+DERELICT PIC - Silhouette of derelict
+DIR      TXT - This file
+DISKDRIV BLK - Forthought disk driver revision to allow 9 sec/trk
+DISPLAY  BLK - Old display system source
+DISYS    BAK - Starflight kernel source backup
+DISYS    BLK - Starflight kernel source
+DOCTOR   CMP - Doctor crew function overlay
+E        COM - TOOL: Editor, decompiler, disassebler, assembler
+EDIT-OV  CMP - Editor overlay source
+EDIT-OV  SAV - Editor overlay source backup
+ELOW-SC  PIC - Silhouette of Elowan scout ship
+ELOW-TR  PIC - Silhouette of Elowan transport ship
+ELOW-WR  PIC - Silhouette of Elowan warship
+ELOWAN   PIC - Communication picture of Elowan
+ENCCHECK BLK - Sensor readings graphics
+ENCNEW   CMP - Old encounter setup overlay
+ENCNTRS  CMP - Encounter data compile source
+ENCSET   CMP - Encounter setup overlay source
+ENDCOMP  CMP - End of compile intialization source
+ENGINEER CMP - Engineer crew function overlay source
+ENTERPR  PIC - Silhouette of Enterprise
+EXPERT   BAK - Old expert system source
+EXPERT   BLK - Expert system source
+EXTEND   CMP - Misc. kernel extensions (ie. 3*)
+FIELDS   CMP - 
+FIELDS00 CMP - Element, artifact, specimen and analysis text compiler
+FIELDS01 CMP - Crew member attribute compile
+FIELDS02 CMP - Captain's log data initializer
+FIELDS03 CMP - Planets, stars, regions, lifeform AFIELD definitions
+FIELDS04 CMP - BOX AFIELD compiler
+FIELDS05 CMP - Lifeform phrase compiler source
+FIELDS06 CMP - Lifeform phrases
+FIELDS07 CMP - Vessel AFIELD compiler
+FIELDS08 CMP - Button AFIELD compiler
+FILES    CMP - Starflight file directory builder
+FIND     BLK - TOOL: text search source
+FIND     EXE - TOOL: DOS text search
+FLIP     ASM - Page flipping assembly source
+FLUX     CMP - Flux location data
+FLUXEFCT CMP - Special effect source for continuum flux
+FRACT-OV CMP - Fractal generator source
+GAME-OV  CMP - Save/Load/Configure game overlay
+GAZUR-SC PIC - Silhouette of Gazurtoid scout ship
+GAZUR-WR PIC - Silhouette of Gazurtoid warship
+GAZURT   PIC - Communication picture of Gazurtoid
+GRAPHX   BLK - Graphics word source
+HEAL-OV  CMP - Heal crew member overlay
+HOLD     COM - 
+HP-OV    CMP - Lifeform class AFIELD generation overlay
+HSTRINGS DAT - 
+HUFFMAN  BLK -
+HUFFMAN  CMP - Huffman tree builder, branch table, encoder
+HUFFTRNS CMP - Branch table data transfer routines
+HYPER-OV BAK - Ship movement source backup
+HYPER-OV CMP - Ship movement source
+HYPERDIR CMP - 
+HYPERMSG CMP - Text message display sub-overlay for HYPER-OV.CMP
+ICON     CMP - Icon data compiler
+ICON-OV  CMP - Icon parameter assignment overlay
+INFER    BLK - 
+INSTALL  CMP - 
+IRESET   BLK - Object handling system reset source
+IT-OV    CMP - Item and box handling overlay source
+ITEMERGE     -
+ITEMS-OV CMP - Items handling on planetside
+JOYSTICK ASM - Joystick usage assembly source
+JOYSTICK OBJ -
+KERNAL   COM - Editor
+KERNEL   BLK -
+KERNEL   COM - Starflight kernel before & after data compile
+KTRACE   COM -
+L3       BLK - TOOL: Tree editor source
+L3       COM - TOOL: Tree editor
+LAUNCH   CMP - Launch countdown sequence overlay
+LCLIP    BLK - Line clipper source
+LED      BLK - TOOL: Old tree editor source
+LED4     COM - TOOL: Tree editor
+LEDIII   DTA - Tree editor data
+LEDNEW   BLK -  
+LISTICON CMP - Icon key display overlay
+LP-OV    CMP - Lifeform species AFIELD setting
+MAPS-OV  CMP - Terrain map display overlay
+MARY     CHK -
+MECHAN   PIC - Communication picture of Mechan
+MECHOUT  PIC - Silhouette of Mechan ship
+MINISYS  CMP -
+MINSTOUT PIC - Silhouette of Minstrel ship
+MINSTREL PIC - Communication picture of Minstrel
+MISC     CMP - BLT trimmings, text output, ship equipment error messages
+MISCUTIL CMP - 
+MOVE-OV  CMP - Planetside terrain vehicle move overlay
+MUSIC3   ASM -
+MVSTAT   BLK -
+MYSTER   PIC - Communication picture of Mysterion
+MYSTOUT  PIC - Silhouette of Mysterion ship
+NAVIGATR CMP - Navigator crew function source
+NAVRING  CMP - Obsolete ship navigation graphics
+NEBULAE  CMP - Data compile of nebulae
+NOMAD    PIC - Communication picture of Nomad
+NOMADOUT PIC - Silhouette of Nomad vessel
+OCOMPILE BAK - Previous overlay compile source
+OCOMPILE CMP - B-Disk overlay compile file  
+OOM3     ASM -
+OPRATION CMP - Starport operations overlay source
+OPTEXT   CMP - Starport operations data compile source
+ORBIT-OV CMP - Rotating planet and landing/liftoff overlay source
+ORBIT-OV SAV - Backup of ORBIT-OV.CMP
+ORBSET   CMP - 
+OUTLINES PIC - Starport personnel race silhouettes
+OVRCOMP2 BAT - B-Disk overlay compile file assembler batch file
+PACKBLT  BLK - Picture compression source
+PERBLT   CMP - Personnel silhouette picture compiler
+PERS     PIC - Starport personnel file slide
+PFILE    CMP - Personnel file overlay
+PHASES   BLK - 
+PHAZE    BRS - Rotating moon brush file
+PHRASES  CMP - Lifeform phrase compiler
+PLAN-OV  BLK - Old planetside source
+PLANCOMP CMP - Planet AFIELD compiler source
+PLANETS  CMP - Planet AFIELD data
+PLNCLUES CMP - 
+PLNNEW   CMP -
+PLSET-OV CMP - Planet parameter setup overlay source
+PORTCNST CMP - Starport instance constants
+PORTMENU CMP - Walking man menu selection
+PORTMENU SAV - 
+PRINTER  BLK - Printer extension source
+READINGS CMP - Sensor readings special effects source
+README   TXT - Starflight instruction file
+REPAIR   CMP - Ship repair source
+RUNBIT   BLK - Picture compression source
+SBOOT    CMP - Starflight boot sequence extension
+SCIENCE  CMP - Science officer crew function source
+SCIENCE  SAV -
+SCRATCH  BLK - Stardust test file
+SEARCH   BLK - TOOL: Text search 
+SECSET   CMP - 
+SECSTARS PIC -
+SEE      EXE -
+SEED-OV  CMP - Mineral, lifeform & ruin seeding overlay
+SELECTP  CMP - 
+SENSESIL DAT -
+SENT-OV  CMP - LOOK & SCAN sentence generator
+SHIPGRPH CMP - Starport ship configuration graphics
+SHPMOV   CMP - Ship movement source
+SITE-OV  CMP - Planet landing site select overlay
+SLIDE    COM - Slideshow kernel
+SMALL4TH COM - Minimal Forthought kernel
+SORT     EXE - TOOL: DOS text line sort 
+SPEM-SC  PIC - Silhouette of Spemin scout ship
+SPEM-TR  PIC - Silhouette of Spemin transport
+SPEM-WR  PIC - Silhouette of Spemin warship
+SPEMIN   PIC - Communication picture of Spemin
+SPLASH   PIC - Starflight splash screen picture
+SPLASH   SCR - 
+STARFLIT COM - Final Starflight kernel
+STARINIT CMP - Starsystem and planet initializer for testing BIO & TV
+STARMAP  CMP - Starmap overlay source
+STARPORT PIC - Starport picture
+STARS    CMP - Star location data
+STORM-OV CMP - Planetside storm overlay source
+STORMPHR CMP - Storm phrase compiler  
+SYSICON  CMP - Starsystem picture compiler 
+SYSSET   CMP - 
+TDEPOT   CMP - Starport trade depot overlay source
+TESTFLIT COM -
+TESTPLAN BLK -
+TESTTAPE CMP -
+THOUGHT  BLK - Forthought extensions from GlennT   
+THOUGHT  COM - Original minimal Forthought kernel
+THOUGHTT BLK - Starflight extensions to minimal kernel
+THOUGHTT COM - SMALL4TH.COM + THOUGHTT.BLK = THOUGHTT.COM
+THRYN-SC PIC - Silhouette of Thrynn scout ship
+THRYN-TR PIC - Silhouette of Thrynn transport ship
+THRYN-WR PIC - Silhouette of Thrynn warship
+THRYNN   PIC - Communication picture of Thrynn
+TINY4TH  COM - 2nd minimal Forthought kernel 
+TRACE    BLK - TOOL: Execution trace utility source
+TRANSASM     -
+TTT      BLK -
+TV-OV    CMP - Terrain vehicle overlay source
+UHLEK-SC PIC - Silhouette of Uhlek scout ship
+UHLEK-WR PIC - Silhouette of Uhlek warship
+VELOX    PIC - Communication picture of Velox
+VELOX-SC PIC - Silhouette of Velox scout ship
+VELOX-TR PIC - Silhouette of Velox transport ship
+VELOX-WR PIC - Silhouette of Velox warship
+VERTEX   CMP - Vertex and polygon data for rotating planet& landing
+VESBLT   CMP - Ship silhouette compiler source
+VITA-OV  CMP - Create ecosystem structure overlay
+VPROBE   PIC - Communication picture for Veloxi probe
+VPROBOUT PIC - Silouette of Veloxi probe
+XTREE    CMP - Universe compiler source
+

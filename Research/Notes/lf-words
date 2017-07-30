@@ -1,0 +1,264 @@
+ 
+                LIFEFORM BEHAVIOR DEFINITIONS
+                -----------------------------
+    ( In order of appearance on the Lifeform Behavior diagram. )
+ 
+
+ACTIONS
+-------
+
+REDUCE-AGGR-LEVEL : Subtract a random no. from 1 to 50 from the
+             aggression level of alien.
+
+INCREASES-AGGR-LEVEL  :  Add  a  random  no.  from  1  to  20  to 
+             aggression level of alien.
+
+APPROACH-PLAYER  :   Move  alien  towards  player  (see  movement 
+          conditions). Sets Moving flag to Yes.
+
+ATTACK-PLAYER  :  Determine whether or not alien hits or  misses.  
+          Distribte any damage, and print out result-phrase.
+          Sets Moving flag to No.
+
+     No. of attacks:
+                Roll RND no. from 1 - 100    
+                1-70  =  1 attack  
+                71-95  =  2 attacks  
+                96-100 =  3 attacks
+
+     For each attack choose a crew member at random.
+     Determine success of attack: 
+                Roll a RND no. from 1 - 100
+                If value is < avg. of alien's aggression and
+                intelligence then attack is successful.
+
+     Determine damage: 
+                Max. no. = aggress. + ( 2 * Hit Pts)
+                           -------------------------  / players 
+                                     3                 durability
+                                     
+      Result Phrase:
+               " The identifier lifeform attacks crew name"
+                     ----------                  ---------
+  if it misses:" and misses."
+  if it hits  :". Crew name is status."    (status is same
+                  ---------    ------       as in Doctor)
+
+
+FLEE-PLAYER  :  Move  alien  away  from  player  (  see  movement 
+          conditions). Sets Moving flag to Yes.
+
+APPROACH-ITS-MATE  :  Move alien towards its mate  (see  movement 
+          conditions). Sets Moving flag to Yes, and Behavior flag
+          to Approaching.
+
+FLEE-ITS-MATE  :  Move  alien  away from its mate  (see  movement 
+          conditions). Sets Moving flag to Yes, and Behavior flag
+          to Fleeing. 
+
+ATTACK-ITS-MATE  :  Sets moving flag to No, and Attacking flag to
+          Yes. 
+
+EAT-ITS-MATE :  Roll a RND no.  from 1 - 100.  If it is < 10 then 
+          the mate is eaten and it dissappears. Some flag is set
+          to indicate the alien has been eaten.
+
+BECOME-UNPAIRED : Un-link lifeform from it's mate.
+
+WANDER  :  Move  alien  in Random direction.  Base  direction  on 
+         species  address value so aliens will move  in  straight 
+         lines.  Then  add  some random variation to  this.  (see 
+         movement conditions)
+
+ERASE-LIFEFORM-FROM-ARRAY :  This is the list of all aliens being 
+         operated on in the encounter area.
+         
+REDUCE-HITS-BY-10-TO-50 :  Roll a RND no.  from 10 - 50 and 
+         subtract from the alien's Hits.
+
+REDUCE-HITS-BY-1-TO-40 :  Roll a RND no. from 1 - 40 and subtract 
+         from the aliens Hits.
+
+REDUCE-STUNS-BY-10-to-50  :  Roll  a  RND no.  from 10  - 50  and 
+         subtract from the alien's Stuns.
+
+STUN-EFFECTS-HITS  :  Take  the absolute value of the  Stuns  and 
+         subtract it from the Hits. Then set Stuns to 0.  
+
+DIE : Set alien's status to DEAD.
+
+STUNNED : Set alien's status to STUNNED.
+
+INCREMENT-STUNS : Add one to the Stuns of that alien.
+
+FLY : Sets current movement mode to flying.
+
+FLOAT : Sets current movement mode to floating.
+
+LAND : Sets current movment mode to ground.
+
+Movement Conditions
+-------------------
+     Aliens  move  by an increment that is  determined  by  their 
+movement rates. If their movement mode is ground every time they 
+move a check is made to see if the square they are moving onto is
+  a) liquid
+  b) lava
+  c) already occupied
+if any of these are the case a different target square is chosen.
+Aliens in the air do not need to make any of these checks. 
+
+
+
+CONDITIONS
+----------
+
+?PLAYER-FIRING-LASER : Set to True when player fires. Set back to 
+          false shortly after.
+
+?ALIEN-CLOSE-ENOUGH : True if alien is within 5 squares
+
+?ALIEN-SMART-ENOUGH : True if intelligence >= 70
+
+?ULTRA-AGGR : True if alien's aggression is >= 80
+
+?RANDOM-SCARED : 10% chance this will be true.
+
+?ALIEN-HIT-WITH-LASER : True if that alien was just hit.
+
+?RANDOM-ANGRY : 10% chance this will be true.
+
+?ALIEN-HIT-WITH-STUNNER : True if alien was just hit.
+
+?DUMB-ENOUGH : If its intelligence < 35 its true.
+
+?DANGEROUS : True if Aggression > 65
+
+?WIMPY : True if Aggression < 35
+ 
+?NEXT-TO-PLAYER : True if alien is in adjacent square.
+
+?NOTICE-PLAYER :  Queries a flag to see if alien has become aware 
+                  of  player.  If it is false a determination  is 
+                  made  with  a small random chance that it  will 
+                  become true. 
+
+?MOBILE : Alien's movement rate > 0
+
+?ALIVE : Check status flag.
+
+?MATE-ALIVE : Check status flag of mate.
+
+?STUNNED : Check status flag.
+
+?HERBIVORE :     -----
+?PRODUCER :          | 
+?CARNIVORE :         |
+?OMNIVORE :          | 
+                     |------- use highest niche
+?MATE-HERBIVORE :    |
+?MATE-PRODUCER :     |
+?MATE-CARNIVORE :    |
+?MATE-OMNIVORE : -----
+
+?NEXT-TO-MATE : Is it in a square adjacent to its mate?
+  
+?MATE-ON-GROUND : Is on-ground flag set for the mate?
+
+?HAS-MATE : Is it paired up with a mate?
+
+?BIG-ENOUGH : Is the alien's size (1-9) >= its mate's size - 2 ?
+
+?MATE-APPROACHING : Is its mates behavior flag set to Approaching?
+
+?MATE-ATTACKING : Is its mate's behavior flag set to Attacking?
+
+?AGGR-ENOUGH : Is its aggression level >= 40 ?
+
+?CAN-BREAK-AWAY? : There is a 10% chance this is true
+
+
+?ATTACKED : Set to true once an alien has attacked its mate. Set
+            to false if an alien is not next to its mate.
+
+?MATE-OUT-OF-BOUNDS : True if an aliens mate is outside the 18x30
+            encounter area.
+
+?RANDOMLY-UNPAIRED  :  A random determination such that this will 
+            happen every now and then.
+
+?MATE-JUST-EATEN : A flag is set or something - hell I dont know.
+
+?OUT-OF-BOUNDS : Is alien outside encounter area?
+
+?BEEN-EATEN : Is the eaten flag set for that alien?
+
+?HITS>0 : Are the aliens Hits > 0
+
+?STUNS>0 : Guess
+
+?STUNS<0 : Thats right
+
+?STUNS<STUN-POINTS : Are the Stuns for that instance of an alien
+                     <  the  Stun-points  it  started  with   (in 
+                     species record).
+
+?MOVING : Is its moving flag set to True?
+
+?ON-GROUND : Is its on-ground flag set to True? 
+
+?CAN-FLY : Does it have movement mode of Fly?
+
+?CAN-FLOAT : same
+
+?WANTS-TO-FLY  :  Some  randomly determined chance with a  fairly 
+                  high %
+
+?WANTS-TO-FLOAT : same
+
+?WANTS-TO-LAND : Some randomly determined chance with a low to 
+                 moderate %. 
+
+?WANDERING : Is its behavior flag set to Wandering?
+
+?OK-TO-LAND  :  Fasle  if the square the alien is on  is  liquid, 
+                lava, or occupied by another alien or the player. 
+
+
+
+
+
+
+
+
+
+ 
+FLAGS
+-----
+( It may not be necessary to use all of these flags but they
+  are made mention of in the above conditions and hopefully,
+  listing them will simplify matters rather than confuse them.)
+
+ALIEN-HIT-WITH-LASER : Not really sure about these two. 
+          &            Perhaps these flags should be set when the
+ALIEN-HIT-WITH-STUNNER alien  is hit,  and cleared when this flag 
+                       is poled by the ?ALIEN-HIT-WITH-LASER and
+                       ?ALIEN-HIT-WITH-STUNNER.
+
+STATUS :  Has 3 states - Alive,  Dead, and Stunned. (These states 
+          should be presented in the SCAN data.)
+
+MOVING  :  This  is set to true when the  alien  is  approaching, 
+           fleeing or wandering.
+
+ON-GROUND : Set to false when the alien floats or flys and is set 
+            to true again when it lands.
+
+BEHAVIOR  :  Has  5  states  - Fleeing  Mate,  Approaching  Mate, 
+             Attacking Mate, Wandering, and Other
+
+BEEN-EATEN : Set to true when alien is successfully eaten by mate.
+   
+
+
+

@@ -1,0 +1,868 @@
+Ambient Designs      Proprietary                          4-10-84
+
+                         STARSHIP DESIGN        
+
+I. USER INTERFACE
+
+   A. STARSHIP CREW FUNCTIONS
+      I. Items 
+         1. use
+         2. examine
+         3. pick-up
+         4. drop
+         5. transfer  
+     II. Crew Positions
+         1. Captain
+            a. Crew Files
+            b. Assign Crew
+            c. Log Planet
+            d. Ships Log            
+            e. Save Game
+       *    f. Bridge
+         2. Science Off(icer)
+            a. Status
+            b. Sensors
+            c. Analysis
+            d. Bridge
+         3. Navigator         
+            a. Raise/Lower shields
+            b. Arm Weapons
+            c. Maneuver
+            d. Starmap
+            e. Bridge
+         4. Engineer 
+            a. Damage
+            b. Repair
+            c. FTL
+            d. Shuttle
+            e. Bridge
+         5. Comm Off
+            a. Communicate
+            b. Distress call 
+            c. Bridge
+         6. Doctor
+            a. Examine
+            b. Treat
+            c. Bridge
+      
+  *  Selecting Bridge returns user to crew position menu
+
+
+     ITEMS - [This option is the same for all crew members and it 
+     will  only  appear here].  When this button  is  pressed,  6 
+     options appear in the text window.  (See #2 in the  Starship 
+     Message Window Layouts.) The options are USE,  PICKUP, DROP, 
+     EXAMINE,  TRANSFER,  &  QUIT.  A highlighting cursor appears 
+     over  the  word  USE (same as on  the  planet).  Moving  the 
+     joystick up or down moves the cursor up or down.  It doesn't 
+     wrap  around.  Moving the joystick left moves the cursor  to 
+     QUIT.  Moving  it  left from QUIT puts the cursor  on  DROP. 
+     Note:  Anytime  an action is aborted a message is  given  to 
+     that effect.
+
+     USE:  [For  EXAMINE  simply  replace  the  word  "USE"  with 
+     "EXAMINE"]  When the use option is invoked the list of  crew 
+     names  appear in the window with the message,  "Who will use 
+     the item?" (Starship Message Window Layout #3) [Note:  there 
+     is no CARGO option].
+
+     A highlighted cursor appears over Name 1 & may be moved with 
+     the joystick.  It does not wrap around. Quit aborts. After a 
+     name  is  selected,   display  in  the  window,  "Possession     
+     Cargo" with a cursor on Possession & the message "Where will 
+     the item come from?" Move the cursor to select.
+
+     If CARGO....
+          Is  the hold empty?  If it is,  give the  message  "The 
+          cargo hold is empty." Else, Display the cargo list. Use 
+          layout  #5.  Use the cursor & scrolling list to select. 
+          Quit aborts.
+
+     If POSSESSION....
+
+          Is the possession list empty?  If so, give the message, 
+          "There  are no possessions to use." Else,  display  the 
+          character's  possessions.  Use Starship Message  Window 
+          Layout   #5.   Replace   "Cargo  Location"   with   the 
+          Character's name and do NOT display % full.
+
+          Use  cursor & scrolling list (with MORE indicators when 
+          appropriate) to select item. Quit aborts.
+       
+     PICKUP :  Display the list of Crew Names & the message  "Who 
+     will  pick up the item?" (Layout #3) [Note:  Do not  include 
+     cargo in the options.] QUIT aborts the action.
+
+     After a character is chosen:  Display the Cargo Hold Display 
+     (layout  #4)  with  the message "Where will  the  item  come 
+     from?"  (If  there are no cargo pods,  do not display the  -
+     CARGO PODS- header). QUIT aborts the action.
+
+     After choosing the Cargo Hold: Check to see if it is empty - 
+     if so, give the message "This Cargo Hold is empty." Abort.
+     Else,  list the contents of the hold (with layout #5).  Move 
+     the cursor to select the item. Quit aborts.
+
+     When  the  item  is selected,  check to see  if  it  can  be 
+     carried.  If  not,  give the message "This crew member can't 
+     carry that much." Else,  transfer the item to Crew  member's 
+     possession list - END
+
+     DROP  & TRANFER:  Display the list of crew members  [include 
+     cargo]  (layout  #3) with the message "Where will  the  item 
+     come from?". QUIT aborts. 
+
+     If  "CARGO" is selected,  display the CARGO HOLDS ( layout # 
+     4)  with  the message "Where will the item(s)  come  from?". 
+     QUIT aborts.
+
+     After a Hold is chosen,  or if a Crew Member had been chosen 
+     - check to see if the list is empty. If so, give the message 
+     "The  cargo hold is empty." or "There are  no  possessions." 
+     Else, display the Cargo hold contents or the possession list 
+     (layout #5) and choose item with the cursor.
+
+     [DROP] -- Add "ALL" to the bottom of any list with more than 
+               one item.  If dropping something from a possession 
+               list  - it goes into the ship's cargo hold.  Check 
+               to see if hold is full - if so give a message  and 
+               abort. Else move item to ship's hold.
+
+               If  dropping something from a cargo hold - it goes 
+               into  deep  space.  Give message on  blank  window 
+               "Permission to jettison this item,  Captain? <-- N  
+               Y -->" 
+
+               No  aborts,  yes  wipes the item  from  the  known 
+               universe. <WUSHHHH!>
+
+     [TRANSFER]  When  an  item is chosen  it  becomes  inverted. 
+               Unlike any of the other operations, MULTIPLE items 
+               may  be  transfered.  Selecting an inverted  item, 
+               deselects it.  Add ALL to the bottom  of any  list 
+               with  more than one item.  If QUIT is invoked, and 
+               no items have been selected then abort transfer.If 
+               ALL is invoked or if QUIT is invoked  and at least
+               1 item has been selected then:
+                
+                   Display  the  crew list (layout  #3)  [Include 
+                   cargo].  With  the  message  "Where  will  the 
+                   item(s) go?".
+
+                   Move  the  cursor  to  select  - Quit   aborts 
+                   transfer.
+
+                   If  cargo is selected,  display the cargo hold 
+                   list (layout #4) and select destination.  Also 
+                   give the message: "Where will the item(s) go?" 
+                   QUIT aborts.
+
+                   After  a  destination (either  Crew  or  Cargo 
+                   Hold)  is selected,  check to see if there  is 
+                   enough  room  and/or the character  can  carry 
+                   that much.
+
+                   If  not,  give a message to that effect at the 
+                   bottom  and  abort,   otherwise  TRANSFER  the 
+                   materials.
+
+
+
+                          ITEM ACTION STRUCTURE
+                       ---------------------------
+            [  WHO ---> FROM WHERE ---> WHAT ---> TO WHERE  ]
+
+
+
+
+
+USE or EXAMINE:
+                               
+     WHO?------------------If EVA----->WHAT?
+     {Crew Members}   |                {Nearby items}
+     {............}   |                {Possessions.}
+     {............}   |                {............}
+     {............}   |                {............}
+                      |
+                      |
+               If in a vehicle     
+                      |
+                      |
+            CARGO OR POSSESSIONS?----->WHAT?
+              |                        {Possessions}
+              |                        {...........}
+              |                        {...........}
+              |
+              | 
+      WHICH CARGO HOLD?--------------->WHAT?
+      {Starship Hold       }           {Hold contents}
+      {Shuttle Hold        }           {.............}
+      {Terrain Vehicle Hold}           {.............}
+      {Cargo Pod # n       }           {.............}
+      {................... }           {.............}
+
+
+PICKUP:
+
+     WHO?----------------- If EVA ---->WHAT?
+     {Crew Members}   |                {Nearby items}
+   * {Terrain Veh.}   |                {............}
+     {............}   |                {............}
+     {............}   |                {............}
+                      |
+                      |
+               If in a vehicle     
+                      |
+                      |
+      FROM WHERE?-------------------------->WHAT?
+      {Starship Hold       }                {Hold contents}
+      {Shuttle Hold        }              * {Nearby items }
+      {Terrain Vehicle Hold}                {.............}
+      {Cargo Pod # n       }                {.............}
+    * {Nearby items        }                {.............}
+
+    * - Crew inside terrain vehicle only.
+
+DROP:
+
+      FROM WHERE?
+      {Crew Member }------------------>WHAT?
+      {............}                   {Possessions}
+      {............}                   {...........}
+      {CARGO       }                   {...........}
+          |
+          |
+          |
+          |
+      WHICH CARGO HOLD?--------------->WHAT?
+      {Starship Hold       }           {Hold contents}
+      {Shuttle Hold        }           {.............}
+      {Terrain Vehicle Hold}           {.............}
+      {Cargo Pod # n       }           {.............}
+      {................... }           {.............}
+
+DROP  moves  an  item  from inside a  container  to  outside  the 
+container.  If  containers are nested and an item is DROPPED from 
+a nested container, it is contained by the next larger container.
+
+
+CONTAINER NESTING AND ALLOWABLE CONTENTS:
+
+  SPACE--------------------------------------------------------
+  |                                                           |
+  |    STARPORT-------------------------------------------    |
+  |    |                                                 |    |
+  |    |    STARSHIP-HOLD----------------------------    |    |
+  |    |    |                                       |    |    |
+  |    |    |    SHUTTLE-HOLD-------------------    |    |    |
+  |    |    |    |                             |    |    |    |
+  |    |    |    |    TERRAIN-VEHICLE-HOLD-    |    |    |    |
+  |    |    |    |    |                   |    |    |    |    |
+  |    |    |    |    |    CREW-MEMBER    |    |    |    |    |
+  |    |    |    |    |    |         |    |    |    |    |    |
+  |    |    |    |    |    | ITEM(S) |    |    |    |    |    |
+  |    |    |    |    |    |         |    |    |    |    |    |
+  |    |    |    |    |    -----------    |    |    |    |    |
+  |    |    |    |    |                   |    |    |    |    |
+  |    |    |    |    |      ITEM(S)      |    |    |    |    |
+  |    |    |    |    |                   |    |    |    |    |
+  |    |    |    |    ---------------------    |
+                 |                             |
+                 |    CREW-MEMBER              |
+                 |    |         |              |
+                 |    | ITEM(S) |     ITEM(S)  |
+                 |    |         |              |
+                 |    -----------              |
+                 |                             |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1. CAPTAIN:
+
+     It  is not necessary to check whether or not there is a 
+living captain as there always is one. (When the captain dies the 
+next in command automatically becomes captain.  Chain of command: 
+Captain, Sci.Off., Navig., Engin., Commun., Doctor). Note - for 
+every crew position other than captain that is not assigned, when
+the  button is pressed for that position give the message "YOU DO 
+NOT HAVE A ______ , CAPTAIN".
+
+  a. CREW  FILES - This button causes the crew files (records) to 
+     appear  just as they do in PERSONNEL in Starport.  The  only 
+     difference  is  that there is no heading at the top  of  the 
+     file and no option box at the bottom of the screen. There is 
+     a message in the text window  at the  bottom that says "Push 
+     the  button to Return to Command Control." 
+
+     Moving  the joystick forward or backward pages  through  the 
+     files.  A  "whiff"  sound occurs when moving  between  files 
+     (records).  ONLY  those files of the crew on board the  ship 
+     are accessable.  The files do wrap around.  If the Character 
+     is dead, his file has a DEAD stamp.
+      
+  b. ASSIGN CREW - This button causes crew assignment to occur in 
+     the  text  window.  A highlighted cursor appears in line  2. 
+     Within  this cursor is the Crew Position & the name  of  the 
+     currently  assigned  crew  members (see #1 in  the  Starship 
+     Message  Window  Layouts).   If  there  is  no  crew  member 
+     currently assigned, the name slot (on the right) is occupied 
+     by "unassigned".  In lines 4 & 5 give the message:  "Use the 
+     joystick to change the name","Press the button to select."
+
+     Moving the joystick  changes  the name in that  window.  The 
+     names  do  wrap around.  The word "Unassigned" does not  re-
+     appear  once  it has been changed.  ONLY  LIVING  characters 
+     appear in the name window.
+
+     Pressing  the  button causes the current name to  lock  into 
+     that  crew  position <Ding> and the next  Crew  Position  to 
+     appear.  After  the last one (doctor) is done,  the  message 
+     appears:  "Crew  Assignment Completed.",  hold message for 2 
+     seconds then <Dong> it's erased.
+
+  c. LOG  PLANET - When this button is pressed check to see if  a 
+     planet is currently being orbited.  If not, give the message 
+     "<beep> You must be in orbit to log a planet.", hold message 
+     for 2 seconds. If the ship is in orbit: check to see if this 
+     planet has been logged before.  If it has, give the message: 
+     "<beep> This planet has already been logged." If it  hasn't, 
+     give  the message "Do you wish to recommend that this planet 
+     be colonized?  <-- N  Y -->". If the response is "No", quit. 
+     Else,  give  the message:  "How do you rate this planet  for 
+     colonization?  (Number from 1 to 10.  1=Poor,  10=Perfect)". 
+     Below this message is a highlighting cursor with the  number 
+     1  in  it.  At the bottom is the message - "Use joystick  to 
+     change  number.  Press  button  to  select."  Joystick  left 
+     decreases the number,  right increases.  The numbers do  NOT 
+     wrap around.  Pressing the button locks the number. Give the 
+     message,  "Recommendation  Noted.  Now launching FTL  homing 
+     drone..." (Pause 2 seconds) <FSSSHHHT!> "Launch completed."
+
+  d. Ships Log - XXXXXXXX
+ 
+  e. SAVE GAME - Give the message:  "Do you wish to save the game 
+     and quit?  <-- N  Y -->". If the response is "No", quit this 
+     option. Else, give the message,"Insert Master Disk and press 
+     Return." Check to see if the Master Disk is present;  if not 
+     give the previous message.  Else,  give the message, "Saving 
+     Game...." followed by "....  Complete. Press Return to Exit" 
+     when Return is pressed, exit to DOS.
+                                                 
+  f. Bridge -
+
+2. SCIENCE OFFICER:
+  
+  a. STATUS - Check to see if the status display is up already,
+     ( see status display layout ). If it is give the message:
+     " You already have the status display, captain "; otherwise
+     slam the status display into the auxillary screen and is a
+     science officer option. For the layout see the prism file of 
+     the aux screens. (Gregs.pic).
+  
+     Eight types of information are given in the status display:
+
+                               1. date
+                               2. food
+                               3. damage
+                               4. shields
+                               5. weapons
+                               6. hull temp
+                               7. fuel
+                               8. shield power
+
+     1. Date:  The date is shown in the followin field. XXXX-XX-XX,
+        and represents respectively the year, the month, and the 
+        day. This is the internal game time that is incremented 
+        continually from the onset of the game. Time is measured
+        in G.S.A., General Standard Arth Time. The year is 10
+        months long, the month is 30 days long, the day is 24 hrs
+        long, an hour = 60 mins, and a minute = 60 secs.
+
+     2. Food:  Food is shown in the number of food packs. Up to
+        99,999 food packs may be represented. Food shown here is
+        the sum total of all food packs aboard - this includes
+        any cargo hold items of possessions. Food packs are used
+        up at varying rates dependent on the consumption rates 
+        of the crew members. The consumption rate is the amt of
+        food packs consumed buy one character in 10 days.
+ 
+     3. Damage:  Overall damage of the ship is given here. It is 
+        given at a resolution of 4 categories. Overall damage
+        is saved as a variable and is updated only when any
+        damage is done to the ship or when any repairs are done.
+        The 4 overall damage levels correspond to the text
+        messages of: 0 = none
+                     1 = light
+                     2 = heavy
+                     3 = critical
+        There are 4 to 7 areas that a ship may take damage in
+        ( this depends on whether of not the ship has shields,
+        missles or lasers ). To re-compute overall damage, add
+        up all the damage levels (0-100 where 0 = destroyed and 
+        100 = undamaged) and divide by the no. of damageable      
+        areas. If this # is = 100, then the damage level is
+        none. If this # is from 60 to 99, then the damage level
+        is 1 (light). If its from 1 to 59 then the damage level
+        = 2 (heavy). If the damage to the hull is <21 the damage
+        level is 3 (critical) - this overrides other damage levels.
+
+     4. Shields: After "shields" is either the word "down" or     
+        "up" for whether of not the shields are activated. Shields
+        are raised and lowered by means of the navigator and this
+        is done immediately when the button is pressed.
+
+     5. Weapons:  Following "weapons", is one of 3 words; unarmed,
+        arming or armed. The "arming" message flashes, the other 
+        2 do not. A weapon stays armed until disarmed.   
+
+     6. Hull Temp: XXXXXXXXXXXXXX
+
+     7. Fuel: Fuel is shown on the fuel meter which registers up
+        to 10,000 kilograms of Endurium. This is all the endurium
+        on board, in holds or as possessions. Fuel is consumed at
+        a rate of X kilograms per sector traveled in hyperspace  
+        and Y kilograms per unit time of acceleration. This X &
+        Y is constant for all ships. Fuel is not consumed while 
+        in orbit. (for now say that X & Y both = 1 and time = 1
+        second).
+
+     8. Shield Power: Shield power is displayed for each of the 
+        Y shields in bar graph form. Shield power is updated each
+        time damage is taken, as well as once each second 
+        when power is below the maximum. For an explanation of 
+        what  shield power is and how it works see shields 
+        section of navigator duties.
+
+  b. SENSORS - Sensor readings may be taken by the science off-
+        icer when on the tactical display or when in orbit around
+        a planet or star. When attempting to get sensor readings
+        in hyperspace the message is returned "the sensors are
+        non-operational in hyperspace". When attempting to get 
+        sensor readings at the system level the message is return-
+        ed "sensors are not picking up anything". When at the 
+        tactical level a cursor appears on the screen; the empty
+        sensor template comes up in the aux window. A message
+        reads "target sensors with Joystick and begin scanning
+        with button". When in orbit the cursor appears in the 
+        center of the screen. The message reads "begin scanning
+        with button". In tactical the joystick moves the cursor
+        around. In either tactical or orbit when the button is
+        pressed, flash the word "scanning" in the message window in
+        medium font for a few seconds. While the sensors are scan-
+        ning life and energy readings are shown as flashing dots
+        within the object's outline. Once scanning has ceased these
+        dots freeze and cease flashing. The sensor display stays
+        in the aux screen with the information until it is replaced.
+        While scanning, fill in the template with sensor data and
+        put composition in the text window. Sensory data includes:
+
+             Mass - quanity with units of measurement
+             Temperature
+             Composition
+             Object Profile
+             Life Readings
+             Energy Readings
+        
+        STARS -
+          Mass: is given as a no. from 0.1 to 50 randomly gener-
+          ated using the location values of the star as the random 
+          no. seed. To determine the mass of a star, roll a random
+          no. from -45 to +45 (normal distribution). If its 0 then
+          set = 1. If the no. is negitive then divide 45 by it and
+          subtract it from 10. (ie. 10-45/X). Display it in decimal
+          notation. If the no. is positive use it as is.
+          Units: used are O.S.M.'s (old sol mass).
+          
+          Temperature: Compute a random no. N using the location
+          seed from 0 to 10. Find the temp for the appropriate 
+          spectral class from the table. Add N% to that no. Its   
+          given in degrees C.
+
+                   M - 3200         K - 4000
+                   G - 5500         F - 7000
+                   A - 10000        B - 20000
+                   O - 30000
+
+          Composition: All stars have a composition of hydrogen
+          and helium gas.
+
+          Object Profile: If the mass is <6 use a small circle.
+                          If >5 & <20 use a medium circle.
+                          If >19 use a big circle.
+        
+          Life Readings: Life readings is a no. from 0 to 100.
+          All stars have a life reading of 0.
+
+          Energy Reading: Energy readings are nos. from 0 to 100.
+          All stars have an energy reading of 100.
+
+        PLANETS -  
+            Mass: A random no. from .01 to the max, where the max 
+            is taken from a table and is dependent on the orbit #.
+
+                            Planet mass table;
+                    
+        Orbit #   1    2    3    4    5    6    7    8    9    10
+        Max       3    7   19  100  250  400   75   50   75    13 
+
+            If the no. is positive use it as is. If its from 0 to
+            -8, add 9 and lead it with a decimal point ".". If its
+            from -9 to -17 add 18 and lead it with a decimal and a
+            0, ".0".
+            Mass Units: are in "Old Earth Mass" units. (O.E.M.)
+            
+            Temperature: Two temps are given, the max and the min
+            and these are taken from the planet's data base. They
+            are resultant from modifications of the effective temp.
+            For that orbit position based on atmosphere and some
+            random deviation (to simulate spin). Temp may range
+            from -273 `C to 3156 'C.
+                 
+                      EFFECTIVE TEMP TABLE
+
+                  Index                  Temp
+                    0                    -273
+                    1                    -240
+                    2                    -207
+                    3                    -174   Temp = Index * 33
+                    4                    -141          - 273
+                    5                    -108
+                    6                    -078
+                    7                    -042
+                    8                    -009
+                    9                      24   _________________
+                   10                     526
+                   11                    1052 
+                   12                    1578
+                   13                    2104   Temp = Index - 9
+                   14                    2630          * 526
+                   15                    3156
+                   16                    3682
+
+        Notes: (Temp/500) - (active shield class) = damage level
+
+                         Damage Level Comments 
+ 
+               WARNINGS - :THE HULL IS BEGINNING TO HEAT UP
+                          :THE HEAT IS CAUSING SOME DAMAGE TO THE 
+                           HULL
+                          :HULL TEMP IS NEARING THE CRITICAL POINT
+                          :WE'RE BURNING UP CAPTAIN...WE...AHHH!!!
+
+        Composition: Solid - list the three major elements
+                     Liquid - list the three major elements
+                     Gas - list the three major elements
+                 Element set obtained from planetary data base.
+
+        Object Profile: If the mass is: <6 use small circle
+                                        >5 & <100 use med circle
+                                        >99 use big circle
+                    
+        Life Readings: Take the planetary bio-density (0-250) 
+        from the data base. If it is >0 then multiply by 10 and
+        divide by 25. This is the Life Reading.
+
+        Energy Reading: for every planet a no. between 0 - 7
+        will be in the data base. If the no. is 0 this means
+        there are no sentients living on the planet above a 
+        tech level 3. If there are sentients of level 4 or 
+        greater, this no. represents the amt of energy they 
+        give off as a function of their no. and tech level. For
+        an energy reading multiply this no. by 10.
+
+
+
+  c. ANALYSIS - A Science Officer may make an analysis of a sensor 
+     reading if it is currently in the aux window and the view  
+     screen context has not changed. If no sensor reading was
+     taken, or the context has changed from (tactical to system 
+     for example) the message is given "I require a sensor read-
+     ing fo analyze, Captain". Sensor Readings may be taken at
+     the tactical level from orbit only, not at the system
+     level or in hyperspace. When an analysis is given a list of
+     headers is also given. For each header there is a chance that
+     the Science Officer will give some information. That % chance
+     is = the Science Officer's skill / 2. If the Science Officer
+     is unsuccessful the word "unknown" appears after the header.
+     Each time a sensor reading is taken a random no. from 1 to
+     64,000 is generated. This is done only for planets and stars.
+     This no. is saved as a variable. When an analysis is required
+     the new random no. is checked against the old random no. If
+     they are the same the message is returned "I have already
+     attempted analysis of this data, Captain". The variable is
+     automatically wiped clean after 5 minutes. (Alien ships 
+     may be read and analyzed as often as desired). Each time an
+     analysis is made the Science Officer recieves his learning
+     rate * 1 in internal skill points (1 - 25,000, see skills
+     document). The first header given is always "analysis:".
+     Following this is the objects class - this is given re-
+     gardless of the Sci Off skill. The possible classis are:
+
+                              Star
+                              Planet
+                              Asteroid
+                              Debris
+                              Mechanical
+     
+     For each class different headers are given. They include -
+
+          STAR -  1). Spectral class: After this the letter M,K,
+                      G,F,A,B, or O is given.
+                  2). Bio-possibility: If the star is -  
+                         red, orange,yellow,white = "High"
+                         green                    = "Moderate"
+                         blue-white               = "Low"
+                         blue                     = "very low"
+                  3). Ecosphere: 
+
+                              ECOSLEVEL TABLE
+
+                       Star Type   Code   Ecoslevel
+                         blue       7        7-9
+                         red        1        1-3
+                         green      5        5-7
+                         white      4        4-6
+                         orange     2        2-4
+                         yellow     3        3-5
+                         bluewhite  6        6-8
+
+                  4). Stability: stability classes -
+                         "STABLE"
+                         "STABLE [POSTFLARE]
+                         "SLIGHTLY UNSTABLE"  > 1000 Arth days to      
+                                                flare
+                         "UNSTABLE - ESTIMATED TIME TO FLARE XXX
+                                     DAYS" < 1000 Arth days to flare
+
+
+      PLANET -  1). Orbit No.: a # from 1 to 10 indicating 
+                               orbit from sun.
+                2). Predominant Surface Characteristic:
+
+                         SURFACE CHARACTERISTIC TABLE 
+
+                Priority       Type      Color       Condition
+                   1       "life-rich"   green    bio-denisty >25
+                   2          "gas"      violet   gas giant
+                   3         "liquid"    blue     >50% liquid
+                   3         "frozen"    white    >50% snow/ice
+                   3         "molton"    red      >50% molton
+                   3          "rock"     brown    >50% rock
+
+                3). Surface Gravity: given as "XXX g's"
+                4). Atmospheric Density: given as - "NONE",
+                    "VERY THIN","THIN","MODERATE","THICK",
+                    "VERY THICK".
+                5). Global Weather: given as - "NONE","CALM",
+                    "MODERATE","VIOLENT","VERY VIOLENT".
+                6). Max Indicated Tech Level:    
+                    no sentients or T.L. = 1-4 ... "NONE"
+                                                   "COMPARABLE"
+                                          8-10 ... "ADVANCED"
+
+      ASTEROID - XXXXXXXX for now !
+
+      MECHANICAL - 1. Max Tech Level: <5 ..."NONE"
+                                     5-7 ..."COMPARABLE"
+                                    8-10 ..."HIGHLY ADVANCED"
+                   2. Energy Shield Analysis: given as -
+                      "NONE" or "CLASS XX EQUIVALENT" or "TYPE
+                      UNKNOWN". (This is taken from the object's
+                      database).
+                   3. Relative Size: "XX TIMES AS BIG AS OUR SHIP"
+                   4. Acceleration: " XX g's "
+
+      DEBRIS - Nothing
+
+3. NAVIGATOR:
+      a. Raise/Lower Shields: If there are no shields when this
+         button is pressed, give the message "WE DO NOT HAVE 
+         SHIELDS, CAPTAIN". When the shields are down this option
+         reads "RAISE SHIELDS". When they're up it reads "LOWER
+         SHIELDS". "RAISE SHIELDS" - When this button is pressed 
+         the shields are raised immediately. Change condition to
+         "SHIELDS RAISED". If the status display is up change the 
+         ship icon color from blue to grey and the word down to 
+         up (after shields:). NOTE - The shield power displayed 
+         in the bar graph around the icon are always displayed 
+         reguardless of whether of not the shields are up. When 
+         shields are off they drain no energy from the ship. When
+         they are turned on they come on immediately. Energy is 
+         drained  at a constant rate reguardless of whether or 
+         not the ship is hit with weapons. The rate of energy 
+         drainage = 5 per sec. Shield power is displayed in the 
+         bar graphs on the status display and works as follows.
+         Shields have a class (0-5), if 0 then there are no 
+         shields. Delta?? damage = (0-100) and delta power for 
+         front, left, right and rear. When a ship is hit with a 
+         weapon and its shields are up the shield on the side hit 
+         absorbs the damage. This reduces the power of the shield 
+         by some amount. ( see weapons doc. for details ) This 
+         amt is based on the weapon damage and the "current 
+         shield class". As long as there is some power left in 
+         the shield the ship takes no damage. When the power 
+         level reaches 0 the shield no longer protects the ship.
+         "Current shield class" is shield class as it is affected 
+         by damage. "Current shield class" = (shield class) -
+         (6 - ((damage + 19) / 20). "Current shield class" can 
+         not be < 0. Shield power is measured for each side 
+         shield from 0 to 100. To find the amt that it is reduced 
+         when a hit is taken, find the modified damage:
+         Modified Damage = weapon damage / (2*(current shield 
+         class)). Shield power is always incremented automatical-
+         ly at a rate of 1 per 5 sec so long as its below 100 for 
+         any side. Increase energy consumption. "LOWER SHIELDS" -
+         Change condition to lowered. If the status display is up
+         change it accordingly. Decrease energy consumption.
+      b. Arm/Disarm Weapons: If there are no weapons when the 
+         button is pressed, give the message "WE DO NOT HAVE ANY
+         WEAPONS, CAPTAIN". When the weapons are disarmed, this
+         option reads "ARM WEAPONS". When they are armed it reads
+         "DISARM". If ship has Missles and Lasers, give message:
+         <-- Missles or Lasers -->. If the status display is up,
+         change the UNARMED to ARMING (flashing). The process of
+         arming takes 6 seconds. When weapons are armed, give the
+         message "BUTTON FIRES MISSLES/LASERS". If the user is not
+         in maneuver mode, add to the above phase "WHEN MANEUVERING"
+         For as long as the weapons are armed, increase the energy
+         consumption. When the weapon has finished arming, pressing
+         the button causes the weapon to fire if maneuvering. 
+         Weapons may not be fired in hyperspace, in a system menu,
+         or while orbiting a planet. Every time a weapon is fired
+         a certain amt of energy is consumed. Disarming - When 
+         this button is pressed weapons disarm immediately.    
+         Change the status display to "UNARMED", and remove the
+         crosshairs and any weapons text. ( for details on weapons,
+         see the document on ship weapons)     
+      c. Maneuvering: This button allows the user to control move-
+         ment in hyperspace and on the tactical screen with the
+         joystick. During maneuvering give the message "ANY KEY
+         RETURNS TO COMMAND CONTROL". Hitting any key ends maneuver-
+         ing and returns joystick control to console.
+      d. Hyperspace: When maneuvering on the sector map there is
+         a 16 dot Nav-Ring around the ship icon. (for start up
+         conditions in hyperspace upon launch or jump to FTL see
+         Engineer / FTL). Movement rate in hyperspace is constant
+         at hyper-speed and drop to sublight speed is automatic
+         and occurs only when some form of encounter occurs.
+         Direction is controlled with left/right movement of the
+         joystick. This changes the highlighted dot in the Nav-
+         Ring and the ships heading. There are 16 dots and 16
+         possible directions. Pressing the button or moving the 
+         joystick forward of backward has no effect.
+      e. Sublight Space: Pushing the joystick left/right turns the
+         ship left of right. Pushing the joystick forward makes the
+         ship accelerate forward by firing the rear rockets. Pulling
+         the joystick back makes the ship decelerate by firing the
+         forward rockets(these are only half as powerful as the 
+         rear rockets. Pushing the button fires an armed weapon.
+      f. Tactical: The ship is represented by a small multi-
+         directional icon (see the Micro-Painter file "SHIPS.TAC"
+         on the MVS work disk)
+
+4. ENGINEER:
+      a. Damage - Check to see if the damage display is not already 
+         up in the Aux screen. If it is, give the message: "THE
+         DAMAGED DISPLAY IS ALREADY UP". If not, put it up. (see
+         ship damage and repair document for details).
+      b. Repair - If the damage display is not already up, put it
+         up in the aux screen. Put a cursor over the top item
+         (hull) in the damage display. Give the message "USE
+         JOYSTICK TO CHANGE SELECTION. PRESS BUTTON TO BEGIN
+         REPAIR". For whatever the cursor is on, also give the mes-
+         sage "ITEM ____ LEVEL DAMAGE ____ ESTIMATED TIME FOR   
+         COMPLETE REPAIR IS ____ HRS". The repairable ship items
+         are: hull, engines, sensors, comm equip, shields, missles,
+         and lasers. The damage levels are none, minor, moderate
+         and heavy. When the button is pressed check to see if the 
+         engineer is busy repairing something else, if so give the
+         message "STILL REPAIRING THE ____ , CAPTAIN. SHALL I DIS-
+         CONTINUE AND WORK ON THIS INSTEAD?  <-- N Y -->" If the 
+         answer is no then abort the new repair command. If the 
+         answer is yes, or if the engineer was not busy check to
+         see if the ship item is damaged. If it is not, give the
+         message "NO REPAIRS ARE REQUIRED, CAPTAIN". Otherwise,
+         give the message "BEGINNING REPAIRS ON THE ____, CAPTAIN".
+         If the item has been completely restored, give the message 
+         "REPAIRS ON THE _____ ALL COMPLETED,SIR". (for details on
+         repairs see ship damage and repair document).
+      c. FTL - When this is pressed, check to see if the ship is at
+         sublight speed. If not, give the message - "WE ARE ALREADY
+         IN HYPERSPACE, CAPTAIN, YOU DIPSHIT". Otherwise ... give
+         the message "CHARGING THE HYPERDRIVES CAPTAIN, STANDBY".
+         Now wait for a random amt of time ( 5 to 15 secs). If
+         during this time any weapons are fired, give the message
+         "DIVERTING POWER TO WEAPONS. JUMP ABORTED" and abort the
+         jump. Otherwise ... give the message "JUMPING TO HYPER-
+         SPACE". Rapidly accelerate the ship forward w/ whoooosh
+         (if it hits anything tough cookies !! Put up the sector
+         map. The ship is shown as stationary with a Nav-Ring 
+         around it and the message "USE JOYSTICK TO ALTER HEADING,
+         PRESS BUTTON TO ENGAGE HYPERDRIVES".
+      d. Shuttle - Check to see if the ship is orbiting a planet.
+         If not give the message "THE SHUTTLE MAY ONLY BE DEPLOY-
+         ED WHEN THE SHIP IS IN ORBIT CAPTAIN, YOU FOOL" If the 
+         ship is in orbit give the message "ENTERING THE SHUTTLE.
+         WAIT 3 SECS THEN SWITCH TO THE SHUTTLE DISPLAY " (see
+         shuttle document for details).
+5. COMM OFF: 
+      a. Communicate - check to see if there are any objects with-
+         in communication range (any ships, planets of bouys). If
+         not give the message "THERE IS NOTHING WITHIN COMMUNICAT-
+         ION RANGE,CAPTAIN". Otherwise ... communications may be
+         established with ships or bouys during an encounter or 
+         with a planet during orbit. Communications may not be
+         established at the system level. If tried, the message
+         "NO 1 IS IN RANGE SIR" is returned. [The communicate 
+         option "opens" communications and does not have to be 
+         pressed each time a transmission is sent.] The aliens may   
+         or may not have already tried to establish communications.
+         If they have, the user will have recieved the message "
+         CAPTAIN, WE ARE RECIEVING A TRANSMISSION FROM THE ALIEN",
+         (object/planet). If this is the case, the first message
+         is automatically recieved (provided your ship is in range)
+         upon pressing this button. Otherwise give the message
+         "OPENING A HAILING FREQUENCY CAPTAIN" Wait 5 seconds. 
+         Now ohhhhhhhhhhhhhh
+
+6. DOCTOR: 
+      a. Examine - Is the doctor busy? If so give message "I AM
+         STILL TREATING A PATIENT, CAPTAIN. SHALL I STOP AND DO
+         THIS INSTEAD?". <-- Y N --> response from joystick. If
+         no, abort command.  If yes,  give the message "WHO DO YOU 
+         WISH TO EXAMINE?", along with the list of crew members.
+         Use  the format for item activites (layout #3) with  the 
+         message at the bottom. Selecting Quit aborts the examin-
+         ation. When a crewmember is chosen, give the results of 
+         the examination in the text window. (for details refer
+         to the examination and treatment document). 
+      b. Treat: Is the doctor busy? If so give the same message
+         as above in EXAMINE. Check to see if this character
+         requires treatment. If not, give the message "THIS
+         CREWMEMBER DOES NOT REQUIRE TREATMENT." If he does,
+         check to see if he requires treatment or has already
+         undergone treatment and is in the process of healing.
+         If so give the message "THIS PATIENT HAS ALREADY BEEN
+         TREATED". Treatment adds the amount of vitality it would 
+         take to reach 100 at the time the treatment is done, ie.
+         the effects of old treatments do not help new wounds.
+         The amount of time the treatment takes (meaning the amt
+         of time the doctor is busy and the amt of time it takes
+         the patient to heal are dependent on the skill of the
+         doctor ( see examination and treatment document). 

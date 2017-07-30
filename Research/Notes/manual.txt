@@ -1,0 +1,349 @@
+                      CLASSIFIED    DOCUMENT
+
+
+                Captain's Technical Reference Manual
+                ------------------------------------
+
+
+     This is highly classified information.  Showing this to non-
+authorized  personnel constitutes a breach of Interstel  security 
+and  is  punishable under code 17,  section 135 of the  Interstel 
+Corporate Regulations.
+
+
+Contents
+--------
+
+I. Breifing
+       1. Breifing Transcript
+       2. Objectives
+             a. Information 
+             b. Endurium
+             c. Artifacts
+             d. Lifeforms
+             e. Planet Recommendations
+II. Building Your Crew
+       1. The Races
+             a. Elowan
+             b. Humans
+             c. Thrynn
+             d. Velox
+             e. Androids
+       2. The Skills
+             a. Navigation
+             b. Science
+             c. Communications
+             d. Engineering
+             e. Medicine
+III. Building Your Ship
+       1. Considerations - "The right ship for the right job"
+       2. Parts
+             a. Holds
+             b. Weapons
+             c. Defenses
+             d. Engines
+IV. Materials and Items
+       1. Endurium
+       2. Repair Minerals
+       3. Items
+V. Starship Procedures
+       1. Space
+             a. Hyperspace
+             b. System
+             c. Orbit
+             d. Tactical
+             e. Starmap
+     
+       2. The Bridge
+             a. Captain
+                  - Launch / Land
+                  - Disembark
+                  - Cargo
+                  - Log Planet
+                  - Ships Log
+             b. Science Officer
+                  - Status
+                  - Sensors
+                  - Analysis
+             c. Navigator
+                  - Raise Shield / Drop Shield
+                  - Arm / Disarm
+                  - Maneuver
+                  - Starmap
+             d. Engineer
+                  - Damage
+                  - Repair
+                  - FTL / Sublight
+             e. Communications Officer
+                  - Hail / Respond
+                  - SOS Drone
+             f. Doctor
+                  - Examine
+                  - Treat
+VI. Planetside Procedures
+       1. Maps
+       2. Movement
+       3. Lifeforms
+       4. Minerals
+       5. Ruins
+
+APPENDIX
+--------
+A. Ancient Religious Writings of Arth (c. 3650)
+B. Excerpt from the Captain's Log of the Noah 2 Expedition
+C. Arth newspaper article announcing the new Interstel Spacehub 
+D. An excerpt from something called: A Translation of the SSSS 
+   Handbook
+E. A Timeline of the planet Arth as reconstructed by the Interstel 
+   Researchers.
+
+
+
+
+
+
+
+
+
+
+
+
+                                                17:00   2-9-4620
+                    Breifing Transcript
+                    -------------------
+
+Thank you for coming gentlefen, please be seated.
+
+   Approximately 15 years ago, on the sixteenth day of Ten-Month,
+4604,   a  significant  discovery  was  made.   While  conducting 
+research  in the southern Hot Zone a team of Interstel scientists 
+happened upon a shaft drilled deep into the crust of the  planet.  
+Further  investigation  revealed a vast and  ancient  underground 
+network that appears to have been built by... the first colonists 
+of Arth. Gentlefen...Please, may I have some quiet.....Thank you.
+I  realize this is difficult to believe.   Take my assurance that 
+this  conclusion was arrived at only after many years of  careful 
+investigation.  There  is little room for doubt at   this  point, 
+that  Arth  was,  in  fact,  colonized  by  a  group  who  called 
+themselves  Noah  2,  and that this group did indeed come from  a 
+planet  called Earth.   I'm sure you can all appreciate  now  why 
+this information hasn't been released to the public.   The notion 
+that  Earth  was,  in fact,  a real place,  and Noah 2 an  actual 
+group,  would be met with skepticism to say the least.   Many  of 
+you may still be skeptical, and that is perfectly understandable.
+I ask you only to bear with me for now.   After this breifing you 
+will  be  seeing some holo-footage that will,  I think,  put  any 
+doubts out of your minds.
+   As you might well imagine, this discovery has answered a  good 
+many questions.   It has also raised quite a few.   It would seem 
+that there was, after all, an Old Empire and a Great Interstellar 
+War.   From  what  we have been able to piece together  it  would 
+appear that during the final stages of the war,  when the  Empire 
+was  facing imminent defeat,   an ambitious colonization project, 
+Project Noah, was launched by something or someone reffered to as 
+MOTI.  The reasons for the war, the final fate of the Empire, and 
+the  causes  for  Noah 2's failure to  maintain  their  level  of 
+technology have not yet been ascertained.   We have though, found 
+several references to "Uhlek",  "Gazurtoid",  and "Phlegmak".  We 
+believe  these  to  be names of races that were  hostile  to  the 
+Empire  and possibly responsible for its downfall.   We have also 
+found evidence that confirms the theory that the Humans,  Elowan, 
+Thrynn,  and Velox (reffered to then as the Veloxi) were all part 
+of this Old Empire and were all represented in the Noah 2  group.   
+   In addition to finding historical information, we have found a 
+fair  amount of technical data as well.   From this we have  been 
+able   to  re-construct  a  certain  amount  of  the  Old  Empire 
+technology.   The most significant area of this  technology,  and 
+the  area  on which most of our attention has been  focused,  has 
+centered  around some peculiar lumps of crystaline  matter  which 
+the  Empire called Endurium.   It was this  substance,  which  is 
+unlike any we have ever encountered, on which  their  Faster-Than 
+-Light   technology   was  based.    Fortunately   there  was   a 
+substantial  amount of this endurium in the  underground  colony, 
+enough  to allow us to experiment freely,  and actually construct 
+some proto-type starships.....Yes, we have constructed starships, 
+and the Faster-Than-Light technology does work.   The next  phase 
+of  our  experimentation involves exploration.  We feel that  the 
+only  way to answer the questions that now face us is  to  gather 
+more information, and to do this we must explore.
+   You  have all been carefully selected because of your  special 
+skills  and qualities.   In front of each of you is  a  Captain's 
+Technical  Reference  Manual.   In  the appendix  you  will  find 
+relevant information which our researchers have compiled.  Should 
+you  decide to participate,  and aid us in the exploration of the 
+unknown,  you will be given the Captaincy of a ship,  the freedom 
+to choose a crew,  and a certain amount of capitol to train  your 
+crew  and  modify  your ship as you see fit.   As  an  additional 
+incentive you will be paid for any discoveries that you make, and 
+you may use this money to further train your crew and modify your 
+ship,  to purchase necessary materials,  or for whatever else you 
+should desire.   Ofcourse I hardly need tell you that all of  the 
+information  you have recieved is highly classified.   Should you 
+decide to not accept the commission we are offering you,  it will 
+be  necessary  that  you see  our...uh..councilors  in  order  to 
+facilitate your return to society as minimal security risks.
+   One  final note;  you are not the first group to come  through 
+our  training program.   The first group was sent out about  five 
+years  ago and consisted of 13 ships and 78 explorers.   To  date 
+none  of these ships have returned and we have had no word as  to 
+their status.   Since each ship was carrying only enough fuel for 
+a  three year journey,  we must assume that they are  all...well, 
+that they will not be returning.  Ofcourse in the past five years 
+we have made significant advances in starship technology,  and we 
+feel that you are a much more expend...uh, capable group than the 
+first.  We are confident that you will have no major difficulties 
+in  successfully completing your missions.   The best of luck  to 
+you all.     
+                        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  TIMELINE
+
+2100  Man discovers endurium.
+2150  He discovers its application to FTL and begins exploring.
+      Endurium is very limited.
+2300  Man meets Velox.
+2380  Human-Velox War.
+2400  Human-Velox Treaty.
+      Decrease in space exploration.
+2650  Humans make major endurium find and increase exploration.
+      Start of the Golden Era for the Empire.
+2675  Human  discover  Spemin in a pre-technological  state  and 
+      decide to uplift them.
+2770  Humans discover Elowan-Thrynn system (pre-FTL  technology) 
+      and begin uplift.
+2790  SSSS (Secret Society for Spemin Superiority)  gains  power 
+      and there is a Spemin revolt.
+3000  The  Empire starts to feel the pressure of the first  wave 
+      (Numlox and Phlegmak).
+      The Spemin plead for protection.
+3120  Empire and Velox make a pact.
+3125  Height of battle - The Velox are fored to take the brunt of 
+      the fighting.
+3260  The First Wave starts to slack off - the  Empire  is 
+      much weakened.
+      Spemin turn on the Empire.
+3330  Empire  takes the Veloxi focusing stone - it  gets  stolen 
+      then lost.
+      Velox denounce the Empire.
+3400  Second Wave hits (Uhlek followed by the Gazurtoid)
+      Spemin plead for protection.
+      Velox refuse to ally.
+3450  Project Noah is initiated.
+      Many factions in the Empire (Masses,Diehards,Fanatics,
+      Intellectuals, and MOTI [Members Of The Institute].
+3480  Earth falls.
+3500  The last colonial world is destroyed. Noah 2 (Arth) is the 
+      only remaining colony. 
+3505  A bomb is dropped on Arth creating Southern Hot  Zone  and 
+      causing malfunction of underground life support. 
+      Survivors are forced above ground.
+3520  Internal problems cause the collapse of the colony.
+3520  The Dark Years begin
+4400  Arths new era begins - industrial revolution.
+4500  Re-discovery of spaceflight (sublight)
+4604  Discovery of Noah 2 colony and Endurium.
+4615  First group sent out in FTL ships.
+4620  Second group sent out - GAME STARTS
+4621  Discovery that Arth's sun is unstable.  Start of search for 
+      colonizable planets.
+4623  Arth's sun flares.
+
+
+
+
+Appendix  A - Excerpt from the Religious Writings of Arth.
+
+
+
+The Book of Endurium, 
+Chapter 1 : The Years of Darkness (and Chaos) , Verses 1 - 6
+
+"1. In the beginning there was darkness.... or was there light. 
+No, there was darkness. Well, there was either light or darkness.
+Anyway,  then  Man  came on the scene and verily did he create  a 
+great  spacefaring empire and unto him.....  you know I'm  almost 
+positive there was darkness in the beginning.
+
+"2.  Well,  so  anyhow  man spreadth wide  and  extended  himself 
+amongst  the  heavenly bodies of the universe,  and it  was  good  
+(actually  it was great!).  And thereby and thusly did he findeth 
+the other races.  And unto his Empire did he take them,  and  yea 
+did he accepteth them almost as equals.
+
+"3. And for a time there was rejoicing and forsooth all was hunky 
+dorey.  Then,  upon  mankind  was  there  laid  the  greatest  of 
+catastrophes and he was bummed.  The lands trembled and the skies 
+burned  and  Yea destruction was brought down upon the Empire  of 
+Man.
+
+"4. And in the fall of this righteous and glorious empire did the 
+other   races  sieze  upon  the  opportunity  to  express   their 
+disapproval  of  mankind's  ways and verily  did  they  slaughter 
+billions of his number. And following this were the Dark Years of 
+Chaos. 
+
+"5.  Woe and Yea and Woe were these years not dark, and were they 
+not  also chaotic.  Verily were they chaotic and dark.  In  these 
+years was there the darkness of chaos and the chaos of  darkness. 
+Both  the  darkness and the chaos were like unto no  darkness  or 
+chaos as had been seen before.
+
+"6.  And  from this dark chaos,  which was both chaotic and dark, 
+were  born  the colonial world's of Noah,  which were  like  unto 
+children  of  the  Empire.  And  among these  worlds,  like  unto 
+siblings of each other,  was Arth, and it's moons which were like 
+unto children of Arth,  and which were like unto grandchildren of 
+the Empire, and first cousins of the other colonial worlds.
+
+Chapter 2 : The Prophecy, Verses 1 - 4 
+
+"1.  And Yea shall Arth be plunged into dark years of chaos.I say 
+unto thee Yea.  Yea!  shall these years be dark and chaotic  like 
+unto the other dark years of chaos.  Woe, shall they be even more 
+dark  and  more  chaotic.  Verily shall they be so  dark  and  so 
+chaotic  it  can not even be imagined how dark and  chaotic  they 
+shall be.
+
+"2. Long and long shall these years of darkness and chaos be. And 
+then from these dark years shall there arise a new Arth and a New 
+Council and loe,  they shall be new.  And then, within the bowels 
+of  Arth shall there once again be movement.   Yea,  and  proudly 
+shall man once again walk the cooridoors of the children of Noah. 
+
+"3.  And within these cooridoors shall he once again findeth  the 
+Rock  of  the Ancients,  which was first found by man within  the 
+ruins  of  the  Ancients  wherein they did  dwell  and  live  and 
+generally hang out, long and long ago. Praise be to the Ancients, 
+who  were  like  unto....well,  who were  like  unto  nothing  in 
+particular,  and  who  did walketh amongst the stars before  even 
+mankind was a twinkle in the cosmic eye of reality.
+
+"4.  Hail  Endurium,  oh holiest of rock-like,  high-yeild energy 
+materials!  Oh beauteous shining Rock of Truth! Praise be to that 
+holy  legacy of the Ancients for in it shall mankind  once  again 
+findeth his destiny amongst the stars! So it is written."

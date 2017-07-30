@@ -1,0 +1,170 @@
+
+                       LIFEFORM BEHAVIOR
+
+     __________________________
+     |                         |
+     |                         \/
+     |
+     |      Pair all un-paired lifeforms in the encounter
+     |      area (18x by 30y cells - twice the visible area)
+     |
+     |                        ||
+     |                        ||
+     |                        \/
+     |     
+     |   For each lifeform in encounter area :
+     |                                         
+     |                 /\                      |                   
+     |                 |                       \/
+     |                 |     Do behavior with Expert System Behavior Controller.
+     |                 |                       |
+     |                 |                       | 
+     |                 |                       \/
+     |                 |     Do a Lifeform-status check
+     |                 |                       |
+     |                 |                       |
+     |                 |                       \/
+     |                 |     Do Ground-Air Transitions
+     |                 |                       |
+     |                 |                       |
+     |                 |_______________________|
+     |
+     |                        |
+     |________________________|
+
+
+
+
+
+Expert System Behavior Controller
+---------------------------------
+
+
+      
+
+(Make aliens scared or angry with laser)
+
+REDUCE-AGGR-LEVEL   <-- ?PLAYER-FIRING-LASER TRUE ?ALIEN-CLOSE-ENOUGH TRUE ?ALIEN-SMART-ENOUGH TRUE ?ULTRA-AGGR FALSE
+                        ?RANDOM-SCARED TRUE 
+INCREASE-AGGR-LEVEL  <-- ?ALIEN-HIT-WITH-LASER TRUE  ?DUMB-ENOUGH TRUE ?RANDOM-ANGRY TRUE ?PRODUCER FALSE                  
+INCREASE-AGGR-LEVEL <-- ?ALIEN-HIT-WITH-STUNNER TRUE ?DUMB-ENOUGH TRUE ?RANDOM-ANGRY TRUE ?PRODUCER FALSE
+
+                 |
+                 |
+                 | [do any action and go to next level]
+                 |
+                 |
+                 \/
+
+(Response to Player)
+           
+APPROACH-PLAYER <-- ?MOBILE TRUE ?ALIVE TRUE ?STUNNED FALSE ?NOTICE-PLAYER TRUE ?DANGEROUS TRUE ?NEXT-TO-PLAYER FALSE
+ATTACK-PLAYER   <-- ?ALIVE TRUE ?STUNNED FALSE ?NOTICE-PLAYER TRUE ?DANGEROUS TRUE ?NEXT-TO-PLAYER TRUE
+FLEE-PLAYER     <-- ?MOBILE TRUE ?NOTICE-PLAYER TRUE ?ALIVE TRUE ?STUNNED FALSE ?WIMPY TRUE 
+
+                 |
+                 | [if any action is done jump to Lifeform Status Check
+                 |  else drop to next level.]
+                 |
+                 \/
+
+(Response to Other Lifeform)
+
+APPROACH-ITS-MATE  <-- ?MOBILE TRUE ?ALIVE TRUE ?STUNNED FALSE ?HERBIVORE TRUE ?MATE-PRODUCER TRUE ?NEXT-TO-MATE FALSE 
+                       ?MATE-ON-GROUND TRUE ?HAS-MATE TRUE
+APPROACH-ITS-MATE  <-- ?MOBILE TRUE ?ALIVE TRUE ?STUNNED FALSE ?CARNIVORE TRUE ?MATE-HERBIVORE TRUE ?BIG-ENOUGH TRUE 
+                       ?NEXT-TO-MATE FALSE ?MATE-ON-GROUND TRUE ?HAS-MATE TRUE  
+APPROACH-ITS-MATE  <-- ?MOBILE TRUE ?ALIVE TRUE ?STUNNED FALSE ?OMNIVORE TRUE ?MATE-PRODUCER TRUE ?NEXT-TO-MATE FALSE 
+                       ?MATE-ON-GROUND TRUE ?HAS-MATE TRUE
+APPROACH-ITS-MATE  <-- ?MOBILE TRUE ?ALIVE TRUE ?STUNNED FALSE ?OMNIVORE TRUE ?MATE-HERBIVORE TRUE ?BIG-ENOUGH TRUE 
+                       ?NEXT-TO-MATE FALSE ?MATE-ON-GROUND TRUE ?HAS-MATE TRUE
+APPROACH-ITS-MATE  <-- ?MOBILE TRUE ?ALIVE TRUE ?STUNNED FALSE ?HERBIVORE FALSE ?PRODUCER FALSE ?MATE-HERBIVORE FALSE 
+                       ?MATE-PRODUCER FALSE ?BIG-ENOUGH TRUE ?ULTRA-AGGR TRUE ?NEXT-TO-MATE FALSE ?MATE-ON-GROUND TRUE 
+                       ?HAS-MATE TRUE
+FLEE-ITS-MATE      <-- ?MOBILE TRUE ?ALIVE TRUE ?STUNNED FALSE ?MATE-APPROACHING TRUE ?HAS-MATE TRUE
+FLEE-ITS-MATE      <-- ?MOBILE TRUE ?ALIVE TRUE ?STUNNED FALSE ?MATE-ATTACKING TRUE ?AGGR-ENOUGH FALSE ?CAN-BREAK-AWAY TRUE 
+                       ?HAS-MATE TRUE
+ATTACK-ITS-MATE    <-- ?ALIVE TRUE ?STUNNED FALSE ?HERBIVORE TRUE ?MATE-PRODUCER TRUE ?NEXT-TO-MATE TRUE ?MATE-ALIVE TRUE 
+                       ?HAS-MATE TRUE
+ATTACK-ITS-MATE    <-- ?ALIVE TRUE ?STUNNED FALSE ?CARNIVORE TRUE ?MATE-HERBIVORE TRUE ?BIG-ENOUGH TRUE ?NEXT-TO-MATE TRUE 
+                       ?MATE-ALIVE TRUE ?HAS-MATE TRUE
+ATTACK-ITS-MATE    <-- ?ALIVE TRUE ?STUNNED FALSE ?OMNIVORE TRUE ?MATE-PRODUCER TRUE ?NEXT-TO-MATE TRUE ?MATE-ALIVE TRUE 
+                       ?HAS-MATE TRUE
+ATTACK-ITS-MATE    <-- ?ALIVE TRUE ?STUNNED FALSE ?OMNIVORE TRUE ?MATE-HERBIVORE TRUE ?BIG-ENOUGH TRUE ?NEXT-TO-MATE TRUE 
+                       ?MATE-ALIVE TRUE ?HAS-MATE TRUE
+ATTACK-ITS-MATE    <-- ?ALIVE TRUE ?STUNNED FALSE ?HERBIVORE FALSE ?PRODUCER FALSE ?MATE-HERBIVORE FALSE 
+                       ?MATE-PRODUCER FALSE ?BIG-ENOUGH TRUE ?ULTRA-AGGR TRUE ?NEXT-TO-MATE TRUE ?MATE-ALIVE TRUE 
+                       ?HAS-MATE TRUE
+ATTACK-ITS-MATE    <-- ?ALIVE TRUE ?STUNNED FALSE ?MATE-ATTACKING TRUE ?AGGR-ENOUGH TRUE ?HAS-MATE TRUE
+EAT-ITS-MATE        <-- ?ALIVE  TRUE  ?STUNNED  FALSE  ?CARNIVORE FALSE ?PRODUCER FALSE ?MATE-PRODUCER TRUE ?ATTACKED TRUE 
+                       ?MATE-IS-ATTACKING FALSE ?NEXT-TO-MATE TRUE ?HAS-MATE TRUE
+EAT-ITS-MATE       <-- ?ALIVE TRUE ?STUNNED FALSE ?CARNIVORE FALSE ?PRODUCER FALSE ?MATE-PRODUCER TRUE ?MATE-ALIVE FALSE 
+                       ?NEXT-TO-MATE TRUE ?HAS-MATE TRUE
+EAT-ITS-MATE       <-- ?ALIVE TRUE ?STUNNED FALSE ?PRODUCER FALSE ?HERBIVORE FALSE ?MATE-PRODUCER FALSE ?MATE-ALIVE FALSE 
+                       ?NEXT-TO-MATE TRUE ?HAS-MATE TRUE
+BECOME-UNPAIRED    <-- ?HAS-MATE TRUE ?MATE-OUT-OF-BOUNDS TRUE 
+BECOME-UNPAIRED    <-- ?HAS-MATE TRUE ?RANDOMLY-UNPAIRED TRUE
+BECOME-UNPAIRED    <-- ?HAS-MATE TRUE ?MATE-JUST-EATEN TRUE
+
+                 |
+                 |
+                 |  [if any action is done jump to Lifeform Status Check
+                 |   else go to next level] 
+                 |
+                 \/
+
+(Default behavior for mobile aliens)
+
+WANDER            <-- ?ALIVE TRUE ?STUNNED FALSE ?MOBILE TRUE         
+
+                 |
+                 |
+                 \/
+              do no behavior
+
+
+
+Lifeform-Status Check
+---------------------
+
+ERASE-LIFEFORM-FROM-ARRAY  <-- ?OUT-OF-BOUNDS TRUE
+ERASE-LIFEFORM-FROM-ARRAY  <-- ?BEEN-EATEN TRUE
+
+                 |
+                 \/
+
+REDUCE-HITS-BY-10-TO-50  <-- ?ALIEN-HIT-WITH-LASER TRUE ?HITS>0 TRUE
+REDUCE-HITS-BY-1-TO-40   <-- ?MATE-IS-ATTACKING ?HITS>0 TRUE
+REDUCE-STUNS-BY-10-TO-50 <-- ?ALIEN-HIT-WITH-STUNNER TRUE ?STUNS>0 TRUE
+
+                 |
+                 \/
+
+STUN-EFFECTS-HITS   <-- ?STUNS<0
+
+                 |
+                 \/
+
+DIE        <-- ?HITS>0 FALSE ?ALIVE TRUE
+STUNNED    <-- ?STUNS>0 FALSE ?STUNNED FALSE 
+UNSTUNNED  <-- ?STUNS>0 TRUE ?STUNNED TRUE
+
+                 |
+                 \/
+
+INCREMENT-STUNS  <-- ?ALIVE TRUE ?STUNNED TRUE ?STUNS<STUN-POINTS TRUE
+
+
+
+
+
+Air-Ground Transitions
+----------------------
+
+FLY    <-- ?MOVING TRUE ?ON-GROUND TRUE ?CAN-FLY TRUE ?WANTS-TO-FLY TRUE
+FLOAT  <-- ?MOVING TRUE ?ON-GROUND TRUE ?CAN-FLOAT TRUE ?PRODUCER TRUE
+FLOAT  <-- ?MOVING TRUE ?ON-GROUND TRUE ?CAN-FLOAT TRUE ?PRODUCER FALSE ?WANTS-TO-FLOAT TRUE
+LAND   <-- ?ALIVE FALSE ?ON-GROUND FALSE ?OK-TO-LAND TRUE
+LAND   <-- ?STUNNED TRUE ?ON-GROUND FALSE ?OK-TO-LAND TRUE
+LAND    <-- ?ON-GROUND FALSE ?WANDERING TRUE ?WANTS-TO-LAND TRUE ?OK-TO-LAND TRUE
+LAND   <-- ?ON-GROUND FALSE ?ATTACKING TRUE ?OK-TO-LAND TRUE                                                 

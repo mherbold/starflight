@@ -1,0 +1,441 @@
+
+
+
+Ambient Designs        Proprietary                   5 - 15 - 84
+
+
+                               PLANETSIDE
+
+
+I. Information Displays.
+
+   1. Status
+              Date   :   9012 - 09 - 21
+              Speed  :  25 kms/hr
+              Energy :  999
+              Cargo  :  50
+              Weapon :  Laser
+              Screen :  Tactical
+              Ship   :  120 deg. 85 kms
+
+   2. Default
+              Terrain     :  Craggy rock
+              Temperature :  8 deg C., very cold
+              Atmosphere  :  Overcast yellow sky
+              Elevation   :  3500 meters
+              Surface Type Key
+                  lava,liquid,ice,snow,rock,lifeform,sand,mud 
+
+    3. Scan
+              Volume              :  1.5 cubic meters
+              Aggression analog   :  Rabbit
+              Intelligence analog :  Dog
+              Niche               :  Photosynthetic Herbiverore
+              Composition         :  Silicon, Nitrogen, Carbon
+              Reliability         :  85%
+
+
+II. Mechanics
+
+    When  the "leave ship" option is chosen the message is  given 
+"fueling  Terrain Vehicle".  After a brief pause and sound effect 
+it says:  "Terrain Vehicle fueled. Fuel remaining in ship: xxxx". 
+The  Terrain  Vehicle (TV) is always fueled to  its  maximum  (if 
+possible) of 999. (The amount of fuel the TV leaves the ship with 
+is  saved,  and  when it reaches half this amount it flashes  and 
+beeps briefly with a warning : "fuel supply half gone".)
+    Now  the planetside display is put up.  The tactical  map  is 
+shown,  and on it is the ship icon and next to it the TV icon. As 
+always  the status and crew displays are shown,  and in the  text 
+window  is  the default description.  (see Info display  #2)  The 
+joystick controls the cursor in the option bar which is presently 
+at the far left.  The options in the option bar are, from left to 
+right:   
+   Screen         Move        Look         Scan         Weapons  
+        
+
+THE PLAYFIELD
+
+SCREEN:  This  toggles  the  view screen between the  2  possible 
+displays - the Tactical and the Contour map.  The view screen  is 
+120  pixels  high by 72 pixels wide.  This is not  including  the 
+border.  The  Tactical  map is broken up into 9 wide by  15  high 
+blocks.  Each  block  is 8 pixels wide by 8  high.  (2  Commodore 
+character  cells)  Each of these 8 by 8 blocks is represented  on 
+the  Contour  map by a single pixel.  This means  that  the  area 
+covered  by  the Tactical map is 9 pixels wide by 15 high on  the 
+Contour map.  8 by 8 total Tactical maps fit on one Contour  map. 
+The  Contour map is broken down into blocks each 4 pixels wide by 
+8  high (1 Commodoer character cell).  This is the resolotion  of 
+the terrain contours.  The boundries of these contours,  and  the 
+boundries  of  the  surfaces on the Tactical map are  roughed  up 
+fractally  however,  so  it appears that the resolution  on  both 
+screens is 1 pixel.
+    The  Contour map is a static map used for reference.  If  one 
+block  on  the  Tactical map,  and one pixel on the  Contour  map 
+equals 100 by 100 meters,  then the entire Contour map represents 
+an  area  of  7.2 kilometers wide  by  12  kilometers  high.  The 
+Tactical  map  represents  an ares of .9 kilometers wide  by  1.5 
+kilometers high.  (These distances have no actual bearing on  the 
+gameplay but serve only to provide a general referance in design)
+    Altitude information is represented on the Contour map  using 
+a fixed color scale. No altitude information, other than the text 
+in the default,  is presented on the Tactical map.  Minimal icons 
+are shown on the Contour map. these are :
+     1. The Tactical Map Box - a 10 by 16 black box
+     2. The Player - a red box with a white dot
+     3. Minerals - a 5 pixel black X
+     4. Ruins -   an 8 pixel black box
+When the Contour map is put up "Screen :" in status is changed to 
+"Contour".  Also the text in the text window is replaced with the 
+color scale. If any other option is hit the screen returns to the 
+Tactical map.   
+    Any  given 4 by 8 character cell on the Contour map is either 
+Blue : liquid          Lt Green : < 1000
+Red  : lava     or     Dk Green : 1000 - 2000
+Cyan : ice             Yellow   : 2000 - 3000
+                       Orange   : 3000 - 4000
+                       Brown    : 4000 - 6000
+                       Grey     : 6000 - 8000 
+                       White    : > 8000
+Altitude is important in game play in 5 different ways -
+THE FIVE SACRED WAYS - 
+ 1) creates a feeling of environment
+ 2) creates identifiable landmarks
+ 3)  allows for efficiency in planet navigation (going uphill  is 
+     very slow and inefficient)
+ 4) creates specific environments in which certain species may be 
+    found 
+ 5) helps player locate minerals which are generally found in the 
+    mountains 
+
+   As  mentioned earlier the smallest unit of resolution  on  the 
+Tactical  map is an 8 by 8 pixel block.  Each block may be one of 
+nine General Surface Types.   Each General Surface Type is broken 
+down  into many Specific Surface Types.  These  Specific  Surface 
+Types  are  used in the text descriptions and serve only  to  add 
+flavor  to  the planet description.  A background color  and  dot 
+color is associated with each of the General Surface Types. While 
+it  is true that any block may be a different surface type ,  the 
+algorithms  that determine surface type generally clump  them  in 
+large areas (this may vary with the particular type).
+   In  addition each surface type has a movement factor from 0 to 
+5  associated with it.  This a factor that modifies the speed  at 
+which the TV can move over the surface.  A factor of 0  indicated 
+that the vehicl is destroyed if it enters that surface.  1 is the 
+slowest the TV may move and 5 is the fastest.
+NOTE:  When  a  single surface covers the entire View Screen  and 
+there  are  no icons visible it will not be possible  to  discern 
+movement.  This is the function of the dots.  For any given block 
+there is a 35% chance that there is a dot in it. If there is, the 
+dot is placed randomly.
+
+  General Surface Types    Colors     Dot Colors    Mvmnt Factor
+  ---------------------    ------     ----------    ------------
+1.     Liquid             Dk. Blue       Cyan           3                 
+2.     Ice                Cyan           White          4
+3.     Lava               Red            Orange         0
+4.     Rock (Dirt)        Grey           Brown          5
+5.     Carpet Life.       Lt Green       Black          5
+6.     Snow               Blue-White     Cyan           3
+7.     Sand               Yellow         Orange         3
+8.     Mud (Quicksand)    Violet         Black          1
+9.     Crystal [PROBE]    Green-White    Dk Blue        5
+
+Only surface 1 - 8 are included in the key to surface type in the 
+text window default display for the Tactical map.        
+
+    Placed  on top of these surfaces are icons.  Following  is  a 
+list of all the possible icons found on the Tactical map.
+
+1.  Terrain Vehicle
+2.  Ship
+3.  Mineral Deposit
+4.  Recent Ruins
+5.  Ancient Ruins
+6.  Dropped Cargo
+
+7.  Black Probe Control Nexus
+
+LIFEFORMS
+8.  Bilateral (animal) no legs, snakelike
+9.  Bilateral (animal) no legs, not snakelike
+10. Bilateral (animal) 1 leg/tent.
+11. Bilateral (animal) 2 legs/tents.
+12. Bilateral (animal) 3 or 4 legs
+13. Bilateral (animal) more than 4 legs or 2 tents.
+14. Radial/Spherical (plant or animal) no legs
+15. Radial Spherical (plant or animal) 1 or 2 legs/tents.
+16. Radial/Spherical (plant or animal) more than 2 legs/tents.
+17. Amorphous/Irregular (plant or animal) no legs
+18. Amorphous/Irregular (plant or animal) legs or tent.
+19. Leaved (plant) small, type A
+20. Leaved (plant) small, type B
+21. Leaved (plant) medium, type A
+22. Leaved (plant) medium, type B 
+23. Leaved (plant) large, type A
+24. Leaved (plant) large, type B
+25. Flying (plant or animal)
+26. Floating (plant or animal)
+27. A stunned lifeform ??? (perhaps not necessary)
+28. A dead lifeform
+
+29. The look eyeball
+30. The scanning cursor
+
+All  icons  (except for the TV which may be on liquid or mud  and 
+creatures  in  flight which may appear over anything)  may  never 
+appear on: liquid, mud, or lava.
+
+Icons  may be any but the following  colors:  grey1,  grey2,  lt. 
+green,  yellow,  cyan,  or  blue-white.  Creatures in flight  are 
+always black.
+   The  same  picture  icon  may  appear  as  a  different  color 
+depending on the species. The icons are saved in such a form that 
+whatever  portion of them is yellow takes on the new  color.  The 
+particular  color  or icon for any given species is part  of  its 
+species record.
+   The  flying and floationg icons are used when the creature  is 
+currently flying or floating and may be applied to any  lifeform. 
+Airborne creatures may not be dealt with by the player.
+
+GAMEPLAY
+
+MOVE:  When  in  the move mode the joystick controls  operate  as 
+follows - 
+
+-) Moving the joystick - moves the TV. The TV stays in the center 
+of  the  screen  and  the  terrain  scrolls.  The  icon  is  non-
+directional  and  moves  in whatever direction  the  joystick  is 
+pushed.  The  TV accelerates to a maximum speed from a stop  and 
+then  stays  at that maximum.  The maximum is determined  by  the 
+surface type of the terrain. As previously stated movement occurs 
+only  on  the Tactical map.  The TV may move over any other  icon 
+accept a flying creature (these have highest priority). If the TV 
+moves  into a lava terrain a warning message is given ("The  heat 
+from the lava is too much - we're burning up").  If the TV  still 
+does  not  move off it is destroyed.  Moving over icons does  not 
+slow  the TV down.  When pressure is released from  the  joystick 
+TV movement stops immediately. 
+   Whenever moving energy is used at a constant rate of units per 
+time.  Tentatively it will use 1 unit every 10 seconds of driving 
+time. (This will need to be calibrated)
+   If  an interaction is not occuring the default information  is 
+presented in the text window (see info display #3).
+
+-)  Pressing  the button while the joystick is pushed  - fires  a 
+weapon in the direction the joystick is pressed. Either the laser 
+or  the  stunner fires depending on which is  currently  mounted. 
+When  the  laser  is  fired a flickering  line  appears  in  that 
+direction.  The  line lasts for about 1/2 a second and goes about 
+3/4  of the distance from the TV to the edge of the View  Screen. 
+The  stunner  fires in a small cone rather than a line  and  goes 
+about 1/2 as far as the laser.  The laser uses 8 units of  energy 
+each time it is fired. The stunner uses 4. 
+   Each time the laser is fired,  if it hits,  it does from 20 to 
+100 points of damage.(determined randomly) [lifeforms may have up 
+to 256 hit points] The effect of the stunner on any given species 
+is  drawn  from that specie's Species record.  The  lifeform  may 
+either be 1) unaffected 2) stunned for some period of time or  3) 
+killed. 
+   It  is  impossible to hit a lifeform with a weapon when it  is 
+directly under the TV.  Thus lifeforms will never move there.  It 
+is possible for the TV to move over them,  though.  Lifeforms may 
+attack  the  TV from underneath,  or from any of the  8  adjacent 
+squares.  As many as 9 lifeforms may attack at once.  Whenever an 
+attack occurs the message is given "Captain,we're being attacked"
+and  the  crew's vitality is  modified  if  necessary.  Lifeforms 
+attacking  the  TV takes precedence over everything  else.  Other 
+activites are interupted if the player is busy when attacked.
+
+-)  Pressing  the  button twice at any time  without  moving  the 
+joystick  - causes the cursor in the option bar to be  controlled 
+by the joystick.
+
+-)  Pressing the joystick button whil on top of an icon  - causes 
+the following things to happen:
+  1) MINERAL DEPOSIT - The message is given " A deposit of _____. 
+  XX.X cubic meters. Shall we mine it Captain?  <-- NO  YES --> "       
+  If  the answer is "NO" then nothing happens.  If the answer  is 
+  "YES"  the message is given "Hold button down to mine." For  as 
+  long  as  the button is held down a "Dink-Dink" sound is  heard 
+  and  minerals  are  transfered from the ground  to  the  TV  in 
+  increments  of  1/10 of a cubic meter.  If all of the  minerals 
+  have been mined a message is given to that effect. If only part 
+  of  the minerals are mined,  and the mine is later returned  to 
+  (and  the  player has not left the planet) the  remainder  will 
+  still be there.  If the player leaves the planet,  all  partial 
+  deposits still remaining are thrown away.
+
+
+  NOTE:  Whenever the player wants to take on cargo, but there is 
+  not enough room, the message is given - "There is no more cargo 
+  space,  sir.  Shall we drop something?  <-- NO YES --> " If the 
+  answer  is "YES" the message is given "What shall we drop?" and 
+  a list of the cargo is given.  To the right of the list is  the 
+  word  "Quit".  The  list  has a highlighting cursor in  it  and 
+  scrolls  up and down.  Items in the list are presented  in  the 
+  following manner:
+  Lifeforms -
+            Item  no.  - Simily or # legges or symmetry (in  that 
+            priority) : XX.X cubic meters
+  Minerals -
+            Mineral name - : XX.X cubic meters
+  Artifacts - 
+            Artifact (estimated value) : XX.X cubic meters
+
+  As  many items as desired may be dropped.  Minerals are dropped 
+  in the same manner in which they are picked up - in  increments 
+  of  1/10 of a cubic meter.  Items remaining in the list  always 
+  keep the same item number.
+
+  NOTE:  The Terrain Vehicle,  a cargo pod, and the ship hold all 
+  have a capacity of 50 cubic meters. 
+       
+  2)  ANCIENT RUINS - The message is given "Very ancient  looking 
+  pyramid  shaped riuns of crystal." Then one of two messages  is 
+  given:  a) "Captain,  we have discovered XXX lumps of Endurium. 
+  (XX.X cubic meters) shall we take it?  <-- NO YES -->" ( 1 lump 
+  is  equivalent  to  1 unit of endurium and has a volume  of  .1 
+  cubic  meters,  or 1 cubic decimeter.) If the answer  is  "YES" 
+  give the message "Hold button down to pick up" and pick up like 
+  minerals.  OR  b) "Captain,  we have discovered a truly amazing 
+  artifact.  We estimate its value at _______ mu.s.  (XX.X  cubic 
+  meters)  Shall  we take it?  <-- NO YES -->" If the  answer  is 
+  "YES" give the message "Storing item # XX"
+
+  In any Ancient Ruin there is at least one thing to find.  There 
+  may be from 0 to 4 truly amazing artifacts.  Determine how many 
+  there are randomly:  60% theres 1
+                       25% theres 2
+                       10% theres 3
+                        5% theres 4
+  Also  determine  the  value of  each  artifact.  Truly  amazing 
+  artifacts  may  be  worth from 500 to 5000 mus.  Use  a  normal 
+  distribution  slope  with the peak at 500.  For  the  estimated 
+  value  roll  a RND no.  from -50% to 50% of the  actual  value. 
+  Again  use a normal distribution with the peak at 0.  Add  this 
+  value to the actual value to get the estimated value. (round to 
+  the nearest 100).
+
+  3) RECENT RUINS :  The message is given: "Ruins from the period 
+  of the Old Empire.  Then one of 2 messages: a) Captain, we have 
+  discovered  an amazing artifact.  We estimate its value at  XXX 
+  mu.s.  Shall we take it? <-- NO YES -->" There may be 0 to 4 of 
+  these (determined same as above,  and the value range is 50  to 
+  1000  mu.s.  (estimate  is determined same as above.) Then  the 
+  message  is  given:  "Storing item # XXX."    OR  b)  "We  have 
+  discovered  some  writing on _______.  It says  _______.  Press 
+  button  to  continue"  There  may  be from  0  to  4  of  these 
+  (determined same as the artifacts)
+
+
+
+  4)  DROPPED CARGO - The message says "Dropped Cargo".  It  then 
+  lists  each item as it was listed in the  drop-list  (including 
+  the item no.s) and for each item it asks:  "Shall we pick it up 
+  Cap'n?" If the answer is yes give the message "Restoring item # 
+  XX" for each item.
+
+  5) DEAD LIFEFORM - The message reads:  "A dead lifeform.  Shall 
+  we  record it in our data banks?  <-- NO YES -->" If the answer 
+  is "YES" there is a whiring noise while the word "Recording" is 
+  presented.  Then  it  reads "Data collection  completed,  sir." 
+  Recording uses 2 units of energy.
+
+  6)  A  LIFEFORM - The message  reads  "A  lifeform.
+                    ^
+  <-- IGNORE      CAPTURE    RECORD  -->  " If  the  response  is 
+  "Record" then do the same as above.  If the response is capture 
+  then  there  is a suspenseful noise.  Capturing takes  about  6 
+  seconds  while  recording takes about  3.  Capturing  does  not 
+  require  energy.  Capturing raises the aliens EDL.  During  the 
+  capturing  or  recording process if the alien is not mobile  it 
+  will  not run away.  If it is stunned it will not run  away  or 
+  attack.  If the alien runs away before the process is completed 
+  then  the attempt is aborted and the message is given :"it  got 
+  away".  If  the alien attacks before the process is completed , 
+  completion  of  the process is delayed.  The  party  will  take 
+  damage,  but  if  they  remain sooner or later the  process  of 
+  recording or capturing will be completed (of course they may be 
+  killed first)  If capturing is successful the message is given: 
+  "The  alien lifeform has been captured and put in  stasis.  Now 
+  loading into T.V." If there is enough room in cargo the message 
+  is given "The lifeform is stored as item # XX".
+     If  the  lifeform is captured or recorded a value  is  saved 
+  with  it.   When  the  player  returns  to  starport   recorded 
+  information  is automatically paid for.  Captured specimens may 
+  be  sold  in  the trade depot along  with  minerals.  Value  is 
+  computed as follows:
+    
+    Base Value:    A new class   -    50 + X
+                   A new order   -    20 + X
+                   A new species -     5 + X
+                   Same species  -     0
+   
+    X  is  a bonus given for valuable attributes and is given  in 
+    the  form  of  a % of the base value.  It is  given  for  the 
+    following things:
+    a) intelligence - intelligence is a number from 1 to 100. Use 
+                      this  number  as the % and add  it  to  the 
+                      base.
+    b)  niche - If the lifeform has B as its highest niche add 25 
+                % of the base.  If it has C as its highest  niche 
+                add  50% of the base.
+    c)   size - Take its size in cubic decimeters (with a max  of 
+                100) and add that as a %
+    d)  carbon - Carbon may be in one of 4 possible positions.
+                 none    -   add 50% of base
+                 3rd     -   add 30% of base
+                 2nd     -   add 10% of base
+                 1st     -   add 0
+  If  the  lifeform was recorded and it is dead cut its value  in 
+  half.
+  If the lifeform was captured multiply its value by 5. 
+
+
+
+LOOK  :  This option causes all movement on the screen to  freeze 
+and an eyeball to appear hovering in front of the screen  staring 
+at  the player.  A loud voice is then heard "You have sinned  and 
+now you shall pay." A lightening bolt then strikes the player and 
+he is banished to the depths of hell for the rest of eternity. In 
+the event that this doesn't happen the eyeball appears as an icon 
+on  the screen.  Moving the joystick moves the eyeball.  When the 
+button  is pressed a description of the icon the eyeball is  over 
+is given. 
+
+Lifeforms :  The detailed description is used from the  template. 
+In  addition  to  the physical description any  current  Movement 
+behavior is given as well as Alive/Dead/Stunned info is given.
+
+Minerals  :  "An  outcropping of  minerals.  Possibly  incredibly 
+valuable and useful"
+
+Ancient  Ruins :  "A very ancient looking  crystaline  structure, 
+beautiful and mysterious."
+
+Recent Ruins : A random description from a set of 8 ruins phrases
+
+Dropped Cargo : "Ex-Cargo (good with garlic and butter sauce)"
+
+Looking  takes no energy.  When in this mode a message is present 
+at the bottom "Hit any key for options"
+
+SCAN  :  This  option also causes all movement to  freeze  and  a 
+cursor  ( 4 inward arrows) to appear.  When the button is pressed 
+if  there  is  a  lifeform in the cursor  the  scanning  data  is 
+presented.  (See info display #3) Scanning uses 1 unit of energy. 
+Hitting any key returns to the option bar. If the attempt is made 
+to  scan  anything but a lifeform the message is given  :  "There 
+must be a lifeform present to scan".
+
+WEAPON :  This option simply allows the player to toggle the  two 
+weapons that can be mounted on the TV, the laser and the stunner. 
+This does not freeze the action. Thus the player must stop moving 
+to  affect  this  change,  and while it is occuring (it  takes  a 
+moment) animals may be moving or even attacking. 
+
+
+
+

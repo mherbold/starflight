@@ -1,0 +1,392 @@
+Ambient Designs   Proprietary                           5-9-84
+
+                 CONVERSATION MODULE DESCRIPTION
+
+Index:
+
+ 1. INTRODUCTION
+ 2. HOW COMMUNICATIONS ARE ESTABLISHED
+ 3. HOW COMMINICATIONS ARE TERMINATED
+ 4. HOW THE PERSONALITY OF THE ALIEN EFFECTS COMMUNICATION
+ 5. HOW PLAYER STRENGTH EFFECTS ALIEN POSTURE                        
+ 6. HOW PLAYER SELECTS A POSTURE
+ 7. HOW PLAYER POSTURE EFFECTS ALIEN POSTURE
+ 8. HOW PLAYER RESPONSES EFFECT ALIEN POSTURE
+ 9. WHAT IS THE PHRASE INTERVAL?
+10. HOW THE ALIEN'S TALKATIVENESS EFFECTS CONVERSATION FLOW
+11. WHY AN ALIEN TERMINATES A CONVERSATION
+12. WHAT ARE THE PLAYER'S OPTIONS?
+13. HOW ALIEN LANGUAGES ARE SIMULATED
+14. HOW THE ALIEN DECIDES WHAT PHRASE TO SEND 
+
+1. INTRODUCTION
+    
+The function of this module is to simulate a conversation between 
+the   player   and  an  alien  for  information   gathering   and 
+entertainment. 
+
+2. HOW COMMUNICATIONS ARE ESTABLISHED
+
+If  the player wishes to establish communications he  selects the 
+the  "HAIL/RESPOND"  option on the Communications  Officer  Menu. 
+Either the player or the computer-controlled alien may attempt to 
+Hail,  but  communications  are not established until  the  other 
+party responds.  When communications are established a picture of 
+the alien appears in the main view screen.
+
+
+3. HOW COMMINICATIONS ARE TERMINATED
+
+The  player terminates communication by selecting the "END  COMM" 
+option on the Communication Menu. 
+
+The alien will terminate communication for a variety of reasons.
+
+When communications are terminated, the message "-- COMMUNICATION 
+TERMINATED --" is displayed. 
+
+Once  communications  have  been  terminated  it  cannot  be  re-
+established   during  the same alien  encounter.  If  the  player 
+selects the "HAIL" option after communications are terminated the 
+player's  hailing  message  is sent but there will  be  no  alien 
+response.
+
+
+
+4. HOW THE PERSONALITY OF THE ALIEN EFFECTS COMMUNICATION
+
+The Emotional Disposition Level (EDL) of the alien determines the 
+posture  the  alien adopts when making a statement  or  asking  a 
+question.  The  EDL  is  a variable which fluctuates  during  the 
+conversation and may have a value from 0 to 100,  where 0 is most 
+calm and 100 is most agitatated.
+
+                           EDL RANGE
+
+            Friendly   Diplomatic   Hostile    Fight
+         |-----------A------------B==========C========|
+         |                         Obsequious  Flight |
+         0                                            100
+
+POSTURES  - The  EDL  range is divided  into  4  posture  regions 
+demarked  by threshold markers A thru C.  The posture regions are 
+defined as follows:  
+
+     REGION    POSTURE                 COMMENTS                      
+   -----------------------------------------------------------  
+     0-----A - FRIENDLY      cooperative, positive attitudes   
+     A-----B - DIPLOMATIC           neutral, aloof                     
+     B=====C - HOSTILE/OBSEQUIUS    abusive OR groveling
+     C===100 - FIGHT/FLIGHT         [NO COMMUNICATION]
+   -----------------------------------------------------------  
+
+The "personality" of each class of aliens is partially defined by 
+the  placement  of the posture threshold markers which  subdivide 
+the  EDL  range.  The  alien's current posture is  determined  by 
+comparing   where  his  current  EDL  is  relative  to  his   EDL 
+thresholds   AND  determining  whether  he  will  be  Hostile  or 
+Obsequious  while  in  region B====C (See  "How  Player  Strength 
+Effects Alien Posture").
+
+
+
+
+
+
+
+5. HOW PLAYER STRENGTH EFFECTS ALIEN POSTURE                        
+                 
+The  "rational alien" will curb his tendency to be  hostile  when 
+confronted with a stronger opponent until he can come to terms or 
+escape. To simulate this, a comparison of the attack strengths of 
+the   player  and  the  alien  is   made  and  modified  by   the 
+aggressiveness  of the alien to determine if the alien is HOSTILE 
+or  OBSEQUIOUS  when  his  EDL is between the  B  &  C  threshold 
+markers  (see  illustration  above).   This  strength  comparison 
+results in a number called the STRENGTH-DIFFERENTIAL.
+
+If the STRENGTH-DIFFERENTIAL is positive,  the OBSEQUIOUS posture 
+is selected;  if negative,  the HOSTILE posture is selected. 
+
+The formula for computing the STRENGTH-DIFFERENTIAL is as follows:
+
+STRENGTH-DIFFERENTIAL =  
+  PLAYER-STRENGTH - [ALIEN-STRENGTH*(AGRESSION-LEVEL/5)]
+
+   where: STRENGTH-DIFFENTIAL=player-alien strength comparison 
+          PLAYER-STRENGTH = player's current strength
+          ALIEN-STRENGTH  = alien's current strength
+          AGRESSION-LEVEL = alien's agressiveness as defined  in 
+                            the  "personality"  record  for   the 
+                            alien  ( see ORIGINATOR RECORD FORMAT 
+                            in TEXT DATA RECORDS)
+
+
+6. HOW THE PLAYER SELECTS A POSTURE
+
+The  player  has direct control over which posture he  adopts  by 
+selecting  it from a list of options on the  communication  menu. 
+The  player's  posture remains in effect until he opts to  change 
+it. The player may adopt any posture but FIGHT/FLIGHT which isn't 
+a communication posture.
+
+
+7. HOW PLAYER POSTURE EFFECTS ALIEN POSTURE
+
+Each class of aliens has, as part of it's "personality" record, a 
+constant  for each of the possible postures that the  player  can 
+adopt which is applied to the alien's EDL when the player  issues 
+a  statement  or  question.  This constant is  called the "Player 
+Posture Effect" (PPE).
+      
+The  rules for applying the Player Posture Effect to the  alien's 
+current EDL are as follows: 
+
+     1  - If the player issues a statement:
+
+          DELTA-EDL = PPE * [1/(#-THIS-POSTURE + 1)]
+
+     2  - If the player issues a question:
+
+          DELTA EDL = {PPE * [1/(#-THIS-POSTURE + 1)]}/2
+
+     where: DELTA-EDL      = the amount added to the current EDL
+            PPE            = the Player Posture Effect associated 
+                             with the player's current posture.
+            #-THIS-POSTURE = a count of the phrases issued by the 
+                             player since he selected his current
+                             posture.
+
+
+
+
+
+
+
+8. HOW PLAYER RESPONSES TO ALIEN QUESTIONS EFFECT ALIEN POSTURE
+
+Aliens  can either issue statements,  respond to player questions 
+or ask the player a yes/no question. If the alien asks the player 
+a yes/no question the following rules apply:
+
+   1  - The player can select either "yes" or "no" or ignore  the 
+        question.
+
+   2  - If the alien becomes impatient (the phrase  interval  has 
+        elapsed)  while  waiting for the player to  respond,  the 
+        alien will send a "What is your answer?" type phrase. 
+
+   3  - If the alien tires of waiting after prompting the  player 
+        with a "What is your answer?" type phrase, the alien will 
+        assume a "no" response to the pending yes/no question.
+
+Each  phrase has an EDL Effect for  both "yes" and "no" responses 
+which  is simply added to the alien's EDL.  (see  PHRASE  CONTROL 
+RECORD FORMAT in TEXT DATA RECORDS).
+
+9. WHAT IS THE PHRASE INTERVAL?
+
+The Phrase Interval is the amount of time that the phrase display 
+routine    will  wait after displaying a phrase before  the  next 
+phrase  can  be displayed.  The real time clock is used  for  the 
+timing  of this interval. 
+
+When  the  player  sends a phrase,  the Phrase Interval  for  the 
+previous  phrase  is set to the minimum,  2  seconds.  The  alien 
+cannot issue any phrases until after the Phrase Interval for  the 
+last phrase has elapsed. 
+
+The  value of the Phrase Interval for each type of phrase  is  as 
+follows:
+                                             PHRASE      
+          PHRASE TYPE                     INTERVAL(SECS)   
+        -------------------------------------------------  
+         Alien: Hailing Request................10          
+         Alien: Hailing Response................6          
+         Alien: Statement......................10          
+         Alien: Conversation Lag...............10          
+         Alien: Hostile    Y/N question........10          
+         Alien: Diplomatic Y/N question........15          
+         Alien: Friendly   Y/N question........20          
+         Alien: Obsequious Y/N question........30          
+         Player: Statement......................6          
+         Player: Question.......................6        
+        -------------------------------------------------         
+                 
+
+
+
+
+
+10. HOW DOES THE ALIEN'S TALKATIVENESS EFFECT CONVERSATION FLOW?
+                 
+Each  class  of aliens has a Talkativeness Percentage as part  of 
+their "personality" record. The Talkativeness Percentage controls 
+the  likelyhood  that  the alien will issue or answer  a  hailing 
+request.  The alien will send a hailing phrase if a random number 
+between  1  and  100 falls below it's  Talkativeness  Percentage. 
+                 
+Once  communications  have been  established,  the  Talkativeness 
+Percentage  for  all aliens is 70%.  This figure  influences  the 
+frequency of alien conversation lags, where he sends no phrase.
+                 
+11. WHY AN ALIEN TERMINATES A CONVERSATION
+
+An  alien will terminate a conversation when one of the following 
+cases occurs:
+
+     1  - TOO AGITATED TO TALK - this occurs when the alien's EDL 
+          increases  to the point where the FIGHT/FLIGHT  posture 
+          is selected.
+
+     2 - TIRED OF TALKING - this occurs when the number of  alien 
+         phrases  given equals the number of phrases allowed  for 
+         the  conversation.  When the conversation is initiated a          
+         maximum number of alien phrases for the conversation  is          
+         computed  by  selecting  a random number  in  the  range          
+         determined by the alien's initial posture, where:
+                                
+                                      # ALIEN PHRASES 
+                      POSTURE         MIN        MAX
+                ---------------------------------------
+                      OBSEQUIOUS      10         20
+                      FRIENDLY         5         15
+                      DIPLOMATIC       3          8
+                      HOSTILE          2          5
+                ---------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+12. WHAT ARE THE PLAYER'S OPTIONS?
+
+The  illustration below shows the options available to the player 
+throughout the communication procedure.
+
+                  
+                      BRIDGE
+                        |
+                        |
+  ---------->---COMMUNICATIONS OFFICER---
+  |          | [1] HAIL or RESPOND---------->
+  |          | [2] DISTRESS             |   |
+  |          | [3] HOMING DRONE         |   |
+  |          | [4] BRIDGE               |   |
+  |          ----------------------------   |
+  |                                         | 
+  |                      <-------------------
+  |                      |
+  |      --------------->|
+  |      |               |
+  |      |      -- POSTURE OPTIONS ---                    
+  |      |      | [1] HOSTILE        |
+  |      |      | [2] DIPLOMATIC     |
+  |      |      | [3] FRIENDLY       |
+  |      |      | [4] OBSEQUIOUS     |
+  |      |      ----------------------
+  |      |               |
+  |      |               |<-------------------------
+  |      |               |                         |
+  |      |               |                  --QUESTION TOPICS---
+  |      |    --COMMUNICATION OPTIONS--     | [1] THEMSELVES   |
+  |      |    | [1] SEND STATEMENT    |     | [2] OTHER RACES  |
+  |      |    | [2] ASK QUESTION----------->| [3] OLD EMPIRE   |
+  |      <----| [3] CHANGE POSTURE    |     | [4] ANCIENT ONES | 
+  <-----------| [4] END               |     | [5] GENERAL INFO | 
+              |{[5] YES}--            |     -------------------- 
+              |{[6] NO }-|            |      
+              -----------|-------------      
+                         |                   
+                         ----- NOTE: Only displayed when an
+                                     alien question is pending.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+13. HOW ALIEN LANGUAGES ARE SIMULATED
+
+To  simulate that the player is communicating with an alien race, 
+all  or  none  of each phrase originated by  the  alien  will  be 
+scrambled.  (All player initiated phrases    are displayed in  an 
+un-scrambled  form.) The factors which control the scrambling  of 
+alien phrases are as follows:
+
+        1 - All phrases will be un-scrambled if any member of the             
+            player's  crew  is the same race as the race  of  the             
+            alien.
+
+        2 - The  setting  of  flag  SCRAMBLE  in  the   alien's 
+            "personality" record. 
+
+        3 - The skill level of the communications officer,  where 
+            the percentage of unscrambled words is equal to:
+
+            %UNSCRAMBLED = COMM-OFFICER-SKILL * 2 
+
+Scrambled  words  are  replaced with words composed of  a  random 
+number of syllables (from 1 to the maximum for that alien  class) 
+selected from a Syllabary Table characteristic of that race. (See 
+Text Data Record Format document). 
+
+The phrase frequency bytes is incremented only for phrases  given 
+entirely un-scrambled.
+
+
+14. HOW ALIEN DECIDES WHAT TYPE OF PHRASE TO SEND
+
+If the player has asked the alien for information:
+
+    1  - A  check is made for phrases in the alien's phrase  pool 
+         that match the question topic and whose frequency counts 
+         don't exceed the frequency limit for the phrase. 
+
+    2  - If a phrase is not found, send an "I don't know phrase". 
+
+    3  - If more than one phrase exists for the topic select  the 
+         one with the lowest frequency count.
+
+If the alien can initiate a phrase:
+
+    1  - If a random number between 1 and 100 falls in the region 
+         above 70,  the alien doesn't send a phrase but sets  the 
+         phrase interval for a conversation lag.
+
+    2 - else,  build a list of the least frequently given phrases 
+        and randomly select from amoung that list.
+
+    3 - if no phrase is found with a frequency count less  that 
+        the frequency limit, issue a conversation lag.
+
+                                #
+
+
+
+
+
+
+

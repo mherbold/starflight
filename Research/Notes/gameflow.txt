@@ -1,0 +1,125 @@
+
+
+Ambient Designs    proprietary                        10 APR 84
+
+
+                            GAMEFLOW
+
+            Ship Movement and Spacial Representation
+
+SECTOR MAP: In hyperspace the following things are represented on
+the screen. They are always on a black background.
+
+  Sectors  - 6(wide) by 5(high) sectors which are 12(wide) by  24 
+            (high) pixels each. Sector boundries are not visible.
+    Stars - solid circles of 10 by 10 square-pixels in colors of
+            red, orange, yellow, white, white-green, white-blue 
+            and cyan.
+  Nebulae - solid amorphous shapes in dark blue and in various
+            sizes. Types consist of gas, magnetic and non-
+            distinguishable. Stars within nebulae are not
+            visible.
+User Ship - a white square-pixel surrounded by a ring of dark red 
+            square-pixels.
+ Nav Ring - a ring of 16 cyan pixels highlighting the specified
+            direction with a yellow pixel.
+
+When hyperspace is entered the heading is initially upwards. 
+When in hyperspace movement cannot be halted. You can drop out of 
+hyperspace  by 1) hitting the sublight option ,  or 2) having  an 
+encounter , or 3) comong to a star system. Movement is at a 
+constant rate. Direction is modified by maneuvering with the Nav-
+Ring in one of 16 directions. When not maneuvering, movement
+occurs on the last heading set. Moving the joystick in 1 of 8
+directions rotates the heading pixel around the Nav-Ring in a
+counter or clock-wise direction whichever way is shorter.
+Pressing the button does nothing. Hitting any key returns you
+to the Bridge. The Nav-Ring is only present when maneuvering. 
+When the ship icon overlaps a star icon, (either a visible one or 
+an invisible one inside a nebulae) or there is an encounter, the 
+white outline of a box rapidly fills the screen, starting as a 
+dot at the ship, to give the impression of zooming in. The 
+interior of the box is dark blue if inside a nebula, otherwise it 
+is black. On the screen is now either a tactical map or a system 
+map. When the ship hits a continum flux sector the  main-view 
+screen rapidly flashes through a series of random colors and the 
+ship appears at a rankom sector adjacent to the destination 
+sector. At all times the current coordinates are shown above the 
+MVS.
+
+TACTICAL MAP: On the tactical screen the following things are 
+represented by icons. They are on a dark blue background if 
+inside a nebula, otherwise they're on a black background.
+    
+      Spacedust - random scattering of grey-green pixels
+      User Ship - grey directional phalic icon
+      Alien Ships, buoys, probes etc. - grey cross icon
+      Planet - A solid blue,  white, brown, red, violet, or green 
+               circle 50, 100, or 150 square-pixels across.
+
+Control of movement: When the joystick is pushed in one of the 8 
+directions, if the ship is pointing in that direction it thrusts 
+that way. If the ship is facing another direction it turns 
+(clockwise or counter clockwise, whichever is shorter) to that 
+direction cycling through the 16 positions. When the joystick 
+pressure is released the ship stops turning. It may face (and
+shoot) in 16 directions but thrust in only 8. Pressing the button 
+fires  the  weapons  when they are armed.  The player's  ship  is 
+always  in  the  center of the  screen.  The  encounter  area  is 
+216(wide)  by 360(high) pixels.  This leaves a border of one main 
+view screen around what is visible.  All encounters start in  the 
+visible  portion  of the screen.  When no objects other than  the 
+player's  ship are in the encounter area a message to the  effect 
+of "We have lost contact" is given and the encounter is ended. If 
+an  encounter occurs when a ship is in orbit the ship drops to  a 
+tactical map which has a planet in it. The planet may be one of 3 
+sizes  and 1 of 6 colors and always has the same  orientation  to 
+the  ship initially.   Spacedust doesn't cover the planet.  Ships 
+and weapons move OVER the planet,  and it scrolls around and does 
+not affect anything.  Whenever an encounter from hyperspace  ends 
+the ship is left in the tactical mode. Whenever an encounter from 
+a  system  ends the ship is poppepd back up to the system  level. 
+When an encounter from orbit ends the ship is also popped back up 
+to the system level.    
+
+SYSTEM MAP:
+In a system the following things are represented.  The icons  are 
+on a dark blue background if in a nebula, otherwise it is black.
+
+The  Star  - A solid circle of 4 by 4 square-pixels (4 wide by  8 
+high).  One of seven colors (same as in hyperspace)
+   
+Planets - are 1 square-pixel and are of one of the following 
+colors: 
+                1. dk-cyan ... liquid surface
+                2. dk-green .. bio-density
+                3. white ..... snow/ice planet
+                4. dk-red .... lava/molten surface
+                5. dk-brown .. any other (rock)
+                6. violet .... gas giant
+
+Your ship - A single white flashing pixel
+
+Other ships (bouys etc..) - Single grey pixels
+
+MOVEMENT - Unlike the sector and tactical maps, where there is 
+Newtonian movement , on the system map the ship icon (flashing 
+pixel) acts like a cursor and moves in 1 of 8 directions. When the 
+joystick pressure is released movement ceases. Encounters may
+occur on this map which will drop you to the tactical level. 
+Weapons may not be fired at this level since no facing is shown.
+Also,  everything  is out of range at this level for  sensors  or 
+communications.   Hull  temperature is affected by distance  from 
+the sun,  and is interpolated from the orbit position/temperature 
+table  as  movement  occurs.  The movement rate of  the  ship  is 
+affected by its acceleration rate.   When within one square-pixel 
+of  a  planet  or sun the option to orbit is  given.  It  is  not 
+possible  to crash into anything (planets,sun,other ships).  They 
+are  just assumed to not be in the same plane.  The  planets  are 
+placed  somewhere randomly in their orbit positions each time the 
+system is entered.  Distances from the center pixel are  computed 
+as :orbit position (0-10) + 1 times 2 in the X and times 3 in the
+Y. The centerpoint is 36,60 so if the X coord. is < 36 subtract 1
+from the X distance,  and if the Y coord. is > 60 subtract 1 from 
+the  Y distance.  (See the reverse side of the auxilliary  screen 
+layout sheet for diagram.)  

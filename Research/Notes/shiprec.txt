@@ -1,0 +1,55 @@
+Ambient Designs     proprietary                        11 APR 84
+
+                           SHIP RECORD
+
+ No. of pods           (0-16)     Pod #1 (0-3)    Pod  #9 (0-3)            
+ Shield class           (0-5)     Pod #2 (0-3)    Pod #10 (0-3)
+ Armor class            (0-5)     Pod #3 (0-3)    Pod #11 (0-3)
+ Missle class           (0-5)     Pod #4 (0-3)    Pod #12 (0-3)
+ Laser class            (0-5)     Pod #5 (0-3)    Pod #13 (0-3)
+ Mass - metric tons (100-500)     Pod #6 (0-3)    Pod #14 (0-3)
+ Accel - g's           (1-25)     Pod #7 (0-3)    Pod #15 (0-3)
+                                  Pod #8 (0-3)    Pod #16 (0-3)
+
+        Pod code ... 0=none, 1=attatched, 2=empty, 3=full
+
+        Damage Range -    Hull ....... (0-100)      
+                          Engines .... (0-100)
+                          Sensors .... (0-100)
+                          Comm ....... (0-100)
+                          Shields .... (0-100)
+                          Missles .... (0-100)
+                          Lasers ..... (0-100)
+
+    Travel mode  (hyperspace/jump-to/sys/tac/orbit) ...(0-4)
+    Hull temp - degrees C ................ ( -273 to 4,500 )
+    Food - paks ............................ ( 0 to 99,999 )
+    Fuel - KG units ......................... ( 0 to 9,999 )
+    Weapon arming condition ..................... ( 0 to 3 )
+    Shield up/down condition .................... ( 0 to 1 )
+    Energy drainage rate - KG/sec .............. ( 0 to 15 )
+    Current shield power - disapation % ....... ( 0 to 100 )
+    Current shield power - front % ............ ( 0 to 100 )
+    Current shield power - left % ............. ( 0 to 100 )
+    Current shield power - right % ............ ( 0 to 100 )
+    Current shield power - rear % ............. ( 0 to 100 )
+
+Arming code - 0=armed, 1=unarmed, 2=arming(6sec), 3=rearming(2sec)
+
+                      STARSHIP CREW RECORD  
+
+        Skill Levels                       Misc. Level            
+ Navigator .......... (0-250)    Comm Off Race - type ..... (0-4)
+ Sci Off ............ (0-250)    Engr repairing - task # .. (0-7)
+ Engineer ........... (0-250)    Doctor treating - who .... (0-6)
+ Comm Off ........... (0-250)
+ Doctor ............. (0-250)
+
+    Healing:                        
+              Duration of treatment ............. (0-30 sec)
+      CRM #1: Amt of hit pts left to heal .......... (0-200)
+      CRM #2:  "      "      "      "                   "
+      CRM #3:  "      "      "      "                   "
+      CRM #4:  "      "      "      "                   "
+      CRM #5:  "      "      "      "                   "
+      CRM #6:  "      "      "      "                   "
