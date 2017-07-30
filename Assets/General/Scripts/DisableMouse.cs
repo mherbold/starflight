@@ -17,7 +17,7 @@ class DisableMouse : MonoBehaviour
 	void Update()
 	{
 		// check if we have an active ui
-		if ( EventSystem.current != null )
+		if ( false && ( EventSystem.current != null ) )
 		{
 			// check if we have a currently selected game object
 			if ( EventSystem.current.currentSelectedGameObject == null )
