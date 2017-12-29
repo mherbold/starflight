@@ -2,7 +2,7 @@
 
 [Serializable]
 
-public class Sheilding
+public class ShipPartGameData
 {
 	public int m_class;
 	public int m_buyPrice;

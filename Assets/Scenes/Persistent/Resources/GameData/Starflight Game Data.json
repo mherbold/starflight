@@ -173,7 +173,7 @@
       "m_averageWeight" : "120 KG"
     }
   ],
-  "m_shipBasics" : {
+  "m_shipGameData" : {
     "m_baseShipMass" : 50,
     "m_cargoPodBuyPrice" : 500,
     "m_cargoPodSellPrice" : 500,
@@ -235,7 +235,7 @@
       "m_accelerationScale" : 1.25
     }
   ],
-  "m_sheildingList" : [
+  "m_shieldingList" : [
     {
       "m_class" : 0,
       "m_buyPrice" : 0,

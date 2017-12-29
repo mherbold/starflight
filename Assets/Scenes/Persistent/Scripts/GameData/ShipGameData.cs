@@ -3,7 +3,7 @@ using System;
 
 [Serializable]
 
-public class ShipBasics
+public class ShipGameData
 {
 	public int m_baseShipMass;
 	public int m_cargoPodBuyPrice;

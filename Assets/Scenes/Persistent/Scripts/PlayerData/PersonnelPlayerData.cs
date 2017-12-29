@@ -69,7 +69,7 @@ public class PersonnelPlayerData
 	public List<Personnel> m_personnelList;
 
 	// reset the personnel player data
-	public PersonnelPlayerData()
+	public void Reset()
 	{
 		// reset the file id numbering
 		m_nextFileId = 0;

@@ -151,6 +151,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_gameDataFileName: Starflight Game Data
   m_playerDataFileName: PlayerData.bin
+  m_gameData:
+    m_noticeList: []
+    m_raceList: []
+    m_shipBasics:
+      m_baseShipMass: 0
+      m_cargoPodBuyPrice: 0
+      m_cargoPodSellPrice: 0
+      m_cargoPodMass: 0
+    m_enginesList: []
+    m_shieldingList: []
+    m_armorList: []
+    m_missileLauncherList: []
+    m_laserCannonList: []
   m_playerData:
     m_starflightPlayerData:
       m_currentStardate: 
@@ -173,11 +186,13 @@ MonoBehaviour:
       m_name: 
       m_numCargoPods: 0
       m_enginesClass: 1
-      m_sheildingClass: 0
+      m_shieldingClass: 0
       m_armorClass: 0
       m_missileLauncherClass: 0
       m_laserCannonClass: 0
-  m_resetPlayerData: 0
+      m_mass: 0
+      m_acceleration: 0
+  m_resetPlayerData: 1
 --- !u!114 &919755014
 MonoBehaviour:
   m_ObjectHideFlags: 0

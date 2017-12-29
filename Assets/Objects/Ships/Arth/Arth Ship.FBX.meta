@@ -156,6 +156,8 @@ ModelImporter:
     100296: Pod Socket 08
     100298: Pod Socket 09
     100300: Pod Socket 16
+    100302: Laser Cannon
+    100304: Missile Launcher
     400000: //RootNode
     400002: Barrel
     400004: Barrel - Left
@@ -307,6 +309,8 @@ ModelImporter:
     400296: Pod Socket 08
     400298: Pod Socket 09
     400300: Pod Socket 16
+    400302: Laser Cannon
+    400304: Missile Launcher
     2300000: Barrel
     2300002: Barrel - Left
     2300004: Barrel - Right

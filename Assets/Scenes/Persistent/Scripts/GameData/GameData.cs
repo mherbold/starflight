@@ -5,12 +5,12 @@ using System;
 
 public class GameData : GameDataFile
 {
-	public Notice[] m_noticeList;
-	public Race[] m_raceList;
-	public ShipBasics m_shipBasics;
-	public Engines[] m_enginesList;
-	public Sheilding[] m_sheildingList;
-	public Armor[] m_armorList;
-	public MissileLauncher[] m_missileLauncherList;
-	public LaserCannon[] m_laserCannonList;
+	public NoticeGameData[] m_noticeList;
+	public RaceGameData[] m_raceList;
+	public ShipGameData m_shipGameData;
+	public EnginesGameData[] m_enginesList;
+	public SheildingGameData[] m_shieldingList;
+	public ArmorGameData[] m_armorList;
+	public MissileLauncherGameData[] m_missileLauncherList;
+	public LaserCannonGameData[] m_laserCannonList;
 }

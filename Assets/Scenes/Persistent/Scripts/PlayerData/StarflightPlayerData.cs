@@ -7,7 +7,7 @@ public class StarflightPlayerData
 {
 	public string m_currentStardate;
 
-	public StarflightPlayerData()
+	public void Reset()
 	{
 		// reset the current stardate
 		m_currentStardate = "4620-01-01";

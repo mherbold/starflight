@@ -78,7 +78,7 @@ public class NoticesController : MonoBehaviour
 
 		for ( int i = 0; i < gameData.m_noticeList.Length; i++ )
 		{
-			Notice notice = gameData.m_noticeList[ i ];
+			NoticeGameData notice = gameData.m_noticeList[ i ];
 
 			if ( string.Compare( playerData.m_starflightPlayerData.m_currentStardate, notice.m_stardate ) >= 0 )
 			{
@@ -236,7 +236,7 @@ public class NoticesController : MonoBehaviour
 		GameData gameData = PersistentController.m_instance.m_gameData;
 
 		// get the current notice
-		Notice currentNotice = gameData.m_noticeList[ m_currentNoticeIndex ];
+		NoticeGameData currentNotice = gameData.m_noticeList[ m_currentNoticeIndex ];
 
 		// check if we are displaying the first line
 		if ( m_currentLine == 0 )

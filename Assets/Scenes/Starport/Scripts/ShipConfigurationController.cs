@@ -9,12 +9,12 @@ public class ShipConfigurationController : PanelController
 {
 	enum State
 	{
-		MenuBar, GiveName
+		MenuBar, BuyPart, SelectClass, GiveName, ErrorMessage
 	}
 
 	enum GameObjects
 	{
-		OverlayPanel, NamePanel, GameObjectCount
+		OverlayPanel, NamePanel, ErrorPanel, SelectedPartPanel, SelectionXform, UpArrowImage, DownArrowImage, GameObjectCount
 	}
 
 	// public stuff we want to set using the editor
@@ -25,16 +25,37 @@ public class ShipConfigurationController : PanelController
 	public Button m_exitButton;
 	public GameObject m_overlayPanel;
 	public GameObject m_namePanel;
+	public GameObject m_errorPanel;
+	public TextMeshProUGUI m_errorMessageText;
 	public InputField m_nameInputField;
-	public TextMeshProUGUI m_currentConfigurationValues;
+	public TextMeshProUGUI m_componentNamesText;
+	public TextMeshProUGUI m_componentValuesText;
+	public TextMeshProUGUI m_configurationValuesText;
+	public TextMeshProUGUI m_statusValuesText;
+	public TextMeshProUGUI m_currentBalanceText;
+	public Image m_upArrowImage;
+	public Image m_downArrowImage;
+	public Image m_shieldImage;
+	public GameObject m_selectedPartPanel;
+	public GameObject m_selectionXform;
+	public GameObject m_missileLauncher;
+	public GameObject m_laserCannon;
+	public GameObject[] m_cargoPods;
 
 	// private stuff we don't want the editor to see
 	private StarportController m_starportController;
 	private InputManager m_inputManager;
 	private State m_currentState;
+	private int m_currentPartIndex;
+	private int m_currentClassIndex;
+	private Vector3 m_baseSelectionOffsetMin;
+	private Vector3 m_baseSelectionOffsetMax;
 	private float m_ignoreControllerTimer;
 
 	// constant values
+	private const int c_numParts = 6;
+	private const int c_numClasses = 5;
+	private const int c_numComponentValuesLines = 13;
 
 	// this is called by unity before start
 	private void Awake()
@@ -47,6 +68,11 @@ public class ShipConfigurationController : PanelController
 
 		// reset the ignore controller timer
 		m_ignoreControllerTimer = 0.0f;
+
+		// remember the base selection offset
+		RectTransform rectTransform = m_selectionXform.GetComponent<RectTransform>();
+		m_baseSelectionOffsetMin = rectTransform.offsetMin;
+		m_baseSelectionOffsetMax = rectTransform.offsetMax;
 	}
 
 	// this is called by unity once at the start of the level
@@ -65,6 +91,152 @@ public class ShipConfigurationController : PanelController
 		// call the proper update function based on our current state
 		switch ( m_currentState )
 		{
+			case State.BuyPart:
+			{
+				UpdateControllerForBuyPartState();
+				break;
+			}
+
+			case State.SelectClass:
+			{
+				UpdateControllerForSelectClassState();
+				break;
+			}
+
+			case State.ErrorMessage:
+			{
+				UpdateControllerForErrorMessageState();
+				break;
+			}
+		}
+	}
+
+	// controller updates for when we are in the buy part state
+	private void UpdateControllerForBuyPartState()
+	{
+		// get the controller stick position
+		float y = m_inputManager.GetRawY();
+
+		// check if we moved the stick down
+		if ( y <= -0.5f )
+		{
+			if ( m_ignoreControllerTimer == 0.0f )
+			{
+				m_ignoreControllerTimer = 0.3f;
+
+				if ( m_currentPartIndex < ( c_numParts - 1 ) )
+				{
+					m_currentPartIndex++;
+
+					UpdateScreen();
+
+					GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
+				}
+			}
+		}
+		else if ( y >= 0.5f ) // check if we have moved the stick up
+		{
+			if ( m_ignoreControllerTimer == 0.0f )
+			{
+				m_ignoreControllerTimer = 0.3f;
+
+				if ( m_currentPartIndex > 0 )
+				{
+					m_currentPartIndex--;
+
+					UpdateScreen();
+
+					GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
+				}
+			}
+		}
+		else // we have centered the stick
+		{
+			m_ignoreControllerTimer = 0.0f;
+		}
+
+		// check if we have pressed the fire button
+		if ( m_inputManager.GetSubmitDown() )
+		{
+			BuySelectedPart();
+		}
+
+		// check if we have pressed the cancel button
+		if ( m_inputManager.GetCancelDown() )
+		{
+			SwitchToMenuBarState();
+
+			GetComponent<UISoundController>().Play( UISoundController.UISound.Deactivate );
+		}
+	}
+
+	// controller updates for when we are in the select class state
+	private void UpdateControllerForSelectClassState()
+	{
+		// get the controller stick position
+		float y = m_inputManager.GetRawY();
+
+		// check if we moved the stick down
+		if ( y <= -0.5f )
+		{
+			if ( m_ignoreControllerTimer == 0.0f )
+			{
+				m_ignoreControllerTimer = 0.3f;
+
+				if ( m_currentClassIndex < ( c_numClasses - 1 ) )
+				{
+					m_currentClassIndex++;
+
+					UpdateScreen();
+
+					GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
+				}
+			}
+		}
+		else if ( y >= 0.5f ) // check if we have moved the stick up
+		{
+			if ( m_ignoreControllerTimer == 0.0f )
+			{
+				m_ignoreControllerTimer = 0.3f;
+
+				if ( m_currentClassIndex > 0 )
+				{
+					m_currentClassIndex--;
+
+					UpdateScreen();
+
+					GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
+				}
+			}
+		}
+		else // we have centered the stick
+		{
+			m_ignoreControllerTimer = 0.0f;
+		}
+
+		// check if we have pressed the fire button
+		if ( m_inputManager.GetSubmitDown() )
+		{
+			BuySelectedPart();
+		}
+
+		// check if we have pressed the cancel button
+		if ( m_inputManager.GetCancelDown() )
+		{
+			SwitchToBuyPartState( false );
+
+			GetComponent<UISoundController>().Play( UISoundController.UISound.Deactivate );
+		}
+	}
+
+	private void UpdateControllerForErrorMessageState()
+	{
+		// check if we have pressed the fire or cancel button
+		if ( m_inputManager.GetSubmitDown() || m_inputManager.GetCancelDown() )
+		{
+			SwitchToMenuBarState();
+
+			GetComponent<UISoundController>().Play( UISoundController.UISound.Deactivate );
 		}
 	}
 
@@ -138,6 +310,41 @@ public class ShipConfigurationController : PanelController
 		m_buyButton.Select();
 	}
 
+	// call this to switch to the buy part state
+	private void SwitchToBuyPartState( bool resetCurrentPartIndex = true )
+	{
+		// change the current state
+		m_currentState = State.BuyPart;
+
+		// select the first part by default
+		if ( resetCurrentPartIndex )
+		{
+			m_currentPartIndex = 0;
+		}
+
+		// update the screen
+		UpdateScreen();
+
+		// debounce the input
+		m_inputManager.DebounceNextUpdate();
+	}
+
+	// call this to switch to the select class state
+	private void SwitchToSelectClassState()
+	{
+		// change the current state
+		m_currentState = State.SelectClass;
+
+		// select the first part by default
+		m_currentClassIndex = 0;
+
+		// update the screen
+		UpdateScreen();
+
+		// debounce the input
+		m_inputManager.DebounceNextUpdate();
+	}
+
 	// call this to switch to the give name state
 	private void SwitchToGiveNameState()
 	{
@@ -157,18 +364,47 @@ public class ShipConfigurationController : PanelController
 		m_nameInputField.Select();
 	}
 
+	// call this to switch to the error message state
+	private void SwitchToErrorMessageState( string errorMessage )
+	{
+		// deselect all the buttons
+		EventSystem.current.SetSelectedGameObject( null );
+
+		// change the current state
+		m_currentState = State.ErrorMessage;
+
+		// update the screen
+		UpdateScreen();
+
+		// set the error message
+		m_errorMessageText.text = errorMessage;
+
+		// play a ui sound
+		GetComponent<UISoundController>().Play( UISoundController.UISound.Error );
+	}
+
 	// call this whenever we change state or do something that would result in something changing on the screen
 	private void UpdateScreen()
 	{
+		// clear out the component values text
+		m_componentValuesText.text = "";
+
 		// reset game objects and buttons
 		bool[] gameObjectIsVisible = new bool[ (int) GameObjects.GameObjectCount ];
 
 		switch ( m_currentState )
 		{
-			// we're not doing anything particular at the moment
-			case State.MenuBar:
+			// we are currently buying parts
+			case State.BuyPart:
 			{
-				UpdateScreenForMenuBarState( gameObjectIsVisible );
+				UpdateScreenForBuyPartState( gameObjectIsVisible );
+				break;
+			}
+
+			// we are currently selecting a class
+			case State.SelectClass:
+			{
+				UpdateScreenForSelectClassState( gameObjectIsVisible );
 				break;
 			}
 
@@ -176,6 +412,13 @@ public class ShipConfigurationController : PanelController
 			case State.GiveName:
 			{
 				UpdateScreenForGiveNameState( gameObjectIsVisible );
+				break;
+			}
+
+			// we are currently showing the error message
+			case State.ErrorMessage:
+			{
+				UpdateScreenForErrorMessageState( gameObjectIsVisible );
 				break;
 			}
 		}
@@ -192,23 +435,117 @@ public class ShipConfigurationController : PanelController
 		// show or hide game objects now
 		m_overlayPanel.gameObject.SetActive( gameObjectIsVisible[ (int) GameObjects.OverlayPanel ] );
 		m_namePanel.gameObject.SetActive( gameObjectIsVisible[ (int) GameObjects.NamePanel ] );
+		m_errorPanel.gameObject.SetActive( gameObjectIsVisible[ (int) GameObjects.ErrorPanel ] );
+		m_selectedPartPanel.gameObject.SetActive( gameObjectIsVisible[ (int) GameObjects.SelectedPartPanel ] );
+		m_selectionXform.gameObject.SetActive( gameObjectIsVisible[ (int) GameObjects.SelectionXform ] );
+		m_upArrowImage.gameObject.SetActive( gameObjectIsVisible[ (int) GameObjects.UpArrowImage ] );
+		m_downArrowImage.gameObject.SetActive( gameObjectIsVisible[ (int) GameObjects.DownArrowImage ] );
+
+		// get the player data
+		PlayerData playerData = PersistentController.m_instance.m_playerData;
 
 		// get the ship configuration player data
-		ShipConfigurationPlayerData shipConfigurationPlayerData = PersistentController.m_instance.m_playerData.m_shipConfigurationPlayerData;
+		ShipConfigurationPlayerData shipConfigurationPlayerData = playerData.m_shipConfigurationPlayerData;
 
-		// update right panel text
-		m_currentConfigurationValues.text = shipConfigurationPlayerData.m_numCargoPods.ToString() + Environment.NewLine;
-		m_currentConfigurationValues.text += Environment.NewLine;
-		m_currentConfigurationValues.text += shipConfigurationPlayerData.GetEnginesClassString() + Environment.NewLine;
-		m_currentConfigurationValues.text += shipConfigurationPlayerData.GetSheildingClassString() + Environment.NewLine;
-		m_currentConfigurationValues.text += shipConfigurationPlayerData.GetArmorClassString() + Environment.NewLine;
-		m_currentConfigurationValues.text += shipConfigurationPlayerData.GetMissileLauncherClassString() + Environment.NewLine;
-		m_currentConfigurationValues.text += shipConfigurationPlayerData.GetLaserCannonClassString() + Environment.NewLine;
+		// update configuration values
+		m_configurationValuesText.text = shipConfigurationPlayerData.m_numCargoPods.ToString() + Environment.NewLine;
+		m_configurationValuesText.text += Environment.NewLine;
+		m_configurationValuesText.text += shipConfigurationPlayerData.GetEnginesClassString() + Environment.NewLine;
+		m_configurationValuesText.text += shipConfigurationPlayerData.GetSheildingClassString() + Environment.NewLine;
+		m_configurationValuesText.text += shipConfigurationPlayerData.GetArmorClassString() + Environment.NewLine;
+		m_configurationValuesText.text += shipConfigurationPlayerData.GetMissileLauncherClassString() + Environment.NewLine;
+		m_configurationValuesText.text += shipConfigurationPlayerData.GetLaserCannonClassString() + Environment.NewLine;
+
+		// show only as many cargo pods as we have purchased
+		for ( int i = 0; i < m_cargoPods.Length; i++ )
+		{
+			m_cargoPods[ i ].SetActive( i < shipConfigurationPlayerData.m_numCargoPods );
+		}
+
+		// hide or show the shield image depending on if we have them
+		m_shieldImage.gameObject.SetActive( shipConfigurationPlayerData.m_shieldingClass > 0 );
+
+		// hide or show the missile launchers depending on if we have them
+		m_missileLauncher.SetActive( shipConfigurationPlayerData.m_missileLauncherClass > 0 );
+
+		// hide or show the missile launchers depending on if we have them
+		m_laserCannon.SetActive( shipConfigurationPlayerData.m_laserCannonClass > 0 );
+
+		// update status values
+		m_statusValuesText.text = shipConfigurationPlayerData.m_mass + " Tons" + Environment.NewLine;
+		m_statusValuesText.text += shipConfigurationPlayerData.m_acceleration + " G" + Environment.NewLine;
+		m_statusValuesText.text += "TODO";
+
+		// update bank balance amount
+		m_currentBalanceText.text = "Your account balance is: " + playerData.m_bankPlayerData.m_currentBalance + " M.U.";
 	}
 
-	// update screen for the view file state
-	private void UpdateScreenForMenuBarState( bool[] gameObjectIsVisible )
+	// update screen for the buy part state
+	private void UpdateScreenForBuyPartState( bool[] gameObjectIsVisible )
 	{
+		// put in the prices for the parts
+		UpdatePartPrices();
+
+		// show the selection xform object
+		gameObjectIsVisible[ (int) GameObjects.SelectionXform ] = true;
+
+		// show the up arrow only if the first part is not selected
+		if ( m_currentPartIndex > 0 )
+		{
+			gameObjectIsVisible[ (int) GameObjects.UpArrowImage ] = true;
+		}
+
+		// show the down arrow only if the last part is not selected
+		if ( m_currentPartIndex < ( c_numParts - 1 ) )
+		{
+			gameObjectIsVisible[ (int) GameObjects.DownArrowImage ] = true;
+		}
+
+		// put the part selection box in the right place
+		float offset = ( ( m_currentPartIndex == 0 ) ? 0 : ( m_currentPartIndex + 1 ) ) * m_componentNamesText.renderedHeight / c_numComponentValuesLines;
+
+		RectTransform rectTransform = m_selectionXform.GetComponent<RectTransform>();
+		rectTransform.offsetMin = m_baseSelectionOffsetMin + new Vector3( 0.0f, -offset, 0.0f );
+		rectTransform.offsetMax = m_baseSelectionOffsetMax + new Vector3( 0.0f, -offset, 0.0f );
+	}
+
+	// update screen for the select class state
+	private void UpdateScreenForSelectClassState( bool[] gameObjectIsVisible )
+	{
+		// put in the prices for the parts
+		UpdatePartPrices( false );
+
+		// show the selected part object
+		gameObjectIsVisible[ (int) GameObjects.SelectedPartPanel ] = true;
+
+		// put the selected part box in the right place
+		float offset = ( m_currentPartIndex + 1 ) * m_componentNamesText.renderedHeight / c_numComponentValuesLines;
+
+		RectTransform rectTransform = m_selectedPartPanel.GetComponent<RectTransform>();
+		rectTransform.offsetMin = m_baseSelectionOffsetMin + new Vector3( 0.0f, -offset, 0.0f );
+		rectTransform.offsetMax = m_baseSelectionOffsetMax + new Vector3( 0.0f, -offset, 0.0f );
+
+		// show the selection xform object
+		gameObjectIsVisible[ (int) GameObjects.SelectionXform ] = true;
+
+		// show the up arrow only if the first class is not selected
+		if ( m_currentClassIndex > 0 )
+		{
+			gameObjectIsVisible[ (int) GameObjects.UpArrowImage ] = true;
+		}
+
+		// show the down arrow only if the last class is not selected
+		if ( m_currentClassIndex < ( c_numClasses - 1 ) )
+		{
+			gameObjectIsVisible[ (int) GameObjects.DownArrowImage ] = true;
+		}
+
+		// put the class selection box in the right place
+		offset = ( m_currentClassIndex + 8 ) * m_componentNamesText.renderedHeight / c_numComponentValuesLines;
+
+		rectTransform = m_selectionXform.GetComponent<RectTransform>();
+		rectTransform.offsetMin = m_baseSelectionOffsetMin + new Vector3( 0.0f, -offset, 0.0f );
+		rectTransform.offsetMax = m_baseSelectionOffsetMax + new Vector3( 0.0f, -offset, 0.0f );
 	}
 
 	// update screen for the give name state
@@ -221,9 +558,22 @@ public class ShipConfigurationController : PanelController
 		gameObjectIsVisible[ (int) GameObjects.NamePanel ] = true;
 	}
 
+	// update screen for the error message state
+	private void UpdateScreenForErrorMessageState( bool[] gameObjectIsVisible )
+	{
+		// show the overlay
+		gameObjectIsVisible[ (int) GameObjects.OverlayPanel ] = true;
+
+		// show the name panel
+		gameObjectIsVisible[ (int) GameObjects.ErrorPanel ] = true;
+	}
+
 	// this is called if we clicked on the buy button
 	public void BuyClicked()
 	{
+		// switch to the buy part state
+		SwitchToBuyPartState();
+
 		// play a ui sound
 		GetComponent<UISoundController>().Play( UISoundController.UISound.Activate );
 	}
@@ -276,5 +626,100 @@ public class ShipConfigurationController : PanelController
 
 		// play a ui sound
 		GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
+	}
+
+	// buy the currently selected part
+	private void BuySelectedPart()
+	{
+		// check if we are buying a cargo pod and handle that differently
+		if ( m_currentPartIndex == 0 )
+		{
+			BuyCargoPod();
+		}
+		else // we are buying a part
+		{
+			SwitchToSelectClassState();
+		}
+	}
+
+	private void UpdatePartPrices( bool includeCargoPods = true )
+	{
+		// get to the game data
+		GameData gameData = PersistentController.m_instance.m_gameData;
+
+		if ( includeCargoPods )
+		{
+			// show the cargo pod price
+			m_componentValuesText.text = gameData.m_shipGameData.m_cargoPodBuyPrice.ToString() + Environment.NewLine;
+		}
+		else
+		{
+			m_componentValuesText.text = Environment.NewLine;
+		}
+
+		// skip to the class prices
+		for ( int i = 0; i < 7; i++ )
+		{
+			m_componentValuesText.text += Environment.NewLine;
+		}
+
+		// update part class prices (if we have anything but cargo pods selected)
+		if ( m_currentPartIndex > 0 )
+		{
+			ShipPartGameData[] shipPartList = null;
+
+			switch ( m_currentPartIndex )
+			{
+				case 1: shipPartList = gameData.m_enginesList; break;
+				case 2: shipPartList = gameData.m_shieldingList; break;
+				case 3: shipPartList = gameData.m_armorList; break;
+				case 4: shipPartList = gameData.m_missileLauncherList; break;
+				case 5: shipPartList = gameData.m_laserCannonList; break;
+			}
+
+			for ( int i = 1; i < shipPartList.Length; i++ )
+			{
+				m_componentValuesText.text += shipPartList[ i ].m_buyPrice.ToString() + Environment.NewLine;
+			}
+		}
+	}
+
+	// buy a cargo pod
+	private void BuyCargoPod()
+	{
+		// get to the game data
+		GameData gameData = PersistentController.m_instance.m_gameData;
+
+		// get to the player data
+		PlayerData playerData = PersistentController.m_instance.m_playerData;
+
+		// check if we have room for another cargo pod
+		if ( playerData.m_shipConfigurationPlayerData.m_numCargoPods == 16 )
+		{
+			// nope - show an error message
+			SwitchToErrorMessageState( "No cargo pod bays available" );
+		}
+		else
+		{
+			// can we afford it?
+			if ( playerData.m_bankPlayerData.m_currentBalance < gameData.m_shipGameData.m_cargoPodBuyPrice )
+			{
+				// nope - show an error message
+				SwitchToErrorMessageState( "Insufficient funds" );
+			}
+			else
+			{
+				// add one cargo pod
+				playerData.m_bankPlayerData.m_currentBalance -= gameData.m_shipGameData.m_cargoPodBuyPrice;
+
+				playerData.m_shipConfigurationPlayerData.m_numCargoPods++;
+
+				// update the screen
+				UpdateScreen();
+
+				// play a ui sound
+				GetComponent<UISoundController>().Play( UISoundController.UISound.Activate );
+			}
+		}
 	}
 }

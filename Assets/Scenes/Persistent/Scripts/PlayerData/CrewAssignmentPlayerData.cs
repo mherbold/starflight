@@ -13,8 +13,9 @@ public class CrewAssignmentPlayerData
 	public int m_communicationsFileId;
 	public int m_doctorFileId;
 
-	public CrewAssignmentPlayerData()
+	public void Reset()
 	{
+		// unassign all crew member positions
 		m_captainFileId = -1;
 		m_scienceOfficerFileId = -1;
 		m_navigatorFileId = -1;

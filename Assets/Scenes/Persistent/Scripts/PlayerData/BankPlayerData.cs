@@ -25,7 +25,7 @@ public class BankPlayerData
 	public int m_currentBalance;
 	public List<Transaction> m_transactionList;
 
-	public BankPlayerData()
+	public void Reset()
 	{
 		// reset the bank balance
 		m_currentBalance = 12000;
