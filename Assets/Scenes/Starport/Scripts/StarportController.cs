@@ -14,6 +14,7 @@ public class StarportController : MonoBehaviour
 	private CrewAssignmentController m_crewAssignmentController;
 	private BankController m_bankController;
 	private ShipConfigurationController m_shipConfigurationController;
+	private TradeDepotController m_tradeDepotController;
 	private PanelController m_currentUIController;
 	private bool m_haveFocus;
 
@@ -43,6 +44,9 @@ public class StarportController : MonoBehaviour
 
 		// get access to the bank controller
 		m_shipConfigurationController = GetComponent<ShipConfigurationController>();
+
+		// get access to the trade depot controller
+		m_tradeDepotController = GetComponent<TradeDepotController>();
 	}
 
 	// this is called by unity once at the start of the level
@@ -148,6 +152,11 @@ public class StarportController : MonoBehaviour
 			{
 				// give control to the ship configuration controller
 				LoseFocus( m_shipConfigurationController );
+			}
+			else if ( currentDoorName == "Trade Depot" )
+			{
+				// give control to the trade depot controller
+				LoseFocus( m_tradeDepotController );
 			}
 		}
 	}
