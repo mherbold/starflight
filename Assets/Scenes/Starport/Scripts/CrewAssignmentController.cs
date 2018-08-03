@@ -33,11 +33,10 @@ public class CrewAssignmentController : PanelController
 	private InputManager m_inputManager;
 	private State m_currentState;
 	private int m_currentPositionIndex;
-	private int m_currentFileIndex;
+	private int m_currentPersonnelId;
 	private Vector3 m_baseSelectionOffsetMin;
 	private Vector3 m_baseSelectionOffsetMax;
 	private float m_ignoreControllerTimer;
-	//private bool m_haveFocus;
 
 	// constant values
 	private const int c_numPositions = 6;
@@ -59,9 +58,6 @@ public class CrewAssignmentController : PanelController
 		RectTransform rectTransform = m_selectionXform.GetComponent<RectTransform>();
 		m_baseSelectionOffsetMin = rectTransform.offsetMin;
 		m_baseSelectionOffsetMax = rectTransform.offsetMax;
-
-		// we don't have the focus
-		//m_haveFocus = false;
 	}
 
 	// this is called by unity once at the start of the level
@@ -109,7 +105,7 @@ public class CrewAssignmentController : PanelController
 			{
 				m_ignoreControllerTimer = 0.3f;
 
-				ChangeCurrentFileIndex( ( m_currentFileIndex + personnelPlayerData.m_personnelList.Count - 1 ) % personnelPlayerData.m_personnelList.Count );
+				ChangeCurrentPersonnelId( ( m_currentPersonnelId + personnelPlayerData.m_personnelList.Count - 1 ) % personnelPlayerData.m_personnelList.Count );
 
 				UpdateDisplay();
 			}
@@ -120,7 +116,7 @@ public class CrewAssignmentController : PanelController
 			{
 				m_ignoreControllerTimer = 0.3f;
 
-				ChangeCurrentFileIndex( ( m_currentFileIndex + 1 ) % personnelPlayerData.m_personnelList.Count );
+				ChangeCurrentPersonnelId( ( m_currentPersonnelId + 1 ) % personnelPlayerData.m_personnelList.Count );
 
 				UpdateDisplay();
 			}
@@ -206,9 +202,6 @@ public class CrewAssignmentController : PanelController
 	// call this to take control
 	public void TakeFocus()
 	{
-		// we have the controller focus
-		//m_haveFocus = true;
-
 		// turn on controller navigation of the UI
 		EventSystem.current.sendNavigationEvents = true;
 
@@ -222,9 +215,6 @@ public class CrewAssignmentController : PanelController
 	// call this to give up control
 	public void LoseFocus()
 	{
-		// we have the controller focus
-		//m_haveFocus = false;
-
 		// turn off controller navigation of the UI
 		EventSystem.current.sendNavigationEvents = false;
 	}
@@ -243,7 +233,7 @@ public class CrewAssignmentController : PanelController
 		m_starportController.TakeFocus();
 	}
 
-	// call this to switch to the view file state
+	// call this to switch to the menu bar state
 	private void SwitchToMenuBarState()
 	{
 		// change the current state
@@ -356,15 +346,15 @@ public class CrewAssignmentController : PanelController
 		m_positionValuesText.text = "";
 
 		// go through each position
-		for ( int i = 0; i < c_numPositions; i++ )
+		for ( int positionIndex = 0; positionIndex < c_numPositions; positionIndex++ )
 		{
 			// get the file id for the assigned crewmember
-			int fileId = crewAssignmentPlayerData.GetFileId( i );
+			int fileId = crewAssignmentPlayerData.GetFileId( positionIndex );
 
 			// check if the position is assigned
 			if ( fileId != -1 )
 			{
-				// find the personnel file with that file id
+				// find the personnel with that file id
 				PersonnelPlayerData.Personnel personnel = personnelPlayerData.GetPersonnel( fileId );
 
 				// add the crewmember's name
@@ -376,7 +366,7 @@ public class CrewAssignmentController : PanelController
 				m_positionValuesText.text += "[Not Assigned]";
 			}
 
-			if ( i < ( c_numPositions - 1 ) )
+			if ( positionIndex < ( c_numPositions - 1 ) )
 			{
 				m_positionValuesText.text += Environment.NewLine;
 			}
@@ -395,7 +385,7 @@ public class CrewAssignmentController : PanelController
 		if ( !crewAssignmentPlayerData.IsAssigned( m_currentPositionIndex ) )
 		{
 			// automatically select the first personnel file
-			ChangeCurrentFileIndex( 0, true );
+			ChangeCurrentPersonnelId( 0, true );
 		}
 		else
 		{
@@ -405,21 +395,21 @@ public class CrewAssignmentController : PanelController
 			// get access to the personnel player data
 			PersonnelPlayerData personnelPlayerData = PersistentController.m_instance.m_playerData.m_personnelPlayerData;
 
-			// update the current file index
-			m_currentFileIndex = personnelPlayerData.GetFileIndex( fileId );
+			// update the current personnel id
+			m_currentPersonnelId = personnelPlayerData.GetPersonnelId( fileId );
 		}
 
 		// play a sound
 		GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
 	}
 
-	private void ChangeCurrentFileIndex( int fileIndex, bool forceUpdate = false )
+	private void ChangeCurrentPersonnelId( int personnelId, bool forceUpdate = false )
 	{
 		// don't do anything if we aren't changing the file index to a different one
-		if ( ( fileIndex != m_currentFileIndex ) || forceUpdate )
+		if ( ( personnelId != m_currentPersonnelId ) || forceUpdate )
 		{
-			// update the current file index
-			m_currentFileIndex = fileIndex;
+			// update the current personnel id
+			m_currentPersonnelId = personnelId;
 
 			// get access to the crew assignment player data
 			CrewAssignmentPlayerData crewAssignmentPlayerData = PersistentController.m_instance.m_playerData.m_crewAssignmentPlayerData;
@@ -428,7 +418,7 @@ public class CrewAssignmentController : PanelController
 			PersonnelPlayerData personnelPlayerData = PersistentController.m_instance.m_playerData.m_personnelPlayerData;
 
 			// get the personnel file
-			PersonnelPlayerData.Personnel personnel = personnelPlayerData.m_personnelList[ m_currentFileIndex ];
+			PersonnelPlayerData.Personnel personnel = personnelPlayerData.m_personnelList[ m_currentPersonnelId ];
 
 			// assign this personnel to this position
 			crewAssignmentPlayerData.Assign( m_currentPositionIndex, personnel.m_fileId );
@@ -463,7 +453,7 @@ public class CrewAssignmentController : PanelController
 		PersonnelPlayerData personnelPlayerData = PersistentController.m_instance.m_playerData.m_personnelPlayerData;
 
 		// get the personnel file
-		PersonnelPlayerData.Personnel personnel = personnelPlayerData.m_personnelList[ m_currentFileIndex ];
+		PersonnelPlayerData.Personnel personnel = personnelPlayerData.m_personnelList[ m_currentPersonnelId ];
 
 		// update the crewmember name
 		if ( personnel.m_vitality > 0 )
@@ -478,11 +468,11 @@ public class CrewAssignmentController : PanelController
 		// update the skill values
 		m_skillValuesText.text = "";
 
-		for ( int i = 0; i < c_numSkills; i++ )
+		for ( int skillIndex = 0; skillIndex < c_numSkills; skillIndex++ )
 		{
-			m_skillValuesText.text += personnel.GetSkill( i ).ToString();
+			m_skillValuesText.text += personnel.GetSkill( skillIndex ).ToString();
 
-			if ( i < ( c_numSkills - 1 ) )
+			if ( skillIndex < ( c_numSkills - 1 ) )
 			{
 				m_skillValuesText.text += Environment.NewLine;
 			}

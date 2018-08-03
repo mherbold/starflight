@@ -18,16 +18,12 @@ public class BankController : PanelController
 
 	// private stuff we don't want the editor to see
 	private StarportController m_starportController;
-	//private bool m_haveFocus;
 
 	// this is called by unity before start
 	private void Awake()
 	{
 		// get access to the starport controller
 		m_starportController = GetComponent<StarportController>();
-
-		// we don't have the focus
-		//m_haveFocus = false;
 	}
 
 	// this is called by unity once at the start of the level
@@ -51,16 +47,16 @@ public class BankController : PanelController
 		m_transactionsListText.text = "";
 		m_amountListText.text = "";
 
-		for ( int i = 0; i < bankPlayerData.m_transactionList.Count; i++ )
+		for ( int transactionId = 0; transactionId < bankPlayerData.m_transactionList.Count; transactionId++ )
 		{
-			BankPlayerData.Transaction transaction = bankPlayerData.m_transactionList[ i ];
+			BankPlayerData.Transaction transaction = bankPlayerData.m_transactionList[ transactionId ];
 
 			DateTime dateTime = DateTime.ParseExact( transaction.m_stardate, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture );
 			m_dateListText.text += dateTime.ToShortDateString();
 			m_transactionsListText.text += transaction.m_description;
 			m_amountListText.text += transaction.m_amount;
 
-			if ( i < ( bankPlayerData.m_transactionList.Count - 1 ) )
+			if ( transactionId < ( bankPlayerData.m_transactionList.Count - 1 ) )
 			{
 				m_dateListText.text += Environment.NewLine;
 				m_transactionsListText.text += Environment.NewLine;
@@ -80,7 +76,7 @@ public class BankController : PanelController
 		// get the height of the date viewport
 		float viewportHeight = m_dateMask.GetComponent<RectTransform>().rect.height;
 
-		// get the height of the date list
+		// calculate the offset we need to show the bottom of the list
 		float offset = Mathf.Max( 0.0f, m_dateListText.renderedHeight - viewportHeight ) + m_baseOffset;
 
 		// move up the text in all 3 columns
@@ -102,9 +98,6 @@ public class BankController : PanelController
 	// call this to take control
 	public void TakeFocus()
 	{
-		// we have the controller focus
-		//m_haveFocus = true;
-
 		// turn on controller navigation of the UI
 		EventSystem.current.sendNavigationEvents = true;
 
@@ -118,9 +111,6 @@ public class BankController : PanelController
 	// call this to give up control
 	public void LoseFocus()
 	{
-		// we have the controller focus
-		//m_haveFocus = false;
-
 		// turn off controller navigation of the UI
 		EventSystem.current.sendNavigationEvents = false;
 	}

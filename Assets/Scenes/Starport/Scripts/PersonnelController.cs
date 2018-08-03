@@ -66,7 +66,6 @@ public class PersonnelController : PanelController
 	private Vector3 m_baseSelectionOffsetMin;
 	private Vector3 m_baseSelectionOffsetMax;
 	private float m_ignoreControllerTimer;
-	//private bool m_haveFocus;
 
 	// constant values
 	private const int c_numRaces = 5;
@@ -88,9 +87,6 @@ public class PersonnelController : PanelController
 		RectTransform rectTransform = m_selectionXform.GetComponent<RectTransform>();
 		m_baseSelectionOffsetMin = rectTransform.offsetMin;
 		m_baseSelectionOffsetMax = rectTransform.offsetMax;
-
-		// we don't have the focus
-		//m_haveFocus = false;
 	}
 
 	// this is called by unity once at the start of the level
@@ -267,9 +263,6 @@ public class PersonnelController : PanelController
 	// call this to take control
 	public void TakeFocus()
 	{
-		// we have the controller focus
-		//m_haveFocus = true;
-
 		// turn on controller navigation of the UI
 		EventSystem.current.sendNavigationEvents = true;
 
@@ -283,9 +276,6 @@ public class PersonnelController : PanelController
 	// call this to give up control
 	public void LoseFocus()
 	{
-		// we have the controller focus
-		//m_haveFocus = false;
-
 		// turn off controller navigation of the UI
 		EventSystem.current.sendNavigationEvents = false;
 	}
@@ -612,11 +602,11 @@ public class PersonnelController : PanelController
 		// update the skill values text to show the race's initial values
 		m_skillValuesText.text = "";
 
-		for ( int i = 0; i < c_numSkills; i++ )
+		for ( int skillIndex = 0; skillIndex < c_numSkills; skillIndex++ )
 		{
-			m_skillValuesText.text += race.GetInitialSkill( i ).ToString();
+			m_skillValuesText.text += race.GetInitialSkill( skillIndex ).ToString();
 
-			if ( i < ( c_numSkills - 1 ) )
+			if ( skillIndex < ( c_numSkills - 1 ) )
 			{
 				m_skillValuesText.text += Environment.NewLine;
 			}
@@ -708,11 +698,11 @@ public class PersonnelController : PanelController
 		// update the skill values with the ones in this personnel file
 		m_skillValuesText.text = "";
 
-		for ( int i = 0; i < c_numSkills; i++ )
+		for ( int skillIndex = 0; skillIndex < c_numSkills; skillIndex++ )
 		{
-			m_skillValuesText.text += personnel.GetSkill( i ).ToString();
+			m_skillValuesText.text += personnel.GetSkill( skillIndex ).ToString();
 
-			if ( i < ( c_numSkills - 1 ) )
+			if ( skillIndex < ( c_numSkills - 1 ) )
 			{
 				m_skillValuesText.text += Environment.NewLine;
 			}
@@ -935,10 +925,10 @@ public class PersonnelController : PanelController
 			int maxTotalPoints = 0;
 			int currentTotalPoints = 0;
 
-			for ( int i = 0; i < c_numSkills; i++ )
+			for ( int skillIndex = 0; skillIndex < c_numSkills; skillIndex++ )
 			{
-				maxTotalPoints = race.GetMaximumSkill( i );
-				currentTotalPoints = personnel.GetSkill( i );
+				maxTotalPoints = race.GetMaximumSkill( skillIndex );
+				currentTotalPoints = personnel.GetSkill( skillIndex );
 			}
 
 			// check if we are maxxed out

@@ -20,7 +20,6 @@ public class OperationsController : PanelController
 	// private stuff we don't want the editor to see
 	private StarportController m_starportController;
 	private NoticesController m_noticesController;
-	//private bool m_haveFocus;
 
 	// this is called by unity before start
 	private void Awake()
@@ -30,9 +29,6 @@ public class OperationsController : PanelController
 
 		// get access to the notices controller
 		m_noticesController = GetComponent<NoticesController>();
-
-		// we don't have the focus
-		//m_haveFocus = false;
 	}
 
 	// this is called by unity once at the start of the level
@@ -40,11 +36,6 @@ public class OperationsController : PanelController
 	{
 		// hide the ui
 		m_panelGameObject.SetActive( false );
-	}
-
-	// this is called by unity every frame
-	private void Update()
-	{
 	}
 
 	// call this to show the operations ui
@@ -73,9 +64,6 @@ public class OperationsController : PanelController
 	// call this to take control
 	public void TakeFocus()
 	{
-		// we have the controller focus
-		//m_haveFocus = true;
-
 		// turn on controller navigation of the UI
 		EventSystem.current.sendNavigationEvents = true;
 
@@ -95,9 +83,6 @@ public class OperationsController : PanelController
 	// call this to give up control
 	public void LoseFocus()
 	{
-		// we have the controller focus
-		//m_haveFocus = false;
-
 		// turn off controller navigation of the UI
 		EventSystem.current.sendNavigationEvents = false;
 	}

@@ -84,14 +84,14 @@ public class PersonnelPlayerData
 		return new Personnel( this );
 	}
 
-	// this gets the personnel index from the file id
-	public int GetFileIndex( int fileId )
+	// this gets the personnel id from the file id
+	public int GetPersonnelId( int fileId )
 	{
-		for ( int i = 0; i < m_personnelList.Count; i++ )
+		for ( int personnelId = 0; personnelId < m_personnelList.Count; personnelId++ )
 		{
-			if ( m_personnelList[ i ].m_fileId == fileId )
+			if ( m_personnelList[ personnelId ].m_fileId == fileId )
 			{
-				return i;
+				return personnelId;
 			}
 		}
 
@@ -101,17 +101,17 @@ public class PersonnelPlayerData
 	// this gets the personnel file using the file id
 	public Personnel GetPersonnel( int fileId )
 	{
-		int fileIndex = GetFileIndex( fileId );
+		int personnelId = GetPersonnelId( fileId );
 
-		return m_personnelList[ fileIndex ];
+		return m_personnelList[ personnelId ];
 	}
 
 	// this returns true if there are any living crewmember in personnel, and false if not
 	public bool AnyLiving()
 	{
-		for ( int i = 0; i < m_personnelList.Count; i++ )
+		for ( int personnelId = 0; personnelId < m_personnelList.Count; personnelId++ )
 		{
-			if ( m_personnelList[ i ].m_vitality > 0 )
+			if ( m_personnelList[ personnelId ].m_vitality > 0 )
 			{
 				return true;
 			}

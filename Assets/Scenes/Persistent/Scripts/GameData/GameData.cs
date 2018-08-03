@@ -13,4 +13,6 @@ public class GameData : GameDataFile
 	public ArmorGameData[] m_armorList;
 	public MissileLauncherGameData[] m_missileLauncherList;
 	public LaserCannonGameData[] m_laserCannonList;
+	public ArtifactGameData[] m_artifactList;
+	public ElementGameData[] m_elementList;
 }

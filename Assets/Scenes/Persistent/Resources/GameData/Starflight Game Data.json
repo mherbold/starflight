@@ -1,390 +1,1030 @@
 {
-  "m_noticeList" : [
+  "m_noticeList": [
     {
-      "m_stardate" : "4620-01-01",
-      "m_message" : "You are about to embark on your first mission.  In your bank account you will find the amount of 12,000 monetary units (M.U.).  This money is to be spent training your crew, configuring your ship, and purchasing any necessary materials.\nOf course you may wish to leave some portion of this in the bank to earn interest.  This is acceptable.  At this stage of the operation our primary goal is to gather information.  Consequently, your objectives are -\n    1. Seek out and explore strange new worlds\n    2. Boldly go where no man has gone before\n    3. Establish contact with any sentients\n    4. Capture and bring back non-sentient lifeforms\n    5. Record alien lifeform data\n    6. Bring back alien artifacts\n    7. Bring back any valuable minerals (including endurium)\n    8. Keep from getting brutally killed\nWe have little information to offer concerning what you might find.  We suggest however, that you avoid the area of space around the coordinates 135, 84 since that is where we lost contact with two of our earlier ships.\nScout reports indicate a high density of minerals in the mountainous regions of the innermost planet of our system.\nFurther, we have found information that leads us to believe that there may be some ruins of the old empire at coordinates 17N x 162E on the second planet of the neighboring K-class system.\nWe have also received some indication of alien activity in the system 175, 94.\nGood luck, and a safe return."
+      "m_stardate": "4620-01-01",
+      "m_message": "You are about to embark on your first mission.  In your bank account you will find the amount of 12,000 monetary units (M.U.).  This money is to be spent training your crew, configuring your ship, and purchasing any necessary materials.\nOf course you may wish to leave some portion of this in the bank to earn interest.  This is acceptable.  At this stage of the operation our primary goal is to gather information.  Consequently, your objectives are -\n    1. Seek out and explore strange new worlds\n    2. Boldly go where no man has gone before\n    3. Establish contact with any sentients\n    4. Capture and bring back non-sentient lifeforms\n    5. Record alien lifeform data\n    6. Bring back alien artifacts\n    7. Bring back any valuable minerals (including endurium)\n    8. Keep from getting brutally killed\nWe have little information to offer concerning what you might find.  We suggest however, that you avoid the area of space around the coordinates 135, 84 since that is where we lost contact with two of our earlier ships.\nScout reports indicate a high density of minerals in the mountainous regions of the innermost planet of our system.\nFurther, we have found information that leads us to believe that there may be some ruins of the old empire at coordinates 17N x 162E on the second planet of the neighboring K-class system.\nWe have also received some indication of alien activity in the system 175, 94.\nGood luck, and a safe return."
     },
     {
-      "m_stardate" : "4620-01-02",
-      "m_message" : "It is necessary to give you some unpleasant news.  You may have been aware that for the last several years scientists have been observing anomalous fluctuations in the radiation levels of our sun.\nWhile you have been away it has been ascertained that the stability of our sun is definitely deteriorating.  How much time we have until there is a fatally large flare, we are still not sure, but there is little doubt that this will eventually occur.\nAs yet, we have no clue as to the cause of this instability.  Therefore, we must assume there is nothing we can do to change the situation.  In view of this the only option available to us is to get as many colonists off of arth as we can.\nYou can be invaluable to us in this.  First we need endurium to power the ships we will build.  We will pay well for any that you can bring back.  Secondly, we need to know where to send the colonists.\nAs you may have already discovered, your ship is equipped with homing drones which you may use to log your recommendations.  This is so that we can move the colonists out as quickly as possible.\nIn addition, a sensor has been installed which will inform you of the stellar condition upon entering a system.  Your ship computer will inform you in the event that a flare is imminent.\nWe advise caution while in systems which are more than slightly unstable.  Being caught in a solar flare would certainly be fatal.\nIn your manual we have outlined the criteria which will be important in your evaluation of viable colony worlds.  You will be rewarded for recommendations of valuable planets and penalized recommendations of planets which turn out to be uninhabitable.\nConsider carefully before logging a planet."
+      "m_stardate": "4620-01-02",
+      "m_message": "It is necessary to give you some unpleasant news.  You may have been aware that for the last several years scientists have been observing anomalous fluctuations in the radiation levels of our sun.\nWhile you have been away it has been ascertained that the stability of our sun is definitely deteriorating.  How much time we have until there is a fatally large flare, we are still not sure, but there is little doubt that this will eventually occur.\nAs yet, we have no clue as to the cause of this instability.  Therefore, we must assume there is nothing we can do to change the situation.  In view of this the only option available to us is to get as many colonists off of arth as we can.\nYou can be invaluable to us in this.  First we need endurium to power the ships we will build.  We will pay well for any that you can bring back.  Secondly, we need to know where to send the colonists.\nAs you may have already discovered, your ship is equipped with homing drones which you may use to log your recommendations.  This is so that we can move the colonists out as quickly as possible.\nIn addition, a sensor has been installed which will inform you of the stellar condition upon entering a system.  Your ship computer will inform you in the event that a flare is imminent.\nWe advise caution while in systems which are more than slightly unstable.  Being caught in a solar flare would certainly be fatal.\nIn your manual we have outlined the criteria which will be important in your evaluation of viable colony worlds.  You will be rewarded for recommendations of valuable planets and penalized recommendations of planets which turn out to be uninhabitable.\nConsider carefully before logging a planet."
     },
     {
-      "m_stardate" : "4620-01-03",
-      "m_message" : "To all captains - one of our ships was just destroyed by what reports indicate to be androids approximately 20 sectors directly coreward of Arth.  When passing through this area proceed with caution."
+      "m_stardate": "4620-01-03",
+      "m_message": "To all captains - one of our ships was just destroyed by what reports indicate to be androids approximately 20 sectors directly coreward of Arth.  When passing through this area proceed with caution."
     },
     {
-      "m_stardate" : "4620-01-05",
-      "m_message" : "We have received reports of an area outward and downspin of Arth about 40 sectors distant.  There is a constellation here in the shape of a cross which seems to mark a nexus of continuum fluxes.\nWe suggest however, that unless you are properly prepared you avoid this area since we have already lost several ships in this vicinity."
+      "m_stardate": "4620-01-05",
+      "m_message": "We have received reports of an area outward and downspin of Arth about 40 sectors distant.  There is a constellation here in the shape of a cross which seems to mark a nexus of continuum fluxes.\nWe suggest however, that unless you are properly prepared you avoid this area since we have already lost several ships in this vicinity."
     },
     {
-      "m_stardate" : "4620-01-08",
-      "m_message" : "A big congratulations to commander Topiphophex and his mate.  They just hatched 16 new larvae.  Way to go Topi!"
+      "m_stardate": "4620-01-08",
+      "m_message": "A big congratulations to commander Topiphophex and his mate.  They just hatched 16 new larvae.  Way to go Topi!"
     },
     {
-      "m_stardate" : "4620-01-10",
-      "m_message" : "One of our ships has stumbled across some ruins on the third planet of our own system.  There is evidence that there may be more.  This may be worth investigating."
+      "m_stardate": "4620-01-10",
+      "m_message": "One of our ships has stumbled across some ruins on the third planet of our own system.  There is evidence that there may be more.  This may be worth investigating."
     },
     {
-      "m_stardate" : "4620-01-12",
-      "m_message" : "Xenon, where’s my money?  Borno."
+      "m_stardate": "4620-01-12",
+      "m_message": "Xenon, where’s my money?  Borno."
     },
     {
-      "m_stardate" : "4620-01-14",
-      "m_message" : "Scientists have ascertained that the cause of the instabilities in our sun are external to the star.  The rate of the deterioration is increasing.  There is a possibility that some other race may have some clue as to the cause.\nOur situation appears increasingly dire."
+      "m_stardate": "4620-01-14",
+      "m_message": "Scientists have ascertained that the cause of the instabilities in our sun are external to the star.  The rate of the deterioration is increasing.  There is a possibility that some other race may have some clue as to the cause.\nOur situation appears increasingly dire."
     },
     {
-      "m_stardate" : "4620-01-18",
-      "m_message" : "We have compiled a list of some of the nearby fluxes from data that has been brought back by the exploration vessels.  This may be of use to you.  Here are some link pairs -\n    128, 105 - 146, 112\n    126, 87 - 173, 88\n    148, 166 - 170, 93\n    104, 82 - 118, 107"
+      "m_stardate": "4620-01-18",
+      "m_message": "We have compiled a list of some of the nearby fluxes from data that has been brought back by the exploration vessels.  This may be of use to you.  Here are some link pairs -\n    128, 105 - 146, 112\n    126, 87 - 173, 88\n    148, 166 - 170, 93\n    104, 82 - 118, 107"
     },
     {
-      "m_stardate" : "4620-01-23",
-      "m_message" : "Highly qualified female thrynn, Ihsss T’larra, seeks employment on outgoing exploration vessel.  Extensive experience on board the ISS Intrepid and has a class 5 navigator’s rating."
+      "m_stardate": "4620-01-23",
+      "m_message": "Highly qualified female thrynn, Ihsss T’larra, seeks employment on outgoing exploration vessel.  Extensive experience on board the ISS Intrepid and has a class 5 navigator’s rating."
     },
     {
-      "m_stardate" : "4620-02-01",
-      "m_message" : "Borno, meet me on Regulon 7 on the 15th.  You know where.  You’ll get your money.  Xenon."
+      "m_stardate": "4620-02-01",
+      "m_message": "Borno, meet me on Regulon 7 on the 15th.  You know where.  You’ll get your money.  Xenon."
     },
     {
-      "m_stardate" : "4620-02-10",
-      "m_message" : "One of our ships has reported that the Thrynn have offered to buy artifacts from them at inflated rates.  We urge you not to do this.\nInasmuch as it may further relations with them, this is understandable, but we do not wish to sacrifice what we might be able to learn from these artifacts."
+      "m_stardate": "4620-02-10",
+      "m_message": "One of our ships has reported that the Thrynn have offered to buy artifacts from them at inflated rates.  We urge you not to do this.\nInasmuch as it may further relations with them, this is understandable, but we do not wish to sacrifice what we might be able to learn from these artifacts."
     },
     {
-      "m_stardate" : "4620-02-18",
-      "m_message" : "We have just lost another of our ships.  This time it was at the coordinates 192, 152.  Any ships in this area may wish to investigate, but we advise extreme caution."
+      "m_stardate": "4620-02-18",
+      "m_message": "We have just lost another of our ships.  This time it was at the coordinates 192, 152.  Any ships in this area may wish to investigate, but we advise extreme caution."
     },
     {
-      "m_stardate" : "4620-02-20",
-      "m_message" : "Due to an increased demand resulting from stepped up colonization efforts, the price of endurium has been raised to 1500 M.U. per cubic meter."
+      "m_stardate": "4620-02-20",
+      "m_message": "Due to an increased demand resulting from stepped up colonization efforts, the price of endurium has been raised to 1500 M.U. per cubic meter."
     },
     {
-      "m_stardate" : "4620-03-06",
-      "m_message" : "We have received to date, many reports which indicate that minimial or no life exists coreward of here.  Any ships acquiring more information are instructed to report on this immediately."
+      "m_stardate": "4620-03-06",
+      "m_message": "We have received to date, many reports which indicate that minimial or no life exists coreward of here.  Any ships acquiring more information are instructed to report on this immediately."
     },
     {
-      "m_stardate" : "4620-03-25",
-      "m_message" : "Used \"teleportal\" matter-mitter.  Almost perfect condition.  Fine for short distance teleportation, and relatively safe for longer jumps.  13,000 or best offer.  Will consider trade for family sized neutron scooter.  See Guido."
+      "m_stardate": "4620-03-25",
+      "m_message": "Used \"teleportal\" matter-mitter.  Almost perfect condition.  Fine for short distance teleportation, and relatively safe for longer jumps.  13,000 or best offer.  Will consider trade for family sized neutron scooter.  See Guido."
     },
     {
-      "m_stardate" : "4620-04-15",
-      "m_message" : "Xenon, I was there, where were you?  Borno."
+      "m_stardate": "4620-04-15",
+      "m_message": "Xenon, I was there, where were you?  Borno."
     },
     {
-      "m_stardate" : "4620-05-06",
-      "m_message" : "Elowan hermaphrodite seeks XB-STP W-VO for fun and companionship.  Must be well-leaved and enjoy 4-D senso-rama and moon hopping.  Send hologram."
+      "m_stardate": "4620-05-06",
+      "m_message": "Elowan hermaphrodite seeks XB-STP W-VO for fun and companionship.  Must be well-leaved and enjoy 4-D senso-rama and moon hopping.  Send hologram."
     },
     {
-      "m_stardate" : "4620-05-15",
-      "m_message" : "The price of endurium has once again been raised.  It is now 2000 M.U. per cubic meter for everyone but the interstel corporate heads and their families.  For them there is a special reduced rate of 50 M.U. per cubic meter."
+      "m_stardate": "4620-05-15",
+      "m_message": "The price of endurium has once again been raised.  It is now 2000 M.U. per cubic meter for everyone but the interstel corporate heads and their families.  For them there is a special reduced rate of 50 M.U. per cubic meter."
     },
     {
-      "m_stardate" : "4620-06-13",
-      "m_message" : "Borno, gone relativistic.  See you in a hundred years.  Xenon."
+      "m_stardate": "4620-06-13",
+      "m_message": "Borno, gone relativistic.  See you in a hundred years.  Xenon."
     }
   ],
-  "m_raceList" : [
+  "m_raceList": [
     {
-      "m_name" : "Human",
-      "m_scienceInitial" : 50,
-      "m_navigationInitial" : 30,
-      "m_engineeringInitial" : 30,
-      "m_communicationsInitial" : 30,
-      "m_medicineInitial" : 30,
-      "m_scienceMax" : 250,
-      "m_navigationMax" : 200,
-      "m_engineeringMax" : 200,
-      "m_communicationsMax" : 200,
-      "m_medicineMax" : 200,
-      "m_learningRate" : 9,
-      "m_durability" : 6,
-      "m_type" : "Mammalian",
-      "m_averageHeight" : "2.0 M",
-      "m_averageWeight" : "80 KG"
+      "m_name": "Human",
+      "m_scienceInitial": 50,
+      "m_navigationInitial": 30,
+      "m_engineeringInitial": 30,
+      "m_communicationsInitial": 30,
+      "m_medicineInitial": 30,
+      "m_scienceMax": 250,
+      "m_navigationMax": 200,
+      "m_engineeringMax": 200,
+      "m_communicationsMax": 200,
+      "m_medicineMax": 200,
+      "m_learningRate": 9,
+      "m_durability": 6,
+      "m_type": "Mammalian",
+      "m_averageHeight": "2.0 M",
+      "m_averageWeight": "80 KG"
     },
     {
-      "m_name" : "Velox",
-      "m_scienceInitial" : 30,
-      "m_navigationInitial" : 50,
-      "m_engineeringInitial" : 50,
-      "m_communicationsInitial" : 0,
-      "m_medicineInitial" : 0,
-      "m_scienceMax" : 200,
-      "m_navigationMax" : 250,
-      "m_engineeringMax" : 250,
-      "m_communicationsMax" : 100,
-      "m_medicineMax" : 100,
-      "m_learningRate" : 6,
-      "m_durability" : 8,
-      "m_type" : "Insectoid",
-      "m_averageHeight" : "1.0 M",
-      "m_averageWeight" : "60 KG"
+      "m_name": "Velox",
+      "m_scienceInitial": 30,
+      "m_navigationInitial": 50,
+      "m_engineeringInitial": 50,
+      "m_communicationsInitial": 0,
+      "m_medicineInitial": 0,
+      "m_scienceMax": 200,
+      "m_navigationMax": 250,
+      "m_engineeringMax": 250,
+      "m_communicationsMax": 100,
+      "m_medicineMax": 100,
+      "m_learningRate": 6,
+      "m_durability": 8,
+      "m_type": "Insectoid",
+      "m_averageHeight": "1.0 M",
+      "m_averageWeight": "60 KG"
     },
     {
-      "m_name" : "Thrynn",
-      "m_scienceInitial" : 30,
-      "m_navigationInitial" : 30,
-      "m_engineeringInitial" : 30,
-      "m_communicationsInitial" : 50,
-      "m_medicineInitial" : 0,
-      "m_scienceMax" : 200,
-      "m_navigationMax" : 200,
-      "m_engineeringMax" : 200,
-      "m_communicationsMax" : 250,
-      "m_medicineMax" : 100,
-      "m_learningRate" : 7,
-      "m_durability" : 6,
-      "m_type" : "Reptilian",
-      "m_averageHeight" : "1.5 M",
-      "m_averageWeight" : "80 KG"
+      "m_name": "Thrynn",
+      "m_scienceInitial": 30,
+      "m_navigationInitial": 30,
+      "m_engineeringInitial": 30,
+      "m_communicationsInitial": 50,
+      "m_medicineInitial": 0,
+      "m_scienceMax": 200,
+      "m_navigationMax": 200,
+      "m_engineeringMax": 200,
+      "m_communicationsMax": 250,
+      "m_medicineMax": 100,
+      "m_learningRate": 7,
+      "m_durability": 6,
+      "m_type": "Reptilian",
+      "m_averageHeight": "1.5 M",
+      "m_averageWeight": "80 KG"
     },
     {
-      "m_name" : "Elowan",
-      "m_scienceInitial" : 10,
-      "m_navigationInitial" : 30,
-      "m_engineeringInitial" : 10,
-      "m_communicationsInitial" : 50,
-      "m_medicineInitial" : 50,
-      "m_scienceMax" : 150,
-      "m_navigationMax" : 200,
-      "m_engineeringMax" : 150,
-      "m_communicationsMax" : 250,
-      "m_medicineMax" : 250,
-      "m_learningRate" : 10,
-      "m_durability" : 2,
-      "m_type" : "Plant",
-      "m_averageHeight" : "2.5 M",
-      "m_averageWeight" : "40 KG"
+      "m_name": "Elowan",
+      "m_scienceInitial": 10,
+      "m_navigationInitial": 30,
+      "m_engineeringInitial": 10,
+      "m_communicationsInitial": 50,
+      "m_medicineInitial": 50,
+      "m_scienceMax": 150,
+      "m_navigationMax": 200,
+      "m_engineeringMax": 150,
+      "m_communicationsMax": 250,
+      "m_medicineMax": 250,
+      "m_learningRate": 10,
+      "m_durability": 2,
+      "m_type": "Plant",
+      "m_averageHeight": "2.5 M",
+      "m_averageWeight": "40 KG"
     },
     {
-      "m_name" : "Android",
-      "m_scienceInitial" : 50,
-      "m_navigationInitial" : 150,
-      "m_engineeringInitial" : 100,
-      "m_communicationsInitial" : 0,
-      "m_medicineInitial" : 20,
-      "m_scienceMax" : 50,
-      "m_navigationMax" : 150,
-      "m_engineeringMax" : 100,
-      "m_communicationsMax" : 0,
-      "m_medicineMax" : 20,
-      "m_learningRate" : 0,
-      "m_durability" : 10,
-      "m_type" : "Synthetic",
-      "m_averageHeight" : "2.0 M",
-      "m_averageWeight" : "120 KG"
+      "m_name": "Android",
+      "m_scienceInitial": 50,
+      "m_navigationInitial": 150,
+      "m_engineeringInitial": 100,
+      "m_communicationsInitial": 0,
+      "m_medicineInitial": 20,
+      "m_scienceMax": 50,
+      "m_navigationMax": 150,
+      "m_engineeringMax": 100,
+      "m_communicationsMax": 0,
+      "m_medicineMax": 20,
+      "m_learningRate": 0,
+      "m_durability": 10,
+      "m_type": "Synthetic",
+      "m_averageHeight": "2.0 M",
+      "m_averageWeight": "120 KG"
     }
   ],
-  "m_shipGameData" : {
-    "m_baseShipMass" : 50,
-    "m_cargoPodBuyPrice" : 500,
-    "m_cargoPodSellPrice" : 500,
-    "m_cargoPodMass" : 10
-  },
-  "m_enginesList" : [
+  "m_shipGameData":
+{
+  "m_baseShipMass": 50,
+  "m_cargoPodBuyPrice": 500,
+  "m_cargoPodSellPrice": 500,
+  "m_cargoPodMass": 10
+},
+  "m_enginesList": [
     {
-      "m_class" : 0,
-      "m_buyPrice" : 0,
-      "m_sellPrice" : 0,
-      "m_mass" : 0,
-      "m_baseAcceleration" : 0,
-      "m_accelerationMass" : 50,
-      "m_accelerationScale" : 0
+      "m_class": 0,
+      "m_buyPrice": 0,
+      "m_sellPrice": 0,
+      "m_mass": 0,
+      "m_baseAcceleration": 0,
+      "m_accelerationMass": 50,
+      "m_accelerationScale": 0
     },
     {
-      "m_class" : 1,
-      "m_buyPrice" : 1000,
-      "m_sellPrice" : 900,
-      "m_mass" : 50,
-      "m_baseAcceleration" : 5,
-      "m_accelerationMass" : 100,
-      "m_accelerationScale" : 0.25
+      "m_class": 1,
+      "m_buyPrice": 1000,
+      "m_sellPrice": 900,
+      "m_mass": 50,
+      "m_baseAcceleration": 5,
+      "m_accelerationMass": 100,
+      "m_accelerationScale": 0.25
     },
     {
-      "m_class" : 2,
-      "m_buyPrice" : 8000,
-      "m_sellPrice" : 7600,
-      "m_mass" : 50,
-      "m_baseAcceleration" : 10,
-      "m_accelerationMass" : 100,
-      "m_accelerationScale" : 0.5
+      "m_class": 2,
+      "m_buyPrice": 8000,
+      "m_sellPrice": 7600,
+      "m_mass": 50,
+      "m_baseAcceleration": 10,
+      "m_accelerationMass": 100,
+      "m_accelerationScale": 0.5
     },
     {
-      "m_class" : 3,
-      "m_buyPrice" : 20000,
-      "m_sellPrice" : 19000,
-      "m_mass" : 50,
-      "m_baseAcceleration" : 15,
-      "m_accelerationMass" : 100,
-      "m_accelerationScale" : 0.75
+      "m_class": 3,
+      "m_buyPrice": 20000,
+      "m_sellPrice": 19000,
+      "m_mass": 50,
+      "m_baseAcceleration": 15,
+      "m_accelerationMass": 100,
+      "m_accelerationScale": 0.75
     },
     {
-      "m_class" : 4,
-      "m_buyPrice" : 40000,
-      "m_sellPrice" : 38000,
-      "m_mass" : 50,
-      "m_baseAcceleration" : 20,
-      "m_accelerationMass" : 100,
-      "m_accelerationScale" : 1
+      "m_class": 4,
+      "m_buyPrice": 40000,
+      "m_sellPrice": 38000,
+      "m_mass": 50,
+      "m_baseAcceleration": 20,
+      "m_accelerationMass": 100,
+      "m_accelerationScale": 1
     },
     {
-      "m_class" : 5,
-      "m_buyPrice" : 100000,
-      "m_sellPrice" : 95200,
-      "m_mass" : 50,
-      "m_baseAcceleration" : 25,
-      "m_accelerationMass" : 100,
-      "m_accelerationScale" : 1.25
+      "m_class": 5,
+      "m_buyPrice": 100000,
+      "m_sellPrice": 95200,
+      "m_mass": 50,
+      "m_baseAcceleration": 25,
+      "m_accelerationMass": 100,
+      "m_accelerationScale": 1.25
     }
   ],
-  "m_shieldingList" : [
+  "m_shieldingList": [
     {
-      "m_class" : 0,
-      "m_buyPrice" : 0,
-      "m_sellPrice" : 0,
-      "m_mass" : 0
+      "m_class": 0,
+      "m_buyPrice": 0,
+      "m_sellPrice": 0,
+      "m_mass": 0
     },
     {
-      "m_class" : 1,
-      "m_buyPrice" : 4000,
-      "m_sellPrice" : 3800,
-      "m_mass" : 5
+      "m_class": 1,
+      "m_buyPrice": 4000,
+      "m_sellPrice": 3800,
+      "m_mass": 5
     },
     {
-      "m_class" : 2,
-      "m_buyPrice" : 12000,
-      "m_sellPrice" : 11400,
-      "m_mass" : 5
+      "m_class": 2,
+      "m_buyPrice": 12000,
+      "m_sellPrice": 11400,
+      "m_mass": 5
     },
     {
-      "m_class" : 3,
-      "m_buyPrice" : 32000,
-      "m_sellPrice" : 30400,
-      "m_mass" : 5
+      "m_class": 3,
+      "m_buyPrice": 32000,
+      "m_sellPrice": 30400,
+      "m_mass": 5
     },
     {
-      "m_class" : 4,
-      "m_buyPrice" : 70000,
-      "m_sellPrice" : 66600,
-      "m_mass" : 5
+      "m_class": 4,
+      "m_buyPrice": 70000,
+      "m_sellPrice": 66600,
+      "m_mass": 5
     },
     {
-      "m_class" : 5,
-      "m_buyPrice" : 125000,
-      "m_sellPrice" : 119000,
-      "m_mass" : 5
+      "m_class": 5,
+      "m_buyPrice": 125000,
+      "m_sellPrice": 119000,
+      "m_mass": 5
     }
   ],
-  "m_armorList" : [
+  "m_armorList": [
     {
-      "m_class" : 0,
-      "m_buyPrice" : 0,
-      "m_sellPrice" : 0,
-      "m_mass" : 0
+      "m_class": 0,
+      "m_buyPrice": 0,
+      "m_sellPrice": 0,
+      "m_mass": 0
     },
     {
-      "m_class" : 1,
-      "m_buyPrice" : 1500,
-      "m_sellPrice" : 1400,
-      "m_mass" : 9
+      "m_class": 1,
+      "m_buyPrice": 1500,
+      "m_sellPrice": 1400,
+      "m_mass": 9
     },
     {
-      "m_class" : 2,
-      "m_buyPrice" : 3100,
-      "m_sellPrice" : 2900,
-      "m_mass" : 36
+      "m_class": 2,
+      "m_buyPrice": 3100,
+      "m_sellPrice": 2900,
+      "m_mass": 36
     },
     {
-      "m_class" : 3,
-      "m_buyPrice" : 6200,
-      "m_sellPrice" : 5900,
-      "m_mass" : 81
+      "m_class": 3,
+      "m_buyPrice": 6200,
+      "m_sellPrice": 5900,
+      "m_mass": 81
     },
     {
-      "m_class" : 4,
-      "m_buyPrice" : 12500,
-      "m_sellPrice" : 11900,
-      "m_mass" : 144
+      "m_class": 4,
+      "m_buyPrice": 12500,
+      "m_sellPrice": 11900,
+      "m_mass": 144
     },
     {
-      "m_class" : 5,
-      "m_buyPrice" : 25000,
-      "m_sellPrice" : 23800,
-      "m_mass" : 225
+      "m_class": 5,
+      "m_buyPrice": 25000,
+      "m_sellPrice": 23800,
+      "m_mass": 225
     }
   ],
-  "m_missileLauncherList" : [
+  "m_missileLauncherList": [
     {
-      "m_class" : 0,
-      "m_buyPrice" : 0,
-      "m_sellPrice" : 0,
-      "m_mass" : 0
+      "m_class": 0,
+      "m_buyPrice": 0,
+      "m_sellPrice": 0,
+      "m_mass": 0
     },
     {
-      "m_class" : 1,
-      "m_buyPrice" : 12000,
-      "m_sellPrice" : 11400,
-      "m_mass" : 5
+      "m_class": 1,
+      "m_buyPrice": 12000,
+      "m_sellPrice": 11400,
+      "m_mass": 5
     },
     {
-      "m_class" : 2,
-      "m_buyPrice" : 28000,
-      "m_sellPrice" : 26600,
-      "m_mass" : 5
+      "m_class": 2,
+      "m_buyPrice": 28000,
+      "m_sellPrice": 26600,
+      "m_mass": 5
     },
     {
-      "m_class" : 3,
-      "m_buyPrice" : 60000,
-      "m_sellPrice" : 57100,
-      "m_mass" : 5
+      "m_class": 3,
+      "m_buyPrice": 60000,
+      "m_sellPrice": 57100,
+      "m_mass": 5
     },
     {
-      "m_class" : 4,
-      "m_buyPrice" : 120000,
-      "m_sellPrice" : 114200,
-      "m_mass" : 5
+      "m_class": 4,
+      "m_buyPrice": 120000,
+      "m_sellPrice": 114200,
+      "m_mass": 5
     },
     {
-      "m_class" : 5,
-      "m_buyPrice" : 200000,
-      "m_sellPrice" : 190400,
-      "m_mass" : 5
+      "m_class": 5,
+      "m_buyPrice": 200000,
+      "m_sellPrice": 190400,
+      "m_mass": 5
     }
   ],
-  "m_laserCannonList" : [
+  "m_laserCannonList": [
     {
-      "m_class" : 0,
-      "m_buyPrice" : 0,
-      "m_sellPrice" : 0,
-      "m_mass" : 0
+      "m_class": 0,
+      "m_buyPrice": 0,
+      "m_sellPrice": 0,
+      "m_mass": 0
     },
     {
-      "m_class" : 1,
-      "m_buyPrice" : 8000,
-      "m_sellPrice" : 7600,
-      "m_mass" : 5
+      "m_class": 1,
+      "m_buyPrice": 8000,
+      "m_sellPrice": 7600,
+      "m_mass": 5
     },
     {
-      "m_class" : 2,
-      "m_buyPrice" : 20000,
-      "m_sellPrice" : 19000,
-      "m_mass" : 5
+      "m_class": 2,
+      "m_buyPrice": 20000,
+      "m_sellPrice": 19000,
+      "m_mass": 5
     },
     {
-      "m_class" : 3,
-      "m_buyPrice" : 54000,
-      "m_sellPrice" : 51400,
-      "m_mass" : 5
+      "m_class": 3,
+      "m_buyPrice": 54000,
+      "m_sellPrice": 51400,
+      "m_mass": 5
     },
     {
-      "m_class" : 4,
-      "m_buyPrice" : 90000,
-      "m_sellPrice" : 85700,
-      "m_mass" : 5
+      "m_class": 4,
+      "m_buyPrice": 90000,
+      "m_sellPrice": 85700,
+      "m_mass": 5
     },
     {
-      "m_class" : 5,
-      "m_buyPrice" : 150000,
-      "m_sellPrice" : 142800,
-      "m_mass" : 5
+      "m_class": 5,
+      "m_buyPrice": 150000,
+      "m_sellPrice": 142800,
+      "m_mass": 5
+    }
+  ],
+  "m_artifactList": [
+    {
+      "m_name": "A Mulligan",
+      "m_volume": 1,
+      "m_starportPrice": 2,
+      "m_thrynnPrice": 1,
+      "m_actualValue": 1,
+      "m_availableInStarport": "",
+      "m_analysisText": "Analysis of this artifact has revealed very little of interest. It has slight value as an alien curio, but otherwise is totally useless to us."
+    },
+    {
+      "m_name": "Adrynna's Gold",
+      "m_volume": 1,
+      "m_starportPrice": 5000,
+      "m_thrynnPrice": "",
+      "m_actualValue": 2500,
+      "m_availableInStarport": "",
+      "m_analysisText": "Analysis of this artifact has revealed very little of interest. It has slight value as an alien curio, but otherwise is totally useless to us."
+    },
+    {
+      "m_name": "Amazing Artifact",
+      "m_volume": 10,
+      "m_starportPrice": 5000,
+      "m_thrynnPrice": 15,
+      "m_actualValue": 2500,
+      "m_availableInStarport": "",
+      "m_analysisText": "Analysis of this artifact has revealed very little of interest. It has slight value as an alien curio, but otherwise is totally useless to us."
+    },
+    {
+      "m_name": "Armalcolite Relic",
+      "m_volume": 7,
+      "m_starportPrice": 2500,
+      "m_thrynnPrice": 7,
+      "m_actualValue": 1250,
+      "m_availableInStarport": "",
+      "m_analysisText": "Analysis of this artifact has revealed very little of interest. It has slight value as an alien curio, but otherwise is totally useless to us."
+    },
+    {
+      "m_name": "Black Box",
+      "m_volume": 4,
+      "m_starportPrice": 12000,
+      "m_thrynnPrice": "",
+      "m_actualValue": 6000,
+      "m_availableInStarport": "",
+      "m_analysisText": "We can't figure out exactly what this is. It slices, it dices, it even makes julienne fries!"
+    },
+    {
+      "m_name": "Black Egg",
+      "m_volume": 1,
+      "m_starportPrice": 25000,
+      "m_thrynnPrice": 75,
+      "m_actualValue": 12500,
+      "m_availableInStarport": "",
+      "m_analysisText": "This appears to be a bomb of some sort. The type is unfamiliar. To activate it, you must drop it."
+    },
+    {
+      "m_name": "Bladed Toy",
+      "m_volume": 1,
+      "m_starportPrice": 500,
+      "m_thrynnPrice": 1,
+      "m_actualValue": 250,
+      "m_availableInStarport": "",
+      "m_analysisText": "Analysis of this artifact has revealed very little of interest. It has slight value as an alien curio, but otherwise is totally useless to us."
+    },
+    {
+      "m_name": "Blue Bauble",
+      "m_volume": 1,
+      "m_starportPrice": 600,
+      "m_thrynnPrice": 1,
+      "m_actualValue": 300,
+      "m_availableInStarport": "",
+      "m_analysisText": "Analysis of this artifact has revealed very little of interest. It has slight value as an alien curio, but otherwise is totally useless to us."
+    },
+    {
+      "m_name": "Buttoned Box",
+      "m_volume": 1,
+      "m_starportPrice": 1000,
+      "m_thrynnPrice": 3,
+      "m_actualValue": 500,
+      "m_availableInStarport": "",
+      "m_analysisText": "Analysis of this artifact has revealed very little of interest. It has slight value as an alien curio, but otherwise is totally useless to us."
+    },
+    {
+      "m_name": "Complex Machine",
+      "m_volume": 18,
+      "m_starportPrice": 3200,
+      "m_thrynnPrice": 9,
+      "m_actualValue": 1600,
+      "m_availableInStarport": "",
+      "m_analysisText": "Analysis of this artifact has revealed very little of interest. It has slight value as an alien curio, but otherwise is totally useless to us."
+    },
+    {
+      "m_name": "Crystal Cone",
+      "m_volume": 2,
+      "m_starportPrice": 48000,
+      "m_thrynnPrice": 145,
+      "m_actualValue": 24000,
+      "m_availableInStarport": "",
+      "m_analysisText": "Our guess is this is some device of the ancients. Beyond that, we can't tell."
+    },
+    {
+      "m_name": "Crystal Orb",
+      "m_volume": 2,
+      "m_starportPrice": 48000,
+      "m_thrynnPrice": 145,
+      "m_actualValue": 24000,
+      "m_availableInStarport": "",
+      "m_analysisText": "Our guess is this is some device of the ancients. Beyond that, we can't tell."
+    },
+    {
+      "m_name": "Crystal Pearl",
+      "m_volume": 1,
+      "m_starportPrice": 30000,
+      "m_thrynnPrice": 90,
+      "m_actualValue": 15000,
+      "m_availableInStarport": "",
+      "m_analysisText": "This seems to be a device of the ancients, but we can't figure out what it does. It contains a tremendous amount of energy."
+    },
+    {
+      "m_name": "Cute Doodad",
+      "m_volume": 1,
+      "m_starportPrice": 200,
+      "m_thrynnPrice": 1,
+      "m_actualValue": 100,
+      "m_availableInStarport": "",
+      "m_analysisText": "Analysis of this artifact has revealed very little of interest. It has slight value as an alien curio, but otherwise is totally useless to us."
+    },
+    {
+      "m_name": "Dodecahedron",
+      "m_volume": 4,
+      "m_starportPrice": 12000,
+      "m_thrynnPrice": 36,
+      "m_actualValue": 6000,
+      "m_availableInStarport": "",
+      "m_analysisText": "This is some sort of transmitter. It is broadcasting continually on several bands. The net effect should be that it will attract the attention of anyone in the area."
+    },
+    {
+      "m_name": "Ellipsoid",
+      "m_volume": 1,
+      "m_starportPrice": 30000,
+      "m_thrynnPrice": 90,
+      "m_actualValue": 15000,
+      "m_availableInStarport": "",
+      "m_analysisText": "This is crafted of endurium. It doesn't appear to have any function other than being decorative."
+    },
+    {
+      "m_name": "Flat Device",
+      "m_volume": 3,
+      "m_starportPrice": 30000,
+      "m_thrynnPrice": 90,
+      "m_actualValue": 15000,
+      "m_availableInStarport": true,
+      "m_analysisText": "This device will project a shield around your terrain vehicle which makes it difficult for dangerous lifeforms to attack you."
+    },
+    {
+      "m_name": "Frightening Apparatus",
+      "m_volume": 12,
+      "m_starportPrice": 2600,
+      "m_thrynnPrice": 7,
+      "m_actualValue": 1300,
+      "m_availableInStarport": "",
+      "m_analysisText": "Analysis of this artifact has revealed very little of interest. It has slight value as an alien curio, but otherwise is totally useless to us."
+    },
+    {
+      "m_name": "Glowing Disk",
+      "m_volume": 2,
+      "m_starportPrice": 1000,
+      "m_thrynnPrice": 3,
+      "m_actualValue": 500,
+      "m_availableInStarport": "",
+      "m_analysisText": "Analysis of this artifact has revealed very little of interest. It has slight value as an alien curio, but otherwise is totally useless to us."
+    },
+    {
+      "m_name": "Golden Globe",
+      "m_volume": 2,
+      "m_starportPrice": 1800,
+      "m_thrynnPrice": 5,
+      "m_actualValue": 900,
+      "m_availableInStarport": "",
+      "m_analysisText": "Analysis of this artifact has revealed very little of interest. It has slight value as an alien curio, but otherwise is totally useless to us."
+    },
+    {
+      "m_name": "Hot P.Y.T.",
+      "m_volume": 1,
+      "m_starportPrice": 5000,
+      "m_thrynnPrice": 15,
+      "m_actualValue": 2500,
+      "m_availableInStarport": "",
+      "m_analysisText": "Analysis of this artifact has revealed very little of interest. It has slight value as an alien curio, but otherwise is totally useless to us."
+    },
+    {
+      "m_name": "Humming Gizzy",
+      "m_volume": 2,
+      "m_starportPrice": 1000,
+      "m_thrynnPrice": 3,
+      "m_actualValue": 500,
+      "m_availableInStarport": "",
+      "m_analysisText": "Analysis of this artifact has revealed very little of interest. It has slight value as an alien curio, but otherwise is totally useless to us."
+    },
+    {
+      "m_name": "Hypercube",
+      "m_volume": 4,
+      "m_starportPrice": 30000,
+      "m_thrynnPrice": 90,
+      "m_actualValue": 15000,
+      "m_availableInStarport": "",
+      "m_analysisText": "This appears to be a 4-dimensional puzzle composed of many multi-colored cubes. Its use produces an over-whelming feeling of atarxia."
+    },
+    {
+      "m_name": "Metal Ball",
+      "m_volume": 1,
+      "m_starportPrice": 200,
+      "m_thrynnPrice": 1,
+      "m_actualValue": 100,
+      "m_availableInStarport": "",
+      "m_analysisText": "Analysis of this artifact has revealed very little of interest. It has slight value as an alien curio, but otherwise is totally useless to us."
+    },
+    {
+      "m_name": "Mobius Device",
+      "m_volume": 3,
+      "m_starportPrice": 700,
+      "m_thrynnPrice": 2,
+      "m_actualValue": 350,
+      "m_availableInStarport": "",
+      "m_analysisText": "Analysis of this artifact has revealed very little of interest. It has slight value as an alien curio, but otherwise is totally useless to us."
+    },
+    {
+      "m_name": "Nice Thing",
+      "m_volume": 2,
+      "m_starportPrice": 300,
+      "m_thrynnPrice": 1,
+      "m_actualValue": 150,
+      "m_availableInStarport": "",
+      "m_analysisText": "Analysis of this artifact has revealed very little of interest. It has slight value as an alien curio, but otherwise is totally useless to us."
+    },
+    {
+      "m_name": "Octagonal Lens",
+      "m_volume": 1,
+      "m_starportPrice": 600,
+      "m_thrynnPrice": 1,
+      "m_actualValue": 300,
+      "m_availableInStarport": "",
+      "m_analysisText": "Analysis of this artifact has revealed very little of interest. It has slight value as an alien curio, but otherwise is totally useless to us."
+    },
+    {
+      "m_name": "Oval Object",
+      "m_volume": 1,
+      "m_starportPrice": 400,
+      "m_thrynnPrice": 1,
+      "m_actualValue": 200,
+      "m_availableInStarport": "",
+      "m_analysisText": "Analysis of this artifact has revealed very little of interest. It has slight value as an alien curio, but otherwise is totally useless to us."
+    },
+    {
+      "m_name": "Pink Tube-a-tron",
+      "m_volume": 10,
+      "m_starportPrice": 5000,
+      "m_thrynnPrice": 15,
+      "m_actualValue": 2500,
+      "m_availableInStarport": "",
+      "m_analysisText": "Analysis of this artifact has revealed very little of interest. It has slight value as an alien curio, but otherwise is totally useless to us."
+    },
+    {
+      "m_name": "Plastic Thing-a-ma-jig",
+      "m_volume": 2,
+      "m_starportPrice": 600,
+      "m_thrynnPrice": 1,
+      "m_actualValue": 300,
+      "m_availableInStarport": "",
+      "m_analysisText": "Analysis of this artifact has revealed very little of interest. It has slight value as an alien curio, but otherwise is totally useless to us."
+    },
+    {
+      "m_name": "Pretty Picture",
+      "m_volume": 1,
+      "m_starportPrice": 400,
+      "m_thrynnPrice": 1,
+      "m_actualValue": 200,
+      "m_availableInStarport": "",
+      "m_analysisText": "Analysis of this artifact has revealed very little of interest. It has slight value as an alien curio, but otherwise is totally useless to us."
+    },
+    {
+      "m_name": "Pyramid Device",
+      "m_volume": 3,
+      "m_starportPrice": 2300,
+      "m_thrynnPrice": 6,
+      "m_actualValue": 1150,
+      "m_availableInStarport": "",
+      "m_analysisText": "Analysis of this artifact has revealed very little of interest. It has slight value as an alien curio, but otherwise is totally useless to us."
+    },
+    {
+      "m_name": "Quivering Lump",
+      "m_volume": 1,
+      "m_starportPrice": 250,
+      "m_thrynnPrice": 1,
+      "m_actualValue": 125,
+      "m_availableInStarport": "",
+      "m_analysisText": "Analysis of this artifact has revealed very little of interest. It has slight value as an alien curio, but otherwise is totally useless to us."
+    },
+    {
+      "m_name": "Red Cylinder",
+      "m_volume": 3,
+      "m_starportPrice": 60000,
+      "m_thrynnPrice": 181,
+      "m_actualValue": 30000,
+      "m_availableInStarport": "",
+      "m_analysisText": "This seems to be an orbital scanner of some sort. We're not sure what it's tuned to locate though."
+    },
+    {
+      "m_name": "Red Herring",
+      "m_volume": 501,
+      "m_starportPrice": 65500,
+      "m_thrynnPrice": "",
+      "m_actualValue": 32750,
+      "m_availableInStarport": "",
+      "m_analysisText": "Starport analysis is impossible to obtain because this artifact is too voluminous to be transported."
+    },
+    {
+      "m_name": "Ring Device",
+      "m_volume": 2,
+      "m_starportPrice": 24000,
+      "m_thrynnPrice": 72,
+      "m_actualValue": 12000,
+      "m_availableInStarport": "",
+      "m_analysisText": "This is an ancient ship navigational aid. It will identify any nearby continuum flux."
+    },
+    {
+      "m_name": "Rod Device",
+      "m_volume": 3,
+      "m_starportPrice": 36000,
+      "m_thrynnPrice": 109,
+      "m_actualValue": 18000,
+      "m_availableInStarport": "",
+      "m_analysisText": "This appears to be a device of the old empire that projects an enhanced laer shield around a spaceship."
+    },
+    {
+      "m_name": "Rubber Widget",
+      "m_volume": 1,
+      "m_starportPrice": 200,
+      "m_thrynnPrice": 1,
+      "m_actualValue": 100,
+      "m_availableInStarport": "",
+      "m_analysisText": "Analysis of this artifact has revealed very little of interest. It has slight value as an alien curio, but otherwise is totally useless to us."
+    },
+    {
+      "m_name": "Shimmering Ball",
+      "m_volume": 3,
+      "m_starportPrice": 48000,
+      "m_thrynnPrice": 145,
+      "m_actualValue": 24000,
+      "m_availableInStarport": "",
+      "m_analysisText": "This artifact seems to be a cloaking device. As far as we can tell it should operate automatically during combat."
+    },
+    {
+      "m_name": "Silver Gadget",
+      "m_volume": 1,
+      "m_starportPrice": 1300,
+      "m_thrynnPrice": 3,
+      "m_actualValue": 650,
+      "m_availableInStarport": "",
+      "m_analysisText": "Analysis of this artifact has revealed very little of interest. It has slight value as an alien curio, but otherwise is totally useless to us."
+    },
+    {
+      "m_name": "Small Obelisk",
+      "m_volume": 1,
+      "m_starportPrice": 1100,
+      "m_thrynnPrice": 3,
+      "m_actualValue": 550,
+      "m_availableInStarport": "",
+      "m_analysisText": "Analysis of this artifact has revealed very little of interest. It has slight value as an alien curio, but otherwise is totally useless to us."
+    },
+    {
+      "m_name": "Spiral Tube",
+      "m_volume": 2,
+      "m_starportPrice": 750,
+      "m_thrynnPrice": 2,
+      "m_actualValue": 375,
+      "m_availableInStarport": "",
+      "m_analysisText": "Analysis of this artifact has revealed very little of interest. It has slight value as an alien curio, but otherwise is totally useless to us."
+    },
+    {
+      "m_name": "Strange Cloth",
+      "m_volume": 1,
+      "m_starportPrice": 400,
+      "m_thrynnPrice": 1,
+      "m_actualValue": 200,
+      "m_availableInStarport": "",
+      "m_analysisText": "Analysis of this artifact has revealed very little of interest. It has slight value as an alien curio, but otherwise is totally useless to us."
+    },
+    {
+      "m_name": "Surprising Utensil",
+      "m_volume": 1,
+      "m_starportPrice": 350,
+      "m_thrynnPrice": 1,
+      "m_actualValue": 175,
+      "m_availableInStarport": "",
+      "m_analysisText": "Analysis of this artifact has revealed very little of interest. It has slight value as an alien curio, but otherwise is totally useless to us."
+    },
+    {
+      "m_name": "Terrain Vehicle Debris",
+      "m_volume": 2000,
+      "m_starportPrice": 0,
+      "m_thrynnPrice": "",
+      "m_actualValue": 0,
+      "m_availableInStarport": "",
+      "m_analysisText": "Analysis of this artifact has revealed very little of interest. It has slight value as an alien curio, but otherwise is totally useless to us."
+    },
+    {
+      "m_name": "Tesseract",
+      "m_volume": 5,
+      "m_starportPrice": 60000,
+      "m_thrynnPrice": 29,
+      "m_actualValue": 30000,
+      "m_availableInStarport": "",
+      "m_analysisText": "This is a device of the old empire that projects a field which doubles the energy efficiency of a ship's engines."
+    },
+    {
+      "m_name": "Throbbing Mass",
+      "m_volume": 1,
+      "m_starportPrice": 250,
+      "m_thrynnPrice": 1,
+      "m_actualValue": 125,
+      "m_availableInStarport": "",
+      "m_analysisText": "Analysis of this artifact has revealed very little of interest. It has slight value as an alien curio, but otherwise is totally useless to us."
+    },
+    {
+      "m_name": "Ticking Sphere",
+      "m_volume": 3,
+      "m_starportPrice": 4500,
+      "m_thrynnPrice": 13,
+      "m_actualValue": 2250,
+      "m_availableInStarport": "",
+      "m_analysisText": "Analysis of this artifact has revealed very little of interest. It has slight value as an alien curio, but otherwise is totally useless to us."
+    },
+    {
+      "m_name": "Translucent Cube",
+      "m_volume": 2,
+      "m_starportPrice": 1000,
+      "m_thrynnPrice": 3,
+      "m_actualValue": 500,
+      "m_availableInStarport": "",
+      "m_analysisText": "Analysis of this artifact has revealed very little of interest. It has slight value as an alien curio, but otherwise is totally useless to us."
+    },
+    {
+      "m_name": "Wee Green Blobbie",
+      "m_volume": 1,
+      "m_starportPrice": 300,
+      "m_thrynnPrice": 1,
+      "m_actualValue": 150,
+      "m_availableInStarport": "",
+      "m_analysisText": "Analysis of this artifact has revealed very little of interest. It has slight value as an alien curio, but otherwise is totally useless to us."
+    },
+    {
+      "m_name": "Whining Orb",
+      "m_volume": 2,
+      "m_starportPrice": 6000,
+      "m_thrynnPrice": 18,
+      "m_actualValue": 3000,
+      "m_availableInStarport": true,
+      "m_analysisText": "This was found in the underground colony. We're not sure what it does. We think it has something to do with communications."
+    }
+  ],
+  "m_elementList": [
+    {
+      "m_name": "Aluminum",
+      "m_starportPrice": 440,
+      "m_actualValue": 220,
+      "m_valueRank": 10,
+      "m_initialVolume": 0,
+      "m_availableInStarport": true
+    },
+    {
+      "m_name": "Antimony",
+      "m_starportPrice": 560,
+      "m_actualValue": 280,
+      "m_valueRank": 13,
+      "m_initialVolume": 0,
+      "m_availableInStarport": ""
+    },
+    {
+      "m_name": "Chromium",
+      "m_starportPrice": 520,
+      "m_actualValue": 260,
+      "m_valueRank": 12,
+      "m_initialVolume": 0,
+      "m_availableInStarport": ""
+    },
+    {
+      "m_name": "Cobalt",
+      "m_starportPrice": 160,
+      "m_actualValue": 80,
+      "m_valueRank": 3,
+      "m_initialVolume": 0,
+      "m_availableInStarport": true
+    },
+    {
+      "m_name": "Copper",
+      "m_starportPrice": 240,
+      "m_actualValue": 120,
+      "m_valueRank": 5,
+      "m_initialVolume": 0,
+      "m_availableInStarport": ""
+    },
+    {
+      "m_name": "Endurium",
+      "m_starportPrice": 1000,
+      "m_actualValue": 500,
+      "m_valueRank": 22,
+      "m_initialVolume": 200,
+      "m_availableInStarport": true
+    },
+    {
+      "m_name": "Gold",
+      "m_starportPrice": 760,
+      "m_actualValue": 380,
+      "m_valueRank": 18,
+      "m_initialVolume": 0,
+      "m_availableInStarport": ""
+    },
+    {
+      "m_name": "Iron",
+      "m_starportPrice": 120,
+      "m_actualValue": 60,
+      "m_valueRank": 2,
+      "m_initialVolume": 0,
+      "m_availableInStarport": ""
+    },
+    {
+      "m_name": "Lead",
+      "m_starportPrice": 80,
+      "m_actualValue": 40,
+      "m_valueRank": 1,
+      "m_initialVolume": 0,
+      "m_availableInStarport": ""
+    },
+    {
+      "m_name": "Magnesium",
+      "m_starportPrice": 400,
+      "m_actualValue": 200,
+      "m_valueRank": 9,
+      "m_initialVolume": 0,
+      "m_availableInStarport": ""
+    },
+    {
+      "m_name": "Mercury",
+      "m_starportPrice": 640,
+      "m_actualValue": 320,
+      "m_valueRank": 15,
+      "m_initialVolume": 0,
+      "m_availableInStarport": ""
+    },
+    {
+      "m_name": "Molybdenum",
+      "m_starportPrice": 320,
+      "m_actualValue": 160,
+      "m_valueRank": 7,
+      "m_initialVolume": 0,
+      "m_availableInStarport": true
+    },
+    {
+      "m_name": "Nickel",
+      "m_starportPrice": 200,
+      "m_actualValue": 100,
+      "m_valueRank": 4,
+      "m_initialVolume": 0,
+      "m_availableInStarport": ""
+    },
+    {
+      "m_name": "Platinum",
+      "m_starportPrice": 800,
+      "m_actualValue": 400,
+      "m_valueRank": 19,
+      "m_initialVolume": 0,
+      "m_availableInStarport": ""
+    },
+    {
+      "m_name": "Plutonium",
+      "m_starportPrice": 840,
+      "m_actualValue": 420,
+      "m_valueRank": 20,
+      "m_initialVolume": 0,
+      "m_availableInStarport": ""
+    },
+    {
+      "m_name": "Promethium",
+      "m_starportPrice": 600,
+      "m_actualValue": 300,
+      "m_valueRank": 14,
+      "m_initialVolume": 0,
+      "m_availableInStarport": true
+    },
+    {
+      "m_name": "Rodnium",
+      "m_starportPrice": 880,
+      "m_actualValue": 440,
+      "m_valueRank": 21,
+      "m_initialVolume": 0,
+      "m_availableInStarport": ""
+    },
+    {
+      "m_name": "Silver",
+      "m_starportPrice": 720,
+      "m_actualValue": 360,
+      "m_valueRank": 17,
+      "m_initialVolume": 0,
+      "m_availableInStarport": ""
+    },
+    {
+      "m_name": "Tin",
+      "m_starportPrice": 360,
+      "m_actualValue": 180,
+      "m_valueRank": 8,
+      "m_initialVolume": 0,
+      "m_availableInStarport": ""
+    },
+    {
+      "m_name": "Titanium",
+      "m_starportPrice": 480,
+      "m_actualValue": 240,
+      "m_valueRank": 11,
+      "m_initialVolume": 0,
+      "m_availableInStarport": true
+    },
+    {
+      "m_name": "Tungsten",
+      "m_starportPrice": 680,
+      "m_actualValue": 340,
+      "m_valueRank": 16,
+      "m_initialVolume": 0,
+      "m_availableInStarport": ""
+    },
+    {
+      "m_name": "Zinc",
+      "m_starportPrice": 280,
+      "m_actualValue": 140,
+      "m_valueRank": 6,
+      "m_initialVolume": 0,
+      "m_availableInStarport": ""
     }
   ]
 }

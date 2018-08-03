@@ -22,6 +22,12 @@ public class PersistentController : MonoBehaviour
 	// private stuff we don't want the editor to see
 	private float m_delayedSaveTimer;
 
+	// the constructor
+	public PersistentController()
+	{
+		m_playerData = new PlayerData();
+	}
+
 	// this is called by unity before start
 	private void Awake()
 	{
@@ -96,9 +102,10 @@ public class PersistentController : MonoBehaviour
 		// get the path to the player data file
 		string filePath = Application.persistentDataPath + "/" + m_playerDataFileName;
 
-		// reset the player data
-		m_playerData.Reset();
+		// keep track of whether or not we were able to load the player data from file
+		bool loadSucceeded = false;
 
+		// check if the file exists
 		if ( File.Exists( filePath ) )
 		{
 			try
@@ -107,12 +114,21 @@ public class PersistentController : MonoBehaviour
 				FileStream file = File.Open( filePath, FileMode.Open );
 				BinaryFormatter binaryFormatter = new BinaryFormatter();
 				m_playerData = (PlayerData) binaryFormatter.Deserialize( file );
+
+				// we were able to load the player data from file (version checking is next)
+				loadSucceeded = true;
 			}
 			catch
 			{
 				// if we failed then we probably have changed the player data structure in a way that we can't load from older player data files
 				Debug.Log( "Failed to load player data - player data has been reset." );
 			}
+		}
+
+		// if the player data is from an old version then we have to start over
+		if ( !loadSucceeded || !m_playerData.IsCurrentVersion() )
+		{
+			m_playerData.Reset();
 		}
 	}
 

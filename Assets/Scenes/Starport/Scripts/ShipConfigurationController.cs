@@ -297,7 +297,7 @@ public class ShipConfigurationController : PanelController
 		m_starportController.TakeFocus();
 	}
 
-	// call this to switch to the view file state
+	// call this to switch to the menu bar state
 	private void SwitchToMenuBarState()
 	{
 		// change the current state
@@ -457,9 +457,9 @@ public class ShipConfigurationController : PanelController
 		m_configurationValuesText.text += shipConfigurationPlayerData.GetLaserCannonClassString() + Environment.NewLine;
 
 		// show only as many cargo pods as we have purchased
-		for ( int i = 0; i < m_cargoPods.Length; i++ )
+		for ( int cargoPodId = 0; cargoPodId < m_cargoPods.Length; cargoPodId++ )
 		{
-			m_cargoPods[ i ].SetActive( i < shipConfigurationPlayerData.m_numCargoPods );
+			m_cargoPods[ cargoPodId ].SetActive( cargoPodId < shipConfigurationPlayerData.m_numCargoPods );
 		}
 
 		// hide or show the shield image depending on if we have them
@@ -677,9 +677,9 @@ public class ShipConfigurationController : PanelController
 				case 5: shipPartList = gameData.m_laserCannonList; break;
 			}
 
-			for ( int i = 1; i < shipPartList.Length; i++ )
+			for ( int shipPartId = 1; shipPartId < shipPartList.Length; shipPartId++ )
 			{
-				m_componentValuesText.text += shipPartList[ i ].m_buyPrice.ToString() + Environment.NewLine;
+				m_componentValuesText.text += shipPartList[ shipPartId ].m_buyPrice.ToString() + Environment.NewLine;
 			}
 		}
 	}

@@ -31,9 +31,10 @@ public class BankPlayerData
 		m_currentBalance = 12000;
 
 		// create a new transactions list
-		m_transactionList = new List<Transaction>();
-
-		// add the first transaction (game purchase)
-		m_transactionList.Add( new Transaction( "4620-01-01", "Game purchase", "200-" ) );
+		m_transactionList = new List<Transaction>
+		{
+			// add the first transaction (game purchase)
+			new Transaction( "4620-01-01", "Game purchase", "200-" )
+		};
 	}
 }

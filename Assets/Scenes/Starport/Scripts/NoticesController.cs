@@ -16,21 +16,17 @@ public class NoticesController : MonoBehaviour
 
 	// private stuff we don't want the editor to see
 	private OperationsController m_operationsController;
-	private int m_latestNoticeIndex;
-	private int m_currentNoticeIndex;
+	private int m_latestNoticeId;
+	private int m_currentNoticeId;
 	private int m_currentLine;
 	private float m_currentOffset;
 	private bool m_endOfMessageReached;
-	// private bool m_haveFocus;
 
 	// this is called by unity before start
 	private void Awake()
 	{
 		// get access to the operations controller
 		m_operationsController = GetComponent<OperationsController>();
-
-		// we don't have the focus
-		//m_haveFocus = false;
 	}
 
 	// this is called by unity every frame
@@ -60,8 +56,8 @@ public class NoticesController : MonoBehaviour
 		TakeFocus();
 
 		// reset some variables
-		m_latestNoticeIndex = 0;
-		m_currentNoticeIndex = 0;
+		m_latestNoticeId = 0;
+		m_currentNoticeId = 0;
 
 		// get access to the player progress
 		PlayerData playerData = PersistentController.m_instance.m_playerData;
@@ -76,13 +72,13 @@ public class NoticesController : MonoBehaviour
 		// figure out which notice we should be showing (current notice)
 		string earliestNewNoticeStardate = "9999-12-31";
 
-		for ( int i = 0; i < gameData.m_noticeList.Length; i++ )
+		for ( int noticeId = 0; noticeId < gameData.m_noticeList.Length; noticeId++ )
 		{
-			NoticeGameData notice = gameData.m_noticeList[ i ];
+			NoticeGameData notice = gameData.m_noticeList[ noticeId ];
 
 			if ( string.Compare( playerData.m_starflightPlayerData.m_currentStardate, notice.m_stardate ) >= 0 )
 			{
-				m_latestNoticeIndex = i;
+				m_latestNoticeId = noticeId;
 
 				if ( string.Compare( notice.m_stardate, playerData.m_noticePlayerData.m_lastReadStardate ) >= 0 )
 				{
@@ -93,7 +89,7 @@ public class NoticesController : MonoBehaviour
 							earliestNewNoticeStardate = notice.m_stardate;
 						}
 
-						m_currentNoticeIndex = i;
+						m_currentNoticeId = noticeId;
 					}
 				}
 			}
@@ -113,9 +109,6 @@ public class NoticesController : MonoBehaviour
 	// call this to take control
 	public void TakeFocus()
 	{
-		// we have the controller focus
-		//m_haveFocus = true;
-
 		// turn on controller navigation of the UI
 		EventSystem.current.sendNavigationEvents = true;
 	}
@@ -123,9 +116,6 @@ public class NoticesController : MonoBehaviour
 	// call this to give up control
 	public void LoseFocus()
 	{
-		// we have the controller focus
-		//m_haveFocus = false;
-
 		// turn off controller navigation of the UI
 		EventSystem.current.sendNavigationEvents = false;
 	}
@@ -146,9 +136,9 @@ public class NoticesController : MonoBehaviour
 	// this is called if we clicked on the evaluation button in the operations panel
 	public void PreviousClicked()
 	{
-		if ( m_currentNoticeIndex > 0 )
+		if ( m_currentNoticeId > 0 )
 		{
-			m_currentNoticeIndex--;
+			m_currentNoticeId--;
 
 			ShowCurrentMessage();
 		}
@@ -160,9 +150,9 @@ public class NoticesController : MonoBehaviour
 	// this is called if we clicked on the exit button in the operations panel
 	public void NextClicked()
 	{
-		if ( m_currentNoticeIndex < m_latestNoticeIndex )
+		if ( m_currentNoticeId < m_latestNoticeId )
 		{
-			m_currentNoticeIndex++;
+			m_currentNoticeId++;
 
 			ShowCurrentMessage();
 		}
@@ -208,15 +198,15 @@ public class NoticesController : MonoBehaviour
 		quitButton.Select();
 
 		// enable / disable the previous and next buttons based on what our current notice index is
-		previousButton.interactable = ( m_currentNoticeIndex > 0 );
-		nextButton.interactable = ( m_currentNoticeIndex < m_latestNoticeIndex );
+		previousButton.interactable = ( m_currentNoticeId > 0 );
+		nextButton.interactable = ( m_currentNoticeId < m_latestNoticeId );
 
 		// check if we have reached the end of the current notice
 		if ( m_endOfMessageReached )
 		{
 			moreButton.interactable = false;
 
-			if ( m_currentNoticeIndex < m_latestNoticeIndex )
+			if ( m_currentNoticeId < m_latestNoticeId )
 			{
 				nextButton.Select();
 			}
@@ -236,7 +226,7 @@ public class NoticesController : MonoBehaviour
 		GameData gameData = PersistentController.m_instance.m_gameData;
 
 		// get the current notice
-		NoticeGameData currentNotice = gameData.m_noticeList[ m_currentNoticeIndex ];
+		NoticeGameData currentNotice = gameData.m_noticeList[ m_currentNoticeId ];
 
 		// check if we are displaying the first line
 		if ( m_currentLine == 0 )
