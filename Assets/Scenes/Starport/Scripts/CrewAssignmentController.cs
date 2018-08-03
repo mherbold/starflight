@@ -423,9 +423,6 @@ public class CrewAssignmentController : PanelController
 			// assign this personnel to this position
 			crewAssignmentPlayerData.Assign( m_currentPositionIndex, personnel.m_fileId );
 
-			// save the player data
-			PersistentController.m_instance.SavePlayerData();
-
 			// update the assigned crewmember list
 			UpdateAssignedCrewmemberList();
 

@@ -255,8 +255,8 @@ public class PersonnelController : PanelController
 		if ( deltaBalance > 0 )
 		{
 			BankPlayerData.Transaction transaction = new BankPlayerData.Transaction( PersistentController.m_instance.m_playerData.m_starflightPlayerData.m_currentStardate, "Personnel", deltaBalance.ToString() + "-" );
+
 			PersistentController.m_instance.m_playerData.m_bankPlayerData.m_transactionList.Add( transaction );
-			PersistentController.m_instance.SavePlayerData();
 		}
 	}
 
@@ -841,9 +841,6 @@ public class PersonnelController : PanelController
 
 				// play a ui sound
 				GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
-
-				// save the player data
-				PersistentController.m_instance.SavePlayerData();
 			}
 			else // the selected skill is already maxxed out
 			{
@@ -988,9 +985,6 @@ public class PersonnelController : PanelController
 		// delete the crewmember
 		personnelPlayerData.m_personnelList.RemoveAt( m_currentFileIndex );
 
-		// save the changes
-		PersistentController.m_instance.SavePlayerData();
-
 		// change the current file index if necessary
 		if ( m_currentFileIndex >= personnelPlayerData.m_personnelList.Count )
 		{
@@ -1036,8 +1030,6 @@ public class PersonnelController : PanelController
 		// add the new personnel file to the list
 		PersistentController.m_instance.m_playerData.m_personnelPlayerData.m_personnelList.Add( personnel );
 
-		// save the new personnel file to disk
-		PersistentController.m_instance.SavePlayerData();
 
 		// make the new file our current one
 		m_currentFileIndex = PersistentController.m_instance.m_playerData.m_personnelPlayerData.m_personnelList.Count - 1;

@@ -29,4 +29,24 @@ public class ArtifactStorage
 		// update the volume used
 		m_volumeUsed += artifactReference.GetVolume();
 	}
+
+	public ArtifactReference Find( int artifactId )
+	{
+		foreach ( ArtifactReference artifactReference in m_artifactList )
+		{
+			if ( artifactReference.m_artifactId == artifactId )
+			{
+				return artifactReference;
+			}
+		}
+
+		return null;
+	}
+
+	public void Remove( int artifactId )
+	{
+		ArtifactReference artifactReference = Find( artifactId );
+
+		m_artifactList.Remove( artifactReference );
+	}
 }

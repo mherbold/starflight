@@ -172,6 +172,12 @@ public class StarportController : MonoBehaviour
 
 		// clear out the current ui controller
 		m_currentUIController = null;
+
+		// save the player data
+		if ( PersistentController.m_instance )
+		{
+			PersistentController.m_instance.SavePlayerData();
+		}
 	}
 
 	// call this when we are losing the focus and giving it to one of the door ui controllers

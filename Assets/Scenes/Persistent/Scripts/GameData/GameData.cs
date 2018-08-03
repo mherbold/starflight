@@ -15,4 +15,17 @@ public class GameData : GameDataFile
 	public LaserCannonGameData[] m_laserCannonList;
 	public ArtifactGameData[] m_artifactList;
 	public ElementGameData[] m_elementList;
+
+	public int FindElementId( string name )
+	{
+		for ( int elementId = 0; elementId < m_elementList.Length; elementId++ )
+		{
+			if ( m_elementList[ elementId ].m_name == name )
+			{
+				return elementId;
+			}
+		}
+
+		return -1;
+	}
 }

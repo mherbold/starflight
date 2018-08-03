@@ -34,6 +34,15 @@ public class ElementStorage
 		return null;
 	}
 
+	public ElementReference Find( string name )
+	{
+		GameData gameData = PersistentController.m_instance.m_gameData;
+
+		int elementId = gameData.FindElementId( name );
+
+		return Find( elementId );
+	}
+
 	public void Add( int elementId, int volume )
 	{
 		ElementReference elementReference = Find( elementId );

@@ -23,24 +23,24 @@ public class ShipConfigurationController : PanelController
 	public Button m_repairButton;
 	public Button m_nameButton;
 	public Button m_exitButton;
-	public GameObject m_overlayPanel;
-	public GameObject m_namePanel;
-	public GameObject m_errorPanel;
-	public TextMeshProUGUI m_errorMessageText;
-	public InputField m_nameInputField;
 	public TextMeshProUGUI m_componentNamesText;
 	public TextMeshProUGUI m_componentValuesText;
 	public TextMeshProUGUI m_configurationValuesText;
 	public TextMeshProUGUI m_statusValuesText;
 	public TextMeshProUGUI m_currentBalanceText;
+	public TextMeshProUGUI m_errorMessageText;
 	public Image m_upArrowImage;
 	public Image m_downArrowImage;
 	public Image m_shieldImage;
+	public GameObject m_overlayPanel;
+	public GameObject m_namePanel;
+	public GameObject m_errorPanel;
 	public GameObject m_selectedPartPanel;
 	public GameObject m_selectionXform;
 	public GameObject m_missileLauncher;
 	public GameObject m_laserCannon;
 	public GameObject[] m_cargoPods;
+	public InputField m_nameInputField;
 
 	// private stuff we don't want the editor to see
 	private StarportController m_starportController;
@@ -48,6 +48,7 @@ public class ShipConfigurationController : PanelController
 	private State m_currentState;
 	private int m_currentPartIndex;
 	private int m_currentClassIndex;
+	private int m_startingBankBalance;
 	private Vector3 m_baseSelectionOffsetMin;
 	private Vector3 m_baseSelectionOffsetMax;
 	private float m_ignoreControllerTimer;
@@ -130,7 +131,7 @@ public class ShipConfigurationController : PanelController
 
 					UpdateScreen();
 
-					GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
+					GetComponent<UISoundController>().Play( UISoundController.UISound.Click );
 				}
 			}
 		}
@@ -146,7 +147,7 @@ public class ShipConfigurationController : PanelController
 
 					UpdateScreen();
 
-					GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
+					GetComponent<UISoundController>().Play( UISoundController.UISound.Click );
 				}
 			}
 		}
@@ -159,6 +160,8 @@ public class ShipConfigurationController : PanelController
 		if ( m_inputManager.GetSubmitDown() )
 		{
 			BuySelectedPart();
+
+			GetComponent<UISoundController>().Play( UISoundController.UISound.Activate );
 		}
 
 		// check if we have pressed the cancel button
@@ -189,7 +192,7 @@ public class ShipConfigurationController : PanelController
 
 					UpdateScreen();
 
-					GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
+					GetComponent<UISoundController>().Play( UISoundController.UISound.Click );
 				}
 			}
 		}
@@ -205,7 +208,7 @@ public class ShipConfigurationController : PanelController
 
 					UpdateScreen();
 
-					GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
+					GetComponent<UISoundController>().Play( UISoundController.UISound.Click );
 				}
 			}
 		}
@@ -246,6 +249,9 @@ public class ShipConfigurationController : PanelController
 		// reset the current state
 		m_currentState = State.MenuBar;
 
+		// remember the starting bank balance
+		m_startingBankBalance = PersistentController.m_instance.m_playerData.m_bankPlayerData.m_currentBalance;
+
 		// update the ui
 		UpdateScreen();
 
@@ -261,6 +267,18 @@ public class ShipConfigurationController : PanelController
 
 		// start the closing animation
 		StartClosingUI();
+
+		// if the bank balance has changed then record it in the bank transaction log
+		int deltaBalance = m_startingBankBalance - PersistentController.m_instance.m_playerData.m_bankPlayerData.m_currentBalance;
+
+		if ( deltaBalance != 0 )
+		{
+			string sign = ( deltaBalance > 0 ) ? "-" : "+";
+
+			BankPlayerData.Transaction transaction = new BankPlayerData.Transaction( PersistentController.m_instance.m_playerData.m_starflightPlayerData.m_currentStardate, "Ship Configuration", deltaBalance.ToString() + sign );
+
+			PersistentController.m_instance.m_playerData.m_bankPlayerData.m_transactionList.Add( transaction );
+		}
 	}
 
 	// call this to take control
@@ -357,7 +375,7 @@ public class ShipConfigurationController : PanelController
 		// update the screen
 		UpdateScreen();
 
-		// erase the current text input
+		// set the current text input to the current name of the ship
 		m_nameInputField.text = PersistentController.m_instance.m_playerData.m_shipConfigurationPlayerData.m_name;
 
 		// select the text input by default
@@ -474,7 +492,18 @@ public class ShipConfigurationController : PanelController
 		// update status values
 		m_statusValuesText.text = shipConfigurationPlayerData.m_mass + " Tons" + Environment.NewLine;
 		m_statusValuesText.text += shipConfigurationPlayerData.m_acceleration + " G" + Environment.NewLine;
-		m_statusValuesText.text += "TODO";
+
+		// report the amount of endurium on the ship
+		ElementReference elementReference = playerData.m_shipCargoPlayerData.m_elementStorage.Find( "Endurium" );
+
+		if ( elementReference == null )
+		{
+			m_statusValuesText.text += "0.0M<sup>3</sup>";
+		}
+		else
+		{
+			m_statusValuesText.text += ( elementReference.m_volume / 10 ) + "." + ( elementReference.m_volume % 10 ) + "M<sup>3</sup>";
+		}
 
 		// update bank balance amount
 		m_currentBalanceText.text = "Your account balance is: " + playerData.m_bankPlayerData.m_currentBalance + " M.U.";
@@ -618,9 +647,6 @@ public class ShipConfigurationController : PanelController
 		// update the ship name in the player data
 		PersistentController.m_instance.m_playerData.m_shipConfigurationPlayerData.m_name = m_nameInputField.text;
 
-		// save the new ship name to disk
-		PersistentController.m_instance.SavePlayerData();
-
 		// switch to the menu bar state
 		SwitchToMenuBarState();
 
@@ -709,16 +735,17 @@ public class ShipConfigurationController : PanelController
 			}
 			else
 			{
-				// add one cargo pod
+				// deduct the price of the cargo pod from the player's bank balance
 				playerData.m_bankPlayerData.m_currentBalance -= gameData.m_shipGameData.m_cargoPodBuyPrice;
 
-				playerData.m_shipConfigurationPlayerData.m_numCargoPods++;
+				// add one cargo pod to the ship
+				playerData.m_shipConfigurationPlayerData.AddCargoPod();
 
 				// update the screen
 				UpdateScreen();
 
 				// play a ui sound
-				GetComponent<UISoundController>().Play( UISoundController.UISound.Activate );
+				GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
 			}
 		}
 	}

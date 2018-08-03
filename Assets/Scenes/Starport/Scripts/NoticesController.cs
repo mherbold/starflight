@@ -239,8 +239,6 @@ public class NoticesController : MonoBehaviour
 			if ( string.Compare( currentNotice.m_stardate, PersistentController.m_instance.m_playerData.m_noticePlayerData.m_lastReadStardate ) > 0 )
 			{
 				PersistentController.m_instance.m_playerData.m_noticePlayerData.m_lastReadStardate = currentNotice.m_stardate;
-
-				PersistentController.m_instance.SavePlayerData();
 			}
 		}
 

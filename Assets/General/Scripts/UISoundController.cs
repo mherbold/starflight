@@ -7,9 +7,9 @@ public class UISoundController : MonoBehaviour
 	{
 		None,
 		Click,
-		Update,
 		Activate,
 		Deactivate,
+		Update,
 		Error
 	};
 
@@ -47,9 +47,9 @@ public class UISoundController : MonoBehaviour
 			switch ( m_soundToPlay )
 			{
 				case UISound.Click: m_audioSource.PlayOneShot( m_clickAudioClip ); break;
-				case UISound.Update: m_audioSource.PlayOneShot( m_updateAudioClip ); break;
 				case UISound.Activate: m_audioSource.PlayOneShot( m_activateAudioClip ); break;
 				case UISound.Deactivate: m_audioSource.PlayOneShot( m_deactivateAudioClip ); break;
+				case UISound.Update: m_audioSource.PlayOneShot( m_updateAudioClip ); break;
 				case UISound.Error: m_audioSource.PlayOneShot( m_errorAudioClip ); break;
 			}
 
@@ -65,6 +65,8 @@ public class UISoundController : MonoBehaviour
 		if ( soundIndex > m_soundToPlay )
 		{
 			m_soundToPlay = soundIndex;
+
+			Debug.Log( "m_soundToPlay = " + m_soundToPlay );
 		}
 	}
 

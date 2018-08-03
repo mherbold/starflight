@@ -13,6 +13,7 @@ public class ShipConfigurationPlayerData
 	public int m_missileLauncherClass;
 	public int m_laserCannonClass;
 	public int m_mass;
+	public int m_volume;
 	public int m_acceleration;
 
 	public void Reset()
@@ -32,6 +33,9 @@ public class ShipConfigurationPlayerData
 
 		// recalculate the mass of the ship
 		RecalculateMass();
+
+		// recalculate the volume of the ship
+		RecalculateVolume();
 
 		// recalculate the acceleration of the ship
 		RecalculateAcceleration();
@@ -91,6 +95,18 @@ public class ShipConfigurationPlayerData
 		m_mass += gameData.m_laserCannonList[ m_laserCannonClass ].m_mass;
 	}
 
+	public void RecalculateVolume()
+	{
+		// get access to the game data
+		GameData gameData = PersistentController.m_instance.m_gameData;
+
+		// start with the base ship mass
+		m_volume = gameData.m_shipGameData.m_baseShipVolume;
+
+		// add in the volume of each cargo pod
+		m_volume += gameData.m_shipGameData.m_cargoPodVolume * m_numCargoPods;
+	}
+
 	public void RecalculateAcceleration()
 	{
 		// get access to the game data
@@ -101,5 +117,36 @@ public class ShipConfigurationPlayerData
 
 		// this formula closely matches the original starflight game
 		m_acceleration = engines.m_baseAcceleration - Convert.ToInt32( Math.Sqrt( m_mass - engines.m_accelerationMass ) * engines.m_accelerationScale );
+	}
+
+	public void AddCargoPod()
+	{
+		// add one cargo pod
+		m_numCargoPods++;
+
+		// recalculate ship metrics
+		RecalculateMass();
+		RecalculateVolume();
+		RecalculateAcceleration();
+	}
+
+	public void RemoveCargoPod()
+	{
+		// remove one cargo pod
+		m_numCargoPods--;
+
+		// recalculate ship metrics
+		RecalculateMass();
+		RecalculateVolume();
+		RecalculateAcceleration();
+	}
+
+	public int GetRemainingVolme()
+	{
+		// get access to the player data
+		PlayerData playerData = PersistentController.m_instance.m_playerData;
+
+		// calculate and return the amount of space remaining in the cargo hold
+		return m_volume - playerData.m_shipCargoPlayerData.m_volumeUsed;
 	}
 }

@@ -176,9 +176,11 @@
   "m_shipGameData":
 {
   "m_baseShipMass": 50,
+  "m_baseShipVolume": 500,
   "m_cargoPodBuyPrice": 500,
   "m_cargoPodSellPrice": 500,
-  "m_cargoPodMass": 10
+  "m_cargoPodMass": 10,
+  "m_cargoPodVolume":  500
 },
   "m_enginesList": [
     {
