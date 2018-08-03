@@ -1,4 +1,7 @@
 {
+  "m_starportGameData": {
+    "m_artifactAnalysisPrice": 500
+  },
   "m_noticeList": [
     {
       "m_stardate": "4620-01-01",
@@ -173,15 +176,14 @@
       "m_averageWeight": "120 KG"
     }
   ],
-  "m_shipGameData":
-{
-  "m_baseShipMass": 50,
-  "m_baseShipVolume": 500,
-  "m_cargoPodBuyPrice": 500,
-  "m_cargoPodSellPrice": 500,
-  "m_cargoPodMass": 10,
-  "m_cargoPodVolume":  500
-},
+  "m_shipGameData": {
+    "m_baseShipMass": 50,
+    "m_baseShipVolume": 500,
+    "m_cargoPodBuyPrice": 500,
+    "m_cargoPodSellPrice": 500,
+    "m_cargoPodMass": 10,
+    "m_cargoPodVolume": 500
+  },
   "m_enginesList": [
     {
       "m_class": 0,
@@ -542,6 +544,7 @@
       "m_thrynnPrice": 90,
       "m_actualValue": 15000,
       "m_availableInStarport": true,
+      "m_knownAtStart": true,
       "m_analysisText": "This device will project a shield around your terrain vehicle which makes it difficult for dangerous lifeforms to attack you."
     },
     {
@@ -848,6 +851,7 @@
       "m_thrynnPrice": 18,
       "m_actualValue": 3000,
       "m_availableInStarport": true,
+      "m_knownAtStart": true,
       "m_analysisText": "This was found in the underground colony. We're not sure what it does. We think it has something to do with communications."
     }
   ],

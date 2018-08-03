@@ -10,7 +10,7 @@ public class TradeDepotController : PanelController
 {
 	enum State
 	{
-		MenuBar, BuyItem, SellItem, AnalyzeItem, BuyAmount, SellAmount, ErrorMessage
+		MenuBar, BuyItem, BuyAmount, SellItem, SellAmount, AnalyzeItem, AnalyzeConfirm, AnalyzeShow, ErrorMessage
 	}
 
 	private class Item
@@ -36,18 +36,23 @@ public class TradeDepotController : PanelController
 	public TextMeshProUGUI m_currentBalanceText;
 	public TextMeshProUGUI m_amountLabelText;
 	public TextMeshProUGUI m_errorMessageText;
+	public TextMeshProUGUI m_analyzeText;
 	public Image m_upArrowImage;
 	public Image m_downArrowImage;
 	public Button m_buyButton;
 	public Button m_sellButton;
 	public Button m_analyzeButton;
 	public Button m_exitButton;
+	public Button m_noButton;
 	public GameObject m_selectionXform;
 	public GameObject m_welcomeGameObject;
 	public GameObject m_tradeGameObject;
+	public GameObject m_overlayPanel;
 	public GameObject m_amountGameObject;
 	public GameObject m_itemListMask;
 	public GameObject m_errorPanel;
+	public GameObject m_analyzePanel;
+	public GameObject m_confirmAnalyzePanel;
 	public InputField m_amountInputField;
 
 	// private stuff we don't want the editor to see
@@ -106,13 +111,19 @@ public class TradeDepotController : PanelController
 
 			case State.SellItem:
 			{
-				//UpdateControllerForSellState();
+				UpdateControllerForSellItemState();
 				break;
 			}
 
 			case State.AnalyzeItem:
 			{
-				//UpdateControllerForAnalyzeState();
+				UpdateControllerForAnalyzeItemState();
+				break;
+			}
+
+			case State.AnalyzeShow:
+			{
+				UpdateControllerForAnalyzeShowState();
 				break;
 			}
 
@@ -124,8 +135,8 @@ public class TradeDepotController : PanelController
 		}
 	}
 
-	// controller updates for when we are in the buy item state
-	private void UpdateControllerForBuyItemState()
+	// common controller updates for the buy item, sell item, and analyze item states
+	private void UpdateController()
 	{
 		// get the controller stick position
 		float y = m_inputManager.GetRawY();
@@ -168,14 +179,6 @@ public class TradeDepotController : PanelController
 			m_ignoreControllerTimer = 0.0f;
 		}
 
-		// check if we have pressed the fire button
-		if ( m_inputManager.GetSubmitDown() )
-		{
-			GetComponent<UISoundController>().Play( UISoundController.UISound.Activate );
-
-			BuySelectedItem();
-		}
-
 		// check if we have pressed the cancel button
 		if ( m_inputManager.GetCancelDown() )
 		{
@@ -185,11 +188,70 @@ public class TradeDepotController : PanelController
 		}
 	}
 
+	// controller updates for when we are in the buy item state
+	private void UpdateControllerForBuyItemState()
+	{
+		// do common controller updates
+		UpdateController();
+
+		// check if we have pressed the fire button
+		if ( m_inputManager.GetSubmitDown() )
+		{
+			GetComponent<UISoundController>().Play( UISoundController.UISound.Activate );
+
+			BuySelectedItem();
+		}
+	}
+
+	// controller updates for when we are in the sell item state
+	private void UpdateControllerForSellItemState()
+	{
+		// do common controller updates
+		UpdateController();
+
+		// check if we have pressed the fire button
+		if ( m_inputManager.GetSubmitDown() )
+		{
+			GetComponent<UISoundController>().Play( UISoundController.UISound.Activate );
+
+			SellSelectedItem();
+		}
+	}
+
+	// controller updates for when we are in the analyze item state
+	private void UpdateControllerForAnalyzeItemState()
+	{
+		// do common controller updates
+		UpdateController();
+
+		// check if we have pressed the fire button
+		if ( m_inputManager.GetSubmitDown() )
+		{
+			GetComponent<UISoundController>().Play( UISoundController.UISound.Activate );
+
+			AnalyzeSelectedItem();
+		}
+	}
+
+	private void UpdateControllerForAnalyzeShowState()
+	{
+		// check if we have pressed the fire or cancel button
+		if ( m_inputManager.GetSubmitDown() || m_inputManager.GetCancelDown() )
+		{
+			// switch back to the analyze item state
+			SwitchToAnalyzeItemState( false );
+
+			// play a ui sound
+			GetComponent<UISoundController>().Play( UISoundController.UISound.Deactivate );
+		}
+	}
+
 	private void UpdateControllerForErrorMessageState()
 	{
 		// check if we have pressed the fire or cancel button
 		if ( m_inputManager.GetSubmitDown() || m_inputManager.GetCancelDown() )
 		{
+			// switch back to the previous state
 			switch ( m_stateBeforeError )
 			{
 				case State.BuyItem:
@@ -201,11 +263,15 @@ public class TradeDepotController : PanelController
 				break;
 
 				case State.SellItem:
-				//SwitchToSellItemState( false );
+				SwitchToSellItemState( false );
 				break;
 
 				case State.SellAmount:
-				//SwitchToBuyAmountState();
+				SwitchToSellAmountState();
+				break;
+
+				case State.AnalyzeItem:
+				SwitchToAnalyzeItemState( false );
 				break;
 
 				case State.MenuBar:
@@ -213,6 +279,7 @@ public class TradeDepotController : PanelController
 				break;
 			}
 
+			// play a ui sound
 			GetComponent<UISoundController>().Play( UISoundController.UISound.Deactivate );
 		}
 	}
@@ -224,7 +291,7 @@ public class TradeDepotController : PanelController
 		m_currentState = State.MenuBar;
 
 		// remember the starting bank balance
-		m_startingBankBalance = PersistentController.m_instance.m_playerData.m_bankPlayerData.m_currentBalance;
+		m_startingBankBalance = PersistentController.m_instance.m_playerData.m_bank.m_currentBalance;
 
 		// update the ui
 		UpdateScreen();
@@ -243,15 +310,15 @@ public class TradeDepotController : PanelController
 		StartClosingUI();
 
 		// if the bank balance has changed then record it in the bank transaction log
-		int deltaBalance = m_startingBankBalance - PersistentController.m_instance.m_playerData.m_bankPlayerData.m_currentBalance;
+		int deltaBalance = m_startingBankBalance - PersistentController.m_instance.m_playerData.m_bank.m_currentBalance;
 
 		if ( deltaBalance != 0 )
 		{
 			string sign = ( deltaBalance > 0 ) ? "-" : "+";
 
-			BankPlayerData.Transaction transaction = new BankPlayerData.Transaction( PersistentController.m_instance.m_playerData.m_starflightPlayerData.m_currentStardate, "Trade depot", deltaBalance.ToString() + sign );
+			Bank.Transaction transaction = new Bank.Transaction( PersistentController.m_instance.m_playerData.m_starflight.m_currentStardate, "Trade depot", deltaBalance.ToString() + sign );
 
-			PersistentController.m_instance.m_playerData.m_bankPlayerData.m_transactionList.Add( transaction );
+			PersistentController.m_instance.m_playerData.m_bank.m_transactionList.Add( transaction );
 		}
 	}
 
@@ -341,6 +408,103 @@ public class TradeDepotController : PanelController
 		m_amountInputField.Select();
 	}
 
+	// call this to switch to the sell item state
+	private void SwitchToSellItemState( bool resetCurrentItemIndex = true )
+	{
+		// change the current state
+		m_currentState = State.SellItem;
+
+		// select the first part by default
+		if ( resetCurrentItemIndex )
+		{
+			m_currentItemIndex = 0;
+			m_currentRowOffset = 0;
+		}
+
+		// update the screen
+		UpdateScreen();
+
+		// debounce the input
+		m_inputManager.DebounceNextUpdate();
+	}
+
+	// call this to switch to the sell amount state
+	private void SwitchToSellAmountState()
+	{
+		// deselect all the buttons
+		EventSystem.current.SetSelectedGameObject( null );
+
+		// change the current state
+		m_currentState = State.SellAmount;
+
+		// update the screen
+		UpdateScreen();
+
+		// erase the current text input
+		m_amountInputField.text = "";
+
+		// select the text input by default
+		m_amountInputField.Select();
+	}
+
+	// call this to switch to the analyze item state
+	private void SwitchToAnalyzeItemState( bool resetCurrentItemIndex = true )
+	{
+		// change the current state
+		m_currentState = State.AnalyzeItem;
+
+		// select the first part by default
+		if ( resetCurrentItemIndex )
+		{
+			m_currentItemIndex = 0;
+			m_currentRowOffset = 0;
+		}
+
+		// update the screen
+		UpdateScreen();
+
+		// debounce the input
+		m_inputManager.DebounceNextUpdate();
+	}
+
+	// call this to switch to the confirm analysis state
+	private void SwitchToAnalyzeConfirmState()
+	{
+		// deselect all the buttons
+		EventSystem.current.SetSelectedGameObject( null );
+
+		// change the current state
+		m_currentState = State.AnalyzeConfirm;
+
+		// update the screen
+		UpdateScreen();
+
+		// select the no button by default
+		m_noButton.Select();
+	}
+
+	// call this to switch to the show analysis state
+	private void SwitchToAnalyzeShowState()
+	{
+		// get the currently selected item
+		Item item = m_itemList[ m_currentItemIndex ];
+
+		// get access to the game data
+		GameData gameData = PersistentController.m_instance.m_gameData;
+
+		// update the analyze text
+		m_analyzeText.text = gameData.m_artifactList[ item.m_id ].m_analysisText;
+
+		// change the current state
+		m_currentState = State.AnalyzeShow;
+
+		// update the screen
+		UpdateScreen();
+
+		// debounce the input
+		m_inputManager.DebounceNextUpdate();
+	}
+
 	// call this to switch to the error message state
 	private void SwitchToErrorMessageState( string errorMessage )
 	{
@@ -373,18 +537,27 @@ public class TradeDepotController : PanelController
 		{
 			// turn on the error message display
 			m_errorPanel.SetActive( true );
+			m_overlayPanel.SetActive( true );
+
+			// turn off the other popup panels
+			m_amountGameObject.SetActive( false );
+			m_confirmAnalyzePanel.SetActive( false );
+			m_analyzePanel.SetActive( false );
 		}
 		else
 		{
 			// turn off the error message display
 			m_errorPanel.SetActive( false );
+			m_overlayPanel.SetActive( false );
 
 			if ( m_currentState == State.MenuBar )
 			{
-				// all we need to do is hide the trade screen and show the welcome screen
+				// all we need to do in this state is hide the trade screen and show the welcome screen
 				m_welcomeGameObject.SetActive( true );
 				m_tradeGameObject.SetActive( false );
 				m_amountGameObject.SetActive( false );
+				m_confirmAnalyzePanel.SetActive( false );
+				m_analyzePanel.SetActive( false );
 			}
 			else
 			{
@@ -403,6 +576,7 @@ public class TradeDepotController : PanelController
 				{
 					// display the amount input
 					m_amountGameObject.SetActive( true );
+					m_overlayPanel.SetActive( true );
 
 					// get the currently selected element id
 					int elementId = m_itemList[ m_currentItemIndex ].m_id;
@@ -416,24 +590,23 @@ public class TradeDepotController : PanelController
 
 						if ( maximumAmount == 0 )
 						{
-							SwitchToBuyItemState( false );
-
+							// the player is broke and cannot buy anything - so immediately block the player
+							m_currentState = State.BuyItem;
 							SwitchToErrorMessageState( "Insufficient funds" );
-
 							return;
 						}
 
-						int remainingVolume = playerData.m_shipConfigurationPlayerData.GetRemainingVolme();
+						int remainingVolume = playerData.m_shipConfiguration.GetRemainingVolme();
 
 						if ( remainingVolume == 0 )
 						{
-							SwitchToBuyItemState( false );
-
+							// the cargo hold is full and the player cannot buy anything - so immediately block the player
+							m_currentState = State.BuyItem;
 							SwitchToErrorMessageState( "Insufficient cargo space" );
-
 							return;
 						}
 
+						// the maximum amount the player can buy is the lesser of the funds remaining or the cargo hold space remaining
 						if ( remainingVolume < maximumAmount )
 						{
 							maximumAmount = remainingVolume;
@@ -441,7 +614,8 @@ public class TradeDepotController : PanelController
 					}
 					else
 					{
-						ElementReference elementReference = playerData.m_shipCargoPlayerData.m_elementStorage.Find( elementId );
+						// the maximum amount is however much the player has in the ships cargo hold
+						ElementReference elementReference = playerData.m_shipCargo.m_elementStorage.Find( elementId );
 
 						maximumAmount = elementReference.m_volume;
 					}
@@ -455,6 +629,32 @@ public class TradeDepotController : PanelController
 					m_amountGameObject.SetActive( false );
 				}
 
+				// check if we are confirming analysis of an artifact
+				if ( m_currentState == State.AnalyzeConfirm )
+				{
+					// show the confirm analyze panel
+					m_confirmAnalyzePanel.SetActive( true );
+					m_overlayPanel.SetActive( true );
+				}
+				else
+				{
+					// hide the confirm analyze panel
+					m_confirmAnalyzePanel.SetActive( false );
+				}
+
+				// check if we are showing the analysis of an artifact
+				if ( m_currentState == State.AnalyzeShow )
+				{
+					// show the analyze panel
+					m_analyzePanel.SetActive( true );
+					m_overlayPanel.SetActive( true );
+				}
+				else
+				{
+					// hide the analyze panel
+					m_analyzePanel.SetActive( false );
+				}
+
 				// reset the trade item list
 				m_itemList = new List<Item>();
 
@@ -465,69 +665,132 @@ public class TradeDepotController : PanelController
 
 				m_rowCount = 0;
 
-				m_itemListText.text += "<color=#A35514>Elements</color>" + Environment.NewLine;
-				m_volumeListText.text += Environment.NewLine;
-				m_unitValueListText.text += Environment.NewLine;
-
-				m_rowCount++;
-
-				// get access to the ship cargo data for elements
-				ElementStorage elementStorage = playerData.m_shipCargoPlayerData.m_elementStorage;
-
-				// add all elements available to buy in starport
-				for ( int elementId = 0; elementId < gameData.m_elementList.Length; elementId++ )
+				if ( ( m_currentState != State.AnalyzeItem ) && ( m_currentState != State.AnalyzeConfirm ) && ( m_currentState != State.AnalyzeShow ) )
 				{
-					ElementGameData elementGameData = gameData.m_elementList[ elementId ];
+					// add elements heading
+					m_itemListText.text += "<color=#A35514>Elements</color>" + Environment.NewLine;
+					m_volumeListText.text += Environment.NewLine;
+					m_unitValueListText.text += Environment.NewLine;
 
-					if ( elementGameData.m_availableInStarport )
+					m_rowCount++;
+
+					// get access to the ship cargo data for elements
+					ElementStorage elementStorage = playerData.m_shipCargo.m_elementStorage;
+
+					if ( ( m_currentState == State.BuyItem ) || ( m_currentState == State.BuyAmount ) )
 					{
-						m_itemListText.text += elementGameData.m_name + Environment.NewLine;
-
-						ElementReference elementReference = elementStorage.Find( elementId );
-
-						if ( elementReference == null )
+						// add all elements available to buy in starport
+						for ( int elementId = 0; elementId < gameData.m_elementList.Length; elementId++ )
 						{
-							m_volumeListText.text += "0.0" + Environment.NewLine;
+							ElementGameData elementGameData = gameData.m_elementList[ elementId ];
+
+							if ( elementGameData.m_availableInStarport )
+							{
+								m_itemListText.text += elementGameData.m_name + Environment.NewLine;
+
+								ElementReference elementReference = elementStorage.Find( elementId );
+
+								if ( elementReference == null )
+								{
+									m_volumeListText.text += "0.0" + Environment.NewLine;
+								}
+								else
+								{
+									m_volumeListText.text += ( elementReference.m_volume / 10 ) + "." + ( elementReference.m_volume % 10 ) + Environment.NewLine;
+								}
+
+								m_unitValueListText.text += elementGameData.m_starportPrice + Environment.NewLine;
+
+								m_itemList.Add( new Item( m_rowCount++, 0, elementId, 0 ) );
+							}
 						}
-						else
+					}
+					else if ( ( m_currentState == State.SellItem ) || ( m_currentState == State.SellAmount ) )
+					{
+						// add all elements in the ship cargo hold
+						foreach ( ElementReference elementReference in elementStorage.m_elementList )
 						{
+							ElementGameData elementGameData = elementReference.GetElementGameData();
+
+							m_itemListText.text += elementGameData.m_name + Environment.NewLine;
 							m_volumeListText.text += ( elementReference.m_volume / 10 ) + "." + ( elementReference.m_volume % 10 ) + Environment.NewLine;
+							m_unitValueListText.text += elementGameData.m_starportPrice + Environment.NewLine;
+
+							m_itemList.Add( new Item( m_rowCount++, 0, elementReference.m_elementId, 0 ) );
 						}
-
-						m_unitValueListText.text += elementGameData.m_starportPrice + Environment.NewLine;
-
-						m_itemList.Add( new Item( m_rowCount++, 0, elementId, 0 ) );
 					}
 				}
 
-				m_itemListText.text += "<color=#A35514>Artifacts</color>" + Environment.NewLine;
-				m_volumeListText.text += Environment.NewLine;
-				m_unitValueListText.text += Environment.NewLine;
-
-				m_rowCount++;
-
-				// get access to the starport data for artifacts
-				ArtifactStorage artifactStorage = playerData.m_starportCargoPlayerData.m_artifactStorage;
-
-				// add all artifacts available to buy in starport
-				for ( int storageId = 0; storageId < artifactStorage.m_artifactList.Count; storageId++ )
+				if ( ( m_currentState == State.BuyItem ) || ( m_currentState == State.BuyAmount ) || ( m_currentState == State.AnalyzeItem ) || ( m_currentState == State.AnalyzeConfirm ) || ( m_currentState == State.AnalyzeShow ) )
 				{
-					ArtifactReference artifactReference = artifactStorage.m_artifactList[ storageId ];
+					// add artifacts heading
+					m_itemListText.text += "<color=#A35514>Artifacts</color>" + Environment.NewLine;
+					m_volumeListText.text += Environment.NewLine;
+					m_unitValueListText.text += Environment.NewLine;
 
-					ArtifactGameData artifactGameData = artifactReference.GetArtifactGameData();
+					m_rowCount++;
 
-					m_itemListText.text += artifactGameData.m_name + Environment.NewLine;
-					m_volumeListText.text += ( artifactGameData.m_volume / 10 ) + "." + ( artifactGameData.m_volume % 10 ) + Environment.NewLine;
-					m_unitValueListText.text += artifactGameData.m_starportPrice + Environment.NewLine;
+					// get access to the starport data for artifacts
+					ArtifactStorage artifactStorage = playerData.m_starportCargo.m_artifactStorage;
 
-					m_itemList.Add( new Item( m_rowCount++, 1, artifactReference.m_artifactId, 0 ) );
+					// add all artifacts available to buy in starport
+					foreach (  ArtifactReference artifactReference in artifactStorage.m_artifactList )
+					{
+						ArtifactGameData artifactGameData = artifactReference.GetArtifactGameData();
+
+						m_itemListText.text += artifactGameData.m_name + Environment.NewLine;
+						m_volumeListText.text += ( artifactGameData.m_volume / 10 ) + "." + ( artifactGameData.m_volume % 10 ) + Environment.NewLine;
+						m_unitValueListText.text += artifactGameData.m_starportPrice + Environment.NewLine;
+
+						m_itemList.Add( new Item( m_rowCount++, 1, artifactReference.m_artifactId, 0 ) );
+					}
+				}
+				
+				if ( ( m_currentState == State.SellItem ) || ( m_currentState == State.SellAmount ) || ( m_currentState == State.AnalyzeItem ) || ( m_currentState == State.AnalyzeConfirm ) || ( m_currentState == State.AnalyzeShow ) )
+				{
+					// add artifacts heading
+					m_itemListText.text += "<color=#A35514>Artifacts</color>" + Environment.NewLine;
+					m_volumeListText.text += Environment.NewLine;
+					m_unitValueListText.text += Environment.NewLine;
+
+					m_rowCount++;
+
+					// get access to the ship storage for artifacts
+					ArtifactStorage artifactStorage = playerData.m_shipCargo.m_artifactStorage;
+
+					// add all artifacts in the ship cargo hold
+					foreach ( ArtifactReference artifactReference in artifactStorage.m_artifactList )
+					{
+						ArtifactGameData artifactGameData = artifactReference.GetArtifactGameData();
+
+						m_itemListText.text += artifactGameData.m_name + Environment.NewLine;
+						m_volumeListText.text += ( artifactGameData.m_volume / 10 ) + "." + ( artifactGameData.m_volume % 10 ) + Environment.NewLine;
+						m_unitValueListText.text += artifactGameData.m_actualValue + Environment.NewLine;
+
+						m_itemList.Add( new Item( m_rowCount++, 1, artifactReference.m_artifactId, 0 ) );
+					}
 				}
 
+				// add end of list heading
 				m_itemListText.text += "<color=#A35514>End of List</color>" + Environment.NewLine;
 				m_volumeListText.text += Environment.NewLine;
 				m_unitValueListText.text += Environment.NewLine;
 
 				m_rowCount++;
+
+				// make sure we have something in the list
+				if ( m_itemList.Count == 0 )
+				{
+					// there is nothing sell or analyze - so immediately block the player
+					SwitchToMenuBarState();
+					return;
+				}
+
+				// keep the current selection index within bounds
+				if ( m_currentItemIndex >= m_itemList.Count )
+				{
+					m_currentItemIndex = m_itemList.Count - 1;
+				}
 
 				// force the text object to update (so we can get the correct height)
 				m_itemListText.ForceMeshUpdate();
@@ -585,7 +848,7 @@ public class TradeDepotController : PanelController
 				m_unitValueListText.rectTransform.offsetMax = new Vector3( 0.0f, -textOffset, 0.0f );
 
 				// update bank balance amount
-				m_currentBalanceText.text = "Your account balance is: " + playerData.m_bankPlayerData.m_currentBalance + " M.U.";
+				m_currentBalanceText.text = "Your account balance is: " + playerData.m_bank.m_currentBalance + " M.U.";
 			}
 		}
 
@@ -611,15 +874,45 @@ public class TradeDepotController : PanelController
 	// this is called if we clicked on the sell button
 	public void SellClicked()
 	{
-		// play a ui sound
-		GetComponent<UISoundController>().Play( UISoundController.UISound.Activate );
+		// get access to the player data
+		PlayerData playerData = PersistentController.m_instance.m_playerData;
+
+		// check if the player has something to sell
+		if ( ( playerData.m_shipCargo.m_artifactStorage.m_artifactList.Count == 0 ) && ( playerData.m_shipCargo.m_elementStorage.m_elementList.Count == 0 ) )
+		{
+			// the player has nothing to sell - block the action
+			SwitchToErrorMessageState( "Starship hold is empty" );
+		}
+		else
+		{
+			// switch to the sell item state
+			SwitchToSellItemState();
+
+			// play a ui sound
+			GetComponent<UISoundController>().Play( UISoundController.UISound.Activate );
+		}
 	}
 
 	// this is called if we clicked on the analyze button
 	public void AnalyzeClicked()
 	{
-		// play a ui sound
-		GetComponent<UISoundController>().Play( UISoundController.UISound.Activate );
+		// get access to the player data
+		PlayerData playerData = PersistentController.m_instance.m_playerData;
+
+		// check if the player has something to analyze
+		if ( ( playerData.m_shipCargo.m_artifactStorage.m_artifactList.Count == 0 ) && ( playerData.m_shipCargo.m_elementStorage.m_elementList.Count == 0 ) && ( playerData.m_starportCargo.m_artifactStorage.m_artifactList.Count == 0 ) )
+		{
+			// the player has nothing to analyze - block the action
+			SwitchToErrorMessageState( "There are no artifacts to analyze" );
+		}
+		else
+		{
+			// switch to the analyze item state
+			SwitchToAnalyzeItemState();
+
+			// play a ui sound
+			GetComponent<UISoundController>().Play( UISoundController.UISound.Activate );
+		}
 	}
 
 	// this is called if we clicked on the exit button
@@ -627,6 +920,41 @@ public class TradeDepotController : PanelController
 	{
 		// close this ui
 		Hide();
+
+		// play a ui sound
+		GetComponent<UISoundController>().Play( UISoundController.UISound.Deactivate );
+	}
+
+	// this is called if we clicked on yes to analyze the selected item
+	public void YesClicked()
+	{
+		// get the currently selected item
+		Item item = m_itemList[ m_currentItemIndex ];
+
+		// get access to the player data
+		PlayerData playerData = PersistentController.m_instance.m_playerData;
+
+		// get access to the game data
+		GameData gameData = PersistentController.m_instance.m_gameData;
+
+		// deduct the cost of analyzing the artifact from the players bank balance
+		playerData.m_bank.m_currentBalance -= gameData.m_starportGameData.m_artifactAnalysisPrice;
+
+		// add artifact to the list of known artifacts
+		playerData.m_knownArtifacts.Add( item.m_id );
+
+		// switch to the show analysis state
+		SwitchToAnalyzeShowState();
+
+		// play a ui sound
+		GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
+	}
+
+	// this is called if we clicked on no to analyze the selected item
+	public void NoClicked()
+	{
+		// switch back to the analyze item state
+		SwitchToAnalyzeItemState( false );
 
 		// play a ui sound
 		GetComponent<UISoundController>().Play( UISoundController.UISound.Deactivate );
@@ -665,19 +993,28 @@ public class TradeDepotController : PanelController
 		// if the desired amount was zero then that's the same as hitting escape
 		if ( desiredAmount <= 0 )
 		{
-			// switch to the menu bar state
-			SwitchToBuyItemState( false );
+			if ( m_currentState == State.BuyAmount )
+			{
+				// switch back to the buy item state
+				SwitchToBuyItemState( false );
+			}
+			else
+			{
+				// switch back to the sell item state
+				SwitchToSellItemState( false );
+			}
 
 			// play a ui sound
 			GetComponent<UISoundController>().Play( UISoundController.UISound.Deactivate );
 		}
 		else
 		{
+			// get the currently selected element id
+			int elementId = m_itemList[ m_currentItemIndex ].m_id;
+
+			// check if we are buying or selling
 			if ( m_currentState == State.BuyAmount )
 			{
-				// get the currently selected element id
-				int elementId = m_itemList[ m_currentItemIndex ].m_id;
-
 				// check if the player has enough money to buy that amount
 				int maximumAmount = GetMaximumBuyAmountDueToCurrentBalance( elementId );
 
@@ -691,7 +1028,7 @@ public class TradeDepotController : PanelController
 					PlayerData playerData = PersistentController.m_instance.m_playerData;
 
 					// check if the ship has room in the cargo hold
-					if ( desiredAmount > playerData.m_shipConfigurationPlayerData.GetRemainingVolme() )
+					if ( desiredAmount > playerData.m_shipConfiguration.GetRemainingVolme() )
 					{
 						SwitchToErrorMessageState( "Insufficient cargo space" );
 					}
@@ -704,19 +1041,41 @@ public class TradeDepotController : PanelController
 						int starportPrice = gameData.m_elementList[ elementId ].m_starportPrice;
 
 						// deduct the price of the artifact from the player's bank balance
-						playerData.m_bankPlayerData.m_currentBalance -= starportPrice * desiredAmount / 10;
+						playerData.m_bank.m_currentBalance -= starportPrice * desiredAmount / 10;
 
 						// transfer the element to the ship
-						playerData.m_shipCargoPlayerData.m_elementStorage.Add( elementId, desiredAmount );
-						playerData.m_shipCargoPlayerData.RecalculateVolumeUsed(); // TODO make a new AddElement function instead
+						playerData.m_shipCargo.AddElement( elementId, desiredAmount );
 
-						// switch to the menu bar state
+						// switch back to the buy item state
 						SwitchToBuyItemState( false );
 
 						// play a ui sound
 						GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
 					}
 				}
+			}
+			else
+			{
+				// get access to the player data
+				PlayerData playerData = PersistentController.m_instance.m_playerData;
+
+				// get access to the game data
+				GameData gameData = PersistentController.m_instance.m_gameData;
+
+				// get the sell price of this element
+				int sellPrice = gameData.m_elementList[ elementId ].m_actualValue;
+
+				// add the sell price of the artifact to the player's bank balance
+				playerData.m_bank.m_currentBalance += sellPrice * desiredAmount / 10;
+
+				// transfer the element to starport
+				playerData.m_shipCargo.RemoveElement( elementId, desiredAmount );
+
+				// switch back to the sell item state
+				SwitchToSellItemState( false );
+
+				// play a ui sound
+				GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
 			}
 		}
 	}
@@ -740,56 +1099,108 @@ public class TradeDepotController : PanelController
 			// get access to the player data
 			PlayerData playerData = PersistentController.m_instance.m_playerData;
 
+			// get access to the artifact data
 			ArtifactGameData artifactGameData = gameData.m_artifactList[ item.m_id ];
 
 			// it's an artifact - check if the player can afford it
-			if ( playerData.m_bankPlayerData.m_currentBalance < artifactGameData.m_starportPrice )
+			if ( playerData.m_bank.m_currentBalance < artifactGameData.m_starportPrice )
 			{
 				// nope - show an error message
 				SwitchToErrorMessageState( "Insufficient funds" );
 
-				Debug.Log( "playerData.m_bankPlayerData.m_currentBalance = " + playerData.m_bankPlayerData.m_currentBalance );
+				Debug.Log( "playerData.m_bankPlayerData.m_currentBalance = " + playerData.m_bank.m_currentBalance );
 				Debug.Log( "artifactGameData.m_starportPrice = " + artifactGameData.m_starportPrice );
 			}
-			else if ( artifactGameData.m_volume > playerData.m_shipConfigurationPlayerData.GetRemainingVolme() )
+			else if ( artifactGameData.m_volume > playerData.m_shipConfiguration.GetRemainingVolme() )
 			{
 				// player's ship has no room for it - show an error message
 				SwitchToErrorMessageState( "Insufficient cargo space" );
 
-				Debug.Log( "playerData.m_shipCargoPlayerData.m_volumeUsed = " + playerData.m_shipCargoPlayerData.m_volumeUsed );
+				Debug.Log( "playerData.m_shipCargoPlayerData.m_volumeUsed = " + playerData.m_shipCargo.m_volumeUsed );
 				Debug.Log( "artifactGameData.m_volume = " + artifactGameData.m_volume );
-				Debug.Log( "playerData.m_shipConfigurationPlayerData.m_volume = " + playerData.m_shipConfigurationPlayerData.m_volume );
+				Debug.Log( "playerData.m_shipConfigurationPlayerData.m_volume = " + playerData.m_shipConfiguration.m_volume );
 			}
 			else
 			{
 				// deduct the price of the artifact from the player's bank balance
-				playerData.m_bankPlayerData.m_currentBalance -= gameData.m_artifactList[ item.m_id ].m_starportPrice;
+				playerData.m_bank.m_currentBalance -= gameData.m_artifactList[ item.m_id ].m_starportPrice;
 
 				// transfer the artifact from the starport to the ship
-				playerData.m_starportCargoPlayerData.m_artifactStorage.Remove( item.m_id );
-				playerData.m_shipCargoPlayerData.m_artifactStorage.Add( item.m_id );
-				playerData.m_shipCargoPlayerData.RecalculateVolumeUsed();
-
-				// keep the selection index within bounds
-				if ( m_currentItemIndex == ( m_itemList.Count - 1 ) )
-				{
-					if ( m_currentItemIndex == 0 )
-					{
-						SwitchToMenuBarState();
-
-						SwitchToErrorMessageState( "There is nothing left to buy" );
-					}
-					else
-					{
-						m_currentItemIndex--;
-					}
-				}
+				playerData.m_starportCargo.m_artifactStorage.Remove( item.m_id );
+				playerData.m_shipCargo.AddArtifact( item.m_id );
 
 				// update the screen
 				UpdateScreen();
 
 				// play a ui sound
 				GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
+			}
+		}
+	}
+
+	// sell the currently selected item
+	private void SellSelectedItem()
+	{
+		// check if the currently selected item is an element (0) or an artifact (1)
+		Item item = m_itemList[ m_currentItemIndex ];
+
+		if ( item.m_type == 0 )
+		{
+			// it's an element - we need to know how much
+			SwitchToSellAmountState();
+		}
+		else
+		{
+			// get access to the game data
+			GameData gameData = PersistentController.m_instance.m_gameData;
+
+			// get access to the player data
+			PlayerData playerData = PersistentController.m_instance.m_playerData;
+
+			// add the sale price of the artifact to the player's bank balance
+			playerData.m_bank.m_currentBalance += gameData.m_artifactList[ item.m_id ].m_actualValue;
+
+			// transfer the artifact from the ship to the starport
+			playerData.m_starportCargo.m_artifactStorage.Add( item.m_id );
+			playerData.m_shipCargo.RemoveArtifact( item.m_id );
+
+			// update the screen
+			UpdateScreen();
+
+			// play a ui sound
+			GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
+		}
+	}
+
+	// analyze the currently selected item
+	private void AnalyzeSelectedItem()
+	{
+		// get access to the game data
+		GameData gameData = PersistentController.m_instance.m_gameData;
+
+		// get access to the player data
+		PlayerData playerData = PersistentController.m_instance.m_playerData;
+
+		// check if the selected artifact is a known artifact
+		Item item = m_itemList[ m_currentItemIndex ];
+
+		if ( playerData.m_knownArtifacts.IsKnown( item.m_id ) )
+		{
+			// yes we know it - go straight to show analysis
+			SwitchToAnalyzeShowState();
+		}
+		else
+		{
+			// we do not know it - check if the player can afford it
+			if ( playerData.m_bank.m_currentBalance < gameData.m_starportGameData.m_artifactAnalysisPrice )
+			{
+				// the player cannot afford it
+				SwitchToErrorMessageState( "Insufficient funds" );
+			}
+			else
+			{
+				// switch to confirm analysis
+				SwitchToAnalyzeConfirmState();
 			}
 		}
 	}
@@ -807,7 +1218,7 @@ public class TradeDepotController : PanelController
 		int starportPrice = gameData.m_elementList[ elementId ].m_starportPrice;
 
 		// get the player's current bank balance
-		int currentBalance = playerData.m_bankPlayerData.m_currentBalance;
+		int currentBalance = playerData.m_bank.m_currentBalance;
 
 		// calculate and return the maximum amount the player can buy
 		return currentBalance * 10 / starportPrice;

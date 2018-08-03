@@ -4,18 +4,26 @@ using System.Collections.Generic;
 
 [Serializable]
 
-public class ArtifactStorage
+public class KnownArtifacts
 {
-	public int m_volumeUsed;
 	public List<ArtifactReference> m_artifactList;
 
 	public void Reset()
 	{
-		// reset the volume used
-		m_volumeUsed = 0;
-
 		// create a new artifact list
 		m_artifactList = new List<ArtifactReference>();
+
+		// get access to the game data
+		GameData gameData = PersistentController.m_instance.m_gameData;
+
+		// add all artifacts that should be already known at the start of the game
+		for ( int artifactId = 0; artifactId < gameData.m_artifactList.Length; artifactId++ )
+		{
+			if ( gameData.m_artifactList[ artifactId ].m_knownAtStart )
+			{
+				Add( artifactId );
+			}
+		}
 	}
 
 	public void Add( int artifactId )
@@ -25,9 +33,6 @@ public class ArtifactStorage
 
 		// add the artifact to the storage
 		m_artifactList.Add( artifactReference );
-
-		// update the volume used
-		m_volumeUsed += artifactReference.GetVolume();
 	}
 
 	public void Remove( int artifactId )
@@ -37,9 +42,6 @@ public class ArtifactStorage
 
 		// remove it
 		m_artifactList.Remove( artifactReference );
-
-		// update the volume used
-		m_volumeUsed -= artifactReference.GetVolume();
 	}
 
 	public ArtifactReference Find( int artifactId )
@@ -55,5 +57,11 @@ public class ArtifactStorage
 
 		// could not find it
 		return null;
+	}
+
+	public bool IsKnown( int artifactId )
+	{
+		// return true if we know what this artifact is
+		return Find( artifactId ) != null;
 	}
 }

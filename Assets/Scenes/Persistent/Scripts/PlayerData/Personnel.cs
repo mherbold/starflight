@@ -4,11 +4,11 @@ using System.Collections.Generic;
 
 [Serializable]
 
-public class PersonnelPlayerData
+public class Personnel
 {
 	[Serializable]
 
-	public class Personnel
+	public class PersonnelFile
 	{
 		public int m_fileId;
 		public int m_raceIndex;
@@ -23,13 +23,13 @@ public class PersonnelPlayerData
 
 		public float m_vitality;
 
-		public Personnel( PersonnelPlayerData personnelPlayerData )
+		public PersonnelFile( Personnel personnel )
 		{
 			// set the id of this personnel file
-			m_fileId = personnelPlayerData.m_nextFileId;
+			m_fileId = personnel.m_nextFileId;
 
 			// increment the id number
-			personnelPlayerData.m_nextFileId++;
+			personnel.m_nextFileId++;
 		}
 
 		// this gets the current skill points for the selected skill
@@ -66,7 +66,7 @@ public class PersonnelPlayerData
 	}
 
 	public int m_nextFileId;
-	public List<Personnel> m_personnelList;
+	public List<PersonnelFile> m_personnelList;
 
 	// reset the personnel player data
 	public void Reset()
@@ -75,13 +75,13 @@ public class PersonnelPlayerData
 		m_nextFileId = 0;
 
 		// reset the personnel list
-		m_personnelList = new List<PersonnelPlayerData.Personnel>();
+		m_personnelList = new List<Personnel.PersonnelFile>();
 	}
 
 	// call this to create and add a new personnel to the list
-	public Personnel CreateNewPersonnel()
+	public PersonnelFile CreateNewPersonnel()
 	{
-		return new Personnel( this );
+		return new PersonnelFile( this );
 	}
 
 	// this gets the personnel id from the file id
@@ -99,7 +99,7 @@ public class PersonnelPlayerData
 	}
 
 	// this gets the personnel file using the file id
-	public Personnel GetPersonnel( int fileId )
+	public PersonnelFile GetPersonnel( int fileId )
 	{
 		int personnelId = GetPersonnelId( fileId );
 

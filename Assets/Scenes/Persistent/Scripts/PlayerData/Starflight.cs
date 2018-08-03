@@ -3,7 +3,7 @@ using System;
 
 [Serializable]
 
-public class StarflightPlayerData
+public class Starflight
 {
 	public string m_currentStardate;
 

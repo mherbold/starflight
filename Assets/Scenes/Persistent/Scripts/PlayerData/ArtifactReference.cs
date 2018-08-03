@@ -22,9 +22,9 @@ public class ArtifactReference
 		return gameData.m_artifactList[ m_artifactId ];
 	}
 
-	// get the number of cubic meters this artifact takes up
 	public int GetVolume()
 	{
+		// get the number of cubic meters this artifact takes up
 		return GetArtifactGameData().m_volume;
 	}
 }

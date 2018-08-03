@@ -5,6 +5,7 @@ using System;
 
 public class GameData : GameDataFile
 {
+	public StarportGameData m_starportGameData;
 	public NoticeGameData[] m_noticeList;
 	public RaceGameData[] m_raceList;
 	public ShipGameData m_shipGameData;
@@ -16,6 +17,7 @@ public class GameData : GameDataFile
 	public ArtifactGameData[] m_artifactList;
 	public ElementGameData[] m_elementList;
 
+	// this finds the element in the list by its name
 	public int FindElementId( string name )
 	{
 		for ( int elementId = 0; elementId < m_elementList.Length; elementId++ )

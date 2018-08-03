@@ -36,4 +36,10 @@ public class ElementReference
 	{
 		m_volume += volume;
 	}
+
+	// remove some volume from this element
+	public void RemoveVolume( int volume )
+	{
+		m_volume -= volume;
+	}
 }

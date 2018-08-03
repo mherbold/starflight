@@ -66,7 +66,7 @@ public class NoticesController : MonoBehaviour
 		GameData gameData = PersistentController.m_instance.m_gameData;
 
 		// update the stardate text
-		DateTime dateTime = DateTime.ParseExact( playerData.m_starflightPlayerData.m_currentStardate, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture );
+		DateTime dateTime = DateTime.ParseExact( playerData.m_starflight.m_currentStardate, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture );
 		m_stardateText.text = "Today is " + dateTime.ToLongDateString();
 
 		// figure out which notice we should be showing (current notice)
@@ -76,15 +76,15 @@ public class NoticesController : MonoBehaviour
 		{
 			NoticeGameData notice = gameData.m_noticeList[ noticeId ];
 
-			if ( string.Compare( playerData.m_starflightPlayerData.m_currentStardate, notice.m_stardate ) >= 0 )
+			if ( string.Compare( playerData.m_starflight.m_currentStardate, notice.m_stardate ) >= 0 )
 			{
 				m_latestNoticeId = noticeId;
 
-				if ( string.Compare( notice.m_stardate, playerData.m_noticePlayerData.m_lastReadStardate ) >= 0 )
+				if ( string.Compare( notice.m_stardate, playerData.m_notice.m_lastReadStardate ) >= 0 )
 				{
 					if ( string.Compare( earliestNewNoticeStardate, notice.m_stardate ) >= 0 )
 					{
-						if ( notice.m_stardate != playerData.m_noticePlayerData.m_lastReadStardate )
+						if ( notice.m_stardate != playerData.m_notice.m_lastReadStardate )
 						{
 							earliestNewNoticeStardate = notice.m_stardate;
 						}
@@ -128,9 +128,6 @@ public class NoticesController : MonoBehaviour
 
 		// update the buttons
 		UpdateButtons();
-
-		// play a ui sound
-		GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
 	}
 
 	// this is called if we clicked on the evaluation button in the operations panel
@@ -236,9 +233,9 @@ public class NoticesController : MonoBehaviour
 			m_messageText.text = messageDate.ToLongDateString();
 
 			// remember the newest notice read
-			if ( string.Compare( currentNotice.m_stardate, PersistentController.m_instance.m_playerData.m_noticePlayerData.m_lastReadStardate ) > 0 )
+			if ( string.Compare( currentNotice.m_stardate, PersistentController.m_instance.m_playerData.m_notice.m_lastReadStardate ) > 0 )
 			{
-				PersistentController.m_instance.m_playerData.m_noticePlayerData.m_lastReadStardate = currentNotice.m_stardate;
+				PersistentController.m_instance.m_playerData.m_notice.m_lastReadStardate = currentNotice.m_stardate;
 			}
 		}
 

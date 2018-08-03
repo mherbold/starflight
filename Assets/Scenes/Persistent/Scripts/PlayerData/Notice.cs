@@ -3,7 +3,7 @@ using System;
 
 [Serializable]
 
-public class NoticePlayerData
+public class Notice
 {
 	public string m_lastReadStardate;
 

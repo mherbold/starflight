@@ -88,7 +88,7 @@ public class CrewAssignmentController : PanelController
 	public void UpdateControllerForAssignPersonnelState()
 	{
 		// get access to the personnel player data
-		PersonnelPlayerData personnelPlayerData = PersistentController.m_instance.m_playerData.m_personnelPlayerData;
+		Personnel personnel = PersistentController.m_instance.m_playerData.m_personnel;
 
 		// get the controller stick position
 		float x = m_inputManager.GetRawX();
@@ -105,7 +105,7 @@ public class CrewAssignmentController : PanelController
 			{
 				m_ignoreControllerTimer = 0.3f;
 
-				ChangeCurrentPersonnelId( ( m_currentPersonnelId + personnelPlayerData.m_personnelList.Count - 1 ) % personnelPlayerData.m_personnelList.Count );
+				ChangeCurrentPersonnelId( ( m_currentPersonnelId + personnel.m_personnelList.Count - 1 ) % personnel.m_personnelList.Count );
 
 				UpdateDisplay();
 			}
@@ -116,7 +116,7 @@ public class CrewAssignmentController : PanelController
 			{
 				m_ignoreControllerTimer = 0.3f;
 
-				ChangeCurrentPersonnelId( ( m_currentPersonnelId + 1 ) % personnelPlayerData.m_personnelList.Count );
+				ChangeCurrentPersonnelId( ( m_currentPersonnelId + 1 ) % personnel.m_personnelList.Count );
 
 				UpdateDisplay();
 			}
@@ -255,10 +255,10 @@ public class CrewAssignmentController : PanelController
 		UpdateAssignedCrewmemberList();
 
 		// get access to the personnel player data
-		PersonnelPlayerData personnelPlayerData = PersistentController.m_instance.m_playerData.m_personnelPlayerData;
+		Personnel personnel = PersistentController.m_instance.m_playerData.m_personnel;
 
 		// check if we have at least one living crewmember in personnel
-		if ( personnelPlayerData.AnyLiving() )
+		if ( personnel.AnyLiving() )
 		{
 			// hide the crewmember panel
 			m_bottomPanelGameObject.SetActive( false );
@@ -313,10 +313,10 @@ public class CrewAssignmentController : PanelController
 		m_selectionXform.SetActive( true );
 
 		// get access to the personnel player data
-		PersonnelPlayerData personnelPlayerData = PersistentController.m_instance.m_playerData.m_personnelPlayerData;
+		Personnel personnel = PersistentController.m_instance.m_playerData.m_personnel;
 
 		// show the enabled arrows only if we have more than one personnel on file
-		if ( personnelPlayerData.m_personnelList.Count > 1 )
+		if ( personnel.m_personnelList.Count > 1 )
 		{
 			m_enabledArrowsGameObject.SetActive( true );
 		}
@@ -337,10 +337,10 @@ public class CrewAssignmentController : PanelController
 	private void UpdateAssignedCrewmemberList()
 	{
 		// get access to the crew assignment player data
-		CrewAssignmentPlayerData crewAssignmentPlayerData = PersistentController.m_instance.m_playerData.m_crewAssignmentPlayerData;
+		CrewAssignment crewAssignment = PersistentController.m_instance.m_playerData.m_crewAssignment;
 
 		// get access to the personnel player data
-		PersonnelPlayerData personnelPlayerData = PersistentController.m_instance.m_playerData.m_personnelPlayerData;
+		Personnel personnel = PersistentController.m_instance.m_playerData.m_personnel;
 
 		// start with an empty text string
 		m_positionValuesText.text = "";
@@ -348,17 +348,17 @@ public class CrewAssignmentController : PanelController
 		// go through each position
 		for ( int positionIndex = 0; positionIndex < c_numPositions; positionIndex++ )
 		{
-			// get the file id for the assigned crewmember
-			int fileId = crewAssignmentPlayerData.GetFileId( positionIndex );
+			// get the personnel id for the assigned crewmember
+			int personnelId = crewAssignment.GetFileId( positionIndex );
 
 			// check if the position is assigned
-			if ( fileId != -1 )
+			if ( personnelId != -1 )
 			{
 				// find the personnel with that file id
-				PersonnelPlayerData.Personnel personnel = personnelPlayerData.GetPersonnel( fileId );
+				Personnel.PersonnelFile personnelFile = personnel.GetPersonnel( personnelId );
 
 				// add the crewmember's name
-				m_positionValuesText.text += personnel.m_name;
+				m_positionValuesText.text += personnelFile.m_name;
 			}
 			else
 			{
@@ -379,10 +379,10 @@ public class CrewAssignmentController : PanelController
 		m_currentPositionIndex = positionIndex;
 
 		// get access to the crew assignment player data
-		CrewAssignmentPlayerData crewAssignmentPlayerData = PersistentController.m_instance.m_playerData.m_crewAssignmentPlayerData;
+		CrewAssignment crewAssignment = PersistentController.m_instance.m_playerData.m_crewAssignment;
 
 		// check if we have don't have someone assigned to this position
-		if ( !crewAssignmentPlayerData.IsAssigned( m_currentPositionIndex ) )
+		if ( !crewAssignment.IsAssigned( m_currentPositionIndex ) )
 		{
 			// automatically select the first personnel file
 			ChangeCurrentPersonnelId( 0, true );
@@ -390,13 +390,13 @@ public class CrewAssignmentController : PanelController
 		else
 		{
 			// get the current file id for this position
-			int fileId = crewAssignmentPlayerData.GetFileId( m_currentPositionIndex );
+			int fileId = crewAssignment.GetFileId( m_currentPositionIndex );
 
 			// get access to the personnel player data
-			PersonnelPlayerData personnelPlayerData = PersistentController.m_instance.m_playerData.m_personnelPlayerData;
+			Personnel personnel = PersistentController.m_instance.m_playerData.m_personnel;
 
 			// update the current personnel id
-			m_currentPersonnelId = personnelPlayerData.GetPersonnelId( fileId );
+			m_currentPersonnelId = personnel.GetPersonnelId( fileId );
 		}
 
 		// play a sound
@@ -412,16 +412,16 @@ public class CrewAssignmentController : PanelController
 			m_currentPersonnelId = personnelId;
 
 			// get access to the crew assignment player data
-			CrewAssignmentPlayerData crewAssignmentPlayerData = PersistentController.m_instance.m_playerData.m_crewAssignmentPlayerData;
+			CrewAssignment crewAssignment = PersistentController.m_instance.m_playerData.m_crewAssignment;
 
 			// get access to the personnel player data
-			PersonnelPlayerData personnelPlayerData = PersistentController.m_instance.m_playerData.m_personnelPlayerData;
+			Personnel personnel = PersistentController.m_instance.m_playerData.m_personnel;
 
 			// get the personnel file
-			PersonnelPlayerData.Personnel personnel = personnelPlayerData.m_personnelList[ m_currentPersonnelId ];
+			Personnel.PersonnelFile personnelFile = personnel.m_personnelList[ m_currentPersonnelId ];
 
 			// assign this personnel to this position
-			crewAssignmentPlayerData.Assign( m_currentPositionIndex, personnel.m_fileId );
+			crewAssignment.Assign( m_currentPositionIndex, personnelFile.m_fileId );
 
 			// update the assigned crewmember list
 			UpdateAssignedCrewmemberList();
@@ -447,19 +447,19 @@ public class CrewAssignmentController : PanelController
 		rectTransform.offsetMax = m_baseSelectionOffsetMax + new Vector3( 0.0f, -offset, 0.0f );
 
 		// get access to the personnel player data
-		PersonnelPlayerData personnelPlayerData = PersistentController.m_instance.m_playerData.m_personnelPlayerData;
+		Personnel personnel = PersistentController.m_instance.m_playerData.m_personnel;
 
 		// get the personnel file
-		PersonnelPlayerData.Personnel personnel = personnelPlayerData.m_personnelList[ m_currentPersonnelId ];
+		Personnel.PersonnelFile personnelFile = personnel.m_personnelList[ m_currentPersonnelId ];
 
 		// update the crewmember name
-		if ( personnel.m_vitality > 0 )
+		if ( personnelFile.m_vitality > 0 )
 		{
-			m_nameText.text = personnel.m_name + " - " + personnel.m_vitality + "% vitality";
+			m_nameText.text = personnelFile.m_name + " - " + personnelFile.m_vitality + "% vitality";
 		}
 		else
 		{
-			m_nameText.text = personnel.m_name + " - DEAD";
+			m_nameText.text = personnelFile.m_name + " - DEAD";
 		}
 
 		// update the skill values
@@ -467,7 +467,7 @@ public class CrewAssignmentController : PanelController
 
 		for ( int skillIndex = 0; skillIndex < c_numSkills; skillIndex++ )
 		{
-			m_skillValuesText.text += personnel.GetSkill( skillIndex ).ToString();
+			m_skillValuesText.text += personnelFile.GetSkill( skillIndex ).ToString();
 
 			if ( skillIndex < ( c_numSkills - 1 ) )
 			{

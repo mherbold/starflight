@@ -34,6 +34,7 @@ public class ElementStorage
 		return null;
 	}
 
+	// search for an element in storage by name
 	public ElementReference Find( string name )
 	{
 		GameData gameData = PersistentController.m_instance.m_gameData;
@@ -43,6 +44,7 @@ public class ElementStorage
 		return Find( elementId );
 	}
 
+	// add the specified amount of the element to storage
 	public void Add( int elementId, int volume )
 	{
 		ElementReference elementReference = Find( elementId );
@@ -63,5 +65,26 @@ public class ElementStorage
 
 		// update the volume used
 		m_volumeUsed += volume;
+	}
+
+	// remove the specified amount of the element from storage
+	public void Remove( int elementId, int volume )
+	{
+		ElementReference elementReference = Find( elementId );
+
+		// check if we want to remove it all or just some of it
+		if ( elementReference.m_volume == volume )
+		{
+			// we want to remove the entire amount so kick the whole thing out of the list
+			m_elementList.Remove( elementReference );
+		}
+		else
+		{
+			// remove only some of the element from the storage
+			elementReference.RemoveVolume( volume );
+		}
+
+		// update the volume used
+		m_volumeUsed -= volume;
 	}
 }

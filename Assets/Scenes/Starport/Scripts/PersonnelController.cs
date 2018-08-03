@@ -136,7 +136,7 @@ public class PersonnelController : PanelController
 
 				UpdateScreen();
 
-				GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
+				GetComponent<UISoundController>().Play( UISoundController.UISound.Click );
 			}
 		}
 		else if ( x >= 0.5f ) // check if we moved the stick right
@@ -149,7 +149,7 @@ public class PersonnelController : PanelController
 
 				UpdateScreen();
 
-				GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
+				GetComponent<UISoundController>().Play( UISoundController.UISound.Click );
 			}
 		}
 		else // we have centered the stick
@@ -179,7 +179,7 @@ public class PersonnelController : PanelController
 
 					UpdateScreen();
 
-					GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
+					GetComponent<UISoundController>().Play( UISoundController.UISound.Click );
 				}
 			}
 		}
@@ -197,7 +197,7 @@ public class PersonnelController : PanelController
 
 					UpdateScreen();
 
-					GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
+					GetComponent<UISoundController>().Play( UISoundController.UISound.Click );
 				}
 			}
 		}
@@ -231,7 +231,7 @@ public class PersonnelController : PanelController
 		m_currentFileIndex = 0;
 
 		// remember the starting bank balance
-		m_startingBankBalance = PersistentController.m_instance.m_playerData.m_bankPlayerData.m_currentBalance;
+		m_startingBankBalance = PersistentController.m_instance.m_playerData.m_bank.m_currentBalance;
 
 		// update the ui
 		UpdateScreen();
@@ -250,13 +250,13 @@ public class PersonnelController : PanelController
 		StartClosingUI();
 
 		// if the bank balance has changed then record it in the bank transaction log
-		int deltaBalance = m_startingBankBalance - PersistentController.m_instance.m_playerData.m_bankPlayerData.m_currentBalance;
+		int deltaBalance = m_startingBankBalance - PersistentController.m_instance.m_playerData.m_bank.m_currentBalance;
 
 		if ( deltaBalance > 0 )
 		{
-			BankPlayerData.Transaction transaction = new BankPlayerData.Transaction( PersistentController.m_instance.m_playerData.m_starflightPlayerData.m_currentStardate, "Personnel", deltaBalance.ToString() + "-" );
+			Bank.Transaction transaction = new Bank.Transaction( PersistentController.m_instance.m_playerData.m_starflight.m_currentStardate, "Personnel", deltaBalance.ToString() + "-" );
 
-			PersistentController.m_instance.m_playerData.m_bankPlayerData.m_transactionList.Add( transaction );
+			PersistentController.m_instance.m_playerData.m_bank.m_transactionList.Add( transaction );
 		}
 	}
 
@@ -516,13 +516,13 @@ public class PersonnelController : PanelController
 		PlayerData playerData = PersistentController.m_instance.m_playerData;
 
 		// enable the create button only if we have less than 20 personnel files
-		if ( playerData.m_personnelPlayerData.m_personnelList.Count < 20 )
+		if ( playerData.m_personnel.m_personnelList.Count < 20 )
 		{
 			buttonIsInteractable[ (int) Buttons.CreateButton ] = true;
 		}
 
 		// check if we have any personnel files
-		if ( playerData.m_personnelPlayerData.m_personnelList.Count == 0 )
+		if ( playerData.m_personnel.m_personnelList.Count == 0 )
 		{
 			// we dont have any personnel files
 			m_fileNumberText.text = "No Personnel Files Found";
@@ -530,13 +530,13 @@ public class PersonnelController : PanelController
 		else
 		{
 			// get access to the current personnel file we are looking at
-			PersonnelPlayerData.Personnel personnel = playerData.m_personnelPlayerData.m_personnelList[ m_currentFileIndex ];
+			Personnel.PersonnelFile personnelFile = playerData.m_personnel.m_personnelList[ m_currentFileIndex ];
 
 			// update the current race index
-			m_currentRaceIndex = personnel.m_raceIndex;
+			m_currentRaceIndex = personnelFile.m_raceIndex;
 
 			// update the personnel file number
-			m_fileNumberText.text = "File # " + ( m_currentFileIndex + 1 ) + ": " + personnel.m_name;
+			m_fileNumberText.text = "File # " + ( m_currentFileIndex + 1 ) + ": " + personnelFile.m_name;
 
 			// enable the previous button if we are not looking at the first personnel file
 			if ( m_currentFileIndex > 0 )
@@ -545,7 +545,7 @@ public class PersonnelController : PanelController
 			}
 
 			// enable the next button if we are not looking at the last personnel file
-			if ( m_currentFileIndex < ( playerData.m_personnelPlayerData.m_personnelList.Count - 1 ) )
+			if ( m_currentFileIndex < ( playerData.m_personnel.m_personnelList.Count - 1 ) )
 			{
 				buttonIsInteractable[ (int) Buttons.NextButton ] = true;
 			}
@@ -693,14 +693,14 @@ public class PersonnelController : PanelController
 		PlayerData playerData = PersistentController.m_instance.m_playerData;
 
 		// get access to the current personnel file we are looking at
-		PersonnelPlayerData.Personnel personnel = playerData.m_personnelPlayerData.m_personnelList[ m_currentFileIndex ];
+		Personnel.PersonnelFile personnelFile = playerData.m_personnel.m_personnelList[ m_currentFileIndex ];
 
 		// update the skill values with the ones in this personnel file
 		m_skillValuesText.text = "";
 
 		for ( int skillIndex = 0; skillIndex < c_numSkills; skillIndex++ )
 		{
-			m_skillValuesText.text += personnel.GetSkill( skillIndex ).ToString();
+			m_skillValuesText.text += personnelFile.GetSkill( skillIndex ).ToString();
 
 			if ( skillIndex < ( c_numSkills - 1 ) )
 			{
@@ -736,10 +736,10 @@ public class PersonnelController : PanelController
 	private void UpdateBankBalanceText()
 	{
 		// get access to the bank player data
-		BankPlayerData bankPlayerData = PersistentController.m_instance.m_playerData.m_bankPlayerData;
+		Bank bank = PersistentController.m_instance.m_playerData.m_bank;
 
 		// update the bank balance
-		m_bankBalanceText.text = "Bank balance: " + string.Format( "{0:n0}", bankPlayerData.m_currentBalance ) + " M.U.";
+		m_bankBalanceText.text = "Bank balance: " + string.Format( "{0:n0}", bank.m_currentBalance ) + " M.U.";
 
 		// show the training text
 		m_bankBalanceText.gameObject.SetActive( true );
@@ -798,9 +798,9 @@ public class PersonnelController : PanelController
 		PlayerData playerData = PersistentController.m_instance.m_playerData;
 
 		// get access to the bank player data
-		BankPlayerData bankPlayerData = playerData.m_bankPlayerData;
+		Bank bank = playerData.m_bank;
 
-		if ( bankPlayerData.m_currentBalance < 300 )
+		if ( bank.m_currentBalance < 300 )
 		{
 			UpdateTrainingText( 5 );
 
@@ -809,13 +809,13 @@ public class PersonnelController : PanelController
 		else
 		{
 			// get access to the current personnel file we are looking at
-			PersonnelPlayerData.Personnel personnel = playerData.m_personnelPlayerData.m_personnelList[ m_currentFileIndex ];
+			Personnel.PersonnelFile personnelFile = playerData.m_personnel.m_personnelList[ m_currentFileIndex ];
 
 			// get access to the race data for this personnel file
 			RaceGameData race = PersistentController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
 
 			// calculate the current skill and maximum skill points for the selected skill
-			int currentSkill = personnel.GetSkill( m_currentSkillIndex );
+			int currentSkill = personnelFile.GetSkill( m_currentSkillIndex );
 			int maximumSkill = race.GetMaximumSkill( m_currentSkillIndex );
 
 			// check if the maximum skill is zero
@@ -828,10 +828,10 @@ public class PersonnelController : PanelController
 			else if ( currentSkill < maximumSkill ) // check if we are still below the maximum skill points
 			{
 				// increase the skill by the learn amount
-				personnel.SetSkill( m_currentSkillIndex, Math.Min( maximumSkill, currentSkill + race.m_learningRate ) );
+				personnelFile.SetSkill( m_currentSkillIndex, Math.Min( maximumSkill, currentSkill + race.m_learningRate ) );
 
 				// take off 300 credits from the bank balance
-				bankPlayerData.m_currentBalance -= 300;
+				bank.m_currentBalance -= 300;
 
 				// update the bank balance text
 				UpdateBankBalanceText();
@@ -871,7 +871,7 @@ public class PersonnelController : PanelController
 		UpdateScreen();
 
 		// play a ui sound
-		GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
+		GetComponent<UISoundController>().Play( UISoundController.UISound.Activate );
 	}
 
 	// this is called if we clicked on the next button
@@ -884,7 +884,7 @@ public class PersonnelController : PanelController
 		UpdateScreen();
 
 		// play a ui sound
-		GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
+		GetComponent<UISoundController>().Play( UISoundController.UISound.Activate );
 	}
 
 	// this is called if we clicked on the exit button
@@ -913,7 +913,7 @@ public class PersonnelController : PanelController
 			PlayerData playerData = PersistentController.m_instance.m_playerData;
 
 			// get access to the current personnel file we are looking at
-			PersonnelPlayerData.Personnel personnel = playerData.m_personnelPlayerData.m_personnelList[ m_currentFileIndex ];
+			Personnel.PersonnelFile personnelFile = playerData.m_personnel.m_personnelList[ m_currentFileIndex ];
 
 			// get access to the race data for this personnel file
 			RaceGameData race = PersistentController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
@@ -925,7 +925,7 @@ public class PersonnelController : PanelController
 			for ( int skillIndex = 0; skillIndex < c_numSkills; skillIndex++ )
 			{
 				maxTotalPoints = race.GetMaximumSkill( skillIndex );
-				currentTotalPoints = personnel.GetSkill( skillIndex );
+				currentTotalPoints = personnelFile.GetSkill( skillIndex );
 			}
 
 			// check if we are maxxed out
@@ -963,7 +963,7 @@ public class PersonnelController : PanelController
 		SwitchToGiveNameState();
 
 		// play a ui sound
-		GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
+		GetComponent<UISoundController>().Play( UISoundController.UISound.Activate );
 	}
 
 	// this is called if we clicked on the cancel button
@@ -980,15 +980,15 @@ public class PersonnelController : PanelController
 	public void YesClicked()
 	{
 		// get to the personnel player data
-		PersonnelPlayerData personnelPlayerData = PersistentController.m_instance.m_playerData.m_personnelPlayerData;
+		Personnel personnel = PersistentController.m_instance.m_playerData.m_personnel;
 
 		// delete the crewmember
-		personnelPlayerData.m_personnelList.RemoveAt( m_currentFileIndex );
+		personnel.m_personnelList.RemoveAt( m_currentFileIndex );
 
 		// change the current file index if necessary
-		if ( m_currentFileIndex >= personnelPlayerData.m_personnelList.Count )
+		if ( m_currentFileIndex >= personnel.m_personnelList.Count )
 		{
-			m_currentFileIndex = Math.Max( 0, personnelPlayerData.m_personnelList.Count - 1 );
+			m_currentFileIndex = Math.Max( 0, personnel.m_personnelList.Count - 1 );
 		}
 
 		// switch to the doing nothing state
@@ -1011,33 +1011,44 @@ public class PersonnelController : PanelController
 	// this is called when we hit enter in the name input field
 	public void OnEndEdit()
 	{
-		// get the current race game data
-		RaceGameData race = PersistentController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
+		if ( m_nameInputField.text.Length == 0 )
+		{
+			// cancel because the player did not type in anything
+			SwitchToViewFileState();
 
-		// create a new personnel file
-		PersonnelPlayerData.Personnel personnel = PersistentController.m_instance.m_playerData.m_personnelPlayerData.CreateNewPersonnel();
+			// play a ui sound
+			GetComponent<UISoundController>().Play( UISoundController.UISound.Deactivate );
+		}
+		else
+		{
+			// get the current race game data
+			RaceGameData race = PersistentController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
 
-		// set up the personnel file
-		personnel.m_name = m_nameInputField.text;
-		personnel.m_vitality = 100.0f;
-		personnel.m_raceIndex = m_currentRaceIndex;
-		personnel.m_science = race.m_scienceInitial;
-		personnel.m_navigation = race.m_navigationInitial;
-		personnel.m_engineering = race.m_engineeringInitial;
-		personnel.m_communications = race.m_communicationsInitial;
-		personnel.m_medicine = race.m_medicineInitial;
+			// create a new personnel file
+			Personnel.PersonnelFile personnelFile = PersistentController.m_instance.m_playerData.m_personnel.CreateNewPersonnel();
 
-		// add the new personnel file to the list
-		PersistentController.m_instance.m_playerData.m_personnelPlayerData.m_personnelList.Add( personnel );
+			// set up the personnel file
+			personnelFile.m_name = m_nameInputField.text;
+			personnelFile.m_vitality = 100.0f;
+			personnelFile.m_raceIndex = m_currentRaceIndex;
+			personnelFile.m_science = race.m_scienceInitial;
+			personnelFile.m_navigation = race.m_navigationInitial;
+			personnelFile.m_engineering = race.m_engineeringInitial;
+			personnelFile.m_communications = race.m_communicationsInitial;
+			personnelFile.m_medicine = race.m_medicineInitial;
+
+			// add the new personnel file to the list
+			PersistentController.m_instance.m_playerData.m_personnel.m_personnelList.Add( personnelFile );
 
 
-		// make the new file our current one
-		m_currentFileIndex = PersistentController.m_instance.m_playerData.m_personnelPlayerData.m_personnelList.Count - 1;
+			// make the new file our current one
+			m_currentFileIndex = PersistentController.m_instance.m_playerData.m_personnel.m_personnelList.Count - 1;
 
-		// switch to the doing nothing state
-		SwitchToViewFileState();
+			// switch to the doing nothing state
+			SwitchToViewFileState();
 
-		// play a ui sound
-		GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
+			// play a ui sound
+			GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
+		}
 	}
 }

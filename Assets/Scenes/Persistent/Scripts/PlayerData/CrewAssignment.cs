@@ -1,10 +1,9 @@
 ﻿
 using System;
-using System.Collections.Generic;
 
 [Serializable]
 
-public class CrewAssignmentPlayerData
+public class CrewAssignment
 {
 	public int m_captainFileId;
 	public int m_scienceOfficerFileId;

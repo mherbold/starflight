@@ -250,7 +250,7 @@ public class ShipConfigurationController : PanelController
 		m_currentState = State.MenuBar;
 
 		// remember the starting bank balance
-		m_startingBankBalance = PersistentController.m_instance.m_playerData.m_bankPlayerData.m_currentBalance;
+		m_startingBankBalance = PersistentController.m_instance.m_playerData.m_bank.m_currentBalance;
 
 		// update the ui
 		UpdateScreen();
@@ -269,15 +269,15 @@ public class ShipConfigurationController : PanelController
 		StartClosingUI();
 
 		// if the bank balance has changed then record it in the bank transaction log
-		int deltaBalance = m_startingBankBalance - PersistentController.m_instance.m_playerData.m_bankPlayerData.m_currentBalance;
+		int deltaBalance = m_startingBankBalance - PersistentController.m_instance.m_playerData.m_bank.m_currentBalance;
 
 		if ( deltaBalance != 0 )
 		{
 			string sign = ( deltaBalance > 0 ) ? "-" : "+";
 
-			BankPlayerData.Transaction transaction = new BankPlayerData.Transaction( PersistentController.m_instance.m_playerData.m_starflightPlayerData.m_currentStardate, "Ship Configuration", deltaBalance.ToString() + sign );
+			Bank.Transaction transaction = new Bank.Transaction( PersistentController.m_instance.m_playerData.m_starflight.m_currentStardate, "Ship Configuration", deltaBalance.ToString() + sign );
 
-			PersistentController.m_instance.m_playerData.m_bankPlayerData.m_transactionList.Add( transaction );
+			PersistentController.m_instance.m_playerData.m_bank.m_transactionList.Add( transaction );
 		}
 	}
 
@@ -376,7 +376,7 @@ public class ShipConfigurationController : PanelController
 		UpdateScreen();
 
 		// set the current text input to the current name of the ship
-		m_nameInputField.text = PersistentController.m_instance.m_playerData.m_shipConfigurationPlayerData.m_name;
+		m_nameInputField.text = PersistentController.m_instance.m_playerData.m_shipConfiguration.m_name;
 
 		// select the text input by default
 		m_nameInputField.Select();
@@ -463,38 +463,38 @@ public class ShipConfigurationController : PanelController
 		PlayerData playerData = PersistentController.m_instance.m_playerData;
 
 		// get the ship configuration player data
-		ShipConfigurationPlayerData shipConfigurationPlayerData = playerData.m_shipConfigurationPlayerData;
+		ShipConfiguration shipConfiguration = playerData.m_shipConfiguration;
 
 		// update configuration values
-		m_configurationValuesText.text = shipConfigurationPlayerData.m_numCargoPods.ToString() + Environment.NewLine;
+		m_configurationValuesText.text = shipConfiguration.m_numCargoPods.ToString() + Environment.NewLine;
 		m_configurationValuesText.text += Environment.NewLine;
-		m_configurationValuesText.text += shipConfigurationPlayerData.GetEnginesClassString() + Environment.NewLine;
-		m_configurationValuesText.text += shipConfigurationPlayerData.GetSheildingClassString() + Environment.NewLine;
-		m_configurationValuesText.text += shipConfigurationPlayerData.GetArmorClassString() + Environment.NewLine;
-		m_configurationValuesText.text += shipConfigurationPlayerData.GetMissileLauncherClassString() + Environment.NewLine;
-		m_configurationValuesText.text += shipConfigurationPlayerData.GetLaserCannonClassString() + Environment.NewLine;
+		m_configurationValuesText.text += shipConfiguration.GetEnginesClassString() + Environment.NewLine;
+		m_configurationValuesText.text += shipConfiguration.GetSheildingClassString() + Environment.NewLine;
+		m_configurationValuesText.text += shipConfiguration.GetArmorClassString() + Environment.NewLine;
+		m_configurationValuesText.text += shipConfiguration.GetMissileLauncherClassString() + Environment.NewLine;
+		m_configurationValuesText.text += shipConfiguration.GetLaserCannonClassString() + Environment.NewLine;
 
 		// show only as many cargo pods as we have purchased
 		for ( int cargoPodId = 0; cargoPodId < m_cargoPods.Length; cargoPodId++ )
 		{
-			m_cargoPods[ cargoPodId ].SetActive( cargoPodId < shipConfigurationPlayerData.m_numCargoPods );
+			m_cargoPods[ cargoPodId ].SetActive( cargoPodId < shipConfiguration.m_numCargoPods );
 		}
 
 		// hide or show the shield image depending on if we have them
-		m_shieldImage.gameObject.SetActive( shipConfigurationPlayerData.m_shieldingClass > 0 );
+		m_shieldImage.gameObject.SetActive( shipConfiguration.m_shieldingClass > 0 );
 
 		// hide or show the missile launchers depending on if we have them
-		m_missileLauncher.SetActive( shipConfigurationPlayerData.m_missileLauncherClass > 0 );
+		m_missileLauncher.SetActive( shipConfiguration.m_missileLauncherClass > 0 );
 
 		// hide or show the missile launchers depending on if we have them
-		m_laserCannon.SetActive( shipConfigurationPlayerData.m_laserCannonClass > 0 );
+		m_laserCannon.SetActive( shipConfiguration.m_laserCannonClass > 0 );
 
 		// update status values
-		m_statusValuesText.text = shipConfigurationPlayerData.m_mass + " Tons" + Environment.NewLine;
-		m_statusValuesText.text += shipConfigurationPlayerData.m_acceleration + " G" + Environment.NewLine;
+		m_statusValuesText.text = shipConfiguration.m_mass + " Tons" + Environment.NewLine;
+		m_statusValuesText.text += shipConfiguration.m_acceleration + " G" + Environment.NewLine;
 
 		// report the amount of endurium on the ship
-		ElementReference elementReference = playerData.m_shipCargoPlayerData.m_elementStorage.Find( "Endurium" );
+		ElementReference elementReference = playerData.m_shipCargo.m_elementStorage.Find( "Endurium" );
 
 		if ( elementReference == null )
 		{
@@ -506,7 +506,7 @@ public class ShipConfigurationController : PanelController
 		}
 
 		// update bank balance amount
-		m_currentBalanceText.text = "Your account balance is: " + playerData.m_bankPlayerData.m_currentBalance + " M.U.";
+		m_currentBalanceText.text = "Your account balance is: " + playerData.m_bank.m_currentBalance + " M.U.";
 	}
 
 	// update screen for the buy part state
@@ -645,7 +645,7 @@ public class ShipConfigurationController : PanelController
 	public void OnEndEdit()
 	{
 		// update the ship name in the player data
-		PersistentController.m_instance.m_playerData.m_shipConfigurationPlayerData.m_name = m_nameInputField.text;
+		PersistentController.m_instance.m_playerData.m_shipConfiguration.m_name = m_nameInputField.text;
 
 		// switch to the menu bar state
 		SwitchToMenuBarState();
@@ -720,7 +720,7 @@ public class ShipConfigurationController : PanelController
 		PlayerData playerData = PersistentController.m_instance.m_playerData;
 
 		// check if we have room for another cargo pod
-		if ( playerData.m_shipConfigurationPlayerData.m_numCargoPods == 16 )
+		if ( playerData.m_shipConfiguration.m_numCargoPods == 16 )
 		{
 			// nope - show an error message
 			SwitchToErrorMessageState( "No cargo pod bays available" );
@@ -728,7 +728,7 @@ public class ShipConfigurationController : PanelController
 		else
 		{
 			// can we afford it?
-			if ( playerData.m_bankPlayerData.m_currentBalance < gameData.m_shipGameData.m_cargoPodBuyPrice )
+			if ( playerData.m_bank.m_currentBalance < gameData.m_shipGameData.m_cargoPodBuyPrice )
 			{
 				// nope - show an error message
 				SwitchToErrorMessageState( "Insufficient funds" );
@@ -736,10 +736,10 @@ public class ShipConfigurationController : PanelController
 			else
 			{
 				// deduct the price of the cargo pod from the player's bank balance
-				playerData.m_bankPlayerData.m_currentBalance -= gameData.m_shipGameData.m_cargoPodBuyPrice;
+				playerData.m_bank.m_currentBalance -= gameData.m_shipGameData.m_cargoPodBuyPrice;
 
 				// add one cargo pod to the ship
-				playerData.m_shipConfigurationPlayerData.AddCargoPod();
+				playerData.m_shipConfiguration.AddCargoPod();
 
 				// update the screen
 				UpdateScreen();

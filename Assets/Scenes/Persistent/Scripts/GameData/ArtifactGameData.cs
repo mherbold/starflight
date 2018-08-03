@@ -11,5 +11,6 @@ public class ArtifactGameData
 	public int m_thrynnPrice;
 	public int m_actualValue;
 	public bool m_availableInStarport;
+	public bool m_knownAtStart;
 	public string m_analysisText;
 }

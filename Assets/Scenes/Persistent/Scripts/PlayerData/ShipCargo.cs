@@ -3,7 +3,7 @@ using System;
 
 [Serializable]
 
-public class ShipCargoPlayerData
+public class ShipCargo
 {
 	public int m_volumeUsed;
 	public ArtifactStorage m_artifactStorage;
@@ -32,7 +32,43 @@ public class ShipCargoPlayerData
 			}
 		}
 
-		// reset the volume used up in the cargo hold
+		// recalculate the used up space in the cargo hold
+		RecalculateVolumeUsed();
+	}
+
+	public void AddElement( int elementId, int volume )
+	{
+		// add the element to storage
+		m_elementStorage.Add( elementId, volume );
+
+		// recalculate the used up space in the cargo hold
+		RecalculateVolumeUsed();
+	}
+
+	public void RemoveElement( int elementId, int volume )
+	{
+		// remove the element from storage
+		m_elementStorage.Remove( elementId, volume );
+
+		// recalculate the used up space in the cargo hold
+		RecalculateVolumeUsed();
+	}
+
+	public void AddArtifact( int artifactId )
+	{
+		// add the artifact to storage
+		m_artifactStorage.Add( artifactId );
+
+		// recalculate the used up space in the cargo hold
+		RecalculateVolumeUsed();
+	}
+
+	public void RemoveArtifact( int artifactId )
+	{
+		// remove the artifact from storage
+		m_artifactStorage.Remove( artifactId );
+
+		// recalculate the used up space in the cargo hold
 		RecalculateVolumeUsed();
 	}
 

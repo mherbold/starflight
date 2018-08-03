@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 [Serializable]
 
-public class BankPlayerData
+public class Bank
 {
 	[Serializable]
 

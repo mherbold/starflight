@@ -3,7 +3,7 @@ using System;
 
 [Serializable]
 
-public class StarportCargoPlayerData
+public class StarportCargo
 {
 	public ArtifactStorage m_artifactStorage;
 

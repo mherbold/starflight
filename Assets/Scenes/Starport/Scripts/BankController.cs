@@ -40,23 +40,23 @@ public class BankController : PanelController
 		StartOpeningUI();
 
 		// get access to the bank player data
-		BankPlayerData bankPlayerData = PersistentController.m_instance.m_playerData.m_bankPlayerData;
+		Bank bank = PersistentController.m_instance.m_playerData.m_bank;
 
 		// update the date, transactions, and amount list text
 		m_dateListText.text = "";
 		m_transactionsListText.text = "";
 		m_amountListText.text = "";
 
-		for ( int transactionId = 0; transactionId < bankPlayerData.m_transactionList.Count; transactionId++ )
+		for ( int transactionId = 0; transactionId < bank.m_transactionList.Count; transactionId++ )
 		{
-			BankPlayerData.Transaction transaction = bankPlayerData.m_transactionList[ transactionId ];
+			Bank.Transaction transaction = bank.m_transactionList[ transactionId ];
 
 			DateTime dateTime = DateTime.ParseExact( transaction.m_stardate, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture );
 			m_dateListText.text += dateTime.ToShortDateString();
 			m_transactionsListText.text += transaction.m_description;
 			m_amountListText.text += transaction.m_amount;
 
-			if ( transactionId < ( bankPlayerData.m_transactionList.Count - 1 ) )
+			if ( transactionId < ( bank.m_transactionList.Count - 1 ) )
 			{
 				m_dateListText.text += Environment.NewLine;
 				m_transactionsListText.text += Environment.NewLine;
@@ -65,7 +65,7 @@ public class BankController : PanelController
 		}
 
 		// update the current balance text
-		m_currentBalanceText.text = "Your current balance is " + string.Format( "{0:n0}", bankPlayerData.m_currentBalance ) + " M.U.";
+		m_currentBalanceText.text = "Your current balance is " + string.Format( "{0:n0}", bank.m_currentBalance ) + " M.U.";
 
 		// force the text object to update (so we can get the correct height)
 		m_currentBalanceText.ForceMeshUpdate();

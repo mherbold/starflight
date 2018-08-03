@@ -3,7 +3,7 @@ using System;
 
 [Serializable]
 
-public class ShipConfigurationPlayerData
+public class ShipConfiguration
 {
 	public string m_name;
 	public int m_numCargoPods;
@@ -147,6 +147,6 @@ public class ShipConfigurationPlayerData
 		PlayerData playerData = PersistentController.m_instance.m_playerData;
 
 		// calculate and return the amount of space remaining in the cargo hold
-		return m_volume - playerData.m_shipCargoPlayerData.m_volumeUsed;
+		return m_volume - playerData.m_shipCargo.m_volumeUsed;
 	}
 }
