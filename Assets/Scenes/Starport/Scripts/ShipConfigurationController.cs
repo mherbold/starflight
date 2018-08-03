@@ -9,7 +9,7 @@ public class ShipConfigurationController : PanelController
 {
 	enum State
 	{
-		MenuBar, BuyPart, SelectClass, GiveName, ErrorMessage
+		MenuBar, BuyPart, SellPart, SelectClass, GiveName, ErrorMessage
 	}
 
 	enum GameObjects
@@ -46,6 +46,7 @@ public class ShipConfigurationController : PanelController
 	private StarportController m_starportController;
 	private InputManager m_inputManager;
 	private State m_currentState;
+	private State m_stateBeforeError;
 	private int m_currentPartIndex;
 	private int m_currentClassIndex;
 	private int m_startingBankBalance;
@@ -98,6 +99,12 @@ public class ShipConfigurationController : PanelController
 				break;
 			}
 
+			case State.SellPart:
+			{
+				UpdateControllerForSellPartState();
+				break;
+			}
+
 			case State.SelectClass:
 			{
 				UpdateControllerForSelectClassState();
@@ -112,8 +119,8 @@ public class ShipConfigurationController : PanelController
 		}
 	}
 
-	// controller updates for when we are in the buy part state
-	private void UpdateControllerForBuyPartState()
+	// controller stuff common between the buy and sell part states
+	private void UpdateController()
 	{
 		// get the controller stick position
 		float y = m_inputManager.GetRawY();
@@ -156,6 +163,21 @@ public class ShipConfigurationController : PanelController
 			m_ignoreControllerTimer = 0.0f;
 		}
 
+		// check if we have pressed the cancel button
+		if ( m_inputManager.GetCancelDown() )
+		{
+			SwitchToMenuBarState();
+
+			GetComponent<UISoundController>().Play( UISoundController.UISound.Deactivate );
+		}
+	}
+
+	// controller updates for when we are in the buy part state
+	private void UpdateControllerForBuyPartState()
+	{
+		// perform common controller update
+		UpdateController();
+
 		// check if we have pressed the fire button
 		if ( m_inputManager.GetSubmitDown() )
 		{
@@ -163,13 +185,18 @@ public class ShipConfigurationController : PanelController
 
 			GetComponent<UISoundController>().Play( UISoundController.UISound.Activate );
 		}
+	}
 
-		// check if we have pressed the cancel button
-		if ( m_inputManager.GetCancelDown() )
+	// controller updates for when we are in the sell part state
+	private void UpdateControllerForSellPartState()
+	{
+		// perform common controller update
+		UpdateController();
+
+		// check if we have pressed the fire button
+		if ( m_inputManager.GetSubmitDown() )
 		{
-			SwitchToMenuBarState();
-
-			GetComponent<UISoundController>().Play( UISoundController.UISound.Deactivate );
+			SellSelectedPart();
 		}
 	}
 
@@ -220,7 +247,7 @@ public class ShipConfigurationController : PanelController
 		// check if we have pressed the fire button
 		if ( m_inputManager.GetSubmitDown() )
 		{
-			BuySelectedPart();
+			BuySelectedClass();
 		}
 
 		// check if we have pressed the cancel button
@@ -237,7 +264,21 @@ public class ShipConfigurationController : PanelController
 		// check if we have pressed the fire or cancel button
 		if ( m_inputManager.GetSubmitDown() || m_inputManager.GetCancelDown() )
 		{
-			SwitchToMenuBarState();
+			// switch back to the previous state
+			switch ( m_stateBeforeError )
+			{
+				case State.BuyPart:
+				SwitchToBuyPartState( false );
+				break;
+
+				case State.SelectClass:
+				SwitchToSelectClassState( false );
+				break;
+
+				default:
+				SwitchToMenuBarState();
+				break;
+			}
 
 			GetComponent<UISoundController>().Play( UISoundController.UISound.Deactivate );
 		}
@@ -347,14 +388,36 @@ public class ShipConfigurationController : PanelController
 		m_inputManager.DebounceNextUpdate();
 	}
 
+	// call this to switch to the sell part state
+	private void SwitchToSellPartState( bool resetCurrentPartIndex = true )
+	{
+		// change the current state
+		m_currentState = State.SellPart;
+
+		// select the first part by default
+		if ( resetCurrentPartIndex )
+		{
+			m_currentPartIndex = 0;
+		}
+
+		// update the screen
+		UpdateScreen();
+
+		// debounce the input
+		m_inputManager.DebounceNextUpdate();
+	}
+
 	// call this to switch to the select class state
-	private void SwitchToSelectClassState()
+	private void SwitchToSelectClassState( bool resetCurrentClassIndex = true )
 	{
 		// change the current state
 		m_currentState = State.SelectClass;
 
 		// select the first part by default
-		m_currentClassIndex = 0;
+		if ( resetCurrentClassIndex )
+		{
+			m_currentClassIndex = 0;
+		}
 
 		// update the screen
 		UpdateScreen();
@@ -388,6 +451,9 @@ public class ShipConfigurationController : PanelController
 		// deselect all the buttons
 		EventSystem.current.SetSelectedGameObject( null );
 
+		// remember the current state
+		m_stateBeforeError = m_currentState;
+
 		// change the current state
 		m_currentState = State.ErrorMessage;
 
@@ -416,6 +482,13 @@ public class ShipConfigurationController : PanelController
 			case State.BuyPart:
 			{
 				UpdateScreenForBuyPartState( gameObjectIsVisible );
+				break;
+			}
+
+			// we are currently selling parts
+			case State.SellPart:
+			{
+				UpdateScreenForSellPartState( gameObjectIsVisible );
 				break;
 			}
 
@@ -538,6 +611,35 @@ public class ShipConfigurationController : PanelController
 		rectTransform.offsetMax = m_baseSelectionOffsetMax + new Vector3( 0.0f, -offset, 0.0f );
 	}
 
+	// update screen for the sell part state
+	private void UpdateScreenForSellPartState( bool[] gameObjectIsVisible )
+	{
+		// put in the prices for the parts
+		UpdatePartPrices();
+
+		// show the selection xform object
+		gameObjectIsVisible[ (int) GameObjects.SelectionXform ] = true;
+
+		// show the up arrow only if the first part is not selected
+		if ( m_currentPartIndex > 0 )
+		{
+			gameObjectIsVisible[ (int) GameObjects.UpArrowImage ] = true;
+		}
+
+		// show the down arrow only if the last part is not selected
+		if ( m_currentPartIndex < ( c_numParts - 1 ) )
+		{
+			gameObjectIsVisible[ (int) GameObjects.DownArrowImage ] = true;
+		}
+
+		// put the part selection box in the right place
+		float offset = ( ( m_currentPartIndex == 0 ) ? 0 : ( m_currentPartIndex + 1 ) ) * m_componentNamesText.renderedHeight / c_numComponentValuesLines;
+
+		RectTransform rectTransform = m_selectionXform.GetComponent<RectTransform>();
+		rectTransform.offsetMin = m_baseSelectionOffsetMin + new Vector3( 0.0f, -offset, 0.0f );
+		rectTransform.offsetMax = m_baseSelectionOffsetMax + new Vector3( 0.0f, -offset, 0.0f );
+	}
+
 	// update screen for the select class state
 	private void UpdateScreenForSelectClassState( bool[] gameObjectIsVisible )
 	{
@@ -610,6 +712,9 @@ public class ShipConfigurationController : PanelController
 	// this is called if we clicked on the sell button
 	public void SellClicked()
 	{
+		// switch to the buy part state
+		SwitchToSellPartState();
+
 		// play a ui sound
 		GetComponent<UISoundController>().Play( UISoundController.UISound.Activate );
 	}
@@ -664,7 +769,149 @@ public class ShipConfigurationController : PanelController
 		}
 		else // we are buying a part
 		{
-			SwitchToSelectClassState();
+			// get to the player data
+			PlayerData playerData = PersistentController.m_instance.m_playerData;
+
+			// get what is currently installed on the ship
+			int currentClass = 0;
+
+			switch ( m_currentPartIndex )
+			{
+				case 1: currentClass = playerData.m_shipConfiguration.m_enginesClass; break;
+				case 2: currentClass = playerData.m_shipConfiguration.m_shieldingClass; break;
+				case 3: currentClass = playerData.m_shipConfiguration.m_armorClass; break;
+				case 4: currentClass = playerData.m_shipConfiguration.m_missileLauncherClass; break;
+				case 5: currentClass = playerData.m_shipConfiguration.m_laserCannonClass; break;
+			}
+
+			// check if the ship has this part installed already
+			if ( currentClass != 0 )
+			{
+				// yes - tell the player to sell it first
+				SwitchToErrorMessageState( "De-equip first" );
+			}
+			else
+			{
+				// no - let the player select the class to buy
+				SwitchToSelectClassState();
+			}
+		}
+	}
+
+	// sell the currently selected part
+	private void SellSelectedPart()
+	{
+		// check if we are selling a cargo pod and handle that differently
+		if ( m_currentPartIndex == 0 )
+		{
+			SellCargoPod();
+		}
+		else // we are selling a part
+		{
+			// get to the player data
+			PlayerData playerData = PersistentController.m_instance.m_playerData;
+
+			// get what is currently installed on the ship
+			int currentClass = 0;
+
+			switch ( m_currentPartIndex )
+			{
+				case 1: currentClass = playerData.m_shipConfiguration.m_enginesClass; break;
+				case 2: currentClass = playerData.m_shipConfiguration.m_shieldingClass; break;
+				case 3: currentClass = playerData.m_shipConfiguration.m_armorClass; break;
+				case 4: currentClass = playerData.m_shipConfiguration.m_missileLauncherClass; break;
+				case 5: currentClass = playerData.m_shipConfiguration.m_laserCannonClass; break;
+			}
+
+			// check if the ship has this part installed already
+			if ( currentClass != 0 )
+			{
+				// get to the game data
+				GameData gameData = PersistentController.m_instance.m_gameData;
+
+				// get the part list
+				ShipPartGameData[] shipPartList = null;
+
+				switch ( m_currentPartIndex )
+				{
+					case 1: shipPartList = gameData.m_enginesList; break;
+					case 2: shipPartList = gameData.m_shieldingList; break;
+					case 3: shipPartList = gameData.m_armorList; break;
+					case 4: shipPartList = gameData.m_missileLauncherList; break;
+					case 5: shipPartList = gameData.m_laserCannonList; break;
+				}
+
+				// add the funds to the players bank balance
+				playerData.m_bank.m_currentBalance += shipPartList[ currentClass ].m_sellPrice;
+
+				// remove the part from the ship
+				switch ( m_currentPartIndex )
+				{
+					case 1: playerData.m_shipConfiguration.m_enginesClass = 0; break;
+					case 2: playerData.m_shipConfiguration.m_shieldingClass = 0; break;
+					case 3: playerData.m_shipConfiguration.m_armorClass = 0; break;
+					case 4: playerData.m_shipConfiguration.m_missileLauncherClass = 0; break;
+					case 5: playerData.m_shipConfiguration.m_laserCannonClass = 0; break;
+				}
+
+				// update the screen
+				UpdateScreen();
+
+				// play a ui sound
+				GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
+			}
+		}
+	}
+	// buy the currently selected class
+	private void BuySelectedClass()
+	{
+		// get to the game data
+		GameData gameData = PersistentController.m_instance.m_gameData;
+
+		// get the ship part list
+		ShipPartGameData[] shipPartList = null;
+
+		switch ( m_currentPartIndex )
+		{
+			case 1: shipPartList = gameData.m_enginesList; break;
+			case 2: shipPartList = gameData.m_shieldingList; break;
+			case 3: shipPartList = gameData.m_armorList; break;
+			case 4: shipPartList = gameData.m_missileLauncherList; break;
+			case 5: shipPartList = gameData.m_laserCannonList; break;
+		}
+
+		// get to the player data
+		PlayerData playerData = PersistentController.m_instance.m_playerData;
+
+		// get the class to buy
+		int classIndex = m_currentClassIndex + 1;
+
+		// check if the player can afford it
+		if ( playerData.m_bank.m_currentBalance < shipPartList[ classIndex ].m_buyPrice )
+		{
+			// nope!
+			SwitchToErrorMessageState( "Insufficient funds" );
+		}
+		else
+		{
+			// yes so make the transaction and install the part
+			playerData.m_bank.m_currentBalance -= shipPartList[ classIndex ].m_buyPrice;
+
+			// upgrade the ship part
+			switch ( m_currentPartIndex )
+			{
+				case 1: playerData.m_shipConfiguration.m_enginesClass = classIndex; break;
+				case 2: playerData.m_shipConfiguration.m_shieldingClass = classIndex; break;
+				case 3: playerData.m_shipConfiguration.m_armorClass = classIndex; break;
+				case 4: playerData.m_shipConfiguration.m_missileLauncherClass = classIndex; break;
+				case 5: playerData.m_shipConfiguration.m_laserCannonClass = classIndex; break;
+			}
+
+			// switch back to the buy part state
+			SwitchToBuyPartState();
+
+			// play a ui sound
+			GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
 		}
 	}
 
@@ -672,6 +919,19 @@ public class ShipConfigurationController : PanelController
 	{
 		// get to the game data
 		GameData gameData = PersistentController.m_instance.m_gameData;
+
+		// get to the player data
+		PlayerData playerData = PersistentController.m_instance.m_playerData;
+
+		// check if we are selling
+		if ( m_currentState == State.SellPart )
+		{
+			// hide the sell prices for cargo pods if we don't have any
+			if ( playerData.m_shipConfiguration.m_numCargoPods == 0 )
+			{
+				includeCargoPods = false;
+			}
+		}
 
 		if ( includeCargoPods )
 		{
@@ -689,6 +949,18 @@ public class ShipConfigurationController : PanelController
 			m_componentValuesText.text += Environment.NewLine;
 		}
 
+		// get what is currently installed on the ship
+		int currentClass = 0;
+
+		switch ( m_currentPartIndex )
+		{
+			case 1: currentClass = playerData.m_shipConfiguration.m_enginesClass; break;
+			case 2: currentClass = playerData.m_shipConfiguration.m_shieldingClass; break;
+			case 3: currentClass = playerData.m_shipConfiguration.m_armorClass; break;
+			case 4: currentClass = playerData.m_shipConfiguration.m_missileLauncherClass; break;
+			case 5: currentClass = playerData.m_shipConfiguration.m_laserCannonClass; break;
+		}
+
 		// update part class prices (if we have anything but cargo pods selected)
 		if ( m_currentPartIndex > 0 )
 		{
@@ -703,9 +975,26 @@ public class ShipConfigurationController : PanelController
 				case 5: shipPartList = gameData.m_laserCannonList; break;
 			}
 
-			for ( int shipPartId = 1; shipPartId < shipPartList.Length; shipPartId++ )
+			for ( int classIndex = 1; classIndex < shipPartList.Length; classIndex++ )
 			{
-				m_componentValuesText.text += shipPartList[ shipPartId ].m_buyPrice.ToString() + Environment.NewLine;
+				// check if we are selling
+				if ( m_currentState == State.SellPart )
+				{
+					// yep - show the sell price only for the class we have installed
+					if ( classIndex == currentClass )
+					{
+						m_componentValuesText.text += shipPartList[ classIndex ].m_sellPrice.ToString() + Environment.NewLine;
+					}
+					else
+					{
+						m_componentValuesText.text += Environment.NewLine;
+					}
+				}
+				else
+				{
+					// no - we are buying - show all prices
+					m_componentValuesText.text += shipPartList[ classIndex ].m_buyPrice.ToString() + Environment.NewLine;
+				}
 			}
 		}
 	}
@@ -747,6 +1036,32 @@ public class ShipConfigurationController : PanelController
 				// play a ui sound
 				GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
 			}
+		}
+	}
+
+	// sell a cargo pod
+	private void SellCargoPod()
+	{
+		// get to the game data
+		GameData gameData = PersistentController.m_instance.m_gameData;
+
+		// get to the player data
+		PlayerData playerData = PersistentController.m_instance.m_playerData;
+
+		// check if we have room for another cargo pod
+		if ( playerData.m_shipConfiguration.m_numCargoPods > 0 )
+		{
+			// pay for the cargo pod into the player's bank balance
+			playerData.m_bank.m_currentBalance += gameData.m_shipGameData.m_cargoPodSellPrice;
+
+			// remove one cargo pod from the ship
+			playerData.m_shipConfiguration.RemoveCargoPod();
+
+			// update the screen
+			UpdateScreen();
+
+			// play a ui sound
+			GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
 		}
 	}
 }
