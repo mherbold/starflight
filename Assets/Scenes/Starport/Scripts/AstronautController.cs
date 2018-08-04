@@ -6,6 +6,7 @@ public class AstronautController : MonoBehaviour
 {
 	// public stuff we want to set using the editor
 	public GameObject m_astronautGameObject;
+	public GameObject m_transporterParticles;
 
 	// private stuff we don't want the editor to see
 	private NavMeshAgent m_navMeshAgent;
@@ -19,6 +20,14 @@ public class AstronautController : MonoBehaviour
 
 		// get access to the animator
 		m_animator = m_astronautGameObject.GetComponent<Animator>();
+	}
+
+	// this is called by unity every frame
+	private void Update()
+	{
+		// move the transporter particles along with the astronaut
+		m_transporterParticles.transform.position = m_astronautGameObject.transform.position;
+
 	}
 
 	// call this to move the astronaut

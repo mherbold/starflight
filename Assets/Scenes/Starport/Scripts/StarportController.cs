@@ -16,6 +16,7 @@ public class StarportController : MonoBehaviour
 	private ShipConfigurationController m_shipConfigurationController;
 	private TradeDepotController m_tradeDepotController;
 	private PanelController m_currentUIController;
+	private DockingBayController m_dockingBayController;
 	private bool m_haveFocus;
 
 	// this is called by unity before start
@@ -47,6 +48,9 @@ public class StarportController : MonoBehaviour
 
 		// get access to the trade depot controller
 		m_tradeDepotController = GetComponent<TradeDepotController>();
+
+		// get access to the docking bay controller
+		m_dockingBayController = GetComponent<DockingBayController>();
 	}
 
 	// this is called by unity once at the start of the level
@@ -157,6 +161,11 @@ public class StarportController : MonoBehaviour
 			{
 				// give control to the trade depot controller
 				LoseFocus( m_tradeDepotController );
+			}
+			else if ( currentDoorName == "Docking Bay" )
+			{
+				// see if we can teleport to the docking bay
+				m_dockingBayController.Transport();
 			}
 		}
 	}
