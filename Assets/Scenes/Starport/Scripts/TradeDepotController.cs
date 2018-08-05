@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class TradeDepotController : PanelController
+public class TradeDepotController : DoorController
 {
 	enum State
 	{
@@ -56,8 +56,6 @@ public class TradeDepotController : PanelController
 	public InputField m_amountInputField;
 
 	// private stuff we don't want the editor to see
-	private StarportController m_starportController;
-	private InputManager m_inputManager;
 	private State m_currentState;
 	private State m_stateBeforeError;
 	private int m_currentItemIndex;
@@ -70,13 +68,9 @@ public class TradeDepotController : PanelController
 	private int m_currentRowOffset;
 
 	// this is called by unity before start
-	private void Awake()
+	protected override void Awake()
 	{
-		// get access to the starport controller
-		m_starportController = GetComponent<StarportController>();
-
-		// get access to the input manager
-		m_inputManager = GetComponent<InputManager>();
+		base.Awake();
 
 		// reset the ignore controller timer
 		m_ignoreControllerTimer = 0.0f;
@@ -87,16 +81,15 @@ public class TradeDepotController : PanelController
 		m_baseSelectionOffsetMax = rectTransform.offsetMax;
 	}
 
-	// this is called by unity once at the start of the level
-	private void Start()
-	{
-		// hide the ui
-		m_panelGameObject.SetActive( false );
-	}
-
 	// this is called by unity every frame
 	private void Update()
 	{
+		// if we don't have the focus then don't do anything now
+		if ( !m_hasFocus )
+		{
+			return;
+		}
+
 		// update the ignore controller timer
 		m_ignoreControllerTimer = Mathf.Max( 0.0f, m_ignoreControllerTimer - Time.deltaTime );
 
@@ -139,7 +132,7 @@ public class TradeDepotController : PanelController
 	private void UpdateController()
 	{
 		// get the controller stick position
-		float y = m_inputManager.GetRawY();
+		float y = m_starportController.m_inputManager.m_yRaw;
 
 		// check if we moved the stick down
 		if ( y <= -0.5f )
@@ -154,7 +147,7 @@ public class TradeDepotController : PanelController
 
 					UpdateScreen();
 
-					GetComponent<UISoundController>().Play( UISoundController.UISound.Click );
+					m_starportController.m_uiSoundController.Play( UISoundController.UISound.Click );
 				}
 			}
 		}
@@ -170,7 +163,7 @@ public class TradeDepotController : PanelController
 
 					UpdateScreen();
 
-					GetComponent<UISoundController>().Play( UISoundController.UISound.Click );
+					m_starportController.m_uiSoundController.Play( UISoundController.UISound.Click );
 				}
 			}
 		}
@@ -180,11 +173,11 @@ public class TradeDepotController : PanelController
 		}
 
 		// check if we have pressed the cancel button
-		if ( m_inputManager.GetCancelDown() )
+		if ( m_starportController.m_inputManager.GetCancelDown() )
 		{
 			SwitchToMenuBarState();
 
-			GetComponent<UISoundController>().Play( UISoundController.UISound.Deactivate );
+			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Deactivate );
 		}
 	}
 
@@ -195,9 +188,9 @@ public class TradeDepotController : PanelController
 		UpdateController();
 
 		// check if we have pressed the fire button
-		if ( m_inputManager.GetSubmitDown() )
+		if ( m_starportController.m_inputManager.GetSubmitDown() )
 		{
-			GetComponent<UISoundController>().Play( UISoundController.UISound.Activate );
+			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Activate );
 
 			BuySelectedItem();
 		}
@@ -210,9 +203,9 @@ public class TradeDepotController : PanelController
 		UpdateController();
 
 		// check if we have pressed the fire button
-		if ( m_inputManager.GetSubmitDown() )
+		if ( m_starportController.m_inputManager.GetSubmitDown() )
 		{
-			GetComponent<UISoundController>().Play( UISoundController.UISound.Activate );
+			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Activate );
 
 			SellSelectedItem();
 		}
@@ -225,9 +218,9 @@ public class TradeDepotController : PanelController
 		UpdateController();
 
 		// check if we have pressed the fire button
-		if ( m_inputManager.GetSubmitDown() )
+		if ( m_starportController.m_inputManager.GetSubmitDown() )
 		{
-			GetComponent<UISoundController>().Play( UISoundController.UISound.Activate );
+			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Activate );
 
 			AnalyzeSelectedItem();
 		}
@@ -236,20 +229,20 @@ public class TradeDepotController : PanelController
 	private void UpdateControllerForAnalyzeShowState()
 	{
 		// check if we have pressed the fire or cancel button
-		if ( m_inputManager.GetSubmitDown() || m_inputManager.GetCancelDown() )
+		if ( m_starportController.m_inputManager.GetSubmitDown() || m_starportController.m_inputManager.GetCancelDown() )
 		{
 			// switch back to the analyze item state
 			SwitchToAnalyzeItemState( false );
 
 			// play a ui sound
-			GetComponent<UISoundController>().Play( UISoundController.UISound.Deactivate );
+			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Deactivate );
 		}
 	}
 
 	private void UpdateControllerForErrorMessageState()
 	{
 		// check if we have pressed the fire or cancel button
-		if ( m_inputManager.GetSubmitDown() || m_inputManager.GetCancelDown() )
+		if ( m_starportController.m_inputManager.GetSubmitDown() || m_starportController.m_inputManager.GetCancelDown() )
 		{
 			// switch back to the previous state
 			switch ( m_stateBeforeError )
@@ -280,7 +273,7 @@ public class TradeDepotController : PanelController
 			}
 
 			// play a ui sound
-			GetComponent<UISoundController>().Play( UISoundController.UISound.Deactivate );
+			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Deactivate );
 		}
 	}
 
@@ -332,7 +325,7 @@ public class TradeDepotController : PanelController
 		SwitchToMenuBarState();
 
 		// cancel the ui sounds
-		GetComponent<UISoundController>().CancelSounds();
+		m_starportController.m_uiSoundController.CancelSounds();
 	}
 
 	// call this to give up control
@@ -386,7 +379,7 @@ public class TradeDepotController : PanelController
 		UpdateScreen();
 
 		// debounce the input
-		m_inputManager.DebounceNextUpdate();
+		m_starportController.m_inputManager.m_debounceNextUpdate = true;
 	}
 
 	// call this to switch to the buy amount state
@@ -425,7 +418,7 @@ public class TradeDepotController : PanelController
 		UpdateScreen();
 
 		// debounce the input
-		m_inputManager.DebounceNextUpdate();
+		m_starportController.m_inputManager.m_debounceNextUpdate = true;
 	}
 
 	// call this to switch to the sell amount state
@@ -464,7 +457,7 @@ public class TradeDepotController : PanelController
 		UpdateScreen();
 
 		// debounce the input
-		m_inputManager.DebounceNextUpdate();
+		m_starportController.m_inputManager.m_debounceNextUpdate = true;
 	}
 
 	// call this to switch to the confirm analysis state
@@ -502,7 +495,7 @@ public class TradeDepotController : PanelController
 		UpdateScreen();
 
 		// debounce the input
-		m_inputManager.DebounceNextUpdate();
+		m_starportController.m_inputManager.m_debounceNextUpdate = true;
 	}
 
 	// call this to switch to the error message state
@@ -524,10 +517,10 @@ public class TradeDepotController : PanelController
 		m_errorMessageText.text = errorMessage;
 
 		// play a ui sound
-		GetComponent<UISoundController>().Play( UISoundController.UISound.Error );
+		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Error );
 
 		// debounce the input
-		m_inputManager.DebounceNextUpdate();
+		m_starportController.m_inputManager.m_debounceNextUpdate = true;
 	}
 
 	// call this whenever we change state or do something that would result in something changing on the screen
@@ -868,7 +861,7 @@ public class TradeDepotController : PanelController
 		SwitchToBuyItemState();
 
 		// play a ui sound
-		GetComponent<UISoundController>().Play( UISoundController.UISound.Activate );
+		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Activate );
 	}
 
 	// this is called if we clicked on the sell button
@@ -889,7 +882,7 @@ public class TradeDepotController : PanelController
 			SwitchToSellItemState();
 
 			// play a ui sound
-			GetComponent<UISoundController>().Play( UISoundController.UISound.Activate );
+			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Activate );
 		}
 	}
 
@@ -911,7 +904,7 @@ public class TradeDepotController : PanelController
 			SwitchToAnalyzeItemState();
 
 			// play a ui sound
-			GetComponent<UISoundController>().Play( UISoundController.UISound.Activate );
+			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Activate );
 		}
 	}
 
@@ -920,9 +913,6 @@ public class TradeDepotController : PanelController
 	{
 		// close this ui
 		Hide();
-
-		// play a ui sound
-		GetComponent<UISoundController>().Play( UISoundController.UISound.Deactivate );
 	}
 
 	// this is called if we clicked on yes to analyze the selected item
@@ -947,7 +937,7 @@ public class TradeDepotController : PanelController
 		SwitchToAnalyzeShowState();
 
 		// play a ui sound
-		GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
+		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Update );
 	}
 
 	// this is called if we clicked on no to analyze the selected item
@@ -957,7 +947,7 @@ public class TradeDepotController : PanelController
 		SwitchToAnalyzeItemState( false );
 
 		// play a ui sound
-		GetComponent<UISoundController>().Play( UISoundController.UISound.Deactivate );
+		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Deactivate );
 	}
 
 	// this is called when we hit enter in the amount input field
@@ -1005,7 +995,7 @@ public class TradeDepotController : PanelController
 			}
 
 			// play a ui sound
-			GetComponent<UISoundController>().Play( UISoundController.UISound.Deactivate );
+			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Deactivate );
 		}
 		else
 		{
@@ -1050,7 +1040,7 @@ public class TradeDepotController : PanelController
 						SwitchToBuyItemState( false );
 
 						// play a ui sound
-						GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
+						m_starportController.m_uiSoundController.Play( UISoundController.UISound.Update );
 					}
 				}
 			}
@@ -1075,7 +1065,7 @@ public class TradeDepotController : PanelController
 				SwitchToSellItemState( false );
 
 				// play a ui sound
-				GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
+				m_starportController.m_uiSoundController.Play( UISoundController.UISound.Update );
 			}
 		}
 	}
@@ -1133,7 +1123,7 @@ public class TradeDepotController : PanelController
 				UpdateScreen();
 
 				// play a ui sound
-				GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
+				m_starportController.m_uiSoundController.Play( UISoundController.UISound.Update );
 			}
 		}
 	}
@@ -1168,7 +1158,7 @@ public class TradeDepotController : PanelController
 			UpdateScreen();
 
 			// play a ui sound
-			GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
+			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Update );
 		}
 	}
 

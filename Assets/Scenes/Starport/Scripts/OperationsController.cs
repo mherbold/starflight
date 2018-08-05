@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class OperationsController : PanelController
+public class OperationsController : DoorController
 {
 	// public stuff we want to set using the editor
 	public Button m_noticesButton;
@@ -18,24 +18,15 @@ public class OperationsController : PanelController
 	public GameObject m_evaluationGameObject;
 
 	// private stuff we don't want the editor to see
-	private StarportController m_starportController;
 	private NoticesController m_noticesController;
 
 	// this is called by unity before start
-	private void Awake()
+	protected override void Awake()
 	{
-		// get access to the starport controller
-		m_starportController = GetComponent<StarportController>();
+		base.Awake();
 
 		// get access to the notices controller
 		m_noticesController = GetComponent<NoticesController>();
-	}
-
-	// this is called by unity once at the start of the level
-	private void Start()
-	{
-		// hide the ui
-		m_panelGameObject.SetActive( false );
 	}
 
 	// call this to show the operations ui
@@ -77,7 +68,7 @@ public class OperationsController : PanelController
 		m_noticesButton.Select();
 
 		// cancel the ui sounds
-		GetComponent<UISoundController>().CancelSounds();
+		m_starportController.m_uiSoundController.CancelSounds();
 	}
 
 	// call this to give up control
@@ -117,7 +108,7 @@ public class OperationsController : PanelController
 		m_noticesController.Show();
 
 		// play a ui sound
-		GetComponent<UISoundController>().Play( UISoundController.UISound.Activate );
+		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Activate );
 	}
 
 	// this is called if we clicked on the evaluation button
@@ -130,7 +121,7 @@ public class OperationsController : PanelController
 		ShowButtons( 0 );
 
 		// play a ui sound
-		GetComponent<UISoundController>().Play( UISoundController.UISound.Activate );
+		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Activate );
 	}
 
 	// this is called if we clicked on the exit button
@@ -138,9 +129,6 @@ public class OperationsController : PanelController
 	{
 		// close this ui
 		Hide();
-
-		// play a ui sound
-		GetComponent<UISoundController>().Play( UISoundController.UISound.Deactivate );
 	}
 
 	// show one of the three screens in operations

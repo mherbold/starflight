@@ -4,7 +4,7 @@ using UnityEngine;
 public class BasicSound : MonoBehaviour
 {
 	// public stuff we want to set using the editor
-	public AudioClip m_audioClip;
+	public AudioClip[] m_audioClip;
 
 	// private stuff we don't want the editor to see
 	private AudioSource m_audioSource;
@@ -20,8 +20,8 @@ public class BasicSound : MonoBehaviour
 	}
 
 	// call this to play the sound now
-	public void PlayOneShot()
+	public void PlayOneShot( int soundIndex )
 	{
-		m_audioSource.PlayOneShot( m_audioClip, 1.0f );
+		m_audioSource.PlayOneShot( m_audioClip[ soundIndex ], 1.0f );
 	}
 }

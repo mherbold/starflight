@@ -6,7 +6,7 @@ public class AstronautController : MonoBehaviour
 {
 	// public stuff we want to set using the editor
 	public GameObject m_astronautGameObject;
-	public GameObject m_transporterParticles;
+	public ParticleSystem m_transporterParticleSystem;
 
 	// private stuff we don't want the editor to see
 	private NavMeshAgent m_navMeshAgent;
@@ -26,7 +26,7 @@ public class AstronautController : MonoBehaviour
 	private void Update()
 	{
 		// move the transporter particles along with the astronaut
-		m_transporterParticles.transform.position = m_astronautGameObject.transform.position;
+		m_transporterParticleSystem.transform.position = m_astronautGameObject.transform.position;
 
 	}
 

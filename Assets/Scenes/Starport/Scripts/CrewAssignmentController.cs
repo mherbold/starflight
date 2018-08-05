@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class CrewAssignmentController : PanelController
+public class CrewAssignmentController : DoorController
 {
 	enum State
 	{
@@ -29,8 +29,6 @@ public class CrewAssignmentController : PanelController
 	public GameObject m_bottomPanelGameObject;
 
 	// private stuff we don't want the editor to see
-	private StarportController m_starportController;
-	private InputManager m_inputManager;
 	private State m_currentState;
 	private int m_currentPositionIndex;
 	private int m_currentPersonnelId;
@@ -43,13 +41,9 @@ public class CrewAssignmentController : PanelController
 	private const int c_numSkills = 5;
 
 	// this is called by unity before start
-	private void Awake()
+	protected override void Awake()
 	{
-		// get access to the starport controller
-		m_starportController = GetComponent<StarportController>();
-
-		// get access to the input manager
-		m_inputManager = GetComponent<InputManager>();
+		base.Awake();
 
 		// reset the ignore controller timer
 		m_ignoreControllerTimer = 0.0f;
@@ -60,16 +54,15 @@ public class CrewAssignmentController : PanelController
 		m_baseSelectionOffsetMax = rectTransform.offsetMax;
 	}
 
-	// this is called by unity once at the start of the level
-	private void Start()
-	{
-		// hide the ui
-		m_panelGameObject.SetActive( false );
-	}
-
 	// this is called by unity every frame
 	private void Update()
 	{
+		// if we don't have the focus then don't do anything now
+		if ( !m_hasFocus )
+		{
+			return;
+		}
+
 		// update the ignore controller timer
 		m_ignoreControllerTimer = Mathf.Max( 0.0f, m_ignoreControllerTimer - Time.deltaTime );
 
@@ -91,8 +84,8 @@ public class CrewAssignmentController : PanelController
 		Personnel personnel = PersistentController.m_instance.m_playerData.m_personnel;
 
 		// get the controller stick position
-		float x = m_inputManager.GetRawX();
-		float y = m_inputManager.GetRawY();
+		float x = m_starportController.m_inputManager.m_xRaw;
+		float y = m_starportController.m_inputManager.m_yRaw;
 
 		// keep track if we have centered both x and y
 		bool xIsCentered = false;
@@ -171,11 +164,11 @@ public class CrewAssignmentController : PanelController
 		}
 
 		// check if we have pressed the cancel button
-		if ( m_inputManager.GetCancelDown() )
+		if ( m_starportController.m_inputManager.GetCancelDown() )
 		{
 			SwitchToMenuBarState();
 
-			GetComponent<UISoundController>().Play( UISoundController.UISound.Deactivate );
+			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Deactivate );
 		}
 	}
 
@@ -209,7 +202,7 @@ public class CrewAssignmentController : PanelController
 		SwitchToMenuBarState();
 
 		// cancel the ui sounds
-		GetComponent<UISoundController>().CancelSounds();
+		m_starportController.m_uiSoundController.CancelSounds();
 	}
 
 	// call this to give up control
@@ -400,7 +393,7 @@ public class CrewAssignmentController : PanelController
 		}
 
 		// play a sound
-		GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
+		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Update );
 	}
 
 	private void ChangeCurrentPersonnelId( int personnelId, bool forceUpdate = false )
@@ -427,7 +420,7 @@ public class CrewAssignmentController : PanelController
 			UpdateAssignedCrewmemberList();
 
 			// play a sound
-			GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
+			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Update );
 		}
 	}
 
@@ -483,7 +476,7 @@ public class CrewAssignmentController : PanelController
 		SwitchToAssignPersonnelState();
 
 		// play a ui sound
-		GetComponent<UISoundController>().Play( UISoundController.UISound.Activate );
+		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Activate );
 	}
 
 	// this is called if we clicked on the exit button
@@ -491,8 +484,5 @@ public class CrewAssignmentController : PanelController
 	{
 		// close this ui
 		Hide();
-
-		// play a ui sound
-		GetComponent<UISoundController>().Play( UISoundController.UISound.Deactivate );
 	}
 }

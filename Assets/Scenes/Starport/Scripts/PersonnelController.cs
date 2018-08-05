@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class PersonnelController : PanelController
+public class PersonnelController : DoorController
 {
 	enum State
 	{
@@ -56,8 +56,6 @@ public class PersonnelController : PanelController
 	public InputField m_nameInputField;
 
 	// private stuff we don't want the editor to see
-	private StarportController m_starportController;
-	private InputManager m_inputManager;
 	private State m_currentState;
 	private int m_currentFileIndex;
 	private int m_currentRaceIndex;
@@ -72,13 +70,9 @@ public class PersonnelController : PanelController
 	private const int c_numSkills = 5;
 
 	// this is called by unity before start
-	private void Awake()
+	protected override void Awake()
 	{
-		// get access to the starport controller
-		m_starportController = GetComponent<StarportController>();
-
-		// get access to the input manager
-		m_inputManager = GetComponent<InputManager>();
+		base.Awake();
 
 		// reset the ignore controller timer
 		m_ignoreControllerTimer = 0.0f;
@@ -89,16 +83,15 @@ public class PersonnelController : PanelController
 		m_baseSelectionOffsetMax = rectTransform.offsetMax;
 	}
 
-	// this is called by unity once at the start of the level
-	private void Start()
-	{
-		// hide the ui
-		m_panelGameObject.SetActive( false );
-	}
-
 	// this is called by unity every frame
 	private void Update()
 	{
+		// if we don't have the focus then don't do anything now
+		if ( !m_hasFocus )
+		{
+			return;
+		}
+
 		// update the ignore controller timer
 		m_ignoreControllerTimer = Mathf.Max( 0.0f, m_ignoreControllerTimer - Time.deltaTime );
 
@@ -123,7 +116,7 @@ public class PersonnelController : PanelController
 	public void UpdateControllerForSelectRaceState()
 	{
 		// get the controller stick position
-		float x = m_inputManager.GetRawX();
+		float x = m_starportController.m_inputManager.m_xRaw;
 
 		// check if we moved the stick left
 		if ( x <= -0.5f )
@@ -136,7 +129,7 @@ public class PersonnelController : PanelController
 
 				UpdateScreen();
 
-				GetComponent<UISoundController>().Play( UISoundController.UISound.Click );
+				m_starportController.m_uiSoundController.Play( UISoundController.UISound.Click );
 			}
 		}
 		else if ( x >= 0.5f ) // check if we moved the stick right
@@ -149,7 +142,7 @@ public class PersonnelController : PanelController
 
 				UpdateScreen();
 
-				GetComponent<UISoundController>().Play( UISoundController.UISound.Click );
+				m_starportController.m_uiSoundController.Play( UISoundController.UISound.Click );
 			}
 		}
 		else // we have centered the stick
@@ -162,7 +155,7 @@ public class PersonnelController : PanelController
 	public void UpdateControllerForTrainCrewmemberState()
 	{
 		// get the controller stick position
-		float y = m_inputManager.GetRawY();
+		float y = m_starportController.m_inputManager.m_yRaw;
 
 		// check if we moved the stick down
 		if ( y <= -0.5f )
@@ -179,7 +172,7 @@ public class PersonnelController : PanelController
 
 					UpdateScreen();
 
-					GetComponent<UISoundController>().Play( UISoundController.UISound.Click );
+					m_starportController.m_uiSoundController.Play( UISoundController.UISound.Click );
 				}
 			}
 		}
@@ -197,7 +190,7 @@ public class PersonnelController : PanelController
 
 					UpdateScreen();
 
-					GetComponent<UISoundController>().Play( UISoundController.UISound.Click );
+					m_starportController.m_uiSoundController.Play( UISoundController.UISound.Click );
 				}
 			}
 		}
@@ -207,17 +200,17 @@ public class PersonnelController : PanelController
 		}
 
 		// check if we have pressed the fire button
-		if ( m_inputManager.GetSubmitDown() )
+		if ( m_starportController.m_inputManager.GetSubmitDown() )
 		{
 			TrainSelectedSkill();
 		}
 
 		// check if we have pressed the cancel button
-		if ( m_inputManager.GetCancelDown() )
+		if ( m_starportController.m_inputManager.GetCancelDown() )
 		{
 			SwitchToViewFileState();
 
-			GetComponent<UISoundController>().Play( UISoundController.UISound.Deactivate );
+			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Deactivate );
 		}
 	}
 
@@ -270,7 +263,7 @@ public class PersonnelController : PanelController
 		SwitchToViewFileState();
 
 		// cancel the ui sounds
-		GetComponent<UISoundController>().CancelSounds();
+		m_starportController.m_uiSoundController.CancelSounds();
 	}
 
 	// call this to give up control
@@ -372,7 +365,7 @@ public class PersonnelController : PanelController
 		UpdateScreen();
 
 		// debounce the buttons
-		m_inputManager.DebounceNextUpdate();
+		m_starportController.m_inputManager.m_debounceNextUpdate = true;
 	}
 
 	// call this whenever we change state or do something that would result in something changing on the screen
@@ -804,7 +797,7 @@ public class PersonnelController : PanelController
 		{
 			UpdateTrainingText( 5 );
 
-			GetComponent<UISoundController>().Play( UISoundController.UISound.Error );
+			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Error );
 		}
 		else
 		{
@@ -823,7 +816,7 @@ public class PersonnelController : PanelController
 			{
 				UpdateTrainingText( 4 );
 
-				GetComponent<UISoundController>().Play( UISoundController.UISound.Error );
+				m_starportController.m_uiSoundController.Play( UISoundController.UISound.Error );
 			}
 			else if ( currentSkill < maximumSkill ) // check if we are still below the maximum skill points
 			{
@@ -840,13 +833,13 @@ public class PersonnelController : PanelController
 				UpdateSkillValues();
 
 				// play a ui sound
-				GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
+				m_starportController.m_uiSoundController.Play( UISoundController.UISound.Update );
 			}
 			else // the selected skill is already maxxed out
 			{
 				UpdateTrainingText( 3 );
 
-				GetComponent<UISoundController>().Play( UISoundController.UISound.Error );
+				m_starportController.m_uiSoundController.Play( UISoundController.UISound.Error );
 			}
 		}
 	}
@@ -858,7 +851,7 @@ public class PersonnelController : PanelController
 		SwitchToSelectRaceState();
 
 		// play a ui sound
-		GetComponent<UISoundController>().Play( UISoundController.UISound.Activate );
+		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Activate );
 	}
 
 	// this is called if we clicked on the previous button
@@ -871,7 +864,7 @@ public class PersonnelController : PanelController
 		UpdateScreen();
 
 		// play a ui sound
-		GetComponent<UISoundController>().Play( UISoundController.UISound.Activate );
+		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Activate );
 	}
 
 	// this is called if we clicked on the next button
@@ -884,7 +877,7 @@ public class PersonnelController : PanelController
 		UpdateScreen();
 
 		// play a ui sound
-		GetComponent<UISoundController>().Play( UISoundController.UISound.Activate );
+		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Activate );
 	}
 
 	// this is called if we clicked on the exit button
@@ -892,9 +885,6 @@ public class PersonnelController : PanelController
 	{
 		// close this ui
 		Hide();
-
-		// play a ui sound
-		GetComponent<UISoundController>().Play( UISoundController.UISound.Deactivate );
 	}
 
 	// this is called if we clicked on the train button
@@ -905,7 +895,7 @@ public class PersonnelController : PanelController
 		{
 			UpdateTrainingText( 1 );
 
-			GetComponent<UISoundController>().Play( UISoundController.UISound.Error );
+			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Error );
 		}
 		else
 		{
@@ -938,12 +928,12 @@ public class PersonnelController : PanelController
 			{
 				UpdateTrainingText( 2 );
 
-				GetComponent<UISoundController>().Play( UISoundController.UISound.Error );
+				m_starportController.m_uiSoundController.Play( UISoundController.UISound.Error );
 			}
 		}
 
 		// play a ui sound
-		GetComponent<UISoundController>().Play( UISoundController.UISound.Activate );
+		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Activate );
 	}
 
 	// this is called if we clicked on the delete button
@@ -953,7 +943,7 @@ public class PersonnelController : PanelController
 		SwitchToDeleteCrewmemberState();
 
 		// play a ui sound
-		GetComponent<UISoundController>().Play( UISoundController.UISound.Activate );
+		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Activate );
 	}
 
 	// this is called if we clicked on the select button
@@ -963,7 +953,7 @@ public class PersonnelController : PanelController
 		SwitchToGiveNameState();
 
 		// play a ui sound
-		GetComponent<UISoundController>().Play( UISoundController.UISound.Activate );
+		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Activate );
 	}
 
 	// this is called if we clicked on the cancel button
@@ -973,7 +963,7 @@ public class PersonnelController : PanelController
 		SwitchToViewFileState();
 
 		// play a ui sound
-		GetComponent<UISoundController>().Play( UISoundController.UISound.Deactivate );
+		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Deactivate );
 	}
 
 	// this is called when the yes button in the delete panel is clicked
@@ -995,7 +985,7 @@ public class PersonnelController : PanelController
 		SwitchToViewFileState();
 
 		// play a ui sound
-		GetComponent<UISoundController>().Play( UISoundController.UISound.Deactivate );
+		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Deactivate );
 	}
 
 	// this is called when the no button in the delete panel is clicked
@@ -1005,7 +995,7 @@ public class PersonnelController : PanelController
 		SwitchToViewFileState();
 
 		// play a ui sound
-		GetComponent<UISoundController>().Play( UISoundController.UISound.Deactivate );
+		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Deactivate );
 	}
 
 	// this is called when we hit enter in the name input field
@@ -1017,7 +1007,7 @@ public class PersonnelController : PanelController
 			SwitchToViewFileState();
 
 			// play a ui sound
-			GetComponent<UISoundController>().Play( UISoundController.UISound.Deactivate );
+			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Deactivate );
 		}
 		else
 		{
@@ -1048,7 +1038,7 @@ public class PersonnelController : PanelController
 			SwitchToViewFileState();
 
 			// play a ui sound
-			GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
+			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Update );
 		}
 	}
 }

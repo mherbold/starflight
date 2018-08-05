@@ -1,20 +1,25 @@
 ﻿
 using UnityEngine;
 
-class InputManager : MonoBehaviour
+public class InputManager : MonoBehaviour
 {
 	// private stuff we don't want the editor to see
-	private float m_x;
-	private float m_y;
-	private float m_xRaw;
-	private float m_yRaw;
-	private bool m_submit;
-	private bool m_cancel;
+	public float m_x { get; private set; }
+	public float m_y { get; private set; }
+
+	public float m_xRaw { get; private set; }
+	public float m_yRaw { get; private set; }
+
+	public bool m_submit { get; private set; }
+	public bool m_cancel { get; private set; }
+
 	private bool m_submitDown;
 	private bool m_cancelDown;
-	private bool m_submitUp;
-	private bool m_cancelUp;
-	private bool m_debounceNextUpdate;
+
+	public bool m_submitUp { get; private set; }
+	public bool m_cancelUp { get; private set; }
+
+	public bool m_debounceNextUpdate;
 
 	// this is called by unity every frame
 	void Update()
@@ -44,44 +49,12 @@ class InputManager : MonoBehaviour
 		{
 			m_debounceNextUpdate = false;
 
-			DebounceNow();
+			m_submitDown = false;
+			m_cancelDown = false;
+
+			m_submitUp = false;
+			m_cancelUp = false;
 		}
-	}
-
-	// get the x axis
-	public float GetX()
-	{
-		return m_x;
-	}
-
-	// get the y axis
-	public float GetY()
-	{
-		return m_y;
-	}
-
-	// get the raw x axis
-	public float GetRawX()
-	{
-		return m_xRaw;
-	}
-
-	// get the raw y axis
-	public float GetRawY()
-	{
-		return m_yRaw;
-	}
-
-	// get the submit button
-	public bool Submit()
-	{
-		return m_submit;
-	}
-
-	// get the cancel button
-	public bool Cancel()
-	{
-		return m_cancel;
 	}
 
 	// get the submit down button (with optional debounce)
@@ -108,33 +81,5 @@ class InputManager : MonoBehaviour
 		}
 
 		return cancelDown;
-	}
-
-	// get the submit up button
-	public bool GetSubmitUp()
-	{
-		return m_submitUp;
-	}
-
-	// get the cancel up button
-	public bool GetCancelUp()
-	{
-		return m_cancelUp;
-	}
-
-	// call this to reset all the buttons on the next frame
-	public void DebounceNextUpdate()
-	{
-		m_debounceNextUpdate = true;
-	}
-
-	// call this to reset all the buttons now
-	public void DebounceNow()
-	{
-		m_submitDown = false;
-		m_cancelDown = false;
-
-		m_submitUp = false;
-		m_cancelUp = false;
 	}
 }

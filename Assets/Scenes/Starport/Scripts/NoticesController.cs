@@ -32,6 +32,12 @@ public class NoticesController : MonoBehaviour
 	// this is called by unity every frame
 	private void Update()
 	{
+		// if we don't have the focus then don't do anything now
+		if ( !m_operationsController.m_hasFocus )
+		{
+			return;
+		}
+
 		// smooth scroll the displayed message
 		UpdateSmoothScroll();
 	}
@@ -120,7 +126,7 @@ public class NoticesController : MonoBehaviour
 		EventSystem.current.sendNavigationEvents = false;
 	}
 
-	// this is called if we clicked on the notices button in the operations panel
+	// this is called if we clicked on the more button
 	public void MoreClicked()
 	{
 		// show the next line of the notice
@@ -130,7 +136,7 @@ public class NoticesController : MonoBehaviour
 		UpdateButtons();
 	}
 
-	// this is called if we clicked on the evaluation button in the operations panel
+	// this is called if we clicked on the prev button
 	public void PreviousClicked()
 	{
 		if ( m_currentNoticeId > 0 )
@@ -141,10 +147,10 @@ public class NoticesController : MonoBehaviour
 		}
 
 		// play a ui sound
-		GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
+		m_operationsController.m_starportController.m_uiSoundController.Play( UISoundController.UISound.Update );
 	}
 
-	// this is called if we clicked on the exit button in the operations panel
+	// this is called if we clicked on the next button
 	public void NextClicked()
 	{
 		if ( m_currentNoticeId < m_latestNoticeId )
@@ -155,17 +161,17 @@ public class NoticesController : MonoBehaviour
 		}
 
 		// play a ui sound
-		GetComponent<UISoundController>().Play( UISoundController.UISound.Update );
+		m_operationsController.m_starportController.m_uiSoundController.Play( UISoundController.UISound.Update );
 	}
 
-	// this is called if we clicked on the exit button in the operations panel
+	// this is called if we clicked on the quit button
 	public void CloseClicked()
 	{
 		// leave the notices screen
 		Hide();
 
 		// play a ui sound
-		GetComponent<UISoundController>().Play( UISoundController.UISound.Deactivate );
+		m_operationsController.m_starportController.m_uiSoundController.Play( UISoundController.UISound.Deactivate );
 	}
 
 	// call this to start displaying the current message

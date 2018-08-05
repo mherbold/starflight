@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class BankController : PanelController
+public class BankController : DoorController
 {
 	// public stuff we want to set using the editor
 	public Button m_exitButton;
@@ -14,24 +14,6 @@ public class BankController : PanelController
 	public TextMeshProUGUI m_amountListText;
 	public TextMeshProUGUI m_currentBalanceText;
 	public GameObject m_dateMask;
-	public float m_baseOffset;
-
-	// private stuff we don't want the editor to see
-	private StarportController m_starportController;
-
-	// this is called by unity before start
-	private void Awake()
-	{
-		// get access to the starport controller
-		m_starportController = GetComponent<StarportController>();
-	}
-
-	// this is called by unity once at the start of the level
-	private void Start()
-	{
-		// hide the ui
-		m_panelGameObject.SetActive( false );
-	}
 
 	// call this to show the operations ui
 	public override void Show()
@@ -77,7 +59,7 @@ public class BankController : PanelController
 		float viewportHeight = m_dateMask.GetComponent<RectTransform>().rect.height;
 
 		// calculate the offset we need to show the bottom of the list
-		float offset = Mathf.Max( 0.0f, m_dateListText.renderedHeight - viewportHeight ) + m_baseOffset;
+		float offset = Mathf.Max( 0.0f, m_dateListText.renderedHeight - viewportHeight );
 
 		// move up the text in all 3 columns
 		m_dateListText.rectTransform.offsetMax = new Vector3( 0.0f, offset, 0.0f );
@@ -105,7 +87,7 @@ public class BankController : PanelController
 		m_exitButton.Select();
 
 		// cancel the ui sounds
-		GetComponent<UISoundController>().CancelSounds();
+		m_starportController.m_uiSoundController.CancelSounds();
 	}
 
 	// call this to give up control
@@ -134,8 +116,5 @@ public class BankController : PanelController
 	{
 		// close this ui
 		Hide();
-
-		// play a ui sound
-		GetComponent<UISoundController>().Play( UISoundController.UISound.Deactivate );
 	}
 }

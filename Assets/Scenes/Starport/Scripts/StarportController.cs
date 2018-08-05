@@ -5,25 +5,39 @@ using UnityEngine.EventSystems;
 
 public class StarportController : MonoBehaviour
 {
-	// private stuff we don't want the editor to see
-	private InputManager m_inputManager;
-	private AstronautController m_astronautController;
-	private DoorNameController m_doorNameController;
+	// stuff shared by all the controllers
+	public InputManager m_inputManager { get; private set; }
+	public BasicSound m_basicSound { get; private set; }
+	public UISoundController m_uiSoundController { get; protected set; }
+	public AstronautController m_astronautController { get; private set; }
+	public DoorNameController m_doorNameController { get; private set; }
+
+	// door controllers
 	private OperationsController m_operationsController;
 	private PersonnelController m_personnelController;
 	private CrewAssignmentController m_crewAssignmentController;
 	private BankController m_bankController;
 	private ShipConfigurationController m_shipConfigurationController;
 	private TradeDepotController m_tradeDepotController;
-	private PanelController m_currentUIController;
 	private DockingBayController m_dockingBayController;
-	private bool m_haveFocus;
+
+	// keep track of which door is the current one
+	private DoorController m_currentUIController;
+
+	// keep track of whether or not the astronaut can be moved
+	private bool m_astronautCanBeMoved;
 
 	// this is called by unity before start
 	private void Awake()
 	{
 		// get access to the input manager
 		m_inputManager = GetComponent<InputManager>();
+
+		// get access to the basic sound
+		m_basicSound = GetComponent<BasicSound>();
+
+		// get access to the ui sound controller
+		m_uiSoundController = GetComponent<UISoundController>();
 
 		// get access to the astronaut controller
 		m_astronautController = GetComponent<AstronautController>();
@@ -75,26 +89,20 @@ public class StarportController : MonoBehaviour
 	// this is called by unity every frame
 	private void Update()
 	{
-		// we only want to update the controller if we have the focus
-		if ( m_haveFocus )
+		// check if the astronaut can be moved
+		if ( m_astronautCanBeMoved )
 		{
-			UpdateController();
-		}
-	}
+			// we want to allow the player to move the astronaut only when the astronaut is not currently transitioning to the idle animation - this prevents weird looking feet sliding
+			if ( !m_astronautController.IsTransitioningToIdle() )
+			{
+				Move();
+			}
 
-	// handle controller input
-	private void UpdateController()
-	{
-		// we want to allow the player to move the astronaut only when the astronaut is not currently transitioning to the idle animation - this prevents weird looking feet sliding
-		if ( !m_astronautController.IsTransitioningToIdle() )
-		{
-			Move();
-		}
-
-		// check if the player has pressed the fire button
-		if ( m_inputManager.GetSubmitDown() )
-		{
-			Fire();
+			// check if the player has pressed the fire button
+			if ( m_inputManager.GetSubmitDown() )
+			{
+				Fire();
+			}
 		}
 	}
 
@@ -102,8 +110,8 @@ public class StarportController : MonoBehaviour
 	private void Move()
 	{
 		// get the controller stick position
-		float x = m_inputManager.GetRawX();
-		float z = m_inputManager.GetRawY();
+		float x = m_inputManager.m_xRaw;
+		float z = m_inputManager.m_yRaw;
 
 		// create our 3d move vector from the controller position
 		Vector3 moveVector = new Vector3( x, 0.0f, z );
@@ -130,8 +138,10 @@ public class StarportController : MonoBehaviour
 		// check if we are showing a door name
 		if ( m_doorNameController.IsShowingDoorName() )
 		{
+			// get the name of the current door
 			string currentDoorName = m_doorNameController.GetCurrentDoorName();
 
+			// figure out which controller to give control to
 			if ( currentDoorName == "Operations" )
 			{
 				// give control to the operations controller
@@ -165,7 +175,7 @@ public class StarportController : MonoBehaviour
 			else if ( currentDoorName == "Docking Bay" )
 			{
 				// see if we can teleport to the docking bay
-				m_dockingBayController.Transport();
+				LoseFocus( m_dockingBayController );
 			}
 		}
 	}
@@ -174,7 +184,7 @@ public class StarportController : MonoBehaviour
 	public void TakeFocus()
 	{
 		// we have the controller focus
-		m_haveFocus = true;
+		m_astronautCanBeMoved = true;
 
 		// show the door name
 		m_doorNameController.Show();
@@ -182,7 +192,7 @@ public class StarportController : MonoBehaviour
 		// clear out the current ui controller
 		m_currentUIController = null;
 
-		// save the player data
+		// save the player data in case something has been updated
 		if ( PersistentController.m_instance )
 		{
 			PersistentController.m_instance.SavePlayerData();
@@ -190,10 +200,10 @@ public class StarportController : MonoBehaviour
 	}
 
 	// call this when we are losing the focus and giving it to one of the door ui controllers
-	public void LoseFocus( PanelController uiController )
+	public void LoseFocus( DoorController uiController )
 	{
 		// we have the controller focus
-		m_haveFocus = false;
+		m_astronautCanBeMoved = false;
 
 		// hide the door name
 		m_doorNameController.Hide();

@@ -11,7 +11,6 @@ public class UISoundController : MonoBehaviour
 		Deactivate,
 		Update,
 		Error,
-		Transporter
 	};
 
 	// public stuff we want to set using the editor
@@ -20,7 +19,6 @@ public class UISoundController : MonoBehaviour
 	public AudioClip m_activateAudioClip;
 	public AudioClip m_deactivateAudioClip;
 	public AudioClip m_errorAudioClip;
-	public AudioClip m_transporterAudioClip;
 
 	// private stuff we don't want the editor to see
 	private AudioSource m_audioSource;
@@ -53,7 +51,6 @@ public class UISoundController : MonoBehaviour
 				case UISound.Deactivate: m_audioSource.PlayOneShot( m_deactivateAudioClip ); break;
 				case UISound.Update: m_audioSource.PlayOneShot( m_updateAudioClip ); break;
 				case UISound.Error: m_audioSource.PlayOneShot( m_errorAudioClip ); break;
-				case UISound.Transporter: m_audioSource.PlayOneShot( m_transporterAudioClip ); break;
 			}
 
 			// reset to no sound
@@ -69,7 +66,7 @@ public class UISoundController : MonoBehaviour
 		{
 			m_soundToPlay = soundIndex;
 
-			Debug.Log( "m_soundToPlay = " + m_soundToPlay );
+			// Debug.Log( "m_soundToPlay = " + m_soundToPlay );
 		}
 	}
 
