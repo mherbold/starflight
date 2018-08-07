@@ -99,7 +99,7 @@ public class Personnel
 	}
 
 	// this gets the personnel file using the file id
-	public PersonnelFile GetPersonnel( int fileId )
+	public PersonnelFile GetPersonnelFile( int fileId )
 	{
 		int personnelId = GetPersonnelId( fileId );
 

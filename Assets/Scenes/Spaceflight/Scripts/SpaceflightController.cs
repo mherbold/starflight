@@ -7,24 +7,36 @@ using TMPro;
 
 public class SpaceflightController : MonoBehaviour
 {
+	// constants
+	const int c_numButtons = 6;
+
 	// public stuff we want to set using the editor
 	public Sprite m_buttonOffSprite;
 	public Sprite m_buttonOnSprite;
 	public Image[] m_buttonImageList;
 	public TextMeshProUGUI[] m_buttonLabelList;
 	public TextMeshProUGUI m_currentOfficer;
+	public TextMeshProUGUI m_messages;
 
 	// stuff shared by all the controllers
 	public InputManager m_inputManager { get; private set; }
 	public UISoundController m_uiSoundController { get; protected set; }
+	public bool m_inOrbit;
+	public bool m_hasCurrentSenorReading;
+	public bool m_inDockingBay;
+	public bool m_inHyperspace;
 
-	// ship function buttons
-	public ShipFunction[] m_buttonFunctionList;
-	public ShipFunction m_currentFunction;
+	// button functions
+	public ButtonFunction[] m_buttonFunctionList;
+	public ButtonFunction m_currentFunction;
 
 	// private stuff we don't want the editor to see
 	private int m_currentButtonIndex;
 	private float m_ignoreControllerTimer;
+
+	// bridge button functions and labels
+	private ButtonFunction[] m_bridgeButtonFunctions;
+	private string[] m_bridgeButtonLabels;
 
 	// this is called by unity before start
 	private void Awake()
@@ -36,7 +48,7 @@ public class SpaceflightController : MonoBehaviour
 		m_uiSoundController = GetComponent<UISoundController>();
 
 		// create the six ship function buttons
-		m_buttonFunctionList = new ShipFunction[ 6 ];
+		m_buttonFunctionList = new ButtonFunction[ c_numButtons ];
 
 		// reset the ignore controller timer
 		m_ignoreControllerTimer = 0.0f;
@@ -45,9 +57,6 @@ public class SpaceflightController : MonoBehaviour
 	// this is called by unity once at the start of the level
 	private void Start()
 	{
-		// turn off controller navigation of the UI
-		EventSystem.current.sendNavigationEvents = false;
-
 		// check if we loaded the persistent scene
 		if ( PersistentController.m_instance == null )
 		{
@@ -56,9 +65,24 @@ public class SpaceflightController : MonoBehaviour
 
 			SceneManager.LoadScene( "Persistent" );
 		}
+		else
+		{
+			// bridge button functions and labels
+			m_bridgeButtonFunctions = new ButtonFunction[] { new CommandFunction(), new ScienceFunction(), new NavigationFunction(), new EngineerFunction(), new CommunicationsFunction(), new MedicalFunction() };
+			m_bridgeButtonLabels = new string[] { "Command", "Science", "Navigation", "Engineering", "Communications", "Medical" };
 
-		// reset the buttons to default
-		ResetButtonList( 0 );
+			// turn off controller navigation of the UI
+			EventSystem.current.sendNavigationEvents = false;
+
+			// reset everything
+			m_inOrbit = false;
+			m_hasCurrentSenorReading = false;
+			m_inDockingBay = true;
+			m_inHyperspace = false;
+
+			// reset the buttons to default
+			RestoreBridgeButtons();
+		}
 	}
 
 	// this is called by unity every frame
@@ -122,50 +146,55 @@ public class SpaceflightController : MonoBehaviour
 		// check if we have pressed the fire button
 		if ( m_inputManager.GetSubmitDown() )
 		{
-			// yep - execute the current button function
-			m_buttonFunctionList[ m_currentButtonIndex ].Execute();
+			if ( m_buttonFunctionList[ m_currentButtonIndex ] == null )
+			{
+				m_uiSoundController.Play( UISoundController.UISound.Error );
+			}
+			else
+			{
+				// yep - execute the current button function
+				m_buttonFunctionList[ m_currentButtonIndex ].Execute();
+			}
 		}
 	}
 
 	// go through each button image and set it to the on or off button sprite depending on what is currently selected
 	private void UpdateButtonSprites()
 	{
-		for ( int i = 0; i < 6; i++ )
+		for ( int i = 0; i < c_numButtons; i++ )
 		{
 			m_buttonImageList[ i ].sprite = ( m_currentButtonIndex == i ) ? m_buttonOnSprite : m_buttonOffSprite;
 		}
 	}
 
-	// reset the function list to default
-	public void ResetButtonList( int buttonIndex )
+	// restore the bridge buttons
+	public void RestoreBridgeButtons()
 	{
-		// get to the player data
-		PlayerData playerData = PersistentController.m_instance.m_playerData;
-
-		// initialize the ship function buttons to startup state
-		m_buttonFunctionList[ 0 ] = new CommandFunction();
-		m_buttonFunctionList[ 1 ] = new ScienceFunction();
-		m_buttonFunctionList[ 2 ] = new NavigationFunction();
-		m_buttonFunctionList[ 3 ] = new EngineerFunction();
-		m_buttonFunctionList[ 4 ] = new CommunicationsFunction();
-		m_buttonFunctionList[ 5 ] = new MedicalFunction();
-
-		// change the button labels
-		m_buttonLabelList[ 0 ].text = "Command";
-		m_buttonLabelList[ 1 ].text = "Science";
-		m_buttonLabelList[ 2 ].text = "Navigation";
-		m_buttonLabelList[ 3 ].text = "Engineering";
-		m_buttonLabelList[ 4 ].text = "Communications";
-		m_buttonLabelList[ 5 ].text = "Medical";
-
-		// change the current button index
-		m_currentButtonIndex = buttonIndex;
-
 		// there is no current funciton
 		m_currentFunction = null;
 
+		// restore the bridge functions and labels
+		UpdateButtonList( m_bridgeButtonFunctions, m_bridgeButtonLabels );
+
+		// get to the player data
+		PlayerData playerData = PersistentController.m_instance.m_playerData;
+
 		// change the current officer label to the name of the ship
 		m_currentOfficer.text = "ISS " + playerData.m_shipConfiguration.m_name;
+	}
+
+	// update the button functions and labels and change the current button index
+	public void UpdateButtonList( ButtonFunction [] buttonFunctionList, string [] buttonLabelList )
+	{
+		// go through all 6 buttons
+		for ( int i = 0; i < c_numButtons; i++ )
+		{
+			m_buttonFunctionList[ i ] = ( i < buttonFunctionList.Length ) ? buttonFunctionList[ i ] : null;
+			m_buttonLabelList[ i ].text = ( i < buttonLabelList.Length ) ? buttonLabelList[ i ] : null;
+		}
+
+		// reset the current button index
+		m_currentButtonIndex = 0;
 
 		// update the button sprites
 		UpdateButtonSprites();

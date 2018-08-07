@@ -513,7 +513,7 @@ GameObject:
   - component: {fileID: 280970583}
   m_Layer: 0
   m_Name: Controllers
-  m_TagString: Untagged
+  m_TagString: Spaceflight Controllers
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -546,6 +546,8 @@ MonoBehaviour:
   - {fileID: 2090744178}
   - {fileID: 1117387106}
   m_currentOfficer: {fileID: 1729061564}
+  m_messages: {fileID: 392032224}
+  m_inOrbit: 0
 --- !u!114 &280970584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1448,7 +1450,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 4
+  m_ChildAlignment: 0
   m_Spacing: 2
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0

@@ -10,7 +10,7 @@ public class UISoundController : MonoBehaviour
 		Activate,
 		Deactivate,
 		Update,
-		Error,
+		Error
 	};
 
 	// public stuff we want to set using the editor

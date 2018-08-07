@@ -5,71 +5,77 @@ using System;
 
 public class CrewAssignment
 {
+	public enum Role
+	{
+		First = 0,
+		Captain = 0,
+		ScienceOfficer,
+		Navigator,
+		Engineer,
+		CommunicationsOfficer,
+		Doctor,
+		Length
+	};
+
 	public int m_captainFileId;
 	public int m_scienceOfficerFileId;
 	public int m_navigatorFileId;
 	public int m_engineerFileId;
-	public int m_communicationsFileId;
+	public int m_communicationsOfficerFileId;
 	public int m_doctorFileId;
 
 	public void Reset()
 	{
-		// unassign all crew member positions
+		// unassign all crew member roles
 		m_captainFileId = -1;
 		m_scienceOfficerFileId = -1;
 		m_navigatorFileId = -1;
 		m_engineerFileId = -1;
-		m_communicationsFileId = -1;
+		m_communicationsOfficerFileId = -1;
 		m_doctorFileId = -1;
 	}
 
-	public int GetFileId( int positionIndex )
+	public int GetFileId( Role role )
 	{
-		switch ( positionIndex )
+		switch ( role )
 		{
-			case 0: return m_captainFileId;
-			case 1: return m_scienceOfficerFileId;
-			case 2: return m_navigatorFileId;
-			case 3: return m_engineerFileId;
-			case 4: return m_communicationsFileId;
-			case 5: return m_doctorFileId;
+			case Role.Captain: return m_captainFileId;
+			case Role.ScienceOfficer: return m_scienceOfficerFileId;
+			case Role.Navigator: return m_navigatorFileId;
+			case Role.Engineer: return m_engineerFileId;
+			case Role.CommunicationsOfficer: return m_communicationsOfficerFileId;
+			case Role.Doctor: return m_doctorFileId;
 		}
 
-		throw new IndexOutOfRangeException();
+		return -1;
 	}
 
-	public bool IsAssigned( int positionIndex )
+	public bool IsAssigned( Role role )
 	{
-		int fileId = -1;
-
-		switch ( positionIndex )
-		{
-			case 0: fileId = m_captainFileId; break;
-			case 1: fileId = m_scienceOfficerFileId; break;
-			case 2: fileId = m_navigatorFileId; break;
-			case 3: fileId = m_engineerFileId; break;
-			case 4: fileId = m_communicationsFileId; break;
-			case 5: fileId = m_doctorFileId; break;
-		}
+		int fileId = GetFileId( role );
 
 		return ( fileId == -1 ) ? false : true;
 	}
 
-	public void Assign( int positionIndex, int fileId )
+	public void Assign( Role role, int fileId )
 	{
-		switch ( positionIndex )
+		switch ( role )
 		{
-			case 0: m_captainFileId = fileId; break;
-			case 1: m_scienceOfficerFileId = fileId; break;
-			case 2: m_navigatorFileId = fileId; break;
-			case 3: m_engineerFileId = fileId; break;
-			case 4: m_communicationsFileId = fileId; break;
-			case 5: m_doctorFileId = fileId; break;
-
-			default:
-			{
-				throw new IndexOutOfRangeException();
-			}
+			case Role.Captain: m_captainFileId = fileId; break;
+			case Role.ScienceOfficer: m_scienceOfficerFileId = fileId; break;
+			case Role.Navigator: m_navigatorFileId = fileId; break;
+			case Role.Engineer: m_engineerFileId = fileId; break;
+			case Role.CommunicationsOfficer: m_communicationsOfficerFileId = fileId; break;
+			case Role.Doctor: m_doctorFileId = fileId; break;
 		}
+	}
+
+	public Personnel.PersonnelFile GetPersonnelFile( Role role )
+	{
+		int fileId = GetFileId( role );
+
+		PlayerData playerData = PersistentController.m_instance.m_playerData;
+
+		return playerData.m_personnel.GetPersonnelFile( fileId );
 	}
 }

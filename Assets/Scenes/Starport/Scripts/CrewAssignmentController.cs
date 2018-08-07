@@ -30,14 +30,13 @@ public class CrewAssignmentController : DoorController
 
 	// private stuff we don't want the editor to see
 	private State m_currentState;
-	private int m_currentPositionIndex;
+	private CrewAssignment.Role m_currentRole;
 	private int m_currentPersonnelId;
 	private Vector3 m_baseSelectionOffsetMin;
 	private Vector3 m_baseSelectionOffsetMax;
 	private float m_ignoreControllerTimer;
 
 	// constant values
-	private const int c_numPositions = 6;
 	private const int c_numSkills = 5;
 
 	// this is called by unity before start
@@ -129,9 +128,9 @@ public class CrewAssignmentController : DoorController
 				{
 					m_ignoreControllerTimer = 0.3f;
 
-					if ( m_currentPositionIndex < ( c_numPositions - 1 ) )
+					if ( m_currentRole < ( CrewAssignment.Role.Length - 1 ) )
 					{
-						ChangeCurrentPositionIndex( m_currentPositionIndex + 1 );
+						ChangeCurrentRole( m_currentRole + 1 );
 
 						UpdateDisplay();
 					}
@@ -143,9 +142,9 @@ public class CrewAssignmentController : DoorController
 				{
 					m_ignoreControllerTimer = 0.3f;
 
-					if ( m_currentPositionIndex > 0 )
+					if ( m_currentRole > CrewAssignment.Role.First )
 					{
-						ChangeCurrentPositionIndex( m_currentPositionIndex - 1 );
+						ChangeCurrentRole( m_currentRole - 1 );
 
 						UpdateDisplay();
 					}
@@ -297,7 +296,7 @@ public class CrewAssignmentController : DoorController
 		m_currentState = State.AssignPersonnel;
 
 		// start with the captain
-		ChangeCurrentPositionIndex( 0 );
+		ChangeCurrentRole( CrewAssignment.Role.Captain );
 
 		// show the crewmember panel
 		m_bottomPanelGameObject.SetActive( true );
@@ -339,16 +338,13 @@ public class CrewAssignmentController : DoorController
 		m_positionValuesText.text = "";
 
 		// go through each position
-		for ( int positionIndex = 0; positionIndex < c_numPositions; positionIndex++ )
+		for ( CrewAssignment.Role role = CrewAssignment.Role.First; role < CrewAssignment.Role.Length; role++ )
 		{
-			// get the personnel id for the assigned crewmember
-			int personnelId = crewAssignment.GetFileId( positionIndex );
-
-			// check if the position is assigned
-			if ( personnelId != -1 )
+			// get the file id for the assigned crewmember
+			if ( crewAssignment.IsAssigned( role ) )
 			{
-				// find the personnel with that file id
-				Personnel.PersonnelFile personnelFile = personnel.GetPersonnel( personnelId );
+				// get the personnel file for that role
+				Personnel.PersonnelFile personnelFile = crewAssignment.GetPersonnelFile( role );
 
 				// add the crewmember's name
 				m_positionValuesText.text += personnelFile.m_name;
@@ -359,23 +355,23 @@ public class CrewAssignmentController : DoorController
 				m_positionValuesText.text += "[Not Assigned]";
 			}
 
-			if ( positionIndex < ( c_numPositions - 1 ) )
+			if ( role < ( CrewAssignment.Role.Length - 1 ) )
 			{
 				m_positionValuesText.text += Environment.NewLine;
 			}
 		}
 	}
 
-	private void ChangeCurrentPositionIndex( int positionIndex )
+	private void ChangeCurrentRole( CrewAssignment.Role role )
 	{
 		// update the current position index
-		m_currentPositionIndex = positionIndex;
+		m_currentRole = role;
 
 		// get access to the crew assignment player data
 		CrewAssignment crewAssignment = PersistentController.m_instance.m_playerData.m_crewAssignment;
 
 		// check if we have don't have someone assigned to this position
-		if ( !crewAssignment.IsAssigned( m_currentPositionIndex ) )
+		if ( !crewAssignment.IsAssigned( m_currentRole ) )
 		{
 			// automatically select the first personnel file
 			ChangeCurrentPersonnelId( 0, true );
@@ -383,7 +379,7 @@ public class CrewAssignmentController : DoorController
 		else
 		{
 			// get the current file id for this position
-			int fileId = crewAssignment.GetFileId( m_currentPositionIndex );
+			int fileId = crewAssignment.GetFileId( m_currentRole );
 
 			// get access to the personnel player data
 			Personnel personnel = PersistentController.m_instance.m_playerData.m_personnel;
@@ -414,7 +410,7 @@ public class CrewAssignmentController : DoorController
 			Personnel.PersonnelFile personnelFile = personnel.m_personnelList[ m_currentPersonnelId ];
 
 			// assign this personnel to this position
-			crewAssignment.Assign( m_currentPositionIndex, personnelFile.m_fileId );
+			crewAssignment.Assign( m_currentRole, personnelFile.m_fileId );
 
 			// update the assigned crewmember list
 			UpdateAssignedCrewmemberList();
@@ -427,13 +423,13 @@ public class CrewAssignmentController : DoorController
 	private void UpdateDisplay()
 	{
 		// show the up arrow only if we are not at the first position index
-		m_upArrowImage.gameObject.SetActive( m_currentPositionIndex != 0 );
+		m_upArrowImage.gameObject.SetActive( m_currentRole != CrewAssignment.Role.First );
 
 		// show the down arrow only if we are not at the last position index
-		m_downArrowImage.gameObject.SetActive( m_currentPositionIndex != ( c_numPositions - 1 ) );
+		m_downArrowImage.gameObject.SetActive( m_currentRole != ( CrewAssignment.Role.Length - 1 ) );
 
 		// put the position selection box in the right place
-		float offset = m_currentPositionIndex * m_positionValuesText.renderedHeight / c_numPositions;
+		float offset = (int) m_currentRole * m_positionValuesText.renderedHeight / (int) CrewAssignment.Role.Length;
 
 		RectTransform rectTransform = m_selectionXform.GetComponent<RectTransform>();
 		rectTransform.offsetMin = m_baseSelectionOffsetMin + new Vector3( 0.0f, -offset, 0.0f );

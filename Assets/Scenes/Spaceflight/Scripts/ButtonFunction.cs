@@ -1,13 +1,12 @@
 ﻿
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-abstract public class ShipFunction
+abstract public class ButtonFunction
 {
 	// convenient access to the spaceflight controller
 	protected SpaceflightController m_spaceflightController;
 
-	public ShipFunction()
+	public ButtonFunction()
 	{
 		GameObject controllersGameObject = GameObject.FindWithTag( "Spaceflight Controllers" );
 
