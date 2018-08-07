@@ -45,9 +45,14 @@ public class DockingBayController : DoorController
 		// give the particles time to completely fade out
 		if ( m_transportTimer >= 4.0f )
 		{
+			// force the astronaut to be completely transparent
 			UpdateOpacity( 0.0f );
 
+			// we are no longer transporting
 			m_isTransporting = false;
+
+			// switch to the spaceflight scene
+			m_starportController.m_manualSceneTransitionController.BeginTransition();
 		}
 	}
 

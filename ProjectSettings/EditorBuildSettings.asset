@@ -17,3 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Starport/Starport.unity
     guid: 9be9bcf4c6f7c024099239261a1ea1c5
+  - enabled: 1
+    path: Assets/Scenes/Spaceflight/Spaceflight.unity
+    guid: 5b287ec3f91a6354aad132c27c3c6bb2
+  m_configObjects: {}

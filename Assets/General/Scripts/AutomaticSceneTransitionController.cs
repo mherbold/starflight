@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class SceneTransitionController : MonoBehaviour
+public class AutomaticSceneTransitionController : MonoBehaviour
 {
 	// public stuff we want to set using the editor
 	public GameObject m_sceneTransitionGameObject;
@@ -36,7 +36,7 @@ public class SceneTransitionController : MonoBehaviour
 	}
 
 	// this is called by unity every frame
-	void Update()
+	private void Update()
 	{
 		// increment timer by the number of seconds that has passed by so far
 		m_timer += Time.deltaTime;
@@ -56,19 +56,43 @@ public class SceneTransitionController : MonoBehaviour
 		// calculate the alpha of the fader image to fade in / out the scene
 		float alpha = 0.0f;
 
+		// do this part only if we have fade in enabled
 		if ( m_fadeIn )
 		{
 			if ( m_timer < m_fadeInEndTime )
 			{
 				alpha = 1.0f - Mathf.Clamp( ( m_timer - m_fadeInStartTime ) / ( m_fadeInEndTime - m_fadeInStartTime ), 0.0f, 1.0f );
 			}
+			else
+			{
+				// we are done fading in - check if we have fade out enabled
+				if ( !m_fadeOut )
+				{
+					// nope - go ahead and deactivate this component to save cpu cycles
+					this.enabled = false;
+				}
+			}
 		}
 
+		// do this part only if we have fade out enabled
 		if ( m_fadeOut )
 		{
 			if ( m_timer >= m_fadeOutStartTime )
 			{
 				alpha = Mathf.Clamp( ( m_timer - m_fadeOutStartTime ) / ( m_fadeOutEndTime - m_fadeOutStartTime ), 0.0f, 1.0f );
+
+				// are we done fading out?
+				if ( m_timer > m_fadeOutEndTime )
+				{
+					// yep - go ahead and deactivate this component to save cpu cycles
+					this.enabled = false;
+
+					// load the next scene
+					if ( m_loadNextScene )
+					{
+						SceneManager.LoadScene( m_nextSceneName );
+					}
+				}
 			}
 		}
 
@@ -84,15 +108,6 @@ public class SceneTransitionController : MonoBehaviour
 			Color color = m_image.color;
 			color.a = alpha;
 			m_image.color = color;
-		}
-
-		// if we have faded the scene out then load the next scene
-		if ( m_timer > m_fadeOutEndTime )
-		{
-			if ( m_loadNextScene )
-			{
-				SceneManager.LoadScene( m_nextSceneName );
-			}
 		}
 	}
 }

@@ -8,7 +8,7 @@ public class PersistentController : MonoBehaviour
 {
 	// static reference to this instance
 	public static PersistentController m_instance;
-	public static bool m_skipIntro;
+	public static string m_sceneToLoad = "Intro A";
 
 	// public stuff we want to set using the editor
 	public string m_gameDataFileName;
@@ -41,6 +41,9 @@ public class PersistentController : MonoBehaviour
 	// this is called by unity once at the start of the level
 	private void Start()
 	{
+		// debug info
+		Debug.Log( "Loading game and player data..." );
+
 		// tell unity to not delete this game object when the scene unloads
 		DontDestroyOnLoad( this );
 
@@ -56,8 +59,11 @@ public class PersistentController : MonoBehaviour
 			m_playerData.Reset();
 		}
 
+		// debug info
+		Debug.Log( "Loading scene " + m_sceneToLoad );
+
 		// load the next scene
-		SceneManager.LoadScene( m_skipIntro ? "Starport" : "Intro A" );
+		SceneManager.LoadScene( m_sceneToLoad );
 	}
 
 	// this is called by unity every frame

@@ -11,7 +11,7 @@ public class IntroAController : MonoBehaviour
 	public float m_secondPageTransitionEndTime;
 
 	// private stuff we don't want the editor to see
-	private SceneTransitionController m_sceneTransitionController;
+	private AutomaticSceneTransitionController m_automaticSceneTransitionController;
 	private InputManager m_inputManager;
 	private float m_timer;
 
@@ -19,7 +19,7 @@ public class IntroAController : MonoBehaviour
 	private void Awake()
 	{
 		// get access to the scene transition controller
-		m_sceneTransitionController = GetComponent<SceneTransitionController>();
+		m_automaticSceneTransitionController = GetComponent<AutomaticSceneTransitionController>();
 
 		// get access to the input manager
 		m_inputManager = GetComponent<InputManager>();
@@ -46,7 +46,7 @@ public class IntroAController : MonoBehaviour
 		// if we are past the transition point then allow the player to skip to the fade out
 		if ( m_timer >= m_secondPageTransitionEndTime )
 		{
-			m_sceneTransitionController.m_allowSkipToFadeOut = true;
+			m_automaticSceneTransitionController.m_allowSkipToFadeOut = true;
 		}
 
 		// fade the first page in

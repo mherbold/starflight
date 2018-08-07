@@ -5,6 +5,9 @@ using UnityEngine.EventSystems;
 
 public class StarportController : MonoBehaviour
 {
+	// the scene transition controller
+	public ManualSceneTransitionController m_manualSceneTransitionController { get; private set; }
+
 	// stuff shared by all the controllers
 	public InputManager m_inputManager { get; private set; }
 	public BasicSound m_basicSound { get; private set; }
@@ -30,6 +33,9 @@ public class StarportController : MonoBehaviour
 	// this is called by unity before start
 	private void Awake()
 	{
+		// get access to the manual scene transition controller
+		m_manualSceneTransitionController = GetComponent<ManualSceneTransitionController>();
+
 		// get access to the input manager
 		m_inputManager = GetComponent<InputManager>();
 
@@ -80,7 +86,7 @@ public class StarportController : MonoBehaviour
 		if ( PersistentController.m_instance == null )
 		{
 			// nope - so then do it now and tell it to skip the intro scene
-			PersistentController.m_skipIntro = true;
+			PersistentController.m_sceneToLoad = "Starport";
 
 			SceneManager.LoadScene( "Persistent" );
 		}
