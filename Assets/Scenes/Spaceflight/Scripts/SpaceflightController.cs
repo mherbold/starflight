@@ -18,7 +18,13 @@ public class SpaceflightController : MonoBehaviour
 	public TextMeshProUGUI[] m_buttonLabelList;
 	public TextMeshProUGUI m_currentOfficer;
 	public TextMeshProUGUI m_messages;
+	public TextMeshProUGUI m_countdown;
+	public Camera m_camera;
 	public GameObject m_map;
+	public Animator m_dockingBayDoorTop;
+	public Animator m_dockingBayDoorBottom;
+	public ParticleSystem m_decompressionParticleSystem;
+	public Image m_overlay;
 
 	// stuff shared by all the controllers
 	public InputManager m_inputManager { get; private set; }
@@ -28,6 +34,7 @@ public class SpaceflightController : MonoBehaviour
 	public bool m_hasCurrentSenorReading;
 	public bool m_inDockingBay;
 	public bool m_inHyperspace;
+	public bool m_justLaunched;
 
 	// button functions
 	public ButtonFunction[] m_buttonFunctionList;
@@ -91,6 +98,15 @@ public class SpaceflightController : MonoBehaviour
 
 			// reset the buttons to default
 			RestoreBridgeButtons();
+
+			// hide various objects
+			m_countdown.gameObject.SetActive( false );
+			m_decompressionParticleSystem.gameObject.SetActive( false );
+			m_overlay.gameObject.SetActive( false );
+
+			// show the docking bay doors (closed) if we just came from the spaceport
+			m_dockingBayDoorTop.gameObject.SetActive( m_inDockingBay );
+			m_dockingBayDoorBottom.gameObject.SetActive( m_inDockingBay );
 		}
 	}
 
@@ -229,7 +245,11 @@ public class SpaceflightController : MonoBehaviour
 		// update the message
 		if ( m_inDockingBay )
 		{
-			m_messages.text = "Ship computer activated.\r\nPre-launch procedures complete.\r\nStanding by to initiate launch.\r\n";
+			m_messages.text = "Ship computer activated.\r\nPre-launch procedures complete.\r\nStanding by to initiate launch.";
+		}
+		else if ( m_justLaunched )
+		{
+			m_messages.text = "Starport clear.\r\nStanding by to maneuver.";
 		}
 	}
 
