@@ -4,16 +4,17 @@ using UnityEngine.EventSystems;
 
 public class MedicalFunction : ButtonFunction
 {
-	private readonly ButtonFunction[] m_buttonFunctions = { null, null, new BridgeFunction() };
-	private readonly string[] m_buttonLabels = { "Examine", "Treat", "Bridge" };
+	private readonly ButtonFunction[] m_buttonFunctions = { new ExamineFunction(), new TreatFunction(), new BridgeFunction() };
+
+	public override string GetButtonLabel()
+	{
+		return "Medical";
+	}
 
 	public override void Execute()
 	{
-		// play the activate sound
-		m_spaceflightController.m_uiSoundController.Play( UISoundController.UISound.Activate );
-
 		// change the button functions and labels
-		m_spaceflightController.UpdateButtonList( m_buttonFunctions, m_buttonLabels );
+		m_spaceflightController.UpdateButtonFunctions( m_buttonFunctions );
 
 		// get to the player data
 		PlayerData playerData = PersistentController.m_instance.m_playerData;
@@ -27,5 +28,10 @@ public class MedicalFunction : ButtonFunction
 
 	public override void Cancel()
 	{
+		// play the deactivate sound
+		m_spaceflightController.m_uiSoundController.Play( UISoundController.UISound.Deactivate );
+
+		// return to the bridge
+		m_spaceflightController.RestoreBridgeButtons();
 	}
 }

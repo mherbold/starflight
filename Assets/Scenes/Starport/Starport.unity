@@ -471,6 +471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c900001118d35794491d9dea4667a640, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_numberOfAudioSources: 0
   m_audioClip:
   - {fileID: 8300000, guid: 3b7493701efb42142b7d9afd62780c9a, type: 3}
   - {fileID: 8300000, guid: 73222da08cd38ee4096c17cd923a60df, type: 3}
@@ -11428,7 +11429,7 @@ Light:
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 1
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -17523,6 +17524,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c900001118d35794491d9dea4667a640, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_numberOfAudioSources: 0
   m_audioClip:
   - {fileID: 8300000, guid: 3b7493701efb42142b7d9afd62780c9a, type: 3}
   - {fileID: 8300000, guid: 73222da08cd38ee4096c17cd923a60df, type: 3}
@@ -21736,6 +21738,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c900001118d35794491d9dea4667a640, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_numberOfAudioSources: 1
   m_audioClip:
   - {fileID: 8300000, guid: 3b7493701efb42142b7d9afd62780c9a, type: 3}
   - {fileID: 8300000, guid: 73222da08cd38ee4096c17cd923a60df, type: 3}
@@ -23385,6 +23388,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c900001118d35794491d9dea4667a640, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_numberOfAudioSources: 0
   m_audioClip:
   - {fileID: 8300000, guid: 3b7493701efb42142b7d9afd62780c9a, type: 3}
   - {fileID: 8300000, guid: 73222da08cd38ee4096c17cd923a60df, type: 3}
@@ -24091,6 +24095,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c900001118d35794491d9dea4667a640, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_numberOfAudioSources: 0
   m_audioClip:
   - {fileID: 8300000, guid: 3b7493701efb42142b7d9afd62780c9a, type: 3}
   - {fileID: 8300000, guid: 73222da08cd38ee4096c17cd923a60df, type: 3}
@@ -29126,6 +29131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c900001118d35794491d9dea4667a640, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_numberOfAudioSources: 0
   m_audioClip:
   - {fileID: 8300000, guid: 3b7493701efb42142b7d9afd62780c9a, type: 3}
   - {fileID: 8300000, guid: 73222da08cd38ee4096c17cd923a60df, type: 3}
@@ -29313,6 +29319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c900001118d35794491d9dea4667a640, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_numberOfAudioSources: 0
   m_audioClip:
   - {fileID: 8300000, guid: 3b7493701efb42142b7d9afd62780c9a, type: 3}
   - {fileID: 8300000, guid: 73222da08cd38ee4096c17cd923a60df, type: 3}
@@ -30538,7 +30545,7 @@ Camera:
     height: 1
   near clip plane: 30
   far clip plane: 230
-  field of view: 60
+  field of view: 70
   orthographic: 0
   orthographic size: 5
   m_Depth: -1

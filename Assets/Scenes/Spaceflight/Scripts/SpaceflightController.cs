@@ -13,13 +13,16 @@ public class SpaceflightController : MonoBehaviour
 	// public stuff we want to set using the editor
 	public Sprite m_buttonOffSprite;
 	public Sprite m_buttonOnSprite;
+	public Sprite m_buttonActiveSprite;
 	public Image[] m_buttonImageList;
 	public TextMeshProUGUI[] m_buttonLabelList;
 	public TextMeshProUGUI m_currentOfficer;
 	public TextMeshProUGUI m_messages;
+	public GameObject m_map;
 
 	// stuff shared by all the controllers
 	public InputManager m_inputManager { get; private set; }
+	public BasicSound m_basicSound { get; private set; }
 	public UISoundController m_uiSoundController { get; protected set; }
 	public bool m_inOrbit;
 	public bool m_hasCurrentSenorReading;
@@ -32,6 +35,8 @@ public class SpaceflightController : MonoBehaviour
 
 	// private stuff we don't want the editor to see
 	private int m_currentButtonIndex;
+	private bool m_activatingButton;
+	private float m_activatingButtonTimer;
 	private float m_ignoreControllerTimer;
 
 	// bridge button functions and labels
@@ -43,6 +48,9 @@ public class SpaceflightController : MonoBehaviour
 	{
 		// get access to the input manager
 		m_inputManager = GetComponent<InputManager>();
+
+		// get access to the basic sound
+		m_basicSound = GetComponent<BasicSound>();
 
 		// get access to the ui sound controller
 		m_uiSoundController = GetComponent<UISoundController>();
@@ -68,8 +76,7 @@ public class SpaceflightController : MonoBehaviour
 		else
 		{
 			// bridge button functions and labels
-			m_bridgeButtonFunctions = new ButtonFunction[] { new CommandFunction(), new ScienceFunction(), new NavigationFunction(), new EngineerFunction(), new CommunicationsFunction(), new MedicalFunction() };
-			m_bridgeButtonLabels = new string[] { "Command", "Science", "Navigation", "Engineering", "Communications", "Medical" };
+			m_bridgeButtonFunctions = new ButtonFunction[] { new CommandFunction(), new ScienceFunction(), new NavigationFunction(), new EngineeringFunction(), new CommunicationsFunction(), new MedicalFunction() };
 
 			// turn off controller navigation of the UI
 			EventSystem.current.sendNavigationEvents = false;
@@ -79,6 +86,8 @@ public class SpaceflightController : MonoBehaviour
 			m_hasCurrentSenorReading = false;
 			m_inDockingBay = true;
 			m_inHyperspace = false;
+			m_activatingButton = false;
+			m_activatingButtonTimer = 0.0f;
 
 			// reset the buttons to default
 			RestoreBridgeButtons();
@@ -88,6 +97,43 @@ public class SpaceflightController : MonoBehaviour
 	// this is called by unity every frame
 	private void Update()
 	{
+		// check if we are activating the currently selected button
+		if ( m_activatingButton )
+		{
+			// yes - so update the timer
+			m_activatingButtonTimer += Time.deltaTime;
+
+			// after a certain amount of time, execute the button function
+			if ( m_activatingButtonTimer >= 0.35f )
+			{
+				// reset the activate button flag and timer
+				m_activatingButton = false;
+				m_activatingButtonTimer = 0.0f;
+
+				// update the current function
+				m_currentFunction = m_buttonFunctionList[ m_currentButtonIndex ];
+
+				// execute the current button function
+				m_currentFunction.Execute();
+
+				// do the first update
+				m_currentFunction.Update();
+			}
+
+			return;
+		}
+
+		// check if we have a current funciton
+		if ( m_currentFunction != null )
+		{
+			// call update on it
+			if ( m_currentFunction.Update() )
+			{
+				// the button did the update - don't let this update function do anything more
+				return;
+			}
+		}
+
 		// get the controller stick position
 		float y = m_inputManager.m_yRaw;
 
@@ -139,7 +185,7 @@ public class SpaceflightController : MonoBehaviour
 			else
 			{
 				// cancel the current function
-				m_buttonFunctionList[ m_currentButtonIndex ].Cancel();
+				m_currentFunction.Cancel();
 			}
 		}
 
@@ -152,18 +198,16 @@ public class SpaceflightController : MonoBehaviour
 			}
 			else
 			{
-				// yep - execute the current button function
-				m_buttonFunctionList[ m_currentButtonIndex ].Execute();
-			}
-		}
-	}
+				// set the activate button flag and reset the timer
+				m_activatingButton = true;
+				m_activatingButtonTimer = 0.0f;
 
-	// go through each button image and set it to the on or off button sprite depending on what is currently selected
-	private void UpdateButtonSprites()
-	{
-		for ( int i = 0; i < c_numButtons; i++ )
-		{
-			m_buttonImageList[ i ].sprite = ( m_currentButtonIndex == i ) ? m_buttonOnSprite : m_buttonOffSprite;
+				// update the button sprite for the currently selected button
+				m_buttonImageList[ m_currentButtonIndex ].sprite = m_buttonActiveSprite;
+
+				// play the activate sound
+				m_uiSoundController.Play( UISoundController.UISound.Activate );
+			}
 		}
 	}
 
@@ -174,23 +218,39 @@ public class SpaceflightController : MonoBehaviour
 		m_currentFunction = null;
 
 		// restore the bridge functions and labels
-		UpdateButtonList( m_bridgeButtonFunctions, m_bridgeButtonLabels );
+		UpdateButtonFunctions( m_bridgeButtonFunctions );
 
 		// get to the player data
 		PlayerData playerData = PersistentController.m_instance.m_playerData;
 
 		// change the current officer label to the name of the ship
 		m_currentOfficer.text = "ISS " + playerData.m_shipConfiguration.m_name;
+
+		// update the message
+		if ( m_inDockingBay )
+		{
+			m_messages.text = "Ship computer activated.\r\nPre-launch procedures complete.\r\nStanding by to initiate launch.\r\n";
+		}
 	}
 
 	// update the button functions and labels and change the current button index
-	public void UpdateButtonList( ButtonFunction [] buttonFunctionList, string [] buttonLabelList )
+	public void UpdateButtonFunctions( ButtonFunction[] buttonFunctionList )
 	{
 		// go through all 6 buttons
 		for ( int i = 0; i < c_numButtons; i++ )
 		{
-			m_buttonFunctionList[ i ] = ( i < buttonFunctionList.Length ) ? buttonFunctionList[ i ] : null;
-			m_buttonLabelList[ i ].text = ( i < buttonLabelList.Length ) ? buttonLabelList[ i ] : null;
+			if ( i < buttonFunctionList.Length )
+			{
+				m_buttonFunctionList[ i ] = buttonFunctionList[ i ];
+
+				m_buttonLabelList[ i ].text = m_buttonFunctionList[ i ].GetButtonLabel();
+			}
+			else
+			{
+				m_buttonFunctionList[ i ] = null;
+
+				m_buttonLabelList[ i ].text = "";
+			}
 		}
 
 		// reset the current button index
@@ -198,5 +258,14 @@ public class SpaceflightController : MonoBehaviour
 
 		// update the button sprites
 		UpdateButtonSprites();
+	}
+
+	// go through each button image and set it to the on or off or active button sprite depending on what is currently selected
+	public void UpdateButtonSprites()
+	{
+		for ( int i = 0; i < c_numButtons; i++ )
+		{
+			m_buttonImageList[ i ].sprite = ( m_currentButtonIndex == i ) ? m_buttonOnSprite : m_buttonOffSprite;
+		}
 	}
 }

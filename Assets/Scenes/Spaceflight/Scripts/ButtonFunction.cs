@@ -13,7 +13,21 @@ abstract public class ButtonFunction
 		m_spaceflightController = controllersGameObject.GetComponent<SpaceflightController>();
 	}
 
-	public abstract void Execute();
+	public virtual string GetButtonLabel()
+	{
+		return "???";
+	}
 
-	public abstract void Cancel();
+	public virtual void Execute()
+	{
+	}
+
+	public virtual void Cancel()
+	{
+	}
+
+	public virtual bool Update()
+	{
+		return false;
+	}
 }

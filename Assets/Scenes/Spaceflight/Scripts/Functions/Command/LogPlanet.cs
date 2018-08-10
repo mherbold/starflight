@@ -4,6 +4,11 @@ using UnityEngine.EventSystems;
 
 public class LogPlanetFunction : ButtonFunction
 {
+	public override string GetButtonLabel()
+	{
+		return "Log Planet";
+	}
+
 	public override void Execute()
 	{
 		if ( !m_spaceflightController.m_inOrbit )
@@ -11,10 +16,8 @@ public class LogPlanetFunction : ButtonFunction
 			m_spaceflightController.m_uiSoundController.Play( UISoundController.UISound.Error );
 
 			m_spaceflightController.m_messages.text = "We're not in orbit.";
-		}
-	}
 
-	public override void Cancel()
-	{
+			m_spaceflightController.UpdateButtonSprites();
+		}
 	}
 }

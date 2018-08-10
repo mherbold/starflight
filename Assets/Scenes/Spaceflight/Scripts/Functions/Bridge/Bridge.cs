@@ -4,14 +4,14 @@ using UnityEngine.EventSystems;
 
 public class BridgeFunction : ButtonFunction
 {
-	public override void Execute()
+	public override string GetButtonLabel()
 	{
-		m_spaceflightController.m_uiSoundController.Play( UISoundController.UISound.Deactivate );
-
-		m_spaceflightController.RestoreBridgeButtons();
+		return "Bridge";
 	}
 
-	public override void Cancel()
+	public override void Execute()
 	{
+		// restore the bridge buttons
+		m_spaceflightController.RestoreBridgeButtons();
 	}
 }

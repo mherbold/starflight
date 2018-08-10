@@ -4,6 +4,11 @@ using UnityEngine.EventSystems;
 
 public class DistressFunction : ButtonFunction
 {
+	public override string GetButtonLabel()
+	{
+		return "Distress";
+	}
+
 	public override void Execute()
 	{
 		if ( m_spaceflightController.m_inDockingBay )
@@ -12,9 +17,5 @@ public class DistressFunction : ButtonFunction
 
 			m_spaceflightController.m_messages.text = "Transmit emergency distress call, please confirm.";
 		}
-	}
-
-	public override void Cancel()
-	{
 	}
 }

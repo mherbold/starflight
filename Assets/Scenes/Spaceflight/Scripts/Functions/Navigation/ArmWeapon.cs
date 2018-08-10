@@ -4,6 +4,11 @@ using UnityEngine.EventSystems;
 
 public class ArmWeaponFunction : ButtonFunction
 {
+	public override string GetButtonLabel()
+	{
+		return "Arm Weapon";
+	}
+
 	public override void Execute()
 	{
 		PlayerData playerData = PersistentController.m_instance.m_playerData;
@@ -13,10 +18,8 @@ public class ArmWeaponFunction : ButtonFunction
 			m_spaceflightController.m_uiSoundController.Play( UISoundController.UISound.Error );
 
 			m_spaceflightController.m_messages.text = "Ship is not equipped with weapons.";
-		}
-	}
 
-	public override void Cancel()
-	{
+			m_spaceflightController.UpdateButtonSprites();
+		}
 	}
 }
