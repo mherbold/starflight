@@ -4,12 +4,6 @@ using UnityEngine;
 public class InputManager : MonoBehaviour
 {
 	// private stuff we don't want the editor to see
-	public float m_x { get; private set; }
-	public float m_y { get; private set; }
-
-	public float m_xRaw { get; private set; }
-	public float m_yRaw { get; private set; }
-
 	public bool m_submit { get; private set; }
 	public bool m_cancel { get; private set; }
 
@@ -19,20 +13,60 @@ public class InputManager : MonoBehaviour
 	public bool m_submitUp { get; private set; }
 	public bool m_cancelUp { get; private set; }
 
+	public bool m_northWest { get; private set; }
+	public bool m_north { get; private set; }
+	public bool m_northEast { get; private set; }
+	public bool m_east { get; private set; }
+	public bool m_southEast { get; private set; }
+	public bool m_south { get; private set; }
+	public bool m_southWest { get; private set; }
+	public bool m_west { get; private set; }
+
+	public float m_x { get; private set; }
+	public float m_y { get; private set; }
+
 	public bool m_debounceNextUpdate;
 
 	// this is called by unity every frame
 	void Update()
 	{
-		// update axis
-		m_x = Input.GetAxis( "Horizontal" );
-		m_y= Input.GetAxis( "Vertical" );
+		// update directional movement
+		m_northWest = Input.GetButton( "NW" );
+		m_north = Input.GetButton( "N" );
+		m_northEast = Input.GetButton( "NE" );
+		m_east = Input.GetButton( "E" );
+		m_southEast = Input.GetButton( "SE" );
+		m_south = Input.GetButton( "S" );
+		m_southWest = Input.GetButton( "SW" );
+		m_west = Input.GetButton( "W" );
 
-		// update axis raw
-		m_xRaw = Input.GetAxisRaw( "Horizontal" );
-		m_yRaw = Input.GetAxisRaw( "Vertical" );
+		if ( m_northWest || m_west || m_southWest )
+		{
+			m_x = -1.0f;
+		}
+		else if ( m_northEast || m_east || m_southEast )
+		{
+			m_x = 1.0f;
+		}
+		else
+		{
+			m_x = 0.0f;
+		}
 
-		// update button
+		if ( m_northWest || m_north || m_northEast )
+		{
+			m_y = 1.0f;
+		}
+		else if ( m_southWest || m_south || m_southEast )
+		{
+			m_y = -1.0f;
+		}
+		else
+		{
+			m_y = 0.0f;
+		}
+
+		// update buttons
 		m_submit = Input.GetButton( "Submit" );
 		m_cancel = Input.GetButton( "Cancel" );
 

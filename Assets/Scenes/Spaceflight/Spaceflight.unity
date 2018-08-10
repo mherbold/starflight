@@ -5195,6 +5195,7 @@ MonoBehaviour:
   m_dockingBayDoorBottom: {fileID: 313232384}
   m_decompressionParticleSystem: {fileID: 1218134}
   m_overlay: {fileID: 536216603}
+  m_player: {fileID: 2052193863}
   m_inOrbit: 0
   m_hasCurrentSenorReading: 0
   m_inDockingBay: 0

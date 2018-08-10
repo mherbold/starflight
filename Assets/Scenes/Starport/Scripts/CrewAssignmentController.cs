@@ -82,16 +82,12 @@ public class CrewAssignmentController : DoorController
 		// get access to the personnel player data
 		Personnel personnel = PersistentController.m_instance.m_playerData.m_personnel;
 
-		// get the controller stick position
-		float x = m_starportController.m_inputManager.m_xRaw;
-		float y = m_starportController.m_inputManager.m_yRaw;
-
 		// keep track if we have centered both x and y
 		bool xIsCentered = false;
 		bool yIsCentered = false;
 
 		// check if we moved the stick left
-		if ( x <= -0.5f )
+		if ( m_starportController.m_inputManager.m_west )
 		{
 			if ( m_ignoreControllerTimer == 0.0f )
 			{
@@ -102,7 +98,7 @@ public class CrewAssignmentController : DoorController
 				UpdateDisplay();
 			}
 		}
-		else if ( x >= 0.5f ) // check if we moved the stick right
+		else if ( m_starportController.m_inputManager.m_east ) // check if we moved the stick right
 		{
 			if ( m_ignoreControllerTimer == 0.0f )
 			{
@@ -122,7 +118,7 @@ public class CrewAssignmentController : DoorController
 		if ( xIsCentered )
 		{
 			// check if we moved the stick down
-			if ( y <= -0.5f )
+			if ( m_starportController.m_inputManager.m_south )
 			{
 				if ( m_ignoreControllerTimer == 0.0f )
 				{
@@ -136,7 +132,7 @@ public class CrewAssignmentController : DoorController
 					}
 				}
 			}
-			else if ( y >= 0.5f ) // check if we have moved the stick up
+			else if ( m_starportController.m_inputManager.m_north ) // check if we have moved the stick up
 			{
 				if ( m_ignoreControllerTimer == 0.0f )
 				{

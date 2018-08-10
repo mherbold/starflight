@@ -131,11 +131,8 @@ public class TradeDepotController : DoorController
 	// common controller updates for the buy item, sell item, and analyze item states
 	private void UpdateController()
 	{
-		// get the controller stick position
-		float y = m_starportController.m_inputManager.m_yRaw;
-
 		// check if we moved the stick down
-		if ( y <= -0.5f )
+		if ( m_starportController.m_inputManager.m_south )
 		{
 			if ( m_ignoreControllerTimer == 0.0f )
 			{
@@ -151,7 +148,7 @@ public class TradeDepotController : DoorController
 				}
 			}
 		}
-		else if ( y >= 0.5f ) // check if we have moved the stick up
+		else if ( m_starportController.m_inputManager.m_north ) // check if we have moved the stick up
 		{
 			if ( m_ignoreControllerTimer == 0.0f )
 			{

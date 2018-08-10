@@ -116,8 +116,8 @@ public class StarportController : MonoBehaviour
 	private void Move()
 	{
 		// get the controller stick position
-		float x = m_inputManager.m_xRaw;
-		float z = m_inputManager.m_yRaw;
+		float x = m_inputManager.m_x;
+		float z = m_inputManager.m_y;
 
 		// create our 3d move vector from the controller position
 		Vector3 moveVector = new Vector3( x, 0.0f, z );

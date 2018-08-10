@@ -115,11 +115,8 @@ public class PersonnelController : DoorController
 	// controller updates for when we are currently selecting a race
 	public void UpdateControllerForSelectRaceState()
 	{
-		// get the controller stick position
-		float x = m_starportController.m_inputManager.m_xRaw;
-
 		// check if we moved the stick left
-		if ( x <= -0.5f )
+		if ( m_starportController.m_inputManager.m_west )
 		{
 			if ( m_ignoreControllerTimer == 0.0f )
 			{
@@ -132,7 +129,7 @@ public class PersonnelController : DoorController
 				m_starportController.m_uiSoundController.Play( UISoundController.UISound.Click );
 			}
 		}
-		else if ( x >= 0.5f ) // check if we moved the stick right
+		else if ( m_starportController.m_inputManager.m_east ) // check if we moved the stick right
 		{
 			if ( m_ignoreControllerTimer == 0.0f )
 			{
@@ -154,11 +151,8 @@ public class PersonnelController : DoorController
 	// controller updates for when we are currently selecting a race
 	public void UpdateControllerForTrainCrewmemberState()
 	{
-		// get the controller stick position
-		float y = m_starportController.m_inputManager.m_yRaw;
-
 		// check if we moved the stick down
-		if ( y <= -0.5f )
+		if ( m_starportController.m_inputManager.m_south )
 		{
 			if ( m_ignoreControllerTimer == 0.0f )
 			{
@@ -176,7 +170,7 @@ public class PersonnelController : DoorController
 				}
 			}
 		}
-		else if ( y >= 0.5f ) // check if we have moved the stick up
+		else if ( m_starportController.m_inputManager.m_north ) // check if we have moved the stick up
 		{
 			if ( m_ignoreControllerTimer == 0.0f )
 			{

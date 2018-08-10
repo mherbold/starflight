@@ -25,6 +25,7 @@ public class SpaceflightController : MonoBehaviour
 	public Animator m_dockingBayDoorBottom;
 	public ParticleSystem m_decompressionParticleSystem;
 	public Image m_overlay;
+	public GameObject m_player;
 
 	// stuff shared by all the controllers
 	public InputManager m_inputManager { get; private set; }
@@ -103,6 +104,7 @@ public class SpaceflightController : MonoBehaviour
 			m_countdown.gameObject.SetActive( false );
 			m_decompressionParticleSystem.gameObject.SetActive( false );
 			m_overlay.gameObject.SetActive( false );
+			m_player.SetActive( false );
 
 			// show the docking bay doors (closed) if we just came from the spaceport
 			m_dockingBayDoorTop.gameObject.SetActive( m_inDockingBay );
@@ -150,11 +152,8 @@ public class SpaceflightController : MonoBehaviour
 			}
 		}
 
-		// get the controller stick position
-		float y = m_inputManager.m_yRaw;
-
 		// check if we moved the stick down
-		if ( y <= -0.5f )
+		if ( m_inputManager.m_south )
 		{
 			if ( m_ignoreControllerTimer == 0.0f )
 			{
@@ -170,7 +169,7 @@ public class SpaceflightController : MonoBehaviour
 				}
 			}
 		}
-		else if ( y >= 0.5f ) // check if we have moved the stick up
+		else if ( m_inputManager.m_north ) // check if we have moved the stick up
 		{
 			if ( m_ignoreControllerTimer == 0.0f )
 			{

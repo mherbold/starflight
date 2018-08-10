@@ -19,5 +19,22 @@ public class ManeuverFunction : ButtonFunction
 
 			m_spaceflightController.UpdateButtonSprites();
 		}
+		else if ( m_spaceflightController.m_justLaunched )
+		{
+			// clear out the just launched flag
+			m_spaceflightController.m_justLaunched = false;
+
+			// turn off the overlay
+			m_spaceflightController.m_overlay.gameObject.SetActive( false );
+
+			// show the player on the map
+			m_spaceflightController.m_player.SetActive( true );
+		}
+	}
+
+	public override bool Update()
+	{
+		// returning true prevents the default spaceflight update from running
+		return true;
 	}
 }
