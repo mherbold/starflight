@@ -7,6 +7,7 @@ public class LaunchYesFunction : ButtonFunction
 {
 	private float m_launchTimer;
 	private bool m_countdownStarted;
+	private bool m_skipCinematics = false;
 
 	public override string GetButtonLabel()
 	{
@@ -47,7 +48,7 @@ public class LaunchYesFunction : ButtonFunction
 	public override bool Update()
 	{
 		// keep track of the cutscene time
-		m_launchTimer += Time.deltaTime;
+		m_launchTimer += Time.deltaTime * ( m_skipCinematics ? 10.0f : 1.0f );
 
 		// at 15 seconds begin the countdown...
 		if ( m_launchTimer >= 15.0f )

@@ -26,6 +26,7 @@ public class SpaceflightController : MonoBehaviour
 	public ParticleSystem m_decompressionParticleSystem;
 	public Image m_overlay;
 	public GameObject m_player;
+	public GameObject m_ship;
 
 	// stuff shared by all the controllers
 	public InputManager m_inputManager { get; private set; }
@@ -104,7 +105,7 @@ public class SpaceflightController : MonoBehaviour
 			m_countdown.gameObject.SetActive( false );
 			m_decompressionParticleSystem.gameObject.SetActive( false );
 			m_overlay.gameObject.SetActive( false );
-			m_player.SetActive( false );
+			m_ship.SetActive( false );
 
 			// show the docking bay doors (closed) if we just came from the spaceport
 			m_dockingBayDoorTop.gameObject.SetActive( m_inDockingBay );
