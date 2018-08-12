@@ -18,8 +18,9 @@ abstract public class ButtonFunction
 		return "???";
 	}
 
-	public virtual void Execute()
+	public virtual bool Execute()
 	{
+		return false;
 	}
 
 	public virtual void Cancel()

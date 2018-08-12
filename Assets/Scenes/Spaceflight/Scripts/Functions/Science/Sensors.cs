@@ -9,7 +9,7 @@ public class SensorsFunction : ButtonFunction
 		return "Sensors";
 	}
 
-	public override void Execute()
+	public override bool Execute()
 	{
 		if ( m_spaceflightController.m_inDockingBay )
 		{
@@ -18,6 +18,10 @@ public class SensorsFunction : ButtonFunction
 			m_spaceflightController.m_messages.text = "We're in the docking bay.";
 
 			m_spaceflightController.UpdateButtonSprites();
+
+			return false;
 		}
+
+		return false;
 	}
 }

@@ -9,7 +9,7 @@ public class StarmapFunction : ButtonFunction
 		return "Starmap";
 	}
 
-	public override void Execute()
+	public override bool Execute()
 	{
 		if ( !m_spaceflightController.m_inHyperspace )
 		{
@@ -18,6 +18,10 @@ public class StarmapFunction : ButtonFunction
 			m_spaceflightController.m_messages.text = "We're not in hyperspace, captain.";
 
 			m_spaceflightController.UpdateButtonSprites();
+
+			return false;
 		}
+
+		return false;
 	}
 }

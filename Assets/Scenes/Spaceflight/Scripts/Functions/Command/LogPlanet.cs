@@ -9,7 +9,7 @@ public class LogPlanetFunction : ButtonFunction
 		return "Log Planet";
 	}
 
-	public override void Execute()
+	public override bool Execute()
 	{
 		if ( !m_spaceflightController.m_inOrbit )
 		{
@@ -18,6 +18,10 @@ public class LogPlanetFunction : ButtonFunction
 			m_spaceflightController.m_messages.text = "We're not in orbit.";
 
 			m_spaceflightController.UpdateButtonSprites();
+
+			return false;
 		}
+
+		return false;
 	}
 }

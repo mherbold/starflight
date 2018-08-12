@@ -129,14 +129,18 @@ public class SpaceflightController : MonoBehaviour
 				m_activatingButton = false;
 				m_activatingButtonTimer = 0.0f;
 
-				// update the current function
-				m_currentFunction = m_buttonFunctionList[ m_currentButtonIndex ];
+				// get the activated button function (execute might change this so grab it now)
+				ButtonFunction activatedFunction = m_buttonFunctionList[ m_currentButtonIndex ];
 
-				// execute the current button function
-				m_currentFunction.Execute();
+				// execute the current button function and check if it returned true
+				if ( activatedFunction.Execute() )
+				{
+					// update the current function
+					m_currentFunction = activatedFunction;
 
-				// do the first update
-				m_currentFunction.Update();
+					// do the first update
+					m_currentFunction.Update();
+				}
 			}
 
 			return;

@@ -11,7 +11,7 @@ public class CommandFunction : ButtonFunction
 		return "Command";
 	}
 
-	public override void Execute()
+	public override bool Execute()
 	{
 		// change the button functions and labels
 		m_spaceflightController.UpdateButtonFunctions( m_buttonFunctions );
@@ -24,6 +24,8 @@ public class CommandFunction : ButtonFunction
 
 		// set the name of the captain
 		m_spaceflightController.m_currentOfficer.text = "Captain " + personnelFile.m_name;
+
+		return true;
 	}
 
 	public override void Cancel()

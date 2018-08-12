@@ -9,8 +9,10 @@ public class LaunchNoFunction : ButtonFunction
 		return "No";
 	}
 
-	public override void Execute()
+	public override bool Execute()
 	{
 		m_spaceflightController.RestoreBridgeButtons();
+
+		return false;
 	}
 }

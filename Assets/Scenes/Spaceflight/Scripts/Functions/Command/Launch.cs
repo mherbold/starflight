@@ -11,13 +11,17 @@ public class LaunchFunction : ButtonFunction
 		return "Launch";
 	}
 
-	public override void Execute()
+	public override bool Execute()
 	{
 		if ( m_spaceflightController.m_inDockingBay )
 		{
 			m_spaceflightController.m_messages.text = "Confirm launch?";
 
 			m_spaceflightController.UpdateButtonFunctions( m_buttonFunctions );
+
+			return true;
 		}
+
+		return false;
 	}
 }

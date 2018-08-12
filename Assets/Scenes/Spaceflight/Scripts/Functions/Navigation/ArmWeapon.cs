@@ -9,7 +9,7 @@ public class ArmWeaponFunction : ButtonFunction
 		return "Arm Weapon";
 	}
 
-	public override void Execute()
+	public override bool Execute()
 	{
 		PlayerData playerData = PersistentController.m_instance.m_playerData;
 
@@ -20,6 +20,10 @@ public class ArmWeaponFunction : ButtonFunction
 			m_spaceflightController.m_messages.text = "Ship is not equipped with weapons.";
 
 			m_spaceflightController.UpdateButtonSprites();
+
+			return false;
 		}
+
+		return false;
 	}
 }

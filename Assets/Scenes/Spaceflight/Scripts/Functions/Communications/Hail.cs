@@ -9,7 +9,7 @@ public class HailFunction : ButtonFunction
 		return "Hail";
 	}
 
-	public override void Execute()
+	public override bool Execute()
 	{
 		if ( m_spaceflightController.m_inDockingBay )
 		{
@@ -18,6 +18,10 @@ public class HailFunction : ButtonFunction
 			m_spaceflightController.m_messages.text = "There's no one to hail.";
 
 			m_spaceflightController.UpdateButtonSprites();
+
+			return false;
 		}
+
+		return false;
 	}
 }

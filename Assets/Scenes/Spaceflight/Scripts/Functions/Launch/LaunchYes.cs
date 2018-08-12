@@ -14,7 +14,7 @@ public class LaunchYesFunction : ButtonFunction
 		return "Yes";
 	}
 
-	public override void Execute()
+	public override bool Execute()
 	{
 		// update the messages log
 		m_spaceflightController.m_messages.text = "Opening docking bay doors...";
@@ -43,6 +43,8 @@ public class LaunchYesFunction : ButtonFunction
 		// reset some private members
 		m_launchTimer = 0.0f;
 		m_countdownStarted = false;
+
+		return true;
 	}
 
 	public override bool Update()

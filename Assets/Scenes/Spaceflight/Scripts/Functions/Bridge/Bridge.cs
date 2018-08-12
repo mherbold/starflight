@@ -9,9 +9,11 @@ public class BridgeFunction : ButtonFunction
 		return "Bridge";
 	}
 
-	public override void Execute()
+	public override bool Execute()
 	{
 		// restore the bridge buttons
 		m_spaceflightController.RestoreBridgeButtons();
+
+		return false;
 	}
 }

@@ -9,7 +9,7 @@ public class RaiseShieldsFunction : ButtonFunction
 		return "Raise Shields";
 	}
 
-	public override void Execute()
+	public override bool Execute()
 	{
 		PlayerData playerData = PersistentController.m_instance.m_playerData;
 
@@ -20,6 +20,10 @@ public class RaiseShieldsFunction : ButtonFunction
 			m_spaceflightController.m_messages.text = "Ship is not equipped with shields.";
 
 			m_spaceflightController.UpdateButtonSprites();
+
+			return false;
 		}
+
+		return false;
 	}
 }
