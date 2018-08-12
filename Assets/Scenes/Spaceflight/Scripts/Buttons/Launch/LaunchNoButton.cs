@@ -11,7 +11,7 @@ public class LaunchNoButton : Button
 
 	public override bool Execute()
 	{
-		m_spaceflightController.RestoreBridgeButtons();
+		m_spaceflightController.m_buttonController.RestoreBridgeButtons();
 
 		return false;
 	}

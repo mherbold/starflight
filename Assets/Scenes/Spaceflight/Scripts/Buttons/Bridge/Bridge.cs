@@ -12,7 +12,7 @@ public class BridgeButton : Button
 	public override bool Execute()
 	{
 		// restore the bridge buttons
-		m_spaceflightController.RestoreBridgeButtons();
+		m_spaceflightController.m_buttonController.RestoreBridgeButtons();
 
 		return false;
 	}

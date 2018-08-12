@@ -17,7 +17,7 @@ public class StarmapButton : Button
 
 			m_spaceflightController.m_messages.text = "We're not in hyperspace, captain.";
 
-			m_spaceflightController.UpdateButtonSprites();
+			m_spaceflightController.m_buttonController.UpdateButtonSprites();
 
 			return false;
 		}

@@ -17,7 +17,7 @@ public class LogPlanetButton : Button
 
 			m_spaceflightController.m_messages.text = "We're not in orbit.";
 
-			m_spaceflightController.UpdateButtonSprites();
+			m_spaceflightController.m_buttonController.UpdateButtonSprites();
 
 			return false;
 		}

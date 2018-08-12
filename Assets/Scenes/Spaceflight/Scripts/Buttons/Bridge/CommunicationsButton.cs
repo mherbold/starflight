@@ -14,7 +14,7 @@ public class CommunicationsButton : Button
 	public override bool Execute()
 	{
 		// change the buttons
-		m_spaceflightController.UpdateButtons( m_buttons );
+		m_spaceflightController.m_buttonController.UpdateButtons( m_buttons );
 
 		// get to the player data
 		PlayerData playerData = PersistentController.m_instance.m_playerData;
@@ -34,6 +34,6 @@ public class CommunicationsButton : Button
 		m_spaceflightController.m_uiSoundController.Play( UISoundController.UISound.Deactivate );
 
 		// return to the bridge
-		m_spaceflightController.RestoreBridgeButtons();
+		m_spaceflightController.m_buttonController.RestoreBridgeButtons();
 	}
 }

@@ -23,7 +23,7 @@ public class ManeuverButton : Button
 
 			m_spaceflightController.m_messages.text = "Standing by to launch.";
 
-			m_spaceflightController.UpdateButtonSprites();
+			m_spaceflightController.m_buttonController.UpdateButtonSprites();
 
 			return false;
 		}
@@ -45,7 +45,7 @@ public class ManeuverButton : Button
 		skyboxMaterial.SetMatrix( "_Rotation", m_skyboxRotation );
 
 		// change to the system display
-		m_spaceflightController.ChangeDisplay( m_spaceflightController.m_systemDisplay );
+		m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_systemDisplay );
 
 		return true;
 	}

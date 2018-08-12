@@ -17,7 +17,7 @@ public class LaunchButton : Button
 		{
 			m_spaceflightController.m_messages.text = "Confirm launch?";
 
-			m_spaceflightController.UpdateButtons( m_buttons );
+			m_spaceflightController.m_buttonController.UpdateButtons( m_buttons );
 
 			return true;
 		}

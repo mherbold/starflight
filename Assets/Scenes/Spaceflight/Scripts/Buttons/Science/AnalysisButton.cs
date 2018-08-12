@@ -17,7 +17,7 @@ public class AnalysisButton : Button
 
 			m_spaceflightController.m_messages.text = "I need a current senor reading.";
 
-			m_spaceflightController.UpdateButtonSprites();
+			m_spaceflightController.m_buttonController.UpdateButtonSprites();
 
 			return false;
 		}

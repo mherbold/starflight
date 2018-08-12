@@ -1,11 +1,9 @@
 ﻿
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 
-public class SpaceflightController : MonoBehaviour
+public class ButtonController : MonoBehaviour
 {
 	// constants
 	const int c_numButtons = 6;
@@ -16,39 +14,10 @@ public class SpaceflightController : MonoBehaviour
 	public Sprite m_buttonActiveSprite;
 	public Image[] m_buttonImageList;
 	public TextMeshProUGUI[] m_buttonLabelList;
-	public TextMeshProUGUI m_currentDisplayLabel;
-	public TextMeshProUGUI m_currentOfficer;
-	public TextMeshProUGUI m_messages;
-	public TextMeshProUGUI m_countdown;
-	public Camera m_camera;
-	public GameObject m_map;
-	public Animator m_dockingBayDoorTop;
-	public Animator m_dockingBayDoorBottom;
-	public ParticleSystem m_decompressionParticleSystem;
-	public Image m_overlay;
-	public GameObject m_player;
-	public GameObject m_ship;
-	public GameObject m_statusDisplayUI;
-	public GameObject m_systemDisplayUI;
-
-	// stuff shared by all the controllers
-	public InputManager m_inputManager { get; private set; }
-	public BasicSound m_basicSound { get; private set; }
-	public UISoundController m_uiSoundController { get; protected set; }
-	public bool m_inOrbit;
-	public bool m_hasCurrentSenorReading;
-	public bool m_inDockingBay;
-	public bool m_inHyperspace;
-	public bool m_justLaunched;
 
 	// buttons
-	public Button[] m_buttonList;
-	public Button m_currentButton;
-
-	// displays
-	public Display m_statusDisplay;
-	public Display m_systemDisplay;
-	public Display m_currentDisplay;
+	private Button[] m_buttonList;
+	private Button m_currentButton;
 
 	// private stuff we don't want the editor to see
 	private int m_currentButtonIndex;
@@ -59,18 +28,12 @@ public class SpaceflightController : MonoBehaviour
 	// bridge buttons
 	private Button[] m_bridgeButtons;
 
+	// convenient access to the spaceflight controller
+	private SpaceflightController m_spaceflightController;
+
 	// this is called by unity before start
 	private void Awake()
 	{
-		// get access to the input manager
-		m_inputManager = GetComponent<InputManager>();
-
-		// get access to the basic sound
-		m_basicSound = GetComponent<BasicSound>();
-
-		// get access to the ui sound controller
-		m_uiSoundController = GetComponent<UISoundController>();
-
 		// create the six ship buttons
 		m_buttonList = new Button[ c_numButtons ];
 
@@ -81,55 +44,36 @@ public class SpaceflightController : MonoBehaviour
 	// this is called by unity once at the start of the level
 	private void Start()
 	{
-		// check if we loaded the persistent scene
-		if ( PersistentController.m_instance == null )
+		// get the spaceflight controller
+		GameObject controllersGameObject = GameObject.FindWithTag( "Spaceflight Controllers" );
+		m_spaceflightController = controllersGameObject.GetComponent<SpaceflightController>();
+
+		// stop here if the spaceflight contoller has not started
+		if ( !m_spaceflightController.m_started )
 		{
-			// nope - so then do it now and tell it to skip the intro scene
-			PersistentController.m_sceneToLoad = "Spaceflight";
-
-			SceneManager.LoadScene( "Persistent" );
+			return;
 		}
-		else
-		{
-			// bridge buttons
-			m_bridgeButtons = new Button[] { new CommandButton(), new ScienceButton(), new NavigationButton(), new EngineeringButton(), new CommunicationsButton(), new MedicalButton() };
 
-			// displays
-			m_statusDisplay = new StatusDisplay();
-			m_systemDisplay = new SystemDisplay();
+		// bridge buttons
+		m_bridgeButtons = new Button[] { new CommandButton(), new ScienceButton(), new NavigationButton(), new EngineeringButton(), new CommunicationsButton(), new MedicalButton() };
 
-			// status display should be first
-			ChangeDisplay( m_statusDisplay );
+		// reset everything
+		m_activatingButton = false;
+		m_activatingButtonTimer = 0.0f;
 
-			// turn off controller navigation of the UI
-			EventSystem.current.sendNavigationEvents = false;
-
-			// reset everything
-			m_inOrbit = false;
-			m_hasCurrentSenorReading = false;
-			m_inDockingBay = true;
-			m_inHyperspace = false;
-			m_activatingButton = false;
-			m_activatingButtonTimer = 0.0f;
-
-			// reset the buttons to default
-			RestoreBridgeButtons();
-
-			// hide various objects
-			m_countdown.gameObject.SetActive( false );
-			m_decompressionParticleSystem.gameObject.SetActive( false );
-			m_overlay.gameObject.SetActive( false );
-			m_ship.SetActive( false );
-
-			// show the docking bay doors (closed) if we just came from the spaceport
-			m_dockingBayDoorTop.gameObject.SetActive( m_inDockingBay );
-			m_dockingBayDoorBottom.gameObject.SetActive( m_inDockingBay );
-		}
+		// reset the buttons to default
+		RestoreBridgeButtons();
 	}
 
 	// this is called by unity every frame
 	private void Update()
 	{
+		// stop here if the spaceflight contoller has not started
+		if ( !m_spaceflightController.m_started )
+		{
+			return;
+		}
+
 		// check if we are activating the currently selected button
 		if ( m_activatingButton )
 		{
@@ -172,7 +116,7 @@ public class SpaceflightController : MonoBehaviour
 		}
 
 		// check if we moved the stick down
-		if ( m_inputManager.m_south )
+		if ( m_spaceflightController.m_inputManager.m_south )
 		{
 			if ( m_ignoreControllerTimer == 0.0f )
 			{
@@ -184,11 +128,11 @@ public class SpaceflightController : MonoBehaviour
 
 					UpdateButtonSprites();
 
-					m_uiSoundController.Play( UISoundController.UISound.Click );
+					m_spaceflightController.m_uiSoundController.Play( UISoundController.UISound.Click );
 				}
 			}
 		}
-		else if ( m_inputManager.m_north ) // check if we have moved the stick up
+		else if ( m_spaceflightController.m_inputManager.m_north ) // check if we have moved the stick up
 		{
 			if ( m_ignoreControllerTimer == 0.0f )
 			{
@@ -200,7 +144,7 @@ public class SpaceflightController : MonoBehaviour
 
 					UpdateButtonSprites();
 
-					m_uiSoundController.Play( UISoundController.UISound.Click );
+					m_spaceflightController.m_uiSoundController.Play( UISoundController.UISound.Click );
 				}
 			}
 		}
@@ -210,11 +154,11 @@ public class SpaceflightController : MonoBehaviour
 		}
 
 		// check if we have pressed the cancel button
-		if ( m_inputManager.GetCancelDown() )
+		if ( m_spaceflightController.m_inputManager.GetCancelDown() )
 		{
 			if ( m_currentButton == null )
 			{
-				m_uiSoundController.Play( UISoundController.UISound.Error );
+				m_spaceflightController.m_uiSoundController.Play( UISoundController.UISound.Error );
 			}
 			else
 			{
@@ -224,11 +168,11 @@ public class SpaceflightController : MonoBehaviour
 		}
 
 		// check if we have pressed the fire button
-		if ( m_inputManager.GetSubmitDown() )
+		if ( m_spaceflightController.m_inputManager.GetSubmitDown() )
 		{
 			if ( m_buttonList[ m_currentButtonIndex ] == null )
 			{
-				m_uiSoundController.Play( UISoundController.UISound.Error );
+				m_spaceflightController.m_uiSoundController.Play( UISoundController.UISound.Error );
 			}
 			else
 			{
@@ -240,7 +184,7 @@ public class SpaceflightController : MonoBehaviour
 				m_buttonImageList[ m_currentButtonIndex ].sprite = m_buttonActiveSprite;
 
 				// play the activate sound
-				m_uiSoundController.Play( UISoundController.UISound.Activate );
+				m_spaceflightController.m_uiSoundController.Play( UISoundController.UISound.Activate );
 			}
 		}
 	}
@@ -258,16 +202,16 @@ public class SpaceflightController : MonoBehaviour
 		PlayerData playerData = PersistentController.m_instance.m_playerData;
 
 		// change the current officer label to the name of the ship
-		m_currentOfficer.text = "ISS " + playerData.m_shipConfiguration.m_name;
+		m_spaceflightController.m_currentOfficer.text = "ISS " + playerData.m_shipConfiguration.m_name;
 
 		// update the message
-		if ( m_inDockingBay )
+		if ( m_spaceflightController.m_inDockingBay )
 		{
-			m_messages.text = "Ship computer activated.\r\nPre-launch procedures complete.\r\nStanding by to initiate launch.";
+			m_spaceflightController.m_messages.text = "Ship computer activated.\r\nPre-launch procedures complete.\r\nStanding by to initiate launch.";
 		}
-		else if ( m_justLaunched )
+		else if ( m_spaceflightController.m_justLaunched )
 		{
-			m_messages.text = "Starport clear.\r\nStanding by to maneuver.";
+			m_spaceflightController.m_messages.text = "Starport clear.\r\nStanding by to maneuver.";
 		}
 	}
 
@@ -305,25 +249,5 @@ public class SpaceflightController : MonoBehaviour
 		{
 			m_buttonImageList[ i ].sprite = ( m_currentButtonIndex == i ) ? m_buttonOnSprite : m_buttonOffSprite;
 		}
-	}
-
-	// change the current display to a different one
-	public void ChangeDisplay( Display newDisplay )
-	{
-		// inactivate all of the display UI
-		m_statusDisplayUI.SetActive( false );
-		m_systemDisplayUI.SetActive( false );
-
-		// change the current display
-		m_currentDisplay = newDisplay;
-
-		// fire it up
-		m_currentDisplay.Start();
-
-		// update the display label
-		m_currentDisplayLabel.text = m_currentDisplay.GetLabel();
-
-		// run the update
-		m_currentDisplay.Update();
 	}
 }

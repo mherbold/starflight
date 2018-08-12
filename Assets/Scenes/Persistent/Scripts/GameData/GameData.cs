@@ -16,6 +16,9 @@ public class GameData : GameDataFile
 	public LaserCannonGameData[] m_laserCannonList;
 	public ArtifactGameData[] m_artifactList;
 	public ElementGameData[] m_elementList;
+	public StarGameData[] m_starList;
+	public PlanetGameData[] m_planetList;
+	public PlanetTypeGameData[] m_planetTypeList;
 
 	// this finds the element in the list by its name
 	public int FindElementId( string name )

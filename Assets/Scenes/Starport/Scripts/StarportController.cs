@@ -95,6 +95,11 @@ public class StarportController : MonoBehaviour
 	// this is called by unity every frame
 	private void Update()
 	{
+		// update the game time
+		PlayerData playerData = PersistentController.m_instance.m_playerData;
+
+		playerData.m_starflight.UpdateGameTime( Time.deltaTime );
+
 		// check if the astronaut can be moved
 		if ( m_astronautCanBeMoved )
 		{

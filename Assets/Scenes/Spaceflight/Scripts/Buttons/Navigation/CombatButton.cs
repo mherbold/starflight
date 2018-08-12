@@ -17,7 +17,7 @@ public class CombatButton : Button
 
 			m_spaceflightController.m_messages.text = "We're in the docking bay.";
 
-			m_spaceflightController.UpdateButtonSprites();
+			m_spaceflightController.m_buttonController.UpdateButtonSprites();
 
 			return false;
 		}

@@ -17,7 +17,7 @@ public class HailButton : Button
 
 			m_spaceflightController.m_messages.text = "There's no one to hail.";
 
-			m_spaceflightController.UpdateButtonSprites();
+			m_spaceflightController.m_buttonController.UpdateButtonSprites();
 
 			return false;
 		}

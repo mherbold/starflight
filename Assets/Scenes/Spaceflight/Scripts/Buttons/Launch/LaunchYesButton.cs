@@ -126,8 +126,10 @@ public class LaunchYesButton : Button
 						m_spaceflightController.m_inDockingBay = false;
 						m_spaceflightController.m_justLaunched = true;
 
+						m_spaceflightController.m_systemController.ChangeSystem( 26 );
+
 						// restore the bridge buttons (this also ends the launch function)
-						m_spaceflightController.RestoreBridgeButtons();
+						m_spaceflightController.m_buttonController.RestoreBridgeButtons();
 					}
 
 					// make the fade overlay visible and update its opacity
