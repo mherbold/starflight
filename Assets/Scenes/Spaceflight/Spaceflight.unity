@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 280600767}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.02525219, g: 0.031279746, b: 0.087541886, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5358,6 +5358,7 @@ MonoBehaviour:
   - {fileID: 1384549382}
   - {fileID: 2090744178}
   - {fileID: 1117387106}
+  m_currentDisplayLabel: {fileID: 1022876887}
   m_currentOfficer: {fileID: 1729061564}
   m_messages: {fileID: 392032224}
   m_countdown: {fileID: 507440701}
@@ -5369,6 +5370,8 @@ MonoBehaviour:
   m_overlay: {fileID: 536216603}
   m_player: {fileID: 2052193863}
   m_ship: {fileID: 1349276896}
+  m_statusDisplayUI: {fileID: 1646402543}
+  m_systemDisplayUI: {fileID: 249927112}
   m_inOrbit: 0
   m_hasCurrentSenorReading: 0
   m_inDockingBay: 0
@@ -12132,7 +12135,7 @@ GameObject:
   - component: {fileID: 1022876888}
   - component: {fileID: 1022876887}
   m_Layer: 5
-  m_Name: Mode
+  m_Name: Display Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -16,6 +16,7 @@ public class SpaceflightController : MonoBehaviour
 	public Sprite m_buttonActiveSprite;
 	public Image[] m_buttonImageList;
 	public TextMeshProUGUI[] m_buttonLabelList;
+	public TextMeshProUGUI m_currentDisplayLabel;
 	public TextMeshProUGUI m_currentOfficer;
 	public TextMeshProUGUI m_messages;
 	public TextMeshProUGUI m_countdown;
@@ -27,6 +28,8 @@ public class SpaceflightController : MonoBehaviour
 	public Image m_overlay;
 	public GameObject m_player;
 	public GameObject m_ship;
+	public GameObject m_statusDisplayUI;
+	public GameObject m_systemDisplayUI;
 
 	// stuff shared by all the controllers
 	public InputManager m_inputManager { get; private set; }
@@ -38,9 +41,14 @@ public class SpaceflightController : MonoBehaviour
 	public bool m_inHyperspace;
 	public bool m_justLaunched;
 
-	// button functions
-	public ButtonFunction[] m_buttonFunctionList;
-	public ButtonFunction m_currentFunction;
+	// buttons
+	public Button[] m_buttonList;
+	public Button m_currentButton;
+
+	// displays
+	public Display m_statusDisplay;
+	public Display m_systemDisplay;
+	public Display m_currentDisplay;
 
 	// private stuff we don't want the editor to see
 	private int m_currentButtonIndex;
@@ -48,9 +56,8 @@ public class SpaceflightController : MonoBehaviour
 	private float m_activatingButtonTimer;
 	private float m_ignoreControllerTimer;
 
-	// bridge button functions and labels
-	private ButtonFunction[] m_bridgeButtonFunctions;
-	private string[] m_bridgeButtonLabels;
+	// bridge buttons
+	private Button[] m_bridgeButtons;
 
 	// this is called by unity before start
 	private void Awake()
@@ -64,8 +71,8 @@ public class SpaceflightController : MonoBehaviour
 		// get access to the ui sound controller
 		m_uiSoundController = GetComponent<UISoundController>();
 
-		// create the six ship function buttons
-		m_buttonFunctionList = new ButtonFunction[ c_numButtons ];
+		// create the six ship buttons
+		m_buttonList = new Button[ c_numButtons ];
 
 		// reset the ignore controller timer
 		m_ignoreControllerTimer = 0.0f;
@@ -84,8 +91,15 @@ public class SpaceflightController : MonoBehaviour
 		}
 		else
 		{
-			// bridge button functions and labels
-			m_bridgeButtonFunctions = new ButtonFunction[] { new CommandFunction(), new ScienceFunction(), new NavigationFunction(), new EngineeringFunction(), new CommunicationsFunction(), new MedicalFunction() };
+			// bridge buttons
+			m_bridgeButtons = new Button[] { new CommandButton(), new ScienceButton(), new NavigationButton(), new EngineeringButton(), new CommunicationsButton(), new MedicalButton() };
+
+			// displays
+			m_statusDisplay = new StatusDisplay();
+			m_systemDisplay = new SystemDisplay();
+
+			// status display should be first
+			ChangeDisplay( m_statusDisplay );
 
 			// turn off controller navigation of the UI
 			EventSystem.current.sendNavigationEvents = false;
@@ -122,24 +136,24 @@ public class SpaceflightController : MonoBehaviour
 			// yes - so update the timer
 			m_activatingButtonTimer += Time.deltaTime;
 
-			// after a certain amount of time, execute the button function
+			// after a certain amount of time, execute the button
 			if ( m_activatingButtonTimer >= 0.35f )
 			{
 				// reset the activate button flag and timer
 				m_activatingButton = false;
 				m_activatingButtonTimer = 0.0f;
 
-				// get the activated button function (execute might change this so grab it now)
-				ButtonFunction activatedFunction = m_buttonFunctionList[ m_currentButtonIndex ];
+				// get the activated button (execute might change this so grab it now)
+				Button activatedButton = m_buttonList[ m_currentButtonIndex ];
 
-				// execute the current button function and check if it returned true
-				if ( activatedFunction.Execute() )
+				// execute the current button and check if it returned true
+				if ( activatedButton.Execute() )
 				{
-					// update the current function
-					m_currentFunction = activatedFunction;
+					// update the current button
+					m_currentButton = activatedButton;
 
 					// do the first update
-					m_currentFunction.Update();
+					m_currentButton.Update();
 				}
 			}
 
@@ -147,12 +161,12 @@ public class SpaceflightController : MonoBehaviour
 		}
 
 		// check if we have a current funciton
-		if ( m_currentFunction != null )
+		if ( m_currentButton != null )
 		{
 			// call update on it
-			if ( m_currentFunction.Update() )
+			if ( m_currentButton.Update() )
 			{
-				// the button did the update - don't let this update function do anything more
+				// the button did the update - don't let this update do anything more
 				return;
 			}
 		}
@@ -164,7 +178,7 @@ public class SpaceflightController : MonoBehaviour
 			{
 				m_ignoreControllerTimer = 0.3f;
 
-				if ( m_currentButtonIndex < ( m_buttonFunctionList.Length - 1 ) )
+				if ( m_currentButtonIndex < ( m_buttonList.Length - 1 ) )
 				{
 					m_currentButtonIndex++;
 
@@ -198,21 +212,21 @@ public class SpaceflightController : MonoBehaviour
 		// check if we have pressed the cancel button
 		if ( m_inputManager.GetCancelDown() )
 		{
-			if ( m_currentFunction == null )
+			if ( m_currentButton == null )
 			{
 				m_uiSoundController.Play( UISoundController.UISound.Error );
 			}
 			else
 			{
-				// cancel the current function
-				m_currentFunction.Cancel();
+				// cancel the current button
+				m_currentButton.Cancel();
 			}
 		}
 
 		// check if we have pressed the fire button
 		if ( m_inputManager.GetSubmitDown() )
 		{
-			if ( m_buttonFunctionList[ m_currentButtonIndex ] == null )
+			if ( m_buttonList[ m_currentButtonIndex ] == null )
 			{
 				m_uiSoundController.Play( UISoundController.UISound.Error );
 			}
@@ -235,10 +249,10 @@ public class SpaceflightController : MonoBehaviour
 	public void RestoreBridgeButtons()
 	{
 		// there is no current funciton
-		m_currentFunction = null;
+		m_currentButton = null;
 
-		// restore the bridge functions and labels
-		UpdateButtonFunctions( m_bridgeButtonFunctions );
+		// restore the bridge buttons
+		UpdateButtons( m_bridgeButtons );
 
 		// get to the player data
 		PlayerData playerData = PersistentController.m_instance.m_playerData;
@@ -257,21 +271,21 @@ public class SpaceflightController : MonoBehaviour
 		}
 	}
 
-	// update the button functions and labels and change the current button index
-	public void UpdateButtonFunctions( ButtonFunction[] buttonFunctionList )
+	// update the buttons and change the current button index
+	public void UpdateButtons( Button[] buttonList )
 	{
 		// go through all 6 buttons
 		for ( int i = 0; i < c_numButtons; i++ )
 		{
-			if ( i < buttonFunctionList.Length )
+			if ( i < buttonList.Length )
 			{
-				m_buttonFunctionList[ i ] = buttonFunctionList[ i ];
+				m_buttonList[ i ] = buttonList[ i ];
 
-				m_buttonLabelList[ i ].text = m_buttonFunctionList[ i ].GetButtonLabel();
+				m_buttonLabelList[ i ].text = m_buttonList[ i ].GetLabel();
 			}
 			else
 			{
-				m_buttonFunctionList[ i ] = null;
+				m_buttonList[ i ] = null;
 
 				m_buttonLabelList[ i ].text = "";
 			}
@@ -291,5 +305,25 @@ public class SpaceflightController : MonoBehaviour
 		{
 			m_buttonImageList[ i ].sprite = ( m_currentButtonIndex == i ) ? m_buttonOnSprite : m_buttonOffSprite;
 		}
+	}
+
+	// change the current display to a different one
+	public void ChangeDisplay( Display newDisplay )
+	{
+		// inactivate all of the display UI
+		m_statusDisplayUI.SetActive( false );
+		m_systemDisplayUI.SetActive( false );
+
+		// change the current display
+		m_currentDisplay = newDisplay;
+
+		// fire it up
+		m_currentDisplay.Start();
+
+		// update the display label
+		m_currentDisplayLabel.text = m_currentDisplay.GetLabel();
+
+		// run the update
+		m_currentDisplay.Update();
 	}
 }

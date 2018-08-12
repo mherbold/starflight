@@ -18,11 +18,11 @@ public class ShipConfigurationController : DoorController
 	}
 
 	// public stuff we want to set using the editor
-	public Button m_buyButton;
-	public Button m_sellButton;
-	public Button m_repairButton;
-	public Button m_nameButton;
-	public Button m_exitButton;
+	public UnityEngine.UI.Button m_buyButton;
+	public UnityEngine.UI.Button m_sellButton;
+	public UnityEngine.UI.Button m_repairButton;
+	public UnityEngine.UI.Button m_nameButton;
+	public UnityEngine.UI.Button m_exitButton;
 	public TextMeshProUGUI m_componentNamesText;
 	public TextMeshProUGUI m_componentValuesText;
 	public TextMeshProUGUI m_configurationValuesText;

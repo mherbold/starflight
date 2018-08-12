@@ -19,8 +19,8 @@ public class CrewAssignmentController : DoorController
 	public TextMeshProUGUI m_messageText;
 	public Image m_upArrowImage;
 	public Image m_downArrowImage;
-	public Button m_assignButton;
-	public Button m_exitButton;
+	public UnityEngine.UI.Button m_assignButton;
+	public UnityEngine.UI.Button m_exitButton;
 	public GameObject m_selectionXform;
 	public GameObject m_personnelFileXform;
 	public GameObject m_messageXform;

@@ -39,11 +39,11 @@ public class TradeDepotController : DoorController
 	public TextMeshProUGUI m_analyzeText;
 	public Image m_upArrowImage;
 	public Image m_downArrowImage;
-	public Button m_buyButton;
-	public Button m_sellButton;
-	public Button m_analyzeButton;
-	public Button m_exitButton;
-	public Button m_noButton;
+	public UnityEngine.UI.Button m_buyButton;
+	public UnityEngine.UI.Button m_sellButton;
+	public UnityEngine.UI.Button m_analyzeButton;
+	public UnityEngine.UI.Button m_exitButton;
+	public UnityEngine.UI.Button m_noButton;
 	public GameObject m_selectionXform;
 	public GameObject m_welcomeGameObject;
 	public GameObject m_tradeGameObject;

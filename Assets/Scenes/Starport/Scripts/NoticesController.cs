@@ -192,10 +192,10 @@ public class NoticesController : MonoBehaviour
 	// update which buttons are enabled and selected
 	private void UpdateButtons()
 	{
-		Button moreButton = m_gameObject.transform.Find( "Panel/Buttons/More Button" ).gameObject.GetComponent<Button>();
-		Button previousButton = m_gameObject.transform.Find( "Panel/Buttons/Previous Button" ).gameObject.GetComponent<Button>();
-		Button nextButton = m_gameObject.transform.Find( "Panel/Buttons/Next Button" ).gameObject.GetComponent<Button>();
-		Button quitButton = m_gameObject.transform.Find( "Panel/Buttons/Quit Button" ).gameObject.GetComponent<Button>();
+		UnityEngine.UI.Button moreButton = m_gameObject.transform.Find( "Panel/Buttons/More Button" ).gameObject.GetComponent<UnityEngine.UI.Button>();
+		UnityEngine.UI.Button previousButton = m_gameObject.transform.Find( "Panel/Buttons/Previous Button" ).gameObject.GetComponent<UnityEngine.UI.Button>();
+		UnityEngine.UI.Button nextButton = m_gameObject.transform.Find( "Panel/Buttons/Next Button" ).gameObject.GetComponent<UnityEngine.UI.Button>();
+		UnityEngine.UI.Button quitButton = m_gameObject.transform.Find( "Panel/Buttons/Quit Button" ).gameObject.GetComponent<UnityEngine.UI.Button>();
 
 		// select the quit button by default
 		quitButton.Select();

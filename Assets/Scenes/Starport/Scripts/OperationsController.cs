@@ -6,13 +6,13 @@ using UnityEngine.EventSystems;
 public class OperationsController : DoorController
 {
 	// public stuff we want to set using the editor
-	public Button m_noticesButton;
-	public Button m_evaluationButton;
-	public Button m_exitButton;
-	public Button m_moreButton;
-	public Button m_previousButton;
-	public Button m_nextButton;
-	public Button m_quitButton;
+	public UnityEngine.UI.Button m_noticesButton;
+	public UnityEngine.UI.Button m_evaluationButton;
+	public UnityEngine.UI.Button m_exitButton;
+	public UnityEngine.UI.Button m_moreButton;
+	public UnityEngine.UI.Button m_previousButton;
+	public UnityEngine.UI.Button m_nextButton;
+	public UnityEngine.UI.Button m_quitButton;
 	public GameObject m_welcomeGameObject;
 	public GameObject m_noticesGameObject;
 	public GameObject m_evaluationGameObject;
