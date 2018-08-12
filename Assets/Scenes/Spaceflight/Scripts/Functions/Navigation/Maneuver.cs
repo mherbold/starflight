@@ -7,6 +7,9 @@ public class ManeuverFunction : ButtonFunction
 	// keep track of the ship's current movement (for inertia)
 	private Vector3 m_inertiaVector;
 
+	// keep track of the skybox rotation
+	private Matrix4x4 m_skyboxRotation = Matrix4x4.identity;
+
 	public override string GetButtonLabel()
 	{
 		return "Maneuver";
@@ -68,14 +71,26 @@ public class ManeuverFunction : ButtonFunction
 		// move the ship!
 		m_spaceflightController.m_player.transform.position += m_inertiaVector;
 
-		// rotate the ship towards the direction we want to move in (as long as it has some magnitude)
-		if ( m_inertiaVector.magnitude > 0.01f )
+		// check if the ship is moving
+		if ( m_inertiaVector.magnitude > 0.001f )
 		{
-			Vector3 currentLookVector = m_spaceflightController.m_ship.transform.rotation * Vector3.forward;
+			// rotate the ship towards the direction we want to move in
+			Vector3 currentForwardVector = m_spaceflightController.m_ship.transform.rotation * Vector3.forward;
 
-			Vector3 newLookVector = Vector3.Slerp( currentLookVector, m_inertiaVector, Time.deltaTime * 4.0f );
+			Vector3 newForwardVector = Vector3.Slerp( currentForwardVector, m_inertiaVector, Time.deltaTime * 4.0f );
 
-			m_spaceflightController.m_ship.transform.rotation = Quaternion.LookRotation( newLookVector, Vector3.up );
+			m_spaceflightController.m_ship.transform.rotation = Quaternion.LookRotation( newForwardVector, Vector3.up );
+
+			// rotate the skybox accordingly
+			Vector3 currentRightVector = m_spaceflightController.m_ship.transform.rotation * Vector3.right;
+
+			Quaternion rotation = Quaternion.AngleAxis( m_inertiaVector.magnitude * Time.deltaTime, currentRightVector );
+
+			m_skyboxRotation = Matrix4x4.Rotate( rotation ) * m_skyboxRotation;
+
+			Material skyboxMaterial = RenderSettings.skybox;
+
+			skyboxMaterial.SetMatrix( "_Rotation", m_skyboxRotation );
 		}
 
 		// returning true prevents the default spaceflight update from running
