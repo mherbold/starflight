@@ -7,7 +7,7 @@ public class StarGameData
 {
 	public int m_xCoordinate;
 	public int m_yCoordinate;
-	public char m_starClass;
+	public string m_class;
 	public int m_daysToNextFlare;
 	public int m_daysSincePreviousFlare;
 	public int m_yearOfNextFlare;

@@ -7,7 +7,7 @@ public class LaunchYesButton : Button
 {
 	private float m_launchTimer;
 	private bool m_countdownStarted;
-	private bool m_skipCinematics = false;
+	private bool m_skipCinematics = true;
 
 	public override string GetLabel()
 	{
@@ -126,7 +126,9 @@ public class LaunchYesButton : Button
 						m_spaceflightController.m_inDockingBay = false;
 						m_spaceflightController.m_justLaunched = true;
 
-						m_spaceflightController.m_systemController.ChangeSystem( 26 );
+						// change to the arth system
+						GameData gameData = PersistentController.m_instance.m_gameData;
+						m_spaceflightController.m_systemController.ChangeSystem( gameData.m_miscGameData.m_arthStarId );
 
 						// restore the bridge buttons (this also ends the launch function)
 						m_spaceflightController.m_buttonController.RestoreBridgeButtons();

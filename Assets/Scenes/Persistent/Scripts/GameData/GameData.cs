@@ -5,6 +5,7 @@ using System;
 
 public class GameData : GameDataFile
 {
+	public MiscGameData m_miscGameData;
 	public StarportGameData m_starportGameData;
 	public NoticeGameData[] m_noticeList;
 	public RaceGameData[] m_raceList;
