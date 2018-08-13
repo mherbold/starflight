@@ -1,13 +1,11 @@
 ﻿
 using UnityEngine;
-using UnityEngine.EventSystems;
-using TMPro;
 
 public class LaunchYesButton : Button
 {
 	private float m_launchTimer;
 	private bool m_countdownStarted;
-	private bool m_skipCinematics = true;
+	private bool m_skipCinematics = false;
 
 	public override string GetLabel()
 	{

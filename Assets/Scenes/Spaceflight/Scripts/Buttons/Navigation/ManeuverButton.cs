@@ -66,7 +66,7 @@ public class ManeuverButton : Button
 			moveVector.Normalize();
 
 			// scale the move vector to the normal ship speed
-			moveVector *= 5.0f;
+			moveVector *= 10.0f;
 
 			// update the inertia vector
 			m_inertiaVector = Vector3.Slerp( m_inertiaVector, moveVector, Time.deltaTime * 2.0f );
