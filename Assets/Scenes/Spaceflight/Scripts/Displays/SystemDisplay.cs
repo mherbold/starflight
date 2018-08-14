@@ -67,7 +67,7 @@ public class SystemDisplay : Display
 		}
 
 		// update the position of the ship
-		Vector3 position = m_spaceflightController.m_camera.transform.position * 0.05f;
+		Vector3 position = m_spaceflightController.m_camera.transform.position * 0.01f;
 		m_shipGameObject.transform.localPosition = new Vector3( position.x, position.z );
 	}
 

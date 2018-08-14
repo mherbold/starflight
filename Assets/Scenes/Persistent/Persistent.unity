@@ -155,8 +155,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_gameDataFileName: Starflight Game Data
+  m_planetDataFileName: Starflight Planet Data
   m_playerDataFileName: PlayerData.bin
   m_gameData:
+    m_miscGameData:
+      m_arthStarId: 0
     m_starportGameData:
       m_artifactAnalysisPrice: 0
     m_noticeList: []
@@ -175,10 +178,21 @@ MonoBehaviour:
     m_laserCannonList: []
     m_artifactList: []
     m_elementList: []
+    m_starList: []
+    m_planetList: []
+    m_planetTypeList: []
+  m_planetData:
+    m_planetMapList: []
   m_playerData:
     m_version: 0
     m_starflight:
       m_currentStardate: 
+      m_day: 0
+      m_hour: 0
+      m_minute: 0
+      m_second: 0
+      m_millisecond: 0
+      m_gameTime: 0
     m_notice:
       m_lastReadStardate: 
     m_personnel:
@@ -189,7 +203,7 @@ MonoBehaviour:
       m_scienceOfficerFileId: 0
       m_navigatorFileId: 0
       m_engineerFileId: 0
-      m_communicationsFileId: 0
+      m_communicationsOfficerFileId: 0
       m_doctorFileId: 0
     m_bank:
       m_currentBalance: 0

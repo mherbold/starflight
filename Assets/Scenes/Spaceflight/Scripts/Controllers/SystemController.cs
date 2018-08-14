@@ -15,8 +15,14 @@ public class SystemController : MonoBehaviour
 	// orbit number to orbit position map
 	public int[] m_orbitNumberToPosition;
 
+	// planet materials
+	public Material[] m_planetMaterials;
+
 	// private stuff we don't want the editor to see
 	private int m_currentStarId;
+
+	// generated planet texture maps
+	private Texture2D[] m_diffuseMap;
 
 	// convenient access to the spaceflight controller
 	private SpaceflightController m_spaceflightController;
@@ -27,6 +33,7 @@ public class SystemController : MonoBehaviour
 		m_planetOrbitAngle = new float[ c_maxNumOrbits ];
 		m_planetRotationAngle = new float[ c_maxNumOrbits ];
 		m_orbitNumberToPosition = new int[ c_maxNumOrbits ];
+		m_diffuseMap = new Texture2D[ c_maxNumOrbits ];
 	}
 
 	// this is called by unity once at the start of the level
@@ -133,5 +140,65 @@ public class SystemController : MonoBehaviour
 
 		// update the system display
 		m_spaceflightController.m_displayController.m_systemDisplay.ChangeSystem( m_currentStarId );
+
+		// generate texture maps for each planet in the system
+		for ( int i = 0; i < gameData.m_planetList.Length; i++ )
+		{
+			PlanetGameData planet = gameData.m_planetList[ i ];
+
+			if ( planet.m_starId == starId )
+			{
+				PlanetMapData planetMap = PersistentController.m_instance.m_planetData.m_planetMapList[ i ];
+
+				if ( planetMap.m_map.Length == 0 )
+				{
+					continue; // TODO: temporary - skip this planet because we have no map data for it
+				}
+
+				const int newWidth = 1024;
+				const int newHeight = 512;
+
+				int textureMapId = m_orbitNumberToPosition[ planet.m_orbitNumber - 1 ] - 1;
+
+				Texture2D textureMap = new Texture2D( newWidth, newHeight, TextureFormat.RGB24, false );
+
+				const int originalWidth = 48;
+				const int originalHeight = 24;
+
+				const float widthRatio = (float) originalWidth / (float) newWidth;
+				const float heightRatio = (float) originalHeight / (float) newHeight;
+
+				for ( int y = 0; y < newHeight; y++ )
+				{
+					float offsetY = (float) y * heightRatio;
+
+					for ( int x = 0; x < newWidth; x++ )
+					{
+						float offsetX = (float) x * widthRatio;
+
+						int offset = Mathf.FloorToInt( offsetY ) * originalWidth + Mathf.FloorToInt( offsetX );
+
+						int originalColor = planetMap.m_map[ offset ];
+
+						float r = ( ( originalColor >> 16 ) & 0xFF ) / 255.0f;
+						float g = ( ( originalColor >> 8 ) & 0xFF ) / 255.0f;
+						float b = ( ( originalColor >> 0 ) & 0xFF ) / 255.0f;
+
+						Color color = new Color( r, g, b );
+
+						textureMap.SetPixel( x, newHeight - y - 1, color );
+					}
+				}
+
+				textureMap.Compress( true );
+
+				textureMap.wrapModeU = TextureWrapMode.Repeat;
+				textureMap.wrapModeV = TextureWrapMode.Clamp;
+
+				m_diffuseMap[ textureMapId ] = textureMap;
+
+				m_planetMaterials[ textureMapId ].SetTexture( "_MainTex", textureMap );
+			}
+		}
 	}
 }

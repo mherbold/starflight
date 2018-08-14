@@ -7,6 +7,11 @@
           <mappings>
             <mapping deploy="/public_html/bravearmy.com/starflight/planets" local="$PROJECT_DIR$" web="/starflight/planets" />
           </mappings>
+          <excludedPaths>
+            <excludedPath path="/public_html/bravearmy.com/starflight/planets/Planets.dat" />
+            <excludedPath path="/public_html/bravearmy.com/starflight/planets/error_log" />
+            <excludedPath path="/public_html/bravearmy.com/starflight/planets/images" />
+          </excludedPaths>
         </serverdata>
       </paths>
     </serverData>

@@ -12,9 +12,11 @@ public class PersistentController : MonoBehaviour
 
 	// public stuff we want to set using the editor
 	public string m_gameDataFileName;
+	public string m_planetDataFileName;
 	public string m_playerDataFileName;
 
 	public GameData m_gameData;
+	public PlanetData m_planetData;
 	public PlayerData m_playerData;
 
 	public bool m_resetPlayerData;
@@ -31,7 +33,7 @@ public class PersistentController : MonoBehaviour
 	// this is called by unity before start
 	private void Awake()
 	{
-		// remember this instance to this game object
+		// remember this instance to this
 		m_instance = this;
 
 		// reset the save timer
@@ -42,13 +44,16 @@ public class PersistentController : MonoBehaviour
 	private void Start()
 	{
 		// debug info
-		Debug.Log( "Loading game and player data..." );
+		Debug.Log( "Loading data..." );
 
 		// tell unity to not delete this game object when the scene unloads
 		DontDestroyOnLoad( this );
 
 		// load the game data
 		LoadGameData();
+
+		// load the planet data
+		LoadPlanetData();
 
 		// load the saved player data
 		LoadPlayerData();
@@ -85,7 +90,7 @@ public class PersistentController : MonoBehaviour
 	// load the game data files
 	private void LoadGameData()
 	{
-		// load the notices game data
+		// load the game data
 		LoadGameDataFile( out m_gameData, m_gameDataFileName );
 	}
 
@@ -100,6 +105,26 @@ public class PersistentController : MonoBehaviour
 
 		// convert it from the json string to our game data class
 		gameData = JsonUtility.FromJson<T>( textAsset.text );
+	}
+
+	// load the planet data files
+	private void LoadPlanetData()
+	{
+		// load the planet data
+		LoadPlanetDataFile( out m_planetData, m_planetDataFileName );
+	}
+
+	// function to load planet data from a file into an object
+	private void LoadPlanetDataFile<T>( out T planetData, string fileName ) where T : PlanetDataFile
+	{
+		// get the location of this planet data file
+		string filePath = Path.Combine( "GameData", fileName );
+
+		// load it as a text asset
+		TextAsset textAsset = Resources.Load( filePath ) as TextAsset;
+
+		// convert it from the json string to our planet data class
+		planetData = JsonUtility.FromJson<T>( textAsset.text );
 	}
 
 	// this loads the current player progress from disk

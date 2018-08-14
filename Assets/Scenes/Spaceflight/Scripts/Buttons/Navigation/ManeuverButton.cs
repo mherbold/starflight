@@ -65,11 +65,13 @@ public class ManeuverButton : Button
 			// normalize the move vector to a length of 1.0 - so the ship will move the same distance in any direction
 			moveVector.Normalize();
 
-			// scale the move vector to the normal ship speed
-			moveVector *= 10.0f;
+			// figure out how much acceleration to apply
+			Vector3 normalizedInertiaVector = Vector3.Normalize( m_inertiaVector );
+			float acceleration = Vector3.Dot( normalizedInertiaVector, moveVector );
+			acceleration = Mathf.Clamp( acceleration * 30.0f, 0.1f, 30.0f );
 
 			// update the inertia vector
-			m_inertiaVector = Vector3.Slerp( m_inertiaVector, moveVector, Time.deltaTime * 2.0f );
+			m_inertiaVector = Vector3.Slerp( m_inertiaVector, moveVector * acceleration, Time.deltaTime * 3.0f );
 		}
 		else
 		{
@@ -84,9 +86,7 @@ public class ManeuverButton : Button
 		if ( m_inertiaVector.magnitude > 0.001f )
 		{
 			// rotate the ship towards the direction we want to move in
-			Vector3 currentForwardVector = m_spaceflightController.m_ship.transform.rotation * Vector3.forward;
-			Vector3 newForwardVector = Vector3.Slerp( currentForwardVector, m_inertiaVector, Time.deltaTime * 4.0f );
-			m_spaceflightController.m_ship.transform.rotation = Quaternion.LookRotation( newForwardVector, Vector3.up );
+			m_spaceflightController.m_ship.transform.rotation = Quaternion.LookRotation( m_inertiaVector, Vector3.up );
 
 			// rotate the skybox accordingly
 			Vector3 currentRightVector = m_spaceflightController.m_ship.transform.rotation * Vector3.right;

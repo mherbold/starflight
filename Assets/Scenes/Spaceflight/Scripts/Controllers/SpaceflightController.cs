@@ -19,6 +19,7 @@ public class SpaceflightController : MonoBehaviour
 	public GameObject m_player;
 	public GameObject m_ship;
 	public TextMeshProUGUI m_currentOfficer;
+	public bool m_skipCinematics;
 
 	// controllers
 	public InputManager m_inputManager { get; private set; }

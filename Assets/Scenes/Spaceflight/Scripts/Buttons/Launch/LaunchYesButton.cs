@@ -5,7 +5,6 @@ public class LaunchYesButton : Button
 {
 	private float m_launchTimer;
 	private bool m_countdownStarted;
-	private bool m_skipCinematics = false;
 
 	public override string GetLabel()
 	{
@@ -48,7 +47,7 @@ public class LaunchYesButton : Button
 	public override bool Update()
 	{
 		// keep track of the cutscene time
-		m_launchTimer += Time.deltaTime * ( m_skipCinematics ? 20.0f : 1.0f );
+		m_launchTimer += Time.deltaTime * ( m_spaceflightController.m_skipCinematics ? 20.0f : 1.0f );
 
 		// at 15 seconds begin the countdown...
 		if ( m_launchTimer >= 15.0f )
