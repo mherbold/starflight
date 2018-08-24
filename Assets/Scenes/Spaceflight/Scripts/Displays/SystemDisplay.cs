@@ -15,14 +15,14 @@ public class SystemDisplay : Display
 		Transform transform;
 
 		// allocate arrays
-		m_orbitGameObject = new GameObject[ SystemController.c_maxNumOrbits ];
-		m_planetImage = new Image[ SystemController.c_maxNumOrbits ];
+		m_orbitGameObject = new GameObject[ SystemController.c_maxNumPlanets ];
+		m_planetImage = new Image[ SystemController.c_maxNumPlanets ];
 
 		// get to the orbits
-		for ( int i = 0; i < SystemController.c_maxNumOrbits; i++ )
+		for ( int i = 0; i < SystemController.c_maxNumPlanets; i++ )
 		{
 			// get the orbit game object
-			transform = m_rootGameObject.transform.Find( "GameObject/Orbit-" + ( i + 1 ) );
+			transform = m_rootGameObject.transform.Find( "Orbit-" + ( i + 1 ) );
 			m_orbitGameObject[ i ] = transform.gameObject;
 
 			// get the planet image
@@ -35,11 +35,11 @@ public class SystemDisplay : Display
 		m_arthGameObject = transform.gameObject;
 
 		// get to the sun image
-		transform = m_rootGameObject.transform.Find( "GameObject/Star" );
+		transform = m_rootGameObject.transform.Find( "Star" );
 		m_sunImage = transform.GetComponent<Image>();
 
 		// get to the ship game object
-		transform = m_rootGameObject.transform.Find( "GameObject/Ship" );
+		transform = m_rootGameObject.transform.Find( "Ship" );
 		m_shipGameObject = transform.gameObject;
 	}
 
@@ -57,7 +57,7 @@ public class SystemDisplay : Display
 	public override void Update()
 	{
 		// update the positions of the planets
-		for ( int i = 0; i < SystemController.c_maxNumOrbits; i++ )
+		for ( int i = 0; i < SystemController.c_maxNumPlanets; i++ )
 		{
 			float angle = m_spaceflightController.m_systemController.m_planetOrbitAngle[ i ];
 
@@ -102,23 +102,17 @@ public class SystemDisplay : Display
 
 		m_sunImage.color = color;
 
-		// turn on or off each orbit
-		m_orbitGameObject[ 0 ].SetActive( star.m_hasOrbitalPosition1 );
-		m_orbitGameObject[ 1 ].SetActive( star.m_hasOrbitalPosition2 );
-		m_orbitGameObject[ 2 ].SetActive( star.m_hasOrbitalPosition3 );
-		m_orbitGameObject[ 3 ].SetActive( star.m_hasOrbitalPosition4 );
-		m_orbitGameObject[ 4 ].SetActive( star.m_hasOrbitalPosition5 );
-		m_orbitGameObject[ 5 ].SetActive( star.m_hasOrbitalPosition6 );
-		m_orbitGameObject[ 6 ].SetActive( star.m_hasOrbitalPosition7 );
-		m_orbitGameObject[ 7 ].SetActive( star.m_hasOrbitalPosition8 );
-
-		// change the color of the planets
-		for ( int planetId = 0; planetId < gameData.m_planetList.Length; planetId++ )
+		// update each planet in the system
+		for ( int i = 0; i < SystemController.c_maxNumPlanets; i++ )
 		{
-			PlanetGameData planet = gameData.m_planetList[ planetId ];
+			bool orbitHasPlanet = ( m_spaceflightController.m_systemController.m_planetController[ i ].m_planetId != -1 );
 
-			if ( planet.m_starId == starId )
+			m_orbitGameObject[ i ].SetActive( orbitHasPlanet );
+
+			if ( orbitHasPlanet )
 			{
+				PlanetGameData planet = m_spaceflightController.m_systemController.m_planetController[ i ].m_planetGameData;
+
 				// check if this is the arth station (special case)
 				if ( planet.m_planetTypeId == 57 )
 				{

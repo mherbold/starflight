@@ -46,7 +46,7 @@ Shader "Custom/Inifinite Starfield"
 					{
 						float4 position : POSITION;
 						fixed4 color : COLOR;
-						float2 texcoord : TEXCOORD0;
+						float2 uv1 : TEXCOORD0;
 						UNITY_VERTEX_INPUT_INSTANCE_ID
 					};
 
@@ -54,7 +54,7 @@ Shader "Custom/Inifinite Starfield"
 					{
 						float4 position : SV_POSITION;
 						fixed4 color : COLOR;
-						float2 texcoord : TEXCOORD0;
+						float2 uv1 : TEXCOORD0;
 						UNITY_VERTEX_OUTPUT_STEREO
 					};
 
@@ -69,14 +69,14 @@ Shader "Custom/Inifinite Starfield"
 
 						o.position = UnityObjectToClipPos( v.position );
 						o.color = float4( v.color.rgb, a );
-						o.texcoord = TRANSFORM_TEX( v.texcoord, _MainTex );
+						o.uv1 = TRANSFORM_TEX( v.uv1, _MainTex );
 
 						return o;
 					}
 
 					fixed4 frag( vs_out v ) : SV_Target
 					{
-						return tex2D( _MainTex, v.texcoord ) * v.color;
+						return tex2D( _MainTex, v.uv1 ) * v.color;
 					}
 
 				ENDCG
