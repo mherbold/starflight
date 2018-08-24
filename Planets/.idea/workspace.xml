@@ -14,7 +14,7 @@
       <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="426">
+            <state relative-caret-position="575">
               <caret line="25" column="18" selection-start-line="25" selection-start-column="14" selection-end-line="25" selection-end-column="18" />
             </state>
           </provider>
@@ -23,8 +23,8 @@
       <file leaf-file-name="convert.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/convert.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1087">
-              <caret line="66" selection-start-line="66" selection-end-line="66" />
+            <state>
+              <caret column="5" selection-start-column="5" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -70,7 +70,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -82,6 +81,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -121,24 +121,24 @@
       <workItem from="1533738697809" duration="11000" />
       <workItem from="1534170015509" duration="912000" />
       <workItem from="1534195940081" duration="5192000" />
+      <workItem from="1534257078960" duration="1543000" />
+      <workItem from="1534943630551" duration="11000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22534000" />
+    <option name="totallyTimeSpent" value="24088000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="3456" height="1426" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="File Transfer" order="7" weight="0.32896763" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info anchor="right" id="Remote Host" visible="true" weight="0.09127907" />
+      <window_info anchor="right" id="Remote Host" order="3" visible="true" weight="0.09127907" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1244186" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
@@ -151,6 +151,7 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="File Transfer" order="7" weight="0.32896763" />
       <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
@@ -161,6 +162,34 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="575">
+          <caret line="25" column="18" selection-start-line="25" selection-start-column="14" selection-end-line="25" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/convert.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="5" lean-forward="true" selection-start-column="5" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="575">
+          <caret line="25" column="18" selection-start-line="25" selection-start-column="14" selection-end-line="25" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/convert.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1518">
+          <caret line="66" selection-start-line="66" selection-end-line="66" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="6141">
@@ -199,7 +228,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="426">
+        <state relative-caret-position="575">
           <caret line="25" column="18" selection-start-line="25" selection-start-column="14" selection-end-line="25" selection-end-column="18" />
         </state>
       </provider>
@@ -218,11 +247,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Planets.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-35052" />
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Planets.json" />
     <entry file="file://$PROJECT_DIR$/Starflight Planet Data.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="23">
@@ -232,8 +257,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/convert.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1087">
-          <caret line="66" selection-start-line="66" selection-end-line="66" />
+        <state>
+          <caret column="5" selection-start-column="5" selection-end-column="5" />
         </state>
       </provider>
     </entry>
