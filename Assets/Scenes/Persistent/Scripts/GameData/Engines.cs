@@ -2,7 +2,7 @@
 
 [Serializable]
 
-public class EnginesGameData : ShipPartGameData
+public class Engines : ShipPart
 {
 	public int m_baseAcceleration;
 	public int m_accelerationMass;

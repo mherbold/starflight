@@ -19,8 +19,8 @@ public class CrewAssignmentController : DoorController
 	public TextMeshProUGUI m_messageText;
 	public Image m_upArrowImage;
 	public Image m_downArrowImage;
-	public UnityEngine.UI.Button m_assignButton;
-	public UnityEngine.UI.Button m_exitButton;
+	public Button m_assignButton;
+	public Button m_exitButton;
 	public GameObject m_selectionXform;
 	public GameObject m_personnelFileXform;
 	public GameObject m_messageXform;
@@ -326,9 +326,6 @@ public class CrewAssignmentController : DoorController
 	{
 		// get access to the crew assignment player data
 		CrewAssignment crewAssignment = PersistentController.m_instance.m_playerData.m_crewAssignment;
-
-		// get access to the personnel player data
-		Personnel personnel = PersistentController.m_instance.m_playerData.m_personnel;
 
 		// start with an empty text string
 		m_positionValuesText.text = "";

@@ -3,7 +3,7 @@ using System;
 
 [Serializable]
 
-public class RaceGameData
+public class Race
 {
 	public string m_name;
 

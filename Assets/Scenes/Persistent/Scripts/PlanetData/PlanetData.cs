@@ -5,5 +5,5 @@ using System;
 
 public class PlanetData : PlanetDataFile
 {
-	public PlanetMapData[] m_planetMapList;
+	public PlanetMap[] m_planetMapList;
 }

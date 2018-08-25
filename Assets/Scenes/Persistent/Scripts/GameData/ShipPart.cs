@@ -2,7 +2,7 @@
 
 [Serializable]
 
-public class ShipPartGameData
+public class ShipPart
 {
 	public int m_class;
 	public int m_buyPrice;

@@ -1,8 +1,5 @@
 ﻿
-using UnityEngine;
-using UnityEngine.EventSystems;
-
-public class CargoButton : Button
+public class CargoButton : ShipButton
 {
 	public override string GetLabel()
 	{

@@ -39,16 +39,16 @@ public class PersonnelController : DoorController
 	public Image m_rightArrowImage;
 	public Image m_upArrowImage;
 	public Image m_downArrowImage;
-	public UnityEngine.UI.Button m_previousButton;
-	public UnityEngine.UI.Button m_nextButton;
-	public UnityEngine.UI.Button m_createButton;
-	public UnityEngine.UI.Button m_deleteButton;
-	public UnityEngine.UI.Button m_trainButton;
-	public UnityEngine.UI.Button m_exitButton;
-	public UnityEngine.UI.Button m_selectButton;
-	public UnityEngine.UI.Button m_cancelButton;
-	public UnityEngine.UI.Button m_yesButton;
-	public UnityEngine.UI.Button m_noButton;
+	public Button m_previousButton;
+	public Button m_nextButton;
+	public Button m_createButton;
+	public Button m_deleteButton;
+	public Button m_trainButton;
+	public Button m_exitButton;
+	public Button m_selectButton;
+	public Button m_cancelButton;
+	public Button m_yesButton;
+	public Button m_noButton;
 	public GameObject m_overlayPanel;
 	public GameObject m_namePanel;
 	public GameObject m_deletePanel;
@@ -584,7 +584,7 @@ public class PersonnelController : DoorController
 		buttonIsInteractable[ (int) Buttons.CancelButton ] = true;
 
 		// get the current race game data
-		RaceGameData race = PersistentController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
+		Race race = PersistentController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
 
 		// update the skill values text to show the race's initial values
 		m_skillValuesText.text = "";
@@ -700,7 +700,7 @@ public class PersonnelController : DoorController
 	private void ShowRace( bool[] gameObjectIsVisible )
 	{
 		// get the current race game data
-		RaceGameData race = PersistentController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
+		Race race = PersistentController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
 
 		// update the race name
 		m_raceNameText.text = race.m_name;
@@ -799,7 +799,7 @@ public class PersonnelController : DoorController
 			Personnel.PersonnelFile personnelFile = playerData.m_personnel.m_personnelList[ m_currentFileIndex ];
 
 			// get access to the race data for this personnel file
-			RaceGameData race = PersistentController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
+			Race race = PersistentController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
 
 			// calculate the current skill and maximum skill points for the selected skill
 			int currentSkill = personnelFile.GetSkill( m_currentSkillIndex );
@@ -900,7 +900,7 @@ public class PersonnelController : DoorController
 			Personnel.PersonnelFile personnelFile = playerData.m_personnel.m_personnelList[ m_currentFileIndex ];
 
 			// get access to the race data for this personnel file
-			RaceGameData race = PersistentController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
+			Race race = PersistentController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
 
 			// enable the train button only if the current personnel is not maxxed out
 			int maxTotalPoints = 0;
@@ -1006,7 +1006,7 @@ public class PersonnelController : DoorController
 		else
 		{
 			// get the current race game data
-			RaceGameData race = PersistentController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
+			Race race = PersistentController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
 
 			// create a new personnel file
 			Personnel.PersonnelFile personnelFile = PersistentController.m_instance.m_playerData.m_personnel.CreateNewPersonnel();

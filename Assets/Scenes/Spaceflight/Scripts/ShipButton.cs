@@ -1,12 +1,12 @@
 ﻿
 using UnityEngine;
 
-abstract public class Button
+abstract public class ShipButton
 {
 	// convenient access to the spaceflight controller
 	protected SpaceflightController m_spaceflightController;
 
-	public Button()
+	public ShipButton()
 	{
 		GameObject controllersGameObject = GameObject.FindWithTag( "Spaceflight Controllers" );
 

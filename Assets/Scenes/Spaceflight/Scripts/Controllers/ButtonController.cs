@@ -16,8 +16,8 @@ public class ButtonController : MonoBehaviour
 	public TextMeshProUGUI[] m_buttonLabelList;
 
 	// buttons
-	private Button[] m_buttonList;
-	private Button m_currentButton;
+	private ShipButton[] m_buttonList;
+	private ShipButton m_currentButton;
 
 	// private stuff we don't want the editor to see
 	private int m_currentButtonIndex;
@@ -26,7 +26,7 @@ public class ButtonController : MonoBehaviour
 	private float m_ignoreControllerTimer;
 
 	// bridge buttons
-	private Button[] m_bridgeButtons;
+	private ShipButton[] m_bridgeButtons;
 
 	// convenient access to the spaceflight controller
 	private SpaceflightController m_spaceflightController;
@@ -35,7 +35,7 @@ public class ButtonController : MonoBehaviour
 	private void Awake()
 	{
 		// create the six ship buttons
-		m_buttonList = new Button[ c_numButtons ];
+		m_buttonList = new ShipButton[ c_numButtons ];
 
 		// reset the ignore controller timer
 		m_ignoreControllerTimer = 0.0f;
@@ -55,7 +55,7 @@ public class ButtonController : MonoBehaviour
 		}
 
 		// bridge buttons
-		m_bridgeButtons = new Button[] { new CommandButton(), new ScienceButton(), new NavigationButton(), new EngineeringButton(), new CommunicationsButton(), new MedicalButton() };
+		m_bridgeButtons = new ShipButton[] { new CommandButton(), new ScienceButton(), new NavigationButton(), new EngineeringButton(), new CommunicationsButton(), new MedicalButton() };
 
 		// reset everything
 		m_activatingButton = false;
@@ -88,7 +88,7 @@ public class ButtonController : MonoBehaviour
 				m_activatingButtonTimer = 0.0f;
 
 				// get the activated button (execute might change this so grab it now)
-				Button activatedButton = m_buttonList[ m_currentButtonIndex ];
+				ShipButton activatedButton = m_buttonList[ m_currentButtonIndex ];
 
 				// execute the current button and check if it returned true
 				if ( activatedButton.Execute() )
@@ -202,7 +202,7 @@ public class ButtonController : MonoBehaviour
 		PlayerData playerData = PersistentController.m_instance.m_playerData;
 
 		// change the current officer label to the name of the ship
-		m_spaceflightController.m_currentOfficer.text = "ISS " + playerData.m_shipConfiguration.m_name;
+		m_spaceflightController.m_currentOfficer.text = "ISS " + playerData.m_ship.m_name;
 
 		// update the message
 		if ( m_spaceflightController.m_inDockingBay )
@@ -216,7 +216,7 @@ public class ButtonController : MonoBehaviour
 	}
 
 	// update the buttons and change the current button index
-	public void UpdateButtons( Button[] buttonList )
+	public void UpdateButtons( ShipButton[] buttonList )
 	{
 		// go through all 6 buttons
 		for ( int i = 0; i < c_numButtons; i++ )

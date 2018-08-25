@@ -1,8 +1,5 @@
 ﻿
-using UnityEngine;
-using UnityEngine.EventSystems;
-
-public class RaiseShieldsButton : Button
+public class RaiseShieldsButton : ShipButton
 {
 	public override string GetLabel()
 	{
@@ -13,7 +10,7 @@ public class RaiseShieldsButton : Button
 	{
 		PlayerData playerData = PersistentController.m_instance.m_playerData;
 
-		if ( playerData.m_shipConfiguration.m_shieldingClass == 0 )
+		if ( playerData.m_ship.m_shieldingClass == 0 )
 		{
 			m_spaceflightController.m_uiSoundController.Play( UISoundController.UISound.Error );
 

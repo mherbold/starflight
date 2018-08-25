@@ -1,44 +1,49 @@
 ﻿
 using UnityEngine;
 
-public class PlanetController
+public class PlanetController : MonoBehaviour
 {
-	// public stuff we want to set using the editor
-	public Transform m_transform;
-	public Material m_material;
+	// the current planet this controller is controlling
+	public Planet m_planet;
 
-	// private stuff we don't want the editor to see
-	public int m_planetId;
-	public PlanetGameData m_planetGameData;
+	// the current orbit angle
 	public float m_orbitAngle;
+
+	// the current rotation angle
 	private float m_rotationAngle;
+
+	// set this to the material for this planet model
+	private Material m_material;
+
+	// the generated diffuse map
 	private Texture2D m_diffuseMap;
 
-	// change the planet we are controlling
-	public void Change( int planetId )
+	// convenient access to the spaceflight controller
+	private SpaceflightController m_spaceflightController;
+
+	// this is called by unity at the start of the level
+	public void Start()
 	{
-		// update the planet id
-		m_planetId = planetId;
+		// get the spaceflight controller
+		GameObject controllersGameObject = GameObject.FindWithTag( "Spaceflight Controllers" );
+		m_spaceflightController = controllersGameObject.GetComponent<SpaceflightController>();
 
-		// check if we are turning on this planet
-		if ( planetId != -1 )
-		{
-			// get to the game data
-			GameData gameData = PersistentController.m_instance.m_gameData;
-
-			// update the current planet
-			m_planetGameData = gameData.m_planetList[ planetId ];
-
-			// generate the texture maps for this planet
-			GenerateTextureMaps();
-		}
+		// grab the material component
+		MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
+		m_material = meshRenderer.material;
 	}
 
 	// this is called by unity every frame
 	public void Update()
 	{
 		// if this planet is off then don't do anything
-		if ( m_planetId == -1 )
+		if ( m_planet == null )
+		{
+			return;
+		}
+
+		// stop here if the spaceflight controller hasn't started
+		if ( !m_spaceflightController.m_started )
 		{
 			return;
 		}
@@ -47,28 +52,52 @@ public class PlanetController
 		PlayerData playerData = PersistentController.m_instance.m_playerData;
 
 		// calculate number of days per year for each planet based on orbit number - orbit 3 should = 366 days like earth
-		int daysPerYear = 122 * ( m_planetGameData.m_orbitPosition + 1 );
+		int daysPerYear = 122 * ( m_planet.m_orbitPosition + 1 );
 
 		// update the orbit angle
-		m_orbitAngle = ( playerData.m_starflight.m_gameTime + 1000.0f + ( m_planetGameData.m_starId * 4 ) ) / daysPerYear;
+		m_orbitAngle = ( playerData.m_starflight.m_gameTime + 1000.0f + ( m_planet.m_starId * 4 ) ) / daysPerYear;
 
 		// update the rotation angle
-		m_rotationAngle = ( playerData.m_starflight.m_gameTime + m_planetGameData.m_orbitPosition );
+		m_rotationAngle = ( playerData.m_starflight.m_gameTime + m_planet.m_orbitPosition );
 
 		// update the planet model
-		Vector3 position = new Vector3( Mathf.Sin( m_orbitAngle ) * 2500.0f, Mathf.Cos( m_orbitAngle ) * 2500.0f, 0.0f );
-		Quaternion rotation = Quaternion.AngleAxis( m_rotationAngle * 360.0f, Vector3.up );
-		m_transform.SetPositionAndRotation( position, rotation );
+		float distance = 2500.0f * ( m_planet.m_orbitPosition + 2 );
+		float angle = m_orbitAngle * 2.0f * Mathf.PI;
+		Vector3 position = new Vector3( -Mathf.Sin( angle ), 0.0f, Mathf.Cos( angle ) ) * distance;
+		Quaternion rotation = Quaternion.AngleAxis( 120.0f, Vector3.right ) * Quaternion.AngleAxis( m_rotationAngle * 360.0f, Vector3.forward );
+		transform.SetPositionAndRotation( position, rotation );
+	}
+
+	// change the planet we are controlling
+	public void SetPlanet( Planet planet )
+	{
+		// update the planet
+		m_planet = planet;
+
+		// if we are just turning off this planet then stop here
+		if ( planet == null )
+		{
+			// hide the planet model
+			gameObject.SetActive( false );
+		}
+		else
+		{
+			// make the planet model visible
+			gameObject.SetActive( true );
+
+			// generate the texture maps for this planet
+			GenerateTextureMaps();
+		}
 	}
 
 	// generates the texture maps for this planet
 	private void GenerateTextureMaps()
 	{
-		PlanetMapData planetMap = PersistentController.m_instance.m_planetData.m_planetMapList[ m_planetId ];
+		PlanetMap planetMap = PersistentController.m_instance.m_planetData.m_planetMapList[ m_planet.m_id ];
 
 		if ( planetMap.m_map.Length == 0 )
 		{
-			return; // TODO: temporary - skip this planet because we have no map data for it
+			return; // TODO: temporary - skip this planet because we have no map data for it yet
 		}
 
 		const int newWidth = 1024;

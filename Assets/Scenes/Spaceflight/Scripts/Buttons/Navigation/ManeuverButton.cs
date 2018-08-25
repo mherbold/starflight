@@ -1,8 +1,7 @@
 ﻿
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-public class ManeuverButton : Button
+public class ManeuverButton : ShipButton
 {
 	// keep track of the ship's current movement (for inertia)
 	private Vector3 m_inertiaVector;
@@ -31,11 +30,14 @@ public class ManeuverButton : Button
 		// clear out the just launched flag
 		m_spaceflightController.m_justLaunched = false;
 
-		// turn off the overlay
-		m_spaceflightController.m_overlay.gameObject.SetActive( false );
+		// turn off the map overlay
+		m_spaceflightController.m_mapRawImage.color = new Color( 1.0f, 1.0f, 1.0f );
 
 		// show the ship on the map
 		m_spaceflightController.m_ship.SetActive( true );
+
+		// show the lens flare
+		m_spaceflightController.m_lensFlare.SetActive( true );
 
 		// reset the inertia vector
 		m_inertiaVector = Vector3.zero;

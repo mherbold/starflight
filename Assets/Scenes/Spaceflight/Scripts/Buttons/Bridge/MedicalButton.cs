@@ -1,10 +1,7 @@
 ﻿
-using UnityEngine;
-using UnityEngine.EventSystems;
-
-public class MedicalButton : Button
+public class MedicalButton : ShipButton
 {
-	private readonly Button[] m_buttons = { new ExamineButton(), new TreatButton(), new BridgeButton() };
+	private readonly ShipButton[] m_buttons = { new ExamineButton(), new TreatButton(), new BridgeButton() };
 
 	public override string GetLabel()
 	{

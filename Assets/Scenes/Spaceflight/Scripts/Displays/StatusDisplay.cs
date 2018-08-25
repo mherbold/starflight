@@ -1,7 +1,7 @@
 ﻿
 using UnityEngine;
 
-public class StatusDisplay : Display
+public class StatusDisplay : ShipDisplay
 {
 	public StatusDisplay( GameObject rootGameObject ) : base( rootGameObject )
 	{

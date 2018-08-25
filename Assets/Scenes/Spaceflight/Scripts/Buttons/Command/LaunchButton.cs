@@ -1,10 +1,7 @@
 ﻿
-using UnityEngine;
-using UnityEngine.EventSystems;
-
-public class LaunchButton : Button
+public class LaunchButton : ShipButton
 {
-	private readonly Button[] m_buttons = { new LaunchYesButton(), new LaunchNoButton() };
+	private readonly ShipButton[] m_buttons = { new LaunchYesButton(), new LaunchNoButton() };
 
 	public override string GetLabel()
 	{

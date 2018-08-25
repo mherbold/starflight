@@ -8,7 +8,7 @@ using TMPro;
 public class BankController : DoorController
 {
 	// public stuff we want to set using the editor
-	public UnityEngine.UI.Button m_exitButton;
+	public Button m_exitButton;
 	public TextMeshProUGUI m_dateListText;
 	public TextMeshProUGUI m_transactionsListText;
 	public TextMeshProUGUI m_amountListText;

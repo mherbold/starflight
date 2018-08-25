@@ -58,6 +58,9 @@ public class PersistentController : MonoBehaviour
 		// load the saved player data
 		LoadPlayerData();
 
+		// initalize the game data
+		m_gameData.Initialize();
+
 		// set this to true to force a reset of the player data
 		if ( m_resetPlayerData )
 		{

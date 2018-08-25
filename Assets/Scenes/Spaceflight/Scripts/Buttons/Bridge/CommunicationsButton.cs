@@ -1,10 +1,7 @@
 ﻿
-using UnityEngine;
-using UnityEngine.EventSystems;
-
-public class CommunicationsButton : Button
+public class CommunicationsButton : ShipButton
 {
-	private readonly Button[] m_buttons = { new HailButton(), new DistressButton(), new BridgeButton() };
+	private readonly ShipButton[] m_buttons = { new HailButton(), new DistressButton(), new BridgeButton() };
 
 	public override string GetLabel()
 	{

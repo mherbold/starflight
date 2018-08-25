@@ -3,7 +3,7 @@ using System;
 
 [Serializable]
 
-public class PlanetMapData
+public class PlanetMap
 {
 	public int[] m_key;
 	public int[] m_map;

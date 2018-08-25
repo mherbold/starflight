@@ -31,8 +31,8 @@ public class Starflight
 	
 	public void UpdateGameTime( float deltaTime )
 	{
-		// we want 1 year of arth time to be equal to 100 hours of game play time
-		float scale = ( 365.0f * 24.0f ) / 100.0f;
+		// we want 1 year of arth time to be equal to 50 hours of game play time
+		float scale = ( 365.0f * 24.0f ) / 50.0f;
 
 		deltaTime *= scale;
 

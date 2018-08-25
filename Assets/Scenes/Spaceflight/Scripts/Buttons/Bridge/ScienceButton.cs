@@ -1,10 +1,7 @@
 ﻿
-using UnityEngine;
-using UnityEngine.EventSystems;
-
-public class ScienceButton : Button
+public class ScienceButton : ShipButton
 {
-	private readonly Button[] m_buttons = { new SensorsButton(), new AnalysisButton(), new StatusButton(), new BridgeButton() };
+	private readonly ShipButton[] m_buttons = { new SensorsButton(), new AnalysisButton(), new StatusButton(), new BridgeButton() };
 
 	public override string GetLabel()
 	{

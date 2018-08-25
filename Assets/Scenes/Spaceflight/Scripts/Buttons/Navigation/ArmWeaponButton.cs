@@ -1,8 +1,5 @@
 ﻿
-using UnityEngine;
-using UnityEngine.EventSystems;
-
-public class ArmWeaponButton : Button
+public class ArmWeaponButton : ShipButton
 {
 	public override string GetLabel()
 	{
@@ -13,7 +10,7 @@ public class ArmWeaponButton : Button
 	{
 		PlayerData playerData = PersistentController.m_instance.m_playerData;
 
-		if ( ( playerData.m_shipConfiguration.m_laserCannonClass == 0 ) && ( playerData.m_shipConfiguration.m_missileLauncherClass == 0 ) )
+		if ( ( playerData.m_ship.m_laserCannonClass == 0 ) && ( playerData.m_ship.m_missileLauncherClass == 0 ) )
 		{
 			m_spaceflightController.m_uiSoundController.Play( UISoundController.UISound.Error );
 

@@ -3,13 +3,10 @@ using UnityEngine;
 
 public class SystemController : MonoBehaviour
 {
-	// constants
-	public const int c_maxNumPlanets = 8;
-
 	// our planet controllers
 	public PlanetController[] m_planetController;
 
-	// private stuff we don't want the editor to see
+	// the star id of the system we are currently in
 	private int m_currentStarId;
 
 	// convenient access to the spaceflight controller
@@ -18,7 +15,6 @@ public class SystemController : MonoBehaviour
 	// this is called by unity before start
 	private void Awake()
 	{
-		m_planetController = new PlanetController[ c_maxNumPlanets ];
 	}
 
 	// this is called by unity once at the start of the level
@@ -41,21 +37,10 @@ public class SystemController : MonoBehaviour
 	// this is called by unity every frame
 	private void Update()
 	{
-		// stop here if the spaceflight contoller has not started
-		if ( !m_spaceflightController.m_started )
-		{
-			return;
-		}
-
-		// update the planets
-		for ( int i = 0; i < c_maxNumPlanets; i++ )
-		{
-			m_planetController[ i ].Update();
-		}
 	}
 
 	// call this to change the current star system
-	public void ChangeSystem( int starId )
+	public void EnterSystem( int starId )
 	{
 		// update the current star id
 		m_currentStarId = starId;
@@ -64,22 +49,20 @@ public class SystemController : MonoBehaviour
 		GameData gameData = PersistentController.m_instance.m_gameData;
 
 		// get to the star data
-		StarGameData star = gameData.m_starList[ starId ];
+		Star star = gameData.m_starList[ starId ];
 
 		// turn off all the planets
-		for ( int i = 0; i < c_maxNumPlanets; i++ )
+		for ( int i = 0; i < Star.c_maxNumPlanets; i++ )
 		{
-			m_planetController[ i ].Change( -1 );
+			m_planetController[ i ].SetPlanet( null );
 		}
 
 		// turn on planets in this system
-		for ( int i = 0; i < gameData.m_planetList.Length; i++ )
+		foreach ( Planet planet in star.m_planetList )
 		{
-			PlanetGameData planetGameData = gameData.m_planetList[ i ];
-
-			if ( planetGameData.m_starId == starId )
+			if ( planet != null )
 			{
-				m_planetController[ planetGameData.m_orbitPosition ].Change( i );
+				m_planetController[ planet.m_orbitPosition ].SetPlanet( planet );
 			}
 		}
 

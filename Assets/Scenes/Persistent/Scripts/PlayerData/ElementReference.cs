@@ -16,7 +16,7 @@ public class ElementReference
 	}
 
 	// get access to the element game data for this element
-	public ElementGameData GetElementGameData()
+	public Element GetElementGameData()
 	{
 		// get access to the game data
 		GameData gameData = PersistentController.m_instance.m_gameData;

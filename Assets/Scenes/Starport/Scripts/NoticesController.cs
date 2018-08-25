@@ -1,7 +1,6 @@
 ﻿
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
@@ -80,17 +79,17 @@ public class NoticesController : MonoBehaviour
 
 		for ( int noticeId = 0; noticeId < gameData.m_noticeList.Length; noticeId++ )
 		{
-			NoticeGameData notice = gameData.m_noticeList[ noticeId ];
+			Notice notice = gameData.m_noticeList[ noticeId ];
 
 			if ( string.Compare( playerData.m_starflight.m_currentStardate, notice.m_stardate ) >= 0 )
 			{
 				m_latestNoticeId = noticeId;
 
-				if ( string.Compare( notice.m_stardate, playerData.m_notice.m_lastReadStardate ) >= 0 )
+				if ( string.Compare( notice.m_stardate, playerData.m_starport.m_lastReadNoticeStardate ) >= 0 )
 				{
 					if ( string.Compare( earliestNewNoticeStardate, notice.m_stardate ) >= 0 )
 					{
-						if ( notice.m_stardate != playerData.m_notice.m_lastReadStardate )
+						if ( notice.m_stardate != playerData.m_starport.m_lastReadNoticeStardate )
 						{
 							earliestNewNoticeStardate = notice.m_stardate;
 						}
@@ -229,7 +228,7 @@ public class NoticesController : MonoBehaviour
 		GameData gameData = PersistentController.m_instance.m_gameData;
 
 		// get the current notice
-		NoticeGameData currentNotice = gameData.m_noticeList[ m_currentNoticeId ];
+		Notice currentNotice = gameData.m_noticeList[ m_currentNoticeId ];
 
 		// check if we are displaying the first line
 		if ( m_currentLine == 0 )
@@ -239,9 +238,9 @@ public class NoticesController : MonoBehaviour
 			m_messageText.text = messageDate.ToLongDateString();
 
 			// remember the newest notice read
-			if ( string.Compare( currentNotice.m_stardate, PersistentController.m_instance.m_playerData.m_notice.m_lastReadStardate ) > 0 )
+			if ( string.Compare( currentNotice.m_stardate, PersistentController.m_instance.m_playerData.m_starport.m_lastReadNoticeStardate ) > 0 )
 			{
-				PersistentController.m_instance.m_playerData.m_notice.m_lastReadStardate = currentNotice.m_stardate;
+				PersistentController.m_instance.m_playerData.m_starport.m_lastReadNoticeStardate = currentNotice.m_stardate;
 			}
 		}
 

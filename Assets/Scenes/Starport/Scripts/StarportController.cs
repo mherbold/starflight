@@ -15,6 +15,9 @@ public class StarportController : MonoBehaviour
 	public AstronautController m_astronautController { get; private set; }
 	public DoorNameController m_doorNameController { get; private set; }
 
+	// whether or not the persistent scene has been loaded
+	public bool m_started;
+
 	// door controllers
 	private OperationsController m_operationsController;
 	private PersonnelController m_personnelController;
@@ -90,11 +93,21 @@ public class StarportController : MonoBehaviour
 
 			SceneManager.LoadScene( "Persistent" );
 		}
+		else
+		{
+			m_started = true;
+		}
 	}
 
 	// this is called by unity every frame
 	private void Update()
 	{
+		// stop here if the starport contoller has not started
+		if ( !m_started )
+		{
+			return;
+		}
+
 		// update the game time
 		PlayerData playerData = PersistentController.m_instance.m_playerData;
 

@@ -1,7 +1,7 @@
 ﻿
 using UnityEngine;
 
-public class LaunchYesButton : Button
+public class LaunchYesButton : ShipButton
 {
 	private float m_launchTimer;
 	private bool m_countdownStarted;
@@ -125,15 +125,15 @@ public class LaunchYesButton : Button
 
 						// change to the arth system
 						GameData gameData = PersistentController.m_instance.m_gameData;
-						m_spaceflightController.m_systemController.ChangeSystem( gameData.m_miscGameData.m_arthStarId );
+						m_spaceflightController.m_systemController.EnterSystem( gameData.m_misc.m_arthStarId );
 
 						// restore the bridge buttons (this also ends the launch function)
 						m_spaceflightController.m_buttonController.RestoreBridgeButtons();
 					}
 
-					// make the fade overlay visible and update its opacity
-					m_spaceflightController.m_overlay.gameObject.SetActive( true );
-					m_spaceflightController.m_overlay.color = new Color( 0.0f, 0.0f, 0.0f, y / 1000.0f );
+					// fade the map overlay
+					float fade = 1.0f - ( y / 1000.0f );
+					m_spaceflightController.m_mapRawImage.color = new Color( fade, fade, fade );
 
 					// update the position of the ship
 					Vector3 position = new Vector3( 0.0f, 2500.0f - y, 0.0f );

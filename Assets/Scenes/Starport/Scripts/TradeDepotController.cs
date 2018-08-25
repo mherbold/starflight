@@ -39,11 +39,11 @@ public class TradeDepotController : DoorController
 	public TextMeshProUGUI m_analyzeText;
 	public Image m_upArrowImage;
 	public Image m_downArrowImage;
-	public UnityEngine.UI.Button m_buyButton;
-	public UnityEngine.UI.Button m_sellButton;
-	public UnityEngine.UI.Button m_analyzeButton;
-	public UnityEngine.UI.Button m_exitButton;
-	public UnityEngine.UI.Button m_noButton;
+	public Button m_buyButton;
+	public Button m_sellButton;
+	public Button m_analyzeButton;
+	public Button m_exitButton;
+	public Button m_noButton;
 	public GameObject m_selectionXform;
 	public GameObject m_welcomeGameObject;
 	public GameObject m_tradeGameObject;
@@ -586,7 +586,7 @@ public class TradeDepotController : DoorController
 							return;
 						}
 
-						int remainingVolume = playerData.m_shipConfiguration.GetRemainingVolme();
+						int remainingVolume = playerData.m_ship.GetRemainingVolme();
 
 						if ( remainingVolume == 0 )
 						{
@@ -605,7 +605,7 @@ public class TradeDepotController : DoorController
 					else
 					{
 						// the maximum amount is however much the player has in the ships cargo hold
-						ElementReference elementReference = playerData.m_shipCargo.m_elementStorage.Find( elementId );
+						ElementReference elementReference = playerData.m_ship.m_elementStorage.Find( elementId );
 
 						maximumAmount = elementReference.m_volume;
 					}
@@ -665,14 +665,14 @@ public class TradeDepotController : DoorController
 					m_rowCount++;
 
 					// get access to the ship cargo data for elements
-					ElementStorage elementStorage = playerData.m_shipCargo.m_elementStorage;
+					ElementStorage elementStorage = playerData.m_ship.m_elementStorage;
 
 					if ( ( m_currentState == State.BuyItem ) || ( m_currentState == State.BuyAmount ) )
 					{
 						// add all elements available to buy in starport
 						for ( int elementId = 0; elementId < gameData.m_elementList.Length; elementId++ )
 						{
-							ElementGameData elementGameData = gameData.m_elementList[ elementId ];
+							Element elementGameData = gameData.m_elementList[ elementId ];
 
 							if ( elementGameData.m_availableInStarport )
 							{
@@ -700,7 +700,7 @@ public class TradeDepotController : DoorController
 						// add all elements in the ship cargo hold
 						foreach ( ElementReference elementReference in elementStorage.m_elementList )
 						{
-							ElementGameData elementGameData = elementReference.GetElementGameData();
+							Element elementGameData = elementReference.GetElementGameData();
 
 							m_itemListText.text += elementGameData.m_name + Environment.NewLine;
 							m_volumeListText.text += ( elementReference.m_volume / 10 ) + "." + ( elementReference.m_volume % 10 ) + Environment.NewLine;
@@ -721,12 +721,12 @@ public class TradeDepotController : DoorController
 					m_rowCount++;
 
 					// get access to the starport data for artifacts
-					ArtifactStorage artifactStorage = playerData.m_starportCargo.m_artifactStorage;
+					ArtifactStorage artifactStorage = playerData.m_starport.m_artifactStorage;
 
 					// add all artifacts available to buy in starport
 					foreach (  ArtifactReference artifactReference in artifactStorage.m_artifactList )
 					{
-						ArtifactGameData artifactGameData = artifactReference.GetArtifactGameData();
+						Artifact artifactGameData = artifactReference.GetArtifactGameData();
 
 						m_itemListText.text += artifactGameData.m_name + Environment.NewLine;
 						m_volumeListText.text += ( artifactGameData.m_volume / 10 ) + "." + ( artifactGameData.m_volume % 10 ) + Environment.NewLine;
@@ -746,12 +746,12 @@ public class TradeDepotController : DoorController
 					m_rowCount++;
 
 					// get access to the ship storage for artifacts
-					ArtifactStorage artifactStorage = playerData.m_shipCargo.m_artifactStorage;
+					ArtifactStorage artifactStorage = playerData.m_ship.m_artifactStorage;
 
 					// add all artifacts in the ship cargo hold
 					foreach ( ArtifactReference artifactReference in artifactStorage.m_artifactList )
 					{
-						ArtifactGameData artifactGameData = artifactReference.GetArtifactGameData();
+						Artifact artifactGameData = artifactReference.GetArtifactGameData();
 
 						m_itemListText.text += artifactGameData.m_name + Environment.NewLine;
 						m_volumeListText.text += ( artifactGameData.m_volume / 10 ) + "." + ( artifactGameData.m_volume % 10 ) + Environment.NewLine;
@@ -868,7 +868,7 @@ public class TradeDepotController : DoorController
 		PlayerData playerData = PersistentController.m_instance.m_playerData;
 
 		// check if the player has something to sell
-		if ( ( playerData.m_shipCargo.m_artifactStorage.m_artifactList.Count == 0 ) && ( playerData.m_shipCargo.m_elementStorage.m_elementList.Count == 0 ) )
+		if ( ( playerData.m_ship.m_artifactStorage.m_artifactList.Count == 0 ) && ( playerData.m_ship.m_elementStorage.m_elementList.Count == 0 ) )
 		{
 			// the player has nothing to sell - block the action
 			SwitchToErrorMessageState( "Starship hold is empty" );
@@ -890,7 +890,7 @@ public class TradeDepotController : DoorController
 		PlayerData playerData = PersistentController.m_instance.m_playerData;
 
 		// check if the player has something to analyze
-		if ( ( playerData.m_shipCargo.m_artifactStorage.m_artifactList.Count == 0 ) && ( playerData.m_shipCargo.m_elementStorage.m_elementList.Count == 0 ) && ( playerData.m_starportCargo.m_artifactStorage.m_artifactList.Count == 0 ) )
+		if ( ( playerData.m_ship.m_artifactStorage.m_artifactList.Count == 0 ) && ( playerData.m_ship.m_elementStorage.m_elementList.Count == 0 ) && ( playerData.m_starport.m_artifactStorage.m_artifactList.Count == 0 ) )
 		{
 			// the player has nothing to analyze - block the action
 			SwitchToErrorMessageState( "There are no artifacts to analyze" );
@@ -925,7 +925,7 @@ public class TradeDepotController : DoorController
 		GameData gameData = PersistentController.m_instance.m_gameData;
 
 		// deduct the cost of analyzing the artifact from the players bank balance
-		playerData.m_bank.m_currentBalance -= gameData.m_starportGameData.m_artifactAnalysisPrice;
+		playerData.m_bank.m_currentBalance -= gameData.m_misc.m_artifactAnalysisPrice;
 
 		// add artifact to the list of known artifacts
 		playerData.m_knownArtifacts.Add( item.m_id );
@@ -1015,7 +1015,7 @@ public class TradeDepotController : DoorController
 					PlayerData playerData = PersistentController.m_instance.m_playerData;
 
 					// check if the ship has room in the cargo hold
-					if ( desiredAmount > playerData.m_shipConfiguration.GetRemainingVolme() )
+					if ( desiredAmount > playerData.m_ship.GetRemainingVolme() )
 					{
 						SwitchToErrorMessageState( "Insufficient cargo space" );
 					}
@@ -1031,7 +1031,7 @@ public class TradeDepotController : DoorController
 						playerData.m_bank.m_currentBalance -= starportPrice * desiredAmount / 10;
 
 						// transfer the element to the ship
-						playerData.m_shipCargo.AddElement( elementId, desiredAmount );
+						playerData.m_ship.AddElement( elementId, desiredAmount );
 
 						// switch back to the buy item state
 						SwitchToBuyItemState( false );
@@ -1056,7 +1056,7 @@ public class TradeDepotController : DoorController
 				playerData.m_bank.m_currentBalance += sellPrice * desiredAmount / 10;
 
 				// transfer the element to starport
-				playerData.m_shipCargo.RemoveElement( elementId, desiredAmount );
+				playerData.m_ship.RemoveElement( elementId, desiredAmount );
 
 				// switch back to the sell item state
 				SwitchToSellItemState( false );
@@ -1087,7 +1087,7 @@ public class TradeDepotController : DoorController
 			PlayerData playerData = PersistentController.m_instance.m_playerData;
 
 			// get access to the artifact data
-			ArtifactGameData artifactGameData = gameData.m_artifactList[ item.m_id ];
+			Artifact artifactGameData = gameData.m_artifactList[ item.m_id ];
 
 			// it's an artifact - check if the player can afford it
 			if ( playerData.m_bank.m_currentBalance < artifactGameData.m_starportPrice )
@@ -1098,14 +1098,14 @@ public class TradeDepotController : DoorController
 				Debug.Log( "playerData.m_bankPlayerData.m_currentBalance = " + playerData.m_bank.m_currentBalance );
 				Debug.Log( "artifactGameData.m_starportPrice = " + artifactGameData.m_starportPrice );
 			}
-			else if ( artifactGameData.m_volume > playerData.m_shipConfiguration.GetRemainingVolme() )
+			else if ( artifactGameData.m_volume > playerData.m_ship.GetRemainingVolme() )
 			{
 				// player's ship has no room for it - show an error message
 				SwitchToErrorMessageState( "Insufficient cargo space" );
 
-				Debug.Log( "playerData.m_shipCargoPlayerData.m_volumeUsed = " + playerData.m_shipCargo.m_volumeUsed );
+				Debug.Log( "playerData.m_shipCargoPlayerData.m_volumeUsed = " + playerData.m_ship.m_volumeUsed );
 				Debug.Log( "artifactGameData.m_volume = " + artifactGameData.m_volume );
-				Debug.Log( "playerData.m_shipConfigurationPlayerData.m_volume = " + playerData.m_shipConfiguration.m_volume );
+				Debug.Log( "playerData.m_shipConfigurationPlayerData.m_volume = " + playerData.m_ship.m_volume );
 			}
 			else
 			{
@@ -1113,8 +1113,8 @@ public class TradeDepotController : DoorController
 				playerData.m_bank.m_currentBalance -= gameData.m_artifactList[ item.m_id ].m_starportPrice;
 
 				// transfer the artifact from the starport to the ship
-				playerData.m_starportCargo.m_artifactStorage.Remove( item.m_id );
-				playerData.m_shipCargo.AddArtifact( item.m_id );
+				playerData.m_starport.m_artifactStorage.Remove( item.m_id );
+				playerData.m_ship.AddArtifact( item.m_id );
 
 				// update the screen
 				UpdateScreen();
@@ -1148,8 +1148,8 @@ public class TradeDepotController : DoorController
 			playerData.m_bank.m_currentBalance += gameData.m_artifactList[ item.m_id ].m_actualValue;
 
 			// transfer the artifact from the ship to the starport
-			playerData.m_starportCargo.m_artifactStorage.Add( item.m_id );
-			playerData.m_shipCargo.RemoveArtifact( item.m_id );
+			playerData.m_starport.m_artifactStorage.Add( item.m_id );
+			playerData.m_ship.RemoveArtifact( item.m_id );
 
 			// update the screen
 			UpdateScreen();
@@ -1179,7 +1179,7 @@ public class TradeDepotController : DoorController
 		else
 		{
 			// we do not know it - check if the player can afford it
-			if ( playerData.m_bank.m_currentBalance < gameData.m_starportGameData.m_artifactAnalysisPrice )
+			if ( playerData.m_bank.m_currentBalance < gameData.m_misc.m_artifactAnalysisPrice )
 			{
 				// the player cannot afford it
 				SwitchToErrorMessageState( "Insufficient funds" );

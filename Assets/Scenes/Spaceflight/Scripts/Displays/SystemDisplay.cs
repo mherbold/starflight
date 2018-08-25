@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SystemDisplay : Display
+public class SystemDisplay : ShipDisplay
 {
 	private GameObject[] m_orbitGameObject;
 	private Image [] m_planetImage;
@@ -15,11 +15,11 @@ public class SystemDisplay : Display
 		Transform transform;
 
 		// allocate arrays
-		m_orbitGameObject = new GameObject[ SystemController.c_maxNumPlanets ];
-		m_planetImage = new Image[ SystemController.c_maxNumPlanets ];
+		m_orbitGameObject = new GameObject[ Star.c_maxNumPlanets ];
+		m_planetImage = new Image[ Star.c_maxNumPlanets ];
 
 		// get to the orbits
-		for ( int i = 0; i < SystemController.c_maxNumPlanets; i++ )
+		for ( int i = 0; i < Star.c_maxNumPlanets; i++ )
 		{
 			// get the orbit game object
 			transform = m_rootGameObject.transform.Find( "Orbit-" + ( i + 1 ) );
@@ -57,9 +57,9 @@ public class SystemDisplay : Display
 	public override void Update()
 	{
 		// update the positions of the planets
-		for ( int i = 0; i < SystemController.c_maxNumPlanets; i++ )
+		for ( int i = 0; i < Star.c_maxNumPlanets; i++ )
 		{
-			float angle = m_spaceflightController.m_systemController.m_planetOrbitAngle[ i ];
+			float angle = m_spaceflightController.m_systemController.m_planetController[ i ].m_orbitAngle * 360.0f;
 
 			Quaternion rotation = Quaternion.AngleAxis( angle, Vector3.forward );
 
@@ -77,7 +77,7 @@ public class SystemDisplay : Display
 		GameData gameData = PersistentController.m_instance.m_gameData;
 
 		// get to the star data
-		StarGameData star = gameData.m_starList[ starId ];
+		Star star = gameData.m_starList[ starId ];
 
 		// turn off the arth game object
 		m_arthGameObject.SetActive( false );
@@ -103,15 +103,17 @@ public class SystemDisplay : Display
 		m_sunImage.color = color;
 
 		// update each planet in the system
-		for ( int i = 0; i < SystemController.c_maxNumPlanets; i++ )
+		for ( int i = 0; i < Star.c_maxNumPlanets; i++ )
 		{
-			bool orbitHasPlanet = ( m_spaceflightController.m_systemController.m_planetController[ i ].m_planetId != -1 );
+			Planet planet = m_spaceflightController.m_systemController.m_planetController[ i ].m_planet;
 
-			m_orbitGameObject[ i ].SetActive( orbitHasPlanet );
-
-			if ( orbitHasPlanet )
+			if ( planet == null )
 			{
-				PlanetGameData planet = m_spaceflightController.m_systemController.m_planetController[ i ].m_planetGameData;
+				m_orbitGameObject[ i ].SetActive( false );
+			}
+			else
+			{
+				m_orbitGameObject[ i ].SetActive( true );
 
 				// check if this is the arth station (special case)
 				if ( planet.m_planetTypeId == 57 )
@@ -122,7 +124,7 @@ public class SystemDisplay : Display
 				}
 				else
 				{
-					PlanetTypeGameData planetType = gameData.m_planetTypeList[ planet.m_planetTypeId ];
+					PlanetType planetType = gameData.m_planetTypeList[ planet.m_planetTypeId ];
 
 					switch ( planetType.m_color )
 					{
@@ -134,9 +136,7 @@ public class SystemDisplay : Display
 						default: color = new Color( 0.0f, 1.0f, 0.0f ); break;
 					}
 
-					int orbitalPosition = m_spaceflightController.m_systemController.m_orbitNumberToPosition[ planet.m_orbitNumber - 1 ];
-
-					m_planetImage[ orbitalPosition - 1 ].color = color;
+					m_planetImage[ planet.m_orbitPosition ].color = color;
 				}
 			}
 		}

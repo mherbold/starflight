@@ -15,7 +15,8 @@ public class SpaceflightController : MonoBehaviour
 	public Animator m_dockingBayDoorTop;
 	public Animator m_dockingBayDoorBottom;
 	public ParticleSystem m_decompressionParticleSystem;
-	public Image m_overlay;
+	public RawImage m_mapRawImage;
+	public GameObject m_lensFlare;
 	public GameObject m_player;
 	public GameObject m_ship;
 	public TextMeshProUGUI m_currentOfficer;
@@ -75,8 +76,8 @@ public class SpaceflightController : MonoBehaviour
 			// hide various objects
 			m_countdown.gameObject.SetActive( false );
 			m_decompressionParticleSystem.gameObject.SetActive( false );
-			m_overlay.gameObject.SetActive( false );
 			m_ship.SetActive( false );
+			m_lensFlare.SetActive( false );
 
 			// show the docking bay doors (closed) if we just came from the spaceport
 			m_dockingBayDoorTop.gameObject.SetActive( m_inDockingBay );

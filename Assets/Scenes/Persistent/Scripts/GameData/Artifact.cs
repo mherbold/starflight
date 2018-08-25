@@ -3,7 +3,7 @@ using System;
 
 [Serializable]
 
-public class ArtifactGameData
+public class Artifact
 {
 	public string m_name;
 	public int m_volume;

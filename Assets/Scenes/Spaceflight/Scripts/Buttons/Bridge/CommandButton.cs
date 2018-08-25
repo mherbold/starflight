@@ -1,10 +1,7 @@
 ﻿
-using UnityEngine;
-using UnityEngine.EventSystems;
-
-public class CommandButton : Button
+public class CommandButton : ShipButton
 {
-	private readonly Button[] m_buttons = { new LaunchButton(), new DisembarkButton(), new CargoButton(), new LogPlanetButton(), new ShipsLogButton(), new BridgeButton() };
+	private readonly ShipButton[] m_buttons = { new LaunchButton(), new DisembarkButton(), new CargoButton(), new LogPlanetButton(), new ShipsLogButton(), new BridgeButton() };
 
 	public override string GetLabel()
 	{

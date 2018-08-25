@@ -1,8 +1,5 @@
 ﻿
-using UnityEngine;
-using UnityEngine.EventSystems;
-
-public class StarmapButton : Button
+public class StarmapButton : ShipButton
 {
 	public override string GetLabel()
 	{

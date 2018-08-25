@@ -1,8 +1,5 @@
 ﻿
-using UnityEngine;
-using UnityEngine.EventSystems;
-
-public class HailButton : Button
+public class HailButton : ShipButton
 {
 	public override string GetLabel()
 	{

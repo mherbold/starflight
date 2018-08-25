@@ -1,7 +1,7 @@
 ﻿
 using UnityEngine;
 
-abstract public class Display
+abstract public class ShipDisplay
 {
 	// convenient access to the spaceflight controller
 	protected SpaceflightController m_spaceflightController;
@@ -9,7 +9,7 @@ abstract public class Display
 	// the root display gameobject
 	protected GameObject m_rootGameObject;
 
-	public Display( GameObject rootGameObject )
+	public ShipDisplay( GameObject rootGameObject )
 	{
 		GameObject controllersGameObject = GameObject.FindWithTag( "Spaceflight Controllers" );
 

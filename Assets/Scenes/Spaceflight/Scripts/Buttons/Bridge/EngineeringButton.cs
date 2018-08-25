@@ -1,10 +1,7 @@
 ﻿
-using UnityEngine;
-using UnityEngine.EventSystems;
-
-public class EngineeringButton : Button
+public class EngineeringButton : ShipButton
 {
-	private readonly Button[] m_buttons = { new DamageButton(), new RepairButton(), new BridgeButton() };
+	private readonly ShipButton[] m_buttons = { new DamageButton(), new RepairButton(), new BridgeButton() };
 
 	public override string GetLabel()
 	{

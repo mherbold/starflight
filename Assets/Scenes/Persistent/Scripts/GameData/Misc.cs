@@ -3,8 +3,12 @@ using System;
 
 [Serializable]
 
-public class ShipGameData
+public class Misc
 {
+	public int m_arthStarId;
+
+	public int m_artifactAnalysisPrice;
+
 	public int m_baseShipMass;
 	public int m_baseShipVolume;
 	public int m_cargoPodBuyPrice;

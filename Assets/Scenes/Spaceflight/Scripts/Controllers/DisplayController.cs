@@ -12,7 +12,7 @@ public class DisplayController : MonoBehaviour
 	// displays
 	public StatusDisplay m_statusDisplay;
 	public SystemDisplay m_systemDisplay;
-	public Display m_currentDisplay;
+	public ShipDisplay m_currentDisplay;
 
 	// convenient access to the spaceflight controller
 	private SpaceflightController m_spaceflightController;
@@ -57,7 +57,7 @@ public class DisplayController : MonoBehaviour
 	}
 
 	// change the current display to a different one
-	public void ChangeDisplay( Display newDisplay )
+	public void ChangeDisplay( ShipDisplay newDisplay )
 	{
 		// inactivate all of the display UI
 		m_statusDisplay.Stop();

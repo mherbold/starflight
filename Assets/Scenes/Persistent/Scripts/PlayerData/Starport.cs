@@ -3,12 +3,16 @@ using System;
 
 [Serializable]
 
-public class StarportCargo
+public class Starport
 {
+	public string m_lastReadNoticeStardate;
 	public ArtifactStorage m_artifactStorage;
 
 	public void Reset()
 	{
+		// reset the last read notice stardate
+		m_lastReadNoticeStardate = "0000-00-00";
+
 		// create and reset the starport artifact storage to initial game state
 		m_artifactStorage = new ArtifactStorage();
 
@@ -20,7 +24,7 @@ public class StarportCargo
 		// add the artifacts that are available to buy in starport at the beginning of the game
 		for ( int artifactId = 0; artifactId < gameData.m_artifactList.Length; artifactId++ )
 		{
-			ArtifactGameData artifactGameData = gameData.m_artifactList[ artifactId ];
+			Artifact artifactGameData = gameData.m_artifactList[ artifactId ];
 
 			if ( artifactGameData.m_availableInStarport )
 			{

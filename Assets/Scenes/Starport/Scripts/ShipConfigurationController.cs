@@ -18,11 +18,11 @@ public class ShipConfigurationController : DoorController
 	}
 
 	// public stuff we want to set using the editor
-	public UnityEngine.UI.Button m_buyButton;
-	public UnityEngine.UI.Button m_sellButton;
-	public UnityEngine.UI.Button m_repairButton;
-	public UnityEngine.UI.Button m_nameButton;
-	public UnityEngine.UI.Button m_exitButton;
+	public Button m_buyButton;
+	public Button m_sellButton;
+	public Button m_repairButton;
+	public Button m_nameButton;
+	public Button m_exitButton;
 	public TextMeshProUGUI m_componentNamesText;
 	public TextMeshProUGUI m_componentValuesText;
 	public TextMeshProUGUI m_configurationValuesText;
@@ -426,7 +426,7 @@ public class ShipConfigurationController : DoorController
 		UpdateScreen();
 
 		// set the current text input to the current name of the ship
-		m_nameInputField.text = PersistentController.m_instance.m_playerData.m_shipConfiguration.m_name;
+		m_nameInputField.text = PersistentController.m_instance.m_playerData.m_ship.m_name;
 
 		// select the text input by default
 		m_nameInputField.Select();
@@ -522,39 +522,39 @@ public class ShipConfigurationController : DoorController
 		// get the player data
 		PlayerData playerData = PersistentController.m_instance.m_playerData;
 
-		// get the ship configuration player data
-		ShipConfiguration shipConfiguration = playerData.m_shipConfiguration;
+		// get the ship player data
+		Ship ship = playerData.m_ship;
 
 		// update configuration values
-		m_configurationValuesText.text = shipConfiguration.m_numCargoPods.ToString() + Environment.NewLine;
+		m_configurationValuesText.text = ship.m_numCargoPods.ToString() + Environment.NewLine;
 		m_configurationValuesText.text += Environment.NewLine;
-		m_configurationValuesText.text += shipConfiguration.GetEnginesClassString() + Environment.NewLine;
-		m_configurationValuesText.text += shipConfiguration.GetSheildingClassString() + Environment.NewLine;
-		m_configurationValuesText.text += shipConfiguration.GetArmorClassString() + Environment.NewLine;
-		m_configurationValuesText.text += shipConfiguration.GetMissileLauncherClassString() + Environment.NewLine;
-		m_configurationValuesText.text += shipConfiguration.GetLaserCannonClassString() + Environment.NewLine;
+		m_configurationValuesText.text += ship.GetEnginesClassString() + Environment.NewLine;
+		m_configurationValuesText.text += ship.GetSheildingClassString() + Environment.NewLine;
+		m_configurationValuesText.text += ship.GetArmorClassString() + Environment.NewLine;
+		m_configurationValuesText.text += ship.GetMissileLauncherClassString() + Environment.NewLine;
+		m_configurationValuesText.text += ship.GetLaserCannonClassString() + Environment.NewLine;
 
 		// show only as many cargo pods as we have purchased
 		for ( int cargoPodId = 0; cargoPodId < m_cargoPods.Length; cargoPodId++ )
 		{
-			m_cargoPods[ cargoPodId ].SetActive( cargoPodId < shipConfiguration.m_numCargoPods );
+			m_cargoPods[ cargoPodId ].SetActive( cargoPodId < ship.m_numCargoPods );
 		}
 
 		// hide or show the shield image depending on if we have them
-		m_shieldImage.gameObject.SetActive( shipConfiguration.m_shieldingClass > 0 );
+		m_shieldImage.gameObject.SetActive( ship.m_shieldingClass > 0 );
 
 		// hide or show the missile launchers depending on if we have them
-		m_missileLauncher.SetActive( shipConfiguration.m_missileLauncherClass > 0 );
+		m_missileLauncher.SetActive( ship.m_missileLauncherClass > 0 );
 
 		// hide or show the missile launchers depending on if we have them
-		m_laserCannon.SetActive( shipConfiguration.m_laserCannonClass > 0 );
+		m_laserCannon.SetActive( ship.m_laserCannonClass > 0 );
 
 		// update status values
-		m_statusValuesText.text = shipConfiguration.m_mass + " Tons" + Environment.NewLine;
-		m_statusValuesText.text += shipConfiguration.m_acceleration + " G" + Environment.NewLine;
+		m_statusValuesText.text = ship.m_mass + " Tons" + Environment.NewLine;
+		m_statusValuesText.text += ship.m_acceleration + " G" + Environment.NewLine;
 
 		// report the amount of endurium on the ship
-		ElementReference elementReference = playerData.m_shipCargo.m_elementStorage.Find( "Endurium" );
+		ElementReference elementReference = playerData.m_ship.m_elementStorage.Find( "Endurium" );
 
 		if ( elementReference == null )
 		{
@@ -734,7 +734,7 @@ public class ShipConfigurationController : DoorController
 	public void OnEndEdit()
 	{
 		// update the ship name in the player data
-		PersistentController.m_instance.m_playerData.m_shipConfiguration.m_name = m_nameInputField.text;
+		PersistentController.m_instance.m_playerData.m_ship.m_name = m_nameInputField.text;
 
 		// switch to the menu bar state
 		SwitchToMenuBarState();
@@ -761,11 +761,11 @@ public class ShipConfigurationController : DoorController
 
 			switch ( m_currentPartIndex )
 			{
-				case 1: currentClass = playerData.m_shipConfiguration.m_enginesClass; break;
-				case 2: currentClass = playerData.m_shipConfiguration.m_shieldingClass; break;
-				case 3: currentClass = playerData.m_shipConfiguration.m_armorClass; break;
-				case 4: currentClass = playerData.m_shipConfiguration.m_missileLauncherClass; break;
-				case 5: currentClass = playerData.m_shipConfiguration.m_laserCannonClass; break;
+				case 1: currentClass = playerData.m_ship.m_enginesClass; break;
+				case 2: currentClass = playerData.m_ship.m_shieldingClass; break;
+				case 3: currentClass = playerData.m_ship.m_armorClass; break;
+				case 4: currentClass = playerData.m_ship.m_missileLauncherClass; break;
+				case 5: currentClass = playerData.m_ship.m_laserCannonClass; break;
 			}
 
 			// check if the ship has this part installed already
@@ -800,11 +800,11 @@ public class ShipConfigurationController : DoorController
 
 			switch ( m_currentPartIndex )
 			{
-				case 1: currentClass = playerData.m_shipConfiguration.m_enginesClass; break;
-				case 2: currentClass = playerData.m_shipConfiguration.m_shieldingClass; break;
-				case 3: currentClass = playerData.m_shipConfiguration.m_armorClass; break;
-				case 4: currentClass = playerData.m_shipConfiguration.m_missileLauncherClass; break;
-				case 5: currentClass = playerData.m_shipConfiguration.m_laserCannonClass; break;
+				case 1: currentClass = playerData.m_ship.m_enginesClass; break;
+				case 2: currentClass = playerData.m_ship.m_shieldingClass; break;
+				case 3: currentClass = playerData.m_ship.m_armorClass; break;
+				case 4: currentClass = playerData.m_ship.m_missileLauncherClass; break;
+				case 5: currentClass = playerData.m_ship.m_laserCannonClass; break;
 			}
 
 			// check if the ship has this part installed already
@@ -814,7 +814,7 @@ public class ShipConfigurationController : DoorController
 				GameData gameData = PersistentController.m_instance.m_gameData;
 
 				// get the part list
-				ShipPartGameData[] shipPartList = null;
+				ShipPart[] shipPartList = null;
 
 				switch ( m_currentPartIndex )
 				{
@@ -831,11 +831,11 @@ public class ShipConfigurationController : DoorController
 				// remove the part from the ship
 				switch ( m_currentPartIndex )
 				{
-					case 1: playerData.m_shipConfiguration.m_enginesClass = 0; break;
-					case 2: playerData.m_shipConfiguration.m_shieldingClass = 0; break;
-					case 3: playerData.m_shipConfiguration.m_armorClass = 0; break;
-					case 4: playerData.m_shipConfiguration.m_missileLauncherClass = 0; break;
-					case 5: playerData.m_shipConfiguration.m_laserCannonClass = 0; break;
+					case 1: playerData.m_ship.m_enginesClass = 0; break;
+					case 2: playerData.m_ship.m_shieldingClass = 0; break;
+					case 3: playerData.m_ship.m_armorClass = 0; break;
+					case 4: playerData.m_ship.m_missileLauncherClass = 0; break;
+					case 5: playerData.m_ship.m_laserCannonClass = 0; break;
 				}
 
 				// update the screen
@@ -853,7 +853,7 @@ public class ShipConfigurationController : DoorController
 		GameData gameData = PersistentController.m_instance.m_gameData;
 
 		// get the ship part list
-		ShipPartGameData[] shipPartList = null;
+		ShipPart[] shipPartList = null;
 
 		switch ( m_currentPartIndex )
 		{
@@ -884,11 +884,11 @@ public class ShipConfigurationController : DoorController
 			// upgrade the ship part
 			switch ( m_currentPartIndex )
 			{
-				case 1: playerData.m_shipConfiguration.m_enginesClass = classIndex; break;
-				case 2: playerData.m_shipConfiguration.m_shieldingClass = classIndex; break;
-				case 3: playerData.m_shipConfiguration.m_armorClass = classIndex; break;
-				case 4: playerData.m_shipConfiguration.m_missileLauncherClass = classIndex; break;
-				case 5: playerData.m_shipConfiguration.m_laserCannonClass = classIndex; break;
+				case 1: playerData.m_ship.m_enginesClass = classIndex; break;
+				case 2: playerData.m_ship.m_shieldingClass = classIndex; break;
+				case 3: playerData.m_ship.m_armorClass = classIndex; break;
+				case 4: playerData.m_ship.m_missileLauncherClass = classIndex; break;
+				case 5: playerData.m_ship.m_laserCannonClass = classIndex; break;
 			}
 
 			// switch back to the buy part state
@@ -911,7 +911,7 @@ public class ShipConfigurationController : DoorController
 		if ( m_currentState == State.SellPart )
 		{
 			// hide the sell prices for cargo pods if we don't have any
-			if ( playerData.m_shipConfiguration.m_numCargoPods == 0 )
+			if ( playerData.m_ship.m_numCargoPods == 0 )
 			{
 				includeCargoPods = false;
 			}
@@ -920,7 +920,7 @@ public class ShipConfigurationController : DoorController
 		if ( includeCargoPods )
 		{
 			// show the cargo pod price
-			m_componentValuesText.text = gameData.m_shipGameData.m_cargoPodBuyPrice.ToString() + Environment.NewLine;
+			m_componentValuesText.text = gameData.m_misc.m_cargoPodBuyPrice.ToString() + Environment.NewLine;
 		}
 		else
 		{
@@ -938,17 +938,17 @@ public class ShipConfigurationController : DoorController
 
 		switch ( m_currentPartIndex )
 		{
-			case 1: currentClass = playerData.m_shipConfiguration.m_enginesClass; break;
-			case 2: currentClass = playerData.m_shipConfiguration.m_shieldingClass; break;
-			case 3: currentClass = playerData.m_shipConfiguration.m_armorClass; break;
-			case 4: currentClass = playerData.m_shipConfiguration.m_missileLauncherClass; break;
-			case 5: currentClass = playerData.m_shipConfiguration.m_laserCannonClass; break;
+			case 1: currentClass = playerData.m_ship.m_enginesClass; break;
+			case 2: currentClass = playerData.m_ship.m_shieldingClass; break;
+			case 3: currentClass = playerData.m_ship.m_armorClass; break;
+			case 4: currentClass = playerData.m_ship.m_missileLauncherClass; break;
+			case 5: currentClass = playerData.m_ship.m_laserCannonClass; break;
 		}
 
 		// update part class prices (if we have anything but cargo pods selected)
 		if ( m_currentPartIndex > 0 )
 		{
-			ShipPartGameData[] shipPartList = null;
+			ShipPart[] shipPartList = null;
 
 			switch ( m_currentPartIndex )
 			{
@@ -993,7 +993,7 @@ public class ShipConfigurationController : DoorController
 		PlayerData playerData = PersistentController.m_instance.m_playerData;
 
 		// check if we have room for another cargo pod
-		if ( playerData.m_shipConfiguration.m_numCargoPods == 16 )
+		if ( playerData.m_ship.m_numCargoPods == 16 )
 		{
 			// nope - show an error message
 			SwitchToErrorMessageState( "No cargo pod bays available" );
@@ -1001,7 +1001,7 @@ public class ShipConfigurationController : DoorController
 		else
 		{
 			// can we afford it?
-			if ( playerData.m_bank.m_currentBalance < gameData.m_shipGameData.m_cargoPodBuyPrice )
+			if ( playerData.m_bank.m_currentBalance < gameData.m_misc.m_cargoPodBuyPrice )
 			{
 				// nope - show an error message
 				SwitchToErrorMessageState( "Insufficient funds" );
@@ -1009,10 +1009,10 @@ public class ShipConfigurationController : DoorController
 			else
 			{
 				// deduct the price of the cargo pod from the player's bank balance
-				playerData.m_bank.m_currentBalance -= gameData.m_shipGameData.m_cargoPodBuyPrice;
+				playerData.m_bank.m_currentBalance -= gameData.m_misc.m_cargoPodBuyPrice;
 
 				// add one cargo pod to the ship
-				playerData.m_shipConfiguration.AddCargoPod();
+				playerData.m_ship.AddCargoPod();
 
 				// update the screen
 				UpdateScreen();
@@ -1033,13 +1033,13 @@ public class ShipConfigurationController : DoorController
 		PlayerData playerData = PersistentController.m_instance.m_playerData;
 
 		// check if we have room for another cargo pod
-		if ( playerData.m_shipConfiguration.m_numCargoPods > 0 )
+		if ( playerData.m_ship.m_numCargoPods > 0 )
 		{
 			// pay for the cargo pod into the player's bank balance
-			playerData.m_bank.m_currentBalance += gameData.m_shipGameData.m_cargoPodSellPrice;
+			playerData.m_bank.m_currentBalance += gameData.m_misc.m_cargoPodSellPrice;
 
 			// remove one cargo pod from the ship
-			playerData.m_shipConfiguration.RemoveCargoPod();
+			playerData.m_ship.RemoveCargoPod();
 
 			// update the screen
 			UpdateScreen();

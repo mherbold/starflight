@@ -13,7 +13,7 @@ public class ArtifactReference
 		m_artifactId = artifactId;
 	}
 
-	public ArtifactGameData GetArtifactGameData()
+	public Artifact GetArtifactGameData()
 	{
 		// get access to the game data
 		GameData gameData = PersistentController.m_instance.m_gameData;
