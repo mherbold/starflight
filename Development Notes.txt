@@ -1,0 +1,10 @@
+Need to fix after taking screenshots:
+
+Star 13 orbit position 4 row might need to be moved up
+Star 23 missing row for liquid planet (orbit position 4)
+Star 32 missing row for the one planet it has
+Star 36 missing the rock planet in the second orbit number
+
+Star 77 outermost planet has weather as "Light" ?!?
+
+
