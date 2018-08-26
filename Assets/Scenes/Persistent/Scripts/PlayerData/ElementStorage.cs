@@ -37,7 +37,7 @@ public class ElementStorage
 	// search for an element in storage by name
 	public ElementReference Find( string name )
 	{
-		GameData gameData = PersistentController.m_instance.m_gameData;
+		GameData gameData = DataController.m_instance.m_gameData;
 
 		int elementId = gameData.FindElementId( name );
 

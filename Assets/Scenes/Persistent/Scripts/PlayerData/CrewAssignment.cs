@@ -74,7 +74,7 @@ public class CrewAssignment
 	{
 		int fileId = GetFileId( role );
 
-		PlayerData playerData = PersistentController.m_instance.m_playerData;
+		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		return playerData.m_personnel.GetPersonnelFile( fileId );
 	}

@@ -14,7 +14,7 @@ public class KnownArtifacts
 		m_artifactList = new List<ArtifactReference>();
 
 		// get access to the game data
-		GameData gameData = PersistentController.m_instance.m_gameData;
+		GameData gameData = DataController.m_instance.m_gameData;
 
 		// add all artifacts that should be already known at the start of the game
 		for ( int artifactId = 0; artifactId < gameData.m_artifactList.Length; artifactId++ )

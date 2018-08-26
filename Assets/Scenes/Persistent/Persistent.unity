@@ -158,19 +158,40 @@ MonoBehaviour:
   m_planetDataFileName: Starflight Planet Data
   m_playerDataFileName: PlayerData.bin
   m_gameData:
-    m_miscGameData:
+    m_misc:
       m_arthStarId: 0
-    m_starportGameData:
       m_artifactAnalysisPrice: 0
-    m_noticeList: []
-    m_raceList: []
-    m_shipGameData:
       m_baseShipMass: 0
       m_baseShipVolume: 0
       m_cargoPodBuyPrice: 0
       m_cargoPodSellPrice: 0
       m_cargoPodMass: 0
       m_cargoPodVolume: 0
+    m_starport:
+      m_lastReadNoticeStardate: 
+      m_artifactStorage:
+        m_volumeUsed: 0
+        m_artifactList: []
+    m_noticeList: []
+    m_raceList: []
+    m_ship:
+      m_name: 
+      m_numCargoPods: 0
+      m_enginesClass: 0
+      m_shieldingClass: 0
+      m_armorClass: 0
+      m_missileLauncherClass: 0
+      m_laserCannonClass: 0
+      m_mass: 0
+      m_volume: 0
+      m_volumeUsed: 0
+      m_acceleration: 0
+      m_artifactStorage:
+        m_volumeUsed: 0
+        m_artifactList: []
+      m_elementStorage:
+        m_volumeUsed: 0
+        m_elementList: []
     m_enginesList: []
     m_shieldingList: []
     m_armorList: []
@@ -181,6 +202,12 @@ MonoBehaviour:
     m_starList: []
     m_planetList: []
     m_planetTypeList: []
+    m_atmosphereList: []
+    m_atmosphereDensityList: []
+    m_hydrosphereList: []
+    m_surfaceList: []
+    m_temperatureList: []
+    m_weatherList: []
   m_planetData:
     m_planetMapList: []
   m_playerData:
@@ -193,8 +220,11 @@ MonoBehaviour:
       m_second: 0
       m_millisecond: 0
       m_gameTime: 0
-    m_notice:
-      m_lastReadStardate: 
+    m_starport:
+      m_lastReadNoticeStardate: 
+      m_artifactStorage:
+        m_volumeUsed: 0
+        m_artifactList: []
     m_personnel:
       m_nextFileId: 0
       m_personnelList: []
@@ -208,7 +238,7 @@ MonoBehaviour:
     m_bank:
       m_currentBalance: 0
       m_transactionList: []
-    m_shipConfiguration:
+    m_ship:
       m_name: 
       m_numCargoPods: 0
       m_enginesClass: 0
@@ -218,19 +248,14 @@ MonoBehaviour:
       m_laserCannonClass: 0
       m_mass: 0
       m_volume: 0
-      m_acceleration: 0
-    m_shipCargo:
       m_volumeUsed: 0
+      m_acceleration: 0
       m_artifactStorage:
         m_volumeUsed: 0
         m_artifactList: []
       m_elementStorage:
         m_volumeUsed: 0
         m_elementList: []
-    m_starportCargo:
-      m_artifactStorage:
-        m_volumeUsed: 0
-        m_artifactList: []
     m_knownArtifacts:
       m_artifactList: []
   m_resetPlayerData: 0
@@ -242,7 +267,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 919755011}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ab41cc280cbe6f4296db7bfad613858, type: 3}
+  m_Script: {fileID: 11500000, guid: 60fce5fa46c6501409e1ca2864ed2a5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_disableMouse: 0
+  m_volume: 0.35
+  m_trackChangeTime: 2
+  m_musicTrackList:
+  - {fileID: 0}
+  - {fileID: 8300000, guid: d73a1a6617309ec4b9dd1f0a53f0b376, type: 3}
+  - {fileID: 8300000, guid: 186ade1022c824e49aba735ea3e41c26, type: 3}
+  - {fileID: 8300000, guid: a1f3c9a830a24074c93e9e7cacd1192f, type: 3}
+  - {fileID: 8300000, guid: 138540bda05e7994197f371b5c05d27e, type: 3}
+  - {fileID: 8300000, guid: 0fe40983d45856d47b6e7ca2a7f49185, type: 3}

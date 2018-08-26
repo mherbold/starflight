@@ -29,12 +29,6 @@ public class DisplayController : MonoBehaviour
 		GameObject controllersGameObject = GameObject.FindWithTag( "Spaceflight Controllers" );
 		m_spaceflightController = controllersGameObject.GetComponent<SpaceflightController>();
 
-		// stop here if the spaceflight contoller has not started
-		if ( !m_spaceflightController.m_started )
-		{
-			return;
-		}
-
 		// displays
 		m_statusDisplay = new StatusDisplay( m_status );
 		m_systemDisplay = new SystemDisplay( m_system );
@@ -46,12 +40,6 @@ public class DisplayController : MonoBehaviour
 	// this is called by unity every frame
 	private void Update()
 	{
-		// stop here if the spaceflight contoller has not started
-		if ( !m_spaceflightController.m_started )
-		{
-			return;
-		}
-
 		// update the current display
 		m_currentDisplay.Update();
 	}

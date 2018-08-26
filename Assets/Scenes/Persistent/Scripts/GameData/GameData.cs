@@ -20,6 +20,12 @@ public class GameData : GameDataFile
 	public Star[] m_starList;
 	public Planet[] m_planetList;
 	public PlanetType[] m_planetTypeList;
+	public Atmosphere[] m_atmosphereList;
+	public AtmosphereDensity[] m_atmosphereDensityList;
+	public Hydrosphere[] m_hydrosphereList;
+	public Surface[] m_surfaceList;
+	public Temperature[] m_temperatureList;
+	public Weather[] m_weatherList;
 
 	public void Initialize()
 	{

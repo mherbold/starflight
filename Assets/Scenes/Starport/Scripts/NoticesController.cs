@@ -65,10 +65,10 @@ public class NoticesController : MonoBehaviour
 		m_currentNoticeId = 0;
 
 		// get access to the player progress
-		PlayerData playerData = PersistentController.m_instance.m_playerData;
+		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// get access to the game data
-		GameData gameData = PersistentController.m_instance.m_gameData;
+		GameData gameData = DataController.m_instance.m_gameData;
 
 		// update the stardate text
 		DateTime dateTime = DateTime.ParseExact( playerData.m_starflight.m_currentStardate, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture );
@@ -225,7 +225,7 @@ public class NoticesController : MonoBehaviour
 	private void ShowNextLine()
 	{
 		// get access to the game data
-		GameData gameData = PersistentController.m_instance.m_gameData;
+		GameData gameData = DataController.m_instance.m_gameData;
 
 		// get the current notice
 		Notice currentNotice = gameData.m_noticeList[ m_currentNoticeId ];
@@ -238,9 +238,9 @@ public class NoticesController : MonoBehaviour
 			m_messageText.text = messageDate.ToLongDateString();
 
 			// remember the newest notice read
-			if ( string.Compare( currentNotice.m_stardate, PersistentController.m_instance.m_playerData.m_starport.m_lastReadNoticeStardate ) > 0 )
+			if ( string.Compare( currentNotice.m_stardate, DataController.m_instance.m_playerData.m_starport.m_lastReadNoticeStardate ) > 0 )
 			{
-				PersistentController.m_instance.m_playerData.m_starport.m_lastReadNoticeStardate = currentNotice.m_stardate;
+				DataController.m_instance.m_playerData.m_starport.m_lastReadNoticeStardate = currentNotice.m_stardate;
 			}
 		}
 

@@ -278,7 +278,7 @@ public class ShipConfigurationController : DoorController
 		m_currentState = State.MenuBar;
 
 		// remember the starting bank balance
-		m_startingBankBalance = PersistentController.m_instance.m_playerData.m_bank.m_currentBalance;
+		m_startingBankBalance = DataController.m_instance.m_playerData.m_bank.m_currentBalance;
 
 		// update the ui
 		UpdateScreen();
@@ -297,15 +297,15 @@ public class ShipConfigurationController : DoorController
 		StartClosingUI();
 
 		// if the bank balance has changed then record it in the bank transaction log
-		int deltaBalance = m_startingBankBalance - PersistentController.m_instance.m_playerData.m_bank.m_currentBalance;
+		int deltaBalance = m_startingBankBalance - DataController.m_instance.m_playerData.m_bank.m_currentBalance;
 
 		if ( deltaBalance != 0 )
 		{
 			string sign = ( deltaBalance > 0 ) ? "-" : "+";
 
-			Bank.Transaction transaction = new Bank.Transaction( PersistentController.m_instance.m_playerData.m_starflight.m_currentStardate, "Ship Configuration", deltaBalance.ToString() + sign );
+			Bank.Transaction transaction = new Bank.Transaction( DataController.m_instance.m_playerData.m_starflight.m_currentStardate, "Ship Configuration", deltaBalance.ToString() + sign );
 
-			PersistentController.m_instance.m_playerData.m_bank.m_transactionList.Add( transaction );
+			DataController.m_instance.m_playerData.m_bank.m_transactionList.Add( transaction );
 		}
 	}
 
@@ -426,7 +426,7 @@ public class ShipConfigurationController : DoorController
 		UpdateScreen();
 
 		// set the current text input to the current name of the ship
-		m_nameInputField.text = PersistentController.m_instance.m_playerData.m_ship.m_name;
+		m_nameInputField.text = DataController.m_instance.m_playerData.m_ship.m_name;
 
 		// select the text input by default
 		m_nameInputField.Select();
@@ -520,7 +520,7 @@ public class ShipConfigurationController : DoorController
 		m_downArrowImage.gameObject.SetActive( gameObjectIsVisible[ (int) GameObjects.DownArrowImage ] );
 
 		// get the player data
-		PlayerData playerData = PersistentController.m_instance.m_playerData;
+		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// get the ship player data
 		Ship ship = playerData.m_ship;
@@ -734,7 +734,7 @@ public class ShipConfigurationController : DoorController
 	public void OnEndEdit()
 	{
 		// update the ship name in the player data
-		PersistentController.m_instance.m_playerData.m_ship.m_name = m_nameInputField.text;
+		DataController.m_instance.m_playerData.m_ship.m_name = m_nameInputField.text;
 
 		// switch to the menu bar state
 		SwitchToMenuBarState();
@@ -754,7 +754,7 @@ public class ShipConfigurationController : DoorController
 		else // we are buying a part
 		{
 			// get to the player data
-			PlayerData playerData = PersistentController.m_instance.m_playerData;
+			PlayerData playerData = DataController.m_instance.m_playerData;
 
 			// get what is currently installed on the ship
 			int currentClass = 0;
@@ -793,7 +793,7 @@ public class ShipConfigurationController : DoorController
 		else // we are selling a part
 		{
 			// get to the player data
-			PlayerData playerData = PersistentController.m_instance.m_playerData;
+			PlayerData playerData = DataController.m_instance.m_playerData;
 
 			// get what is currently installed on the ship
 			int currentClass = 0;
@@ -811,7 +811,7 @@ public class ShipConfigurationController : DoorController
 			if ( currentClass != 0 )
 			{
 				// get to the game data
-				GameData gameData = PersistentController.m_instance.m_gameData;
+				GameData gameData = DataController.m_instance.m_gameData;
 
 				// get the part list
 				ShipPart[] shipPartList = null;
@@ -850,7 +850,7 @@ public class ShipConfigurationController : DoorController
 	private void BuySelectedClass()
 	{
 		// get to the game data
-		GameData gameData = PersistentController.m_instance.m_gameData;
+		GameData gameData = DataController.m_instance.m_gameData;
 
 		// get the ship part list
 		ShipPart[] shipPartList = null;
@@ -865,7 +865,7 @@ public class ShipConfigurationController : DoorController
 		}
 
 		// get to the player data
-		PlayerData playerData = PersistentController.m_instance.m_playerData;
+		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// get the class to buy
 		int classIndex = m_currentClassIndex + 1;
@@ -902,10 +902,10 @@ public class ShipConfigurationController : DoorController
 	private void UpdatePartPrices( bool includeCargoPods = true )
 	{
 		// get to the game data
-		GameData gameData = PersistentController.m_instance.m_gameData;
+		GameData gameData = DataController.m_instance.m_gameData;
 
 		// get to the player data
-		PlayerData playerData = PersistentController.m_instance.m_playerData;
+		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// check if we are selling
 		if ( m_currentState == State.SellPart )
@@ -987,10 +987,10 @@ public class ShipConfigurationController : DoorController
 	private void BuyCargoPod()
 	{
 		// get to the game data
-		GameData gameData = PersistentController.m_instance.m_gameData;
+		GameData gameData = DataController.m_instance.m_gameData;
 
 		// get to the player data
-		PlayerData playerData = PersistentController.m_instance.m_playerData;
+		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// check if we have room for another cargo pod
 		if ( playerData.m_ship.m_numCargoPods == 16 )
@@ -1027,10 +1027,10 @@ public class ShipConfigurationController : DoorController
 	private void SellCargoPod()
 	{
 		// get to the game data
-		GameData gameData = PersistentController.m_instance.m_gameData;
+		GameData gameData = DataController.m_instance.m_gameData;
 
 		// get to the player data
-		PlayerData playerData = PersistentController.m_instance.m_playerData;
+		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// check if we have room for another cargo pod
 		if ( playerData.m_ship.m_numCargoPods > 0 )

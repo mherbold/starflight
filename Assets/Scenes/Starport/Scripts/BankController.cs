@@ -22,7 +22,7 @@ public class BankController : DoorController
 		StartOpeningUI();
 
 		// get access to the bank player data
-		Bank bank = PersistentController.m_instance.m_playerData.m_bank;
+		Bank bank = DataController.m_instance.m_playerData.m_bank;
 
 		// update the date, transactions, and amount list text
 		m_dateListText.text = "";

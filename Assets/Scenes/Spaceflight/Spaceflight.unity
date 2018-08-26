@@ -5265,7 +5265,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 150687723}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 15000, z: 0}
+  m_LocalPosition: {x: 0, y: 2500, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1637878564}
@@ -5443,8 +5443,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 294, y: -24}
-  m_SizeDelta: {x: 436, y: 48}
+  m_AnchoredPosition: {x: 294, y: -16}
+  m_SizeDelta: {x: 436, y: 32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &180803324
 MonoBehaviour:
@@ -5598,7 +5598,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: -0}
-  m_SizeDelta: {x: 512, y: 48}
+  m_SizeDelta: {x: 512, y: 32}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &240577397
 MonoBehaviour:
@@ -5615,7 +5615,7 @@ MonoBehaviour:
   m_MinWidth: -1
   m_MinHeight: -1
   m_PreferredWidth: -1
-  m_PreferredHeight: 48
+  m_PreferredHeight: 32
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
@@ -5704,12 +5704,12 @@ MonoBehaviour:
   m_dockingBayDoorBottom: {fileID: 313232384}
   m_decompressionParticleSystem: {fileID: 1218134}
   m_mapRawImage: {fileID: 1384696240}
-  m_lensFlare: {fileID: 1887653830}
   m_player: {fileID: 2052193863}
   m_ship: {fileID: 1349276896}
+  m_star: {fileID: 845916767}
+  m_lensFlare: {fileID: 1887653830}
   m_currentOfficer: {fileID: 1729061564}
   m_skipCinematics: 0
-  m_started: 0
   m_inOrbit: 0
   m_hasCurrentSenorReading: 0
   m_inDockingBay: 0
@@ -6287,8 +6287,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -848}
-  m_SizeDelta: {x: 512, y: 208.00003}
+  m_AnchoredPosition: {x: 0, y: -832}
+  m_SizeDelta: {x: 512, y: 224.00003}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &499367345
 MonoBehaviour:
@@ -6364,6 +6364,23 @@ MonoBehaviour:
     m_starId: 0
     m_planetTypeId: 0
     m_orbitPosition: 0
+    m_mass: 0
+    m_bioDensity: 0
+    m_mineralDensity: 0
+    m_atmosphereIdA: 0
+    m_atmosphereIdB: 0
+    m_atmosphereIdC: 0
+    m_atmosphereDensityId: 0
+    m_hydrosphereId: 0
+    m_hasEthanol: 0
+    m_elementIdA: 0
+    m_elementIdB: 0
+    m_elementIdC: 0
+    m_surfaceId: 0
+    m_gravity: 0
+    m_temperatureIdA: 0
+    m_temperatureIdB: 0
+    m_weatherId: 0
   m_orbitAngle: 0
 --- !u!1 &507009621
 GameObject:
@@ -6623,7 +6640,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -16, y: 0}
+  m_SizeDelta: {x: -32, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &512699736
 MonoBehaviour:
@@ -6794,7 +6811,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: -568}
-  m_SizeDelta: {x: 512, y: 268}
+  m_SizeDelta: {x: 512, y: 252}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &542087592
 MonoBehaviour:
@@ -6811,7 +6828,7 @@ MonoBehaviour:
   m_MinWidth: -1
   m_MinHeight: -1
   m_PreferredWidth: -1
-  m_PreferredHeight: 268
+  m_PreferredHeight: 252
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
@@ -6937,8 +6954,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 32, y: -24}
-  m_SizeDelta: {x: 64, y: 48}
+  m_AnchoredPosition: {x: 32, y: -16}
+  m_SizeDelta: {x: 64, y: 32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &554913628
 MonoBehaviour:
@@ -7626,7 +7643,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceb6bf710e86f704f98cb3156d9adb1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_speed: 3
+  m_speed: 1.5
   m_size: 12
 --- !u!1 &888856204 stripped
 GameObject:
@@ -7649,6 +7666,23 @@ MonoBehaviour:
     m_starId: 0
     m_planetTypeId: 0
     m_orbitPosition: 0
+    m_mass: 0
+    m_bioDensity: 0
+    m_mineralDensity: 0
+    m_atmosphereIdA: 0
+    m_atmosphereIdB: 0
+    m_atmosphereIdC: 0
+    m_atmosphereDensityId: 0
+    m_hydrosphereId: 0
+    m_hasEthanol: 0
+    m_elementIdA: 0
+    m_elementIdB: 0
+    m_elementIdC: 0
+    m_surfaceId: 0
+    m_gravity: 0
+    m_temperatureIdA: 0
+    m_temperatureIdB: 0
+    m_weatherId: 0
   m_orbitAngle: 0
 --- !u!1 &893953738
 GameObject:
@@ -8704,7 +8738,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1395.371, y: -12}
+  m_AnchoredPosition: {x: 916, y: -12}
   m_SizeDelta: {x: 512, y: 1056}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1027751574
@@ -8866,6 +8900,23 @@ MonoBehaviour:
     m_starId: 0
     m_planetTypeId: 0
     m_orbitPosition: 0
+    m_mass: 0
+    m_bioDensity: 0
+    m_mineralDensity: 0
+    m_atmosphereIdA: 0
+    m_atmosphereIdB: 0
+    m_atmosphereIdC: 0
+    m_atmosphereDensityId: 0
+    m_hydrosphereId: 0
+    m_hasEthanol: 0
+    m_elementIdA: 0
+    m_elementIdB: 0
+    m_elementIdC: 0
+    m_surfaceId: 0
+    m_gravity: 0
+    m_temperatureIdA: 0
+    m_temperatureIdB: 0
+    m_weatherId: 0
   m_orbitAngle: 0
 --- !u!1 &1117387104
 GameObject:
@@ -9191,6 +9242,23 @@ MonoBehaviour:
     m_starId: 0
     m_planetTypeId: 0
     m_orbitPosition: 0
+    m_mass: 0
+    m_bioDensity: 0
+    m_mineralDensity: 0
+    m_atmosphereIdA: 0
+    m_atmosphereIdB: 0
+    m_atmosphereIdC: 0
+    m_atmosphereDensityId: 0
+    m_hydrosphereId: 0
+    m_hasEthanol: 0
+    m_elementIdA: 0
+    m_elementIdB: 0
+    m_elementIdC: 0
+    m_surfaceId: 0
+    m_gravity: 0
+    m_temperatureIdA: 0
+    m_temperatureIdB: 0
+    m_weatherId: 0
   m_orbitAngle: 0
 --- !u!1 &1202479675
 GameObject:
@@ -9577,7 +9645,7 @@ MonoBehaviour:
   m_maximumNumberOfStars: 1500
   m_sizeOfStars: 15
   m_maximumDistanceOfStars: 1000
-  m_fullyVisibleSpeed: 50
+  m_fullyVisibleSpeed: 100
   m_fullyInvisibleSpeed: 1
   m_colorOfStars:
     serializedVersion: 2
@@ -14674,8 +14742,8 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -359.37097, y: 0}
-  m_Pivot: {x: 0, y: 1}
+  m_SizeDelta: {x: 0, y: -120}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1384696239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14773,6 +14841,23 @@ MonoBehaviour:
     m_starId: 0
     m_planetTypeId: 0
     m_orbitPosition: 0
+    m_mass: 0
+    m_bioDensity: 0
+    m_mineralDensity: 0
+    m_atmosphereIdA: 0
+    m_atmosphereIdB: 0
+    m_atmosphereIdC: 0
+    m_atmosphereDensityId: 0
+    m_hydrosphereId: 0
+    m_hasEthanol: 0
+    m_elementIdA: 0
+    m_elementIdB: 0
+    m_elementIdC: 0
+    m_surfaceId: 0
+    m_gravity: 0
+    m_temperatureIdA: 0
+    m_temperatureIdB: 0
+    m_weatherId: 0
   m_orbitAngle: 0
 --- !u!1 &1407748604
 GameObject:
@@ -14806,7 +14891,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -60}
+  m_AnchoredPosition: {x: 0, y: -44}
   m_SizeDelta: {x: 512, y: 208}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1407748606
@@ -14861,7 +14946,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 12, y: -12}
-  m_SizeDelta: {x: 1371.371, y: 1056}
+  m_SizeDelta: {x: 892, y: 1056}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1433329002
 MonoBehaviour:
@@ -15151,7 +15236,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: -16}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1625867935
 GameObject:
@@ -15591,14 +15676,14 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 32
+  m_fontSize: 33.65
   m_fontSizeBase: 32
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_textAlignment: 257
+  m_textAlignment: 513
   m_isAlignmentEnumConverted: 1
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -15806,6 +15891,23 @@ MonoBehaviour:
     m_starId: 0
     m_planetTypeId: 0
     m_orbitPosition: 0
+    m_mass: 0
+    m_bioDensity: 0
+    m_mineralDensity: 0
+    m_atmosphereIdA: 0
+    m_atmosphereIdB: 0
+    m_atmosphereIdC: 0
+    m_atmosphereDensityId: 0
+    m_hydrosphereId: 0
+    m_hasEthanol: 0
+    m_elementIdA: 0
+    m_elementIdB: 0
+    m_elementIdC: 0
+    m_surfaceId: 0
+    m_gravity: 0
+    m_temperatureIdA: 0
+    m_temperatureIdB: 0
+    m_weatherId: 0
   m_orbitAngle: 0
 --- !u!1 &1797406959
 GameObject:
@@ -15886,6 +15988,23 @@ MonoBehaviour:
     m_starId: 0
     m_planetTypeId: 0
     m_orbitPosition: 0
+    m_mass: 0
+    m_bioDensity: 0
+    m_mineralDensity: 0
+    m_atmosphereIdA: 0
+    m_atmosphereIdB: 0
+    m_atmosphereIdC: 0
+    m_atmosphereDensityId: 0
+    m_hydrosphereId: 0
+    m_hasEthanol: 0
+    m_elementIdA: 0
+    m_elementIdB: 0
+    m_elementIdC: 0
+    m_surfaceId: 0
+    m_gravity: 0
+    m_temperatureIdA: 0
+    m_temperatureIdB: 0
+    m_weatherId: 0
   m_orbitAngle: 0
 --- !u!1 &1809499455
 GameObject:
@@ -16495,7 +16614,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: -0}
-  m_SizeDelta: {x: 1371.371, y: 32}
+  m_SizeDelta: {x: 892, y: 32}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2014036047
 MonoBehaviour:
@@ -16551,7 +16670,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: -44}
-  m_SizeDelta: {x: 1371.371, y: 1012}
+  m_SizeDelta: {x: 892, y: 1012}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2037695102
 MonoBehaviour:
@@ -16627,6 +16746,23 @@ MonoBehaviour:
     m_starId: 0
     m_planetTypeId: 0
     m_orbitPosition: 0
+    m_mass: 0
+    m_bioDensity: 0
+    m_mineralDensity: 0
+    m_atmosphereIdA: 0
+    m_atmosphereIdB: 0
+    m_atmosphereIdC: 0
+    m_atmosphereDensityId: 0
+    m_hydrosphereId: 0
+    m_hasEthanol: 0
+    m_elementIdA: 0
+    m_elementIdB: 0
+    m_elementIdC: 0
+    m_surfaceId: 0
+    m_gravity: 0
+    m_temperatureIdA: 0
+    m_temperatureIdB: 0
+    m_weatherId: 0
   m_orbitAngle: 0
 --- !u!1 &2048351697
 GameObject:

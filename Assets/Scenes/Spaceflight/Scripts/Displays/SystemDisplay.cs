@@ -74,7 +74,7 @@ public class SystemDisplay : ShipDisplay
 	public void ChangeSystem( int starId )
 	{
 		// get to the game data
-		GameData gameData = PersistentController.m_instance.m_gameData;
+		GameData gameData = DataController.m_instance.m_gameData;
 
 		// get to the star data
 		Star star = gameData.m_starList[ starId ];
@@ -124,19 +124,11 @@ public class SystemDisplay : ShipDisplay
 				}
 				else
 				{
-					PlanetType planetType = gameData.m_planetTypeList[ planet.m_planetTypeId ];
-
-					switch ( planetType.m_color )
-					{
-						case 0: color = new Color( 1.0f, 0.0f, 0.0f ); break;
-						case 1: color = new Color( 0.4f, 0.2f, 0.0f ); break;
-						case 2: color = new Color( 0.0f, 0.0f, 1.0f ); break;
-						case 3: color = new Color( 1.0f, 1.0f, 1.0f ); break;
-						case 4: color = new Color( 1.0f, 0.0f, 1.0f ); break;
-						default: color = new Color( 0.0f, 1.0f, 0.0f ); break;
-					}
-
+					// change the display color for this planet
+					Surface surface = planet.GetSurface();
+					color = new Color( surface.m_colorR / 255.0f, surface.m_colorG / 255.0f, surface.m_colorB / 255.0f );
 					m_planetImage[ planet.m_orbitPosition ].color = color;
+					Debug.Log( "Setting display color for planet " + planet.m_orbitPosition + " to R:" + surface.m_colorR + " G:" + surface.m_colorG + " B:" + surface.m_colorB );
 				}
 			}
 		}

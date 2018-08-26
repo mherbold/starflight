@@ -8,7 +8,7 @@ public class RaiseShieldsButton : ShipButton
 
 	public override bool Execute()
 	{
-		PlayerData playerData = PersistentController.m_instance.m_playerData;
+		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		if ( playerData.m_ship.m_shieldingClass == 0 )
 		{

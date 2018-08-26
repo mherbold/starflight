@@ -14,7 +14,7 @@ public class ScienceButton : ShipButton
 		m_spaceflightController.m_buttonController.UpdateButtons( m_buttons );
 
 		// get to the player data
-		PlayerData playerData = PersistentController.m_instance.m_playerData;
+		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// get the personnel file on this officer
 		Personnel.PersonnelFile personnelFile = playerData.m_crewAssignment.GetPersonnelFile( CrewAssignment.Role.ScienceOfficer );

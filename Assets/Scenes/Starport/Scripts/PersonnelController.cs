@@ -218,7 +218,7 @@ public class PersonnelController : DoorController
 		m_currentFileIndex = 0;
 
 		// remember the starting bank balance
-		m_startingBankBalance = PersistentController.m_instance.m_playerData.m_bank.m_currentBalance;
+		m_startingBankBalance = DataController.m_instance.m_playerData.m_bank.m_currentBalance;
 
 		// update the ui
 		UpdateScreen();
@@ -237,13 +237,13 @@ public class PersonnelController : DoorController
 		StartClosingUI();
 
 		// if the bank balance has changed then record it in the bank transaction log
-		int deltaBalance = m_startingBankBalance - PersistentController.m_instance.m_playerData.m_bank.m_currentBalance;
+		int deltaBalance = m_startingBankBalance - DataController.m_instance.m_playerData.m_bank.m_currentBalance;
 
 		if ( deltaBalance > 0 )
 		{
-			Bank.Transaction transaction = new Bank.Transaction( PersistentController.m_instance.m_playerData.m_starflight.m_currentStardate, "Personnel", deltaBalance.ToString() + "-" );
+			Bank.Transaction transaction = new Bank.Transaction( DataController.m_instance.m_playerData.m_starflight.m_currentStardate, "Personnel", deltaBalance.ToString() + "-" );
 
-			PersistentController.m_instance.m_playerData.m_bank.m_transactionList.Add( transaction );
+			DataController.m_instance.m_playerData.m_bank.m_transactionList.Add( transaction );
 		}
 	}
 
@@ -500,7 +500,7 @@ public class PersonnelController : DoorController
 		bool showPersonnelFile = false;
 
 		// get access to the player data
-		PlayerData playerData = PersistentController.m_instance.m_playerData;
+		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// enable the create button only if we have less than 20 personnel files
 		if ( playerData.m_personnel.m_personnelList.Count < 20 )
@@ -584,7 +584,7 @@ public class PersonnelController : DoorController
 		buttonIsInteractable[ (int) Buttons.CancelButton ] = true;
 
 		// get the current race game data
-		Race race = PersistentController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
+		Race race = DataController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
 
 		// update the skill values text to show the race's initial values
 		m_skillValuesText.text = "";
@@ -677,7 +677,7 @@ public class PersonnelController : DoorController
 	private void UpdateSkillValues()
 	{
 		// get access to the player data
-		PlayerData playerData = PersistentController.m_instance.m_playerData;
+		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// get access to the current personnel file we are looking at
 		Personnel.PersonnelFile personnelFile = playerData.m_personnel.m_personnelList[ m_currentFileIndex ];
@@ -700,7 +700,7 @@ public class PersonnelController : DoorController
 	private void ShowRace( bool[] gameObjectIsVisible )
 	{
 		// get the current race game data
-		Race race = PersistentController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
+		Race race = DataController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
 
 		// update the race name
 		m_raceNameText.text = race.m_name;
@@ -723,7 +723,7 @@ public class PersonnelController : DoorController
 	private void UpdateBankBalanceText()
 	{
 		// get access to the bank player data
-		Bank bank = PersistentController.m_instance.m_playerData.m_bank;
+		Bank bank = DataController.m_instance.m_playerData.m_bank;
 
 		// update the bank balance
 		m_bankBalanceText.text = "Bank balance: " + string.Format( "{0:n0}", bank.m_currentBalance ) + " M.U.";
@@ -782,7 +782,7 @@ public class PersonnelController : DoorController
 	private void TrainSelectedSkill()
 	{
 		// get access to the player data
-		PlayerData playerData = PersistentController.m_instance.m_playerData;
+		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// get access to the bank player data
 		Bank bank = playerData.m_bank;
@@ -799,7 +799,7 @@ public class PersonnelController : DoorController
 			Personnel.PersonnelFile personnelFile = playerData.m_personnel.m_personnelList[ m_currentFileIndex ];
 
 			// get access to the race data for this personnel file
-			Race race = PersistentController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
+			Race race = DataController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
 
 			// calculate the current skill and maximum skill points for the selected skill
 			int currentSkill = personnelFile.GetSkill( m_currentSkillIndex );
@@ -894,13 +894,13 @@ public class PersonnelController : DoorController
 		else
 		{
 			// get access to the player data
-			PlayerData playerData = PersistentController.m_instance.m_playerData;
+			PlayerData playerData = DataController.m_instance.m_playerData;
 
 			// get access to the current personnel file we are looking at
 			Personnel.PersonnelFile personnelFile = playerData.m_personnel.m_personnelList[ m_currentFileIndex ];
 
 			// get access to the race data for this personnel file
-			Race race = PersistentController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
+			Race race = DataController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
 
 			// enable the train button only if the current personnel is not maxxed out
 			int maxTotalPoints = 0;
@@ -964,7 +964,7 @@ public class PersonnelController : DoorController
 	public void YesClicked()
 	{
 		// get to the personnel player data
-		Personnel personnel = PersistentController.m_instance.m_playerData.m_personnel;
+		Personnel personnel = DataController.m_instance.m_playerData.m_personnel;
 
 		// delete the crewmember
 		personnel.m_personnelList.RemoveAt( m_currentFileIndex );
@@ -1006,10 +1006,10 @@ public class PersonnelController : DoorController
 		else
 		{
 			// get the current race game data
-			Race race = PersistentController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
+			Race race = DataController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
 
 			// create a new personnel file
-			Personnel.PersonnelFile personnelFile = PersistentController.m_instance.m_playerData.m_personnel.CreateNewPersonnel();
+			Personnel.PersonnelFile personnelFile = DataController.m_instance.m_playerData.m_personnel.CreateNewPersonnel();
 
 			// set up the personnel file
 			personnelFile.m_name = m_nameInputField.text;
@@ -1022,11 +1022,11 @@ public class PersonnelController : DoorController
 			personnelFile.m_medicine = race.m_medicineInitial;
 
 			// add the new personnel file to the list
-			PersistentController.m_instance.m_playerData.m_personnel.m_personnelList.Add( personnelFile );
+			DataController.m_instance.m_playerData.m_personnel.m_personnelList.Add( personnelFile );
 
 
 			// make the new file our current one
-			m_currentFileIndex = PersistentController.m_instance.m_playerData.m_personnel.m_personnelList.Count - 1;
+			m_currentFileIndex = DataController.m_instance.m_playerData.m_personnel.m_personnelList.Count - 1;
 
 			// switch to the doing nothing state
 			SwitchToViewFileState();

@@ -80,7 +80,7 @@ public class CrewAssignmentController : DoorController
 	public void UpdateControllerForAssignPersonnelState()
 	{
 		// get access to the personnel player data
-		Personnel personnel = PersistentController.m_instance.m_playerData.m_personnel;
+		Personnel personnel = DataController.m_instance.m_playerData.m_personnel;
 
 		// keep track if we have centered both x and y
 		bool xIsCentered = false;
@@ -243,7 +243,7 @@ public class CrewAssignmentController : DoorController
 		UpdateAssignedCrewmemberList();
 
 		// get access to the personnel player data
-		Personnel personnel = PersistentController.m_instance.m_playerData.m_personnel;
+		Personnel personnel = DataController.m_instance.m_playerData.m_personnel;
 
 		// check if we have at least one living crewmember in personnel
 		if ( personnel.AnyLiving() )
@@ -301,7 +301,7 @@ public class CrewAssignmentController : DoorController
 		m_selectionXform.SetActive( true );
 
 		// get access to the personnel player data
-		Personnel personnel = PersistentController.m_instance.m_playerData.m_personnel;
+		Personnel personnel = DataController.m_instance.m_playerData.m_personnel;
 
 		// show the enabled arrows only if we have more than one personnel on file
 		if ( personnel.m_personnelList.Count > 1 )
@@ -325,7 +325,7 @@ public class CrewAssignmentController : DoorController
 	private void UpdateAssignedCrewmemberList()
 	{
 		// get access to the crew assignment player data
-		CrewAssignment crewAssignment = PersistentController.m_instance.m_playerData.m_crewAssignment;
+		CrewAssignment crewAssignment = DataController.m_instance.m_playerData.m_crewAssignment;
 
 		// start with an empty text string
 		m_positionValuesText.text = "";
@@ -361,7 +361,7 @@ public class CrewAssignmentController : DoorController
 		m_currentRole = role;
 
 		// get access to the crew assignment player data
-		CrewAssignment crewAssignment = PersistentController.m_instance.m_playerData.m_crewAssignment;
+		CrewAssignment crewAssignment = DataController.m_instance.m_playerData.m_crewAssignment;
 
 		// check if we have don't have someone assigned to this position
 		if ( !crewAssignment.IsAssigned( m_currentRole ) )
@@ -375,7 +375,7 @@ public class CrewAssignmentController : DoorController
 			int fileId = crewAssignment.GetFileId( m_currentRole );
 
 			// get access to the personnel player data
-			Personnel personnel = PersistentController.m_instance.m_playerData.m_personnel;
+			Personnel personnel = DataController.m_instance.m_playerData.m_personnel;
 
 			// update the current personnel id
 			m_currentPersonnelId = personnel.GetPersonnelId( fileId );
@@ -394,10 +394,10 @@ public class CrewAssignmentController : DoorController
 			m_currentPersonnelId = personnelId;
 
 			// get access to the crew assignment player data
-			CrewAssignment crewAssignment = PersistentController.m_instance.m_playerData.m_crewAssignment;
+			CrewAssignment crewAssignment = DataController.m_instance.m_playerData.m_crewAssignment;
 
 			// get access to the personnel player data
-			Personnel personnel = PersistentController.m_instance.m_playerData.m_personnel;
+			Personnel personnel = DataController.m_instance.m_playerData.m_personnel;
 
 			// get the personnel file
 			Personnel.PersonnelFile personnelFile = personnel.m_personnelList[ m_currentPersonnelId ];
@@ -429,7 +429,7 @@ public class CrewAssignmentController : DoorController
 		rectTransform.offsetMax = m_baseSelectionOffsetMax + new Vector3( 0.0f, -offset, 0.0f );
 
 		// get access to the personnel player data
-		Personnel personnel = PersistentController.m_instance.m_playerData.m_personnel;
+		Personnel personnel = DataController.m_instance.m_playerData.m_personnel;
 
 		// get the personnel file
 		Personnel.PersonnelFile personnelFile = personnel.m_personnelList[ m_currentPersonnelId ];

@@ -16,7 +16,7 @@ public class ArtifactReference
 	public Artifact GetArtifactGameData()
 	{
 		// get access to the game data
-		GameData gameData = PersistentController.m_instance.m_gameData;
+		GameData gameData = DataController.m_instance.m_gameData;
 
 		// return the artifact game data
 		return gameData.m_artifactList[ m_artifactId ];

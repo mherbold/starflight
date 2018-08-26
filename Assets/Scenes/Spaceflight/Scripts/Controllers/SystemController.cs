@@ -24,12 +24,6 @@ public class SystemController : MonoBehaviour
 		GameObject controllersGameObject = GameObject.FindWithTag( "Spaceflight Controllers" );
 		m_spaceflightController = controllersGameObject.GetComponent<SpaceflightController>();
 
-		// stop here if the spaceflight contoller has not started
-		if ( !m_spaceflightController.m_started )
-		{
-			return;
-		}
-
 		// reset stuff
 		m_currentStarId = 0;
 	}
@@ -46,7 +40,7 @@ public class SystemController : MonoBehaviour
 		m_currentStarId = starId;
 
 		// get to the game data
-		GameData gameData = PersistentController.m_instance.m_gameData;
+		GameData gameData = DataController.m_instance.m_gameData;
 
 		// get to the star data
 		Star star = gameData.m_starList[ starId ];

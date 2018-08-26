@@ -15,9 +15,6 @@ public class StarportController : MonoBehaviour
 	public AstronautController m_astronautController { get; private set; }
 	public DoorNameController m_doorNameController { get; private set; }
 
-	// whether or not the persistent scene has been loaded
-	public bool m_started;
-
 	// door controllers
 	private OperationsController m_operationsController;
 	private PersonnelController m_personnelController;
@@ -34,82 +31,77 @@ public class StarportController : MonoBehaviour
 	private bool m_astronautCanBeMoved;
 
 	// this is called by unity before start
-	private void Awake()
+	void Awake()
 	{
-		// get access to the manual scene transition controller
-		m_manualSceneTransitionController = GetComponent<ManualSceneTransitionController>();
-
-		// get access to the input manager
-		m_inputManager = GetComponent<InputManager>();
-
-		// get access to the basic sound
-		m_basicSound = GetComponent<BasicSound>();
-
-		// get access to the ui sound controller
-		m_uiSoundController = GetComponent<UISoundController>();
-
-		// get access to the astronaut controller
-		m_astronautController = GetComponent<AstronautController>();
-
-		// get access to the door name controller
-		m_doorNameController = GetComponent<DoorNameController>();
-
-		// get access to the operations controller
-		m_operationsController = GetComponent<OperationsController>();
-
-		// get access to the personnel controller
-		m_personnelController = GetComponent<PersonnelController>();
-
-		// get access to the crew assignment controller
-		m_crewAssignmentController = GetComponent<CrewAssignmentController>();
-
-		// get access to the bank controller
-		m_bankController = GetComponent<BankController>();
-
-		// get access to the bank controller
-		m_shipConfigurationController = GetComponent<ShipConfigurationController>();
-
-		// get access to the trade depot controller
-		m_tradeDepotController = GetComponent<TradeDepotController>();
-
-		// get access to the docking bay controller
-		m_dockingBayController = GetComponent<DockingBayController>();
-	}
-
-	// this is called by unity once at the start of the level
-	private void Start()
-	{
-		// turn off controller navigation of the UI
-		EventSystem.current.sendNavigationEvents = false;
-
-		// we have the focus
-		TakeFocus();
-
 		// check if we loaded the persistent scene
-		if ( PersistentController.m_instance == null )
+		if ( DataController.m_instance == null )
 		{
 			// nope - so then do it now and tell it to skip the intro scene
-			PersistentController.m_sceneToLoad = "Starport";
+			DataController.m_sceneToLoad = "Starport";
 
 			SceneManager.LoadScene( "Persistent" );
 		}
 		else
 		{
-			m_started = true;
+			// get access to the manual scene transition controller
+			m_manualSceneTransitionController = GetComponent<ManualSceneTransitionController>();
+
+			// get access to the input manager
+			m_inputManager = GetComponent<InputManager>();
+
+			// get access to the basic sound
+			m_basicSound = GetComponent<BasicSound>();
+
+			// get access to the ui sound controller
+			m_uiSoundController = GetComponent<UISoundController>();
+
+			// get access to the astronaut controller
+			m_astronautController = GetComponent<AstronautController>();
+
+			// get access to the door name controller
+			m_doorNameController = GetComponent<DoorNameController>();
+
+			// get access to the operations controller
+			m_operationsController = GetComponent<OperationsController>();
+
+			// get access to the personnel controller
+			m_personnelController = GetComponent<PersonnelController>();
+
+			// get access to the crew assignment controller
+			m_crewAssignmentController = GetComponent<CrewAssignmentController>();
+
+			// get access to the bank controller
+			m_bankController = GetComponent<BankController>();
+
+			// get access to the bank controller
+			m_shipConfigurationController = GetComponent<ShipConfigurationController>();
+
+			// get access to the trade depot controller
+			m_tradeDepotController = GetComponent<TradeDepotController>();
+
+			// get access to the docking bay controller
+			m_dockingBayController = GetComponent<DockingBayController>();
 		}
+	}
+
+	// use this for initialization
+	void Start()
+	{
+		// turn off controller navigation of the UI
+		EventSystem.current.sendNavigationEvents = false;
+
+		// start playing the starport music
+		MusicController.m_instance.ChangeToTrack( MusicController.Track.Starport );
+
+		// we have the focus
+		TakeFocus();
 	}
 
 	// this is called by unity every frame
 	private void Update()
 	{
-		// stop here if the starport contoller has not started
-		if ( !m_started )
-		{
-			return;
-		}
-
 		// update the game time
-		PlayerData playerData = PersistentController.m_instance.m_playerData;
+		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		playerData.m_starflight.UpdateGameTime( Time.deltaTime );
 
@@ -217,9 +209,9 @@ public class StarportController : MonoBehaviour
 		m_currentUIController = null;
 
 		// save the player data in case something has been updated
-		if ( PersistentController.m_instance )
+		if ( DataController.m_instance )
 		{
-			PersistentController.m_instance.SavePlayerData();
+			DataController.m_instance.SavePlayerData();
 		}
 	}
 

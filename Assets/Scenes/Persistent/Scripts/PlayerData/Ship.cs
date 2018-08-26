@@ -53,7 +53,7 @@ public class Ship
 		m_elementStorage.Reset();
 
 		// get access to the game data
-		GameData gameData = PersistentController.m_instance.m_gameData;
+		GameData gameData = DataController.m_instance.m_gameData;
 
 		// fill the ship cargo with all of the elements the player gets at the start of the game
 		for ( int elementId = 0; elementId < gameData.m_elementList.Length; elementId++ )
@@ -110,7 +110,7 @@ public class Ship
 	public void RecalculateMass()
 	{
 		// get access to the game data
-		GameData gameData = PersistentController.m_instance.m_gameData;
+		GameData gameData = DataController.m_instance.m_gameData;
 
 		// start with the base ship mass
 		m_mass = gameData.m_misc.m_baseShipMass;
@@ -127,7 +127,7 @@ public class Ship
 	public void RecalculateVolume()
 	{
 		// get access to the game data
-		GameData gameData = PersistentController.m_instance.m_gameData;
+		GameData gameData = DataController.m_instance.m_gameData;
 
 		// start with the base ship mass
 		m_volume = gameData.m_misc.m_baseShipVolume;
@@ -139,7 +139,7 @@ public class Ship
 	public void RecalculateAcceleration()
 	{
 		// get access to the game data
-		GameData gameData = PersistentController.m_instance.m_gameData;
+		GameData gameData = DataController.m_instance.m_gameData;
 
 		// get access to our engines
 		Engines engines = gameData.m_enginesList[ m_enginesClass ];
@@ -173,7 +173,7 @@ public class Ship
 	public int GetRemainingVolme()
 	{
 		// get access to the player data
-		PlayerData playerData = PersistentController.m_instance.m_playerData;
+		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// calculate and return the amount of space remaining in the cargo hold
 		return m_volume - playerData.m_ship.m_volumeUsed;

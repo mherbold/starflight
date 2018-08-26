@@ -42,14 +42,8 @@ public class PlanetController : MonoBehaviour
 			return;
 		}
 
-		// stop here if the spaceflight controller hasn't started
-		if ( !m_spaceflightController.m_started )
-		{
-			return;
-		}
-
 		// get to the player data
-		PlayerData playerData = PersistentController.m_instance.m_playerData;
+		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// calculate number of days per year for each planet based on orbit number - orbit 3 should = 366 days like earth
 		int daysPerYear = 122 * ( m_planet.m_orbitPosition + 1 );
@@ -63,7 +57,8 @@ public class PlanetController : MonoBehaviour
 		// update the planet model
 		float distance = 2500.0f * ( m_planet.m_orbitPosition + 2 );
 		float angle = m_orbitAngle * 2.0f * Mathf.PI;
-		Vector3 position = new Vector3( -Mathf.Sin( angle ), 0.0f, Mathf.Cos( angle ) ) * distance;
+		float planeOffset = -transform.localScale.y;
+		Vector3 position = new Vector3( -Mathf.Sin( angle ) * distance, planeOffset, Mathf.Cos( angle ) * distance );
 		Quaternion rotation = Quaternion.AngleAxis( 120.0f, Vector3.right ) * Quaternion.AngleAxis( m_rotationAngle * 360.0f, Vector3.forward );
 		transform.SetPositionAndRotation( position, rotation );
 	}
@@ -87,13 +82,17 @@ public class PlanetController : MonoBehaviour
 
 			// generate the texture maps for this planet
 			GenerateTextureMaps();
+
+			// scale the planet based on its gravity
+			float scale = 100.0f + planet.m_gravity / 5.0f;
+			transform.localScale = new Vector3( scale, scale, scale );
 		}
 	}
 
 	// generates the texture maps for this planet
 	private void GenerateTextureMaps()
 	{
-		PlanetMap planetMap = PersistentController.m_instance.m_planetData.m_planetMapList[ m_planet.m_id ];
+		PlanetMap planetMap = DataController.m_instance.m_planetData.m_planetMapList[ m_planet.m_id ];
 
 		if ( planetMap.m_map.Length == 0 )
 		{

@@ -281,7 +281,7 @@ public class TradeDepotController : DoorController
 		m_currentState = State.MenuBar;
 
 		// remember the starting bank balance
-		m_startingBankBalance = PersistentController.m_instance.m_playerData.m_bank.m_currentBalance;
+		m_startingBankBalance = DataController.m_instance.m_playerData.m_bank.m_currentBalance;
 
 		// update the ui
 		UpdateScreen();
@@ -300,15 +300,15 @@ public class TradeDepotController : DoorController
 		StartClosingUI();
 
 		// if the bank balance has changed then record it in the bank transaction log
-		int deltaBalance = m_startingBankBalance - PersistentController.m_instance.m_playerData.m_bank.m_currentBalance;
+		int deltaBalance = m_startingBankBalance - DataController.m_instance.m_playerData.m_bank.m_currentBalance;
 
 		if ( deltaBalance != 0 )
 		{
 			string sign = ( deltaBalance > 0 ) ? "-" : "+";
 
-			Bank.Transaction transaction = new Bank.Transaction( PersistentController.m_instance.m_playerData.m_starflight.m_currentStardate, "Trade depot", deltaBalance.ToString() + sign );
+			Bank.Transaction transaction = new Bank.Transaction( DataController.m_instance.m_playerData.m_starflight.m_currentStardate, "Trade depot", deltaBalance.ToString() + sign );
 
-			PersistentController.m_instance.m_playerData.m_bank.m_transactionList.Add( transaction );
+			DataController.m_instance.m_playerData.m_bank.m_transactionList.Add( transaction );
 		}
 	}
 
@@ -480,7 +480,7 @@ public class TradeDepotController : DoorController
 		Item item = m_itemList[ m_currentItemIndex ];
 
 		// get access to the game data
-		GameData gameData = PersistentController.m_instance.m_gameData;
+		GameData gameData = DataController.m_instance.m_gameData;
 
 		// update the analyze text
 		m_analyzeText.text = gameData.m_artifactList[ item.m_id ].m_analysisText;
@@ -556,10 +556,10 @@ public class TradeDepotController : DoorController
 				m_tradeGameObject.SetActive( true );
 
 				// get access to the game data
-				GameData gameData = PersistentController.m_instance.m_gameData;
+				GameData gameData = DataController.m_instance.m_gameData;
 
 				// get access to the player data
-				PlayerData playerData = PersistentController.m_instance.m_playerData;
+				PlayerData playerData = DataController.m_instance.m_playerData;
 
 				// check if we are needing the buy or sell amount
 				if ( ( m_currentState == State.BuyAmount ) || ( m_currentState == State.SellAmount ) )
@@ -865,7 +865,7 @@ public class TradeDepotController : DoorController
 	public void SellClicked()
 	{
 		// get access to the player data
-		PlayerData playerData = PersistentController.m_instance.m_playerData;
+		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// check if the player has something to sell
 		if ( ( playerData.m_ship.m_artifactStorage.m_artifactList.Count == 0 ) && ( playerData.m_ship.m_elementStorage.m_elementList.Count == 0 ) )
@@ -887,7 +887,7 @@ public class TradeDepotController : DoorController
 	public void AnalyzeClicked()
 	{
 		// get access to the player data
-		PlayerData playerData = PersistentController.m_instance.m_playerData;
+		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// check if the player has something to analyze
 		if ( ( playerData.m_ship.m_artifactStorage.m_artifactList.Count == 0 ) && ( playerData.m_ship.m_elementStorage.m_elementList.Count == 0 ) && ( playerData.m_starport.m_artifactStorage.m_artifactList.Count == 0 ) )
@@ -919,10 +919,10 @@ public class TradeDepotController : DoorController
 		Item item = m_itemList[ m_currentItemIndex ];
 
 		// get access to the player data
-		PlayerData playerData = PersistentController.m_instance.m_playerData;
+		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// get access to the game data
-		GameData gameData = PersistentController.m_instance.m_gameData;
+		GameData gameData = DataController.m_instance.m_gameData;
 
 		// deduct the cost of analyzing the artifact from the players bank balance
 		playerData.m_bank.m_currentBalance -= gameData.m_misc.m_artifactAnalysisPrice;
@@ -1012,7 +1012,7 @@ public class TradeDepotController : DoorController
 				else
 				{
 					// get access to the player data
-					PlayerData playerData = PersistentController.m_instance.m_playerData;
+					PlayerData playerData = DataController.m_instance.m_playerData;
 
 					// check if the ship has room in the cargo hold
 					if ( desiredAmount > playerData.m_ship.GetRemainingVolme() )
@@ -1022,7 +1022,7 @@ public class TradeDepotController : DoorController
 					else
 					{
 						// get access to the game data
-						GameData gameData = PersistentController.m_instance.m_gameData;
+						GameData gameData = DataController.m_instance.m_gameData;
 
 						// get the starport price of this element
 						int starportPrice = gameData.m_elementList[ elementId ].m_starportPrice;
@@ -1044,10 +1044,10 @@ public class TradeDepotController : DoorController
 			else
 			{
 				// get access to the player data
-				PlayerData playerData = PersistentController.m_instance.m_playerData;
+				PlayerData playerData = DataController.m_instance.m_playerData;
 
 				// get access to the game data
-				GameData gameData = PersistentController.m_instance.m_gameData;
+				GameData gameData = DataController.m_instance.m_gameData;
 
 				// get the sell price of this element
 				int sellPrice = gameData.m_elementList[ elementId ].m_actualValue;
@@ -1081,10 +1081,10 @@ public class TradeDepotController : DoorController
 		else
 		{
 			// get access to the game data
-			GameData gameData = PersistentController.m_instance.m_gameData;
+			GameData gameData = DataController.m_instance.m_gameData;
 
 			// get access to the player data
-			PlayerData playerData = PersistentController.m_instance.m_playerData;
+			PlayerData playerData = DataController.m_instance.m_playerData;
 
 			// get access to the artifact data
 			Artifact artifactGameData = gameData.m_artifactList[ item.m_id ];
@@ -1139,10 +1139,10 @@ public class TradeDepotController : DoorController
 		else
 		{
 			// get access to the game data
-			GameData gameData = PersistentController.m_instance.m_gameData;
+			GameData gameData = DataController.m_instance.m_gameData;
 
 			// get access to the player data
-			PlayerData playerData = PersistentController.m_instance.m_playerData;
+			PlayerData playerData = DataController.m_instance.m_playerData;
 
 			// add the sale price of the artifact to the player's bank balance
 			playerData.m_bank.m_currentBalance += gameData.m_artifactList[ item.m_id ].m_actualValue;
@@ -1163,10 +1163,10 @@ public class TradeDepotController : DoorController
 	private void AnalyzeSelectedItem()
 	{
 		// get access to the game data
-		GameData gameData = PersistentController.m_instance.m_gameData;
+		GameData gameData = DataController.m_instance.m_gameData;
 
 		// get access to the player data
-		PlayerData playerData = PersistentController.m_instance.m_playerData;
+		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// check if the selected artifact is a known artifact
 		Item item = m_itemList[ m_currentItemIndex ];
@@ -1196,10 +1196,10 @@ public class TradeDepotController : DoorController
 	private int GetMaximumBuyAmountDueToCurrentBalance( int elementId )
 	{
 		// get access to the game data
-		GameData gameData = PersistentController.m_instance.m_gameData;
+		GameData gameData = DataController.m_instance.m_gameData;
 
 		// get access to the player data
-		PlayerData playerData = PersistentController.m_instance.m_playerData;
+		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// get the starport price of this element
 		int starportPrice = gameData.m_elementList[ elementId ].m_starportPrice;

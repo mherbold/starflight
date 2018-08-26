@@ -16,30 +16,36 @@ public class LaunchYesButton : ShipButton
 		// update the messages log
 		m_spaceflightController.m_messages.text = "Opening docking bay doors...";
 
-		// play the docking bay door open sound
-		m_spaceflightController.m_basicSound.PlayOneShot( 0 );
+		if ( !m_spaceflightController.m_skipCinematics )
+		{
+			// play the docking bay door open sound
+			m_spaceflightController.m_basicSound.PlayOneShot( 0 );
 
-		// play the decompression sound
-		m_spaceflightController.m_basicSound.PlayOneShot( 1, 1 );
+			// play the decompression sound
+			m_spaceflightController.m_basicSound.PlayOneShot( 1, 1 );
 
-		// play the launch sound
-		m_spaceflightController.m_basicSound.PlayOneShot( 3, 2 );
+			// play the launch sound
+			m_spaceflightController.m_basicSound.PlayOneShot( 3, 2 );
 
-		// open the top docking bay door
-		m_spaceflightController.m_dockingBayDoorTop.gameObject.SetActive( true );
-		m_spaceflightController.m_dockingBayDoorTop.Play( "Open" );
+			// open the top docking bay door
+			m_spaceflightController.m_dockingBayDoorTop.gameObject.SetActive( true );
+			m_spaceflightController.m_dockingBayDoorTop.Play( "Open" );
 
-		// open the bottom docking bay door
-		m_spaceflightController.m_dockingBayDoorBottom.gameObject.SetActive( true );
-		m_spaceflightController.m_dockingBayDoorBottom.Play( "Open" );
+			// open the bottom docking bay door
+			m_spaceflightController.m_dockingBayDoorBottom.gameObject.SetActive( true );
+			m_spaceflightController.m_dockingBayDoorBottom.Play( "Open" );
 
-		// fire up the particle system
-		m_spaceflightController.m_decompressionParticleSystem.gameObject.SetActive( true );
-		m_spaceflightController.m_decompressionParticleSystem.Play();
+			// fire up the particle system
+			m_spaceflightController.m_decompressionParticleSystem.gameObject.SetActive( true );
+			m_spaceflightController.m_decompressionParticleSystem.Play();
+		}
 
 		// reset some private members
 		m_launchTimer = 0.0f;
 		m_countdownStarted = false;
+
+		// stop the music
+		MusicController.m_instance.ChangeToTrack( MusicController.Track.None );
 
 		return true;
 	}
@@ -55,11 +61,14 @@ public class LaunchYesButton : ShipButton
 			// check if we have have not played the countdown sound yet
 			if ( !m_countdownStarted )
 			{
+				if ( !m_spaceflightController.m_skipCinematics )
+				{
+					// play the countdown sound
+					m_spaceflightController.m_basicSound.PlayOneShot( 2 );
+				}
+
 				// turn off the decompression particle system
 				m_spaceflightController.m_decompressionParticleSystem.gameObject.SetActive( false );
-
-				// play the countdown sound
-				m_spaceflightController.m_basicSound.PlayOneShot( 2 );
 
 				// remember that we've already started playing the countdown sound
 				m_countdownStarted = true;
@@ -124,7 +133,7 @@ public class LaunchYesButton : ShipButton
 						m_spaceflightController.m_justLaunched = true;
 
 						// change to the arth system
-						GameData gameData = PersistentController.m_instance.m_gameData;
+						GameData gameData = DataController.m_instance.m_gameData;
 						m_spaceflightController.m_systemController.EnterSystem( gameData.m_misc.m_arthStarId );
 
 						// restore the bridge buttons (this also ends the launch function)

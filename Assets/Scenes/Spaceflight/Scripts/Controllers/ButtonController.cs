@@ -48,12 +48,6 @@ public class ButtonController : MonoBehaviour
 		GameObject controllersGameObject = GameObject.FindWithTag( "Spaceflight Controllers" );
 		m_spaceflightController = controllersGameObject.GetComponent<SpaceflightController>();
 
-		// stop here if the spaceflight contoller has not started
-		if ( !m_spaceflightController.m_started )
-		{
-			return;
-		}
-
 		// bridge buttons
 		m_bridgeButtons = new ShipButton[] { new CommandButton(), new ScienceButton(), new NavigationButton(), new EngineeringButton(), new CommunicationsButton(), new MedicalButton() };
 
@@ -68,12 +62,6 @@ public class ButtonController : MonoBehaviour
 	// this is called by unity every frame
 	private void Update()
 	{
-		// stop here if the spaceflight contoller has not started
-		if ( !m_spaceflightController.m_started )
-		{
-			return;
-		}
-
 		// check if we are activating the currently selected button
 		if ( m_activatingButton )
 		{
@@ -199,7 +187,7 @@ public class ButtonController : MonoBehaviour
 		UpdateButtons( m_bridgeButtons );
 
 		// get to the player data
-		PlayerData playerData = PersistentController.m_instance.m_playerData;
+		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// change the current officer label to the name of the ship
 		m_spaceflightController.m_currentOfficer.text = "ISS " + playerData.m_ship.m_name;

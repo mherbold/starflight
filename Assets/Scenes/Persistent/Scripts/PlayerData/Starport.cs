@@ -19,7 +19,7 @@ public class Starport
 		m_artifactStorage.Reset();
 
 		// get access to the game data
-		GameData gameData = PersistentController.m_instance.m_gameData;
+		GameData gameData = DataController.m_instance.m_gameData;
 
 		// add the artifacts that are available to buy in starport at the beginning of the game
 		for ( int artifactId = 0; artifactId < gameData.m_artifactList.Length; artifactId++ )
