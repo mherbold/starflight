@@ -116,7 +116,7 @@ public class PersonnelController : DoorController
 	public void UpdateControllerForSelectRaceState()
 	{
 		// check if we moved the stick left
-		if ( m_starportController.m_inputManager.m_west )
+		if ( InputController.m_instance.m_west )
 		{
 			if ( m_ignoreControllerTimer == 0.0f )
 			{
@@ -126,10 +126,10 @@ public class PersonnelController : DoorController
 
 				UpdateScreen();
 
-				m_starportController.m_uiSoundController.Play( UISoundController.UISound.Click );
+				SoundController.m_instance.PlaySound( SoundController.Sound.Click );
 			}
 		}
-		else if ( m_starportController.m_inputManager.m_east ) // check if we moved the stick right
+		else if ( InputController.m_instance.m_east ) // check if we moved the stick right
 		{
 			if ( m_ignoreControllerTimer == 0.0f )
 			{
@@ -139,7 +139,7 @@ public class PersonnelController : DoorController
 
 				UpdateScreen();
 
-				m_starportController.m_uiSoundController.Play( UISoundController.UISound.Click );
+				SoundController.m_instance.PlaySound( SoundController.Sound.Click );
 			}
 		}
 		else // we have centered the stick
@@ -152,7 +152,7 @@ public class PersonnelController : DoorController
 	public void UpdateControllerForTrainCrewmemberState()
 	{
 		// check if we moved the stick down
-		if ( m_starportController.m_inputManager.m_south )
+		if ( InputController.m_instance.m_south )
 		{
 			if ( m_ignoreControllerTimer == 0.0f )
 			{
@@ -166,11 +166,11 @@ public class PersonnelController : DoorController
 
 					UpdateScreen();
 
-					m_starportController.m_uiSoundController.Play( UISoundController.UISound.Click );
+					SoundController.m_instance.PlaySound( SoundController.Sound.Click );
 				}
 			}
 		}
-		else if ( m_starportController.m_inputManager.m_north ) // check if we have moved the stick up
+		else if ( InputController.m_instance.m_north ) // check if we have moved the stick up
 		{
 			if ( m_ignoreControllerTimer == 0.0f )
 			{
@@ -184,7 +184,7 @@ public class PersonnelController : DoorController
 
 					UpdateScreen();
 
-					m_starportController.m_uiSoundController.Play( UISoundController.UISound.Click );
+					SoundController.m_instance.PlaySound( SoundController.Sound.Click );
 				}
 			}
 		}
@@ -194,17 +194,17 @@ public class PersonnelController : DoorController
 		}
 
 		// check if we have pressed the fire button
-		if ( m_starportController.m_inputManager.GetSubmitDown() )
+		if ( InputController.m_instance.SubmitWasPressed() )
 		{
 			TrainSelectedSkill();
 		}
 
 		// check if we have pressed the cancel button
-		if ( m_starportController.m_inputManager.GetCancelDown() )
+		if ( InputController.m_instance.CancelWasPressed() )
 		{
 			SwitchToViewFileState();
 
-			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Deactivate );
+			SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
 		}
 	}
 
@@ -257,7 +257,7 @@ public class PersonnelController : DoorController
 		SwitchToViewFileState();
 
 		// cancel the ui sounds
-		m_starportController.m_uiSoundController.CancelSounds();
+		//m_starportController.m_uiSoundController.CancelSounds();
 	}
 
 	// call this to give up control
@@ -359,7 +359,7 @@ public class PersonnelController : DoorController
 		UpdateScreen();
 
 		// debounce the buttons
-		m_starportController.m_inputManager.m_debounceNextUpdate = true;
+		InputController.m_instance.m_debounceNextUpdate = true;
 	}
 
 	// call this whenever we change state or do something that would result in something changing on the screen
@@ -791,7 +791,7 @@ public class PersonnelController : DoorController
 		{
 			UpdateTrainingText( 5 );
 
-			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Error );
+			SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 		}
 		else
 		{
@@ -810,7 +810,7 @@ public class PersonnelController : DoorController
 			{
 				UpdateTrainingText( 4 );
 
-				m_starportController.m_uiSoundController.Play( UISoundController.UISound.Error );
+				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 			}
 			else if ( currentSkill < maximumSkill ) // check if we are still below the maximum skill points
 			{
@@ -827,13 +827,13 @@ public class PersonnelController : DoorController
 				UpdateSkillValues();
 
 				// play a ui sound
-				m_starportController.m_uiSoundController.Play( UISoundController.UISound.Update );
+				SoundController.m_instance.PlaySound( SoundController.Sound.Update );
 			}
 			else // the selected skill is already maxxed out
 			{
 				UpdateTrainingText( 3 );
 
-				m_starportController.m_uiSoundController.Play( UISoundController.UISound.Error );
+				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 			}
 		}
 	}
@@ -845,7 +845,7 @@ public class PersonnelController : DoorController
 		SwitchToSelectRaceState();
 
 		// play a ui sound
-		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Activate );
+		SoundController.m_instance.PlaySound( SoundController.Sound.Activate );
 	}
 
 	// this is called if we clicked on the previous button
@@ -858,7 +858,7 @@ public class PersonnelController : DoorController
 		UpdateScreen();
 
 		// play a ui sound
-		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Activate );
+		SoundController.m_instance.PlaySound( SoundController.Sound.Activate );
 	}
 
 	// this is called if we clicked on the next button
@@ -871,7 +871,7 @@ public class PersonnelController : DoorController
 		UpdateScreen();
 
 		// play a ui sound
-		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Activate );
+		SoundController.m_instance.PlaySound( SoundController.Sound.Activate );
 	}
 
 	// this is called if we clicked on the exit button
@@ -889,7 +889,7 @@ public class PersonnelController : DoorController
 		{
 			UpdateTrainingText( 1 );
 
-			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Error );
+			SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 		}
 		else
 		{
@@ -922,12 +922,12 @@ public class PersonnelController : DoorController
 			{
 				UpdateTrainingText( 2 );
 
-				m_starportController.m_uiSoundController.Play( UISoundController.UISound.Error );
+				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 			}
 		}
 
 		// play a ui sound
-		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Activate );
+		SoundController.m_instance.PlaySound( SoundController.Sound.Activate );
 	}
 
 	// this is called if we clicked on the delete button
@@ -937,7 +937,7 @@ public class PersonnelController : DoorController
 		SwitchToDeleteCrewmemberState();
 
 		// play a ui sound
-		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Activate );
+		SoundController.m_instance.PlaySound( SoundController.Sound.Activate );
 	}
 
 	// this is called if we clicked on the select button
@@ -947,7 +947,7 @@ public class PersonnelController : DoorController
 		SwitchToGiveNameState();
 
 		// play a ui sound
-		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Activate );
+		SoundController.m_instance.PlaySound( SoundController.Sound.Activate );
 	}
 
 	// this is called if we clicked on the cancel button
@@ -957,7 +957,7 @@ public class PersonnelController : DoorController
 		SwitchToViewFileState();
 
 		// play a ui sound
-		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Deactivate );
+		SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
 	}
 
 	// this is called when the yes button in the delete panel is clicked
@@ -979,7 +979,7 @@ public class PersonnelController : DoorController
 		SwitchToViewFileState();
 
 		// play a ui sound
-		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Deactivate );
+		SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
 	}
 
 	// this is called when the no button in the delete panel is clicked
@@ -989,7 +989,7 @@ public class PersonnelController : DoorController
 		SwitchToViewFileState();
 
 		// play a ui sound
-		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Deactivate );
+		SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
 	}
 
 	// this is called when we hit enter in the name input field
@@ -1001,7 +1001,7 @@ public class PersonnelController : DoorController
 			SwitchToViewFileState();
 
 			// play a ui sound
-			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Deactivate );
+			SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
 		}
 		else
 		{
@@ -1032,7 +1032,7 @@ public class PersonnelController : DoorController
 			SwitchToViewFileState();
 
 			// play a ui sound
-			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Update );
+			SoundController.m_instance.PlaySound( SoundController.Sound.Update );
 		}
 	}
 }

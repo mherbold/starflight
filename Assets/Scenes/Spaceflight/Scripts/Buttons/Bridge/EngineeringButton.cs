@@ -28,7 +28,7 @@ public class EngineeringButton : ShipButton
 	public override void Cancel()
 	{
 		// play the deactivate sound
-		m_spaceflightController.m_uiSoundController.Play( UISoundController.UISound.Deactivate );
+		SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
 
 		// return to the bridge
 		m_spaceflightController.m_buttonController.RestoreBridgeButtons();

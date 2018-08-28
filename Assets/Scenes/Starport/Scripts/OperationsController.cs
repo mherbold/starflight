@@ -68,7 +68,7 @@ public class OperationsController : DoorController
 		m_noticesButton.Select();
 
 		// cancel the ui sounds
-		m_starportController.m_uiSoundController.CancelSounds();
+		//m_starportController.m_uiSoundController.CancelSounds();
 	}
 
 	// call this to give up control
@@ -108,7 +108,7 @@ public class OperationsController : DoorController
 		m_noticesController.Show();
 
 		// play a ui sound
-		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Activate );
+		SoundController.m_instance.PlaySound( SoundController.Sound.Activate );
 	}
 
 	// this is called if we clicked on the evaluation button
@@ -121,7 +121,7 @@ public class OperationsController : DoorController
 		ShowButtons( 0 );
 
 		// play a ui sound
-		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Activate );
+		SoundController.m_instance.PlaySound( SoundController.Sound.Activate );
 	}
 
 	// this is called if we clicked on the exit button

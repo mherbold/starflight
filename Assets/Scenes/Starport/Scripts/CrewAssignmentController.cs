@@ -87,7 +87,7 @@ public class CrewAssignmentController : DoorController
 		bool yIsCentered = false;
 
 		// check if we moved the stick left
-		if ( m_starportController.m_inputManager.m_west )
+		if ( InputController.m_instance.m_west )
 		{
 			if ( m_ignoreControllerTimer == 0.0f )
 			{
@@ -98,7 +98,7 @@ public class CrewAssignmentController : DoorController
 				UpdateDisplay();
 			}
 		}
-		else if ( m_starportController.m_inputManager.m_east ) // check if we moved the stick right
+		else if ( InputController.m_instance.m_east ) // check if we moved the stick right
 		{
 			if ( m_ignoreControllerTimer == 0.0f )
 			{
@@ -118,7 +118,7 @@ public class CrewAssignmentController : DoorController
 		if ( xIsCentered )
 		{
 			// check if we moved the stick down
-			if ( m_starportController.m_inputManager.m_south )
+			if ( InputController.m_instance.m_south )
 			{
 				if ( m_ignoreControllerTimer == 0.0f )
 				{
@@ -132,7 +132,7 @@ public class CrewAssignmentController : DoorController
 					}
 				}
 			}
-			else if ( m_starportController.m_inputManager.m_north ) // check if we have moved the stick up
+			else if ( InputController.m_instance.m_north ) // check if we have moved the stick up
 			{
 				if ( m_ignoreControllerTimer == 0.0f )
 				{
@@ -159,11 +159,11 @@ public class CrewAssignmentController : DoorController
 		}
 
 		// check if we have pressed the cancel button
-		if ( m_starportController.m_inputManager.GetCancelDown() )
+		if ( InputController.m_instance.CancelWasPressed() )
 		{
 			SwitchToMenuBarState();
 
-			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Deactivate );
+			SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
 		}
 	}
 
@@ -197,7 +197,7 @@ public class CrewAssignmentController : DoorController
 		SwitchToMenuBarState();
 
 		// cancel the ui sounds
-		m_starportController.m_uiSoundController.CancelSounds();
+		//m_starportController.m_uiSoundController.CancelSounds();
 	}
 
 	// call this to give up control
@@ -382,7 +382,7 @@ public class CrewAssignmentController : DoorController
 		}
 
 		// play a sound
-		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Update );
+		SoundController.m_instance.PlaySound( SoundController.Sound.Update );
 	}
 
 	private void ChangeCurrentPersonnelId( int personnelId, bool forceUpdate = false )
@@ -409,7 +409,7 @@ public class CrewAssignmentController : DoorController
 			UpdateAssignedCrewmemberList();
 
 			// play a sound
-			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Update );
+			SoundController.m_instance.PlaySound( SoundController.Sound.Update );
 		}
 	}
 
@@ -465,7 +465,7 @@ public class CrewAssignmentController : DoorController
 		SwitchToAssignPersonnelState();
 
 		// play a ui sound
-		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Activate );
+		SoundController.m_instance.PlaySound( SoundController.Sound.Activate );
 	}
 
 	// this is called if we clicked on the exit button

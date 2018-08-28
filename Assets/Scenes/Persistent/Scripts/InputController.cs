@@ -1,9 +1,12 @@
 ﻿
 using UnityEngine;
 
-public class InputManager : MonoBehaviour
+public class InputController : MonoBehaviour
 {
-	// private stuff we don't want the editor to see
+	// static reference to this instance
+	public static InputController m_instance;
+
+	// submit (fire1) and cancel (fire2) inputs
 	public bool m_submit { get; private set; }
 	public bool m_cancel { get; private set; }
 
@@ -13,6 +16,7 @@ public class InputManager : MonoBehaviour
 	public bool m_submitUp { get; private set; }
 	public bool m_cancelUp { get; private set; }
 
+	// directional arrow inputs
 	public bool m_northWest { get; private set; }
 	public bool m_north { get; private set; }
 	public bool m_northEast { get; private set; }
@@ -25,9 +29,17 @@ public class InputManager : MonoBehaviour
 	public float m_x { get; private set; }
 	public float m_y { get; private set; }
 
+	// true if we want to ignore the submit and cancel inputs on the next frame
 	public bool m_debounceNextUpdate;
 
-	// this is called by unity every frame
+	// unity awake
+	void Awake()
+	{
+		// remember this instance to this
+		m_instance = this;
+	}
+
+	// unity update
 	void Update()
 	{
 		// update directional movement
@@ -92,7 +104,7 @@ public class InputManager : MonoBehaviour
 	}
 
 	// get the submit down button (with optional debounce)
-	public bool GetSubmitDown( bool debounce = true )
+	public bool SubmitWasPressed( bool debounce = true )
 	{
 		bool submitDown = m_submitDown;
 
@@ -105,7 +117,7 @@ public class InputManager : MonoBehaviour
 	}
 
 	// get the cancel down button (with optional debounce)
-	public bool GetCancelDown( bool debounce = true )
+	public bool CancelWasPressed( bool debounce = true )
 	{
 		bool cancelDown = m_cancelDown;
 

@@ -3,56 +3,59 @@ using UnityEngine;
 
 public class DockingBayController : DoorController
 {
-	// public stuff we want to set using the editor
+	// the renderer for the astronaut so we can fade him out
 	public Renderer m_astronautRenderer;
 
-	// private stuff we don't want the editor to see
-	private bool m_isTransporting;
-	private float m_transportTimer;
+	// set this to true to transport the astronaut to the docking bay
+	bool m_isTransporting;
 
-	// this is called by unity once at the start of the level
+	// our timer (for the transporting effect)
+	float m_timer;
+
+	// unity start
 	protected override void Start()
 	{
+		// call the base start function
 		base.Start();
 
 		// we're not transporting yet
 		m_isTransporting = false;
 	}
 
-	// this is called by unity every frame
-	private void Update()
+	// unity update
+	void Update()
 	{
-		if ( !m_isTransporting )
+		// are we transporting the astronaut?
+		if ( m_isTransporting )
 		{
-			return;
-		}
+			// yes - update the transport timer
+			m_timer += Time.deltaTime;
 
-		// update the transport timer
-		m_transportTimer += Time.deltaTime;
+			// let the particle system run for only a second and a half
+			if ( m_timer >= 1.5f )
+			{
+				m_starportController.m_astronautController.m_transporterParticleSystem.Stop();
+			}
 
-		// let the particle system run for only a second and a half
-		if ( m_transportTimer >= 1.5f )
-		{
-			m_starportController.m_astronautController.m_transporterParticleSystem.Stop();
-		}
+			// TODO - Fix this!  Need to write a 2 pass shader to fade the astronaut out (a-la distance fade)
+			// fade out the astronaut over two and a half seconds
+			if ( m_timer < 2.5f )
+			{
+				UpdateOpacity( 1.0f - ( m_timer / 2.5f ) );
+			}
 
-		// fade out the astronaut over two and a half seconds
-		if ( m_transportTimer < 2.5f )
-		{
-			UpdateOpacity( 1.0f - ( m_transportTimer / 2.5f ) );
-		}
+			// give the particles time to completely fade out
+			if ( m_timer >= 4.0f )
+			{
+				// force the astronaut to be completely transparent
+				UpdateOpacity( 0.0f );
 
-		// give the particles time to completely fade out
-		if ( m_transportTimer >= 4.0f )
-		{
-			// force the astronaut to be completely transparent
-			UpdateOpacity( 0.0f );
+				// we are no longer transporting
+				m_isTransporting = false;
 
-			// we are no longer transporting
-			m_isTransporting = false;
-
-			// switch to the spaceflight scene
-			m_starportController.m_manualSceneTransitionController.BeginTransition();
+				// start fading out and switch to the spaceflight scene
+				SceneFadeController.m_instance.FadeOut( "Spaceflight" );
+			}
 		}
 	}
 
@@ -63,17 +66,17 @@ public class DockingBayController : DoorController
 		m_isTransporting = true;
 
 		// reset the transporter timer
-		m_transportTimer = 0.0f;
+		m_timer = 0.0f;
 
 		// start the particle system
 		m_starportController.m_astronautController.m_transporterParticleSystem.Play();
 
 		// play the transporting sound
-		m_starportController.m_basicSound.PlayOneShot( 2 );
+		SoundController.m_instance.PlaySound( SoundController.Sound.Transport );
 	}
 
 	// this updates the opacity of the astronaut
-	private void UpdateOpacity( float opacity )
+	void UpdateOpacity( float opacity )
 	{
 		// go through all the materials on the astronaut
 		for ( int i = 0; i < m_astronautRenderer.materials.Length; i++ )

@@ -5,32 +5,26 @@ using UnityEngine.EventSystems;
 
 public class StarportController : MonoBehaviour
 {
-	// the scene transition controller
-	public ManualSceneTransitionController m_manualSceneTransitionController { get; private set; }
-
 	// stuff shared by all the controllers
-	public InputManager m_inputManager { get; private set; }
-	public BasicSound m_basicSound { get; private set; }
-	public UISoundController m_uiSoundController { get; protected set; }
 	public AstronautController m_astronautController { get; private set; }
 	public DoorNameController m_doorNameController { get; private set; }
 
 	// door controllers
-	private OperationsController m_operationsController;
-	private PersonnelController m_personnelController;
-	private CrewAssignmentController m_crewAssignmentController;
-	private BankController m_bankController;
-	private ShipConfigurationController m_shipConfigurationController;
-	private TradeDepotController m_tradeDepotController;
-	private DockingBayController m_dockingBayController;
+	OperationsController m_operationsController;
+	PersonnelController m_personnelController;
+	CrewAssignmentController m_crewAssignmentController;
+	BankController m_bankController;
+	ShipConfigurationController m_shipConfigurationController;
+	TradeDepotController m_tradeDepotController;
+	DockingBayController m_dockingBayController;
 
 	// keep track of which door is the current one
-	private DoorController m_currentUIController;
+	DoorController m_currentUIController;
 
 	// keep track of whether or not the astronaut can be moved
-	private bool m_astronautCanBeMoved;
+	bool m_astronautCanBeMoved;
 
-	// this is called by unity before start
+	// unity awake
 	void Awake()
 	{
 		// check if we loaded the persistent scene
@@ -43,18 +37,6 @@ public class StarportController : MonoBehaviour
 		}
 		else
 		{
-			// get access to the manual scene transition controller
-			m_manualSceneTransitionController = GetComponent<ManualSceneTransitionController>();
-
-			// get access to the input manager
-			m_inputManager = GetComponent<InputManager>();
-
-			// get access to the basic sound
-			m_basicSound = GetComponent<BasicSound>();
-
-			// get access to the ui sound controller
-			m_uiSoundController = GetComponent<UISoundController>();
-
 			// get access to the astronaut controller
 			m_astronautController = GetComponent<AstronautController>();
 
@@ -84,7 +66,7 @@ public class StarportController : MonoBehaviour
 		}
 	}
 
-	// use this for initialization
+	// unity start
 	void Start()
 	{
 		// turn off controller navigation of the UI
@@ -95,10 +77,13 @@ public class StarportController : MonoBehaviour
 
 		// we have the focus
 		TakeFocus();
+
+		// fade the scene in
+		SceneFadeController.m_instance.FadeIn();
 	}
 
-	// this is called by unity every frame
-	private void Update()
+	// unity update
+	void Update()
 	{
 		// update the game time
 		PlayerData playerData = DataController.m_instance.m_playerData;
@@ -115,7 +100,7 @@ public class StarportController : MonoBehaviour
 			}
 
 			// check if the player has pressed the fire button
-			if ( m_inputManager.GetSubmitDown() )
+			if ( InputController.m_instance.SubmitWasPressed() )
 			{
 				Fire();
 			}
@@ -126,8 +111,8 @@ public class StarportController : MonoBehaviour
 	private void Move()
 	{
 		// get the controller stick position
-		float x = m_inputManager.m_x;
-		float z = m_inputManager.m_y;
+		float x = InputController.m_instance.m_x;
+		float z = InputController.m_instance.m_y;
 
 		// create our 3d move vector from the controller position
 		Vector3 moveVector = new Vector3( x, 0.0f, z );

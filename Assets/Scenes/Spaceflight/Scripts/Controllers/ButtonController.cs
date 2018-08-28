@@ -104,7 +104,7 @@ public class ButtonController : MonoBehaviour
 		}
 
 		// check if we moved the stick down
-		if ( m_spaceflightController.m_inputManager.m_south )
+		if ( InputController.m_instance.m_south )
 		{
 			if ( m_ignoreControllerTimer == 0.0f )
 			{
@@ -116,11 +116,11 @@ public class ButtonController : MonoBehaviour
 
 					UpdateButtonSprites();
 
-					m_spaceflightController.m_uiSoundController.Play( UISoundController.UISound.Click );
+					SoundController.m_instance.PlaySound( SoundController.Sound.Click );
 				}
 			}
 		}
-		else if ( m_spaceflightController.m_inputManager.m_north ) // check if we have moved the stick up
+		else if ( InputController.m_instance.m_north ) // check if we have moved the stick up
 		{
 			if ( m_ignoreControllerTimer == 0.0f )
 			{
@@ -132,7 +132,7 @@ public class ButtonController : MonoBehaviour
 
 					UpdateButtonSprites();
 
-					m_spaceflightController.m_uiSoundController.Play( UISoundController.UISound.Click );
+					SoundController.m_instance.PlaySound( SoundController.Sound.Click );
 				}
 			}
 		}
@@ -142,11 +142,11 @@ public class ButtonController : MonoBehaviour
 		}
 
 		// check if we have pressed the cancel button
-		if ( m_spaceflightController.m_inputManager.GetCancelDown() )
+		if ( InputController.m_instance.CancelWasPressed() )
 		{
 			if ( m_currentButton == null )
 			{
-				m_spaceflightController.m_uiSoundController.Play( UISoundController.UISound.Error );
+				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 			}
 			else
 			{
@@ -156,11 +156,11 @@ public class ButtonController : MonoBehaviour
 		}
 
 		// check if we have pressed the fire button
-		if ( m_spaceflightController.m_inputManager.GetSubmitDown() )
+		if ( InputController.m_instance.SubmitWasPressed() )
 		{
 			if ( m_buttonList[ m_currentButtonIndex ] == null )
 			{
-				m_spaceflightController.m_uiSoundController.Play( UISoundController.UISound.Error );
+				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 			}
 			else
 			{
@@ -172,7 +172,7 @@ public class ButtonController : MonoBehaviour
 				m_buttonImageList[ m_currentButtonIndex ].sprite = m_buttonActiveSprite;
 
 				// play the activate sound
-				m_spaceflightController.m_uiSoundController.Play( UISoundController.UISound.Activate );
+				SoundController.m_instance.PlaySound( SoundController.Sound.Activate );
 			}
 		}
 	}

@@ -10,7 +10,7 @@ public class CombatButton : ShipButton
 	{
 		if ( m_spaceflightController.m_inDockingBay )
 		{
-			m_spaceflightController.m_uiSoundController.Play( UISoundController.UISound.Error );
+			SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
 			m_spaceflightController.m_messages.text = "We're in the docking bay.";
 

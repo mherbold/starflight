@@ -12,6 +12,7 @@ TagManager:
   - Trade Depot
   - Docking Bay
   - Spaceflight Controllers
+  - Scene Fade
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - UI
   - 
   - 
-  - Ship UI
+  - Ship Configuration
   - Main View
   - 
   - 

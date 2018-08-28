@@ -146,7 +146,7 @@ public class NoticesController : MonoBehaviour
 		}
 
 		// play a ui sound
-		m_operationsController.m_starportController.m_uiSoundController.Play( UISoundController.UISound.Update );
+		SoundController.m_instance.PlaySound( SoundController.Sound.Update );
 	}
 
 	// this is called if we clicked on the next button
@@ -160,7 +160,7 @@ public class NoticesController : MonoBehaviour
 		}
 
 		// play a ui sound
-		m_operationsController.m_starportController.m_uiSoundController.Play( UISoundController.UISound.Update );
+		SoundController.m_instance.PlaySound( SoundController.Sound.Update );
 	}
 
 	// this is called if we clicked on the quit button
@@ -170,7 +170,7 @@ public class NoticesController : MonoBehaviour
 		Hide();
 
 		// play a ui sound
-		m_operationsController.m_starportController.m_uiSoundController.Play( UISoundController.UISound.Deactivate );
+		SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
 	}
 
 	// call this to start displaying the current message

@@ -132,7 +132,7 @@ public class TradeDepotController : DoorController
 	private void UpdateController()
 	{
 		// check if we moved the stick down
-		if ( m_starportController.m_inputManager.m_south )
+		if ( InputController.m_instance.m_south )
 		{
 			if ( m_ignoreControllerTimer == 0.0f )
 			{
@@ -144,11 +144,11 @@ public class TradeDepotController : DoorController
 
 					UpdateScreen();
 
-					m_starportController.m_uiSoundController.Play( UISoundController.UISound.Click );
+					SoundController.m_instance.PlaySound( SoundController.Sound.Click );
 				}
 			}
 		}
-		else if ( m_starportController.m_inputManager.m_north ) // check if we have moved the stick up
+		else if ( InputController.m_instance.m_north ) // check if we have moved the stick up
 		{
 			if ( m_ignoreControllerTimer == 0.0f )
 			{
@@ -160,7 +160,7 @@ public class TradeDepotController : DoorController
 
 					UpdateScreen();
 
-					m_starportController.m_uiSoundController.Play( UISoundController.UISound.Click );
+					SoundController.m_instance.PlaySound( SoundController.Sound.Click );
 				}
 			}
 		}
@@ -170,11 +170,11 @@ public class TradeDepotController : DoorController
 		}
 
 		// check if we have pressed the cancel button
-		if ( m_starportController.m_inputManager.GetCancelDown() )
+		if ( InputController.m_instance.CancelWasPressed() )
 		{
 			SwitchToMenuBarState();
 
-			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Deactivate );
+			SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
 		}
 	}
 
@@ -185,9 +185,9 @@ public class TradeDepotController : DoorController
 		UpdateController();
 
 		// check if we have pressed the fire button
-		if ( m_starportController.m_inputManager.GetSubmitDown() )
+		if ( InputController.m_instance.SubmitWasPressed() )
 		{
-			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Activate );
+			SoundController.m_instance.PlaySound( SoundController.Sound.Activate );
 
 			BuySelectedItem();
 		}
@@ -200,9 +200,9 @@ public class TradeDepotController : DoorController
 		UpdateController();
 
 		// check if we have pressed the fire button
-		if ( m_starportController.m_inputManager.GetSubmitDown() )
+		if ( InputController.m_instance.SubmitWasPressed() )
 		{
-			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Activate );
+			SoundController.m_instance.PlaySound( SoundController.Sound.Activate );
 
 			SellSelectedItem();
 		}
@@ -215,9 +215,9 @@ public class TradeDepotController : DoorController
 		UpdateController();
 
 		// check if we have pressed the fire button
-		if ( m_starportController.m_inputManager.GetSubmitDown() )
+		if ( InputController.m_instance.SubmitWasPressed() )
 		{
-			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Activate );
+			SoundController.m_instance.PlaySound( SoundController.Sound.Activate );
 
 			AnalyzeSelectedItem();
 		}
@@ -226,20 +226,20 @@ public class TradeDepotController : DoorController
 	private void UpdateControllerForAnalyzeShowState()
 	{
 		// check if we have pressed the fire or cancel button
-		if ( m_starportController.m_inputManager.GetSubmitDown() || m_starportController.m_inputManager.GetCancelDown() )
+		if ( InputController.m_instance.SubmitWasPressed() || InputController.m_instance.CancelWasPressed() )
 		{
 			// switch back to the analyze item state
 			SwitchToAnalyzeItemState( false );
 
 			// play a ui sound
-			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Deactivate );
+			SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
 		}
 	}
 
 	private void UpdateControllerForErrorMessageState()
 	{
 		// check if we have pressed the fire or cancel button
-		if ( m_starportController.m_inputManager.GetSubmitDown() || m_starportController.m_inputManager.GetCancelDown() )
+		if ( InputController.m_instance.SubmitWasPressed() || InputController.m_instance.CancelWasPressed() )
 		{
 			// switch back to the previous state
 			switch ( m_stateBeforeError )
@@ -270,7 +270,7 @@ public class TradeDepotController : DoorController
 			}
 
 			// play a ui sound
-			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Deactivate );
+			SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
 		}
 	}
 
@@ -322,7 +322,7 @@ public class TradeDepotController : DoorController
 		SwitchToMenuBarState();
 
 		// cancel the ui sounds
-		m_starportController.m_uiSoundController.CancelSounds();
+		//m_starportController.m_uiSoundController.CancelSounds();
 	}
 
 	// call this to give up control
@@ -376,7 +376,7 @@ public class TradeDepotController : DoorController
 		UpdateScreen();
 
 		// debounce the input
-		m_starportController.m_inputManager.m_debounceNextUpdate = true;
+		InputController.m_instance.m_debounceNextUpdate = true;
 	}
 
 	// call this to switch to the buy amount state
@@ -415,7 +415,7 @@ public class TradeDepotController : DoorController
 		UpdateScreen();
 
 		// debounce the input
-		m_starportController.m_inputManager.m_debounceNextUpdate = true;
+		InputController.m_instance.m_debounceNextUpdate = true;
 	}
 
 	// call this to switch to the sell amount state
@@ -454,7 +454,7 @@ public class TradeDepotController : DoorController
 		UpdateScreen();
 
 		// debounce the input
-		m_starportController.m_inputManager.m_debounceNextUpdate = true;
+		InputController.m_instance.m_debounceNextUpdate = true;
 	}
 
 	// call this to switch to the confirm analysis state
@@ -492,7 +492,7 @@ public class TradeDepotController : DoorController
 		UpdateScreen();
 
 		// debounce the input
-		m_starportController.m_inputManager.m_debounceNextUpdate = true;
+		InputController.m_instance.m_debounceNextUpdate = true;
 	}
 
 	// call this to switch to the error message state
@@ -514,10 +514,10 @@ public class TradeDepotController : DoorController
 		m_errorMessageText.text = errorMessage;
 
 		// play a ui sound
-		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Error );
+		SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
 		// debounce the input
-		m_starportController.m_inputManager.m_debounceNextUpdate = true;
+		InputController.m_instance.m_debounceNextUpdate = true;
 	}
 
 	// call this whenever we change state or do something that would result in something changing on the screen
@@ -858,7 +858,7 @@ public class TradeDepotController : DoorController
 		SwitchToBuyItemState();
 
 		// play a ui sound
-		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Activate );
+		SoundController.m_instance.PlaySound( SoundController.Sound.Activate );
 	}
 
 	// this is called if we clicked on the sell button
@@ -879,7 +879,7 @@ public class TradeDepotController : DoorController
 			SwitchToSellItemState();
 
 			// play a ui sound
-			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Activate );
+			SoundController.m_instance.PlaySound( SoundController.Sound.Activate );
 		}
 	}
 
@@ -901,7 +901,7 @@ public class TradeDepotController : DoorController
 			SwitchToAnalyzeItemState();
 
 			// play a ui sound
-			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Activate );
+			SoundController.m_instance.PlaySound( SoundController.Sound.Activate );
 		}
 	}
 
@@ -934,7 +934,7 @@ public class TradeDepotController : DoorController
 		SwitchToAnalyzeShowState();
 
 		// play a ui sound
-		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Update );
+		SoundController.m_instance.PlaySound( SoundController.Sound.Update );
 	}
 
 	// this is called if we clicked on no to analyze the selected item
@@ -944,7 +944,7 @@ public class TradeDepotController : DoorController
 		SwitchToAnalyzeItemState( false );
 
 		// play a ui sound
-		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Deactivate );
+		SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
 	}
 
 	// this is called when we hit enter in the amount input field
@@ -992,7 +992,7 @@ public class TradeDepotController : DoorController
 			}
 
 			// play a ui sound
-			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Deactivate );
+			SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
 		}
 		else
 		{
@@ -1037,7 +1037,7 @@ public class TradeDepotController : DoorController
 						SwitchToBuyItemState( false );
 
 						// play a ui sound
-						m_starportController.m_uiSoundController.Play( UISoundController.UISound.Update );
+						SoundController.m_instance.PlaySound( SoundController.Sound.Update );
 					}
 				}
 			}
@@ -1062,7 +1062,7 @@ public class TradeDepotController : DoorController
 				SwitchToSellItemState( false );
 
 				// play a ui sound
-				m_starportController.m_uiSoundController.Play( UISoundController.UISound.Update );
+				SoundController.m_instance.PlaySound( SoundController.Sound.Update );
 			}
 		}
 	}
@@ -1120,7 +1120,7 @@ public class TradeDepotController : DoorController
 				UpdateScreen();
 
 				// play a ui sound
-				m_starportController.m_uiSoundController.Play( UISoundController.UISound.Update );
+				SoundController.m_instance.PlaySound( SoundController.Sound.Update );
 			}
 		}
 	}
@@ -1155,7 +1155,7 @@ public class TradeDepotController : DoorController
 			UpdateScreen();
 
 			// play a ui sound
-			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Update );
+			SoundController.m_instance.PlaySound( SoundController.Sound.Update );
 		}
 	}
 

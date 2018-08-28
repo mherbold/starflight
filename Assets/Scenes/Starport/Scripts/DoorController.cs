@@ -69,7 +69,7 @@ public class DoorController : MonoBehaviour
 		UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject( null );
 
 		// play the compressed air sound
-		m_starportController.m_basicSound.PlayOneShot( 0 );
+		SoundController.m_instance.PlaySound( SoundController.Sound.Open );
 	}
 
 	// this is called when the ui is finished opening
@@ -92,7 +92,7 @@ public class DoorController : MonoBehaviour
 		m_animator.SetBool( "Open", false );
 
 		// play the escaping air sound
-		m_starportController.m_basicSound.PlayOneShot( 1 );
+		SoundController.m_instance.PlaySound( SoundController.Sound.Close );
 	}
 
 	// this is called when the ui is finished closing

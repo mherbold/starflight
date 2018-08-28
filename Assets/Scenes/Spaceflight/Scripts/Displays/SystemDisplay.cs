@@ -31,7 +31,7 @@ public class SystemDisplay : ShipDisplay
 		}
 
 		// get to the arth game object
-		transform = m_orbitGameObject[ 3 ].transform.Find( "Arth" );
+		transform = m_orbitGameObject[ 2 ].transform.Find( "Arth" );
 		m_arthGameObject = transform.gameObject;
 
 		// get to the sun image
@@ -119,7 +119,7 @@ public class SystemDisplay : ShipDisplay
 				if ( planet.m_planetTypeId == 57 )
 				{
 					// yep - hide the planet object and show the arth station instead
-					m_planetImage[ 3 ].gameObject.SetActive( false );
+					m_planetImage[ planet.m_orbitPosition ].gameObject.SetActive( false );
 					m_arthGameObject.SetActive( true );
 				}
 				else

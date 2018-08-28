@@ -13,31 +13,42 @@ public class LaunchYesButton : ShipButton
 
 	public override bool Execute()
 	{
-		// update the messages log
-		m_spaceflightController.m_messages.text = "Opening docking bay doors...";
-
-		if ( !m_spaceflightController.m_skipCinematics )
+		if ( m_spaceflightController.m_inDockingBay )
 		{
-			// play the docking bay door open sound
-			m_spaceflightController.m_basicSound.PlayOneShot( 0 );
+			// change to the arth system
+			GameData gameData = DataController.m_instance.m_gameData;
+			m_spaceflightController.m_systemController.EnterSystem( gameData.m_misc.m_arthStarId );
 
-			// play the decompression sound
-			m_spaceflightController.m_basicSound.PlayOneShot( 1, 1 );
+			// update the messages log
+			m_spaceflightController.m_messages.text = "Opening docking bay doors...";
 
-			// play the launch sound
-			m_spaceflightController.m_basicSound.PlayOneShot( 3, 2 );
+			if ( !m_spaceflightController.m_skipCinematics )
+			{
+				// play the docking bay door open sound
+				SoundController.m_instance.PlaySound( SoundController.Sound.DockingBayDoorOpen );
 
-			// open the top docking bay door
-			m_spaceflightController.m_dockingBayDoorTop.gameObject.SetActive( true );
-			m_spaceflightController.m_dockingBayDoorTop.Play( "Open" );
+				// play the decompression sound
+				SoundController.m_instance.PlaySound( SoundController.Sound.Decompression );
 
-			// open the bottom docking bay door
-			m_spaceflightController.m_dockingBayDoorBottom.gameObject.SetActive( true );
-			m_spaceflightController.m_dockingBayDoorBottom.Play( "Open" );
+				// play the launch sound
+				SoundController.m_instance.PlaySound( SoundController.Sound.Launch );
 
-			// fire up the particle system
-			m_spaceflightController.m_decompressionParticleSystem.gameObject.SetActive( true );
-			m_spaceflightController.m_decompressionParticleSystem.Play();
+				// open the top docking bay door
+				m_spaceflightController.m_dockingBayDoorTop.gameObject.SetActive( true );
+				m_spaceflightController.m_dockingBayDoorTop.Play( "Open" );
+
+				// open the bottom docking bay door
+				m_spaceflightController.m_dockingBayDoorBottom.gameObject.SetActive( true );
+				m_spaceflightController.m_dockingBayDoorBottom.Play( "Open" );
+
+				// fire up the particle system
+				m_spaceflightController.m_decompressionParticleSystem.gameObject.SetActive( true );
+				m_spaceflightController.m_decompressionParticleSystem.Play();
+			}
+		}
+		else
+		{
+			// TODO: Launching from planet cinematics
 		}
 
 		// reset some private members
@@ -64,7 +75,7 @@ public class LaunchYesButton : ShipButton
 				if ( !m_spaceflightController.m_skipCinematics )
 				{
 					// play the countdown sound
-					m_spaceflightController.m_basicSound.PlayOneShot( 2 );
+					SoundController.m_instance.PlaySound( SoundController.Sound.Countdown );
 				}
 
 				// turn off the decompression particle system
@@ -110,43 +121,54 @@ public class LaunchYesButton : ShipButton
 				// have we reached zero in the countdown?
 				if ( currentNumber <= 0 )
 				{
-					// yes - update the messages text
-					m_spaceflightController.m_messages.text = "Leaving starport...";
-
-					// figure out how much to move the ship forward by (with an exponential acceleration curve)
-					float y = ( m_launchTimer - 20.5f ) * 5.0f;
-
-					y *= y;
-
-					// have we reached the end of the launch trip?
-					if ( y >= 1000.0f )
+					if ( m_spaceflightController.m_inDockingBay )
 					{
-						// yep - fix us at exactly 1500 units above the zero plane
-						y = 1000.0f;
+						// yes - update the messages text
+						m_spaceflightController.m_messages.text = "Leaving starport...";
 
-						// hide the docking bay doors
-						m_spaceflightController.m_dockingBayDoorTop.gameObject.SetActive( false );
-						m_spaceflightController.m_dockingBayDoorBottom.gameObject.SetActive( false );
+						// figure out how much to move the ship forward by (with an exponential acceleration curve)
+						float y = ( m_launchTimer - 20.5f ) * 5.0f;
 
-						// update some flags
-						m_spaceflightController.m_inDockingBay = false;
-						m_spaceflightController.m_justLaunched = true;
+						y *= y;
 
-						// change to the arth system
-						GameData gameData = DataController.m_instance.m_gameData;
-						m_spaceflightController.m_systemController.EnterSystem( gameData.m_misc.m_arthStarId );
+						// have we reached the end of the launch trip?
+						if ( y >= 1000.0f )
+						{
+							// yep - fix us at exactly 1500 units above the zero plane
+							y = 1000.0f;
 
-						// restore the bridge buttons (this also ends the launch function)
-						m_spaceflightController.m_buttonController.RestoreBridgeButtons();
+							// hide the docking bay doors
+							m_spaceflightController.m_dockingBayDoorTop.gameObject.SetActive( false );
+							m_spaceflightController.m_dockingBayDoorBottom.gameObject.SetActive( false );
+
+							// update some flags
+							m_spaceflightController.m_inDockingBay = false;
+							m_spaceflightController.m_justLaunched = true;
+
+							// calculate the new position of the player (just north of the arth spaceport)
+							Vector3 playerPosition = m_spaceflightController.m_systemController.m_planetController[ 2 ].transform.position;
+							playerPosition.y = 0.0f;
+							playerPosition.z += 250.0f;
+
+							// update the players position
+							m_spaceflightController.m_player.transform.position = playerPosition;
+
+							// restore the bridge buttons (this also ends the launch function)
+							m_spaceflightController.m_buttonController.RestoreBridgeButtons();
+						}
+
+						// update the position of the camera
+						Vector3 cameraPosition = new Vector3( 0.0f, 2500.0f - y, 0.0f );
+						m_spaceflightController.m_camera.transform.localPosition = cameraPosition;
+
+						// fade the map overlay
+						float fade = 1.0f - ( y / 1000.0f );
+						m_spaceflightController.m_mapRawImage.color = new Color( fade, fade, fade );
 					}
-
-					// fade the map overlay
-					float fade = 1.0f - ( y / 1000.0f );
-					m_spaceflightController.m_mapRawImage.color = new Color( fade, fade, fade );
-
-					// update the position of the ship
-					Vector3 position = new Vector3( 0.0f, 2500.0f - y, 0.0f );
-					m_spaceflightController.m_camera.transform.position = position;
+					else
+					{
+						// TODO: Launching from planet animation
+					}
 				}
 			}
 		}

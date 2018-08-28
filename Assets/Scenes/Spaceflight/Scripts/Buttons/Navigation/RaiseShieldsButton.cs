@@ -12,7 +12,7 @@ public class RaiseShieldsButton : ShipButton
 
 		if ( playerData.m_ship.m_shieldingClass == 0 )
 		{
-			m_spaceflightController.m_uiSoundController.Play( UISoundController.UISound.Error );
+			SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
 			m_spaceflightController.m_messages.text = "Ship is not equipped with shields.";
 

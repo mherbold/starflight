@@ -116,7 +116,7 @@ public class ShipConfigurationController : DoorController
 	private void UpdateController()
 	{
 		// check if we moved the stick down
-		if ( m_starportController.m_inputManager.m_south )
+		if ( InputController.m_instance.m_south )
 		{
 			if ( m_ignoreControllerTimer == 0.0f )
 			{
@@ -128,11 +128,11 @@ public class ShipConfigurationController : DoorController
 
 					UpdateScreen();
 
-					m_starportController.m_uiSoundController.Play( UISoundController.UISound.Click );
+					SoundController.m_instance.PlaySound( SoundController.Sound.Click );
 				}
 			}
 		}
-		else if ( m_starportController.m_inputManager.m_north ) // check if we have moved the stick up
+		else if ( InputController.m_instance.m_north ) // check if we have moved the stick up
 		{
 			if ( m_ignoreControllerTimer == 0.0f )
 			{
@@ -144,7 +144,7 @@ public class ShipConfigurationController : DoorController
 
 					UpdateScreen();
 
-					m_starportController.m_uiSoundController.Play( UISoundController.UISound.Click );
+					SoundController.m_instance.PlaySound( SoundController.Sound.Click );
 				}
 			}
 		}
@@ -154,11 +154,11 @@ public class ShipConfigurationController : DoorController
 		}
 
 		// check if we have pressed the cancel button
-		if ( m_starportController.m_inputManager.GetCancelDown() )
+		if ( InputController.m_instance.CancelWasPressed() )
 		{
 			SwitchToMenuBarState();
 
-			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Deactivate );
+			SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
 		}
 	}
 
@@ -169,11 +169,11 @@ public class ShipConfigurationController : DoorController
 		UpdateController();
 
 		// check if we have pressed the fire button
-		if ( m_starportController.m_inputManager.GetSubmitDown() )
+		if ( InputController.m_instance.SubmitWasPressed() )
 		{
 			BuySelectedPart();
 
-			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Activate );
+			SoundController.m_instance.PlaySound( SoundController.Sound.Activate );
 		}
 	}
 
@@ -184,7 +184,7 @@ public class ShipConfigurationController : DoorController
 		UpdateController();
 
 		// check if we have pressed the fire button
-		if ( m_starportController.m_inputManager.GetSubmitDown() )
+		if ( InputController.m_instance.SubmitWasPressed() )
 		{
 			SellSelectedPart();
 		}
@@ -194,7 +194,7 @@ public class ShipConfigurationController : DoorController
 	private void UpdateControllerForSelectClassState()
 	{
 		// check if we moved the stick down
-		if ( m_starportController.m_inputManager.m_south )
+		if ( InputController.m_instance.m_south )
 		{
 			if ( m_ignoreControllerTimer == 0.0f )
 			{
@@ -206,11 +206,11 @@ public class ShipConfigurationController : DoorController
 
 					UpdateScreen();
 
-					m_starportController.m_uiSoundController.Play( UISoundController.UISound.Click );
+					SoundController.m_instance.PlaySound( SoundController.Sound.Click );
 				}
 			}
 		}
-		else if ( m_starportController.m_inputManager.m_north ) // check if we have moved the stick up
+		else if ( InputController.m_instance.m_north ) // check if we have moved the stick up
 		{
 			if ( m_ignoreControllerTimer == 0.0f )
 			{
@@ -222,7 +222,7 @@ public class ShipConfigurationController : DoorController
 
 					UpdateScreen();
 
-					m_starportController.m_uiSoundController.Play( UISoundController.UISound.Click );
+					SoundController.m_instance.PlaySound( SoundController.Sound.Click );
 				}
 			}
 		}
@@ -232,24 +232,24 @@ public class ShipConfigurationController : DoorController
 		}
 
 		// check if we have pressed the fire button
-		if ( m_starportController.m_inputManager.GetSubmitDown() )
+		if ( InputController.m_instance.SubmitWasPressed() )
 		{
 			BuySelectedClass();
 		}
 
 		// check if we have pressed the cancel button
-		if ( m_starportController.m_inputManager.GetCancelDown() )
+		if ( InputController.m_instance.CancelWasPressed() )
 		{
 			SwitchToBuyPartState( false );
 
-			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Deactivate );
+			SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
 		}
 	}
 
 	private void UpdateControllerForErrorMessageState()
 	{
 		// check if we have pressed the fire or cancel button
-		if ( m_starportController.m_inputManager.GetSubmitDown() || m_starportController.m_inputManager.GetCancelDown() )
+		if ( InputController.m_instance.SubmitWasPressed() || InputController.m_instance.CancelWasPressed() )
 		{
 			// switch back to the previous state
 			switch ( m_stateBeforeError )
@@ -267,7 +267,7 @@ public class ShipConfigurationController : DoorController
 				break;
 			}
 
-			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Deactivate );
+			SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
 		}
 	}
 
@@ -319,7 +319,7 @@ public class ShipConfigurationController : DoorController
 		SwitchToMenuBarState();
 
 		// cancel the ui sounds
-		m_starportController.m_uiSoundController.CancelSounds();
+		//m_starportController.m_uiSoundController.CancelSounds();
 	}
 
 	// call this to give up control
@@ -372,7 +372,7 @@ public class ShipConfigurationController : DoorController
 		UpdateScreen();
 
 		// debounce the input
-		m_starportController.m_inputManager.m_debounceNextUpdate = true;
+		InputController.m_instance.m_debounceNextUpdate = true;
 	}
 
 	// call this to switch to the sell part state
@@ -391,7 +391,7 @@ public class ShipConfigurationController : DoorController
 		UpdateScreen();
 
 		// debounce the input
-		m_starportController.m_inputManager.m_debounceNextUpdate = true;
+		InputController.m_instance.m_debounceNextUpdate = true;
 	}
 
 	// call this to switch to the select class state
@@ -410,7 +410,7 @@ public class ShipConfigurationController : DoorController
 		UpdateScreen();
 
 		// debounce the input
-		m_starportController.m_inputManager.m_debounceNextUpdate = true;
+		InputController.m_instance.m_debounceNextUpdate = true;
 	}
 
 	// call this to switch to the give name state
@@ -451,7 +451,7 @@ public class ShipConfigurationController : DoorController
 		m_errorMessageText.text = errorMessage;
 
 		// play a ui sound
-		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Error );
+		SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 	}
 
 	// call this whenever we change state or do something that would result in something changing on the screen
@@ -693,7 +693,7 @@ public class ShipConfigurationController : DoorController
 		SwitchToBuyPartState();
 
 		// play a ui sound
-		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Activate );
+		SoundController.m_instance.PlaySound( SoundController.Sound.Activate );
 	}
 
 	// this is called if we clicked on the sell button
@@ -703,14 +703,14 @@ public class ShipConfigurationController : DoorController
 		SwitchToSellPartState();
 
 		// play a ui sound
-		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Activate );
+		SoundController.m_instance.PlaySound( SoundController.Sound.Activate );
 	}
 
 	// this is called if we clicked on the repair button
 	public void RepairClicked()
 	{
 		// play a ui sound
-		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Activate );
+		SoundController.m_instance.PlaySound( SoundController.Sound.Activate );
 	}
 
 	// this is called if we clicked on the name button
@@ -720,7 +720,7 @@ public class ShipConfigurationController : DoorController
 		SwitchToGiveNameState();
 
 		// play a ui sound
-		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Activate );
+		SoundController.m_instance.PlaySound( SoundController.Sound.Activate );
 	}
 
 	// this is called if we clicked on the exit button
@@ -740,7 +740,7 @@ public class ShipConfigurationController : DoorController
 		SwitchToMenuBarState();
 
 		// play a ui sound
-		m_starportController.m_uiSoundController.Play( UISoundController.UISound.Update );
+		SoundController.m_instance.PlaySound( SoundController.Sound.Update );
 	}
 
 	// buy the currently selected part
@@ -842,7 +842,7 @@ public class ShipConfigurationController : DoorController
 				UpdateScreen();
 
 				// play a ui sound
-				m_starportController.m_uiSoundController.Play( UISoundController.UISound.Update );
+				SoundController.m_instance.PlaySound( SoundController.Sound.Update );
 			}
 		}
 	}
@@ -895,7 +895,7 @@ public class ShipConfigurationController : DoorController
 			SwitchToBuyPartState();
 
 			// play a ui sound
-			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Update );
+			SoundController.m_instance.PlaySound( SoundController.Sound.Update );
 		}
 	}
 
@@ -1018,7 +1018,7 @@ public class ShipConfigurationController : DoorController
 				UpdateScreen();
 
 				// play a ui sound
-				m_starportController.m_uiSoundController.Play( UISoundController.UISound.Update );
+				SoundController.m_instance.PlaySound( SoundController.Sound.Update );
 			}
 		}
 	}
@@ -1045,7 +1045,7 @@ public class ShipConfigurationController : DoorController
 			UpdateScreen();
 
 			// play a ui sound
-			m_starportController.m_uiSoundController.Play( UISoundController.UISound.Update );
+			SoundController.m_instance.PlaySound( SoundController.Sound.Update );
 		}
 	}
 }

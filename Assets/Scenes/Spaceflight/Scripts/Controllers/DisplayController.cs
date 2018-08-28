@@ -14,9 +14,6 @@ public class DisplayController : MonoBehaviour
 	public SystemDisplay m_systemDisplay;
 	public ShipDisplay m_currentDisplay;
 
-	// convenient access to the spaceflight controller
-	private SpaceflightController m_spaceflightController;
-
 	// this is called by unity before start
 	private void Awake()
 	{
@@ -25,10 +22,6 @@ public class DisplayController : MonoBehaviour
 	// this is called by unity once at the start of the level
 	private void Start()
 	{
-		// get the spaceflight controller
-		GameObject controllersGameObject = GameObject.FindWithTag( "Spaceflight Controllers" );
-		m_spaceflightController = controllersGameObject.GetComponent<SpaceflightController>();
-
 		// displays
 		m_statusDisplay = new StatusDisplay( m_status );
 		m_systemDisplay = new SystemDisplay( m_system );

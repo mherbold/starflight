@@ -24,9 +24,6 @@ public class SpaceflightController : MonoBehaviour
 	public bool m_skipCinematics;
 
 	// controllers
-	public InputManager m_inputManager { get; private set; }
-	public BasicSound m_basicSound { get; private set; }
-	public UISoundController m_uiSoundController { get; protected set; }
 	public ButtonController m_buttonController { get; protected set; }
 	public DisplayController m_displayController { get; protected set; }
 	public SystemController m_systemController { get; protected set; }
@@ -38,8 +35,8 @@ public class SpaceflightController : MonoBehaviour
 	public bool m_inHyperspace;
 	public bool m_justLaunched;
 
-	// this is called by unity before start
-	private void Awake()
+	// unity awake
+	void Awake()
 	{
 		// check if we loaded the persistent scene
 		if ( DataController.m_instance == null )
@@ -52,17 +49,14 @@ public class SpaceflightController : MonoBehaviour
 		else
 		{
 			// get access to the various controllers
-			m_inputManager = GetComponent<InputManager>();
-			m_basicSound = GetComponent<BasicSound>();
-			m_uiSoundController = GetComponent<UISoundController>();
 			m_buttonController = GetComponent<ButtonController>();
 			m_displayController = GetComponent<DisplayController>();
 			m_systemController = GetComponent<SystemController>();
 		}
 	}
 
-	// this is called by unity once at the start of the level
-	private void Start()
+	// unity start
+	void Start()
 	{
 		// turn off controller navigation of the UI
 		EventSystem.current.sendNavigationEvents = false;
@@ -93,6 +87,9 @@ public class SpaceflightController : MonoBehaviour
 		{
 			MusicController.m_instance.ChangeToTrack( MusicController.Track.StarSystem );
 		}
+
+		// fade in the scene
+		SceneFadeController.m_instance.FadeIn();
 	}
 
 	// this is called by unity every frame

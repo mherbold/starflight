@@ -10,7 +10,7 @@ public class DistressButton : ShipButton
 	{
 		if ( m_spaceflightController.m_inDockingBay )
 		{
-			m_spaceflightController.m_uiSoundController.Play( UISoundController.UISound.Error );
+			SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
 			m_spaceflightController.m_messages.text = "Transmit emergency distress call, please confirm.";
 

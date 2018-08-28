@@ -123,6 +123,9 @@ GameObject:
   - component: {fileID: 919755012}
   - component: {fileID: 919755013}
   - component: {fileID: 919755014}
+  - component: {fileID: 919755015}
+  - component: {fileID: 919755016}
+  - component: {fileID: 919755017}
   m_Layer: 0
   m_Name: Controllers
   m_TagString: Untagged
@@ -279,3 +282,52 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a1f3c9a830a24074c93e9e7cacd1192f, type: 3}
   - {fileID: 8300000, guid: 138540bda05e7994197f371b5c05d27e, type: 3}
   - {fileID: 8300000, guid: 0fe40983d45856d47b6e7ca2a7f49185, type: 3}
+--- !u!114 &919755015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 919755011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b79c5aa0837bcc34797b05da4b8e4c2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_maxSimultaneousSounds: 6
+  m_click: {fileID: 8300000, guid: 255aafa6356eb804887b94ceaa571080, type: 3}
+  m_activate: {fileID: 8300000, guid: 6a9ebfa0e562c8144b74f10a24e80f77, type: 3}
+  m_deactivate: {fileID: 8300000, guid: 1aab2ffafc2263a41a18ea4c287864e8, type: 3}
+  m_update: {fileID: 8300000, guid: 6b42a54b5e218494b80a03650dd83cfe, type: 3}
+  m_error: {fileID: 8300000, guid: 430b5f6dce7bfd544b2532f571b21136, type: 3}
+  m_close: {fileID: 8300000, guid: 73222da08cd38ee4096c17cd923a60df, type: 3}
+  m_open: {fileID: 8300000, guid: 3b7493701efb42142b7d9afd62780c9a, type: 3}
+  m_transport: {fileID: 8300000, guid: 623da73f0caf8a646adb659d00179948, type: 3}
+  m_dockingBayDoorOpen: {fileID: 8300000, guid: 1f8de080d28303944b8c17f8b9c82ef4,
+    type: 3}
+  m_decompression: {fileID: 8300000, guid: eb7ff4fb1960d66419b40579d32eb370, type: 3}
+  m_launch: {fileID: 8300000, guid: e244c9a0dd490124eab576ca9d50eefc, type: 3}
+  m_countdown: {fileID: 8300000, guid: d233a21c34a0612448b5546b9b81ecd8, type: 3}
+--- !u!114 &919755016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 919755011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed43ec93ef413cd47a8046d35c5573b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_debounceNextUpdate: 0
+--- !u!114 &919755017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 919755011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5c22506a26d1f7498be098956cbbdf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_fadeDuration: 1

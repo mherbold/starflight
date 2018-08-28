@@ -9,58 +9,80 @@ public class PlanetController : MonoBehaviour
 	// the current orbit angle
 	public float m_orbitAngle;
 
+	// access to the planet model
+	public GameObject m_planetModel;
+
+	// access to the starport model
+	public GameObject m_starportModel;
+
 	// the current rotation angle
-	private float m_rotationAngle;
+	float m_rotationAngle;
+
+	// access to the mesh renderer (to get to the material)
+	MeshRenderer m_meshRenderer;
 
 	// set this to the material for this planet model
-	private Material m_material;
+	Material m_material;
 
 	// the generated diffuse map
-	private Texture2D m_diffuseMap;
+	Texture2D m_diffuseMap;
 
-	// convenient access to the spaceflight controller
-	private SpaceflightController m_spaceflightController;
-
-	// this is called by unity at the start of the level
-	public void Start()
+	// unity awake
+	private void Awake()
 	{
-		// get the spaceflight controller
-		GameObject controllersGameObject = GameObject.FindWithTag( "Spaceflight Controllers" );
-		m_spaceflightController = controllersGameObject.GetComponent<SpaceflightController>();
-
-		// grab the material component
-		MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
-		m_material = meshRenderer.material;
+		// mesh renderer component
+		m_meshRenderer = m_planetModel.GetComponent<MeshRenderer>();
 	}
 
-	// this is called by unity every frame
-	public void Update()
+	// unity start
+	void Start()
+	{
+		// grab the material from the mesh renderer
+		m_material = m_meshRenderer.material;
+	}
+
+	// unity update
+	void Update()
 	{
 		// if this planet is off then don't do anything
-		if ( m_planet == null )
+		if ( m_planet != null )
 		{
-			return;
+			// get to the player data
+			PlayerData playerData = DataController.m_instance.m_playerData;
+
+			// calculate number of days per year for each planet based on orbit number - orbit 3 should = 366 days like earth
+			int daysPerYear = 122 * ( m_planet.m_orbitPosition + 1 );
+
+			// update the orbit angle
+			m_orbitAngle = ( playerData.m_starflight.m_gameTime + 1000.0f + ( m_planet.m_starId * 4 ) ) / daysPerYear;
+
+			// update the rotation angle
+			m_rotationAngle = ( playerData.m_starflight.m_gameTime + m_planet.m_orbitPosition );
+
+			Quaternion rotation;
+
+			float distance = 2500.0f * ( m_planet.m_orbitPosition + 2 );
+			float angle = m_orbitAngle * 2.0f * Mathf.PI;
+			float planeOffset;
+
+			// is this the arth starport?
+			if ( m_planet.m_planetTypeId == 57 )
+			{
+				// starport height is about 12 units
+				planeOffset = -12.0f;
+				rotation = Quaternion.AngleAxis( m_rotationAngle * 360.0f * 20.0f, Vector3.up );
+			}
+			else
+			{
+				// update the planet model
+				planeOffset = -transform.localScale.y;
+				rotation = Quaternion.AngleAxis( 120.0f, Vector3.right ) * Quaternion.AngleAxis( m_rotationAngle * 360.0f, Vector3.forward );
+			}
+
+			// update the position and rotation of the controller
+			Vector3 position = new Vector3( -Mathf.Sin( angle ) * distance, planeOffset, Mathf.Cos( angle ) * distance );
+			transform.SetPositionAndRotation( position, rotation );
 		}
-
-		// get to the player data
-		PlayerData playerData = DataController.m_instance.m_playerData;
-
-		// calculate number of days per year for each planet based on orbit number - orbit 3 should = 366 days like earth
-		int daysPerYear = 122 * ( m_planet.m_orbitPosition + 1 );
-
-		// update the orbit angle
-		m_orbitAngle = ( playerData.m_starflight.m_gameTime + 1000.0f + ( m_planet.m_starId * 4 ) ) / daysPerYear;
-
-		// update the rotation angle
-		m_rotationAngle = ( playerData.m_starflight.m_gameTime + m_planet.m_orbitPosition );
-
-		// update the planet model
-		float distance = 2500.0f * ( m_planet.m_orbitPosition + 2 );
-		float angle = m_orbitAngle * 2.0f * Mathf.PI;
-		float planeOffset = -transform.localScale.y;
-		Vector3 position = new Vector3( -Mathf.Sin( angle ) * distance, planeOffset, Mathf.Cos( angle ) * distance );
-		Quaternion rotation = Quaternion.AngleAxis( 120.0f, Vector3.right ) * Quaternion.AngleAxis( m_rotationAngle * 360.0f, Vector3.forward );
-		transform.SetPositionAndRotation( position, rotation );
 	}
 
 	// change the planet we are controlling
@@ -80,17 +102,46 @@ public class PlanetController : MonoBehaviour
 			// make the planet model visible
 			gameObject.SetActive( true );
 
-			// generate the texture maps for this planet
-			GenerateTextureMaps();
+			float scale;
 
-			// scale the planet based on its gravity
-			float scale = 100.0f + planet.m_gravity / 5.0f;
+			// check if this is arth station
+			if ( planet.m_planetTypeId == 57 )
+			{
+				// yep - show the starport model
+				m_starportModel.SetActive( true );
+
+				// hide the planet model
+				m_planetModel.SetActive( false );
+
+				// starport scale is 1
+				scale = 1.0f;
+			}
+			else
+			{
+				// nope - show the planet model
+				m_planetModel.SetActive( true );
+
+				// does this orbit have a starport model?
+				if ( m_starportModel != null )
+				{
+					// yep - hide it
+					m_starportModel.SetActive( false );
+				}
+
+				// scale the planet based on its gravity
+				scale = 100.0f + planet.m_gravity / 5.0f;
+
+				// generate the texture maps for this planet
+				GenerateTextureMaps();
+			}
+
+			// update the scale
 			transform.localScale = new Vector3( scale, scale, scale );
 		}
 	}
 
 	// generates the texture maps for this planet
-	private void GenerateTextureMaps()
+	void GenerateTextureMaps()
 	{
 		PlanetMap planetMap = DataController.m_instance.m_planetData.m_planetMapList[ m_planet.m_id ];
 

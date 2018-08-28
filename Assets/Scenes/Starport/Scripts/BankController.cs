@@ -87,7 +87,7 @@ public class BankController : DoorController
 		m_exitButton.Select();
 
 		// cancel the ui sounds
-		m_starportController.m_uiSoundController.CancelSounds();
+		//m_starportController.m_uiSoundController.CancelSounds();
 	}
 
 	// call this to give up control

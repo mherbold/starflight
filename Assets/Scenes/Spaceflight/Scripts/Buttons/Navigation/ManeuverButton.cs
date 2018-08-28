@@ -18,7 +18,7 @@ public class ManeuverButton : ShipButton
 	{
 		if ( m_spaceflightController.m_inDockingBay )
 		{
-			m_spaceflightController.m_uiSoundController.Play( UISoundController.UISound.Error );
+			SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
 			m_spaceflightController.m_messages.text = "Standing by to launch.";
 
@@ -68,15 +68,15 @@ public class ManeuverButton : ShipButton
 	public override bool Update()
 	{
 		// check if we want to stop maneuvering
-		if ( m_spaceflightController.m_inputManager.GetSubmitDown() )
+		if ( InputController.m_instance.SubmitWasPressed() )
 		{
 			//		m_spaceflightController.m_buttonController.UpdateButtons();
 		}
 		else
 		{
 			// get the controller stick position
-			float x = m_spaceflightController.m_inputManager.m_x;
-			float z = m_spaceflightController.m_inputManager.m_y;
+			float x = InputController.m_instance.m_x;
+			float z = InputController.m_instance.m_y;
 
 			// create our 3d move vector from the controller position
 			Vector3 moveVector = new Vector3( x, 0.0f, z );
@@ -118,7 +118,7 @@ public class ManeuverButton : ShipButton
 
 				// rotate the skybox accordingly
 				Vector3 currentRightVector = m_spaceflightController.m_ship.transform.rotation * Vector3.right;
-				Quaternion rotation = Quaternion.AngleAxis( m_inertiaVector.magnitude * Time.deltaTime, currentRightVector );
+				Quaternion rotation = Quaternion.AngleAxis( m_inertiaVector.magnitude * Time.deltaTime * 0.15f, currentRightVector );
 				m_skyboxRotation = Matrix4x4.Rotate( rotation ) * m_skyboxRotation;
 
 				Material skyboxMaterial = RenderSettings.skybox;
