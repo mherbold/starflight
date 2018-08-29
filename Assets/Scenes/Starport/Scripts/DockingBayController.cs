@@ -53,6 +53,15 @@ public class DockingBayController : DoorController
 				// we are no longer transporting
 				m_isTransporting = false;
 
+				// get to the player data
+				PlayerData playerData = DataController.m_instance.m_playerData;
+
+				// update the player location
+				playerData.m_starflight.m_location = Starflight.Location.DockingBay;
+
+				// save the player data
+				DataController.m_instance.SavePlayerData();
+
 				// start fading out and switch to the spaceflight scene
 				SceneFadeController.m_instance.FadeOut( "Spaceflight" );
 			}

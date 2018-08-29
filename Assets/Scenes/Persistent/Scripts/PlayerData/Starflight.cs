@@ -6,6 +6,26 @@ using System;
 
 public class Starflight
 {
+	public enum Location
+	{
+		Starport,
+		DockingBay,
+		JustLaunched,
+		StarSystem,
+		Hyperspace,
+		InOrbit,
+		OnPlanet
+	}
+
+	// the player location
+	public Location m_location;
+
+	// the player coordinates
+	public SerializableVector3 m_starportCoordinates; // TODO: use this
+	public SerializableVector3 m_systemCoordinates;
+	public SerializableVector3 m_hyperspaceCoordinates; // TODO: use this
+
+	// game time stuff
 	public string m_currentStardate;
 
 	public int m_day;
@@ -16,8 +36,23 @@ public class Starflight
 
 	public float m_gameTime;
 
+	// temporary - this will be replaced
+	public bool m_hasCurrentSenorReading;
+
+	// the current star we are in (or the last star we visited if we are in hyperspace)
+	public int m_currentStarId;
+
+	// this resets everything to initial game state
 	public void Reset()
 	{
+		// reset location
+		m_location = Location.Starport;
+
+		// reset coordinates
+		m_starportCoordinates = new Vector3( 0.0f, 0.0f, 0.0f );
+		m_systemCoordinates = new Vector3( 0.0f, 0.0f, 0.0f );
+		m_hyperspaceCoordinates = new Vector3( 0.0f, 0.0f, 0.0f );
+
 		// reset the current stardate
 		m_currentStardate = "4620-01-01";
 
@@ -27,8 +62,16 @@ public class Starflight
 		m_minute = 0;
 		m_second = 0;
 		m_millisecond = 0;
+
+		// reset flags
+		m_hasCurrentSenorReading = false;
+
+		// reset star id
+		GameData gameData = DataController.m_instance.m_gameData;
+		m_currentStarId = gameData.m_misc.m_arthStarId;
 	}
 	
+	// this updates the game time
 	public void UpdateGameTime( float deltaTime )
 	{
 		// we want 1 year of arth time to be equal to 50 hours of game play time

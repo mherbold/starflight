@@ -36,7 +36,7 @@ public class IntroController : MonoBehaviour
 		if ( DataController.m_instance == null )
 		{
 			// nope - so then do it now and tell it to skip the intro scene
-			DataController.m_sceneToLoad = "Intro A";
+			DataController.m_sceneToLoad = "Intro";
 
 			SceneManager.LoadScene( "Persistent" );
 		}

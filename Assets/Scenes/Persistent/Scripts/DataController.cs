@@ -8,7 +8,7 @@ public class DataController : MonoBehaviour
 {
 	// static reference to this instance
 	public static DataController m_instance;
-	public static string m_sceneToLoad = "Intro A";
+	public static string m_sceneToLoad = "Intro";
 
 	// public stuff we want to set using the editor
 	public string m_gameDataFileName;

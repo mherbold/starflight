@@ -14,24 +14,23 @@ public class DisplayController : MonoBehaviour
 	public SystemDisplay m_systemDisplay;
 	public ShipDisplay m_currentDisplay;
 
-	// this is called by unity before start
-	private void Awake()
+	// unity awake
+	void Awake()
 	{
-	}
-
-	// this is called by unity once at the start of the level
-	private void Start()
-	{
-		// displays
+		// create displays
 		m_statusDisplay = new StatusDisplay( m_status );
 		m_systemDisplay = new SystemDisplay( m_system );
+	}
 
+	// unity start
+	void Start()
+	{
 		// status display should be first
 		ChangeDisplay( m_statusDisplay );
 	}
 
-	// this is called by unity every frame
-	private void Update()
+	// unity update
+	void Update()
 	{
 		// update the current display
 		m_currentDisplay.Update();

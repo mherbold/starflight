@@ -8,7 +8,10 @@ public class AnalysisButton : ShipButton
 
 	public override bool Execute()
 	{
-		if ( !m_spaceflightController.m_hasCurrentSenorReading )
+		// get to the player data
+		PlayerData playerData = DataController.m_instance.m_playerData;
+
+		if ( !playerData.m_starflight.m_hasCurrentSenorReading )
 		{
 			SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 

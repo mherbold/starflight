@@ -102,7 +102,7 @@ public class SoundController : MonoBehaviour
 				audioSource.Play();
 
 				// debug info
-				Debug.Log( "Playing sound " + sound + "." );
+				// Debug.Log( "Playing sound " + sound + "." );
 
 				// nothing more to do here
 				return;

@@ -9,11 +9,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Persistent/Persistent.unity
     guid: dff3a08acb5c4aa41adeb2f72cb8a1db
   - enabled: 1
-    path: Assets/Scenes/Intro A/Intro A.unity
+    path: Assets/Scenes/Intro/Intro.unity
     guid: 0c837280001dc044da0923ce150b249c
-  - enabled: 1
-    path: Assets/Scenes/Intro B/Intro B.unity
-    guid: a143efbbdf211f945a07ffe2de5f597b
   - enabled: 1
     path: Assets/Scenes/Starport/Starport.unity
     guid: 9be9bcf4c6f7c024099239261a1ea1c5

@@ -4,10 +4,10 @@ using UnityEngine;
 public class ManeuverButton : ShipButton
 {
 	// keep track of the ship's current movement (for inertia)
-	private Vector3 m_inertiaVector;
+	Vector3 m_inertiaVector;
 
 	// keep track of the skybox rotation
-	private Matrix4x4 m_skyboxRotation = Matrix4x4.identity;
+	Matrix4x4 m_skyboxRotation = Matrix4x4.identity;
 
 	public override string GetLabel()
 	{
@@ -16,7 +16,10 @@ public class ManeuverButton : ShipButton
 
 	public override bool Execute()
 	{
-		if ( m_spaceflightController.m_inDockingBay )
+		// get to the player data
+		PlayerData playerData = DataController.m_instance.m_playerData;
+
+		if ( playerData.m_starflight.m_location == Starflight.Location.DockingBay )
 		{
 			SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
@@ -27,20 +30,14 @@ public class ManeuverButton : ShipButton
 			return false;
 		}
 
-		// clear out the just launched flag
-		m_spaceflightController.m_justLaunched = false;
+		// if we aren't in hyperspace then switch to the star system
+		if ( playerData.m_starflight.m_location != Starflight.Location.Hyperspace )
+		{
+			playerData.m_starflight.m_location = Starflight.Location.StarSystem;
+		}
 
-		// turn off the map overlay
-		m_spaceflightController.m_mapRawImage.color = new Color( 1.0f, 1.0f, 1.0f );
-
-		// show the ship on the map
-		m_spaceflightController.m_ship.SetActive( true );
-
-		// show the star
-		m_spaceflightController.m_star.SetActive( true );
-
-		// show the lens flare
-		m_spaceflightController.m_lensFlare.SetActive( true );
+		// switch to the correct mode
+		m_spaceflightController.SwitchMode();
 
 		// reset the inertia vector
 		m_inertiaVector = Vector3.zero;
@@ -52,15 +49,8 @@ public class ManeuverButton : ShipButton
 		// change to the system display
 		m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_systemDisplay );
 
-		// start playing music
-		if ( m_spaceflightController.m_inHyperspace )
-		{
-			MusicController.m_instance.ChangeToTrack( MusicController.Track.Hyperspace );
-		}
-		else
-		{
-			MusicController.m_instance.ChangeToTrack( MusicController.Track.StarSystem );
-		}
+		// configure the infinite starfield system to become visible at higher speeds
+		m_spaceflightController.m_infiniteStarfield.m_fullyVisibleSpeed = 100.0f;
 
 		return true;
 	}
@@ -70,7 +60,7 @@ public class ManeuverButton : ShipButton
 		// check if we want to stop maneuvering
 		if ( InputController.m_instance.SubmitWasPressed() )
 		{
-			//		m_spaceflightController.m_buttonController.UpdateButtons();
+			// m_spaceflightController.m_buttonController.UpdateButtons();
 		}
 		else
 		{
@@ -101,17 +91,17 @@ public class ManeuverButton : ShipButton
 				m_inertiaVector = Vector3.Slerp( m_inertiaVector, Vector3.zero, Time.deltaTime );
 			}
 
-			// calculate the new position of the ship
-			Vector3 shipPosition = m_spaceflightController.m_player.transform.position + m_inertiaVector;
+			// calculate the new position of the player
+			Vector3 newPosition = m_spaceflightController.m_player.transform.position + m_inertiaVector;
 
 			// make sure the ship stays on the zero plane
-			shipPosition.y = 0.0f;
+			newPosition.y = 0.0f;
 
-			// update the ship model
-			m_spaceflightController.m_player.transform.position = shipPosition;
+			// update the player position
+			m_spaceflightController.UpdatePlayerPosition( newPosition );
 
 			// check if the ship is moving
-			if ( m_inertiaVector.magnitude > 0.001f )
+			if ( m_inertiaVector.magnitude >= 0.001f )
 			{
 				// rotate the ship towards the direction we want to move in
 				m_spaceflightController.m_ship.transform.rotation = Quaternion.LookRotation( m_inertiaVector, Vector3.up );

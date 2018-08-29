@@ -6,30 +6,30 @@ public class SystemController : MonoBehaviour
 	// our planet controllers
 	public PlanetController[] m_planetController;
 
-	// the star id of the system we are currently in
-	private int m_currentStarId;
+	// the star id of the system we are currently controlling
+	int m_currentStarId;
 
 	// convenient access to the spaceflight controller
-	private SpaceflightController m_spaceflightController;
+	SpaceflightController m_spaceflightController;
 
-	// this is called by unity before start
-	private void Awake()
-	{
-	}
-
-	// this is called by unity once at the start of the level
-	private void Start()
+	// unity awake
+	void Awake()
 	{
 		// get the spaceflight controller
 		GameObject controllersGameObject = GameObject.FindWithTag( "Spaceflight Controllers" );
 		m_spaceflightController = controllersGameObject.GetComponent<SpaceflightController>();
+	}
+
+	// unity start
+	void Start()
+	{
 
 		// reset stuff
 		m_currentStarId = 0;
 	}
 
-	// this is called by unity every frame
-	private void Update()
+	// unity update
+	void Update()
 	{
 	}
 

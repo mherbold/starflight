@@ -20,37 +20,37 @@ public class ButtonController : MonoBehaviour
 	private ShipButton m_currentButton;
 
 	// private stuff we don't want the editor to see
-	private int m_currentButtonIndex;
-	private bool m_activatingButton;
-	private float m_activatingButtonTimer;
-	private float m_ignoreControllerTimer;
+	int m_currentButtonIndex;
+	bool m_activatingButton;
+	float m_activatingButtonTimer;
+	float m_ignoreControllerTimer;
 
 	// bridge buttons
-	private ShipButton[] m_bridgeButtons;
+	ShipButton[] m_bridgeButtons;
 
 	// convenient access to the spaceflight controller
-	private SpaceflightController m_spaceflightController;
+	SpaceflightController m_spaceflightController;
 
-	// this is called by unity before start
-	private void Awake()
-	{
-		// create the six ship buttons
-		m_buttonList = new ShipButton[ c_numButtons ];
-
-		// reset the ignore controller timer
-		m_ignoreControllerTimer = 0.0f;
-	}
-
-	// this is called by unity once at the start of the level
-	private void Start()
+	// unity awake
+	void Awake()
 	{
 		// get the spaceflight controller
 		GameObject controllersGameObject = GameObject.FindWithTag( "Spaceflight Controllers" );
 		m_spaceflightController = controllersGameObject.GetComponent<SpaceflightController>();
 
+		// create the six ship buttons
+		m_buttonList = new ShipButton[ c_numButtons ];
+
+		// reset the ignore controller timer
+		m_ignoreControllerTimer = 0.0f;
+
 		// bridge buttons
 		m_bridgeButtons = new ShipButton[] { new CommandButton(), new ScienceButton(), new NavigationButton(), new EngineeringButton(), new CommunicationsButton(), new MedicalButton() };
+	}
 
+	// unity start
+	void Start()
+	{
 		// reset everything
 		m_activatingButton = false;
 		m_activatingButtonTimer = 0.0f;
@@ -59,8 +59,8 @@ public class ButtonController : MonoBehaviour
 		RestoreBridgeButtons();
 	}
 
-	// this is called by unity every frame
-	private void Update()
+	// unity update
+	void Update()
 	{
 		// check if we are activating the currently selected button
 		if ( m_activatingButton )
@@ -193,13 +193,15 @@ public class ButtonController : MonoBehaviour
 		m_spaceflightController.m_currentOfficer.text = "ISS " + playerData.m_ship.m_name;
 
 		// update the message
-		if ( m_spaceflightController.m_inDockingBay )
+		switch ( playerData.m_starflight.m_location )
 		{
-			m_spaceflightController.m_messages.text = "Ship computer activated.\r\nPre-launch procedures complete.\r\nStanding by to initiate launch.";
-		}
-		else if ( m_spaceflightController.m_justLaunched )
-		{
-			m_spaceflightController.m_messages.text = "Starport clear.\r\nStanding by to maneuver.";
+			case Starflight.Location.DockingBay:
+				m_spaceflightController.m_messages.text = "Ship computer activated.\r\nPre-launch procedures complete.\r\nStanding by to initiate launch.";
+				break;
+
+			case Starflight.Location.JustLaunched:
+				m_spaceflightController.m_messages.text = "Starport clear.\r\nStanding by to maneuver.";
+				break;
 		}
 	}
 

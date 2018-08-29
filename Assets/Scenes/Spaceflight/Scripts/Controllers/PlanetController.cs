@@ -28,17 +28,18 @@ public class PlanetController : MonoBehaviour
 	Texture2D m_diffuseMap;
 
 	// unity awake
-	private void Awake()
+	void Awake()
 	{
 		// mesh renderer component
 		m_meshRenderer = m_planetModel.GetComponent<MeshRenderer>();
+
+		// grab the material from the mesh renderer
+		m_material = m_meshRenderer.material;
 	}
 
 	// unity start
 	void Start()
 	{
-		// grab the material from the mesh renderer
-		m_material = m_meshRenderer.material;
 	}
 
 	// unity update
@@ -94,12 +95,12 @@ public class PlanetController : MonoBehaviour
 		// if we are just turning off this planet then stop here
 		if ( planet == null )
 		{
-			// hide the planet model
+			// hide this orbit
 			gameObject.SetActive( false );
 		}
 		else
 		{
-			// make the planet model visible
+			// show this orbit
 			gameObject.SetActive( true );
 
 			float scale;

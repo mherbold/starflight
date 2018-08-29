@@ -108,6 +108,10 @@ public class MusicController : MonoBehaviour
 					{
 						// no - end the transition now
 						m_phase = Phase.None;
+
+						// Debug.Log( "No music being played now." );
+
+						m_audioSource.Stop();
 					}
 					else
 					{
@@ -117,6 +121,10 @@ public class MusicController : MonoBehaviour
 						// play the new track
 						m_audioSource.clip = m_musicTrackList[ (int) m_currentTrack ];
 						m_audioSource.loop = true;
+
+						m_audioSource.Play();
+
+						// Debug.Log( "Fading in " + m_currentTrack + "." );
 					}
 				}
 			}
@@ -132,6 +140,8 @@ public class MusicController : MonoBehaviour
 				{
 					// yes - end the transition
 					m_phase = Phase.None;
+
+					// Debug.Log( "Fade in complete." );
 				}
 			}
 
@@ -150,7 +160,7 @@ public class MusicController : MonoBehaviour
 		}
 		else
 		{
-			Debug.Log( "Switching to music track " + track + "." );
+			// Debug.Log( "Switching to music track " + track + "." );
 
 			// don't do anything if we are already playing this track
 			if ( track != m_currentTrack )
@@ -174,6 +184,8 @@ public class MusicController : MonoBehaviour
 					}
 
 					m_audioSource.Play();
+
+					// Debug.Log( "Playing " + track + " right away because there is no current music being played." );
 				}
 				else
 				{
@@ -182,6 +194,8 @@ public class MusicController : MonoBehaviour
 					m_nextTrack = track;
 					m_phase = Phase.FadingOut;
 					m_timer = 0.0f;
+
+					// Debug.Log( "Fading out music track " + m_currentTrack + "." );
 				}
 			}
 		}

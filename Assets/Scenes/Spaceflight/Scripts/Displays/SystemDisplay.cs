@@ -128,7 +128,7 @@ public class SystemDisplay : ShipDisplay
 					Surface surface = planet.GetSurface();
 					color = new Color( surface.m_colorR / 255.0f, surface.m_colorG / 255.0f, surface.m_colorB / 255.0f );
 					m_planetImage[ planet.m_orbitPosition ].color = color;
-					Debug.Log( "Setting display color for planet " + planet.m_orbitPosition + " to R:" + surface.m_colorR + " G:" + surface.m_colorG + " B:" + surface.m_colorB );
+					// Debug.Log( "Setting display color for planet " + planet.m_orbitPosition + " to R:" + surface.m_colorR + " G:" + surface.m_colorG + " B:" + surface.m_colorB );
 				}
 			}
 		}

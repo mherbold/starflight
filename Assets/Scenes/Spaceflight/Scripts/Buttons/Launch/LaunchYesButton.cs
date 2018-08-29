@@ -3,8 +3,11 @@ using UnityEngine;
 
 public class LaunchYesButton : ShipButton
 {
-	private float m_launchTimer;
-	private bool m_countdownStarted;
+	// whether or not we have started the countdown
+	bool m_countdownStarted;
+
+	// our launch timer
+	float m_timer;
 
 	public override string GetLabel()
 	{
@@ -13,14 +16,16 @@ public class LaunchYesButton : ShipButton
 
 	public override bool Execute()
 	{
-		if ( m_spaceflightController.m_inDockingBay )
-		{
-			// change to the arth system
-			GameData gameData = DataController.m_instance.m_gameData;
-			m_spaceflightController.m_systemController.EnterSystem( gameData.m_misc.m_arthStarId );
+		// get to the player data
+		PlayerData playerData = DataController.m_instance.m_playerData;
 
+		if ( playerData.m_starflight.m_location == Starflight.Location.DockingBay )
+		{
 			// update the messages log
 			m_spaceflightController.m_messages.text = "Opening docking bay doors...";
+
+			// configure the infinite starfield system to become visible at lower speeds
+			m_spaceflightController.m_infiniteStarfield.m_fullyVisibleSpeed = 5.0f;
 
 			if ( !m_spaceflightController.m_skipCinematics )
 			{
@@ -51,8 +56,10 @@ public class LaunchYesButton : ShipButton
 			// TODO: Launching from planet cinematics
 		}
 
-		// reset some private members
-		m_launchTimer = 0.0f;
+		// reset the timer
+		m_timer = 0.0f;
+
+		// we haven't started the countdown just yet
 		m_countdownStarted = false;
 
 		// stop the music
@@ -64,10 +71,10 @@ public class LaunchYesButton : ShipButton
 	public override bool Update()
 	{
 		// keep track of the cutscene time
-		m_launchTimer += Time.deltaTime * ( m_spaceflightController.m_skipCinematics ? 20.0f : 1.0f );
+		m_timer += Time.deltaTime * ( m_spaceflightController.m_skipCinematics ? 20.0f : 1.0f );
 
 		// at 15 seconds begin the countdown...
-		if ( m_launchTimer >= 15.0f )
+		if ( m_timer >= 15.0f )
 		{
 			// check if we have have not played the countdown sound yet
 			if ( !m_countdownStarted )
@@ -86,7 +93,7 @@ public class LaunchYesButton : ShipButton
 			}
 
 			// do countdown text animation
-			int currentNumber = Mathf.FloorToInt( 21.5f - m_launchTimer );
+			int currentNumber = Mathf.FloorToInt( 21.5f - m_timer );
 
 			// check if we are showing the countdown text
 			if ( ( currentNumber >= 1 ) && ( currentNumber <= 5 ) )
@@ -98,7 +105,7 @@ public class LaunchYesButton : ShipButton
 				m_spaceflightController.m_countdown.text = currentNumber.ToString();
 
 				// animate the opacity and the size of the numbers
-				float deltaTime = m_launchTimer - ( 15.5f + ( 5 - currentNumber ) );
+				float deltaTime = m_timer - ( 15.5f + ( 5 - currentNumber ) );
 
 				if ( deltaTime < 0.1f )
 				{
@@ -121,37 +128,38 @@ public class LaunchYesButton : ShipButton
 				// have we reached zero in the countdown?
 				if ( currentNumber <= 0 )
 				{
-					if ( m_spaceflightController.m_inDockingBay )
+					// get to the player data
+					PlayerData playerData = DataController.m_instance.m_playerData;
+
+					if ( playerData.m_starflight.m_location == Starflight.Location.DockingBay )
 					{
 						// yes - update the messages text
 						m_spaceflightController.m_messages.text = "Leaving starport...";
 
 						// figure out how much to move the ship forward by (with an exponential acceleration curve)
-						float y = ( m_launchTimer - 20.5f ) * 5.0f;
+						float y = ( m_timer - 20.5f ) * 5.0f;
 
 						y *= y;
 
 						// have we reached the end of the launch trip?
 						if ( y >= 1000.0f )
 						{
+							// update the player location
+							playerData.m_starflight.m_location = Starflight.Location.JustLaunched;
+
+							// switch modes
+							m_spaceflightController.SwitchMode();
+
 							// yep - fix us at exactly 1500 units above the zero plane
 							y = 1000.0f;
 
-							// hide the docking bay doors
-							m_spaceflightController.m_dockingBayDoorTop.gameObject.SetActive( false );
-							m_spaceflightController.m_dockingBayDoorBottom.gameObject.SetActive( false );
-
-							// update some flags
-							m_spaceflightController.m_inDockingBay = false;
-							m_spaceflightController.m_justLaunched = true;
-
 							// calculate the new position of the player (just north of the arth spaceport)
-							Vector3 playerPosition = m_spaceflightController.m_systemController.m_planetController[ 2 ].transform.position;
-							playerPosition.y = 0.0f;
-							playerPosition.z += 250.0f;
+							Vector3 newPosition = m_spaceflightController.m_systemController.m_planetController[ 2 ].transform.position;
+							newPosition.y = 0.0f;
+							newPosition.z += 250.0f;
 
 							// update the players position
-							m_spaceflightController.m_player.transform.position = playerPosition;
+							m_spaceflightController.UpdatePlayerPosition( newPosition );
 
 							// restore the bridge buttons (this also ends the launch function)
 							m_spaceflightController.m_buttonController.RestoreBridgeButtons();
@@ -161,9 +169,9 @@ public class LaunchYesButton : ShipButton
 						Vector3 cameraPosition = new Vector3( 0.0f, 2500.0f - y, 0.0f );
 						m_spaceflightController.m_camera.transform.localPosition = cameraPosition;
 
-						// fade the map overlay
+						// fade the map out
 						float fade = 1.0f - ( y / 1000.0f );
-						m_spaceflightController.m_mapRawImage.color = new Color( fade, fade, fade );
+						m_spaceflightController.m_map.color = new Color( fade, fade, fade );
 					}
 					else
 					{
