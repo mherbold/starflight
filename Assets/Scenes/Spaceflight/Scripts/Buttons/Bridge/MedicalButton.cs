@@ -20,7 +20,7 @@ public class MedicalButton : ShipButton
 		Personnel.PersonnelFile personnelFile = playerData.m_crewAssignment.GetPersonnelFile( CrewAssignment.Role.Doctor );
 
 		// set the name of the officer
-		m_spaceflightController.m_currentOfficer.text = "Doctor " + personnelFile.m_name;
+		m_spaceflightController.m_spaceflightUI.ChangeOfficerText( "Doctor " + personnelFile.m_name );
 
 		return true;
 	}

@@ -15,7 +15,7 @@ public class CombatButton : ShipButton
 		{
 			SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
-			m_spaceflightController.m_messages.text = "We're in the docking bay.";
+			m_spaceflightController.m_spaceflightUI.ChangeMessageText( "We're in the docking bay." );
 
 			m_spaceflightController.m_buttonController.UpdateButtonSprites();
 

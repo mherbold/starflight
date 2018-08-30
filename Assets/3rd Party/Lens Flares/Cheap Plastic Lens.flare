@@ -209,14 +209,6 @@ Flare:
     m_Rotate: 1
     m_Zoom: 1
     m_Fade: 1
-  - m_ImageIndex: 10
-    m_Position: -0.25
-    m_Size: 9
-    m_Color: {r: 0.8230769, g: 0.8230769, b: 0.8230769, a: 1}
-    m_UseLightColor: 0
-    m_Rotate: 1
-    m_Zoom: 1
-    m_Fade: 1
   m_UseFog: 1
 --- !u!1002 &12100001
 EditorExtensionImpl:

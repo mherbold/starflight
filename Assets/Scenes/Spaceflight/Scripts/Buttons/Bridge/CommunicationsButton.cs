@@ -20,7 +20,7 @@ public class CommunicationsButton : ShipButton
 		Personnel.PersonnelFile personnelFile = playerData.m_crewAssignment.GetPersonnelFile( CrewAssignment.Role.CommunicationsOfficer );
 
 		// set the name of the officer
-		m_spaceflightController.m_currentOfficer.text = "Officer " + personnelFile.m_name;
+		m_spaceflightController.m_spaceflightUI.ChangeOfficerText( "Officer " + personnelFile.m_name );
 
 		return true;
 	}

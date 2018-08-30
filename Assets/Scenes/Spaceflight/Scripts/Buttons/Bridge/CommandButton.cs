@@ -20,7 +20,7 @@ public class CommandButton : ShipButton
 		Personnel.PersonnelFile personnelFile = playerData.m_crewAssignment.GetPersonnelFile( CrewAssignment.Role.Captain );
 
 		// set the name of the captain
-		m_spaceflightController.m_currentOfficer.text = "Captain " + personnelFile.m_name;
+		m_spaceflightController.m_spaceflightUI.ChangeOfficerText( "Captain " + personnelFile.m_name );
 
 		return true;
 	}

@@ -2,38 +2,26 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using TMPro;
 
 public class SpaceflightController : MonoBehaviour
 {
-	// text elements
-	public TextMeshProUGUI m_messages;
-	public TextMeshProUGUI m_countdown;
-	public TextMeshProUGUI m_currentOfficer;
-
-	// the main camera
-	public Camera m_camera;
-
-	// the map ui object
-	public RawImage m_map;
-
-	// the docking bay doors
-	public Animator m_dockingBayDoorTop;
-	public Animator m_dockingBayDoorBottom;
-
-	// particle systems
-	public ParticleSystem m_decompressionParticleSystem;
-	public InfiniteStarfield m_infiniteStarfield;
-
-	// various game objects
-	public GameObject m_player;
-	public GameObject m_ship;
-	public GameObject m_star;
-	public GameObject m_lensFlare;
-
 	// set this to true to skip cinematics
 	public bool m_skipCinematics;
+	public bool m_forceResetToDockingBay;
+
+	// set this to the maximum speed of the ship
+	public float m_maximumShipSpeedHyperspace;
+	public float m_maximumShipSpeedStarSystem;
+	public float m_timeToReachMaximumShipSpeed;
+	public float m_timeToStop;
+
+	// the different components of the spaceflight scene
+	public Player m_player;
+	public DockingBay m_dockingBay;
+	public JustLaunched m_justLaunched;
+	public StarSystem m_starSystem;
+	public Hyperspace m_hyperspace;
+	public SpaceflightUI m_spaceflightUI;
 
 	// controllers
 	public ButtonController m_buttonController { get; protected set; }
@@ -69,11 +57,13 @@ public class SpaceflightController : MonoBehaviour
 		// turn off controller navigation of the UI
 		EventSystem.current.sendNavigationEvents = false;
 
-		// update the game time
-		//PlayerData playerData = DataController.m_instance.m_playerData;
-
-		// temporary
-		//playerData.m_starflight.m_location = Starflight.Location.DockingBay;
+		// reset the player to the docking bay if we want that to happen
+		if ( m_forceResetToDockingBay )
+		{
+			PlayerData playerData = DataController.m_instance.m_playerData;
+			playerData.m_starflight.m_hyperspaceCoordinates = Tools.GameToWorldCoordinates( new Vector3( 125.0f, 0.0f, 101.0f ) );
+			playerData.m_starflight.m_location = Starflight.Location.DockingBay;
+		}
 
 		// switch to the correct mode
 		SwitchMode();
@@ -104,25 +94,18 @@ public class SpaceflightController : MonoBehaviour
 		}
 	}
 
-	// this is called by each switch function
-	void HideAllObjects()
-	{
-		// hide various objects that aren't used by every mode
-		m_countdown.gameObject.SetActive( false );
-		m_dockingBayDoorTop.gameObject.SetActive( false );
-		m_dockingBayDoorBottom.gameObject.SetActive( false );
-		m_decompressionParticleSystem.gameObject.SetActive( false );
-		m_ship.SetActive( false );
-		m_star.SetActive( false );
-		m_lensFlare.SetActive( false );
-
-		// make sure the map is visible
-		m_map.color = new Color( 1.0f, 1.0f, 1.0f );
-	}
-
 	// call this to switch to the correct mode
 	public void SwitchMode()
 	{
+		// hide all components
+		m_player.Hide();
+		m_dockingBay.Hide();
+		m_starSystem.Hide();
+		m_hyperspace.Hide();
+
+		// make sure the map is visible
+		m_spaceflightUI.FadeMap( 1.0f );
+
 		// get to the player data
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
@@ -132,16 +115,16 @@ public class SpaceflightController : MonoBehaviour
 		switch ( playerData.m_starflight.m_location )
 		{
 			case Starflight.Location.DockingBay:
-				SwitchToDockingBay();
+				m_dockingBay.Show();
 				break;
 			case Starflight.Location.JustLaunched:
-				SwitchToJustLaunched();
+				m_justLaunched.Show();
 				break;
 			case Starflight.Location.StarSystem:
-				SwitchToStarSystem();
+				m_starSystem.Show();
 				break;
 			case Starflight.Location.Hyperspace:
-				SwitchToHyperspace();
+				m_hyperspace.Show();
 				break;
 		}
 
@@ -149,75 +132,11 @@ public class SpaceflightController : MonoBehaviour
 		DataController.m_instance.SavePlayerData();
 	}
 
-	// call this to switch to the docking bay
-	public void SwitchToDockingBay()
-	{
-		HideAllObjects();
-
-		// show the docking bay doors
-		m_dockingBayDoorTop.gameObject.SetActive( true );
-		m_dockingBayDoorBottom.gameObject.SetActive( true );
-
-		// play the docking bay music track
-		MusicController.m_instance.ChangeToTrack( MusicController.Track.DockingBay );
-	}
-
-	// call this to switch to the just launched mode
-	public void SwitchToJustLaunched()
-	{
-		HideAllObjects();
-
-		// get to the player data
-		PlayerData playerData = DataController.m_instance.m_playerData;
-
-		// update the system controller
-		m_systemController.EnterSystem( playerData.m_starflight.m_currentStarId );
-
-		// make sure the map is NOT visible
-		m_map.color = new Color( 0.0f, 0.0f, 0.0f );
-	}
-
-	// call this to switch to the star system
-	public void SwitchToStarSystem()
-	{
-		HideAllObjects();
-
-		// show various objects
-		m_ship.SetActive( true );
-		m_star.SetActive( true );
-		m_lensFlare.SetActive( true );
-
-		// make sure the camera is at the right height above the zero plane
-		Vector3 cameraPosition = new Vector3( 0.0f, 1500.0f, 0.0f );
-		m_camera.transform.localPosition = cameraPosition;
-
-		// get to the player data
-		PlayerData playerData = DataController.m_instance.m_playerData;
-
-		// move the player object
-		m_player.transform.position = playerData.m_starflight.m_systemCoordinates;
-
-		// update the system controller
-		m_systemController.EnterSystem( playerData.m_starflight.m_currentStarId );
-
-		// play the star system music track
-		MusicController.m_instance.ChangeToTrack( MusicController.Track.StarSystem );
-	}
-
-	// call this to switch to hyperspace
-	public void SwitchToHyperspace()
-	{
-		HideAllObjects();
-
-		// play the star system music track
-		MusicController.m_instance.ChangeToTrack( MusicController.Track.Hyperspace );
-	}
-
 	// call this to update the player's position
 	public void UpdatePlayerPosition( Vector3 newPosition )
 	{
 		// update the game object
-		m_player.transform.position = newPosition;
+		m_player.SetPosition( newPosition );
 
 		// get to the player data
 		PlayerData playerData = DataController.m_instance.m_playerData;

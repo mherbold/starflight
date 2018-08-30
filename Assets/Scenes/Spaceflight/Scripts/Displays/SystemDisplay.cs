@@ -67,17 +67,20 @@ public class SystemDisplay : ShipDisplay
 		}
 
 		// update the position of the ship
-		Vector3 position = m_spaceflightController.m_camera.transform.position * 0.01f;
+		Vector3 position = m_spaceflightController.m_player.GetPosition() * 256.0f / 8192.0f;
 		m_shipGameObject.transform.localPosition = new Vector3( position.x, position.z );
 	}
 
-	public void ChangeSystem( int starId )
+	public void ChangeSystem()
 	{
+		// get to the player data
+		PlayerData playerData = DataController.m_instance.m_playerData;
+
 		// get to the game data
 		GameData gameData = DataController.m_instance.m_gameData;
 
 		// get to the star data
-		Star star = gameData.m_starList[ starId ];
+		Star star = gameData.m_starList[ playerData.m_starflight.m_currentStarId ];
 
 		// turn off the arth game object
 		m_arthGameObject.SetActive( false );

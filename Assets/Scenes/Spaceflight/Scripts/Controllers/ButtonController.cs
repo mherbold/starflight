@@ -190,17 +190,17 @@ public class ButtonController : MonoBehaviour
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// change the current officer label to the name of the ship
-		m_spaceflightController.m_currentOfficer.text = "ISS " + playerData.m_ship.m_name;
+		m_spaceflightController.m_spaceflightUI.ChangeOfficerText( "ISS " + playerData.m_ship.m_name );
 
 		// update the message
 		switch ( playerData.m_starflight.m_location )
 		{
 			case Starflight.Location.DockingBay:
-				m_spaceflightController.m_messages.text = "Ship computer activated.\r\nPre-launch procedures complete.\r\nStanding by to initiate launch.";
+				m_spaceflightController.m_spaceflightUI.ChangeMessageText( "Ship computer activated.\r\nPre-launch procedures complete.\r\nStanding by to initiate launch." );
 				break;
 
 			case Starflight.Location.JustLaunched:
-				m_spaceflightController.m_messages.text = "Starport clear.\r\nStanding by to maneuver.";
+				m_spaceflightController.m_spaceflightUI.ChangeMessageText( "Starport clear.\r\nStanding by to maneuver." );
 				break;
 		}
 	}

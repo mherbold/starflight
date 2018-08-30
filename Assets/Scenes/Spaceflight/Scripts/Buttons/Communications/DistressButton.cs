@@ -15,7 +15,7 @@ public class DistressButton : ShipButton
 		{
 			SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
-			m_spaceflightController.m_messages.text = "Transmit emergency distress call, please confirm.";
+			m_spaceflightController.m_spaceflightUI.ChangeMessageText( "Transmit emergency distress call, please confirm." );
 
 			return true;
 		}

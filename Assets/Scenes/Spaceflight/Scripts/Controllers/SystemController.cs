@@ -6,9 +6,6 @@ public class SystemController : MonoBehaviour
 	// our planet controllers
 	public PlanetController[] m_planetController;
 
-	// the star id of the system we are currently controlling
-	int m_currentStarId;
-
 	// convenient access to the spaceflight controller
 	SpaceflightController m_spaceflightController;
 
@@ -23,9 +20,6 @@ public class SystemController : MonoBehaviour
 	// unity start
 	void Start()
 	{
-
-		// reset stuff
-		m_currentStarId = 0;
 	}
 
 	// unity update
@@ -34,16 +28,16 @@ public class SystemController : MonoBehaviour
 	}
 
 	// call this to change the current star system
-	public void EnterSystem( int starId )
+	public void EnterSystem()
 	{
-		// update the current star id
-		m_currentStarId = starId;
+		// get to the player data
+		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// get to the game data
 		GameData gameData = DataController.m_instance.m_gameData;
 
 		// get to the star data
-		Star star = gameData.m_starList[ starId ];
+		Star star = gameData.m_starList[ playerData.m_starflight.m_currentStarId ];
 
 		// turn off all the planets
 		for ( int i = 0; i < Star.c_maxNumPlanets; i++ )
@@ -61,6 +55,6 @@ public class SystemController : MonoBehaviour
 		}
 
 		// update the system display
-		m_spaceflightController.m_displayController.m_systemDisplay.ChangeSystem( m_currentStarId );
+		m_spaceflightController.m_displayController.m_systemDisplay.ChangeSystem();
 	}
 }

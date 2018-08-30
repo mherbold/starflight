@@ -15,7 +15,7 @@ public class LogPlanetButton : ShipButton
 		{
 			SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
-			m_spaceflightController.m_messages.text = "We're not in orbit.";
+			m_spaceflightController.m_spaceflightUI.ChangeMessageText( "We're not in orbit." );
 
 			m_spaceflightController.m_buttonController.UpdateButtonSprites();
 

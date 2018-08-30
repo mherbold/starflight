@@ -62,7 +62,7 @@ public class PlanetController : MonoBehaviour
 
 			Quaternion rotation;
 
-			float distance = 2500.0f * ( m_planet.m_orbitPosition + 2 );
+			float distance = Mathf.Lerp( 50.0f, 225.0f, m_planet.m_orbitPosition / 7.0f ) * ( 8192.0f / 256.0f );
 			float angle = m_orbitAngle * 2.0f * Mathf.PI;
 			float planeOffset;
 
@@ -84,6 +84,12 @@ public class PlanetController : MonoBehaviour
 			Vector3 position = new Vector3( -Mathf.Sin( angle ) * distance, planeOffset, Mathf.Cos( angle ) * distance );
 			transform.SetPositionAndRotation( position, rotation );
 		}
+	}
+
+	// call this to force this planet to update
+	public void ForceUpdate()
+	{
+		Update();
 	}
 
 	// change the planet we are controlling
@@ -114,8 +120,8 @@ public class PlanetController : MonoBehaviour
 				// hide the planet model
 				m_planetModel.SetActive( false );
 
-				// starport scale is 1
-				scale = 1.0f;
+				// starport scale
+				scale = 0.5f;
 			}
 			else
 			{
@@ -130,7 +136,7 @@ public class PlanetController : MonoBehaviour
 				}
 
 				// scale the planet based on its gravity
-				scale = 100.0f + planet.m_gravity / 5.0f;
+				scale = 32.0f + planet.m_gravity / 8.0f;
 
 				// generate the texture maps for this planet
 				GenerateTextureMaps();
@@ -145,11 +151,6 @@ public class PlanetController : MonoBehaviour
 	void GenerateTextureMaps()
 	{
 		PlanetMap planetMap = DataController.m_instance.m_planetData.m_planetMapList[ m_planet.m_id ];
-
-		if ( planetMap.m_map.Length == 0 )
-		{
-			return; // TODO: temporary - skip this planet because we have no map data for it yet
-		}
 
 		const int newWidth = 1024;
 		const int newHeight = 512;
@@ -172,7 +173,16 @@ public class PlanetController : MonoBehaviour
 
 				int offset = Mathf.FloorToInt( offsetY ) * originalWidth + Mathf.FloorToInt( offsetX );
 
-				int originalColor = planetMap.m_map[ offset ];
+				int originalColor = 0;
+
+				if ( planetMap.m_map.Length == 0 )
+				{
+					originalColor = Random.Range( 0x00000000, 0x00FFFFFF );
+				}
+				else
+				{
+					originalColor = planetMap.m_map[ offset ];
+				}
 
 				float r = ( ( originalColor >> 16 ) & 0xFF ) / 255.0f;
 				float g = ( ( originalColor >> 8 ) & 0xFF ) / 255.0f;
