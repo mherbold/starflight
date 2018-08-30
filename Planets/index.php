@@ -67,6 +67,7 @@ foreach ( $planetList as $planet )
 }
 
 $viewList = filter_input( INPUT_GET, 'viewList', FILTER_VALIDATE_BOOLEAN ) ?? false;
+$remove = filter_input( INPUT_GET, 'remove', FILTER_VALIDATE_INT ) ?? false;
 $submit = filter_input( INPUT_POST, 'submit', FILTER_VALIDATE_BOOLEAN ) ?? false;
 
 $yourName = '';
@@ -190,6 +191,29 @@ if ( $submit )
 	}
 }
 
+$admin = ( $_SERVER[ "REMOTE_ADDR" ] == '72.208.133.228' );
+
+if ( $admin )
+{
+	if ( $remove !== false )
+	{
+		foreach ( $planetList as $planet )
+		{
+			if ( $planet->index == $remove )
+			{
+				unlink( "images/{$planet->index}.png" );
+				
+				$planet->captured = false;
+				$planet->yourName = '';
+				
+				file_put_contents( 'Planets.dat', serialize( $planetList ) );
+				
+				break;
+			}
+		}
+	}
+}
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -224,6 +248,9 @@ if ( $submit )
 							<th>Captured</th>
 							<th>By Who</th>
 							<th>Screenshot</th>
+							<?php if ( $admin ) { ?>
+								<td>Actions</td>
+							<?php } ?>
 						</tr>
 					</thead>
 					<tbody>
@@ -239,6 +266,11 @@ if ( $submit )
 								<td><?php echo $planet->captured ? 'Yes' : 'No'; ?></td>
 								<td><?php echo $planet->yourName; ?></td>
 								<td><?php echo $planet->captured ? "<img src=\"images/{$planet->index}.png\">" : 'None'; ?></td>
+								<?php if ( $admin ) { ?>
+									<td>
+										<a href="index.php?remove=<?php echo $planet->index; ?>">REMOVE</a>
+									</td>
+								<?php } ?>
 							</tr>
 							<?php
 						}
