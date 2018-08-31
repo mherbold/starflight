@@ -5,7 +5,7 @@ using System;
 
 public class PlayerData
 {
-	const int c_currentVersion = 3;
+	const int c_currentVersion = 4;
 
 	public int m_version;
 
