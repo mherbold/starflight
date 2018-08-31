@@ -54,16 +54,20 @@ public class SpaceflightController : MonoBehaviour
 	// unity start
 	void Start()
 	{
+		// get to the player data
+		PlayerData playerData = DataController.m_instance.m_playerData;
+
 		// turn off controller navigation of the UI
 		EventSystem.current.sendNavigationEvents = false;
 
 		// reset the player to the docking bay if we want that to happen
 		if ( m_forceResetToDockingBay )
 		{
-			PlayerData playerData = DataController.m_instance.m_playerData;
 			playerData.m_starflight.m_hyperspaceCoordinates = Tools.GameToWorldCoordinates( new Vector3( 125.0f, 0.0f, 101.0f ) );
 			playerData.m_starflight.m_location = Starflight.Location.DockingBay;
 		}
+
+		// playerData.m_starflight.m_hyperspaceCoordinates = Tools.GameToWorldCoordinates( new Vector3( 119.0f, 0.0f, 107.0f ) );
 
 		// switch to the correct mode
 		SwitchMode();

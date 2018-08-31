@@ -211,11 +211,25 @@ MonoBehaviour:
     m_surfaceList: []
     m_temperatureList: []
     m_weatherList: []
+    m_fluxList: []
   m_planetData:
     m_planetMapList: []
   m_playerData:
     m_version: 0
     m_starflight:
+      m_location: 0
+      m_starportCoordinates:
+        m_x: 0
+        m_y: 0
+        m_z: 0
+      m_systemCoordinates:
+        m_x: 0
+        m_y: 0
+        m_z: 0
+      m_hyperspaceCoordinates:
+        m_x: 0
+        m_y: 0
+        m_z: 0
       m_currentStardate: 
       m_day: 0
       m_hour: 0
@@ -223,6 +237,13 @@ MonoBehaviour:
       m_second: 0
       m_millisecond: 0
       m_gameTime: 0
+      m_hasCurrentSenorReading: 0
+      m_currentStarId: 0
+      m_currentSpeed: 0
+      m_currentDirection:
+        m_x: 0
+        m_y: 0
+        m_z: 0
     m_starport:
       m_lastReadNoticeStardate: 
       m_artifactStorage:
@@ -293,7 +314,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b79c5aa0837bcc34797b05da4b8e4c2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_maxSimultaneousSounds: 6
+  m_maxSimultaneousSounds: 7
   m_click: {fileID: 8300000, guid: 255aafa6356eb804887b94ceaa571080, type: 3}
   m_activate: {fileID: 8300000, guid: 6a9ebfa0e562c8144b74f10a24e80f77, type: 3}
   m_deactivate: {fileID: 8300000, guid: 1aab2ffafc2263a41a18ea4c287864e8, type: 3}
@@ -307,6 +328,8 @@ MonoBehaviour:
   m_decompression: {fileID: 8300000, guid: eb7ff4fb1960d66419b40579d32eb370, type: 3}
   m_launch: {fileID: 8300000, guid: e244c9a0dd490124eab576ca9d50eefc, type: 3}
   m_countdown: {fileID: 8300000, guid: d233a21c34a0612448b5546b9b81ecd8, type: 3}
+  m_enterWarp: {fileID: 8300000, guid: 371f49cae63e5594487c73c8045b1831, type: 3}
+  m_exitWarp: {fileID: 8300000, guid: 1285081642ed8ec458b0f6d3c5b8e308, type: 3}
 --- !u!114 &919755016
 MonoBehaviour:
   m_ObjectHideFlags: 0

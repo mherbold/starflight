@@ -23,7 +23,7 @@ public class Starflight
 	// the player coordinates
 	public SerializableVector3 m_starportCoordinates; // TODO: use this
 	public SerializableVector3 m_systemCoordinates;
-	public SerializableVector3 m_hyperspaceCoordinates; // TODO: use this
+	public SerializableVector3 m_hyperspaceCoordinates;
 
 	// game time stuff
 	public string m_currentStardate;
@@ -41,6 +41,12 @@ public class Starflight
 
 	// the current star we are in (or the last star we visited if we are in hyperspace)
 	public int m_currentStarId;
+
+	// keep track of the player's current speed
+	public float m_currentSpeed;
+
+	// keep track of the player's current direction
+	public SerializableVector3 m_currentDirection;
 
 	// this resets everything to initial game state
 	public void Reset()
@@ -69,6 +75,12 @@ public class Starflight
 		// reset star id
 		GameData gameData = DataController.m_instance.m_gameData;
 		m_currentStarId = gameData.m_misc.m_arthStarId;
+
+		// facing north
+		m_currentDirection = Vector3.forward;
+
+		// not moving
+		m_currentSpeed = 0.0f;
 	}
 	
 	// this updates the game time

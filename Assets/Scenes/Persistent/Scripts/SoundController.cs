@@ -16,6 +16,8 @@ public class SoundController : MonoBehaviour
 		Decompression,
 		Launch,
 		Countdown,
+		EnterWarp,
+		ExitWarp,
 		Count
 	};
 
@@ -38,6 +40,8 @@ public class SoundController : MonoBehaviour
 	public AudioClip m_decompression;
 	public AudioClip m_launch;
 	public AudioClip m_countdown;
+	public AudioClip m_enterWarp;
+	public AudioClip m_exitWarp;
 
 	// the audio source
 	AudioSource[] m_audioSourceList;
@@ -74,6 +78,8 @@ public class SoundController : MonoBehaviour
 		m_soundList[ (int) Sound.Decompression ] = m_decompression;
 		m_soundList[ (int) Sound.Launch ] = m_launch;
 		m_soundList[ (int) Sound.Countdown ] = m_countdown;
+		m_soundList[ (int) Sound.EnterWarp ] = m_enterWarp;
+		m_soundList[ (int) Sound.ExitWarp ] = m_exitWarp;
 	}
 
 	// use this for initialization

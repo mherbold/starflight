@@ -26,6 +26,7 @@ public class GameData : GameDataFile
 	public Surface[] m_surfaceList;
 	public Temperature[] m_temperatureList;
 	public Weather[] m_weatherList;
+	public Flux[] m_fluxList;
 
 	public void Initialize()
 	{
@@ -34,6 +35,13 @@ public class GameData : GameDataFile
 		{
 			// initialize it
 			star.Initialize( this );
+		}
+
+		// go through each flux
+		foreach ( Flux flux in m_fluxList )
+		{
+			// initialize it
+			flux.Initialize();
 		}
 	}
 
