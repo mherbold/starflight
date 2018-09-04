@@ -22,15 +22,9 @@ public class SpaceflightUI : MonoBehaviour
 	// whether or not we are currently animating the countdown text
 	bool m_animatingCountdownText;
 
-	// convenient access to the spaceflight controller
-	SpaceflightController m_spaceflightController;
-
 	// unity awake
 	private void Awake()
 	{
-		// get the spaceflight controller
-		GameObject controllersGameObject = GameObject.FindWithTag( "Spaceflight Controllers" );
-		m_spaceflightController = controllersGameObject.GetComponent<SpaceflightController>();
 	}
 
 	// unity start

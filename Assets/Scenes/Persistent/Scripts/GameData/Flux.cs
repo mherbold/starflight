@@ -22,6 +22,6 @@ public class Flux
 
 	public float GetBreachDistance()
 	{
-		return 64.0f;
+		return 96.0f;
 	}
 }

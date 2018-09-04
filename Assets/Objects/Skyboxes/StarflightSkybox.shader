@@ -4,12 +4,21 @@ Shader "Custom/Starflight Skybox"
 {
 	Properties
 	{
-		[NoScaleOffset] _FrontTex ("Front [+Z]", 2D) = "grey" {}
-		[NoScaleOffset] _BackTex ("Back [-Z]", 2D) = "grey" {}
-		[NoScaleOffset] _LeftTex ("Left [+X]", 2D) = "grey" {}
-		[NoScaleOffset] _RightTex ("Right [-X]", 2D) = "grey" {}
-		[NoScaleOffset] _UpTex ("Up [+Y]", 2D) = "grey" {}
-		[NoScaleOffset] _DownTex ("Down [-Y]", 2D) = "grey" {}
+		[NoScaleOffset] _FrontTexA( "Front [+Z]", 2D ) = "grey" {}
+		[NoScaleOffset] _BackTexA( "Back [-Z]", 2D ) = "grey" {}
+		[NoScaleOffset] _LeftTexA( "Left [+X]", 2D ) = "grey" {}
+		[NoScaleOffset] _RightTexA( "Right [-X]", 2D ) = "grey" {}
+		[NoScaleOffset] _UpTexA( "Up [+Y]", 2D ) = "grey" {}
+		[NoScaleOffset] _DownTexA( "Down [-Y]", 2D ) = "grey" {}
+
+		[NoScaleOffset] _FrontTexB( "Front [+Z]", 2D ) = "grey" {}
+		[NoScaleOffset] _BackTexB( "Back [-Z]", 2D ) = "grey" {}
+		[NoScaleOffset] _LeftTexB( "Left [+X]", 2D ) = "grey" {}
+		[NoScaleOffset] _RightTexB( "Right [-X]", 2D ) = "grey" {}
+		[NoScaleOffset] _UpTexB( "Up [+Y]", 2D ) = "grey" {}
+		[NoScaleOffset] _DownTexB( "Down [-Y]", 2D ) = "grey" {}
+
+		_BlendFactor( "Blend Factor", Float ) = 0
 	}
 
 	SubShader
@@ -28,7 +37,9 @@ Shader "Custom/Starflight Skybox"
 
 		#include "UnityCG.cginc"
 
-		matrix _Rotation;
+		matrix _ModelMatrix;
+		matrix _ProjectionMatrix;
+		float _BlendFactor;
 
 		struct vertex_data
 		{
@@ -51,17 +62,30 @@ Shader "Custom/Starflight Skybox"
 			UNITY_SETUP_INSTANCE_ID( vd );
 			UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( o );
 
-			float3 rotatedPosition = mul( _Rotation, vd.position );
+			float3 worldPosition = mul( _ModelMatrix, vd.position );
+			float3 viewPosition = mul( UNITY_MATRIX_MV, worldPosition );
 
-			o.position = UnityObjectToClipPos( rotatedPosition );
+			float4x4 projectionMatrix = UNITY_MATRIX_P;
+
+			float halfFov = atan( 1.0 / projectionMatrix._11 );
+
+			halfFov *= 1.5;
+
+			projectionMatrix._11 = 1 / tan( halfFov );
+			projectionMatrix._22 = -projectionMatrix._11;
+
+			o.position = mul( projectionMatrix, viewPosition );
 			o.texcoord = vd.texcoord;
 
 			return o;
 		}
 
-		half4 skybox_frag( vs_out i, sampler2D smp )
+		half4 skybox_frag( vs_out i, sampler2D smpA, sampler2D smpB )
 		{
-			half3 tex = tex2D( smp, i.texcoord ); // * unity_ColorSpaceDouble.rgb;
+			half3 texA = tex2D( smpA, i.texcoord );
+			half3 texB = tex2D( smpB, i.texcoord );
+
+			half3 tex = lerp( texA, texB, _BlendFactor );
 
 			return half4( tex, 1 );
 		}
@@ -76,11 +100,12 @@ Shader "Custom/Starflight Skybox"
 			#pragma fragment frag
 			#pragma target 2.0
 
-			sampler2D _FrontTex;
+			sampler2D _FrontTexA;
+			sampler2D _FrontTexB;
 
 			half4 frag( vs_out i ) : SV_Target
 			{
-				return skybox_frag( i, _FrontTex );
+				return skybox_frag( i, _FrontTexA, _FrontTexB );
 			}
 
 			ENDCG
@@ -94,11 +119,12 @@ Shader "Custom/Starflight Skybox"
 			#pragma fragment frag
 			#pragma target 2.0
 
-			sampler2D _BackTex;
+			sampler2D _BackTexA;
+			sampler2D _BackTexB;
 
 			half4 frag( vs_out i ) : SV_Target
 			{
-				return skybox_frag( i, _BackTex );
+				return skybox_frag( i, _BackTexA, _BackTexB );
 			}
 
 			ENDCG
@@ -112,11 +138,12 @@ Shader "Custom/Starflight Skybox"
 			#pragma fragment frag
 			#pragma target 2.0
 
-			sampler2D _LeftTex;
+			sampler2D _LeftTexA;
+			sampler2D _LeftTexB;
 
 			half4 frag( vs_out i ) : SV_Target
 			{
-				return skybox_frag( i, _LeftTex );
+				return skybox_frag( i, _LeftTexA, _LeftTexB );
 			}
 
 			ENDCG
@@ -130,11 +157,12 @@ Shader "Custom/Starflight Skybox"
 			#pragma fragment frag
 			#pragma target 2.0
 
-			sampler2D _RightTex;
+			sampler2D _RightTexA;
+			sampler2D _RightTexB;
 
 			half4 frag( vs_out i ) : SV_Target
 			{
-				return skybox_frag( i, _RightTex );
+				return skybox_frag( i, _RightTexA, _RightTexB );
 			}
 
 			ENDCG
@@ -148,11 +176,12 @@ Shader "Custom/Starflight Skybox"
 			#pragma fragment frag
 			#pragma target 2.0
 
-			sampler2D _UpTex;
+			sampler2D _UpTexA;
+			sampler2D _UpTexB;
 
 			half4 frag( vs_out i ) : SV_Target
 			{
-				return skybox_frag( i, _UpTex );
+				return skybox_frag( i, _UpTexA, _UpTexB );
 			}
 
 			ENDCG
@@ -166,11 +195,12 @@ Shader "Custom/Starflight Skybox"
 			#pragma fragment frag
 			#pragma target 2.0
 
-			sampler2D _DownTex;
+			sampler2D _DownTexA;
+			sampler2D _DownTexB;
 
 			half4 frag( vs_out i ) : SV_Target
 			{
-				return skybox_frag( i, _DownTex );
+				return skybox_frag( i, _DownTexA, _DownTexB );
 			}
 
 			ENDCG

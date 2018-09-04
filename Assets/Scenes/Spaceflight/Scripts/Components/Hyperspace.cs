@@ -64,7 +64,7 @@ public class Hyperspace : MonoBehaviour
 		foreach ( Flux flux in gameData.m_fluxList )
 		{
 			// clone the flux
-			GameObject clonedFlux = Instantiate( m_fluxTemplate, flux.m_from, Quaternion.identity, transform ) as GameObject;
+			Instantiate( m_fluxTemplate, flux.m_from, Quaternion.identity, transform );
 		}
 
 		// hide the flux template
@@ -82,6 +82,9 @@ public class Hyperspace : MonoBehaviour
 
 		// get to the game data
 		GameData gameData = DataController.m_instance.m_gameData;
+
+		// configure the infinite starfield system to become visible at lower speeds
+		m_spaceflightController.m_player.SetStarfieldFullyVisibleSpeed( 3.5f );
 
 		// are we travelling through a flux right now?
 		if ( m_travelingThroughFlux )

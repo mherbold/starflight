@@ -127,6 +127,9 @@ public class SystemDisplay : ShipDisplay
 				}
 				else
 				{
+					// show the planet object (it may have been hidden by the arth orbit)
+					m_planetImage[ planet.m_orbitPosition ].gameObject.SetActive( true );
+
 					// change the display color for this planet
 					Surface surface = planet.GetSurface();
 					color = new Color( surface.m_colorR / 255.0f, surface.m_colorG / 255.0f, surface.m_colorB / 255.0f );

@@ -24,9 +24,6 @@ public class PlanetController : MonoBehaviour
 	// set this to the material for this planet model
 	Material m_material;
 
-	// the generated diffuse map
-	Texture2D m_diffuseMap;
-
 	// unity awake
 	void Awake()
 	{
@@ -198,8 +195,6 @@ public class PlanetController : MonoBehaviour
 
 		textureMap.wrapModeU = TextureWrapMode.Repeat;
 		textureMap.wrapModeV = TextureWrapMode.Clamp;
-
-		m_diffuseMap = textureMap;
 
 		m_material.SetTexture( "_MainTex", textureMap );
 	}

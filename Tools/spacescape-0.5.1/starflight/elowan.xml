@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<spacescapelayers>
+    <layer>
+        <destBlendFactor>one</destBlendFactor>
+        <ditherAmount>0.01</ditherAmount>
+        <gain>0.5</gain>
+        <hdrMultiplier>1</hdrMultiplier>
+        <hdrPower>1</hdrPower>
+        <innerColor>0 0.666667 0 1</innerColor>
+        <lacunarity>2</lacunarity>
+        <name>Green Nebula</name>
+        <noiseType>fbm</noiseType>
+        <octaves>12</octaves>
+        <offset>1</offset>
+        <outerColor>0 0 0 1</outerColor>
+        <powerAmount>1</powerAmount>
+        <previewTextureSize>1024</previewTextureSize>
+        <scale>1</scale>
+        <seed>1</seed>
+        <shelfAmount>0.45</shelfAmount>
+        <sourceBlendFactor>one</sourceBlendFactor>
+        <type>noise</type>
+    </layer>
+    <layer>
+        <destBlendFactor>one</destBlendFactor>
+        <ditherAmount>0.01</ditherAmount>
+        <gain>0.7</gain>
+        <hdrMultiplier>1</hdrMultiplier>
+        <hdrPower>1</hdrPower>
+        <innerColor>0.309804 0.309804 0.14902 1</innerColor>
+        <lacunarity>2</lacunarity>
+        <name>Green Nebula</name>
+        <noiseType>ridged</noiseType>
+        <octaves>10</octaves>
+        <offset>1</offset>
+        <outerColor>0 0 0 1</outerColor>
+        <powerAmount>0.5</powerAmount>
+        <previewTextureSize>1024</previewTextureSize>
+        <scale>1</scale>
+        <seed>3</seed>
+        <shelfAmount>0.85</shelfAmount>
+        <sourceBlendFactor>src_colour</sourceBlendFactor>
+        <type>noise</type>
+    </layer>
+    <layer>
+        <destBlendFactor>one_minus_src_alpha</destBlendFactor>
+        <ditherAmount>0.03</ditherAmount>
+        <gain>0.8</gain>
+        <hdrMultiplier>1</hdrMultiplier>
+        <hdrPower>1</hdrPower>
+        <innerColor>0 0 0 1</innerColor>
+        <lacunarity>2.5</lacunarity>
+        <name>Nebula Black Mask</name>
+        <noiseType>ridged</noiseType>
+        <octaves>8</octaves>
+        <offset>0.975</offset>
+        <outerColor>0 0 0 1</outerColor>
+        <powerAmount>0.5</powerAmount>
+        <previewTextureSize>1024</previewTextureSize>
+        <scale>4</scale>
+        <seed>0</seed>
+        <shelfAmount>0.5</shelfAmount>
+        <sourceBlendFactor>src_alpha</sourceBlendFactor>
+        <type>noise</type>
+    </layer>
+    <layer>
+        <destBlendFactor>one</destBlendFactor>
+        <ditherAmount>0.03</ditherAmount>
+        <gain>0.71</gain>
+        <hdrMultiplier>1</hdrMultiplier>
+        <hdrPower>1</hdrPower>
+        <innerColor>1 1 0 1</innerColor>
+        <lacunarity>2.22</lacunarity>
+        <name>Light Yellow Nebula</name>
+        <noiseType>ridged</noiseType>
+        <octaves>7</octaves>
+        <offset>1</offset>
+        <outerColor>0 0 0 1</outerColor>
+        <powerAmount>0.3</powerAmount>
+        <previewTextureSize>1024</previewTextureSize>
+        <scale>0.5</scale>
+        <seed>1999</seed>
+        <shelfAmount>0.84</shelfAmount>
+        <sourceBlendFactor>one</sourceBlendFactor>
+        <type>noise</type>
+    </layer>
+    <layer>
+        <dataFile></dataFile>
+        <destBlendFactor>one</destBlendFactor>
+        <farColor>0.564706 0.564706 0.564706 1</farColor>
+        <hdrMultiplier>5</hdrMultiplier>
+        <hdrPower>0.1</hdrPower>
+        <maskEnabled>false</maskEnabled>
+        <maskGain>0.5</maskGain>
+        <maskLacunarity>2</maskLacunarity>
+        <maskNoiseType></maskNoiseType>
+        <maskOctaves>1</maskOctaves>
+        <maskOffset>1</maskOffset>
+        <maskPower>1</maskPower>
+        <maskScale>1</maskScale>
+        <maskSeed>1</maskSeed>
+        <maskThreshold>0</maskThreshold>
+        <maxSize>0.03</maxSize>
+        <minSize>0.002</minSize>
+        <name>Small Stars</name>
+        <nearColor>1 1 1 1</nearColor>
+        <numBillboards>5000</numBillboards>
+        <seed>0</seed>
+        <sourceBlendFactor>src_colour</sourceBlendFactor>
+        <texture>default.png</texture>
+        <type>billboards</type>
+    </layer>
+    <layer>
+        <dataFile></dataFile>
+        <destBlendFactor>one</destBlendFactor>
+        <farColor>1 1 1 1</farColor>
+        <hdrMultiplier>10</hdrMultiplier>
+        <hdrPower>0.1</hdrPower>
+        <maskEnabled>false</maskEnabled>
+        <maskGain>0.5</maskGain>
+        <maskLacunarity>2</maskLacunarity>
+        <maskNoiseType></maskNoiseType>
+        <maskOctaves>1</maskOctaves>
+        <maskOffset>1</maskOffset>
+        <maskPower>1</maskPower>
+        <maskScale>1</maskScale>
+        <maskSeed>1</maskSeed>
+        <maskThreshold>0</maskThreshold>
+        <maxSize>0.06</maxSize>
+        <minSize>0.03</minSize>
+        <name>Big Stars</name>
+        <nearColor>1 1 1 1</nearColor>
+        <numBillboards>100</numBillboards>
+        <seed>10</seed>
+        <sourceBlendFactor>src_colour</sourceBlendFactor>
+        <texture>default.png</texture>
+        <type>billboards</type>
+    </layer>
+</spacescapelayers>

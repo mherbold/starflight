@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class IntroController : MonoBehaviour
 {
-	// the three pages of the intro
+	// the pages of the intro
 	public CanvasGroup[] m_pages;
 
 	// first page fade in / out times
@@ -22,6 +22,10 @@ public class IntroController : MonoBehaviour
 	// fourth page fade in / out times
 	public float m_fourthPageFadeInStartTime;
 	public float m_fourthPageFadeInEndTime;
+
+	// fifth page fade in / out times
+	public float m_fifthPageFadeInStartTime;
+	public float m_fifthPageFadeInEndTime;
 
 	// our timer
 	float m_timer;
@@ -83,6 +87,10 @@ public class IntroController : MonoBehaviour
 			{
 				m_timer = m_fourthPageFadeInEndTime;
 			}
+			else if ( m_timer < m_fifthPageFadeInEndTime )
+			{
+				m_timer = m_fifthPageFadeInEndTime;
+			}
 			else
 			{
 				SceneFadeController.m_instance.FadeOut( "Starport" );
@@ -94,6 +102,7 @@ public class IntroController : MonoBehaviour
 		float secondPageAlpha = Mathf.Lerp( 0.0f, 1.0f, ( m_timer - m_secondPageFadeInStartTime ) / ( m_secondPageFadeInEndTime - m_secondPageFadeInStartTime ) );
 		float thirdPageAlpha = Mathf.Lerp( 0.0f, 1.0f, ( m_timer - m_thirdPageFadeInStartTime ) / ( m_thirdPageFadeInEndTime - m_thirdPageFadeInStartTime ) );
 		float fourthPageAlpha = Mathf.Lerp( 0.0f, 1.0f, ( m_timer - m_fourthPageFadeInStartTime ) / ( m_fourthPageFadeInEndTime - m_fourthPageFadeInStartTime ) );
+		float fifthPageAlpha = Mathf.Lerp( 0.0f, 1.0f, ( m_timer - m_fifthPageFadeInStartTime ) / ( m_fifthPageFadeInEndTime - m_fifthPageFadeInStartTime ) );
 
 		// cross fade between first and second pages
 		firstPageAlpha -= secondPageAlpha;
@@ -104,22 +113,27 @@ public class IntroController : MonoBehaviour
 		// cross fade between third and fourth pages
 		thirdPageAlpha -= fourthPageAlpha;
 
+		// cross fade between fourth and fifth pages
+		fourthPageAlpha -= fifthPageAlpha;
+
 		// turn on / off each page depending on whether they have an alpha above zero or not
 		m_pages[ 0 ].gameObject.SetActive( firstPageAlpha > 0.0f );
 		m_pages[ 1 ].gameObject.SetActive( secondPageAlpha > 0.0f );
 		m_pages[ 2 ].gameObject.SetActive( thirdPageAlpha > 0.0f );
 		m_pages[ 3 ].gameObject.SetActive( fourthPageAlpha > 0.0f );
+		m_pages[ 4 ].gameObject.SetActive( fifthPageAlpha > 0.0f );
 
 		// update the alpha for each page
 		m_pages[ 0 ].alpha = firstPageAlpha;
 		m_pages[ 1 ].alpha = secondPageAlpha;
 		m_pages[ 2 ].alpha = thirdPageAlpha;
 		m_pages[ 3 ].alpha = fourthPageAlpha;
+		m_pages[ 4 ].alpha = fifthPageAlpha;
 
 		// if the alpha for the last page is not zero then stop playing the music
 		if ( m_introMusicMightBePlaying )
 		{
-			if ( m_pages[ 3 ].alpha > 0.0f )
+			if ( m_pages[ 4 ].alpha > 0.0f )
 			{
 				MusicController.m_instance.ChangeToTrack( MusicController.Track.None );
 

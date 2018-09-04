@@ -27,6 +27,7 @@ public class GameData : GameDataFile
 	public Temperature[] m_temperatureList;
 	public Weather[] m_weatherList;
 	public Flux[] m_fluxList;
+	public Territory[] m_territoryList;
 
 	public void Initialize()
 	{
@@ -42,6 +43,13 @@ public class GameData : GameDataFile
 		{
 			// initialize it
 			flux.Initialize();
+		}
+
+		// go through each territory
+		foreach ( Territory territory in m_territoryList )
+		{
+			// initialize it
+			territory.Initialize();
 		}
 	}
 

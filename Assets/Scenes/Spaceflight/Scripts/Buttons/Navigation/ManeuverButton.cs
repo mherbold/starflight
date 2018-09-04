@@ -112,7 +112,7 @@ public class ManeuverButton : ShipButton
 			if ( playerData.m_starflight.m_currentSpeed >= 0.001f )
 			{
 				// rotate the skybox accordingly
-				m_spaceflightController.m_player.RotateSkybox( playerData.m_starflight.m_currentDirection, playerData.m_starflight.m_currentSpeed * Time.deltaTime * 0.5f );
+				m_spaceflightController.m_player.RotateSkybox( playerData.m_starflight.m_currentDirection, playerData.m_starflight.m_currentSpeed * Time.deltaTime * 2.0f );
 
 				// update the map coordinates
 				m_spaceflightController.m_spaceflightUI.UpdateCoordinates();

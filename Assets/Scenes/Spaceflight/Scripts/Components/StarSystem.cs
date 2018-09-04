@@ -23,7 +23,8 @@ public class StarSystem : MonoBehaviour
 	// unity update
 	void Update()
 	{
-
+		// configure the infinite starfield system to become visible at higher speeds
+		m_spaceflightController.m_player.SetStarfieldFullyVisibleSpeed( 12.0f );
 	}
 
 	// call this to hide the starsystem objects

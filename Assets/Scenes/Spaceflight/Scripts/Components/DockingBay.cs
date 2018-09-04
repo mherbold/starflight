@@ -55,6 +55,7 @@ public class DockingBay : MonoBehaviour
 
 		// put us in the arth system (just in case)
 		playerData.m_starflight.m_currentStarId = gameData.m_misc.m_arthStarId;
+		playerData.m_starflight.m_hyperspaceCoordinates = Tools.GameToWorldCoordinates( new Vector3( 125.0f, 0.0f, 100.0f ) );
 
 		// put us in the right spot for the docking bay launch sequence
 		playerData.m_starflight.m_systemCoordinates = Tools.GameToWorldCoordinates( new Vector3( 0.0f, 0.0f, 0.0f ) );

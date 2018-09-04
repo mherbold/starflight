@@ -1,6 +1,48 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <spacescapelayers>
     <layer>
+        <destBlendFactor>one_minus_src_alpha</destBlendFactor>
+        <ditherAmount>0</ditherAmount>
+        <gain>0.3</gain>
+        <hdrMultiplier>1</hdrMultiplier>
+        <hdrPower>1</hdrPower>
+        <innerColor>0.0941177 0.121569 0.4 1</innerColor>
+        <lacunarity>5</lacunarity>
+        <name>Blue Nebula 1</name>
+        <noiseType>ridged</noiseType>
+        <octaves>10</octaves>
+        <offset>1</offset>
+        <outerColor>0 0 0 1</outerColor>
+        <powerAmount>0.05</powerAmount>
+        <previewTextureSize>512</previewTextureSize>
+        <scale>0.5</scale>
+        <seed>2</seed>
+        <shelfAmount>0</shelfAmount>
+        <sourceBlendFactor>one</sourceBlendFactor>
+        <type>noise</type>
+    </layer>
+    <layer>
+        <destBlendFactor>one_minus_src_alpha</destBlendFactor>
+        <ditherAmount>0</ditherAmount>
+        <gain>0.3</gain>
+        <hdrMultiplier>1</hdrMultiplier>
+        <hdrPower>1</hdrPower>
+        <innerColor>0.0941177 0.121569 0.4 1</innerColor>
+        <lacunarity>5</lacunarity>
+        <name>Blue Nebula 2</name>
+        <noiseType>ridged</noiseType>
+        <octaves>10</octaves>
+        <offset>1</offset>
+        <outerColor>0 0 0 1</outerColor>
+        <powerAmount>0.05</powerAmount>
+        <previewTextureSize>512</previewTextureSize>
+        <scale>0.5</scale>
+        <seed>6</seed>
+        <shelfAmount>0</shelfAmount>
+        <sourceBlendFactor>one</sourceBlendFactor>
+        <type>noise</type>
+    </layer>
+    <layer>
         <dataFile></dataFile>
         <destBlendFactor>one</destBlendFactor>
         <farColor>0.564706 0.564706 0.564706 1</farColor>
@@ -51,47 +93,5 @@
         <sourceBlendFactor>src_colour</sourceBlendFactor>
         <texture>default.png</texture>
         <type>billboards</type>
-    </layer>
-    <layer>
-        <destBlendFactor>one_minus_src_alpha</destBlendFactor>
-        <ditherAmount>0</ditherAmount>
-        <gain>0.3</gain>
-        <hdrMultiplier>1</hdrMultiplier>
-        <hdrPower>1</hdrPower>
-        <innerColor>0.0941177 0.121569 0.4 1</innerColor>
-        <lacunarity>5</lacunarity>
-        <name>Blue Nebula 1</name>
-        <noiseType>ridged</noiseType>
-        <octaves>10</octaves>
-        <offset>1</offset>
-        <outerColor>0 0 0 1</outerColor>
-        <powerAmount>0.05</powerAmount>
-        <previewTextureSize>512</previewTextureSize>
-        <scale>0.5</scale>
-        <seed>2</seed>
-        <shelfAmount>0</shelfAmount>
-        <sourceBlendFactor>one</sourceBlendFactor>
-        <type>noise</type>
-    </layer>
-    <layer>
-        <destBlendFactor>one_minus_src_alpha</destBlendFactor>
-        <ditherAmount>0</ditherAmount>
-        <gain>0.3</gain>
-        <hdrMultiplier>1</hdrMultiplier>
-        <hdrPower>1</hdrPower>
-        <innerColor>0.0941177 0.121569 0.4 1</innerColor>
-        <lacunarity>5</lacunarity>
-        <name>Blue Nebula 2</name>
-        <noiseType>ridged</noiseType>
-        <octaves>10</octaves>
-        <offset>1</offset>
-        <outerColor>0 0 0 1</outerColor>
-        <powerAmount>0.05</powerAmount>
-        <previewTextureSize>512</previewTextureSize>
-        <scale>0.5</scale>
-        <seed>6</seed>
-        <shelfAmount>0</shelfAmount>
-        <sourceBlendFactor>one</sourceBlendFactor>
-        <type>noise</type>
     </layer>
 </spacescapelayers>

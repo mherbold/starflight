@@ -23513,5 +23513,61 @@
       "m_x2": 128,
       "m_y2": 143
     }
+  ],
+  "m_territoryList": [
+    {
+      "m_xCoordinate": 156,
+      "m_yCoordinate": 58,
+      "m_radius": 41,
+      "m_name": "elowan"
+    },
+    {
+      "m_xCoordinate": 132,
+      "m_yCoordinate": 35,
+      "m_radius": 46,
+      "m_name": "thrynn"
+    },
+    {
+      "m_xCoordinate": 84,
+      "m_yCoordinate": 137,
+      "m_radius": 89,
+      "m_name": "spemin"
+    },
+    {
+      "m_xCoordinate": 82,
+      "m_yCoordinate": 61,
+      "m_radius": 84,
+      "m_name": "gazurtoid"
+    },
+    {
+      "m_xCoordinate": 141,
+      "m_yCoordinate": 147,
+      "m_radius": 67,
+      "m_name": "veloxi"
+    },
+    {
+      "m_xCoordinate": 2,
+      "m_yCoordinate": 6,
+      "m_radius": 129,
+      "m_name": "uhlek"
+    },
+    {
+      "m_xCoordinate": 6,
+      "m_yCoordinate": 107,
+      "m_radius": 88,
+      "m_name": "uhlek"
+    },
+    {
+      "m_xCoordinate": 17,
+      "m_yCoordinate": 191,
+      "m_radius": 90,
+      "m_name": "uhlek"
+    },
+    {
+      "m_xCoordinate": 108,
+      "m_yCoordinate": 220,
+      "m_radius": 103,
+      "m_name": "uhlek"
+    }
   ]
 }
