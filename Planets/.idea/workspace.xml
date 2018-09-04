@@ -2,23 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ed3ca016-f749-472d-a640-9e9af0f0c396" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/../Assets/Objects/Skyboxes/Human/human.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assets/Objects/Skyboxes/Human/human.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assets/Objects/Skyboxes/Human/human_back.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Assets/Objects/Skyboxes/Human/human_back.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assets/Objects/Skyboxes/Human/human_down.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Assets/Objects/Skyboxes/Human/human_down.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assets/Objects/Skyboxes/Human/human_front.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Assets/Objects/Skyboxes/Human/human_front.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assets/Objects/Skyboxes/Human/human_left.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Assets/Objects/Skyboxes/Human/human_left.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assets/Objects/Skyboxes/Human/human_right.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Assets/Objects/Skyboxes/Human/human_right.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assets/Objects/Skyboxes/Human/human_up.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Assets/Objects/Skyboxes/Human/human_up.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assets/Objects/Skyboxes/StarflightSkybox.shader" beforeDir="false" afterPath="$PROJECT_DIR$/../Assets/Objects/Skyboxes/StarflightSkybox.shader" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assets/Scenes/Persistent/Resources/GameData/Starflight Game Data.json" beforeDir="false" afterPath="$PROJECT_DIR$/../Assets/Scenes/Persistent/Resources/GameData/Starflight Game Data.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assets/Scenes/Persistent/Scripts/GameData/GameData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Assets/Scenes/Persistent/Scripts/GameData/GameData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assets/Scenes/Spaceflight/Scripts/Components/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Assets/Scenes/Spaceflight/Scripts/Components/Player.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assets/Scenes/Spaceflight/Spaceflight.unity" beforeDir="false" afterPath="$PROJECT_DIR$/../Assets/Scenes/Spaceflight/Spaceflight.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Illustrator/Map/Starflight Map.ai" beforeDir="false" afterPath="$PROJECT_DIR$/../Illustrator/Map/Starflight Map.ai" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/spacescape-0.5.1/app/win/app.log" beforeDir="false" afterPath="$PROJECT_DIR$/../Tools/spacescape-0.5.1/app/win/app.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/spacescape-0.5.1/save/human.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Starflight Planet Data.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/95_map.png" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,10 +17,11 @@
     <session id="1386787163">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="2" />
+          <entry key="project.closed" value="3" />
+          <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.4" value="1" />
-          <entry key="project.opened" value="2" />
+          <entry key="project.opened" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
@@ -63,16 +51,16 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4347">
-              <caret line="207" column="16" selection-start-line="207" selection-start-column="16" selection-end-line="207" selection-end-column="16" />
+            <state relative-caret-position="262">
+              <caret line="303" column="38" selection-start-line="303" selection-start-column="36" selection-end-line="303" selection-end-column="38" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/convert.php">
           <provider selected="true" editor-type-id="text-editor">
             <state>
@@ -142,7 +130,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -154,6 +141,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -198,6 +186,7 @@
       <workItem from="1534943630551" duration="11000" />
       <workItem from="1535658148359" duration="2278000" />
       <workItem from="1536071120838" duration="282000" />
+      <workItem from="1536098472551" duration="1571000" />
     </task>
     <task id="LOCAL-00001" summary="Don't check in .idea files from PhpStorm">
       <created>1535658754793</created>
@@ -210,13 +199,12 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26648000" />
+    <option name="totallyTimeSpent" value="28219000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="3456" height="1426" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12573616" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12632509" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -231,11 +219,11 @@
       <window_info anchor="bottom" id="Terminal" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="11" weight="0.32972136" />
-      <window_info anchor="bottom" id="File Transfer" order="12" weight="0.32894737" />
+      <window_info anchor="bottom" id="File Transfer" order="12" visible="true" weight="0.32894737" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Remote Host" order="3" visible="true" weight="0.090989396" />
+      <window_info anchor="right" id="Remote Host" order="3" visible="true" weight="0.1254417" />
       <window_info anchor="right" id="Database" order="4" />
     </layout>
   </component>
@@ -295,17 +283,17 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore" />
-    <entry file="file://$PROJECT_DIR$/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4347">
-          <caret line="207" column="16" selection-start-line="207" selection-start-column="16" selection-end-line="207" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/convert.php">
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret column="5" selection-start-column="5" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="262">
+          <caret line="303" column="38" selection-start-line="303" selection-start-column="36" selection-end-line="303" selection-end-column="38" />
         </state>
       </provider>
     </entry>
