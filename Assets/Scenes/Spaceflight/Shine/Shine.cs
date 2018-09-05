@@ -6,20 +6,20 @@ public class Shine : MonoBehaviour
 	const int c_numVertices = 256;
 
 	public float m_speed = 1.0f;
-    public float m_size = 5.0f;
 
-	private Vector3[] m_positions;
-	private Vector2[] m_uv;
-	private int[] m_triangles;
+	Vector3[] m_positions;
+	Vector2[] m_uv;
+	int[] m_triangles;
 
-	private Mesh m_mesh;
-	private MeshFilter m_meshFilter;
-	private MeshRenderer m_meshRenderer;
-	private Material m_material;
+	Mesh m_mesh;
+	MeshFilter m_meshFilter;
+	MeshRenderer m_meshRenderer;
+	Material m_material;
 
-	private float m_lerpTime;
+	float m_lerpTime;
 
-	private void Start()
+	// unity awake
+	void Awake()
 	{
 		m_mesh = new Mesh();
 		m_mesh.MarkDynamic();
@@ -39,12 +39,19 @@ public class Shine : MonoBehaviour
 		m_mesh.vertices = m_positions;
 		m_mesh.uv = m_uv;
 		m_mesh.triangles = m_triangles;
-        m_mesh.bounds = new Bounds( new Vector3( 0.0f, 0.0f, 0.0f ), new Vector3( m_size, m_size, 0.0f ) );
 
+		SetColor( new Color( 1.0f, 1.0f, 1.0f ) );
+		SetSize( 5.0f, 10.0f );
+	}
+
+	// unity start
+	void Start()
+	{
 		m_lerpTime = 0.0f;
 	}
 
-	private void Update()
+	// unity update
+	void Update()
 	{
 		m_lerpTime += Time.deltaTime * m_speed;
 
@@ -56,7 +63,7 @@ public class Shine : MonoBehaviour
 		m_material.SetFloat( "_LerpTime", m_lerpTime );
 	}
 
-	private void InitializeMesh()
+	void InitializeMesh()
 	{
 		m_positions[ 0 ] = new Vector3( 0.0f, 0.0f, 0.0f );
 		m_uv[ 0 ] = new Vector2( 0.0f, 0.0f );
@@ -82,5 +89,17 @@ public class Shine : MonoBehaviour
 			m_triangles[ vertexIndex++ ] = i;
 			m_triangles[ vertexIndex++ ] = ( i + 1 ) % c_numVertices;
 		}
+	}
+
+	public void SetColor( Color newColor )
+	{
+		m_material.SetColor( "_Color", newColor );
+	}
+
+	public void SetSize( float newMinSize, float newMaxSize )
+	{
+		m_material.SetVector( "_Size", new Vector4( newMinSize, newMaxSize - newMinSize, 0.0f, 0.0f ) );
+
+		m_mesh.bounds = new Bounds( new Vector3( 0.0f, 0.0f, 0.0f ), new Vector3( newMaxSize, newMaxSize, 0.0f ) );
 	}
 }

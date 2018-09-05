@@ -5,7 +5,7 @@
 		_Color( "Color", Color ) = ( 1, 1, 1, 1 )
 		_MainTex( "Albedo (RGB)", 2D ) = "white" {}
 		_LerpTime( "LerpTime", Float ) = 0.0
-		_Size( "Size", Float ) = 2.0
+		_Size( "Size", Vector ) = ( 5, 10, 0, 0 )
 	}
 
 	Category
@@ -17,7 +17,7 @@
 			"RenderType" = "Transparent"
 		}
 
-		Blend SrcAlpha One
+		Blend SrcAlpha OneMinusSrcAlpha
 		Cull Off
 		Lighting Off
 		ZWrite Off
@@ -38,7 +38,7 @@
 					sampler2D _MainTex;
 					float4 _MainTex_ST;
 					float _LerpTime;
-					float _Size;
+					float4 _Size;
 
 					struct vs_in
 					{
@@ -56,7 +56,7 @@
 					{
 						vs_out o;
 
-						float s = ( _Size + sin( v.position.y + _LerpTime ) ) * v.position.z;
+						float s = ( _Size.x + sin( v.position.y + _LerpTime ) * _Size.y ) * v.position.z;
 
 						float x = sin( v.position.x ) * s;
 						float y = cos( v.position.x ) * s;

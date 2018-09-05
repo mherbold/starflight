@@ -6274,6 +6274,7 @@ MonoBehaviour:
   - {fileID: 1173938741}
   - {fileID: 502575364}
   - {fileID: 1106076620}
+  m_shine: {fileID: 845916771}
 --- !u!114 &280970590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8210,7 +8211,7 @@ Transform:
   m_GameObject: {fileID: 845916767}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 32, y: 32, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 626356945}
   m_RootOrder: 1
@@ -8269,7 +8270,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_speed: 1.5
-  m_size: 12
 --- !u!123 &845916772
 LensFlare:
   m_ObjectHideFlags: 0
