@@ -31,6 +31,13 @@ public class GameData : GameDataFile
 
 	public void Initialize()
 	{
+		// go through each planet
+		foreach ( Planet planet in m_planetList )
+		{
+			// initialize it
+			planet.Initialize();
+		}
+
 		// go through each star
 		foreach ( Star star in m_starList )
 		{

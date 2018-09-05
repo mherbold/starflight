@@ -27,6 +27,16 @@ public class Planet
 	public int m_temperatureIdB;
 	public int m_weatherId;
 
+	public void Initialize()
+	{
+		// make sure we don't go below mass of 6
+		if ( m_mass < 6 )
+		{
+			m_mass = 6;
+		}
+	}
+
+	// call this to get the surface of the planet
 	public Surface GetSurface()
 	{
 		GameData gameData = DataController.m_instance.m_gameData;

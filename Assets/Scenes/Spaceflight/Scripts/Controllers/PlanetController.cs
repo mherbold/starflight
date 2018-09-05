@@ -57,29 +57,20 @@ public class PlanetController : MonoBehaviour
 			// update the rotation angle
 			m_rotationAngle = ( playerData.m_starflight.m_gameTime + m_planet.m_orbitPosition );
 
-			Quaternion rotation;
-
 			float distance = Mathf.Lerp( 50.0f, 225.0f, m_planet.m_orbitPosition / 7.0f ) * ( 8192.0f / 256.0f );
 			float angle = m_orbitAngle * 2.0f * Mathf.PI;
-			float planeOffset;
 
-			// is this the arth starport?
-			if ( m_planet.m_planetTypeId == 57 )
-			{
-				// starport height is about 12 units
-				planeOffset = -12.0f;
-				rotation = Quaternion.AngleAxis( m_rotationAngle * 360.0f * 20.0f, Vector3.up );
-			}
-			else
-			{
-				// update the planet model
-				planeOffset = -transform.localScale.y;
-				rotation = Quaternion.AngleAxis( -30.0f, Vector3.right ) * Quaternion.AngleAxis( m_rotationAngle * 360.0f, Vector3.forward );
-			}
+			// calculate the new position of the container
+			transform.localPosition = new Vector3( -Mathf.Sin( angle ) * distance, 0.0f, Mathf.Cos( angle ) * distance );
 
-			// update the position and rotation of the controller
-			Vector3 position = new Vector3( -Mathf.Sin( angle ) * distance, planeOffset, Mathf.Cos( angle ) * distance );
-			transform.SetPositionAndRotation( position, rotation );
+			// update the rotation of the planet
+			m_planetModel.transform.localRotation = Quaternion.AngleAxis( -30.0f, Vector3.right ) * Quaternion.AngleAxis( m_rotationAngle * 360.0f, Vector3.forward );
+
+			// update the rotation of the starport
+			if ( m_starportModel != null )
+			{
+				m_starportModel.transform.localRotation = Quaternion.Euler( -90.0f, 0.0f, m_rotationAngle * 360.0f * 20.0f );
+			}
 		}
 	}
 
@@ -92,7 +83,7 @@ public class PlanetController : MonoBehaviour
 	// change the planet we are controlling
 	public void SetPlanet( Planet planet )
 	{
-		// update the planet
+		// change the planet we are controlling
 		m_planet = planet;
 
 		// if we are just turning off this planet then stop here
@@ -106,41 +97,22 @@ public class PlanetController : MonoBehaviour
 			// show this orbit
 			gameObject.SetActive( true );
 
-			float scale;
-
-			// check if this is arth station
-			if ( planet.m_planetTypeId == 57 )
+			// show or hide the starport model depending on whether or not this planet is Arth
+			if ( m_starportModel != null )
 			{
-				// yep - show the starport model
-				m_starportModel.SetActive( true );
-
-				// hide the planet model
-				m_planetModel.SetActive( false );
-
-				// starport scale
-				scale = 0.5f;
-			}
-			else
-			{
-				// nope - show the planet model
-				m_planetModel.SetActive( true );
-
-				// does this orbit have a starport model?
-				if ( m_starportModel != null )
-				{
-					// yep - hide it
-					m_starportModel.SetActive( false );
-				}
-
-				// scale the planet based on its gravity
-				scale = 32.0f + planet.m_gravity / 8.0f;
-
-				// generate the texture maps for this planet
-				GenerateTextureMaps();
+				m_starportModel.SetActive( ( planet.m_planetTypeId == 57 ) );
 			}
 
-			// update the scale
-			transform.localScale = new Vector3( scale, scale, scale );
+			// scale the planet based on its mass
+			float scale = Mathf.Lerp( 32.0f, 320.0f, Mathf.Sqrt( ( planet.m_mass - 6.0f ) / 500000.0f ) );
+			m_planetModel.transform.localScale = new Vector3( scale, scale, scale );
+			Debug.Log( "Planet " + planet.m_id + " mass is " + planet.m_mass + " so scale is " + scale );
+
+			// move the planet to be just below the zero plane
+			m_planetModel.transform.localPosition = new Vector3( 0.0f, -16.0f - scale, 0.0f );
+
+			// generate the texture maps for this planet
+			GenerateTextureMaps();
 		}
 	}
 
