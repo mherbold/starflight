@@ -100,6 +100,6 @@ public class Shine : MonoBehaviour
 	{
 		m_material.SetVector( "_Size", new Vector4( newMinSize, newMaxSize - newMinSize, 0.0f, 0.0f ) );
 
-		m_mesh.bounds = new Bounds( new Vector3( 0.0f, 0.0f, 0.0f ), new Vector3( newMaxSize, newMaxSize, 0.0f ) );
+		m_mesh.bounds = new Bounds( new Vector3( 0.0f, 0.0f, 0.0f ), new Vector3( newMaxSize * 2.0f, newMaxSize * 2.0f, 0.0f ) );
 	}
 }
