@@ -6229,8 +6229,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e73dfd95841e32b40a2d0407bcc31c2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_skipCinematics: 1
-  m_forceResetToDockingBay: 1
+  m_skipCinematics: 0
+  m_forceResetToDockingBay: 0
   m_maximumShipSpeedHyperspace: 3
   m_maximumShipSpeedStarSystem: 10
   m_timeToReachMaximumShipSpeed: 5
