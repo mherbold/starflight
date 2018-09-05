@@ -74,7 +74,7 @@ public class PlanetController : MonoBehaviour
 			{
 				// update the planet model
 				planeOffset = -transform.localScale.y;
-				rotation = Quaternion.AngleAxis( 120.0f, Vector3.right ) * Quaternion.AngleAxis( m_rotationAngle * 360.0f, Vector3.forward );
+				rotation = Quaternion.AngleAxis( -30.0f, Vector3.right ) * Quaternion.AngleAxis( m_rotationAngle * 360.0f, Vector3.forward );
 			}
 
 			// update the position and rotation of the controller
