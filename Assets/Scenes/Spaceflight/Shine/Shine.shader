@@ -43,7 +43,7 @@
 					struct vs_in
 					{
 						float4 position : POSITION;
-						float2 uv : TEXCOORD0;
+						float2 texcoord : TEXCOORD0;
 					};
 
 					struct vs_out
@@ -64,7 +64,7 @@
 						float3 position = float3( x, y, 0.0f );
 
 						o.position = UnityObjectToClipPos( position );
-						o.texcoord = TRANSFORM_TEX( v.uv, _MainTex );
+						o.texcoord = TRANSFORM_TEX( v.texcoord, _MainTex );
 
 						return o;
 					}

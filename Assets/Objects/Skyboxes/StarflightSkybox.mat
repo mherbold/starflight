@@ -27,7 +27,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BackTexB:
-        m_Texture: {fileID: 2800000, guid: 4ee44f622395b3b42a2cf78358ad04d8, type: 3}
+        m_Texture: {fileID: 2800000, guid: efdd1138f0f5d4f428cd882215412eab, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -55,7 +55,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DownTexB:
-        m_Texture: {fileID: 2800000, guid: f2edf380444761d4eb3c759fa9bd2686, type: 3}
+        m_Texture: {fileID: 2800000, guid: 00f44cada2e2fe2418cd480fd27d524a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
@@ -71,7 +71,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _FrontTexB:
-        m_Texture: {fileID: 2800000, guid: c265cbd28eb2de947b9af2fb6bd18708, type: 3}
+        m_Texture: {fileID: 2800000, guid: 3c93d888f924df241b351ef218c318cf, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _LeftTex:
@@ -83,7 +83,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _LeftTexB:
-        m_Texture: {fileID: 2800000, guid: d15cc673d0cf6ae40b71cbbdf72d1509, type: 3}
+        m_Texture: {fileID: 2800000, guid: ed55e5f0da8f0b44698da412b0023f84, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -111,7 +111,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RightTexB:
-        m_Texture: {fileID: 2800000, guid: 87e9e527e7394a946bc980c21144a9d2, type: 3}
+        m_Texture: {fileID: 2800000, guid: 492f7bbbeab331744ac6025a705d9002, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _UpTex:
@@ -123,7 +123,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _UpTexB:
-        m_Texture: {fileID: 2800000, guid: 1674a43ddc6295a459d6f9611009dbca, type: 3}
+        m_Texture: {fileID: 2800000, guid: a12780d211457e4489c2d8f71ed97c8b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:

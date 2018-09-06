@@ -6198,23 +6198,23 @@
       "m_starId": 25,
       "m_planetTypeId": 57,
       "m_orbitPosition": 2,
-      "m_mass": "",
-      "m_bioDensity": "",
-      "m_mineralDensity": "",
-      "m_atmosphereIdA": "",
-      "m_atmosphereIdB": "",
+      "m_mass": 6000,
+      "m_bioDensity": 0,
+      "m_mineralDensity": 39,
+      "m_atmosphereIdA": 12,
+      "m_atmosphereIdB": 10,
       "m_atmosphereIdC": "",
-      "m_atmosphereDensityId": "",
-      "m_hydrosphereId": "",
+      "m_atmosphereDensityId": 1,
+      "m_hydrosphereId": 15,
       "m_hasEthanol": "",
-      "m_elementIdA": "",
-      "m_elementIdB": "",
-      "m_elementIdC": "",
-      "m_surfaceId": "",
-      "m_gravity": 0,
-      "m_temperatureIdA": "",
-      "m_temperatureIdB": "",
-      "m_weatherId": ""
+      "m_elementIdA": 0,
+      "m_elementIdB": 13,
+      "m_elementIdC": 19,
+      "m_surfaceId": 4,
+      "m_gravity": 108,
+      "m_temperatureIdA": 2,
+      "m_temperatureIdB": 4,
+      "m_weatherId": 1
     },
     {
       "m_id": 94,
@@ -23518,56 +23518,73 @@
     {
       "m_xCoordinate": 156,
       "m_yCoordinate": 58,
-      "m_radius": 41,
+      "m_radius": 20,
       "m_name": "elowan"
     },
     {
       "m_xCoordinate": 132,
       "m_yCoordinate": 35,
-      "m_radius": 46,
+      "m_radius": 23,
       "m_name": "thrynn"
     },
     {
       "m_xCoordinate": 84,
       "m_yCoordinate": 137,
-      "m_radius": 89,
+      "m_radius": 44,
       "m_name": "spemin"
     },
     {
       "m_xCoordinate": 82,
       "m_yCoordinate": 61,
-      "m_radius": 84,
+      "m_radius": 42,
       "m_name": "gazurtoid"
     },
     {
       "m_xCoordinate": 141,
       "m_yCoordinate": 147,
-      "m_radius": 67,
+      "m_radius": 33,
       "m_name": "veloxi"
     },
     {
       "m_xCoordinate": 2,
       "m_yCoordinate": 6,
-      "m_radius": 129,
+      "m_radius": 64,
       "m_name": "uhlek"
     },
     {
       "m_xCoordinate": 6,
       "m_yCoordinate": 107,
-      "m_radius": 88,
+      "m_radius": 44,
       "m_name": "uhlek"
     },
     {
       "m_xCoordinate": 17,
       "m_yCoordinate": 191,
-      "m_radius": 90,
+      "m_radius": 45,
       "m_name": "uhlek"
     },
     {
       "m_xCoordinate": 108,
       "m_yCoordinate": 220,
-      "m_radius": 103,
+      "m_radius": 51,
       "m_name": "uhlek"
+    }
+  ],
+  "m_nebulaList": [
+    {
+      "m_xCoordinate": 159,
+      "m_yCoordinate": 79,
+      "m_radius": 4
+    },
+    {
+      "m_xCoordinate": 165,
+      "m_yCoordinate": 84,
+      "m_radius": 5
+    },
+    {
+      "m_xCoordinate": 164,
+      "m_yCoordinate": 89,
+      "m_radius": 3
     }
   ]
 }

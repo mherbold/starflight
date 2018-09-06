@@ -28,6 +28,7 @@ public class GameData : GameDataFile
 	public Weather[] m_weatherList;
 	public Flux[] m_fluxList;
 	public Territory[] m_territoryList;
+	public Nebula[] m_nebulaList;
 
 	public void Initialize()
 	{
@@ -57,6 +58,13 @@ public class GameData : GameDataFile
 		{
 			// initialize it
 			territory.Initialize();
+		}
+
+		// go through each nebula
+		foreach ( Nebula nebula in m_nebulaList )
+		{
+			// initialize it
+			nebula.Initialize();
 		}
 	}
 

@@ -81,7 +81,7 @@ public class Player : MonoBehaviour
 		foreach ( Territory territory in gameData.m_territoryList )
 		{
 			territory.m_currentDistance = Vector3.Distance( playerData.m_starflight.m_hyperspaceCoordinates, territory.m_center );
-			territory.m_currentDistance -= (float) territory.m_size;
+			territory.m_currentDistance -= territory.m_size;
 			territory.m_penetrationDistance = Mathf.Max( 0.0f, -territory.m_currentDistance );
 			territory.m_currentDistance = Mathf.Max( 0.0f, territory.m_currentDistance );
 		}
@@ -153,6 +153,18 @@ public class Player : MonoBehaviour
 
 			skyboxMaterial.SetFloat( "_BlendFactor", blendFactor );
 		}
+
+		// figure out how far we are from each nebula
+		foreach ( Nebula nebula in gameData.m_nebulaList )
+		{
+			nebula.m_currentDistance = Vector3.Distance( playerData.m_starflight.m_hyperspaceCoordinates, nebula.m_center );
+			nebula.m_currentDistance -= nebula.m_size;
+			nebula.m_penetrationDistance = Mathf.Max( 0.0f, -nebula.m_currentDistance );
+			nebula.m_currentDistance = Mathf.Max( 0.0f, nebula.m_currentDistance );
+		}
+
+		// sort the results
+		Array.Sort( gameData.m_nebulaList );
 	}
 
 	// call this to hide the player (ship)

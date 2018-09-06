@@ -4,12 +4,11 @@ using System;
 
 [Serializable]
 
-public class Territory : IComparable
+public class Nebula : IComparable
 {
 	public int m_xCoordinate;
 	public int m_yCoordinate;
 	public int m_radius;
-	public string m_name;
 
 	public SerializableVector3 m_center;
 	public float m_size;
@@ -25,11 +24,11 @@ public class Territory : IComparable
 
 	public int CompareTo( object obj )
 	{
-		if ( obj is Territory )
+		if ( obj is Nebula )
 		{
-			return m_currentDistance.CompareTo( ( obj as Territory ).m_currentDistance );
+			return m_currentDistance.CompareTo( ( obj as Nebula ).m_currentDistance );
 		}
 
-		throw new ArgumentException( "Object is not a Territory" );
+		throw new ArgumentException( "Object is not a Nebula" );
 	}
 }
