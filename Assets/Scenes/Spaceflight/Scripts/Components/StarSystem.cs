@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class StarSystem : MonoBehaviour
 {
+	public GameObject m_nebula;
+
 	// convenient access to the spaceflight controller
 	SpaceflightController m_spaceflightController;
 
@@ -17,7 +19,6 @@ public class StarSystem : MonoBehaviour
 	// unity start
 	void Start()
 	{
-
 	}
 
 	// unity update
@@ -37,6 +38,12 @@ public class StarSystem : MonoBehaviour
 	// call this to show the starsystem objects
 	public void Show()
 	{
+		// get to the game data
+		GameData gameData = DataController.m_instance.m_gameData;
+
+		// get to the player data
+		PlayerData playerData = DataController.m_instance.m_playerData;
+
 		// show the starsystem
 		gameObject.SetActive( true );
 
@@ -46,9 +53,6 @@ public class StarSystem : MonoBehaviour
 		// make sure the camera is at the right height above the zero plane
 		m_spaceflightController.m_player.DollyCamera( 1024.0f );
 
-		// get to the player data
-		PlayerData playerData = DataController.m_instance.m_playerData;
-
 		// move the player object
 		m_spaceflightController.m_player.SetPosition( playerData.m_starflight.m_systemCoordinates );
 
@@ -57,6 +61,12 @@ public class StarSystem : MonoBehaviour
 
 		// show the status display
 		m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_systemDisplay );
+
+		// get to the star data
+		Star star = gameData.m_starList[ playerData.m_starflight.m_currentStarId ];
+
+		// show / hide the nebula depending on if we are in one
+		m_nebula.SetActive( star.m_insideNebula );
 
 		// play the star system music track
 		MusicController.m_instance.ChangeToTrack( MusicController.Track.StarSystem );

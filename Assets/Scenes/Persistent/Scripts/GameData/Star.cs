@@ -17,6 +17,7 @@ public class Star
 	public int m_yearOfNextFlare;
 	public int m_monthOfNextFlare;
 	public int m_dayOfNextFlare;
+	public bool m_insideNebula;
 
 	public Planet[] m_planetList;
 	public float m_scale;

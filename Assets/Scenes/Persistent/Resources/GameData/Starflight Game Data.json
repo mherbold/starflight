@@ -1091,7 +1091,8 @@
       "m_daysSincePreviousFlare": -60,
       "m_yearOfNextFlare": 4838,
       "m_monthOfNextFlare": 3,
-      "m_dayOfNextFlare": 17
+      "m_dayOfNextFlare": 17,
+      "m_insideNebula": ""
     },
     {
       "m_id": 1,
@@ -1102,7 +1103,8 @@
       "m_daysSincePreviousFlare": -68,
       "m_yearOfNextFlare": 4838,
       "m_monthOfNextFlare": 3,
-      "m_dayOfNextFlare": 9
+      "m_dayOfNextFlare": 9,
+      "m_insideNebula": ""
     },
     {
       "m_id": 2,
@@ -1113,7 +1115,8 @@
       "m_daysSincePreviousFlare": -60,
       "m_yearOfNextFlare": 4838,
       "m_monthOfNextFlare": 3,
-      "m_dayOfNextFlare": 17
+      "m_dayOfNextFlare": 17,
+      "m_insideNebula": ""
     },
     {
       "m_id": 3,
@@ -1124,7 +1127,8 @@
       "m_daysSincePreviousFlare": -136,
       "m_yearOfNextFlare": 4838,
       "m_monthOfNextFlare": 1,
-      "m_dayOfNextFlare": 1
+      "m_dayOfNextFlare": 1,
+      "m_insideNebula": ""
     },
     {
       "m_id": 4,
@@ -1135,7 +1139,8 @@
       "m_daysSincePreviousFlare": -128,
       "m_yearOfNextFlare": 4838,
       "m_monthOfNextFlare": 1,
-      "m_dayOfNextFlare": 9
+      "m_dayOfNextFlare": 9,
+      "m_insideNebula": ""
     },
     {
       "m_id": 5,
@@ -1146,7 +1151,8 @@
       "m_daysSincePreviousFlare": -120,
       "m_yearOfNextFlare": 4838,
       "m_monthOfNextFlare": 1,
-      "m_dayOfNextFlare": 17
+      "m_dayOfNextFlare": 17,
+      "m_insideNebula": ""
     },
     {
       "m_id": 6,
@@ -1157,7 +1163,8 @@
       "m_daysSincePreviousFlare": -116,
       "m_yearOfNextFlare": 4838,
       "m_monthOfNextFlare": 1,
-      "m_dayOfNextFlare": 21
+      "m_dayOfNextFlare": 21,
+      "m_insideNebula": ""
     },
     {
       "m_id": 7,
@@ -1168,7 +1175,8 @@
       "m_daysSincePreviousFlare": -108,
       "m_yearOfNextFlare": 4838,
       "m_monthOfNextFlare": 1,
-      "m_dayOfNextFlare": 29
+      "m_dayOfNextFlare": 29,
+      "m_insideNebula": ""
     },
     {
       "m_id": 8,
@@ -1179,7 +1187,8 @@
       "m_daysSincePreviousFlare": -152,
       "m_yearOfNextFlare": 4837,
       "m_monthOfNextFlare": 10,
-      "m_dayOfNextFlare": 15
+      "m_dayOfNextFlare": 15,
+      "m_insideNebula": ""
     },
     {
       "m_id": 9,
@@ -1190,7 +1199,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 2,
-      "m_dayOfNextFlare": 3
+      "m_dayOfNextFlare": 3,
+      "m_insideNebula": ""
     },
     {
       "m_id": 10,
@@ -1201,7 +1211,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 3,
-      "m_dayOfNextFlare": 21
+      "m_dayOfNextFlare": 21,
+      "m_insideNebula": ""
     },
     {
       "m_id": 11,
@@ -1212,7 +1223,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 3,
-      "m_dayOfNextFlare": 21
+      "m_dayOfNextFlare": 21,
+      "m_insideNebula": ""
     },
     {
       "m_id": 12,
@@ -1223,7 +1235,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 3,
-      "m_dayOfNextFlare": 21
+      "m_dayOfNextFlare": 21,
+      "m_insideNebula": ""
     },
     {
       "m_id": 13,
@@ -1234,7 +1247,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 10,
-      "m_dayOfNextFlare": 15
+      "m_dayOfNextFlare": 15,
+      "m_insideNebula": ""
     },
     {
       "m_id": 14,
@@ -1245,7 +1259,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 9
+      "m_dayOfNextFlare": 9,
+      "m_insideNebula": ""
     },
     {
       "m_id": 15,
@@ -1256,7 +1271,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 6,
-      "m_dayOfNextFlare": 27
+      "m_dayOfNextFlare": 27,
+      "m_insideNebula": ""
     },
     {
       "m_id": 16,
@@ -1267,7 +1283,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 2,
-      "m_dayOfNextFlare": 23
+      "m_dayOfNextFlare": 23,
+      "m_insideNebula": ""
     },
     {
       "m_id": 17,
@@ -1278,7 +1295,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 1,
-      "m_dayOfNextFlare": 17
+      "m_dayOfNextFlare": 17,
+      "m_insideNebula": ""
     },
     {
       "m_id": 18,
@@ -1289,7 +1307,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 4,
-      "m_dayOfNextFlare": 3
+      "m_dayOfNextFlare": 3,
+      "m_insideNebula": ""
     },
     {
       "m_id": 19,
@@ -1300,7 +1319,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 4,
-      "m_dayOfNextFlare": 19
+      "m_dayOfNextFlare": 19,
+      "m_insideNebula": ""
     },
     {
       "m_id": 20,
@@ -1311,7 +1331,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 4,
-      "m_dayOfNextFlare": 19
+      "m_dayOfNextFlare": 19,
+      "m_insideNebula": ""
     },
     {
       "m_id": 21,
@@ -1322,7 +1343,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 4,
-      "m_dayOfNextFlare": 19
+      "m_dayOfNextFlare": 19,
+      "m_insideNebula": ""
     },
     {
       "m_id": 22,
@@ -1333,7 +1355,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 1
+      "m_dayOfNextFlare": 1,
+      "m_insideNebula": ""
     },
     {
       "m_id": 23,
@@ -1344,7 +1367,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 6,
-      "m_dayOfNextFlare": 7
+      "m_dayOfNextFlare": 7,
+      "m_insideNebula": ""
     },
     {
       "m_id": 24,
@@ -1355,7 +1379,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 8,
-      "m_dayOfNextFlare": 19
+      "m_dayOfNextFlare": 19,
+      "m_insideNebula": true
     },
     {
       "m_id": 25,
@@ -1366,7 +1391,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 1,
-      "m_dayOfNextFlare": 1
+      "m_dayOfNextFlare": 1,
+      "m_insideNebula": ""
     },
     {
       "m_id": 26,
@@ -1377,7 +1403,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 1,
-      "m_dayOfNextFlare": 9
+      "m_dayOfNextFlare": 9,
+      "m_insideNebula": ""
     },
     {
       "m_id": 27,
@@ -1388,7 +1415,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 1,
-      "m_dayOfNextFlare": 29
+      "m_dayOfNextFlare": 29,
+      "m_insideNebula": ""
     },
     {
       "m_id": 28,
@@ -1399,7 +1427,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 8,
-      "m_dayOfNextFlare": 11
+      "m_dayOfNextFlare": 11,
+      "m_insideNebula": ""
     },
     {
       "m_id": 29,
@@ -1410,7 +1439,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 8,
-      "m_dayOfNextFlare": 19
+      "m_dayOfNextFlare": 19,
+      "m_insideNebula": ""
     },
     {
       "m_id": 30,
@@ -1421,7 +1451,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 4,
-      "m_dayOfNextFlare": 11
+      "m_dayOfNextFlare": 11,
+      "m_insideNebula": ""
     },
     {
       "m_id": 31,
@@ -1432,7 +1463,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 7,
-      "m_dayOfNextFlare": 29
+      "m_dayOfNextFlare": 29,
+      "m_insideNebula": ""
     },
     {
       "m_id": 32,
@@ -1443,7 +1475,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 6,
-      "m_dayOfNextFlare": 23
+      "m_dayOfNextFlare": 23,
+      "m_insideNebula": true
     },
     {
       "m_id": 33,
@@ -1454,7 +1487,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 10,
-      "m_dayOfNextFlare": 7
+      "m_dayOfNextFlare": 7,
+      "m_insideNebula": true
     },
     {
       "m_id": 34,
@@ -1465,7 +1499,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 1
+      "m_dayOfNextFlare": 1,
+      "m_insideNebula": true
     },
     {
       "m_id": 35,
@@ -1476,7 +1511,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 10,
-      "m_dayOfNextFlare": 3
+      "m_dayOfNextFlare": 3,
+      "m_insideNebula": ""
     },
     {
       "m_id": 36,
@@ -1487,7 +1523,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 7,
-      "m_dayOfNextFlare": 21
+      "m_dayOfNextFlare": 21,
+      "m_insideNebula": ""
     },
     {
       "m_id": 37,
@@ -1498,7 +1535,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 10,
-      "m_dayOfNextFlare": 11
+      "m_dayOfNextFlare": 11,
+      "m_insideNebula": ""
     },
     {
       "m_id": 38,
@@ -1509,7 +1547,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 25
+      "m_dayOfNextFlare": 25,
+      "m_insideNebula": ""
     },
     {
       "m_id": 39,
@@ -1520,7 +1559,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 25
+      "m_dayOfNextFlare": 25,
+      "m_insideNebula": true
     },
     {
       "m_id": 40,
@@ -1531,7 +1571,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 21
+      "m_dayOfNextFlare": 21,
+      "m_insideNebula": true
     },
     {
       "m_id": 41,
@@ -1542,7 +1583,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 21
+      "m_dayOfNextFlare": 21,
+      "m_insideNebula": true
     },
     {
       "m_id": 42,
@@ -1553,7 +1595,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 6,
-      "m_dayOfNextFlare": 7
+      "m_dayOfNextFlare": 7,
+      "m_insideNebula": ""
     },
     {
       "m_id": 43,
@@ -1564,7 +1607,8 @@
       "m_daysSincePreviousFlare": -196,
       "m_yearOfNextFlare": 4837,
       "m_monthOfNextFlare": 9,
-      "m_dayOfNextFlare": 1
+      "m_dayOfNextFlare": 1,
+      "m_insideNebula": ""
     },
     {
       "m_id": 44,
@@ -1575,7 +1619,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 7,
-      "m_dayOfNextFlare": 25
+      "m_dayOfNextFlare": 25,
+      "m_insideNebula": ""
     },
     {
       "m_id": 45,
@@ -1586,7 +1631,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 7,
-      "m_dayOfNextFlare": 5
+      "m_dayOfNextFlare": 5,
+      "m_insideNebula": ""
     },
     {
       "m_id": 46,
@@ -1597,7 +1643,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 10,
-      "m_dayOfNextFlare": 27
+      "m_dayOfNextFlare": 27,
+      "m_insideNebula": ""
     },
     {
       "m_id": 47,
@@ -1608,7 +1655,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 2,
-      "m_dayOfNextFlare": 19
+      "m_dayOfNextFlare": 19,
+      "m_insideNebula": ""
     },
     {
       "m_id": 48,
@@ -1619,7 +1667,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 1,
-      "m_dayOfNextFlare": 17
+      "m_dayOfNextFlare": 17,
+      "m_insideNebula": ""
     },
     {
       "m_id": 49,
@@ -1630,7 +1679,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 1,
-      "m_dayOfNextFlare": 1
+      "m_dayOfNextFlare": 1,
+      "m_insideNebula": ""
     },
     {
       "m_id": 50,
@@ -1641,7 +1691,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 10,
-      "m_dayOfNextFlare": 27
+      "m_dayOfNextFlare": 27,
+      "m_insideNebula": ""
     },
     {
       "m_id": 51,
@@ -1652,7 +1703,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 10,
-      "m_dayOfNextFlare": 19
+      "m_dayOfNextFlare": 19,
+      "m_insideNebula": ""
     },
     {
       "m_id": 52,
@@ -1663,7 +1715,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 9,
-      "m_dayOfNextFlare": 21
+      "m_dayOfNextFlare": 21,
+      "m_insideNebula": ""
     },
     {
       "m_id": 53,
@@ -1674,7 +1727,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 8,
-      "m_dayOfNextFlare": 15
+      "m_dayOfNextFlare": 15,
+      "m_insideNebula": ""
     },
     {
       "m_id": 54,
@@ -1685,7 +1739,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 8,
-      "m_dayOfNextFlare": 15
+      "m_dayOfNextFlare": 15,
+      "m_insideNebula": ""
     },
     {
       "m_id": 55,
@@ -1696,7 +1751,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 7,
-      "m_dayOfNextFlare": 17
+      "m_dayOfNextFlare": 17,
+      "m_insideNebula": ""
     },
     {
       "m_id": 56,
@@ -1707,7 +1763,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 6,
-      "m_dayOfNextFlare": 3
+      "m_dayOfNextFlare": 3,
+      "m_insideNebula": ""
     },
     {
       "m_id": 57,
@@ -1718,7 +1775,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 29
+      "m_dayOfNextFlare": 29,
+      "m_insideNebula": ""
     },
     {
       "m_id": 58,
@@ -1729,7 +1787,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 5
+      "m_dayOfNextFlare": 5,
+      "m_insideNebula": ""
     },
     {
       "m_id": 59,
@@ -1740,7 +1799,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 4,
-      "m_dayOfNextFlare": 23
+      "m_dayOfNextFlare": 23,
+      "m_insideNebula": ""
     },
     {
       "m_id": 60,
@@ -1751,7 +1811,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 3,
-      "m_dayOfNextFlare": 21
+      "m_dayOfNextFlare": 21,
+      "m_insideNebula": ""
     },
     {
       "m_id": 61,
@@ -1762,7 +1823,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 3,
-      "m_dayOfNextFlare": 21
+      "m_dayOfNextFlare": 21,
+      "m_insideNebula": true
     },
     {
       "m_id": 62,
@@ -1773,7 +1835,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 3,
-      "m_dayOfNextFlare": 17
+      "m_dayOfNextFlare": 17,
+      "m_insideNebula": true
     },
     {
       "m_id": 63,
@@ -1784,7 +1847,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 2,
-      "m_dayOfNextFlare": 19
+      "m_dayOfNextFlare": 19,
+      "m_insideNebula": ""
     },
     {
       "m_id": 64,
@@ -1795,7 +1859,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 2,
-      "m_dayOfNextFlare": 3
+      "m_dayOfNextFlare": 3,
+      "m_insideNebula": ""
     },
     {
       "m_id": 65,
@@ -1806,7 +1871,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 1,
-      "m_dayOfNextFlare": 25
+      "m_dayOfNextFlare": 25,
+      "m_insideNebula": ""
     },
     {
       "m_id": 66,
@@ -1817,7 +1883,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 1,
-      "m_dayOfNextFlare": 17
+      "m_dayOfNextFlare": 17,
+      "m_insideNebula": ""
     },
     {
       "m_id": 67,
@@ -1828,7 +1895,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 1,
-      "m_dayOfNextFlare": 17
+      "m_dayOfNextFlare": 17,
+      "m_insideNebula": ""
     },
     {
       "m_id": 68,
@@ -1839,7 +1907,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 4,
-      "m_dayOfNextFlare": 3
+      "m_dayOfNextFlare": 3,
+      "m_insideNebula": ""
     },
     {
       "m_id": 69,
@@ -1850,7 +1919,8 @@
       "m_daysSincePreviousFlare": -24,
       "m_yearOfNextFlare": 4838,
       "m_monthOfNextFlare": 4,
-      "m_dayOfNextFlare": 23
+      "m_dayOfNextFlare": 23,
+      "m_insideNebula": ""
     },
     {
       "m_id": 70,
@@ -1861,7 +1931,8 @@
       "m_daysSincePreviousFlare": -80,
       "m_yearOfNextFlare": 4838,
       "m_monthOfNextFlare": 2,
-      "m_dayOfNextFlare": 27
+      "m_dayOfNextFlare": 27,
+      "m_insideNebula": ""
     },
     {
       "m_id": 71,
@@ -1872,7 +1943,8 @@
       "m_daysSincePreviousFlare": -100,
       "m_yearOfNextFlare": 4838,
       "m_monthOfNextFlare": 2,
-      "m_dayOfNextFlare": 7
+      "m_dayOfNextFlare": 7,
+      "m_insideNebula": ""
     },
     {
       "m_id": 72,
@@ -1883,7 +1955,8 @@
       "m_daysSincePreviousFlare": -76,
       "m_yearOfNextFlare": 4838,
       "m_monthOfNextFlare": 3,
-      "m_dayOfNextFlare": 1
+      "m_dayOfNextFlare": 1,
+      "m_insideNebula": ""
     },
     {
       "m_id": 73,
@@ -1894,7 +1967,8 @@
       "m_daysSincePreviousFlare": -44,
       "m_yearOfNextFlare": 4838,
       "m_monthOfNextFlare": 4,
-      "m_dayOfNextFlare": 3
+      "m_dayOfNextFlare": 3,
+      "m_insideNebula": ""
     },
     {
       "m_id": 74,
@@ -1905,7 +1979,8 @@
       "m_daysSincePreviousFlare": -36,
       "m_yearOfNextFlare": 4838,
       "m_monthOfNextFlare": 4,
-      "m_dayOfNextFlare": 11
+      "m_dayOfNextFlare": 11,
+      "m_insideNebula": ""
     },
     {
       "m_id": 75,
@@ -1916,7 +1991,8 @@
       "m_daysSincePreviousFlare": -172,
       "m_yearOfNextFlare": 4837,
       "m_monthOfNextFlare": 9,
-      "m_dayOfNextFlare": 25
+      "m_dayOfNextFlare": 25,
+      "m_insideNebula": ""
     },
     {
       "m_id": 76,
@@ -1927,7 +2003,8 @@
       "m_daysSincePreviousFlare": -132,
       "m_yearOfNextFlare": 4838,
       "m_monthOfNextFlare": 1,
-      "m_dayOfNextFlare": 5
+      "m_dayOfNextFlare": 5,
+      "m_insideNebula": ""
     },
     {
       "m_id": 77,
@@ -1938,7 +2015,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 1,
-      "m_dayOfNextFlare": 17
+      "m_dayOfNextFlare": 17,
+      "m_insideNebula": ""
     },
     {
       "m_id": 78,
@@ -1949,7 +2027,8 @@
       "m_daysSincePreviousFlare": -120,
       "m_yearOfNextFlare": 4838,
       "m_monthOfNextFlare": 1,
-      "m_dayOfNextFlare": 17
+      "m_dayOfNextFlare": 17,
+      "m_insideNebula": ""
     },
     {
       "m_id": 79,
@@ -1960,7 +2039,8 @@
       "m_daysSincePreviousFlare": -116,
       "m_yearOfNextFlare": 4838,
       "m_monthOfNextFlare": 1,
-      "m_dayOfNextFlare": 21
+      "m_dayOfNextFlare": 21,
+      "m_insideNebula": ""
     },
     {
       "m_id": 80,
@@ -1971,7 +2051,8 @@
       "m_daysSincePreviousFlare": -36,
       "m_yearOfNextFlare": 4838,
       "m_monthOfNextFlare": 4,
-      "m_dayOfNextFlare": 11
+      "m_dayOfNextFlare": 11,
+      "m_insideNebula": ""
     },
     {
       "m_id": 81,
@@ -1982,7 +2063,8 @@
       "m_daysSincePreviousFlare": -188,
       "m_yearOfNextFlare": 4837,
       "m_monthOfNextFlare": 9,
-      "m_dayOfNextFlare": 9
+      "m_dayOfNextFlare": 9,
+      "m_insideNebula": ""
     },
     {
       "m_id": 82,
@@ -1993,7 +2075,8 @@
       "m_daysSincePreviousFlare": -44,
       "m_yearOfNextFlare": 4838,
       "m_monthOfNextFlare": 4,
-      "m_dayOfNextFlare": 3
+      "m_dayOfNextFlare": 3,
+      "m_insideNebula": ""
     },
     {
       "m_id": 83,
@@ -2004,7 +2087,8 @@
       "m_daysSincePreviousFlare": -144,
       "m_yearOfNextFlare": 4837,
       "m_monthOfNextFlare": 10,
-      "m_dayOfNextFlare": 23
+      "m_dayOfNextFlare": 23,
+      "m_insideNebula": ""
     },
     {
       "m_id": 84,
@@ -2015,7 +2099,8 @@
       "m_daysSincePreviousFlare": -16,
       "m_yearOfNextFlare": 4838,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 1
+      "m_dayOfNextFlare": 1,
+      "m_insideNebula": ""
     },
     {
       "m_id": 85,
@@ -2026,7 +2111,8 @@
       "m_daysSincePreviousFlare": -24,
       "m_yearOfNextFlare": 4838,
       "m_monthOfNextFlare": 4,
-      "m_dayOfNextFlare": 23
+      "m_dayOfNextFlare": 23,
+      "m_insideNebula": ""
     },
     {
       "m_id": 86,
@@ -2037,7 +2123,8 @@
       "m_daysSincePreviousFlare": -40,
       "m_yearOfNextFlare": 4838,
       "m_monthOfNextFlare": 4,
-      "m_dayOfNextFlare": 7
+      "m_dayOfNextFlare": 7,
+      "m_insideNebula": ""
     },
     {
       "m_id": 87,
@@ -2048,7 +2135,8 @@
       "m_daysSincePreviousFlare": -48,
       "m_yearOfNextFlare": 4838,
       "m_monthOfNextFlare": 3,
-      "m_dayOfNextFlare": 29
+      "m_dayOfNextFlare": 29,
+      "m_insideNebula": ""
     },
     {
       "m_id": 88,
@@ -2059,7 +2147,8 @@
       "m_daysSincePreviousFlare": -64,
       "m_yearOfNextFlare": 4838,
       "m_monthOfNextFlare": 3,
-      "m_dayOfNextFlare": 13
+      "m_dayOfNextFlare": 13,
+      "m_insideNebula": ""
     },
     {
       "m_id": 89,
@@ -2070,7 +2159,8 @@
       "m_daysSincePreviousFlare": -164,
       "m_yearOfNextFlare": 4837,
       "m_monthOfNextFlare": 10,
-      "m_dayOfNextFlare": 3
+      "m_dayOfNextFlare": 3,
+      "m_insideNebula": ""
     },
     {
       "m_id": 90,
@@ -2081,7 +2171,8 @@
       "m_daysSincePreviousFlare": -32,
       "m_yearOfNextFlare": 4838,
       "m_monthOfNextFlare": 4,
-      "m_dayOfNextFlare": 15
+      "m_dayOfNextFlare": 15,
+      "m_insideNebula": ""
     },
     {
       "m_id": 91,
@@ -2092,7 +2183,8 @@
       "m_daysSincePreviousFlare": -104,
       "m_yearOfNextFlare": 4838,
       "m_monthOfNextFlare": 2,
-      "m_dayOfNextFlare": 3
+      "m_dayOfNextFlare": 3,
+      "m_insideNebula": true
     },
     {
       "m_id": 92,
@@ -2103,7 +2195,8 @@
       "m_daysSincePreviousFlare": -76,
       "m_yearOfNextFlare": 4838,
       "m_monthOfNextFlare": 3,
-      "m_dayOfNextFlare": 1
+      "m_dayOfNextFlare": 1,
+      "m_insideNebula": true
     },
     {
       "m_id": 93,
@@ -2114,7 +2207,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 6,
-      "m_dayOfNextFlare": 11
+      "m_dayOfNextFlare": 11,
+      "m_insideNebula": ""
     },
     {
       "m_id": 94,
@@ -2125,7 +2219,8 @@
       "m_daysSincePreviousFlare": -84,
       "m_yearOfNextFlare": 4838,
       "m_monthOfNextFlare": 2,
-      "m_dayOfNextFlare": 23
+      "m_dayOfNextFlare": 23,
+      "m_insideNebula": ""
     },
     {
       "m_id": 95,
@@ -2136,7 +2231,8 @@
       "m_daysSincePreviousFlare": -104,
       "m_yearOfNextFlare": 4838,
       "m_monthOfNextFlare": 2,
-      "m_dayOfNextFlare": 3
+      "m_dayOfNextFlare": 3,
+      "m_insideNebula": ""
     },
     {
       "m_id": 96,
@@ -2147,7 +2243,8 @@
       "m_daysSincePreviousFlare": -28,
       "m_yearOfNextFlare": 4838,
       "m_monthOfNextFlare": 4,
-      "m_dayOfNextFlare": 19
+      "m_dayOfNextFlare": 19,
+      "m_insideNebula": ""
     },
     {
       "m_id": 97,
@@ -2158,7 +2255,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 3,
-      "m_dayOfNextFlare": 25
+      "m_dayOfNextFlare": 25,
+      "m_insideNebula": ""
     },
     {
       "m_id": 98,
@@ -2169,7 +2267,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 4,
-      "m_dayOfNextFlare": 7
+      "m_dayOfNextFlare": 7,
+      "m_insideNebula": ""
     },
     {
       "m_id": 99,
@@ -2180,7 +2279,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 4,
-      "m_dayOfNextFlare": 15
+      "m_dayOfNextFlare": 15,
+      "m_insideNebula": ""
     },
     {
       "m_id": 100,
@@ -2191,7 +2291,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 3,
-      "m_dayOfNextFlare": 5
+      "m_dayOfNextFlare": 5,
+      "m_insideNebula": ""
     },
     {
       "m_id": 101,
@@ -2202,7 +2303,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 3,
-      "m_dayOfNextFlare": 25
+      "m_dayOfNextFlare": 25,
+      "m_insideNebula": ""
     },
     {
       "m_id": 102,
@@ -2213,7 +2315,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 2,
-      "m_dayOfNextFlare": 23
+      "m_dayOfNextFlare": 23,
+      "m_insideNebula": ""
     },
     {
       "m_id": 103,
@@ -2224,7 +2327,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 2,
-      "m_dayOfNextFlare": 27
+      "m_dayOfNextFlare": 27,
+      "m_insideNebula": ""
     },
     {
       "m_id": 104,
@@ -2235,7 +2339,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 29
+      "m_dayOfNextFlare": 29,
+      "m_insideNebula": ""
     },
     {
       "m_id": 105,
@@ -2246,7 +2351,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 1,
-      "m_dayOfNextFlare": 5
+      "m_dayOfNextFlare": 5,
+      "m_insideNebula": ""
     },
     {
       "m_id": 106,
@@ -2257,7 +2363,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 3,
-      "m_dayOfNextFlare": 25
+      "m_dayOfNextFlare": 25,
+      "m_insideNebula": ""
     },
     {
       "m_id": 107,
@@ -2268,7 +2375,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 4,
-      "m_dayOfNextFlare": 23
+      "m_dayOfNextFlare": 23,
+      "m_insideNebula": ""
     },
     {
       "m_id": 108,
@@ -2279,7 +2387,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 3,
-      "m_dayOfNextFlare": 25
+      "m_dayOfNextFlare": 25,
+      "m_insideNebula": ""
     },
     {
       "m_id": 109,
@@ -2290,7 +2399,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 3,
-      "m_dayOfNextFlare": 13
+      "m_dayOfNextFlare": 13,
+      "m_insideNebula": ""
     },
     {
       "m_id": 110,
@@ -2301,7 +2411,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 8,
-      "m_dayOfNextFlare": 11
+      "m_dayOfNextFlare": 11,
+      "m_insideNebula": ""
     },
     {
       "m_id": 111,
@@ -2312,7 +2423,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 10,
-      "m_dayOfNextFlare": 15
+      "m_dayOfNextFlare": 15,
+      "m_insideNebula": ""
     },
     {
       "m_id": 112,
@@ -2323,7 +2435,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 10,
-      "m_dayOfNextFlare": 23
+      "m_dayOfNextFlare": 23,
+      "m_insideNebula": ""
     },
     {
       "m_id": 113,
@@ -2334,7 +2447,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 1,
-      "m_dayOfNextFlare": 1
+      "m_dayOfNextFlare": 1,
+      "m_insideNebula": ""
     },
     {
       "m_id": 114,
@@ -2345,7 +2459,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 10,
-      "m_dayOfNextFlare": 19
+      "m_dayOfNextFlare": 19,
+      "m_insideNebula": ""
     },
     {
       "m_id": 115,
@@ -2356,7 +2471,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 10,
-      "m_dayOfNextFlare": 19
+      "m_dayOfNextFlare": 19,
+      "m_insideNebula": ""
     },
     {
       "m_id": 116,
@@ -2367,7 +2483,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 8,
-      "m_dayOfNextFlare": 7
+      "m_dayOfNextFlare": 7,
+      "m_insideNebula": ""
     },
     {
       "m_id": 117,
@@ -2378,7 +2495,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 8,
-      "m_dayOfNextFlare": 19
+      "m_dayOfNextFlare": 19,
+      "m_insideNebula": ""
     },
     {
       "m_id": 118,
@@ -2389,7 +2507,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 7,
-      "m_dayOfNextFlare": 25
+      "m_dayOfNextFlare": 25,
+      "m_insideNebula": ""
     },
     {
       "m_id": 119,
@@ -2400,7 +2519,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 7,
-      "m_dayOfNextFlare": 17
+      "m_dayOfNextFlare": 17,
+      "m_insideNebula": ""
     },
     {
       "m_id": 120,
@@ -2411,7 +2531,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 8,
-      "m_dayOfNextFlare": 11
+      "m_dayOfNextFlare": 11,
+      "m_insideNebula": ""
     },
     {
       "m_id": 121,
@@ -2422,7 +2543,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 9,
-      "m_dayOfNextFlare": 17
+      "m_dayOfNextFlare": 17,
+      "m_insideNebula": ""
     },
     {
       "m_id": 122,
@@ -2433,7 +2555,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 1,
-      "m_dayOfNextFlare": 25
+      "m_dayOfNextFlare": 25,
+      "m_insideNebula": ""
     },
     {
       "m_id": 123,
@@ -2444,7 +2567,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 1,
-      "m_dayOfNextFlare": 17
+      "m_dayOfNextFlare": 17,
+      "m_insideNebula": ""
     },
     {
       "m_id": 124,
@@ -2455,7 +2579,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 9,
-      "m_dayOfNextFlare": 17
+      "m_dayOfNextFlare": 17,
+      "m_insideNebula": ""
     },
     {
       "m_id": 125,
@@ -2466,7 +2591,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 9,
-      "m_dayOfNextFlare": 13
+      "m_dayOfNextFlare": 13,
+      "m_insideNebula": ""
     },
     {
       "m_id": 126,
@@ -2477,7 +2603,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 9,
-      "m_dayOfNextFlare": 13
+      "m_dayOfNextFlare": 13,
+      "m_insideNebula": ""
     },
     {
       "m_id": 127,
@@ -2488,7 +2615,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 17
+      "m_dayOfNextFlare": 17,
+      "m_insideNebula": ""
     },
     {
       "m_id": 128,
@@ -2499,7 +2627,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 17
+      "m_dayOfNextFlare": 17,
+      "m_insideNebula": ""
     },
     {
       "m_id": 129,
@@ -2510,7 +2639,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 6,
-      "m_dayOfNextFlare": 3
+      "m_dayOfNextFlare": 3,
+      "m_insideNebula": ""
     },
     {
       "m_id": 130,
@@ -2521,7 +2651,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 9
+      "m_dayOfNextFlare": 9,
+      "m_insideNebula": ""
     },
     {
       "m_id": 131,
@@ -2532,7 +2663,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 2,
-      "m_dayOfNextFlare": 19
+      "m_dayOfNextFlare": 19,
+      "m_insideNebula": ""
     },
     {
       "m_id": 132,
@@ -2543,7 +2675,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 10,
-      "m_dayOfNextFlare": 7
+      "m_dayOfNextFlare": 7,
+      "m_insideNebula": ""
     },
     {
       "m_id": 133,
@@ -2554,7 +2687,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 7,
-      "m_dayOfNextFlare": 21
+      "m_dayOfNextFlare": 21,
+      "m_insideNebula": ""
     },
     {
       "m_id": 134,
@@ -2565,7 +2699,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 6,
-      "m_dayOfNextFlare": 11
+      "m_dayOfNextFlare": 11,
+      "m_insideNebula": ""
     },
     {
       "m_id": 135,
@@ -2576,7 +2711,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 8,
-      "m_dayOfNextFlare": 15
+      "m_dayOfNextFlare": 15,
+      "m_insideNebula": ""
     },
     {
       "m_id": 136,
@@ -2587,7 +2723,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 2,
-      "m_dayOfNextFlare": 15
+      "m_dayOfNextFlare": 15,
+      "m_insideNebula": ""
     },
     {
       "m_id": 137,
@@ -2598,7 +2735,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 10,
-      "m_dayOfNextFlare": 19
+      "m_dayOfNextFlare": 19,
+      "m_insideNebula": ""
     },
     {
       "m_id": 138,
@@ -2609,7 +2747,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 10,
-      "m_dayOfNextFlare": 15
+      "m_dayOfNextFlare": 15,
+      "m_insideNebula": ""
     },
     {
       "m_id": 139,
@@ -2620,7 +2759,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 17
+      "m_dayOfNextFlare": 17,
+      "m_insideNebula": true
     },
     {
       "m_id": 140,
@@ -2631,7 +2771,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 29
+      "m_dayOfNextFlare": 29,
+      "m_insideNebula": ""
     },
     {
       "m_id": 141,
@@ -2642,7 +2783,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 4,
-      "m_dayOfNextFlare": 19
+      "m_dayOfNextFlare": 19,
+      "m_insideNebula": ""
     },
     {
       "m_id": 142,
@@ -2653,7 +2795,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 7,
-      "m_dayOfNextFlare": 17
+      "m_dayOfNextFlare": 17,
+      "m_insideNebula": ""
     },
     {
       "m_id": 143,
@@ -2664,7 +2807,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 10,
-      "m_dayOfNextFlare": 7
+      "m_dayOfNextFlare": 7,
+      "m_insideNebula": ""
     },
     {
       "m_id": 144,
@@ -2675,7 +2819,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 4,
-      "m_dayOfNextFlare": 11
+      "m_dayOfNextFlare": 11,
+      "m_insideNebula": ""
     },
     {
       "m_id": 145,
@@ -2686,7 +2831,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 3,
-      "m_dayOfNextFlare": 5
+      "m_dayOfNextFlare": 5,
+      "m_insideNebula": ""
     },
     {
       "m_id": 146,
@@ -2697,7 +2843,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 1,
-      "m_dayOfNextFlare": 9
+      "m_dayOfNextFlare": 9,
+      "m_insideNebula": ""
     },
     {
       "m_id": 147,
@@ -2708,7 +2855,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 6,
-      "m_dayOfNextFlare": 23
+      "m_dayOfNextFlare": 23,
+      "m_insideNebula": ""
     },
     {
       "m_id": 148,
@@ -2719,7 +2867,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 6,
-      "m_dayOfNextFlare": 19
+      "m_dayOfNextFlare": 19,
+      "m_insideNebula": ""
     },
     {
       "m_id": 149,
@@ -2730,7 +2879,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 6,
-      "m_dayOfNextFlare": 27
+      "m_dayOfNextFlare": 27,
+      "m_insideNebula": ""
     },
     {
       "m_id": 150,
@@ -2741,7 +2891,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 6,
-      "m_dayOfNextFlare": 23
+      "m_dayOfNextFlare": 23,
+      "m_insideNebula": ""
     },
     {
       "m_id": 151,
@@ -2752,7 +2903,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 8,
-      "m_dayOfNextFlare": 19
+      "m_dayOfNextFlare": 19,
+      "m_insideNebula": ""
     },
     {
       "m_id": 152,
@@ -2763,7 +2915,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 8,
-      "m_dayOfNextFlare": 11
+      "m_dayOfNextFlare": 11,
+      "m_insideNebula": ""
     },
     {
       "m_id": 153,
@@ -2774,7 +2927,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4620,
       "m_monthOfNextFlare": 8,
-      "m_dayOfNextFlare": 15
+      "m_dayOfNextFlare": 15,
+      "m_insideNebula": ""
     },
     {
       "m_id": 154,
@@ -2785,7 +2939,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 2,
-      "m_dayOfNextFlare": 15
+      "m_dayOfNextFlare": 15,
+      "m_insideNebula": ""
     },
     {
       "m_id": 155,
@@ -2796,7 +2951,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 2,
-      "m_dayOfNextFlare": 3
+      "m_dayOfNextFlare": 3,
+      "m_insideNebula": ""
     },
     {
       "m_id": 156,
@@ -2807,7 +2963,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 1,
-      "m_dayOfNextFlare": 29
+      "m_dayOfNextFlare": 29,
+      "m_insideNebula": ""
     },
     {
       "m_id": 157,
@@ -2818,7 +2975,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 9
+      "m_dayOfNextFlare": 9,
+      "m_insideNebula": ""
     },
     {
       "m_id": 158,
@@ -2829,7 +2987,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 6,
-      "m_dayOfNextFlare": 3
+      "m_dayOfNextFlare": 3,
+      "m_insideNebula": ""
     },
     {
       "m_id": 159,
@@ -2840,7 +2999,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 8,
-      "m_dayOfNextFlare": 11
+      "m_dayOfNextFlare": 11,
+      "m_insideNebula": ""
     },
     {
       "m_id": 160,
@@ -2851,7 +3011,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 8,
-      "m_dayOfNextFlare": 19
+      "m_dayOfNextFlare": 19,
+      "m_insideNebula": ""
     },
     {
       "m_id": 161,
@@ -2862,7 +3023,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 8,
-      "m_dayOfNextFlare": 23
+      "m_dayOfNextFlare": 23,
+      "m_insideNebula": ""
     },
     {
       "m_id": 162,
@@ -2873,7 +3035,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 9,
-      "m_dayOfNextFlare": 5
+      "m_dayOfNextFlare": 5,
+      "m_insideNebula": ""
     },
     {
       "m_id": 163,
@@ -2884,7 +3047,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 9,
-      "m_dayOfNextFlare": 1
+      "m_dayOfNextFlare": 1,
+      "m_insideNebula": ""
     },
     {
       "m_id": 164,
@@ -2895,7 +3059,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 10,
-      "m_dayOfNextFlare": 7
+      "m_dayOfNextFlare": 7,
+      "m_insideNebula": ""
     },
     {
       "m_id": 165,
@@ -2906,7 +3071,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 13
+      "m_dayOfNextFlare": 13,
+      "m_insideNebula": ""
     },
     {
       "m_id": 166,
@@ -2917,7 +3083,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 21
+      "m_dayOfNextFlare": 21,
+      "m_insideNebula": ""
     },
     {
       "m_id": 167,
@@ -2928,7 +3095,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 7,
-      "m_dayOfNextFlare": 13
+      "m_dayOfNextFlare": 13,
+      "m_insideNebula": ""
     },
     {
       "m_id": 168,
@@ -2939,7 +3107,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 29
+      "m_dayOfNextFlare": 29,
+      "m_insideNebula": true
     },
     {
       "m_id": 169,
@@ -2950,7 +3119,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 3,
-      "m_dayOfNextFlare": 29
+      "m_dayOfNextFlare": 29,
+      "m_insideNebula": true
     },
     {
       "m_id": 170,
@@ -2961,7 +3131,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 8,
-      "m_dayOfNextFlare": 23
+      "m_dayOfNextFlare": 23,
+      "m_insideNebula": ""
     },
     {
       "m_id": 171,
@@ -2972,7 +3143,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 3,
-      "m_dayOfNextFlare": 25
+      "m_dayOfNextFlare": 25,
+      "m_insideNebula": ""
     },
     {
       "m_id": 172,
@@ -2983,7 +3155,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 3,
-      "m_dayOfNextFlare": 21
+      "m_dayOfNextFlare": 21,
+      "m_insideNebula": ""
     },
     {
       "m_id": 173,
@@ -2994,7 +3167,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 6,
-      "m_dayOfNextFlare": 11
+      "m_dayOfNextFlare": 11,
+      "m_insideNebula": ""
     },
     {
       "m_id": 174,
@@ -3005,7 +3179,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 6,
-      "m_dayOfNextFlare": 19
+      "m_dayOfNextFlare": 19,
+      "m_insideNebula": ""
     },
     {
       "m_id": 175,
@@ -3016,7 +3191,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 8,
-      "m_dayOfNextFlare": 15
+      "m_dayOfNextFlare": 15,
+      "m_insideNebula": ""
     },
     {
       "m_id": 176,
@@ -3027,7 +3203,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 3,
-      "m_dayOfNextFlare": 1
+      "m_dayOfNextFlare": 1,
+      "m_insideNebula": ""
     },
     {
       "m_id": 177,
@@ -3038,7 +3215,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 3,
-      "m_dayOfNextFlare": 13
+      "m_dayOfNextFlare": 13,
+      "m_insideNebula": ""
     },
     {
       "m_id": 178,
@@ -3049,7 +3227,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 4,
-      "m_dayOfNextFlare": 3
+      "m_dayOfNextFlare": 3,
+      "m_insideNebula": ""
     },
     {
       "m_id": 179,
@@ -3060,7 +3239,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 4,
-      "m_dayOfNextFlare": 7
+      "m_dayOfNextFlare": 7,
+      "m_insideNebula": ""
     },
     {
       "m_id": 180,
@@ -3071,7 +3251,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 4,
-      "m_dayOfNextFlare": 7
+      "m_dayOfNextFlare": 7,
+      "m_insideNebula": true
     },
     {
       "m_id": 181,
@@ -3082,7 +3263,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 17
+      "m_dayOfNextFlare": 17,
+      "m_insideNebula": ""
     },
     {
       "m_id": 182,
@@ -3093,7 +3275,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 17
+      "m_dayOfNextFlare": 17,
+      "m_insideNebula": ""
     },
     {
       "m_id": 183,
@@ -3104,7 +3287,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 4,
-      "m_dayOfNextFlare": 27
+      "m_dayOfNextFlare": 27,
+      "m_insideNebula": ""
     },
     {
       "m_id": 184,
@@ -3115,7 +3299,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 4,
-      "m_dayOfNextFlare": 19
+      "m_dayOfNextFlare": 19,
+      "m_insideNebula": ""
     },
     {
       "m_id": 185,
@@ -3126,7 +3311,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 3,
-      "m_dayOfNextFlare": 17
+      "m_dayOfNextFlare": 17,
+      "m_insideNebula": ""
     },
     {
       "m_id": 186,
@@ -3137,7 +3323,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 13
+      "m_dayOfNextFlare": 13,
+      "m_insideNebula": ""
     },
     {
       "m_id": 187,
@@ -3148,7 +3335,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 1,
-      "m_dayOfNextFlare": 29
+      "m_dayOfNextFlare": 29,
+      "m_insideNebula": ""
     },
     {
       "m_id": 188,
@@ -3159,7 +3347,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 1,
-      "m_dayOfNextFlare": 21
+      "m_dayOfNextFlare": 21,
+      "m_insideNebula": ""
     },
     {
       "m_id": 189,
@@ -3170,7 +3359,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 1,
-      "m_dayOfNextFlare": 25
+      "m_dayOfNextFlare": 25,
+      "m_insideNebula": ""
     },
     {
       "m_id": 190,
@@ -3181,7 +3371,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 1,
-      "m_dayOfNextFlare": 25
+      "m_dayOfNextFlare": 25,
+      "m_insideNebula": ""
     },
     {
       "m_id": 191,
@@ -3192,7 +3383,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 1,
-      "m_dayOfNextFlare": 17
+      "m_dayOfNextFlare": 17,
+      "m_insideNebula": ""
     },
     {
       "m_id": 192,
@@ -3203,7 +3395,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 7,
-      "m_dayOfNextFlare": 17
+      "m_dayOfNextFlare": 17,
+      "m_insideNebula": ""
     },
     {
       "m_id": 193,
@@ -3214,7 +3407,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 7,
-      "m_dayOfNextFlare": 17
+      "m_dayOfNextFlare": 17,
+      "m_insideNebula": ""
     },
     {
       "m_id": 194,
@@ -3225,7 +3419,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 3,
-      "m_dayOfNextFlare": 25
+      "m_dayOfNextFlare": 25,
+      "m_insideNebula": ""
     },
     {
       "m_id": 195,
@@ -3236,7 +3431,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 5
+      "m_dayOfNextFlare": 5,
+      "m_insideNebula": ""
     },
     {
       "m_id": 196,
@@ -3247,7 +3443,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 17
+      "m_dayOfNextFlare": 17,
+      "m_insideNebula": ""
     },
     {
       "m_id": 197,
@@ -3258,7 +3455,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 29
+      "m_dayOfNextFlare": 29,
+      "m_insideNebula": ""
     },
     {
       "m_id": 198,
@@ -3269,7 +3467,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 7,
-      "m_dayOfNextFlare": 9
+      "m_dayOfNextFlare": 9,
+      "m_insideNebula": true
     },
     {
       "m_id": 199,
@@ -3280,7 +3479,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 10,
-      "m_dayOfNextFlare": 7
+      "m_dayOfNextFlare": 7,
+      "m_insideNebula": true
     },
     {
       "m_id": 200,
@@ -3291,7 +3491,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 9,
-      "m_dayOfNextFlare": 29
+      "m_dayOfNextFlare": 29,
+      "m_insideNebula": true
     },
     {
       "m_id": 201,
@@ -3302,7 +3503,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 10,
-      "m_dayOfNextFlare": 7
+      "m_dayOfNextFlare": 7,
+      "m_insideNebula": true
     },
     {
       "m_id": 202,
@@ -3313,7 +3515,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 10,
-      "m_dayOfNextFlare": 3
+      "m_dayOfNextFlare": 3,
+      "m_insideNebula": true
     },
     {
       "m_id": 203,
@@ -3324,7 +3527,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 2,
-      "m_dayOfNextFlare": 3
+      "m_dayOfNextFlare": 3,
+      "m_insideNebula": ""
     },
     {
       "m_id": 204,
@@ -3335,7 +3539,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 4,
-      "m_dayOfNextFlare": 23
+      "m_dayOfNextFlare": 23,
+      "m_insideNebula": ""
     },
     {
       "m_id": 205,
@@ -3346,7 +3551,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 6,
-      "m_dayOfNextFlare": 23
+      "m_dayOfNextFlare": 23,
+      "m_insideNebula": ""
     },
     {
       "m_id": 206,
@@ -3357,7 +3563,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 6,
-      "m_dayOfNextFlare": 23
+      "m_dayOfNextFlare": 23,
+      "m_insideNebula": ""
     },
     {
       "m_id": 207,
@@ -3368,7 +3575,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 29
+      "m_dayOfNextFlare": 29,
+      "m_insideNebula": ""
     },
     {
       "m_id": 208,
@@ -3379,7 +3587,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 17
+      "m_dayOfNextFlare": 17,
+      "m_insideNebula": ""
     },
     {
       "m_id": 209,
@@ -3390,7 +3599,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 13
+      "m_dayOfNextFlare": 13,
+      "m_insideNebula": ""
     },
     {
       "m_id": 210,
@@ -3401,7 +3611,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 6,
-      "m_dayOfNextFlare": 7
+      "m_dayOfNextFlare": 7,
+      "m_insideNebula": ""
     },
     {
       "m_id": 211,
@@ -3412,7 +3623,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 6,
-      "m_dayOfNextFlare": 3
+      "m_dayOfNextFlare": 3,
+      "m_insideNebula": ""
     },
     {
       "m_id": 212,
@@ -3423,7 +3635,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 6,
-      "m_dayOfNextFlare": 3
+      "m_dayOfNextFlare": 3,
+      "m_insideNebula": ""
     },
     {
       "m_id": 213,
@@ -3434,7 +3647,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 1
+      "m_dayOfNextFlare": 1,
+      "m_insideNebula": ""
     },
     {
       "m_id": 214,
@@ -3445,7 +3659,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 8,
-      "m_dayOfNextFlare": 19
+      "m_dayOfNextFlare": 19,
+      "m_insideNebula": ""
     },
     {
       "m_id": 215,
@@ -3456,7 +3671,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 8,
-      "m_dayOfNextFlare": 11
+      "m_dayOfNextFlare": 11,
+      "m_insideNebula": ""
     },
     {
       "m_id": 216,
@@ -3467,7 +3683,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 9,
-      "m_dayOfNextFlare": 9
+      "m_dayOfNextFlare": 9,
+      "m_insideNebula": ""
     },
     {
       "m_id": 217,
@@ -3478,7 +3695,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 9,
-      "m_dayOfNextFlare": 1
+      "m_dayOfNextFlare": 1,
+      "m_insideNebula": ""
     },
     {
       "m_id": 218,
@@ -3489,7 +3707,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 8,
-      "m_dayOfNextFlare": 27
+      "m_dayOfNextFlare": 27,
+      "m_insideNebula": ""
     },
     {
       "m_id": 219,
@@ -3500,7 +3719,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 2,
-      "m_dayOfNextFlare": 7
+      "m_dayOfNextFlare": 7,
+      "m_insideNebula": ""
     },
     {
       "m_id": 220,
@@ -3511,7 +3731,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 4,
-      "m_dayOfNextFlare": 19
+      "m_dayOfNextFlare": 19,
+      "m_insideNebula": ""
     },
     {
       "m_id": 221,
@@ -3522,7 +3743,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 4,
-      "m_dayOfNextFlare": 15
+      "m_dayOfNextFlare": 15,
+      "m_insideNebula": ""
     },
     {
       "m_id": 222,
@@ -3533,7 +3755,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 6,
-      "m_dayOfNextFlare": 11
+      "m_dayOfNextFlare": 11,
+      "m_insideNebula": true
     },
     {
       "m_id": 223,
@@ -3544,7 +3767,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 4,
-      "m_dayOfNextFlare": 23
+      "m_dayOfNextFlare": 23,
+      "m_insideNebula": ""
     },
     {
       "m_id": 224,
@@ -3555,7 +3779,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 17
+      "m_dayOfNextFlare": 17,
+      "m_insideNebula": ""
     },
     {
       "m_id": 225,
@@ -3566,7 +3791,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 29
+      "m_dayOfNextFlare": 29,
+      "m_insideNebula": ""
     },
     {
       "m_id": 226,
@@ -3577,7 +3803,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 6,
-      "m_dayOfNextFlare": 7
+      "m_dayOfNextFlare": 7,
+      "m_insideNebula": ""
     },
     {
       "m_id": 227,
@@ -3588,7 +3815,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 29
+      "m_dayOfNextFlare": 29,
+      "m_insideNebula": ""
     },
     {
       "m_id": 228,
@@ -3599,7 +3827,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 6,
-      "m_dayOfNextFlare": 3
+      "m_dayOfNextFlare": 3,
+      "m_insideNebula": ""
     },
     {
       "m_id": 229,
@@ -3610,7 +3839,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 3,
-      "m_dayOfNextFlare": 5
+      "m_dayOfNextFlare": 5,
+      "m_insideNebula": ""
     },
     {
       "m_id": 230,
@@ -3621,7 +3851,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 3,
-      "m_dayOfNextFlare": 25
+      "m_dayOfNextFlare": 25,
+      "m_insideNebula": true
     },
     {
       "m_id": 231,
@@ -3632,7 +3863,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 4,
-      "m_dayOfNextFlare": 7
+      "m_dayOfNextFlare": 7,
+      "m_insideNebula": true
     },
     {
       "m_id": 232,
@@ -3643,7 +3875,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 3,
-      "m_dayOfNextFlare": 25
+      "m_dayOfNextFlare": 25,
+      "m_insideNebula": ""
     },
     {
       "m_id": 233,
@@ -3654,7 +3887,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 21
+      "m_dayOfNextFlare": 21,
+      "m_insideNebula": ""
     },
     {
       "m_id": 234,
@@ -3665,7 +3899,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 6,
-      "m_dayOfNextFlare": 19
+      "m_dayOfNextFlare": 19,
+      "m_insideNebula": ""
     },
     {
       "m_id": 235,
@@ -3676,7 +3911,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 7,
-      "m_dayOfNextFlare": 13
+      "m_dayOfNextFlare": 13,
+      "m_insideNebula": true
     },
     {
       "m_id": 236,
@@ -3687,7 +3923,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 6,
-      "m_dayOfNextFlare": 7
+      "m_dayOfNextFlare": 7,
+      "m_insideNebula": ""
     },
     {
       "m_id": 237,
@@ -3698,7 +3935,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 6,
-      "m_dayOfNextFlare": 3
+      "m_dayOfNextFlare": 3,
+      "m_insideNebula": ""
     },
     {
       "m_id": 238,
@@ -3709,7 +3947,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 29
+      "m_dayOfNextFlare": 29,
+      "m_insideNebula": ""
     },
     {
       "m_id": 239,
@@ -3720,7 +3959,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 5
+      "m_dayOfNextFlare": 5,
+      "m_insideNebula": ""
     },
     {
       "m_id": 240,
@@ -3731,7 +3971,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 6,
-      "m_dayOfNextFlare": 23
+      "m_dayOfNextFlare": 23,
+      "m_insideNebula": ""
     },
     {
       "m_id": 241,
@@ -3742,7 +3983,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 5
+      "m_dayOfNextFlare": 5,
+      "m_insideNebula": ""
     },
     {
       "m_id": 242,
@@ -3753,7 +3995,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 4,
-      "m_dayOfNextFlare": 23
+      "m_dayOfNextFlare": 23,
+      "m_insideNebula": ""
     },
     {
       "m_id": 243,
@@ -3764,7 +4007,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 5
+      "m_dayOfNextFlare": 5,
+      "m_insideNebula": ""
     },
     {
       "m_id": 244,
@@ -3775,7 +4019,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 21
+      "m_dayOfNextFlare": 21,
+      "m_insideNebula": ""
     },
     {
       "m_id": 245,
@@ -3786,7 +4031,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 7,
-      "m_dayOfNextFlare": 29
+      "m_dayOfNextFlare": 29,
+      "m_insideNebula": ""
     },
     {
       "m_id": 246,
@@ -3797,7 +4043,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 8,
-      "m_dayOfNextFlare": 27
+      "m_dayOfNextFlare": 27,
+      "m_insideNebula": ""
     },
     {
       "m_id": 247,
@@ -3808,7 +4055,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 3,
-      "m_dayOfNextFlare": 1
+      "m_dayOfNextFlare": 1,
+      "m_insideNebula": ""
     },
     {
       "m_id": 248,
@@ -3819,7 +4067,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 3,
-      "m_dayOfNextFlare": 1
+      "m_dayOfNextFlare": 1,
+      "m_insideNebula": ""
     },
     {
       "m_id": 249,
@@ -3830,7 +4079,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 2,
-      "m_dayOfNextFlare": 27
+      "m_dayOfNextFlare": 27,
+      "m_insideNebula": ""
     },
     {
       "m_id": 250,
@@ -3841,7 +4091,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 3,
-      "m_dayOfNextFlare": 13
+      "m_dayOfNextFlare": 13,
+      "m_insideNebula": ""
     },
     {
       "m_id": 251,
@@ -3852,7 +4103,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 7,
-      "m_dayOfNextFlare": 1
+      "m_dayOfNextFlare": 1,
+      "m_insideNebula": ""
     },
     {
       "m_id": 252,
@@ -3863,7 +4115,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 10,
-      "m_dayOfNextFlare": 23
+      "m_dayOfNextFlare": 23,
+      "m_insideNebula": ""
     },
     {
       "m_id": 253,
@@ -3874,7 +4127,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 10,
-      "m_dayOfNextFlare": 15
+      "m_dayOfNextFlare": 15,
+      "m_insideNebula": ""
     },
     {
       "m_id": 254,
@@ -3885,7 +4139,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 10,
-      "m_dayOfNextFlare": 23
+      "m_dayOfNextFlare": 23,
+      "m_insideNebula": ""
     },
     {
       "m_id": 255,
@@ -3896,7 +4151,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 10,
-      "m_dayOfNextFlare": 23
+      "m_dayOfNextFlare": 23,
+      "m_insideNebula": ""
     },
     {
       "m_id": 256,
@@ -3907,7 +4163,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 7,
-      "m_dayOfNextFlare": 13
+      "m_dayOfNextFlare": 13,
+      "m_insideNebula": ""
     },
     {
       "m_id": 257,
@@ -3918,7 +4175,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 7,
-      "m_dayOfNextFlare": 5
+      "m_dayOfNextFlare": 5,
+      "m_insideNebula": ""
     },
     {
       "m_id": 258,
@@ -3929,7 +4187,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 6,
-      "m_dayOfNextFlare": 11
+      "m_dayOfNextFlare": 11,
+      "m_insideNebula": true
     },
     {
       "m_id": 259,
@@ -3940,7 +4199,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 3,
-      "m_dayOfNextFlare": 17
+      "m_dayOfNextFlare": 17,
+      "m_insideNebula": ""
     },
     {
       "m_id": 260,
@@ -3951,7 +4211,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 2,
-      "m_dayOfNextFlare": 19
+      "m_dayOfNextFlare": 19,
+      "m_insideNebula": ""
     },
     {
       "m_id": 261,
@@ -3962,7 +4223,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 2,
-      "m_dayOfNextFlare": 3
+      "m_dayOfNextFlare": 3,
+      "m_insideNebula": ""
     },
     {
       "m_id": 262,
@@ -3973,7 +4235,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 1,
-      "m_dayOfNextFlare": 9
+      "m_dayOfNextFlare": 9,
+      "m_insideNebula": ""
     },
     {
       "m_id": 263,
@@ -3984,7 +4247,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 2,
-      "m_dayOfNextFlare": 3
+      "m_dayOfNextFlare": 3,
+      "m_insideNebula": ""
     },
     {
       "m_id": 264,
@@ -3995,7 +4259,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 10,
-      "m_dayOfNextFlare": 7
+      "m_dayOfNextFlare": 7,
+      "m_insideNebula": ""
     },
     {
       "m_id": 265,
@@ -4006,7 +4271,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4621,
       "m_monthOfNextFlare": 10,
-      "m_dayOfNextFlare": 3
+      "m_dayOfNextFlare": 3,
+      "m_insideNebula": ""
     },
     {
       "m_id": 266,
@@ -4017,7 +4283,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 3,
-      "m_dayOfNextFlare": 9
+      "m_dayOfNextFlare": 9,
+      "m_insideNebula": true
     },
     {
       "m_id": 267,
@@ -4028,7 +4295,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 3,
-      "m_dayOfNextFlare": 17
+      "m_dayOfNextFlare": 17,
+      "m_insideNebula": true
     },
     {
       "m_id": 268,
@@ -4039,7 +4307,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 5,
-      "m_dayOfNextFlare": 25
+      "m_dayOfNextFlare": 25,
+      "m_insideNebula": ""
     },
     {
       "m_id": 269,
@@ -4050,7 +4319,8 @@
       "m_daysSincePreviousFlare": "",
       "m_yearOfNextFlare": 4622,
       "m_monthOfNextFlare": 1,
-      "m_dayOfNextFlare": 1
+      "m_dayOfNextFlare": 1,
+      "m_insideNebula": ""
     }
   ],
   "m_planetList": [
