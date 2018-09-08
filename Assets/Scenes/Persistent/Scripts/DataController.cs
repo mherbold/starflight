@@ -32,11 +32,14 @@ public class DataController : MonoBehaviour
 	// the save game slots
 	public PlayerData[] m_playerDataList;
 
+	// the player data from the current save game slot
+	public PlayerData m_playerData;
+
 	// the active save game slot number
 	public int m_activeSaveGameSlotNumber;
 
-	// the player data from the current save game slot
-	public PlayerData m_playerData;
+	// set this to switch to a different save game slot
+	int m_targetSaveGameSlotNumber;
 
 	// unity awake
 	void Awake()
@@ -63,7 +66,45 @@ public class DataController : MonoBehaviour
 		// load the next scene
 		SceneManager.LoadScene( m_sceneToLoad );
 	}
-	
+
+	// unity late update
+	void LateUpdate()
+	{
+		// if we want to switch to a different save game do it now and load the next scene
+		if ( m_targetSaveGameSlotNumber != m_activeSaveGameSlotNumber )
+		{
+			// report the change
+			Debug.Log( "Switching to save game slot number " + m_targetSaveGameSlotNumber );
+
+			// make the current slot not the current game
+			m_playerData.m_isCurrentGame = false;
+
+			// save the active game in the old save game slot number
+			SaveActiveGame();
+
+			// update the active save game slot number
+			m_activeSaveGameSlotNumber = m_targetSaveGameSlotNumber;
+
+			// point the current player data to the new slot
+			m_playerData = m_playerDataList[ m_activeSaveGameSlotNumber ];
+
+			// make the current slot the active game
+			m_playerData.m_isCurrentGame = true;
+
+			// save the active game
+			SaveActiveGame();
+
+			// turn off controller navigation of the UI
+			EventSystem.current.sendNavigationEvents = false;
+
+			// figure out which scene to load (based on the player location in the save data)
+			string nextSceneName = GetCurrentSceneName();
+
+			// load the next scene
+			SceneManager.LoadScene( nextSceneName );
+		}
+	}
+
 	// load the game data files
 	void LoadGameData()
 	{
@@ -174,6 +215,9 @@ public class DataController : MonoBehaviour
 			m_playerData = m_playerDataList[ m_activeSaveGameSlotNumber ];
 		}
 
+		// set the target save game slot number to be the same as the active one
+		m_targetSaveGameSlotNumber = m_activeSaveGameSlotNumber;
+
 		// debug info
 		Debug.Log( "Active save game slot number is " + m_activeSaveGameSlotNumber );
 	}
@@ -227,35 +271,11 @@ public class DataController : MonoBehaviour
 		}
 	}
 
-	// call this to change the active save game slot number
-	public void SetActiveSaveGameSlotNumber( int newActiveSaveGameSlotNumber )
+	// call this to change the target save game slot number
+	public void SetTargetSaveGameSlotNumber( int targetSaveGameSlotNumber )
 	{
-		// make the current slot not the current game
-		m_playerData.m_isCurrentGame = false;
-
-		// save the active game in the old save game slot number
-		SaveActiveGame();
-
-		// update the active save game slot number
-		m_activeSaveGameSlotNumber = newActiveSaveGameSlotNumber;
-
-		// point the current player data to the new slot
-		m_playerData = m_playerDataList[ m_activeSaveGameSlotNumber ];
-
-		// make the current slot the active game
-		m_playerData.m_isCurrentGame = true;
-
-		// save the active game
-		SaveActiveGame();
-
-		// turn off controller navigation of the UI
-		EventSystem.current.sendNavigationEvents = false;
-
-		// figure out which scene to load (based on the player location in the save data)
-		string nextSceneName = GetCurrentSceneName();
-
-		// load the next scene
-		SceneManager.LoadScene( nextSceneName );
+		// update the target save game slot number
+		m_targetSaveGameSlotNumber = targetSaveGameSlotNumber;
 	}
 
 	// call this top copy the active save game slot to another slot
@@ -286,13 +306,13 @@ public class DataController : MonoBehaviour
 		// save the active game (with freshly reset data)
 		SaveActiveGame();
 
+		// turn off controller navigation of the UI
+		EventSystem.current.sendNavigationEvents = false;
+
 		// figure out which scene to load (based on the player location in the save data)
 		string nextSceneName = GetCurrentSceneName();
 
-		// start fading out the intro scene
-		SceneFadeController.m_instance.FadeOut( nextSceneName );
-
-		// turn off controller navigation of the UI
-		EventSystem.current.sendNavigationEvents = false;
+		// load the next scene
+		SceneManager.LoadScene( nextSceneName );
 	}
 }

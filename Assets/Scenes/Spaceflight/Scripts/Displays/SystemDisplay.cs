@@ -4,56 +4,22 @@ using UnityEngine.UI;
 
 public class SystemDisplay : ShipDisplay
 {
-	private GameObject[] m_orbitGameObject;
-	private Image [] m_planetImage;
-	private GameObject m_arthGameObject;
-	private Image m_sunImage;
-	private GameObject m_shipGameObject;
+	// the orbit rings
+	public GameObject[] m_orbitGameObject;
 
-	public SystemDisplay( GameObject rootGameObject ) : base( rootGameObject )
-	{
-		Transform transform;
+	// the planets
+	public Image [] m_planetImage;
 
-		// allocate arrays
-		m_orbitGameObject = new GameObject[ Star.c_maxNumPlanets ];
-		m_planetImage = new Image[ Star.c_maxNumPlanets ];
+	// arth starport
+	public GameObject m_arthGameObject;
 
-		// get to the orbits
-		for ( int i = 0; i < Star.c_maxNumPlanets; i++ )
-		{
-			// get the orbit game object
-			transform = m_rootGameObject.transform.Find( "Orbit-" + ( i + 1 ) );
-			m_orbitGameObject[ i ] = transform.gameObject;
+	// the star
+	public Image m_starImage;
 
-			// get the planet image
-			transform = m_orbitGameObject[ i ].transform.Find( "Planet" );
-			m_planetImage[ i ] = transform.GetComponent<Image>();
-		}
+	// the ship
+	public GameObject m_shipGameObject;
 
-		// get to the arth game object
-		transform = m_orbitGameObject[ 2 ].transform.Find( "Arth" );
-		m_arthGameObject = transform.gameObject;
-
-		// get to the sun image
-		transform = m_rootGameObject.transform.Find( "Star" );
-		m_sunImage = transform.GetComponent<Image>();
-
-		// get to the ship game object
-		transform = m_rootGameObject.transform.Find( "Ship" );
-		m_shipGameObject = transform.gameObject;
-	}
-
-	public override string GetLabel()
-	{
-		return "System Map";
-	}
-
-	public override void Start()
-	{
-		// turn on the system display
-		m_rootGameObject.SetActive( true );
-	}
-
+	// unity update
 	public override void Update()
 	{
 		// update the positions of the planets
@@ -71,6 +37,13 @@ public class SystemDisplay : ShipDisplay
 		m_shipGameObject.transform.localPosition = new Vector3( position.x, position.z );
 	}
 
+	// the system map display label
+	public override string GetLabel()
+	{
+		return "System Map";
+	}
+
+	// call this to change the system currently being displayed
 	public void ChangeSystem()
 	{
 		// get to the player data
@@ -103,7 +76,7 @@ public class SystemDisplay : ShipDisplay
 			default: color = new Color( 1.0f, 0.5f, 1.0f ); break;
 		}
 
-		m_sunImage.color = color;
+		m_starImage.color = color;
 
 		// update each planet in the system
 		for ( int i = 0; i < Star.c_maxNumPlanets; i++ )

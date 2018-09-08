@@ -1,38 +1,31 @@
 ﻿
 using UnityEngine;
 
-abstract public class ShipDisplay
+abstract public class ShipDisplay : MonoBehaviour
 {
 	// convenient access to the spaceflight controller
-	protected SpaceflightController m_spaceflightController;
+	public SpaceflightController m_spaceflightController;
 
-	// the root display gameobject
-	protected GameObject m_rootGameObject;
-
-	public ShipDisplay( GameObject rootGameObject )
+	// unity update
+	public virtual void Update()
 	{
-		GameObject controllersGameObject = GameObject.FindWithTag( "Spaceflight Controllers" );
-
-		m_spaceflightController = controllersGameObject.GetComponent<SpaceflightController>();
-
-		m_rootGameObject = rootGameObject;
 	}
 
+	// returns the display label
 	public virtual string GetLabel()
 	{
 		return "???";
 	}
 
-	public virtual void Start()
+	// call this to show the display
+	public void Show()
 	{
+		gameObject.SetActive( true );
 	}
 
-	public virtual void Stop()
+	// call this to hide the display
+	public void Hide()
 	{
-		m_rootGameObject.SetActive( false );
-	}
-
-	public virtual void Update()
-	{
+		gameObject.SetActive( false );
 	}
 }

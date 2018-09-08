@@ -83,7 +83,7 @@ public class SaveGamePanel : Panel
 		base.Closed();
 
 		// if we have a callback object let it know we have closed the panel
-		if ( m_callbackObject != null )
+		if ( ( m_callbackObject != null ) && !m_callbackObject.Equals( null ) )
 		{
 			// get the object type
 			var type = m_callbackObject.GetType();
@@ -176,7 +176,7 @@ public class SaveGamePanel : Panel
 		if ( i != DataController.m_instance.m_activeSaveGameSlotNumber )
 		{
 			// yes - tell the data controller to switch
-			DataController.m_instance.SetActiveSaveGameSlotNumber( i );
+			DataController.m_instance.SetTargetSaveGameSlotNumber( i );
 
 			// play the update sound
 			SoundController.m_instance.PlaySound( SoundController.Sound.Update );

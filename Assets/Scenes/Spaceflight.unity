@@ -6549,6 +6549,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 249927113}
+  - component: {fileID: 249927114}
   m_Layer: 5
   m_Name: System
   m_TagString: Untagged
@@ -6584,6 +6585,39 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &249927114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 249927112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24da9d98cb3635947b5eb3147497cdcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_spaceflightController: {fileID: 280970583}
+  m_orbitGameObject:
+  - {fileID: 481871163}
+  - {fileID: 1333564173}
+  - {fileID: 22325945}
+  - {fileID: 908655282}
+  - {fileID: 1826840657}
+  - {fileID: 1202479675}
+  - {fileID: 1661536533}
+  - {fileID: 2048351697}
+  m_planetImage:
+  - {fileID: 965561277}
+  - {fileID: 68207494}
+  - {fileID: 84032509}
+  - {fileID: 165515775}
+  - {fileID: 1516164080}
+  - {fileID: 1481652164}
+  - {fileID: 1285096146}
+  - {fileID: 690888905}
+  m_arthGameObject: {fileID: 633193389}
+  m_starImage: {fileID: 93735868}
+  m_shipGameObject: {fileID: 2140552717}
 --- !u!4 &255837059 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400002, guid: d55d5f63500e02a439c1dd3e993335b9,
@@ -6603,9 +6637,6 @@ GameObject:
   m_Component:
   - component: {fileID: 280970586}
   - component: {fileID: 280970583}
-  - component: {fileID: 280970591}
-  - component: {fileID: 280970590}
-  - component: {fileID: 280970589}
   m_Layer: 0
   m_Name: Controllers
   m_TagString: Spaceflight Controllers
@@ -6636,6 +6667,9 @@ MonoBehaviour:
   m_starSystem: {fileID: 626356946}
   m_hyperspace: {fileID: 1706819838}
   m_spaceflightUI: {fileID: 1871356017}
+  m_buttonController: {fileID: 1137917436}
+  m_displayController: {fileID: 1625867937}
+  m_systemController: {fileID: 626356947}
 --- !u!4 &280970586
 Transform:
   m_ObjectHideFlags: 0
@@ -6649,70 +6683,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &280970589
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 280970582}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c88f33ad406d98e47acef01ac6fe685f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_planetController:
-  - {fileID: 888856207}
-  - {fileID: 1769079814}
-  - {fileID: 1805226547}
-  - {fileID: 1398623718}
-  - {fileID: 2038733350}
-  - {fileID: 1173938741}
-  - {fileID: 502575364}
-  - {fileID: 1106076620}
-  m_shine: {fileID: 845916771}
---- !u!114 &280970590
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 280970582}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c25d3c85ecd92694d99ce086a90bc946, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_displayLabel: {fileID: 1022876887}
-  m_status: {fileID: 1646402543}
-  m_system: {fileID: 249927112}
---- !u!114 &280970591
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 280970582}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d89e95fe93122a43ba4c62a881fa712, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_buttonOffSprite: {fileID: 21300000, guid: 042e91bf611e68f448be1604aec65327, type: 3}
-  m_buttonOnSprite: {fileID: 21300000, guid: d6252e721c8b73d4e9e495a3f207875f, type: 3}
-  m_buttonActiveSprite: {fileID: 21300000, guid: 08717c6514401b2498ab1d94f2007acd,
-    type: 3}
-  m_buttonImageList:
-  - {fileID: 1142541247}
-  - {fileID: 1330699051}
-  - {fileID: 538894709}
-  - {fileID: 94337285}
-  - {fileID: 1356559144}
-  - {fileID: 911945545}
-  m_buttonLabelList:
-  - {fileID: 1960921345}
-  - {fileID: 998491393}
-  - {fileID: 920414655}
-  - {fileID: 1384549382}
-  - {fileID: 2090744178}
-  - {fileID: 1117387106}
 --- !u!1 &313232382
 GameObject:
   m_ObjectHideFlags: 0
@@ -8055,6 +8025,7 @@ GameObject:
   m_Component:
   - component: {fileID: 626356945}
   - component: {fileID: 626356946}
+  - component: {fileID: 626356947}
   m_Layer: 8
   m_Name: Star System
   m_TagString: Untagged
@@ -8098,6 +8069,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_nebula: {fileID: 613705365}
+--- !u!114 &626356947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 626356944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c88f33ad406d98e47acef01ac6fe685f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_planetController:
+  - {fileID: 888856207}
+  - {fileID: 1769079814}
+  - {fileID: 1805226547}
+  - {fileID: 1398623718}
+  - {fileID: 2038733350}
+  - {fileID: 1173938741}
+  - {fileID: 502575364}
+  - {fileID: 1106076620}
+  m_shine: {fileID: 845916771}
 --- !u!1 &633193389
 GameObject:
   m_ObjectHideFlags: 0
@@ -10104,8 +10096,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1137917434}
   - component: {fileID: 1137917435}
+  - component: {fileID: 1137917436}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: Buttons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10153,6 +10146,35 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
   m_ChildControlHeight: 1
+--- !u!114 &1137917436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1137917433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d89e95fe93122a43ba4c62a881fa712, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_buttonOffSprite: {fileID: 21300000, guid: 042e91bf611e68f448be1604aec65327, type: 3}
+  m_buttonOnSprite: {fileID: 21300000, guid: d6252e721c8b73d4e9e495a3f207875f, type: 3}
+  m_buttonActiveSprite: {fileID: 21300000, guid: 08717c6514401b2498ab1d94f2007acd,
+    type: 3}
+  m_buttonImageList:
+  - {fileID: 1142541247}
+  - {fileID: 1330699051}
+  - {fileID: 538894709}
+  - {fileID: 94337285}
+  - {fileID: 1356559144}
+  - {fileID: 911945545}
+  m_buttonLabelList:
+  - {fileID: 1960921345}
+  - {fileID: 998491393}
+  - {fileID: 920414655}
+  - {fileID: 1384549382}
+  - {fileID: 2090744178}
+  - {fileID: 1117387106}
 --- !u!1 &1142541244
 GameObject:
   m_ObjectHideFlags: 0
@@ -21112,8 +21134,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1625867936}
+  - component: {fileID: 1625867937}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: Display
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21139,6 +21162,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1625867937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1625867935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c25d3c85ecd92694d99ce086a90bc946, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_displayLabel: {fileID: 1022876887}
+  m_statusDisplay: {fileID: 1646402545}
+  m_systemDisplay: {fileID: 249927114}
 --- !u!1 &1637878563
 GameObject:
   m_ObjectHideFlags: 0
@@ -21181,6 +21218,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1646402544}
+  - component: {fileID: 1646402545}
   m_Layer: 5
   m_Name: Status
   m_TagString: Untagged
@@ -21206,6 +21244,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1646402545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1646402543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c3f1e7107f155d419341850d61addd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_spaceflightController: {fileID: 280970583}
 --- !u!1001 &1648626399
 Prefab:
   m_ObjectHideFlags: 0

@@ -4,23 +4,15 @@ using TMPro;
 
 public class DisplayController : MonoBehaviour
 {
-	// public stuff we want to set using the editor
+	// the display label
 	public TextMeshProUGUI m_displayLabel;
-	public GameObject m_status;
-	public GameObject m_system;
 
-	// displays
+	// the controllers for each display
 	public StatusDisplay m_statusDisplay;
 	public SystemDisplay m_systemDisplay;
-	public ShipDisplay m_currentDisplay;
 
-	// unity awake
-	void Awake()
-	{
-		// create displays
-		m_statusDisplay = new StatusDisplay( m_status );
-		m_systemDisplay = new SystemDisplay( m_system );
-	}
+	// the current display
+	ShipDisplay m_currentDisplay;
 
 	// unity start
 	void Start()
@@ -29,25 +21,18 @@ public class DisplayController : MonoBehaviour
 		ChangeDisplay( m_statusDisplay );
 	}
 
-	// unity update
-	void Update()
-	{
-		// update the current display
-		m_currentDisplay.Update();
-	}
-
 	// change the current display to a different one
 	public void ChangeDisplay( ShipDisplay newDisplay )
 	{
 		// inactivate all of the display UI
-		m_statusDisplay.Stop();
-		m_systemDisplay.Stop();
+		m_statusDisplay.Hide();
+		m_systemDisplay.Hide();
 
 		// change the current display
 		m_currentDisplay = newDisplay;
 
 		// fire it up
-		m_currentDisplay.Start();
+		m_currentDisplay.Show();
 
 		// update the display label
 		m_displayLabel.text = m_currentDisplay.GetLabel();

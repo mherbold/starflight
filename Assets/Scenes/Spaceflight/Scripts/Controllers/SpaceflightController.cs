@@ -24,9 +24,9 @@ public class SpaceflightController : MonoBehaviour
 	public SpaceflightUI m_spaceflightUI;
 
 	// controllers
-	public ButtonController m_buttonController { get; protected set; }
-	public DisplayController m_displayController { get; protected set; }
-	public SystemController m_systemController { get; protected set; }
+	public ButtonController m_buttonController;
+	public DisplayController m_displayController;
+	public SystemController m_systemController;
 
 	// save game timer
 	float m_timer;
@@ -34,6 +34,12 @@ public class SpaceflightController : MonoBehaviour
 	// unity awake
 	void Awake()
 	{
+		// hide all components
+		m_player.Hide();
+		m_dockingBay.Hide();
+		m_starSystem.Hide();
+		m_hyperspace.Hide();
+
 		// check if we loaded the persistent scene
 		if ( DataController.m_instance == null )
 		{
@@ -41,13 +47,6 @@ public class SpaceflightController : MonoBehaviour
 			DataController.m_sceneToLoad = "Spaceflight";
 
 			SceneManager.LoadScene( "Persistent" );
-		}
-		else
-		{
-			// get access to the various controllers
-			m_buttonController = GetComponent<ButtonController>();
-			m_displayController = GetComponent<DisplayController>();
-			m_systemController = GetComponent<SystemController>();
 		}
 	}
 
@@ -59,15 +58,6 @@ public class SpaceflightController : MonoBehaviour
 
 		// turn off controller navigation of the UI
 		EventSystem.current.sendNavigationEvents = false;
-
-		// reset the player to the docking bay if we want that to happen
-		if ( m_forceResetToDockingBay )
-		{
-			playerData.m_starflight.m_hyperspaceCoordinates = Tools.GameToWorldCoordinates( new Vector3( 125.0f, 0.0f, 101.0f ) );
-			playerData.m_starflight.m_location = Starflight.Location.DockingBay;
-		}
-
-		// playerData.m_starflight.m_hyperspaceCoordinates = Tools.GameToWorldCoordinates( new Vector3( 119.0f, 0.0f, 107.0f ) );
 
 		// switch to the correct mode
 		SwitchMode();
@@ -128,7 +118,7 @@ public class SpaceflightController : MonoBehaviour
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// switch to the correct mode
-		Debug.Log( "Switching to " + playerData.m_starflight.m_location );
+		Debug.Log( "Switching to location " + playerData.m_starflight.m_location );
 
 		switch ( playerData.m_starflight.m_location )
 		{
@@ -143,6 +133,9 @@ public class SpaceflightController : MonoBehaviour
 				break;
 			case Starflight.Location.Hyperspace:
 				m_hyperspace.Show();
+				break;
+			case Starflight.Location.Starport:
+				SceneManager.LoadScene( "Starport" );
 				break;
 		}
 
