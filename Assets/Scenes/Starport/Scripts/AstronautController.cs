@@ -27,7 +27,6 @@ public class AstronautController : MonoBehaviour
 	{
 		// move the transporter particles along with the astronaut
 		m_transporterParticleSystem.transform.position = m_astronautGameObject.transform.position;
-
 	}
 
 	// call this to move the astronaut

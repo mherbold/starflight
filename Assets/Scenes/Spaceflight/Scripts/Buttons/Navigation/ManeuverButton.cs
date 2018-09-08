@@ -34,9 +34,8 @@ public class ManeuverButton : ShipButton
 		// switch to the correct mode
 		m_spaceflightController.SwitchMode();
 
-		// reset the current speed and direction
+		// reset the current speed
 		playerData.m_starflight.m_currentSpeed = 0.0f;
-		playerData.m_starflight.m_currentDirection = Vector3.forward;
 
 		return true;
 	}

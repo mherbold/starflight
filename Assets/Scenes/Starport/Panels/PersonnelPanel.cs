@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class PersonnelController : DoorController
+public class PersonnelPanel : Panel
 {
 	enum State
 	{
@@ -55,25 +55,26 @@ public class PersonnelController : DoorController
 	public GameObject m_selectionXform;
 	public InputField m_nameInputField;
 
+	// the starport controller
+	public StarportController m_starportController;
+
 	// private stuff we don't want the editor to see
-	private State m_currentState;
-	private int m_currentFileIndex;
-	private int m_currentRaceIndex;
-	private int m_currentSkillIndex;
-	private int m_startingBankBalance;
-	private Vector3 m_baseSelectionOffsetMin;
-	private Vector3 m_baseSelectionOffsetMax;
-	private float m_ignoreControllerTimer;
+	State m_currentState;
+	int m_currentFileIndex;
+	int m_currentRaceIndex;
+	int m_currentSkillIndex;
+	int m_startingBankBalance;
+	Vector3 m_baseSelectionOffsetMin;
+	Vector3 m_baseSelectionOffsetMax;
+	float m_ignoreControllerTimer;
 
 	// constant values
-	private const int c_numRaces = 5;
-	private const int c_numSkills = 5;
+	const int c_numRaces = 5;
+	const int c_numSkills = 5;
 
-	// this is called by unity before start
-	protected override void Awake()
+	// unity awake
+	void Awake()
 	{
-		base.Awake();
-
 		// reset the ignore controller timer
 		m_ignoreControllerTimer = 0.0f;
 
@@ -83,15 +84,58 @@ public class PersonnelController : DoorController
 		m_baseSelectionOffsetMax = rectTransform.offsetMax;
 	}
 
-	// this is called by unity every frame
-	private void Update()
+	// panel open
+	public override bool Open()
 	{
-		// if we don't have the focus then don't do anything now
-		if ( !m_hasFocus )
+		// base panel open
+		base.Open();
+
+		// view the first file
+		m_currentFileIndex = 0;
+
+		// remember the starting bank balance
+		m_startingBankBalance = DataController.m_instance.m_playerData.m_bank.m_currentBalance;
+
+		// update the ui
+		UpdateScreen();
+
+		// switch to the default view
+		SwitchToViewFileState();
+
+		// panel was opened
+		return true; 
+	}
+
+	// call this to hide the personnel ui
+	public override void Close()
+	{
+		// if the bank balance has changed then record it in the bank transaction log
+		int deltaBalance = m_startingBankBalance - DataController.m_instance.m_playerData.m_bank.m_currentBalance;
+
+		if ( deltaBalance > 0 )
 		{
-			return;
+			Bank.Transaction transaction = new Bank.Transaction( DataController.m_instance.m_playerData.m_starflight.m_currentStardate, "Personnel", deltaBalance.ToString() + "-" );
+
+			DataController.m_instance.m_playerData.m_bank.m_transactionList.Add( transaction );
 		}
 
+		// base panel close
+		base.Close();
+	}
+
+	// panel closed
+	public override void Closed()
+	{
+		// base panel closed
+		base.Closed();
+
+		// let the starport controller know
+		m_starportController.PanelWasClosed();
+	}
+
+	// panel tick
+	public override void Tick()
+	{
 		// update the ignore controller timer
 		m_ignoreControllerTimer = Mathf.Max( 0.0f, m_ignoreControllerTimer - Time.deltaTime );
 
@@ -206,79 +250,6 @@ public class PersonnelController : DoorController
 
 			SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
 		}
-	}
-
-	// call this to show the personnel ui
-	public override void Show()
-	{
-		// reset the current state
-		m_currentState = State.ViewFile;
-
-		// view the first file
-		m_currentFileIndex = 0;
-
-		// remember the starting bank balance
-		m_startingBankBalance = DataController.m_instance.m_playerData.m_bank.m_currentBalance;
-
-		// update the ui
-		UpdateScreen();
-
-		// start the opening animation
-		StartOpeningUI();
-	}
-
-	// call this to hide the personnel ui
-	public override void Hide()
-	{
-		// lose the focus
-		LoseFocus();
-
-		// start the closing animation
-		StartClosingUI();
-
-		// if the bank balance has changed then record it in the bank transaction log
-		int deltaBalance = m_startingBankBalance - DataController.m_instance.m_playerData.m_bank.m_currentBalance;
-
-		if ( deltaBalance > 0 )
-		{
-			Bank.Transaction transaction = new Bank.Transaction( DataController.m_instance.m_playerData.m_starflight.m_currentStardate, "Personnel", deltaBalance.ToString() + "-" );
-
-			DataController.m_instance.m_playerData.m_bank.m_transactionList.Add( transaction );
-		}
-	}
-
-	// call this to take control
-	public void TakeFocus()
-	{
-		// turn on controller navigation of the UI
-		EventSystem.current.sendNavigationEvents = true;
-
-		// switch to the default view
-		SwitchToViewFileState();
-
-		// cancel the ui sounds
-		//m_starportController.m_uiSoundController.CancelSounds();
-	}
-
-	// call this to give up control
-	public void LoseFocus()
-	{
-		// turn off controller navigation of the UI
-		EventSystem.current.sendNavigationEvents = false;
-	}
-
-	// this is called when the ui has finished animating to the open state
-	public override void FinishedOpeningUI()
-	{
-		// take the focus
-		TakeFocus();
-	}
-
-	// this is called when the ui has finished animating to the close state
-	public override void FinishedClosingUI()
-	{
-		// give the focus back to the starport controller
-		m_starportController.TakeFocus();
 	}
 
 	// call this to switch to the view file state
@@ -877,8 +848,8 @@ public class PersonnelController : DoorController
 	// this is called if we clicked on the exit button
 	public void ExitClicked()
 	{
-		// close this ui
-		Hide();
+		// close this panel
+		PanelController.m_instance.Close();
 	}
 
 	// this is called if we clicked on the train button

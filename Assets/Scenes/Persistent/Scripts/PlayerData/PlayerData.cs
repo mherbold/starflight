@@ -5,10 +5,16 @@ using System;
 
 public class PlayerData
 {
-	const int c_currentVersion = 4;
+	// the current save game version - increment this to invalidate obsolete save game files
+	const int c_currentVersion = 6;
 
+	// the current version of this player data file
 	public int m_version;
 
+	// is this the current game?
+	public bool m_isCurrentGame;
+	
+	// all the parts of the player data
 	public Starflight m_starflight;
 	public Starport m_starport;
 	public Personnel m_personnel;
@@ -21,6 +27,7 @@ public class PlayerData
 	public void Reset()
 	{
 		m_version = c_currentVersion;
+		m_isCurrentGame = false;
 
 		m_starflight = new Starflight();
 		m_starport = new Starport();

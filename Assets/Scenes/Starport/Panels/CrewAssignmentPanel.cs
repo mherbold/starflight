@@ -2,10 +2,9 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using TMPro;
 
-public class CrewAssignmentController : DoorController
+public class CrewAssignmentPanel : Panel
 {
 	enum State
 	{
@@ -28,22 +27,23 @@ public class CrewAssignmentController : DoorController
 	public GameObject m_disabledArrowsGameObject;
 	public GameObject m_bottomPanelGameObject;
 
+	// the starport controller
+	public StarportController m_starportController;
+
 	// private stuff we don't want the editor to see
-	private State m_currentState;
-	private CrewAssignment.Role m_currentRole;
-	private int m_currentPersonnelId;
-	private Vector3 m_baseSelectionOffsetMin;
-	private Vector3 m_baseSelectionOffsetMax;
-	private float m_ignoreControllerTimer;
+	State m_currentState;
+	CrewAssignment.Role m_currentRole;
+	int m_currentPersonnelId;
+	Vector3 m_baseSelectionOffsetMin;
+	Vector3 m_baseSelectionOffsetMax;
+	float m_ignoreControllerTimer;
 
 	// constant values
-	private const int c_numSkills = 5;
+	const int c_numSkills = 5;
 
-	// this is called by unity before start
-	protected override void Awake()
+	// unity awake
+	void Awake()
 	{
-		base.Awake();
-
 		// reset the ignore controller timer
 		m_ignoreControllerTimer = 0.0f;
 
@@ -53,15 +53,32 @@ public class CrewAssignmentController : DoorController
 		m_baseSelectionOffsetMax = rectTransform.offsetMax;
 	}
 
-	// this is called by unity every frame
-	private void Update()
+	// panel open
+	public override bool Open()
 	{
-		// if we don't have the focus then don't do anything now
-		if ( !m_hasFocus )
-		{
-			return;
-		}
+		// base panel open
+		base.Open();
 
+		// reset the current state
+		SwitchToMenuBarState();
+
+		// panel was opened
+		return true;
+	}
+
+	// panel closed
+	public override void Closed()
+	{
+		// base panel closed
+		base.Closed();
+
+		// let the starport controller know
+		m_starportController.PanelWasClosed();
+	}
+
+	// panel tick
+	public override void Tick()
+	{
 		// update the ignore controller timer
 		m_ignoreControllerTimer = Mathf.Max( 0.0f, m_ignoreControllerTimer - Time.deltaTime );
 
@@ -167,62 +184,8 @@ public class CrewAssignmentController : DoorController
 		}
 	}
 
-	// call this to show the personnel ui
-	public override void Show()
-	{
-		// reset the current state
-		SwitchToMenuBarState();
-
-		// start the opening animation
-		StartOpeningUI();
-	}
-
-	// call this to hide the personnel ui
-	public override void Hide()
-	{
-		// lose the focus
-		LoseFocus();
-
-		// start the closing animation
-		StartClosingUI();
-	}
-
-	// call this to take control
-	public void TakeFocus()
-	{
-		// turn on controller navigation of the UI
-		EventSystem.current.sendNavigationEvents = true;
-
-		// switch to the default view
-		SwitchToMenuBarState();
-
-		// cancel the ui sounds
-		//m_starportController.m_uiSoundController.CancelSounds();
-	}
-
-	// call this to give up control
-	public void LoseFocus()
-	{
-		// turn off controller navigation of the UI
-		EventSystem.current.sendNavigationEvents = false;
-	}
-
-	// this is called when the ui has finished animating to the open state
-	public override void FinishedOpeningUI()
-	{
-		// take the focus
-		TakeFocus();
-	}
-
-	// this is called when the ui has finished animating to the close state
-	public override void FinishedClosingUI()
-	{
-		// give the focus back to the starport controller
-		m_starportController.TakeFocus();
-	}
-
 	// call this to switch to the menu bar state
-	private void SwitchToMenuBarState()
+	void SwitchToMenuBarState()
 	{
 		// change the current state
 		m_currentState = State.MenuBar;
@@ -286,7 +249,7 @@ public class CrewAssignmentController : DoorController
 	}
 
 	// call this to switch to the select race state
-	private void SwitchToAssignPersonnelState()
+	void SwitchToAssignPersonnelState()
 	{
 		// change the current state
 		m_currentState = State.AssignPersonnel;
@@ -322,7 +285,7 @@ public class CrewAssignmentController : DoorController
 	}
 
 	// update the assigned crewmember list
-	private void UpdateAssignedCrewmemberList()
+	void UpdateAssignedCrewmemberList()
 	{
 		// get access to the crew assignment player data
 		CrewAssignment crewAssignment = DataController.m_instance.m_playerData.m_crewAssignment;
@@ -355,7 +318,7 @@ public class CrewAssignmentController : DoorController
 		}
 	}
 
-	private void ChangeCurrentRole( CrewAssignment.Role role )
+	void ChangeCurrentRole( CrewAssignment.Role role )
 	{
 		// update the current position index
 		m_currentRole = role;
@@ -385,7 +348,7 @@ public class CrewAssignmentController : DoorController
 		SoundController.m_instance.PlaySound( SoundController.Sound.Update );
 	}
 
-	private void ChangeCurrentPersonnelId( int personnelId, bool forceUpdate = false )
+	void ChangeCurrentPersonnelId( int personnelId, bool forceUpdate = false )
 	{
 		// don't do anything if we aren't changing the file index to a different one
 		if ( ( personnelId != m_currentPersonnelId ) || forceUpdate )
@@ -413,7 +376,7 @@ public class CrewAssignmentController : DoorController
 		}
 	}
 
-	private void UpdateDisplay()
+	void UpdateDisplay()
 	{
 		// show the up arrow only if we are not at the first position index
 		m_upArrowImage.gameObject.SetActive( m_currentRole != CrewAssignment.Role.First );
@@ -471,7 +434,7 @@ public class CrewAssignmentController : DoorController
 	// this is called if we clicked on the exit button
 	public void ExitClicked()
 	{
-		// close this ui
-		Hide();
+		// close this panel
+		PanelController.m_instance.Close();
 	}
 }

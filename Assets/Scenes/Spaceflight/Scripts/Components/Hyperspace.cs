@@ -210,6 +210,12 @@ public class Hyperspace : MonoBehaviour
 		// move the ship to where we are in hyperspace
 		m_spaceflightController.m_player.SetPosition( playerData.m_starflight.m_hyperspaceCoordinates );
 
+		// calculate the new rotation of the player
+		Quaternion newRotation = Quaternion.LookRotation( playerData.m_starflight.m_currentDirection, Vector3.up );
+
+		// update the player rotation
+		m_spaceflightController.m_player.SetRotation( newRotation );
+
 		// show the status display
 		m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_statusDisplay );
 

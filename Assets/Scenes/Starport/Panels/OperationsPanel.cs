@@ -1,48 +1,68 @@
 ﻿
 using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using TMPro;
 
-public class NoticesController : MonoBehaviour
+public class OperationsPanel : Panel
 {
-	// public stuff we want to set using the editor
-	public GameObject m_gameObject;
+	// the screens
+	public GameObject m_welcomeGameObject;
+	public GameObject m_noticesGameObject;
+	public GameObject m_evaluationGameObject;
+
+	// main buttons
+	public Button m_noticesButton;
+	public Button m_evaluationButton;
+	public Button m_exitButton;
+
+	// notices buttons
+	public Button m_moreButton;
+	public Button m_previousButton;
+	public Button m_nextButton;
+	public Button m_quitButton;
+
+	// notice screen components
 	public TextMeshProUGUI m_stardateText;
 	public TextMeshProUGUI m_messageText;
 	public float m_baseOffset;
 	public float m_smoothScrollSpeed;
 
-	// private stuff we don't want the editor to see
-	private OperationsController m_operationsController;
-	private int m_latestNoticeId;
-	private int m_currentNoticeId;
-	private int m_currentLine;
-	private float m_currentOffset;
-	private bool m_endOfMessageReached;
+	// notices stuff
+	int m_latestNoticeId;
+	int m_currentNoticeId;
+	int m_currentLine;
+	float m_currentOffset;
+	bool m_endOfMessageReached;
 
-	// this is called by unity before start
-	private void Awake()
+	// the starport controller
+	public StarportController m_starportController;
+
+	// panel open
+	public override bool Open()
 	{
-		// get access to the operations controller
-		m_operationsController = GetComponent<OperationsController>();
+		// base panel open
+		base.Open();
+
+		// show the welcome screen
+		ShowWelcome();
+
+		// panel was opened
+		return true;
 	}
 
-	// this is called by unity every frame
-	private void Update()
+	// panel closed
+	public override void Closed()
 	{
-		// if we don't have the focus then don't do anything now
-		if ( !m_operationsController.m_hasFocus )
-		{
-			return;
-		}
+		// base panel closed
+		base.Closed();
 
-		// smooth scroll the displayed message
-		UpdateSmoothScroll();
+		// let the starport controller know
+		m_starportController.PanelWasClosed();
 	}
 
-	// call this to smooth scroll the displayed message
-	private void UpdateSmoothScroll()
+	// panel tick
+	public override void Tick()
 	{
 		// get the height of the message shown
 		float newOffset = m_messageText.renderedHeight + m_baseOffset;
@@ -54,11 +74,47 @@ public class NoticesController : MonoBehaviour
 		m_messageText.rectTransform.offsetMax = new Vector3( 0.0f, m_currentOffset, 0.0f );
 	}
 
-	// call this to enter the notices screen
-	public void Show()
+	// call this to enter the welcome screen
+	public void ShowWelcome()
 	{
-		// we have the controller focus now
-		TakeFocus();
+		// show and hide objects
+		m_welcomeGameObject.SetActive( true );
+		m_noticesGameObject.SetActive( false );
+		m_evaluationGameObject.SetActive( false );
+
+		// show the main buttons
+		m_noticesButton.gameObject.SetActive( true );
+		m_evaluationButton.gameObject.SetActive( true );
+		m_exitButton.gameObject.SetActive( true );
+
+		// hide the notices buttons
+		m_moreButton.gameObject.SetActive( false );
+		m_previousButton.gameObject.SetActive( false );
+		m_nextButton.gameObject.SetActive( false );
+		m_quitButton.gameObject.SetActive( false );
+
+		// automatically select the "notices" button for the player
+		m_noticesButton.Select();
+	}
+
+	// call this to enter the notices screen
+	public void ShowNotices()
+	{
+		// show and hide objects
+		m_welcomeGameObject.SetActive( false );
+		m_noticesGameObject.SetActive( true );
+		m_evaluationGameObject.SetActive( false );
+
+		// hide the main buttons
+		m_noticesButton.gameObject.SetActive( false );
+		m_evaluationButton.gameObject.SetActive( false );
+		m_exitButton.gameObject.SetActive( false );
+
+		// show the notices buttons
+		m_moreButton.gameObject.SetActive( true );
+		m_previousButton.gameObject.SetActive( true );
+		m_nextButton.gameObject.SetActive( true );
+		m_quitButton.gameObject.SetActive( true );
 
 		// reset some variables
 		m_latestNoticeId = 0;
@@ -104,25 +160,51 @@ public class NoticesController : MonoBehaviour
 		ShowCurrentMessage();
 	}
 
-	// call this to return to the operations screen
-	public void Hide()
+	// call this to enter the evaluations screen
+	public void ShowEvaluations()
 	{
-		// give focus to the operations controller
-		m_operationsController.TakeFocus();
+		// show and hide objects
+		m_welcomeGameObject.SetActive( false );
+		m_noticesGameObject.SetActive( false );
+		m_evaluationGameObject.SetActive( true );
+
+		// show the main buttons
+		m_noticesButton.gameObject.SetActive( true );
+		m_evaluationButton.gameObject.SetActive( true );
+		m_exitButton.gameObject.SetActive( true );
+
+		// hide the notices buttons
+		m_moreButton.gameObject.SetActive( false );
+		m_previousButton.gameObject.SetActive( false );
+		m_nextButton.gameObject.SetActive( false );
+		m_quitButton.gameObject.SetActive( false );
 	}
 
-	// call this to take control
-	public void TakeFocus()
+	// this is called if we clicked on the notices button
+	public void NoticesClicked()
 	{
-		// turn on controller navigation of the UI
-		EventSystem.current.sendNavigationEvents = true;
+		// show the notices
+		ShowNotices();
+
+		// play a ui sound
+		SoundController.m_instance.PlaySound( SoundController.Sound.Activate );
 	}
 
-	// call this to give up control
-	public void LoseFocus()
+	// this is called if we clicked on the evaluation button
+	public void EvaluationClicked()
 	{
-		// turn off controller navigation of the UI
-		EventSystem.current.sendNavigationEvents = false;
+		// show the evaluations screen
+		ShowEvaluations();
+
+		// play a ui sound
+		SoundController.m_instance.PlaySound( SoundController.Sound.Activate );
+	}
+
+	// this is called if we clicked on the exit button
+	public void ExitClicked()
+	{
+		// close this panel
+		PanelController.m_instance.Close();
 	}
 
 	// this is called if we clicked on the more button
@@ -164,17 +246,17 @@ public class NoticesController : MonoBehaviour
 	}
 
 	// this is called if we clicked on the quit button
-	public void CloseClicked()
+	public void QuitClicked()
 	{
-		// leave the notices screen
-		Hide();
+		// show the welcome screen
+		ShowWelcome();
 
 		// play a ui sound
 		SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
 	}
 
 	// call this to start displaying the current message
-	private void ShowCurrentMessage()
+	void ShowCurrentMessage()
 	{
 		// reset some variables
 		m_currentLine = 0;
@@ -189,40 +271,35 @@ public class NoticesController : MonoBehaviour
 	}
 
 	// update which buttons are enabled and selected
-	private void UpdateButtons()
+	void UpdateButtons()
 	{
-		UnityEngine.UI.Button moreButton = m_gameObject.transform.Find( "Panel/Buttons/More Button" ).gameObject.GetComponent<UnityEngine.UI.Button>();
-		UnityEngine.UI.Button previousButton = m_gameObject.transform.Find( "Panel/Buttons/Previous Button" ).gameObject.GetComponent<UnityEngine.UI.Button>();
-		UnityEngine.UI.Button nextButton = m_gameObject.transform.Find( "Panel/Buttons/Next Button" ).gameObject.GetComponent<UnityEngine.UI.Button>();
-		UnityEngine.UI.Button quitButton = m_gameObject.transform.Find( "Panel/Buttons/Quit Button" ).gameObject.GetComponent<UnityEngine.UI.Button>();
-
 		// select the quit button by default
-		quitButton.Select();
+		m_quitButton.Select();
 
 		// enable / disable the previous and next buttons based on what our current notice index is
-		previousButton.interactable = ( m_currentNoticeId > 0 );
-		nextButton.interactable = ( m_currentNoticeId < m_latestNoticeId );
+		m_previousButton.interactable = ( m_currentNoticeId > 0 );
+		m_nextButton.interactable = ( m_currentNoticeId < m_latestNoticeId );
 
 		// check if we have reached the end of the current notice
 		if ( m_endOfMessageReached )
 		{
-			moreButton.interactable = false;
+			m_moreButton.interactable = false;
 
 			if ( m_currentNoticeId < m_latestNoticeId )
 			{
-				nextButton.Select();
+				m_nextButton.Select();
 			}
 		}
 		else
 		{
-			moreButton.interactable = true;
+			m_moreButton.interactable = true;
 
-			moreButton.Select();
+			m_moreButton.Select();
 		}
 	}
 
 	// call this to show the next line of the current message
-	private void ShowNextLine()
+	void ShowNextLine()
 	{
 		// get access to the game data
 		GameData gameData = DataController.m_instance.m_gameData;

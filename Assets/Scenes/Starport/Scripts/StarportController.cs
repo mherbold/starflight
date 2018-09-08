@@ -6,23 +6,17 @@ using UnityEngine.EventSystems;
 public class StarportController : MonoBehaviour
 {
 	// stuff shared by all the controllers
-	public AstronautController m_astronautController { get; private set; }
-	public DoorNameController m_doorNameController { get; private set; }
+	public AstronautController m_astronautController;
+	public DoorNameController m_doorNameController;
 
-	// door controllers
-	OperationsController m_operationsController;
-	PersonnelController m_personnelController;
-	CrewAssignmentController m_crewAssignmentController;
-	BankController m_bankController;
-	ShipConfigurationController m_shipConfigurationController;
-	TradeDepotController m_tradeDepotController;
-	DockingBayController m_dockingBayController;
-
-	// keep track of which door is the current one
-	DoorController m_currentUIController;
-
-	// keep track of whether or not the astronaut can be moved
-	bool m_astronautCanBeMoved;
+	// starport panels
+	public OperationsPanel m_operationsPanel;
+	public PersonnelPanel m_personnelPanel;
+	public CrewAssignmentPanel m_crewAssignmentPanel;
+	public BankPanel m_bankPanel;
+	public ShipConfigurationPanel m_shipConfigurationPanel;
+	public TradeDepotPanel m_tradeDepotPanel;
+	public DockingBayPanel m_dockingBayPanel;
 
 	// unity awake
 	void Awake()
@@ -35,35 +29,6 @@ public class StarportController : MonoBehaviour
 
 			SceneManager.LoadScene( "Persistent" );
 		}
-		else
-		{
-			// get access to the astronaut controller
-			m_astronautController = GetComponent<AstronautController>();
-
-			// get access to the door name controller
-			m_doorNameController = GetComponent<DoorNameController>();
-
-			// get access to the operations controller
-			m_operationsController = GetComponent<OperationsController>();
-
-			// get access to the personnel controller
-			m_personnelController = GetComponent<PersonnelController>();
-
-			// get access to the crew assignment controller
-			m_crewAssignmentController = GetComponent<CrewAssignmentController>();
-
-			// get access to the bank controller
-			m_bankController = GetComponent<BankController>();
-
-			// get access to the bank controller
-			m_shipConfigurationController = GetComponent<ShipConfigurationController>();
-
-			// get access to the trade depot controller
-			m_tradeDepotController = GetComponent<TradeDepotController>();
-
-			// get access to the docking bay controller
-			m_dockingBayController = GetComponent<DockingBayController>();
-		}
 	}
 
 	// unity start
@@ -75,8 +40,8 @@ public class StarportController : MonoBehaviour
 		// start playing the starport music
 		MusicController.m_instance.ChangeToTrack( MusicController.Track.Starport );
 
-		// we have the focus
-		TakeFocus();
+		// show the door name
+		m_doorNameController.Show();
 
 		// fade the scene in
 		SceneFadeController.m_instance.FadeIn();
@@ -85,13 +50,8 @@ public class StarportController : MonoBehaviour
 	// unity update
 	void Update()
 	{
-		// update the game time
-		PlayerData playerData = DataController.m_instance.m_playerData;
-
-		playerData.m_starflight.UpdateGameTime( Time.deltaTime );
-
-		// check if the astronaut can be moved
-		if ( m_astronautCanBeMoved )
+		// the astronaut can be moved only if a panel is not active and the astronaut is not transporting to the docking bay
+		if ( !PanelController.m_instance.HasActivePanel() && !m_dockingBayPanel.IsTransporting() )
 		{
 			// we want to allow the player to move the astronaut only when the astronaut is not currently transitioning to the idle animation - this prevents weird looking feet sliding
 			if ( !m_astronautController.IsTransitioningToIdle() )
@@ -99,10 +59,16 @@ public class StarportController : MonoBehaviour
 				Move();
 			}
 
-			// check if the player has pressed the fire button
+			// check if the player has pressed the fire button or the cancel button
 			if ( InputController.m_instance.SubmitWasPressed() )
 			{
 				Fire();
+			}
+			else if ( InputController.m_instance.CancelWasPressed() )
+			{
+				PanelController.m_instance.m_saveGamePanel.SetCallbackObject( this );
+
+				OpenPanel( PanelController.m_instance.m_saveGamePanel );
 			}
 		}
 	}
@@ -146,87 +112,58 @@ public class StarportController : MonoBehaviour
 			if ( currentDoorName == "Operations" )
 			{
 				// give control to the operations controller
-				LoseFocus( m_operationsController );
+				OpenPanel( m_operationsPanel );
 			}
 			else if ( currentDoorName == "Personnel" )
 			{
 				// give control to the personnel controller
-				LoseFocus( m_personnelController );
+				OpenPanel( m_personnelPanel );
 			}
 			else if ( currentDoorName == "Crew Assignment" )
 			{
 				// give control to the personnel controller
-				LoseFocus( m_crewAssignmentController );
+				OpenPanel( m_crewAssignmentPanel );
 			}
 			else if ( currentDoorName == "Bank" )
 			{
 				// give control to the bank controller
-				LoseFocus( m_bankController );
+				OpenPanel( m_bankPanel );
 			}
 			else if ( currentDoorName == "Ship Configuration" )
 			{
 				// give control to the ship configuration controller
-				LoseFocus( m_shipConfigurationController );
+				OpenPanel( m_shipConfigurationPanel );
 			}
 			else if ( currentDoorName == "Trade Depot" )
 			{
 				// give control to the trade depot controller
-				LoseFocus( m_tradeDepotController );
+				OpenPanel( m_tradeDepotPanel );
 			}
 			else if ( currentDoorName == "Docking Bay" )
 			{
 				// see if we can teleport to the docking bay
-				LoseFocus( m_dockingBayController );
+				OpenPanel( m_dockingBayPanel );
 			}
 		}
 	}
 
-	// call this when we are taking the focus
-	public void TakeFocus()
+	// call this when we want to open a starport panel
+	public void OpenPanel( Panel panel )
 	{
-		// we have the controller focus
-		m_astronautCanBeMoved = true;
-
-		// show the door name
-		m_doorNameController.Show();
-
-		// clear out the current ui controller
-		m_currentUIController = null;
-
-		// save the player data in case something has been updated
-		if ( DataController.m_instance )
-		{
-			DataController.m_instance.SavePlayerData();
-		}
-	}
-
-	// call this when we are losing the focus and giving it to one of the door ui controllers
-	public void LoseFocus( DoorController uiController )
-	{
-		// we have the controller focus
-		m_astronautCanBeMoved = false;
-
 		// hide the door name
 		m_doorNameController.Hide();
 
-		// remember the current ui controller
-		m_currentUIController = uiController;
-
-		// call show on the ui controller
-		m_currentUIController.Show();
+		// tell the panel controller we want to open this panel
+		PanelController.m_instance.Open( panel );
 	}
 
-	// this is called by the ui animation callback
-	public void FinishOpeningUI()
+	// call this when a starport panel was closed
+	public void PanelWasClosed()
 	{
-		// let the currently active ui controller know we have finished opening the ui
-		m_currentUIController.FinishOpeningUI();
-	}
+		// show the door name
+		m_doorNameController.Show();
 
-	// this is called by the ui animation callback
-	public void FinishClosingUI()
-	{
-		// let the currently active ui controller know we have finished closing the ui
-		m_currentUIController.FinishClosingUI();
+		// save the player data in case something has been updated
+		DataController.m_instance.SaveActiveGame();
 	}
 }

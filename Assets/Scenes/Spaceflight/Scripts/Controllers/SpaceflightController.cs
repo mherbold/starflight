@@ -82,6 +82,12 @@ public class SpaceflightController : MonoBehaviour
 	// unity update
 	void Update()
 	{
+		// don't do anything if we have a panel open
+		if ( PanelController.m_instance.HasActivePanel() )
+		{
+			return;
+		}
+
 		// update the game time
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
@@ -94,7 +100,15 @@ public class SpaceflightController : MonoBehaviour
 		{
 			m_timer -= 30.0f;
 
-			DataController.m_instance.SavePlayerData();
+			DataController.m_instance.SaveActiveGame();
+		}
+
+		// when player hits cancel (esc) show the save game panel
+		if ( InputController.m_instance.CancelWasPressed() )
+		{
+			PanelController.m_instance.m_saveGamePanel.SetCallbackObject( this );
+
+			PanelController.m_instance.Open( PanelController.m_instance.m_saveGamePanel );
 		}
 	}
 
@@ -133,7 +147,7 @@ public class SpaceflightController : MonoBehaviour
 		}
 
 		// save the player data (since the location was most likely changed)
-		DataController.m_instance.SavePlayerData();
+		DataController.m_instance.SaveActiveGame();
 	}
 
 	// call this to update the player's position
@@ -154,5 +168,12 @@ public class SpaceflightController : MonoBehaviour
 		{
 			playerData.m_starflight.m_hyperspaceCoordinates = newPosition;
 		}
+	}
+	
+	// call this when a the save game panel was closed
+	public void PanelWasClosed()
+	{
+		// save the player data in case something has been updated
+		DataController.m_instance.SaveActiveGame();
 	}
 }

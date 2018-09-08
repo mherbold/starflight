@@ -93,28 +93,10 @@ public class IntroController : MonoBehaviour
 			}
 			else
 			{
-				// get to the player data
-				PlayerData playerData = DataController.m_instance.m_playerData;
-
 				// figure out which scene to load (based on the player location in the save data)
-				string nextSceneName;
+				string nextSceneName = DataController.m_instance.GetCurrentSceneName();
 
-				switch ( playerData.m_starflight.m_location )
-				{
-					case Starflight.Location.DockingBay:
-					case Starflight.Location.Hyperspace:
-					case Starflight.Location.InOrbit:
-					case Starflight.Location.JustLaunched:
-					case Starflight.Location.OnPlanet:
-					case Starflight.Location.StarSystem:
-						nextSceneName = "Spaceflight";
-						break;
-
-					default:
-						nextSceneName = "Starport";
-						break;
-				}
-						
+				// start fading out the intro scene
 				SceneFadeController.m_instance.FadeOut( nextSceneName );
 			}
 		}

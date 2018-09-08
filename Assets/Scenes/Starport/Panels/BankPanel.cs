@@ -2,24 +2,30 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using TMPro;
 
-public class BankController : DoorController
+public class BankPanel : Panel
 {
-	// public stuff we want to set using the editor
+	// buttons
 	public Button m_exitButton;
+
+	// text
 	public TextMeshProUGUI m_dateListText;
 	public TextMeshProUGUI m_transactionsListText;
 	public TextMeshProUGUI m_amountListText;
 	public TextMeshProUGUI m_currentBalanceText;
+
+	// the date mask
 	public GameObject m_dateMask;
 
-	// call this to show the operations ui
-	public override void Show()
+	// the starport controller
+	public StarportController m_starportController;
+
+	// panel open
+	public override bool Open()
 	{
-		// start the opening animation
-		StartOpeningUI();
+		// base panel open
+		base.Open();
 
 		// get access to the bank player data
 		Bank bank = DataController.m_instance.m_playerData.m_bank;
@@ -65,56 +71,28 @@ public class BankController : DoorController
 		m_dateListText.rectTransform.offsetMax = new Vector3( 0.0f, offset, 0.0f );
 		m_transactionsListText.rectTransform.offsetMax = new Vector3( 0.0f, offset, 0.0f );
 		m_amountListText.rectTransform.offsetMax = new Vector3( 0.0f, offset, 0.0f );
-	}
 
-	// call this to hide the operations ui
-	public override void Hide()
-	{
-		// lose the focus
-		LoseFocus();
-
-		// start the closing animation
-		StartClosingUI();
-	}
-
-	// call this to take control
-	public void TakeFocus()
-	{
-		// turn on controller navigation of the UI
-		EventSystem.current.sendNavigationEvents = true;
-
-		// automatically select the "notices" button for the player
+		// automatically select the "exit" button for the player
 		m_exitButton.Select();
 
-		// cancel the ui sounds
-		//m_starportController.m_uiSoundController.CancelSounds();
+		// panel was opened
+		return true;
 	}
 
-	// call this to give up control
-	public void LoseFocus()
+	// panel closed
+	public override void Closed()
 	{
-		// turn off controller navigation of the UI
-		EventSystem.current.sendNavigationEvents = false;
-	}
-	
-	// this is called when the ui has finished animating to the open state
-	public override void FinishedOpeningUI()
-	{
-		// take the focus
-		TakeFocus();
-	}
+		// base panel closed
+		base.Closed();
 
-	// this is called when the ui has finished animating to the close state
-	public override void FinishedClosingUI()
-	{
-		// give the focus back to the starport controller
-		m_starportController.TakeFocus();
+		// let the starport controller know
+		m_starportController.PanelWasClosed();
 	}
 
 	// this is called if we clicked on the exit button
 	public void ExitClicked()
 	{
-		// close this ui
-		Hide();
+		// close this panel
+		PanelController.m_instance.Close();
 	}
 }

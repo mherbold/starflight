@@ -13,6 +13,7 @@ TagManager:
   - Docking Bay
   - Spaceflight Controllers
   - Scene Fade
+  - Save Game Panel
   layers:
   - Default
   - TransparentFX

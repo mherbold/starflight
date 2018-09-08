@@ -1,71 +1,61 @@
 ﻿
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 public class DataController : MonoBehaviour
 {
+	// the number of save game slots
+	public const int c_numSaveGameSlots = 5;
+
 	// static reference to this instance
 	public static DataController m_instance;
 	public static string m_sceneToLoad = "Intro";
 
-	// public stuff we want to set using the editor
+	// the name of the game data file
 	public string m_gameDataFileName;
+	
+	// the name of the planet data file
 	public string m_planetDataFileName;
+
+	// the name of the save game file
 	public string m_playerDataFileName;
 
+	// the loaded game data
 	public GameData m_gameData;
+
+	// the loaded planet data
 	public PlanetData m_planetData;
+
+	// the save game slots
+	public PlayerData[] m_playerDataList;
+
+	// the active save game slot number
+	public int m_activeSaveGameSlotNumber;
+
+	// the player data from the current save game slot
 	public PlayerData m_playerData;
 
-	public bool m_resetPlayerData;
-
-	// private stuff we don't want the editor to see
-	private float m_delayedSaveTimer;
-
-	// the constructor
-	public DataController()
-	{
-		m_playerData = new PlayerData();
-	}
-
-	// this is called by unity before start
-	private void Awake()
+	// unity awake
+	void Awake()
 	{
 		// remember this instance to this
 		m_instance = this;
-
-		// reset the save timer
-		m_delayedSaveTimer = 0.0f;
 	}
 
-	// this is called by unity once at the start of the level
-	private void Start()
+	// unity start
+	void Start()
 	{
-		// debug info
-		Debug.Log( "Loading data..." );
-
-		// tell unity to not delete this game object when the scene unloads
-		DontDestroyOnLoad( this );
-
 		// load the game data
 		LoadGameData();
 
 		// load the planet data
 		LoadPlanetData();
 
-		// load the saved player data
-		LoadPlayerData();
-
-		// initalize the game data
-		m_gameData.Initialize();
-
-		// set this to true to force a reset of the player data
-		if ( m_resetPlayerData )
-		{
-			m_playerData.Reset();
-		}
+		// load the save game slots
+		LoadPlayerDataList();
 
 		// debug info
 		Debug.Log( "Loading scene " + m_sceneToLoad );
@@ -73,125 +63,236 @@ public class DataController : MonoBehaviour
 		// load the next scene
 		SceneManager.LoadScene( m_sceneToLoad );
 	}
-
-	// this is called by unity every frame
-	private void Update()
-	{
-		// if we have a delayed save active then update it
-		if ( m_delayedSaveTimer > 0.0f )
-		{
-			m_delayedSaveTimer = Mathf.Max( 0.0f, m_delayedSaveTimer - Time.deltaTime );
-
-			if ( m_delayedSaveTimer == 0.0f )
-			{
-				// the timer has expired - try saving the player data now
-				SavePlayerData();
-			}
-		}
-	}
-
+	
 	// load the game data files
-	private void LoadGameData()
+	void LoadGameData()
 	{
-		// load the game data
-		LoadGameDataFile( out m_gameData, m_gameDataFileName );
-	}
+		// debug info
+		Debug.Log( "Loading game data" );
 
-	// function to load game data from a file into an object
-	private void LoadGameDataFile<T>( out T gameData, string fileName ) where T : GameDataFile
-	{
 		// get the location of this game data file
-		string filePath = Path.Combine( "GameData", fileName );
+		string filePath = Path.Combine( "GameData", m_gameDataFileName );
 
 		// load it as a text asset
 		TextAsset textAsset = Resources.Load( filePath ) as TextAsset;
 
 		// convert it from the json string to our game data class
-		gameData = JsonUtility.FromJson<T>( textAsset.text );
+		m_gameData = JsonUtility.FromJson<GameData>( textAsset.text );
+
+		// initalize the game data
+		m_gameData.Initialize();
 	}
 
 	// load the planet data files
-	private void LoadPlanetData()
+	void LoadPlanetData()
 	{
-		// load the planet data
-		LoadPlanetDataFile( out m_planetData, m_planetDataFileName );
-	}
+		// debug info
+		Debug.Log( "Loading planet data" );
 
-	// function to load planet data from a file into an object
-	private void LoadPlanetDataFile<T>( out T planetData, string fileName ) where T : PlanetDataFile
-	{
 		// get the location of this planet data file
-		string filePath = Path.Combine( "GameData", fileName );
+		string filePath = Path.Combine( "GameData", m_planetDataFileName );
 
 		// load it as a text asset
 		TextAsset textAsset = Resources.Load( filePath ) as TextAsset;
 
 		// convert it from the json string to our planet data class
-		planetData = JsonUtility.FromJson<T>( textAsset.text );
+		m_planetData = JsonUtility.FromJson<PlanetData>( textAsset.text );
 	}
 
-	// this loads the current player progress from disk
-	private void LoadPlayerData()
+	// this loads the save game slots from disk
+	void LoadPlayerDataList()
 	{
-		// get the path to the player data file
-		string filePath = Application.persistentDataPath + "/" + m_playerDataFileName;
+		// whether or not we have found the current game
+		bool currentGameFound = false;
 
-		// keep track of whether or not we were able to load the player data from file
-		bool loadSucceeded = false;
+		// create the player data list
+		m_playerDataList = new PlayerData[ c_numSaveGameSlots ];
 
-		// check if the file exists
-		if ( File.Exists( filePath ) )
+		// go through each save game slot
+		for ( int i = 0; i < c_numSaveGameSlots; i++ )
 		{
-			try
-			{
-				// try to load the player data now
-				FileStream file = File.Open( filePath, FileMode.Open );
-				BinaryFormatter binaryFormatter = new BinaryFormatter();
-				m_playerData = (PlayerData) binaryFormatter.Deserialize( file );
-
-				// we were able to load the player data from file (version checking is next)
-				loadSucceeded = true;
-			}
-			catch
-			{
-				// if we failed then we probably have changed the player data structure in a way that we can't load from older player data files
-				Debug.Log( "Failed to load player data - player data has been reset." );
-			}
-		}
-
-		// if the player data is from an old version then we have to start over
-		if ( !loadSucceeded || !m_playerData.IsCurrentVersion() )
-		{
-			m_playerData.Reset();
-		}
-	}
-
-	// this saves our current player progress to disk
-	public void SavePlayerData()
-	{
-		// if the delayed save timer is not zero then don't save the player data yet
-		if ( m_delayedSaveTimer == 0.0f )
-		{
-			Debug.Log( "Saving the player data now..." );
-
 			// get the path to the player data file
-			string filePath = Application.persistentDataPath + "/" + m_playerDataFileName;
+			string filePath = Application.persistentDataPath + "/" + m_playerDataFileName + i + ".bin";
 
-			try
+			// keep track of whether or not we were able to load the player data file
+			bool loadSucceeded = false;
+
+			// check if the file exists
+			if ( File.Exists( filePath ) )
 			{
-				// try to save the player data now
-				FileStream file = File.Create( filePath );
+				try
+				{
+					// debug info
+					Debug.Log( "Loading player data " + i );
+
+					// try to load the save game file now
+					FileStream file = File.Open( filePath, FileMode.Open );
+					BinaryFormatter binaryFormatter = new BinaryFormatter();
+					m_playerDataList[ i ] = (PlayerData) binaryFormatter.Deserialize( file );
+
+					// we were able to load the save game slots from file (version checking is next)
+					loadSucceeded = true;
+				}
+				catch
+				{
+					Debug.Log( "...failed" );
+				}
+			}
+
+			// if the player data is from an old version then we have to start over
+			if ( !loadSucceeded || !m_playerDataList[ i ].IsCurrentVersion() )
+			{
+				// debug info
+				Debug.Log( "Creating and resetting player data " + i );
+
+				m_playerDataList[ i ] = new PlayerData();
+
+				m_playerDataList[ i ].Reset();
+			}
+
+			// check if this is the active save game slot
+			if ( m_playerDataList[ i ].m_isCurrentGame )
+			{
+				// yes - remember the slot number
+				m_activeSaveGameSlotNumber = i;
+
+				// point the current player data to this slot
+				m_playerData = m_playerDataList[ m_activeSaveGameSlotNumber ];
+
+				// we have found the current game
+				currentGameFound = true;
+			}
+		}
+
+		// did we not find the current game?
+		if ( !currentGameFound )
+		{
+			// nope - use the first slot
+			m_activeSaveGameSlotNumber = 0;
+
+			// point the current player data to this slot
+			m_playerData = m_playerDataList[ m_activeSaveGameSlotNumber ];
+		}
+
+		// debug info
+		Debug.Log( "Active save game slot number is " + m_activeSaveGameSlotNumber );
+	}
+
+	// this saves our current save game slot to disk
+	public void SaveActiveGame()
+	{
+		SavePlayerData( m_activeSaveGameSlotNumber );
+	}
+
+	// this saves a save game slot to disk
+	public void SavePlayerData( int saveGameSlotNumber )
+	{
+		Debug.Log( "Saving player data in game slot number " + saveGameSlotNumber );
+
+		// get the path to the player data file
+		string filePath = Application.persistentDataPath + "/" + m_playerDataFileName + saveGameSlotNumber + ".bin";
+
+		try
+		{
+			// try to save the player data file
+			using ( FileStream file = File.Create( filePath ) )
+			{
 				BinaryFormatter binaryFormatter = new BinaryFormatter();
 				binaryFormatter.Serialize( file, m_playerData );
 			}
-			catch ( IOException )
-			{
-				// if we got an exception it is possibly a sharing violation which means we may be trying to save too quickly after the last save
-				Debug.Log( "Got exception - trying again later." );
-
-				// wait some time before trying to save again
-				m_delayedSaveTimer = 2.0f;
-			}
 		}
+		catch ( IOException exception )
+		{
+			// report if we got an exception
+			Debug.Log( "...failed - " + exception.Message );
+		}
+	}
+
+	// call this to get the name of the current scene for the active save game slot
+	public string GetCurrentSceneName()
+	{
+		// figure out what the current scene is
+		switch ( m_playerData.m_starflight.m_location )
+		{
+			case Starflight.Location.DockingBay:
+			case Starflight.Location.Hyperspace:
+			case Starflight.Location.InOrbit:
+			case Starflight.Location.JustLaunched:
+			case Starflight.Location.OnPlanet:
+			case Starflight.Location.StarSystem:
+				return "Spaceflight";
+
+			default:
+				return "Starport";
+		}
+	}
+
+	// call this to change the active save game slot number
+	public void SetActiveSaveGameSlotNumber( int newActiveSaveGameSlotNumber )
+	{
+		// make the current slot not the current game
+		m_playerData.m_isCurrentGame = false;
+
+		// save the active game in the old save game slot number
+		SaveActiveGame();
+
+		// update the active save game slot number
+		m_activeSaveGameSlotNumber = newActiveSaveGameSlotNumber;
+
+		// point the current player data to the new slot
+		m_playerData = m_playerDataList[ m_activeSaveGameSlotNumber ];
+
+		// make the current slot the active game
+		m_playerData.m_isCurrentGame = true;
+
+		// save the active game
+		SaveActiveGame();
+
+		// turn off controller navigation of the UI
+		EventSystem.current.sendNavigationEvents = false;
+
+		// figure out which scene to load (based on the player location in the save data)
+		string nextSceneName = GetCurrentSceneName();
+
+		// load the next scene
+		SceneManager.LoadScene( nextSceneName );
+	}
+
+	// call this top copy the active save game slot to another slot
+	public void CopyActiveSaveGameSlot( int targetSaveGameSlotNumber )
+	{
+		// save the active game in the current slot
+		SaveActiveGame();
+
+		// clone the player data
+		PlayerData clonedPlayerData = Tools.CloneObject( m_playerData );
+
+		// the cloned copy is not the current game
+		clonedPlayerData.m_isCurrentGame = false;
+
+		// set the cloned player data to the target slot
+		m_playerDataList[ targetSaveGameSlotNumber ] = clonedPlayerData;
+
+		// save the game in the target save game slot
+		SavePlayerData( targetSaveGameSlotNumber );
+	}
+
+	// call this to reset the active game
+	public void ResetGame()
+	{
+		// reset the player data for the current slot
+		m_playerData.Reset();
+
+		// save the active game (with freshly reset data)
+		SaveActiveGame();
+
+		// figure out which scene to load (based on the player location in the save data)
+		string nextSceneName = GetCurrentSceneName();
+
+		// start fading out the intro scene
+		SceneFadeController.m_instance.FadeOut( nextSceneName );
+
+		// turn off controller navigation of the UI
+		EventSystem.current.sendNavigationEvents = false;
 	}
 }

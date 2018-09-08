@@ -1,7 +1,10 @@
 ﻿
-using System;
-using System.ComponentModel;
 using UnityEngine;
+using System;
+using System.IO;
+using System.ComponentModel;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 class Tools
 {
@@ -58,5 +61,32 @@ class Tools
 		}
 
 		return dumpString;
+	}
+
+	// call this to perform a deep clone of a serializable object
+	public static T CloneObject<T>( T source )
+	{
+		// make the sure object is serializable
+		if ( !typeof( T ).IsSerializable )
+		{
+			throw new ArgumentException( "The type must be serializable.", "source" );
+		}
+
+		// if the object is null the return the default
+		if ( ReferenceEquals( source, null ) )
+		{
+			return default( T );
+		}
+
+		// copy the object by serializing and then deserializing it
+		IFormatter formatter = new BinaryFormatter();
+		Stream stream = new MemoryStream();
+
+		using ( stream )
+		{
+			formatter.Serialize( stream, source );
+			stream.Seek( 0, SeekOrigin.Begin );
+			return (T) formatter.Deserialize( stream );
+		}
 	}
 }

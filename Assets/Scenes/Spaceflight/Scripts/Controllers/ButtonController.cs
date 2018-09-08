@@ -62,6 +62,12 @@ public class ButtonController : MonoBehaviour
 	// unity update
 	void Update()
 	{
+		// don't do anything if we have a panel open
+		if ( PanelController.m_instance.HasActivePanel() )
+		{
+			return;
+		}
+
 		// check if we are activating the currently selected button
 		if ( m_activatingButton )
 		{
