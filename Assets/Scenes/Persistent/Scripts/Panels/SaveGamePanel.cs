@@ -280,39 +280,63 @@ public class SaveGamePanel : Panel
 	// call this to update the save game descriptions
 	void UpdateDescriptions()
 	{
+		// go through each save game slot
 		for ( int i = 0; i < DataController.c_numSaveGameSlots; i++ )
 		{
+			// get the player data for that save game slot
 			PlayerData playerData = DataController.m_instance.m_playerDataList[ i ];
 
-			string description = "Date: <color=\"blue\">" + playerData.m_starflight.m_currentStardateYMD + "</color> Time: <color=\"blue\">" + playerData.m_starflight.m_hour.ToString( "D2" ) + ":" + playerData.m_starflight.m_minute.ToString( "D2" ) + "</color>\nLocation: <color=\"blue\">";
+			// the date and time
+			string description = "Date: <color=\"blue\">" + playerData.m_starflight.m_currentStardateYMD + "</color>   Time: <color=\"blue\">" + playerData.m_starflight.m_hour.ToString( "D2" ) + ":" + playerData.m_starflight.m_minute.ToString( "D2" ) + "</color>\n";
 
+			// calculate game hyperspace coordinates
 			Vector3 hyperspaceCoordinates = Tools.WorldToGameCoordinates( playerData.m_starflight.m_hyperspaceCoordinates );
+
+			// the location
+			description += "Location: <color=\"blue\">";
 
 			switch ( playerData.m_starflight.m_location )
 			{
 				case Starflight.Location.Starport:
-					description += "Starport";
+					description += "Starport</color>\n";
 					break;
 				case Starflight.Location.DockingBay:
-					description += "Docking Bay";
+					description += "Docking Bay</color>\n";
 					break;
 				case Starflight.Location.JustLaunched:
-					description += "Just Launched";
+					description += "Just Launched</color>\n";
 					break;
 				case Starflight.Location.StarSystem:
-					description += "Star System</color> Coordinates: <color=\"blue\">" + Mathf.RoundToInt( hyperspaceCoordinates.x ) + ", " + Mathf.RoundToInt( hyperspaceCoordinates.z ) + "</color>";
+					description += "Star System</color>   Coordinates: <color=\"blue\">" + Mathf.RoundToInt( hyperspaceCoordinates.x ) + ", " + Mathf.RoundToInt( hyperspaceCoordinates.z ) + "</color>\n";
 					break;
 				case Starflight.Location.Hyperspace:
-					description += "Hyperspace</color> Coordinates: <color=\"blue\">" + Mathf.RoundToInt( hyperspaceCoordinates.x ) + ", " + Mathf.RoundToInt( hyperspaceCoordinates.z ) + "</color>";
+					description += "Hyperspace</color>   Coordinates: <color=\"blue\">" + Mathf.RoundToInt( hyperspaceCoordinates.x ) + ", " + Mathf.RoundToInt( hyperspaceCoordinates.z ) + "</color>\n";
 					break;
 				case Starflight.Location.InOrbit:
-					description += "In Orbit";
+					description += "In Orbit</color>\n";
 					break;
 				case Starflight.Location.OnPlanet:
-					description += "On Planet";
+					description += "On Planet</color>\n";
 					break;
 			}
 
+			// the ship name and cargo
+			string shipName = ( playerData.m_ship.m_name == "" ) ? "No Name" : playerData.m_ship.m_name;
+			string numCargoPods = ( playerData.m_ship.m_numCargoPods == 0 ) ? "None" : playerData.m_ship.m_numCargoPods.ToString();
+			float cargoUsage = (float) playerData.m_ship.m_volumeUsed / (float) playerData.m_ship.m_volume * 100.0f;
+
+			description += "Ship: <color=\"blue\">" + shipName + "</color>";
+			description += "   Cargo Pods: <color=\"blue\">" + numCargoPods + "</color>";
+			description += "   Cargo: <color=\"blue\">" + cargoUsage.ToString( "N1" ) + "% Full</color>\n";
+
+			// ship part classes
+			description += "Engines: <color=\"blue\">" + playerData.m_ship.GetEnginesClassString() + "</color>";
+			description += "   Shields: <color=\"blue\">" + playerData.m_ship.GetSheildingClassString() + "</color>";
+			description += "   Armor: <color=\"blue\">" + playerData.m_ship.GetArmorClassString() + "</color>";
+			description += "   Missle Launcher: <color=\"blue\">" + playerData.m_ship.GetMissileLauncherClassString() + "</color>";
+			description += "   Laser Cannon: <color=\"blue\">" + playerData.m_ship.GetLaserCannonClassString() + "</color>";
+
+			// replace the description text for this save game slot
 			m_slotDescriptionText[ i ].text = description;
 		}
 	}

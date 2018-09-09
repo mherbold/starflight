@@ -122,8 +122,7 @@ public class SpaceflightController : MonoBehaviour
 				m_dockingBay.Show();
 				break;
 			case Starflight.Location.JustLaunched:
-				m_starSystem.Show();
-				m_spaceflightUI.FadeMap( 0.0f );
+				SwitchToJustLaunched();
 				break;
 			case Starflight.Location.StarSystem:
 				m_starSystem.Show();
@@ -132,7 +131,7 @@ public class SpaceflightController : MonoBehaviour
 				m_hyperspace.Show();
 				break;
 			case Starflight.Location.Starport:
-				SceneManager.LoadScene( "Starport" );
+				SwitchToStarport();
 				break;
 		}
 
@@ -165,5 +164,26 @@ public class SpaceflightController : MonoBehaviour
 	{
 		// save the player data in case something has been updated
 		DataController.m_instance.SaveActiveGame();
+	}
+
+	void SwitchToJustLaunched()
+	{
+		// show the star system
+		m_starSystem.Show();
+
+		// make sure the map overlay is black
+		m_spaceflightUI.FadeMap( 0.0f );
+
+		// update the message shown
+		m_spaceflightUI.ChangeMessageText( "Starport clear.\nStanding by to maneuver." );
+	}
+
+	void SwitchToStarport()
+	{
+		// make sure the map overlay is black
+		m_spaceflightUI.FadeMap( 0.0f );
+
+		// tell the scene manager we want to switch scenes
+		SceneManager.LoadScene( "Starport" );
 	}
 }

@@ -17,8 +17,6 @@ public class RaiseShieldsButton : ShipButton
 			m_spaceflightController.m_spaceflightUI.ChangeMessageText( "Ship is not equipped with shields." );
 
 			m_spaceflightController.m_buttonController.UpdateButtonSprites();
-
-			return false;
 		}
 
 		return false;

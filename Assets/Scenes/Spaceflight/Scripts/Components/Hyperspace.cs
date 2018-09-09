@@ -195,6 +195,12 @@ public class Hyperspace : MonoBehaviour
 	// call this to show the hyperspace stuff
 	public void Show()
 	{
+		// if we are already active then don't do it again
+		if ( gameObject.activeInHierarchy )
+		{
+			return;
+		}
+
 		// show the hyperspace objects
 		gameObject.SetActive( true );
 

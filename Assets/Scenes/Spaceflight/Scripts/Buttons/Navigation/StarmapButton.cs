@@ -18,8 +18,6 @@ public class StarmapButton : ShipButton
 			m_spaceflightController.m_spaceflightUI.ChangeMessageText( "We're not in hyperspace, captain." );
 
 			m_spaceflightController.m_buttonController.UpdateButtonSprites();
-
-			return false;
 		}
 
 		return false;

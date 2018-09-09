@@ -11,15 +11,15 @@ public class CombatButton : ShipButton
 		// get to the player data
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
-		if ( playerData.m_starflight.m_location == Starflight.Location.DockingBay )
+		switch ( playerData.m_starflight.m_location )
 		{
-			SoundController.m_instance.PlaySound( SoundController.Sound.Error );
+			default:
 
-			m_spaceflightController.m_spaceflightUI.ChangeMessageText( "We're in the docking bay." );
+				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
-			m_spaceflightController.m_buttonController.UpdateButtonSprites();
+				m_spaceflightController.m_buttonController.UpdateButtonSprites();
 
-			return false;
+				break;
 		}
 
 		return false;

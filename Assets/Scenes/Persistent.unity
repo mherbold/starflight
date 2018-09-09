@@ -1485,9 +1485,9 @@ MonoBehaviour:
   m_fontSize: 24
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 9
+  m_fontSizeMax: 24
   m_fontStyle: 0
   m_textAlignment: 257
   m_isAlignmentEnumConverted: 1
@@ -3542,9 +3542,9 @@ MonoBehaviour:
   m_fontSize: 24
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 9
+  m_fontSizeMax: 24
   m_fontStyle: 0
   m_textAlignment: 257
   m_isAlignmentEnumConverted: 1
@@ -5289,7 +5289,6 @@ MonoBehaviour:
   m_planetData:
     m_planetMapList: []
   m_playerDataList: []
-  m_activeSaveGameSlotNumber: 0
   m_playerData:
     m_version: 0
     m_isCurrentGame: 0
@@ -5307,7 +5306,8 @@ MonoBehaviour:
         m_x: 0
         m_y: 0
         m_z: 0
-      m_currentStardate: 
+      m_currentStardateYMD: 
+      m_currentStardateDHMY: 
       m_day: 0
       m_hour: 0
       m_minute: 0
@@ -5359,6 +5359,7 @@ MonoBehaviour:
         m_elementList: []
     m_knownArtifacts:
       m_artifactList: []
+  m_activeSaveGameSlotNumber: 0
 --- !u!114 &919755014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7267,9 +7268,9 @@ MonoBehaviour:
   m_fontSize: 24
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 9
+  m_fontSizeMax: 24
   m_fontStyle: 0
   m_textAlignment: 257
   m_isAlignmentEnumConverted: 1
@@ -8824,9 +8825,9 @@ MonoBehaviour:
   m_fontSize: 24
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 9
+  m_fontSizeMax: 24
   m_fontStyle: 0
   m_textAlignment: 257
   m_isAlignmentEnumConverted: 1
@@ -10060,9 +10061,9 @@ MonoBehaviour:
   m_fontSize: 24
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 9
+  m_fontSizeMax: 24
   m_fontStyle: 0
   m_textAlignment: 257
   m_isAlignmentEnumConverted: 1

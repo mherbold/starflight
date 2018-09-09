@@ -38,6 +38,12 @@ public class StarSystem : MonoBehaviour
 	// call this to show the starsystem objects
 	public void Show()
 	{
+		// if we are already active then don't do it again
+		if ( gameObject.activeInHierarchy )
+		{
+			return;
+		}
+
 		// get to the game data
 		GameData gameData = DataController.m_instance.m_gameData;
 
@@ -64,9 +70,6 @@ public class StarSystem : MonoBehaviour
 
 		// update the system controller
 		m_spaceflightController.m_systemController.EnterSystem();
-
-		// show the system display
-		m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_systemDisplay );
 
 		// get to the star data
 		Star star = gameData.m_starList[ playerData.m_starflight.m_currentStarId ];

@@ -14,6 +14,9 @@ public class StatusButton : ShipButton
 		// remove the "active" dot from the current button
 		m_spaceflightController.m_buttonController.UpdateButtonSprites();
 
+		// play the update sound
+		SoundController.m_instance.PlaySound( SoundController.Sound.Update );
+
 		// this button has no update function
 		return false;
 	}

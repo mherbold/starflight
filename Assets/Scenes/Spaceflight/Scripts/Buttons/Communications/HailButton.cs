@@ -11,15 +11,17 @@ public class HailButton : ShipButton
 		// get to the player data
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
-		if ( playerData.m_starflight.m_location == Starflight.Location.DockingBay )
+		switch ( playerData.m_starflight.m_location )
 		{
-			SoundController.m_instance.PlaySound( SoundController.Sound.Error );
+			default:
 
-			m_spaceflightController.m_spaceflightUI.ChangeMessageText( "There's no one to hail." );
+				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
-			m_spaceflightController.m_buttonController.UpdateButtonSprites();
+				m_spaceflightController.m_spaceflightUI.ChangeMessageText( "There's no one to hail." );
 
-			return false;
+				m_spaceflightController.m_buttonController.UpdateButtonSprites();
+
+				break;
 		}
 
 		return false;

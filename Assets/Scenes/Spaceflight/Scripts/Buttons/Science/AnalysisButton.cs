@@ -18,8 +18,6 @@ public class AnalysisButton : ShipButton
 			m_spaceflightController.m_spaceflightUI.ChangeMessageText( "I need a current senor reading." );
 
 			m_spaceflightController.m_buttonController.UpdateButtonSprites();
-
-			return false;
 		}
 
 		return false;

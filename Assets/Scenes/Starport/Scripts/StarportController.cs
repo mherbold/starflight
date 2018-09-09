@@ -37,14 +37,29 @@ public class StarportController : MonoBehaviour
 		// turn off controller navigation of the UI
 		EventSystem.current.sendNavigationEvents = false;
 
-		// start playing the starport music
-		MusicController.m_instance.ChangeToTrack( MusicController.Track.Starport );
+		// get to the player data
+		PlayerData playerData = DataController.m_instance.m_playerData;
 
-		// show the door name
-		m_doorNameController.Show();
+		// make sure we are in the right scene
+		switch ( playerData.m_starflight.m_location )
+		{
+			case Starflight.Location.Starport:
 
-		// fade the scene in
-		SceneFadeController.m_instance.FadeIn();
+				// start playing the starport music
+				MusicController.m_instance.ChangeToTrack( MusicController.Track.Starport );
+
+				// show the door name
+				m_doorNameController.Show();
+
+				// fade the scene in
+				SceneFadeController.m_instance.FadeIn();
+
+				break;
+
+			default:
+				SceneManager.LoadScene( "Spaceflight" );
+				break;
+		}
 	}
 
 	// unity update

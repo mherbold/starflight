@@ -14,25 +14,42 @@ public class ManeuverButton : ShipButton
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// are we still in the docking bay?
-		if ( playerData.m_starflight.m_location == Starflight.Location.DockingBay )
+		switch ( playerData.m_starflight.m_location )
 		{
-			SoundController.m_instance.PlaySound( SoundController.Sound.Error );
+			case Starflight.Location.DockingBay:
 
-			m_spaceflightController.m_spaceflightUI.ChangeMessageText( "Standing by to launch." );
+				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
-			m_spaceflightController.m_buttonController.UpdateButtonSprites();
+				m_spaceflightController.m_spaceflightUI.ChangeMessageText( "Standing by to launch." );
 
-			return false;
+				m_spaceflightController.m_buttonController.UpdateButtonSprites();
+
+				return false;
+
+			case Starflight.Location.JustLaunched:
+
+				// yes - switch to the star system location
+				playerData.m_starflight.m_location = Starflight.Location.StarSystem;
+
+				// switch to the correct mode
+				m_spaceflightController.SwitchMode();
+
+				// show the system display
+				m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_systemDisplay );
+
+				break;
+
+			case Starflight.Location.StarSystem:
+
+				// show the system display
+				m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_systemDisplay );
+
+				break;
+
+			case Starflight.Location.Hyperspace:
+
+				break;
 		}
-
-		// if we aren't in hyperspace then switch to the star system
-		if ( playerData.m_starflight.m_location != Starflight.Location.Hyperspace )
-		{
-			playerData.m_starflight.m_location = Starflight.Location.StarSystem;
-		}
-
-		// switch to the correct mode
-		m_spaceflightController.SwitchMode();
 
 		// reset the current speed
 		playerData.m_starflight.m_currentSpeed = 0.0f;

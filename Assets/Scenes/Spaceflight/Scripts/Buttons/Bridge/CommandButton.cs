@@ -1,7 +1,8 @@
 ﻿
 public class CommandButton : ShipButton
 {
-	private readonly ShipButton[] m_buttons = { new LaunchButton(), new DisembarkButton(), new CargoButton(), new LogPlanetButton(), new ShipsLogButton(), new BridgeButton() };
+	private readonly ShipButton[] m_buttonSetA = { new LaunchButton(), new DisembarkButton(), new CargoButton(), new LogPlanetButton(), new ShipsLogButton(), new BridgeButton() };
+	private readonly ShipButton[] m_buttonSetB = { new LandButton(), new DisembarkButton(), new CargoButton(), new LogPlanetButton(), new ShipsLogButton(), new BridgeButton() };
 
 	public override string GetLabel()
 	{
@@ -10,11 +11,20 @@ public class CommandButton : ShipButton
 
 	public override bool Execute()
 	{
-		// change the buttons
-		m_spaceflightController.m_buttonController.UpdateButtons( m_buttons );
-
 		// get to the player data
 		PlayerData playerData = DataController.m_instance.m_playerData;
+
+		// change the buttons
+		switch ( playerData.m_starflight.m_location )
+		{
+			case Starflight.Location.DockingBay:
+				m_spaceflightController.m_buttonController.UpdateButtons( m_buttonSetA );
+				break;
+
+			default:
+				m_spaceflightController.m_buttonController.UpdateButtons( m_buttonSetB );
+				break;
+		}
 
 		// get the personnel file on our captain
 		Personnel.PersonnelFile personnelFile = playerData.m_crewAssignment.GetPersonnelFile( CrewAssignment.Role.Captain );
