@@ -23,7 +23,10 @@ public class Player : MonoBehaviour
 	public Texture[] m_uhlekSkyboxTextureList;
 
 	// the space warp effect
-	SpaceWarp m_spaceWarp;
+	public SpaceWarp m_spaceWarp;
+
+	// convenient access to the spaceflight controller
+	public SpaceflightController m_spaceflightController;
 
 	// keep track of the skybox rotation
 	Matrix4x4 m_skyboxRotation;
@@ -38,18 +41,17 @@ public class Player : MonoBehaviour
 	// set to true to prevent the player from moving (temporarily)
 	bool m_freezePlayer;
 
-	// convenient access to the spaceflight controller
-	SpaceflightController m_spaceflightController;
-
 	// unity awake
-	private void Awake()
+	void Awake()
 	{
-		// get the spaceflight controller
-		GameObject controllersGameObject = GameObject.FindWithTag( "Spaceflight Controllers" );
-		m_spaceflightController = controllersGameObject.GetComponent<SpaceflightController>();
+		// get to the global skybox material
+		Material skyboxMaterial = RenderSettings.skybox;
 
-		// get the space warp effect
-		m_spaceWarp = m_camera.GetComponent<SpaceWarp>();
+		// replace it with a copy (so when we call settexture it doesn't modify the material on disk)
+		skyboxMaterial = new Material( skyboxMaterial );
+
+		// set the copy into the global skybox
+		RenderSettings.skybox = skyboxMaterial;
 	}
 
 	// unity start

@@ -25393,6 +25393,8 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 79edb61a103223c49998bb995cbfca22, type: 3}
   - {fileID: 2800000, guid: 35d3a5ae7508e054baf9503fd1898cd9, type: 3}
   - {fileID: 2800000, guid: 7a2e4f41d1ff09f4a87d2528e83150b2, type: 3}
+  m_spaceWarp: {fileID: 839097935}
+  m_spaceflightController: {fileID: 280970583}
 --- !u!1 &2053083280
 GameObject:
   m_ObjectHideFlags: 0
