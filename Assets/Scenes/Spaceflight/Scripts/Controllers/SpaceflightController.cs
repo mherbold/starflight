@@ -53,9 +53,6 @@ public class SpaceflightController : MonoBehaviour
 	// unity start
 	void Start()
 	{
-		// get to the player data
-		PlayerData playerData = DataController.m_instance.m_playerData;
-
 		// turn off controller navigation of the UI
 		EventSystem.current.sendNavigationEvents = false;
 
