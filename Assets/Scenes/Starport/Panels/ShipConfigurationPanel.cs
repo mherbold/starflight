@@ -101,7 +101,7 @@ public class ShipConfigurationPanel : Panel
 		{
 			string sign = ( deltaBalance > 0 ) ? "-" : "+";
 
-			Bank.Transaction transaction = new Bank.Transaction( DataController.m_instance.m_playerData.m_starflight.m_currentStardate, "Ship Configuration", deltaBalance.ToString() + sign );
+			Bank.Transaction transaction = new Bank.Transaction( DataController.m_instance.m_playerData.m_starflight.m_currentStardateYMD, "Ship Configuration", deltaBalance.ToString() + sign );
 
 			DataController.m_instance.m_playerData.m_bank.m_transactionList.Add( transaction );
 		}

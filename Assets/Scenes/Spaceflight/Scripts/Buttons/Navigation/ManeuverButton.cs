@@ -61,7 +61,7 @@ public class ManeuverButton : ShipButton
 		// check if we want to stop maneuvering
 		if ( InputController.m_instance.SubmitWasPressed() )
 		{
-			// m_spaceflightController.m_buttonController.UpdateButtons();
+			m_spaceflightController.m_buttonController.DeactivateButton();
 		}
 		else
 		{

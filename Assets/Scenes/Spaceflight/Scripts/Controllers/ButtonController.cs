@@ -246,4 +246,17 @@ public class ButtonController : MonoBehaviour
 			m_buttonImageList[ i ].sprite = ( m_currentButtonIndex == i ) ? m_buttonOnSprite : m_buttonOffSprite;
 		}
 	}
+
+	// call this to deactivate the current button
+	public void DeactivateButton()
+	{
+		// we no longer have a current button
+		m_currentButton = null;
+
+		// remove the "active" dot from the current button
+		UpdateButtonSprites();
+
+		// play the deactivate sound
+		SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
+	}
 }

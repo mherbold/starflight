@@ -18,7 +18,6 @@ public class SpaceflightController : MonoBehaviour
 	// the different components of the spaceflight scene
 	public Player m_player;
 	public DockingBay m_dockingBay;
-	public JustLaunched m_justLaunched;
 	public StarSystem m_starSystem;
 	public Hyperspace m_hyperspace;
 	public SpaceflightUI m_spaceflightUI;
@@ -123,7 +122,8 @@ public class SpaceflightController : MonoBehaviour
 				m_dockingBay.Show();
 				break;
 			case Starflight.Location.JustLaunched:
-				m_justLaunched.Show();
+				m_starSystem.Show();
+				m_spaceflightUI.FadeMap( 0.0f );
 				break;
 			case Starflight.Location.StarSystem:
 				m_starSystem.Show();

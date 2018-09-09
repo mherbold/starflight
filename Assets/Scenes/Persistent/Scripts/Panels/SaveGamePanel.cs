@@ -284,7 +284,7 @@ public class SaveGamePanel : Panel
 		{
 			PlayerData playerData = DataController.m_instance.m_playerDataList[ i ];
 
-			string description = "Date: <color=\"blue\">" + playerData.m_starflight.m_currentStardate + "</color> Time: <color=\"blue\">" + playerData.m_starflight.m_hour.ToString( "D2" ) + ":" + playerData.m_starflight.m_minute.ToString( "D2" ) + "</color>\nLocation: <color=\"blue\">";
+			string description = "Date: <color=\"blue\">" + playerData.m_starflight.m_currentStardateYMD + "</color> Time: <color=\"blue\">" + playerData.m_starflight.m_hour.ToString( "D2" ) + ":" + playerData.m_starflight.m_minute.ToString( "D2" ) + "</color>\nLocation: <color=\"blue\">";
 
 			Vector3 hyperspaceCoordinates = Tools.WorldToGameCoordinates( playerData.m_starflight.m_hyperspaceCoordinates );
 

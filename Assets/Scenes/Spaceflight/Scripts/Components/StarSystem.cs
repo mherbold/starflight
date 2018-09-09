@@ -65,7 +65,7 @@ public class StarSystem : MonoBehaviour
 		// update the system controller
 		m_spaceflightController.m_systemController.EnterSystem();
 
-		// show the status display
+		// show the system display
 		m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_systemDisplay );
 
 		// get to the star data

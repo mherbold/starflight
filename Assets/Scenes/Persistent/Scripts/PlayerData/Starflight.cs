@@ -26,7 +26,8 @@ public class Starflight
 	public SerializableVector3 m_hyperspaceCoordinates;
 
 	// game time stuff
-	public string m_currentStardate;
+	public string m_currentStardateYMD;
+	public string m_currentStardateDHMY;
 
 	public int m_day;
 	public int m_hour;
@@ -60,7 +61,7 @@ public class Starflight
 		m_hyperspaceCoordinates = new Vector3( 0.0f, 0.0f, 0.0f );
 
 		// reset the current stardate
-		m_currentStardate = "4620-01-01";
+		m_currentStardateYMD = "4620-01-01";
 
 		// reset the current game time
 		m_day = 0;
@@ -110,7 +111,9 @@ public class Starflight
 
 		// update the current stardate
 		DateTime dateTime = new DateTime( 4620, 1, 1 );
-		dateTime.AddDays( m_day );
-		m_currentStardate = dateTime.ToString( "yyyy-MM-dd" );
+		dateTime = dateTime.AddDays( m_day );
+		dateTime = dateTime.AddHours( m_hour );
+		m_currentStardateYMD = dateTime.ToString( "yyyy-MM-dd" );
+		m_currentStardateDHMY = dateTime.ToString( "dd.HH-MM-yyyy" );
 	}
 }
