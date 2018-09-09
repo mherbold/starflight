@@ -4,27 +4,23 @@ using UnityEngine.AI;
 
 public class AstronautCallbacks : MonoBehaviour
 {
-	// public stuff we want to set using the editor
+	// the door name controller
 	public DoorNameController m_doorNameController;
+
+	// the nav mesh agent
+	public NavMeshAgent m_navMeshAgent;
+
+	// the audio source (to use for playing footstep sounds)
+	public AudioSource m_audioSource;
+
+	// the audio clip to use for footsteps
 	public AudioClip m_footstepAudioClip;
 
-	// private stuff we don't want the editor to see
-	private NavMeshAgent m_navMeshAgent;
-	private float m_currentHeightAboveFloor;
-	private AudioSource m_audioSource;
-
-	// this is called by unity before start
-	private void Awake()
-	{
-		// get access to the NavMeshAgent
-		m_navMeshAgent = GetComponent<NavMeshAgent>();
-
-		// get access to the AudioSource
-		m_audioSource = GetComponent<AudioSource>();
-	}
+	// this is the current height above the floor
+	float m_currentHeightAboveFloor;
 
 	// this is called by unity once at the start of the level
-	private void Start()
+	void Start()
 	{
 		// tell the NavMeshAgent component that we will be updating the astronaut position ourselves
 		m_navMeshAgent.updatePosition = false;
@@ -34,7 +30,7 @@ public class AstronautCallbacks : MonoBehaviour
 	}
 
 	// this is called by unity every frame
-	private void OnAnimatorMove()
+	void OnAnimatorMove()
 	{
 		// smooth out the astronaut's height above the floor changes (remove popping)
 		float smooth = Mathf.Min( 1.0f, Time.deltaTime / 0.15f );
@@ -45,21 +41,21 @@ public class AstronautCallbacks : MonoBehaviour
 	}
 
 	// this is called by the astronaut's CapsuleCollider component once when it detects a collision with a trigger
-	private void OnTriggerEnter( Collider other )
+	void OnTriggerEnter( Collider other )
 	{
 		// change the text to show the tag of the trigger we have collided with (we conveniently set up each trigger's tag to be the door name)
 		m_doorNameController.SetText( other.tag );
 	}
 
 	// this is called by the astronaut's CapsuleCollider component once when it no longer detects a collision with a trigger
-	private void OnTriggerExit( Collider other )
+	void OnTriggerExit( Collider other )
 	{
 		// hide the door name text
 		m_doorNameController.Hide();
 	}
 
 	// call this to play the footstep sound
-	private void PlayFootstepSound()
+	void PlayFootstepSound()
 	{
 		// play the footstep sound
 		m_audioSource.PlayOneShot( m_footstepAudioClip, 1.0f );

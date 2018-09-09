@@ -18,6 +18,12 @@ public class StarportController : MonoBehaviour
 	public TradeDepotPanel m_tradeDepotPanel;
 	public DockingBayPanel m_dockingBayPanel;
 
+	// whether or not we were moving the astronaut
+	bool m_astronautWasMoving;
+
+	// direction we want to move the astronaut in
+	Vector3 m_lastMoveVector;
+
 	// unity awake
 	void Awake()
 	{
@@ -68,11 +74,8 @@ public class StarportController : MonoBehaviour
 		// the astronaut can be moved only if a panel is not active and the astronaut is not transporting to the docking bay
 		if ( !PanelController.m_instance.HasActivePanel() && !m_dockingBayPanel.IsTransporting() )
 		{
-			// we want to allow the player to move the astronaut only when the astronaut is not currently transitioning to the idle animation - this prevents weird looking feet sliding
-			if ( !m_astronautController.IsTransitioningToIdle() )
-			{
-				Move();
-			}
+			// let the user move the astronaut
+			Move();
 
 			// check if the player has pressed the fire button or the cancel button
 			if ( InputController.m_instance.SubmitWasPressed() )
@@ -89,7 +92,7 @@ public class StarportController : MonoBehaviour
 	}
 
 	// handle controller stick input
-	private void Move()
+	void Move()
 	{
 		// get the controller stick position
 		float x = InputController.m_instance.m_x;
@@ -104,18 +107,30 @@ public class StarportController : MonoBehaviour
 			// normalize the move vector to a length of 1.0 - so the astronaut will move the same distance in any direction
 			moveVector.Normalize();
 
-			// tell the NavMeshAgent component where we want to move the astronaut to - 3 feet away in the direction of the controller
-			m_astronautController.Move( moveVector * 3.0f );
+			// tell the NavMeshAgent component where we want to move the astronaut to
+			m_astronautController.Move( moveVector * 10.0f );
+
+			// remember the move vector
+			m_lastMoveVector = moveVector;
+
+			// we are moving the astronaut
+			m_astronautWasMoving = true;
 		}
-		else
+		else if ( m_astronautWasMoving )
 		{
+			// tell the NavMeshAgent component where we want to move the astronaut to
+			m_astronautController.Move( m_lastMoveVector * 1.5f );
+
 			// tell the Animator component to transition the astronaut to the idle animation (if not already idling)
 			m_astronautController.TransitionToIdle();
+
+			// we are no longer moving the astronaut
+			m_astronautWasMoving = false;
 		}
 	}
 
 	// handle fire button input
-	private void Fire()
+	void Fire()
 	{
 		// check if we are showing a door name
 		if ( m_doorNameController.IsShowingDoorName() )

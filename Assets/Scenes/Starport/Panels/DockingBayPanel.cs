@@ -14,6 +14,9 @@ public class DockingBayPanel : Panel
 	// the renderer for the astronaut so we can fade him out
 	public Renderer m_astronautRenderer;
 
+	// the materials to switch to when transporting
+	public Material[] m_fadeAstronautMaterials;
+
 	// the transporter particle system
 	public ParticleSystem m_transporterParticleSystem;
 
@@ -94,6 +97,19 @@ public class DockingBayPanel : Panel
 
 			// activate this game object so that update is called
 			gameObject.SetActive( true );
+
+			// get a copy of the materials array
+			Material[] astronautMaterials = m_astronautRenderer.materials;
+
+			// go through all the materials on the astronaut
+			for ( int i = 0; i < astronautMaterials.Length; i++ )
+			{
+				// switch the shader to the two pass standard shader
+				astronautMaterials[ i ] = m_fadeAstronautMaterials[ i ];
+			}
+
+			// update the renderer with the new list of materials
+			m_astronautRenderer.materials = astronautMaterials;
 
 			// return false because we did not open the panel
 			return false;
