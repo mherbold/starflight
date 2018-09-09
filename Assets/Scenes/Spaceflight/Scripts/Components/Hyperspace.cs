@@ -146,6 +146,9 @@ public class Hyperspace : MonoBehaviour
 
 					// switch to the star system mode
 					m_spaceflightController.SwitchMode();
+
+					// switch to the system display
+					m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_systemDisplay );
 				}
 			}
 
