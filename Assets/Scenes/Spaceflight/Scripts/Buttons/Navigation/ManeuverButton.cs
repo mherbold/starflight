@@ -82,9 +82,19 @@ public class ManeuverButton : ShipButton
 		}
 		else
 		{
-			// get the controller stick position
-			float x = InputController.m_instance.m_x;
-			float z = InputController.m_instance.m_y;
+			// get the amount of enduruium remaining in storage
+			ElementReference elementReference = playerData.m_ship.m_elementStorage.Find( 5 );
+
+			// move the ship only if we have any remaining
+			float x = 0.0f;
+			float z = 0.0f;
+
+			if ( elementReference != null )
+			{
+				// get the controller stick position
+				x = InputController.m_instance.m_x;
+				z = InputController.m_instance.m_y;
+			}
 
 			// create our 3d move vector from the controller position
 			Vector3 moveVector = new Vector3( x, 0.0f, z );
@@ -110,10 +120,10 @@ public class ManeuverButton : ShipButton
 			}
 
 			// check if the ship is moving
-			if ( playerData.m_starflight.m_currentSpeed >= 0.001f )
+			if ( playerData.m_starflight.m_currentSpeed >= 0.1f )
 			{
 				// calculate the new position of the player
-				Vector3 newPosition = m_spaceflightController.m_player.transform.position + (Vector3) playerData.m_starflight.m_currentDirection * playerData.m_starflight.m_currentSpeed;
+				Vector3 newPosition = m_spaceflightController.m_player.transform.position + (Vector3) playerData.m_starflight.m_currentDirection * playerData.m_starflight.m_currentSpeed * Time.deltaTime;
 
 				// make sure the ship stays on the zero plane
 				newPosition.y = 0.0f;
@@ -127,8 +137,28 @@ public class ManeuverButton : ShipButton
 				// update the player rotation
 				m_spaceflightController.m_player.SetRotation( newRotation );
 
+				// are we in hyperspace?
+				if ( playerData.m_starflight.m_location == Starflight.Location.Hyperspace )
+				{
+					// calculate amount of fuel used per coordinate
+					float fuelPerUnit = Mathf.Lerp( 0.48f, 0.16f, ( playerData.m_ship.m_enginesClass - 1.0f ) / 5.0f );
+
+					// calculate the amount of fuel used up
+					playerData.m_ship.m_fuelUsed += ( playerData.m_starflight.m_currentSpeed * fuelPerUnit / 256.0f ) * Time.deltaTime;
+
+					// have we used up more than 0.1 units?
+					if ( playerData.m_ship.m_fuelUsed >= 0.1f )
+					{
+						// yes - deduct 0.1 unit from storage
+						playerData.m_ship.m_elementStorage.Remove( 5, 1 );
+
+						// adjust fuel use
+						playerData.m_ship.m_fuelUsed -= 0.1f;
+					}
+				}
+
 				// rotate the skybox accordingly
-				float multiplier = ( playerData.m_starflight.m_location == Starflight.Location.Hyperspace ) ? 2.0f : 1.0f;
+				float multiplier = ( playerData.m_starflight.m_location == Starflight.Location.Hyperspace ) ? ( 2.0f / 30.0f ) : ( 1.0f / 30.0f );
 				m_spaceflightController.m_player.RotateSkybox( playerData.m_starflight.m_currentDirection, playerData.m_starflight.m_currentSpeed * Time.deltaTime * multiplier );
 
 				// update the map coordinates

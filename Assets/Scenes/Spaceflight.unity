@@ -7226,8 +7226,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_skipCinematics: 0
   m_forceResetToDockingBay: 0
-  m_maximumShipSpeedHyperspace: 3
-  m_maximumShipSpeedStarSystem: 10
+  m_maximumShipSpeedHyperspace: 128
+  m_maximumShipSpeedStarSystem: 512
   m_timeToReachMaximumShipSpeed: 6
   m_timeToStop: 0.5
   m_player: {fileID: 2052193865}

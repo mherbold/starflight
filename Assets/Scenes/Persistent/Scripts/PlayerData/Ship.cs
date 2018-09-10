@@ -18,6 +18,8 @@ public class Ship
 	public int m_volumeUsed;
 	public int m_acceleration;
 
+	public float m_fuelUsed;
+
 	public ArtifactStorage m_artifactStorage;
 	public ElementStorage m_elementStorage;
 
@@ -35,6 +37,9 @@ public class Ship
 		m_armorClass = 0;
 		m_missileLauncherClass = 0;
 		m_laserCannonClass = 0;
+
+		// reset fuel used to zero
+		m_fuelUsed = 0.0f;
 
 		// recalculate the mass of the ship
 		RecalculateMass();
