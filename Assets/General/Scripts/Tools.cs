@@ -89,4 +89,10 @@ class Tools
 			return (T) formatter.Deserialize( stream );
 		}
 	}
+
+	// call this to find if one FP number is close to another FP number (within the given threshold)
+	public static bool IsApproximatelyEqual( float a, float b, float threshold )
+	{
+		return Mathf.Abs( a - b ) <= threshold;
+	}
 }
