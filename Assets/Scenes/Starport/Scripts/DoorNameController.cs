@@ -10,8 +10,6 @@ public class DoorNameController : MonoBehaviour
 	// this is called by unity once at the start of the level
 	void Start()
 	{
-		// hide the door name when we load this scene
-		Hide();
 	}
 
 	// change the door name and show it

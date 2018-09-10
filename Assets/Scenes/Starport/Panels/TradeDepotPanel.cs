@@ -56,7 +56,7 @@ public class TradeDepotPanel : Panel
 	public InputField m_amountInputField;
 
 	// the starport controller
-	public StarportController m_starportController;
+	public AstronautController m_astronautController;
 
 	// private stuff we don't want the editor to see
 	State m_currentState;
@@ -127,7 +127,7 @@ public class TradeDepotPanel : Panel
 		base.Closed();
 
 		// let the starport controller know
-		m_starportController.PanelWasClosed();
+		m_astronautController.PanelWasClosed();
 	}
 
 	// panel tick

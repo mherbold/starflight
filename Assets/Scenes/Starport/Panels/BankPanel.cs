@@ -18,8 +18,8 @@ public class BankPanel : Panel
 	// the date mask
 	public GameObject m_dateMask;
 
-	// the starport controller
-	public StarportController m_starportController;
+	// the astronaut controller
+	public AstronautController m_astronautController;
 
 	// panel open
 	public override bool Open()
@@ -86,7 +86,7 @@ public class BankPanel : Panel
 		base.Closed();
 
 		// let the starport controller know
-		m_starportController.PanelWasClosed();
+		m_astronautController.PanelWasClosed();
 	}
 
 	// this is called if we clicked on the exit button

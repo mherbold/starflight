@@ -28,7 +28,7 @@ public class CrewAssignmentPanel : Panel
 	public GameObject m_bottomPanelGameObject;
 
 	// the starport controller
-	public StarportController m_starportController;
+	public AstronautController m_astronautController;
 
 	// private stuff we don't want the editor to see
 	State m_currentState;
@@ -73,7 +73,7 @@ public class CrewAssignmentPanel : Panel
 		base.Closed();
 
 		// let the starport controller know
-		m_starportController.PanelWasClosed();
+		m_astronautController.PanelWasClosed();
 	}
 
 	// panel tick

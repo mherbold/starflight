@@ -569,7 +569,7 @@ MonoBehaviour:
   m_enabledArrowsGameObject: {fileID: 1381028229}
   m_disabledArrowsGameObject: {fileID: 65308402}
   m_bottomPanelGameObject: {fileID: 481989433}
-  m_starportController: {fileID: 1103932352}
+  m_astronautController: {fileID: 1026458900}
 --- !u!1 &9407203
 GameObject:
   m_ObjectHideFlags: 0
@@ -18170,7 +18170,7 @@ MonoBehaviour:
   m_amountListText: {fileID: 1275627195}
   m_currentBalanceText: {fileID: 570267199}
   m_dateMask: {fileID: 167388774}
-  m_starportController: {fileID: 1103932352}
+  m_astronautController: {fileID: 1026458900}
 --- !u!1 &908991915
 GameObject:
   m_ObjectHideFlags: 0
@@ -20530,22 +20530,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1026458896
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1026458893}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7705b5623ebaadb4aa0f5c1aa8c83fe5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_doorNameController: {fileID: 1017418671}
-  m_navMeshAgent: {fileID: 1026458897}
-  m_audioSource: {fileID: 1026458899}
-  m_footstepAudioClip: {fileID: 8300000, guid: ed719c7a711874e498839b4aacd9011e, type: 3}
-  m_heightTransitionTime: 0.1
 --- !u!195 &1026458897
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -20686,8 +20670,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30bfc34a42c646c4db58a62a609c9105, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_doorNameController: {fileID: 1017418671}
   m_navMeshAgent: {fileID: 1026458897}
   m_animator: {fileID: 1026458895}
+  m_operationsPanel: {fileID: 1223361394}
+  m_personnelPanel: {fileID: 1614959086}
+  m_crewAssignmentPanel: {fileID: 7618756}
+  m_bankPanel: {fileID: 907744910}
+  m_shipConfigurationPanel: {fileID: 1606966769}
+  m_tradeDepotPanel: {fileID: 1297038250}
+  m_dockingBayPanel: {fileID: 1799566589}
+  m_audioSource: {fileID: 1026458899}
+  m_footstepAudioClip: {fileID: 8300000, guid: ed719c7a711874e498839b4aacd9011e, type: 3}
+  m_heightTransitionTime: 0.1
+  m_danceWaitTime: 15
 --- !u!54 &1026458901
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -21647,15 +21643,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1ad07f1077eb1d4e8d25b0295497771, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_astronautController: {fileID: 1026458900}
-  m_doorNameController: {fileID: 1017418671}
-  m_operationsPanel: {fileID: 1223361394}
-  m_personnelPanel: {fileID: 1614959086}
-  m_crewAssignmentPanel: {fileID: 7618756}
-  m_bankPanel: {fileID: 907744910}
-  m_shipConfigurationPanel: {fileID: 1606966769}
-  m_tradeDepotPanel: {fileID: 1297038250}
-  m_dockingBayPanel: {fileID: 1799566589}
 --- !u!1 &1114406438
 GameObject:
   m_ObjectHideFlags: 0
@@ -23360,7 +23347,7 @@ MonoBehaviour:
   m_messageText: {fileID: 605876668}
   m_baseOffset: 16
   m_smoothScrollSpeed: 4
-  m_starportController: {fileID: 1103932352}
+  m_astronautController: {fileID: 1026458900}
 --- !u!1 &1230424898 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100158, guid: e26148b8b7a13b64d93bc449d062d5a3,
@@ -24089,7 +24076,7 @@ MonoBehaviour:
   m_analyzePanel: {fileID: 373599133}
   m_confirmAnalyzePanel: {fileID: 1338609550}
   m_amountInputField: {fileID: 1616810819}
-  m_starportController: {fileID: 1103932352}
+  m_astronautController: {fileID: 1026458900}
 --- !u!1 &1297231478
 GameObject:
   m_ObjectHideFlags: 0
@@ -29184,7 +29171,7 @@ MonoBehaviour:
   - {fileID: 466549282}
   - {fileID: 1682278334}
   m_nameInputField: {fileID: 1874064744}
-  m_starportController: {fileID: 1103932352}
+  m_astronautController: {fileID: 1026458900}
 --- !u!1 &1610129253
 GameObject:
   m_ObjectHideFlags: 0
@@ -29401,7 +29388,7 @@ MonoBehaviour:
   m_deletePanel: {fileID: 1467642027}
   m_selectionXform: {fileID: 927913358}
   m_nameInputField: {fileID: 89483108}
-  m_starportController: {fileID: 1103932352}
+  m_astronautController: {fileID: 1026458900}
 --- !u!1 &1616810817
 GameObject:
   m_ObjectHideFlags: 0
@@ -32634,7 +32621,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 7212d90b12f93fd46bdaf9b209379eb1, type: 2}
   - {fileID: 2100000, guid: c2d1e349d45316d42ad215fffd3570ef, type: 2}
   m_transporterParticleSystem: {fileID: 247884873}
-  m_starportController: {fileID: 1103932352}
+  m_astronautController: {fileID: 1026458900}
 --- !u!1 &1805009871
 GameObject:
   m_ObjectHideFlags: 0

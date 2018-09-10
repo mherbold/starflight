@@ -36,7 +36,7 @@ public class OperationsPanel : Panel
 	bool m_endOfMessageReached;
 
 	// the starport controller
-	public StarportController m_starportController;
+	public AstronautController m_astronautController;
 
 	// panel open
 	public override bool Open()
@@ -58,7 +58,7 @@ public class OperationsPanel : Panel
 		base.Closed();
 
 		// let the starport controller know
-		m_starportController.PanelWasClosed();
+		m_astronautController.PanelWasClosed();
 	}
 
 	// panel tick

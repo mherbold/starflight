@@ -21,7 +21,7 @@ public class DockingBayPanel : Panel
 	public ParticleSystem m_transporterParticleSystem;
 
 	// the starport controller
-	public StarportController m_starportController;
+	public AstronautController m_astronautController;
 
 	// set this to true to transport the astronaut to the docking bay
 	bool m_isTransporting;
@@ -134,7 +134,7 @@ public class DockingBayPanel : Panel
 		base.Closed();
 
 		// let the starport controller know
-		m_starportController.PanelWasClosed();
+		m_astronautController.PanelWasClosed();
 	}
 
 	// unity update
