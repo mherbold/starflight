@@ -2855,7 +2855,6 @@ Transform:
   - {fileID: 969829694}
   - {fileID: 957767526}
   - {fileID: 1026458894}
-  - {fileID: 247884871}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3712,6 +3711,7 @@ GameObject:
   - component: {fileID: 247884871}
   - component: {fileID: 247884873}
   - component: {fileID: 247884872}
+  - component: {fileID: 247884874}
   m_Layer: 0
   m_Name: Transporter Particle System
   m_TagString: Untagged
@@ -3725,13 +3725,13 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 247884870}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalRotation: {x: -0, y: 0.12360156, z: -0, w: 0.992332}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 208050239}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_Father: {fileID: 1026458894}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 45, z: 0}
 --- !u!199 &247884872
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -8322,6 +8322,24 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!1818360609 &247884874
+RotationConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 247884870}
+  m_Enabled: 1
+  m_Weight: 1
+  m_RotationAtRest: {x: 0, y: 45, z: 0}
+  m_RotationOffset: {x: 0, y: -179.60004, z: 0}
+  m_AffectRotationX: 1
+  m_AffectRotationY: 1
+  m_AffectRotationZ: 1
+  m_IsContraintActive: 1
+  m_IsLocked: 1
+  m_Sources:
+  - sourceTransform: {fileID: 208050239}
+    weight: 1
 --- !u!1 &266322754
 GameObject:
   m_ObjectHideFlags: 0
@@ -20527,6 +20545,7 @@ MonoBehaviour:
   m_navMeshAgent: {fileID: 1026458897}
   m_audioSource: {fileID: 1026458899}
   m_footstepAudioClip: {fileID: 8300000, guid: ed719c7a711874e498839b4aacd9011e, type: 3}
+  m_heightTransitionTime: 0.1
 --- !u!195 &1026458897
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -20667,7 +20686,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30bfc34a42c646c4db58a62a609c9105, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_transporterParticleSystem: {fileID: 247884873}
   m_navMeshAgent: {fileID: 1026458897}
   m_animator: {fileID: 1026458895}
 --- !u!54 &1026458901
@@ -23107,7 +23125,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 224ccd8849e6c684eac9273a2bfd6a2e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.9252097
+      value: 0.9927574
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 224ccd8849e6c684eac9273a2bfd6a2e, type: 3}
       propertyPath: m_LocalRotation.z
@@ -23115,7 +23133,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 224ccd8849e6c684eac9273a2bfd6a2e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.3794563
+      value: 0.120137
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 224ccd8849e6c684eac9273a2bfd6a2e, type: 3}
       propertyPath: m_RootOrder
@@ -23131,7 +23149,7 @@ Prefab:
       objectReference: {fileID: 9100000, guid: d9872209e12d77c4ab455124b50d4108, type: 2}
     - target: {fileID: 400002, guid: 224ccd8849e6c684eac9273a2bfd6a2e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 135.4
+      value: 166.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 224ccd8849e6c684eac9273a2bfd6a2e, type: 3}
