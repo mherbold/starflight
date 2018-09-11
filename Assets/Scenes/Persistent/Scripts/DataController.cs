@@ -242,7 +242,7 @@ public class DataController : MonoBehaviour
 			using ( FileStream file = File.Create( filePath ) )
 			{
 				BinaryFormatter binaryFormatter = new BinaryFormatter();
-				binaryFormatter.Serialize( file, m_playerData );
+				binaryFormatter.Serialize( file, m_playerDataList[ saveGameSlotNumber ] );
 			}
 		}
 		catch ( IOException exception )
@@ -302,6 +302,9 @@ public class DataController : MonoBehaviour
 	{
 		// reset the player data for the current slot
 		m_playerData.Reset();
+
+		// keep this game the active one
+		m_playerData.m_isCurrentGame = true;
 
 		// save the active game (with freshly reset data)
 		SaveActiveGame();
