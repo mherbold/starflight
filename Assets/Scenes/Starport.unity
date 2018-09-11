@@ -32622,6 +32622,9 @@ MonoBehaviour:
   - {fileID: 2100000, guid: c2d1e349d45316d42ad215fffd3570ef, type: 2}
   m_transporterParticleSystem: {fileID: 247884873}
   m_astronautController: {fileID: 1026458900}
+  m_fadeStartTime: 0
+  m_fadeDuration: 2.5
+  m_sceneSwitchTime: 6
 --- !u!1 &1805009871
 GameObject:
   m_ObjectHideFlags: 0

@@ -23,6 +23,15 @@ public class DockingBayPanel : Panel
 	// the starport controller
 	public AstronautController m_astronautController;
 
+	// the time to run the transporter effect particles and start fading out the astronaut
+	public float m_fadeStartTime;
+
+	// how long to run the fade
+	public float m_fadeDuration;
+
+	// the time to switch to the spaceflight scene
+	public float m_sceneSwitchTime;
+
 	// set this to true to transport the astronaut to the docking bay
 	bool m_isTransporting;
 
@@ -89,9 +98,6 @@ public class DockingBayPanel : Panel
 			// reset the transporter timer
 			m_timer = 0.0f;
 
-			// start the particle system
-			m_transporterParticleSystem.Play();
-
 			// play the transporting sound
 			SoundController.m_instance.PlaySound( SoundController.Sound.Transport );
 
@@ -146,23 +152,10 @@ public class DockingBayPanel : Panel
 			// yes - update the transport timer
 			m_timer += Time.deltaTime;
 
-			// let the particle system run for only a second and a half
-			if ( m_timer >= 1.5f )
+			// is it time to switch the scene?
+			if ( m_timer >= m_sceneSwitchTime )
 			{
-				m_transporterParticleSystem.Stop();
-			}
-
-			// TODO - Fix this!  Need to write a 2 pass shader to fade the astronaut out (a-la distance fade)
-			// fade out the astronaut over two and a half seconds
-			if ( m_timer < 2.5f )
-			{
-				UpdateOpacity( 1.0f - ( m_timer / 2.5f ) );
-			}
-
-			// give the particles time to completely fade out
-			if ( m_timer >= 4.0f )
-			{
-				// force the astronaut to be completely transparent
+				// yes - force the astronaut to be completely transparent
 				UpdateOpacity( 0.0f );
 
 				// we are no longer transporting
@@ -179,6 +172,30 @@ public class DockingBayPanel : Panel
 
 				// start fading out and switch to the spaceflight scene
 				SceneFadeController.m_instance.FadeOut( "Spaceflight" );
+			}
+			else if ( m_timer >= ( m_fadeStartTime + m_fadeDuration ) )
+			{
+				// is the particle system still playing?
+				if ( m_transporterParticleSystem.isPlaying )
+				{
+					// yes - stop it
+					m_transporterParticleSystem.Stop();
+				}
+			}
+			else if ( m_timer >= m_fadeStartTime )
+			{
+				// calculate the astronaut opacity
+				float opacity = Mathf.Lerp( 1.0f, 0.0f, ( m_timer - m_fadeStartTime ) / m_fadeDuration );
+
+				// update the astronaut opacity
+				UpdateOpacity( opacity );
+
+				// has the particle system been started?
+				if ( !m_transporterParticleSystem.isPlaying )
+				{
+					// no - start the particle system
+					m_transporterParticleSystem.Play();
+				}
 			}
 		}
 	}
