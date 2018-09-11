@@ -106,7 +106,7 @@ public class PlanetController : MonoBehaviour
 			// scale the planet based on its mass
 			float scale = Mathf.Lerp( 32.0f, 320.0f, Mathf.Sqrt( ( planet.m_mass - 6.0f ) / 500000.0f ) );
 			m_planetModel.transform.localScale = new Vector3( scale, scale, scale );
-			//Debug.Log( "Planet " + planet.m_id + " mass is " + planet.m_mass + " so scale is " + scale );
+			Debug.Log( "Planet " + planet.m_id + " mass is " + planet.m_mass + " so scale is " + scale );
 
 			// move the planet to be just below the zero plane
 			m_planetModel.transform.localPosition = new Vector3( 0.0f, -16.0f - scale, 0.0f );

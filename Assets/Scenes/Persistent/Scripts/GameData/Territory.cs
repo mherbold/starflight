@@ -27,7 +27,16 @@ public class Territory : IComparable
 	{
 		if ( obj is Territory )
 		{
-			return m_currentDistance.CompareTo( ( obj as Territory ).m_currentDistance );
+			int compareTo = m_currentDistance.CompareTo( ( obj as Territory ).m_currentDistance );
+
+			if ( compareTo == 0 )
+			{
+				return ( obj as Territory ).m_penetrationDistance.CompareTo( m_penetrationDistance );
+			}
+			else
+			{
+				return compareTo;
+			}
 		}
 
 		throw new ArgumentException( "Object is not a Territory" );

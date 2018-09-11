@@ -75,41 +75,49 @@ public class Ship
 		RecalculateVolumeUsed();
 	}
 
-	public string GetClassString( int classNumber )
+	public Engines GetEngines()
 	{
-		if ( classNumber == 0 )
-		{
-			return "None";
-		}
-		else
-		{
-			return "Class " + classNumber;
-		}
+		// get access to the game data
+		GameData gameData = DataController.m_instance.m_gameData;
+
+		// return the engines this ship has
+		return gameData.m_enginesList[ m_enginesClass ];
 	}
 
-	public string GetEnginesClassString()
+	public Sheilding GetSheilding()
 	{
-		return GetClassString( m_enginesClass );
+		// get access to the game data
+		GameData gameData = DataController.m_instance.m_gameData;
+
+		// return the engines this ship has
+		return gameData.m_shieldingList[ m_shieldingClass ];
 	}
 
-	public string GetSheildingClassString()
+	public Armor GetArmor()
 	{
-		return GetClassString( m_shieldingClass );
+		// get access to the game data
+		GameData gameData = DataController.m_instance.m_gameData;
+
+		// return the engines this ship has
+		return gameData.m_armorList[ m_armorClass ];
 	}
 
-	public string GetArmorClassString()
+	public MissileLauncher GetMissileLauncher()
 	{
-		return GetClassString( m_armorClass );
+		// get access to the game data
+		GameData gameData = DataController.m_instance.m_gameData;
+
+		// return the engines this ship has
+		return gameData.m_missileLauncherList[ m_missileLauncherClass ];
 	}
 
-	public string GetMissileLauncherClassString()
+	public LaserCannon GetLaserCannon()
 	{
-		return GetClassString( m_missileLauncherClass );
-	}
+		// get access to the game data
+		GameData gameData = DataController.m_instance.m_gameData;
 
-	public string GetLaserCannonClassString()
-	{
-		return GetClassString( m_laserCannonClass );
+		// return the engines this ship has
+		return gameData.m_laserCannonList[ m_laserCannonClass ];
 	}
 
 	public void RecalculateMass()
@@ -120,13 +128,15 @@ public class Ship
 		// start with the base ship mass
 		m_mass = gameData.m_misc.m_baseShipMass;
 
+		// add in the mass of all the cargo pods
+		m_mass += m_numCargoPods * gameData.m_misc.m_cargoPodMass;
+
 		// add in the mass of all the add on ship components
-		m_mass += gameData.m_misc.m_cargoPodMass * m_numCargoPods;
-		m_mass += gameData.m_enginesList[ m_enginesClass ].m_mass;
-		m_mass += gameData.m_shieldingList[ m_shieldingClass ].m_mass;
-		m_mass += gameData.m_armorList[ m_armorClass ].m_mass;
-		m_mass += gameData.m_missileLauncherList[ m_missileLauncherClass ].m_mass;
-		m_mass += gameData.m_laserCannonList[ m_laserCannonClass ].m_mass;
+		m_mass += GetEngines().m_mass;
+		m_mass += GetSheilding().m_mass;
+		m_mass += GetArmor().m_mass;
+		m_mass += GetMissileLauncher().m_mass;
+		m_mass += GetLaserCannon().m_mass;
 	}
 
 	public void RecalculateVolume()
@@ -143,11 +153,8 @@ public class Ship
 
 	public void RecalculateAcceleration()
 	{
-		// get access to the game data
-		GameData gameData = DataController.m_instance.m_gameData;
-
-		// get access to our engines
-		Engines engines = gameData.m_enginesList[ m_enginesClass ];
+		// get our engines
+		Engines engines = GetEngines();
 
 		// this formula closely matches the original starflight game
 		m_acceleration = engines.m_baseAcceleration - Convert.ToInt32( Math.Sqrt( m_mass - engines.m_accelerationMass ) * engines.m_accelerationScale );

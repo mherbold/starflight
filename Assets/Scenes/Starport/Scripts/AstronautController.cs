@@ -117,16 +117,10 @@ public class AstronautController : MonoBehaviour
 				// we are moving the astronaut
 				m_astronautWasMoving = true;
 			}
-			else if ( m_astronautWasMoving )
+			else
 			{
-				// tell the NavMeshAgent component where we want to move the astronaut to
-				m_navMeshAgent.SetDestination( transform.position + m_lastMoveVector * 1.5f );
-
-				// tell the animator component to transition the astronaut to the idle animation (if not already idling)
-				m_animator.SetBool( "Run", false );
-
-				// we are no longer moving the astronaut
-				m_astronautWasMoving = false;
+				// tell the astronaut to stop moving
+				StopMoving();
 			}
 
 			// check if the player has pressed the fire button or the cancel button
@@ -186,7 +180,7 @@ public class AstronautController : MonoBehaviour
 	}
 
 	// call this when we want to open a starport panel
-	public void OpenPanel( Panel panel )
+	void OpenPanel( Panel panel )
 	{
 		// hide the door name
 		m_doorNameController.Hide();
@@ -194,14 +188,8 @@ public class AstronautController : MonoBehaviour
 		// tell the panel controller we want to open this panel
 		PanelController.m_instance.Open( panel );
 
-		// tell the NavMeshAgent component where we want to move the astronaut to
-		m_navMeshAgent.SetDestination( transform.position + m_lastMoveVector * 1.5f );
-
-		// tell the animator component to transition the astronaut to the idle animation (if not already idling)
-		m_animator.SetBool( "Run", false );
-
-		// we are no longer moving the astronaut
-		m_astronautWasMoving = false;
+		// tell the astronaut to stop moving
+		StopMoving();
 	}
 
 	// call this when a starport panel was closed
@@ -212,6 +200,23 @@ public class AstronautController : MonoBehaviour
 
 		// save the player data in case something has been updated
 		DataController.m_instance.SaveActiveGame();
+	}
+
+	// call this to get the astronaut to stop moving
+	void StopMoving()
+	{
+		// was the astronaut moving?
+		if ( m_astronautWasMoving )
+		{
+			// tell the NavMeshAgent component where we want to move the astronaut to
+			m_navMeshAgent.SetDestination( transform.position + m_lastMoveVector * 1.5f );
+
+			// tell the animator component to transition the astronaut to the idle animation (if not already idling)
+			m_animator.SetBool( "Run", false );
+
+			// we are no longer moving the astronaut
+			m_astronautWasMoving = false;
+		}
 	}
 
 	// unity on animator move

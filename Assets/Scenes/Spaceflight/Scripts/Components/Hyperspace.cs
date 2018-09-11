@@ -92,11 +92,14 @@ public class Hyperspace : MonoBehaviour
 			// update the timer
 			m_timer += Time.deltaTime;
 
-			// travel through the flux
-			float t = Mathf.Cos( ( m_timer / m_fluxTravelDuration ) * Mathf.PI ) * -0.5f + 0.5f;
+			// calculate a smoothed curve for moving our position to the other end of the flux
+			float t = Mathf.SmoothStep( 0.0f, 1.0f, m_timer / m_fluxTravelDuration );
 			
+			// update the position of the ship
 			Vector3 newPosition = Vector3.Lerp( m_fluxTravelStartPosition, m_fluxTravelEndPosition, t );
-			m_spaceflightController.UpdatePlayerPosition( newPosition );
+
+			// update the ship position
+			m_spaceflightController.m_player.transform.position = newPosition;
 
 			// rotate the skybox in the direction of the flux travel
 			Vector3 direction = Vector3.Normalize( m_fluxTravelStartPosition - m_fluxTravelEndPosition );
@@ -108,7 +111,7 @@ public class Hyperspace : MonoBehaviour
 				// end the space warp effect
 				m_spaceflightController.m_player.StopSpaceWarp();
 
-				// let the player move the ship again
+				// let the ship move again
 				m_spaceflightController.m_player.Unfreeze();
 
 				// update the map coordinates
@@ -217,13 +220,13 @@ public class Hyperspace : MonoBehaviour
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// move the ship to where we are in hyperspace
-		m_spaceflightController.m_player.SetPosition( playerData.m_starflight.m_hyperspaceCoordinates );
+		m_spaceflightController.m_player.transform.position = playerData.m_starflight.m_hyperspaceCoordinates;
 
 		// calculate the new rotation of the player
 		Quaternion newRotation = Quaternion.LookRotation( playerData.m_starflight.m_currentDirection, Vector3.up );
 
 		// update the player rotation
-		m_spaceflightController.m_player.SetRotation( newRotation );
+		m_spaceflightController.m_player.m_ship.rotation = newRotation;
 
 		// show the status display
 		m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_statusDisplay );

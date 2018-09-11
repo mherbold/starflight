@@ -60,13 +60,13 @@ public class StarSystem : MonoBehaviour
 		m_spaceflightController.m_player.DollyCamera( 1024.0f );
 
 		// move the player object
-		m_spaceflightController.m_player.SetPosition( playerData.m_starflight.m_systemCoordinates );
+		m_spaceflightController.m_player.transform.position = playerData.m_starflight.m_systemCoordinates;
 
 		// calculate the new rotation of the player
 		Quaternion newRotation = Quaternion.LookRotation( playerData.m_starflight.m_currentDirection, Vector3.up );
 
 		// update the player rotation
-		m_spaceflightController.m_player.SetRotation( newRotation );
+		m_spaceflightController.m_player.m_ship.rotation = newRotation;
 
 		// update the system controller
 		m_spaceflightController.m_systemController.EnterSystem();

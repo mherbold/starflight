@@ -57,7 +57,7 @@ public class SpaceWarp : MonoBehaviour
 		{
 			m_timer += Time.deltaTime;
 
-			float warpStrength = Mathf.Lerp( m_warpStrength, 0.0f, ( m_timer / m_exitWarpTransitionTime ) );
+			float warpStrength = Mathf.SmoothStep( m_warpStrength, 0.0f, ( m_timer / m_exitWarpTransitionTime ) );
 
 			if ( m_timer >= m_exitWarpTransitionTime )
 			{

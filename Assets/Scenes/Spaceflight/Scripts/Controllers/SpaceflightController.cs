@@ -138,26 +138,6 @@ public class SpaceflightController : MonoBehaviour
 		// save the player data (since the location was most likely changed)
 		DataController.m_instance.SaveActiveGame();
 	}
-
-	// call this to update the player's position
-	public void UpdatePlayerPosition( Vector3 newPosition )
-	{
-		// update the game object
-		m_player.SetPosition( newPosition );
-
-		// get to the player data
-		PlayerData playerData = DataController.m_instance.m_playerData;
-
-		// update the player data (it will save out to disk eventually)
-		if ( playerData.m_starflight.m_location != Starflight.Location.Hyperspace )
-		{
-			playerData.m_starflight.m_systemCoordinates = newPosition;
-		}
-		else
-		{
-			playerData.m_starflight.m_hyperspaceCoordinates = newPosition;
-		}
-	}
 	
 	// call this when a the save game panel was closed
 	public void PanelWasClosed()

@@ -20683,7 +20683,7 @@ MonoBehaviour:
   m_audioSource: {fileID: 1026458899}
   m_footstepAudioClip: {fileID: 8300000, guid: ed719c7a711874e498839b4aacd9011e, type: 3}
   m_heightTransitionTime: 0.1
-  m_danceWaitTime: 15
+  m_danceWaitTime: 30
 --- !u!54 &1026458901
 Rigidbody:
   m_ObjectHideFlags: 0

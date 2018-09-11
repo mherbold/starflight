@@ -38,6 +38,9 @@ public class Player : MonoBehaviour
 	string m_skyboxA;
 	string m_skyboxB;
 
+	// set to true when the engines are on (to accelerate) or off (to brake)
+	bool m_enginesAreOn;
+
 	// set to true to prevent the player from moving (temporarily)
 	bool m_freezePlayer;
 
@@ -60,6 +63,9 @@ public class Player : MonoBehaviour
 		// reset the skybox rotation
 		m_skyboxRotation = Matrix4x4.identity;
 
+		// the engines are off
+		m_enginesAreOn = false;
+
 		// make sure the player can move
 		m_freezePlayer = false;
 	}
@@ -73,16 +79,106 @@ public class Player : MonoBehaviour
 		// get to the player data
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
+		// get the amount of enduruium remaining in storage
+		ElementReference elementReference = playerData.m_ship.m_elementStorage.Find( 5 );
+
+		// do this part only if we havent frozen the player (in flux travel)
+		if ( !m_freezePlayer )
+		{
+			// are we out of fuel?
+			if ( elementReference == null )
+			{
+				// yes - turn the engines off
+				m_enginesAreOn = false;
+			}
+
+			// are the engines turned on?
+			if ( m_enginesAreOn )
+			{
+				// calculate the maximum ship speed (it is the same for all engine classes)
+				float maximumShipSpeed = ( playerData.m_starflight.m_location == Starflight.Location.Hyperspace ) ? m_spaceflightController.m_maximumShipSpeedHyperspace : m_spaceflightController.m_maximumShipSpeedStarSystem;
+
+				// calculate the acceleration
+				float acceleration = Time.deltaTime * playerData.m_ship.GetEngines().m_accelerationScale / m_spaceflightController.m_timeToReachMaximumShipSpeed;
+
+				// increase the current speed
+				playerData.m_starflight.m_currentSpeed = Mathf.Lerp( playerData.m_starflight.m_currentSpeed, maximumShipSpeed, acceleration );
+
+				// are we in hyperspace?
+				if ( playerData.m_starflight.m_location == Starflight.Location.Hyperspace )
+				{
+					// get the engines
+					Engines engines = playerData.m_ship.GetEngines();
+
+					// calculate the amount of fuel used up
+					playerData.m_ship.m_fuelUsed += ( playerData.m_starflight.m_currentSpeed * engines.m_fuelUsedPerCoordinate / 256.0f ) * Time.deltaTime;
+
+					// have we used up more than 0.1 units?
+					if ( playerData.m_ship.m_fuelUsed >= 0.1f )
+					{
+						// yes - deduct 0.1 unit from storage
+						playerData.m_ship.m_elementStorage.Remove( 5, 1 );
+
+						// adjust fuel use
+						playerData.m_ship.m_fuelUsed -= 0.1f;
+					}
+				}
+			}
+			else
+			{
+				// slow the ship to a stop
+				playerData.m_starflight.m_currentSpeed = Mathf.Lerp( playerData.m_starflight.m_currentSpeed, 0.0f, Time.deltaTime / m_spaceflightController.m_timeToStop );
+			}
+
+			// check if the ship is moving
+			if ( playerData.m_starflight.m_currentSpeed >= 0.1f )
+			{
+				// calculate the new position of the player
+				Vector3 newPosition = transform.position + (Vector3) playerData.m_starflight.m_currentDirection * playerData.m_starflight.m_currentSpeed * Time.deltaTime;
+
+				// make sure the ship stays on the zero plane
+				newPosition.y = 0.0f;
+
+				// update the player position
+				transform.position = newPosition;
+
+				// update the player data (it will save out to disk eventually)
+				if ( playerData.m_starflight.m_location != Starflight.Location.Hyperspace )
+				{
+					playerData.m_starflight.m_systemCoordinates = newPosition;
+				}
+				else
+				{
+					playerData.m_starflight.m_hyperspaceCoordinates = newPosition;
+				}
+
+				// set the rotation of the ship
+				m_ship.rotation = Quaternion.LookRotation( playerData.m_starflight.m_currentDirection, Vector3.up );
+
+				// figure out how fast to rotate the skybox
+				float multiplier = ( playerData.m_starflight.m_location == Starflight.Location.Hyperspace ) ? ( 2.0f / 30.0f ) : ( 1.0f / 30.0f );
+
+				// rotate the skybox
+				RotateSkybox( playerData.m_starflight.m_currentDirection, playerData.m_starflight.m_currentSpeed * Time.deltaTime * multiplier );
+
+				// update the map coordinates
+				m_spaceflightController.m_spaceflightUI.UpdateCoordinates();
+			}
+		}
+
 		// get to the global skybox material
 		Material skyboxMaterial = RenderSettings.skybox;
 
 		// update the skybox rotation on the material
-		skyboxMaterial.SetMatrix( "_ModelMatrix", m_spaceflightController.m_player.m_skyboxRotation );
+		skyboxMaterial.SetMatrix( "_ModelMatrix", m_skyboxRotation );
+
+		// get the current hyperspace coordinates (if in hyperspace get it from the player position due to flux travel not updating m_hyperspaceCoordinats)
+		Vector3 hyperspaceCoordinates = ( playerData.m_starflight.m_location == Starflight.Location.Hyperspace ) ? transform.position : (Vector3) playerData.m_starflight.m_hyperspaceCoordinates;
 
 		// figure out how far we are from each territory
 		foreach ( Territory territory in gameData.m_territoryList )
 		{
-			territory.m_currentDistance = Vector3.Distance( playerData.m_starflight.m_hyperspaceCoordinates, territory.m_center );
+			territory.m_currentDistance = Vector3.Distance( hyperspaceCoordinates, territory.m_center );
 			territory.m_currentDistance -= territory.m_size;
 			territory.m_penetrationDistance = Mathf.Max( 0.0f, -territory.m_currentDistance );
 			territory.m_currentDistance = Mathf.Max( 0.0f, territory.m_currentDistance );
@@ -159,7 +255,7 @@ public class Player : MonoBehaviour
 		// figure out how far we are from each nebula
 		foreach ( Nebula nebula in gameData.m_nebulaList )
 		{
-			nebula.m_currentDistance = Vector3.Distance( playerData.m_starflight.m_hyperspaceCoordinates, nebula.m_center );
+			nebula.m_currentDistance = Vector3.Distance( hyperspaceCoordinates, nebula.m_center );
 			nebula.m_currentDistance -= nebula.m_size;
 			nebula.m_penetrationDistance = Mathf.Max( 0.0f, -nebula.m_currentDistance );
 			nebula.m_currentDistance = Mathf.Max( 0.0f, nebula.m_currentDistance );
@@ -169,16 +265,28 @@ public class Player : MonoBehaviour
 		Array.Sort( gameData.m_nebulaList );
 	}
 
+	// call this to show the player (ship)
+	public void Show()
+	{
+		m_ship.gameObject.SetActive( true );
+	}
+
 	// call this to hide the player (ship)
 	public void Hide()
 	{
 		m_ship.gameObject.SetActive( false );
 	}
 
-	// call this to show the player (ship)
-	public void Show()
+	// call this to turn on the engines (accelerate)
+	public void TurnOnEngines()
 	{
-		m_ship.gameObject.SetActive( true );
+		m_enginesAreOn = true;
+	}
+
+	// call this to turn off the engines (brake)
+	public void TurnOffEngines()
+	{
+		m_enginesAreOn = false;
 	}
 
 	// call this to change the height of the camera above the zero plane
@@ -197,28 +305,10 @@ public class Player : MonoBehaviour
 		return transform.position;
 	}
 
-	// call this to instantly change the position of the player
-	public void SetPosition( Vector3 newPosition )
-	{
-		transform.position = newPosition;
-	}
-
-	// call this to instantly change the rotation of the player
-	public void SetRotation( Quaternion newRotation )
-	{
-		m_ship.rotation = newRotation;
-	}
-
 	// call this to change when the infinite starfield becomes fully visible
 	public void SetStarfieldFullyVisibleSpeed( float newSpeed )
 	{
 		m_infiniteStarfield.m_fullyVisibleSpeed = newSpeed;
-	}
-
-	// call this to find out if the player is currently frozen or not
-	public bool IsFrozen()
-	{
-		return m_freezePlayer;
 	}
 
 	// call this to temporarily stop the player from moving (e.g. while travelling in flux)

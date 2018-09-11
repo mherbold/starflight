@@ -330,11 +330,11 @@ public class SaveGamePanel : Panel
 			description += "   Cargo: <color=\"blue\">" + cargoUsage.ToString( "N1" ) + "% Full</color>\n";
 
 			// ship part classes
-			description += "Engines: <color=\"blue\">" + playerData.m_ship.GetEnginesClassString() + "</color>";
-			description += "   Shields: <color=\"blue\">" + playerData.m_ship.GetSheildingClassString() + "</color>";
-			description += "   Armor: <color=\"blue\">" + playerData.m_ship.GetArmorClassString() + "</color>";
-			description += "   Missle Launcher: <color=\"blue\">" + playerData.m_ship.GetMissileLauncherClassString() + "</color>";
-			description += "   Laser Cannon: <color=\"blue\">" + playerData.m_ship.GetLaserCannonClassString() + "</color>";
+			description += "Engines: <color=\"blue\">" + playerData.m_ship.GetEngines().m_name + "</color>";
+			description += "   Shields: <color=\"blue\">" + playerData.m_ship.GetSheilding().m_name + "</color>";
+			description += "   Armor: <color=\"blue\">" + playerData.m_ship.GetArmor().m_name + "</color>";
+			description += "   Missle Launcher: <color=\"blue\">" + playerData.m_ship.GetMissileLauncher().m_name + "</color>";
+			description += "   Laser Cannon: <color=\"blue\">" + playerData.m_ship.GetLaserCannon().m_name + "</color>";
 
 			// replace the description text for this save game slot
 			m_slotDescriptionText[ i ].text = description;

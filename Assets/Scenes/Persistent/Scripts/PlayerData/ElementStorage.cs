@@ -73,23 +73,19 @@ public class ElementStorage
 		// find the element in storage
 		ElementReference elementReference = Find( elementId );
 
-		// if we didn't find it in storage then do nothing
-		if ( elementReference != null )
+		// check if we want to remove it all or just some of it
+		if ( elementReference.m_volume == volume )
 		{
-			// check if we want to remove it all or just some of it
-			if ( elementReference.m_volume == volume )
-			{
-				// we want to remove the entire amount so kick the whole thing out of the list
-				m_elementList.Remove( elementReference );
-			}
-			else
-			{
-				// remove only some of the element from the storage
-				elementReference.RemoveVolume( volume );
-			}
-
-			// update the volume used
-			m_volumeUsed -= volume;
+			// we want to remove the entire amount so kick the whole thing out of the list
+			m_elementList.Remove( elementReference );
 		}
+		else
+		{
+			// remove only some of the element from the storage
+			elementReference.RemoveVolume( volume );
+		}
+
+		// update the volume used
+		m_volumeUsed -= volume;
 	}
 }

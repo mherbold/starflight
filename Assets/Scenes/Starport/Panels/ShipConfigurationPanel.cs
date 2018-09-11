@@ -499,11 +499,11 @@ public class ShipConfigurationPanel : Panel
 		// update configuration values
 		m_configurationValuesText.text = ship.m_numCargoPods.ToString() + Environment.NewLine;
 		m_configurationValuesText.text += Environment.NewLine;
-		m_configurationValuesText.text += ship.GetEnginesClassString() + Environment.NewLine;
-		m_configurationValuesText.text += ship.GetSheildingClassString() + Environment.NewLine;
-		m_configurationValuesText.text += ship.GetArmorClassString() + Environment.NewLine;
-		m_configurationValuesText.text += ship.GetMissileLauncherClassString() + Environment.NewLine;
-		m_configurationValuesText.text += ship.GetLaserCannonClassString() + Environment.NewLine;
+		m_configurationValuesText.text += ship.GetEngines().m_name + Environment.NewLine;
+		m_configurationValuesText.text += ship.GetSheilding().m_name + Environment.NewLine;
+		m_configurationValuesText.text += ship.GetArmor().m_name + Environment.NewLine;
+		m_configurationValuesText.text += ship.GetMissileLauncher().m_name + Environment.NewLine;
+		m_configurationValuesText.text += ship.GetLaserCannon().m_name + Environment.NewLine;
 
 		// show only as many cargo pods as we have purchased
 		for ( int cargoPodId = 0; cargoPodId < m_cargoPods.Length; cargoPodId++ )
