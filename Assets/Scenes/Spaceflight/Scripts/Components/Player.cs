@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
 	public SpaceflightController m_spaceflightController;
 
 	// keep track of the skybox rotation
-	Matrix4x4 m_skyboxRotation;
+	Matrix4x4 m_skyboxRotation = Matrix4x4.identity;
 
 	// keep track of the current skybox blend factor
 	float m_skyboxBlendFactor;
@@ -60,14 +60,6 @@ public class Player : MonoBehaviour
 	// unity start
 	void Start()
 	{
-		// reset the skybox rotation
-		m_skyboxRotation = Matrix4x4.identity;
-
-		// the engines are off
-		m_enginesAreOn = false;
-
-		// make sure the player can move
-		m_freezePlayer = false;
 	}
 
 	// unity update
@@ -118,6 +110,9 @@ public class Player : MonoBehaviour
 					{
 						// yes - deduct 0.1 unit from storage
 						playerData.m_ship.m_elementStorage.Remove( 5, 1 );
+
+						// recalculate the volume used up in the cargo bays
+						playerData.m_ship.RecalculateVolumeUsed();
 
 						// adjust fuel use
 						playerData.m_ship.m_fuelUsed -= 0.1f;
@@ -320,6 +315,13 @@ public class Player : MonoBehaviour
 	// call this to allow the player to move again
 	public void Unfreeze()
 	{
+		// get to the player data
+		PlayerData playerData = DataController.m_instance.m_playerData;
+
+		// make sure the player has no momentum to start with
+		playerData.m_starflight.m_currentSpeed = 0.0f;
+
+		// unfreeze the player
 		m_freezePlayer = false;
 	}
 

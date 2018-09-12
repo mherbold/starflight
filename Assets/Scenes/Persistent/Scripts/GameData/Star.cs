@@ -20,9 +20,9 @@ public class Star
 	public bool m_insideNebula;
 
 	public Planet[] m_planetList;
-	public float m_scale;
 	public SerializableVector3 m_gameCoordinates;
 	public SerializableVector3 m_worldCoordinates;
+	public SpectralClass m_spectralClass;
 
 	public void Initialize( GameData gameData )
 	{
@@ -44,28 +44,24 @@ public class Star
 			}
 		}
 
-		// calculate the scale of this star based on the system class
-		m_scale = 0.0f;
-
-		switch ( m_class )
-		{
-			case "M": m_scale = 0.0f; break;
-			case "K": m_scale = 0.1f; break;
-			case "G": m_scale = 0.2f; break;
-			case "F": m_scale = 0.3f; break;
-			case "A": m_scale = 0.4f; break;
-			case "B": m_scale = 0.5f; break;
-			case "O": m_scale = 0.6f; break;
-		}
-
 		// generate coordinate vectors
 		m_gameCoordinates = new Vector3( m_xCoordinate, 0.0f, m_yCoordinate );
 		m_worldCoordinates = Tools.GameToWorldCoordinates( m_gameCoordinates );
+
+		// find and link to the spectral class data
+		foreach ( SpectralClass spectralClass in gameData.m_spectralClassList )
+		{
+			if ( spectralClass.m_class == m_class )
+			{
+				m_spectralClass = spectralClass;
+				break;
+			}
+		}
 	}
 
 	// call this to get the breach distance
 	public float GetBreachDistance()
 	{
-		return ( 1.0f + m_scale / 0.6f ) * 48.0f;
+		return ( 1.0f + m_spectralClass.m_scale / 0.6f ) * 48.0f;
 	}
 }

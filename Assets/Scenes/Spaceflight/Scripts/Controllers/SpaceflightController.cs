@@ -55,8 +55,11 @@ public class SpaceflightController : MonoBehaviour
 		// turn off controller navigation of the UI
 		EventSystem.current.sendNavigationEvents = false;
 
-		// switch to the correct mode
-		SwitchMode();
+		// get to the player data
+		PlayerData playerData = DataController.m_instance.m_playerData;
+
+		// switch to the current location
+		SwitchLocation( playerData.m_starflight.m_location );
 
 		// fade in the scene
 		SceneFadeController.m_instance.FadeIn();
@@ -98,9 +101,18 @@ public class SpaceflightController : MonoBehaviour
 		}
 	}
 
-	// call this to switch to the correct mode
-	public void SwitchMode()
+	// call this to switch to the correct location
+	public void SwitchLocation( Starflight.Location newLocation )
 	{
+		// switch to the correct mode
+		Debug.Log( "Switching to location " + newLocation );
+
+		// get to the player data
+		PlayerData playerData = DataController.m_instance.m_playerData;
+
+		// update the player data
+		playerData.m_starflight.m_location = newLocation;
+
 		// hide all components
 		m_player.Hide();
 		m_dockingBay.Hide();
@@ -108,14 +120,9 @@ public class SpaceflightController : MonoBehaviour
 		m_hyperspace.Hide();
 
 		// make sure the map is visible
-		m_spaceflightUI.FadeMap( 1.0f );
+		m_spaceflightUI.FadeMap( 1.0f, 2.0f );
 
-		// get to the player data
-		PlayerData playerData = DataController.m_instance.m_playerData;
-
-		// switch to the correct mode
-		Debug.Log( "Switching to location " + playerData.m_starflight.m_location );
-
+		// switch the location
 		switch ( playerData.m_starflight.m_location )
 		{
 			case Starflight.Location.DockingBay:
@@ -152,7 +159,7 @@ public class SpaceflightController : MonoBehaviour
 		m_starSystem.Show();
 
 		// make sure the map overlay is black
-		m_spaceflightUI.FadeMap( 0.0f );
+		m_spaceflightUI.FadeMap( 0.0f, 0.0f );
 
 		// update the message shown
 		m_spaceflightUI.ChangeMessageText( "Starport clear.\nStanding by to maneuver." );
@@ -161,7 +168,7 @@ public class SpaceflightController : MonoBehaviour
 	void SwitchToStarport()
 	{
 		// make sure the map overlay is black
-		m_spaceflightUI.FadeMap( 0.0f );
+		m_spaceflightUI.FadeMap( 0.0f, 0.0f );
 
 		// tell the scene manager we want to switch scenes
 		SceneManager.LoadScene( "Starport" );

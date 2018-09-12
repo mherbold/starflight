@@ -47,11 +47,14 @@ public class Hyperspace : MonoBehaviour
 			// clone the star
 			GameObject clonedStar = Instantiate( m_starTemplate, star.m_worldCoordinates, Quaternion.identity, transform ) as GameObject;
 
+			// activate the star
+			clonedStar.SetActive( true );
+
 			// get to the star quad mesh object
 			Transform starQuad = clonedStar.transform.Find( "Star Quad" );
 
 			// calculate the scale of the star quad
-			float scale = ( 1.0f + star.m_scale / 0.6f ) * 128.0f;
+			float scale = star.GetBreachDistance() * 3.0f;
 
 			// scale the star image based on the class of the star system
 			starQuad.localScale = new Vector3( scale, scale, 1.0f );
@@ -64,7 +67,10 @@ public class Hyperspace : MonoBehaviour
 		foreach ( Flux flux in gameData.m_fluxList )
 		{
 			// clone the flux
-			Instantiate( m_fluxTemplate, flux.m_from, Quaternion.identity, transform );
+			GameObject clonedFlux = Instantiate( m_fluxTemplate, flux.m_from, Quaternion.identity, transform );
+
+			// activate the flux
+			clonedFlux.SetActive( true );
 		}
 
 		// hide the flux template
@@ -139,16 +145,13 @@ public class Hyperspace : MonoBehaviour
 					// change the system
 					playerData.m_starflight.m_currentStarId = star.m_id;
 
-					// update the player location
-					playerData.m_starflight.m_location = Starflight.Location.StarSystem;
-
 					// set the position of the player inside this system
 					Vector3 starToShip = playerData.m_starflight.m_hyperspaceCoordinates - (Vector3) star.m_worldCoordinates;
 					starToShip.Normalize();
 					playerData.m_starflight.m_systemCoordinates = starToShip * ( 8192.0f - 16.0f );
 
-					// switch to the star system mode
-					m_spaceflightController.SwitchMode();
+					// switch to the star system location
+					m_spaceflightController.SwitchLocation( Starflight.Location.StarSystem );
 
 					// switch to the system display
 					m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_systemDisplay );
@@ -227,6 +230,12 @@ public class Hyperspace : MonoBehaviour
 
 		// update the player rotation
 		m_spaceflightController.m_player.m_ship.rotation = newRotation;
+
+		// unfreeze the player
+		m_spaceflightController.m_player.Unfreeze();
+	
+		// fade in the map
+		m_spaceflightController.m_spaceflightUI.FadeMap( 1.0f, 2.0f );
 
 		// show the status display
 		m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_statusDisplay );

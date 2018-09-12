@@ -5216,7 +5216,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &919755013
 MonoBehaviour:
@@ -5287,6 +5287,7 @@ MonoBehaviour:
     m_fluxList: []
     m_territoryList: []
     m_nebulaList: []
+    m_spectralClassList: []
   m_planetData:
     m_planetMapList: []
   m_playerDataList: []
@@ -5403,6 +5404,8 @@ MonoBehaviour:
   m_open: {fileID: 8300000, guid: 3b7493701efb42142b7d9afd62780c9a, type: 3}
   m_transport: {fileID: 8300000, guid: 8ec1f89e855bdff4f902e01ef1d82718, type: 3}
   m_dockingBayDoorOpen: {fileID: 8300000, guid: 1f8de080d28303944b8c17f8b9c82ef4,
+    type: 3}
+  m_dockingBayDoorClose: {fileID: 8300000, guid: c39baaae3fe92c94799f6eecdc571a29,
     type: 3}
   m_decompression: {fileID: 8300000, guid: eb7ff4fb1960d66419b40579d32eb370, type: 3}
   m_launch: {fileID: 8300000, guid: e244c9a0dd490124eab576ca9d50eefc, type: 3}
@@ -6058,7 +6061,7 @@ RectTransform:
   m_Children:
   - {fileID: 1494547589}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

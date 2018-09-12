@@ -63,6 +63,30 @@ public class SystemController : MonoBehaviour
 		}
 	}
 
+	// call this to get th nearest planet controller to the player
+	public PlanetController GetNearestPlanetController()
+	{
+		float nearestDistanceToPlayer = 0.0f;
+
+		PlanetController nearestPlanetController = null;
+
+		foreach ( PlanetController planetController in m_planetController )
+		{
+			if ( planetController.m_planet != null )
+			{
+				float distanceToPlayer = planetController.GetDistanceToPlayer();
+
+				if ( ( nearestPlanetController == null ) || ( distanceToPlayer < nearestDistanceToPlayer ) )
+				{
+					nearestDistanceToPlayer = distanceToPlayer;
+					nearestPlanetController = planetController;
+				}
+			}
+		}
+
+		return nearestPlanetController;
+	}
+
 	// call this to change the current star system
 	public void EnterSystem()
 	{

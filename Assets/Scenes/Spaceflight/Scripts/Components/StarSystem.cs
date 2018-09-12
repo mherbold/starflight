@@ -68,8 +68,14 @@ public class StarSystem : MonoBehaviour
 		// update the player rotation
 		m_spaceflightController.m_player.m_ship.rotation = newRotation;
 
+		// unfreeze the player
+		m_spaceflightController.m_player.Unfreeze();
+
 		// update the system controller
 		m_spaceflightController.m_systemController.EnterSystem();
+
+		// fade in the map
+		m_spaceflightController.m_spaceflightUI.FadeMap( 1.0f, 2.0f );
 
 		// get to the star data
 		Star star = gameData.m_starList[ playerData.m_starflight.m_currentStarId ];

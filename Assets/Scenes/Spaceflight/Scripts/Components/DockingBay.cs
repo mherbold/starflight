@@ -58,10 +58,20 @@ public class DockingBay : MonoBehaviour
 		playerData.m_starflight.m_hyperspaceCoordinates = Tools.GameToWorldCoordinates( new Vector3( 125.0f, 0.0f, 100.0f ) );
 
 		// put us in the right spot for the docking bay launch sequence
-		playerData.m_starflight.m_systemCoordinates = Tools.GameToWorldCoordinates( new Vector3( 0.0f, 0.0f, 0.0f ) );
+		playerData.m_starflight.m_systemCoordinates = new Vector3( 0.0f, 0.0f, 0.0f );
+		m_spaceflightController.m_player.transform.position = playerData.m_starflight.m_systemCoordinates;
 
 		// dolly the camera to the start of the cinematic sequence
 		m_spaceflightController.m_player.DollyCamera( 2048.0f );
+
+		// freeze the player
+		m_spaceflightController.m_player.Freeze();
+
+		// make sure we have the status display up
+		m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_statusDisplay );
+
+		// reset the buttons
+		m_spaceflightController.m_buttonController.RestoreBridgeButtons();
 
 		// play the docking bay music track
 		MusicController.m_instance.ChangeToTrack( MusicController.Track.DockingBay );
@@ -84,5 +94,18 @@ public class DockingBay : MonoBehaviour
 
 		// play the decompression sound
 		SoundController.m_instance.PlaySound( SoundController.Sound.Decompression );
+	}
+
+	// call this to close the docking bay doors
+	public void CloseDockingBayDoors()
+	{
+		// open the top docking bay door
+		m_dockingBayDoorTop.Play( "Close" );
+
+		// open the bottom docking bay door
+		m_dockingBayDoorBottom.Play( "Close" );
+
+		// play the docking bay door open sound
+		SoundController.m_instance.PlaySound( SoundController.Sound.DockingBayDoorClose );
 	}
 }

@@ -23892,5 +23892,49 @@
       "m_yCoordinate": 89,
       "m_radius": 3
     }
+  ],
+  "m_spectralClassList": [
+    {
+      "m_class": "M",
+      "m_scale": 0,
+      "m_ecosphereMin": 1,
+      "m_ecosphereMax": 3
+    },
+    {
+      "m_class": "K",
+      "m_scale": 0.1,
+      "m_ecosphereMin": 2,
+      "m_ecosphereMax": 4
+    },
+    {
+      "m_class": "G",
+      "m_scale": 0.2,
+      "m_ecosphereMin": 3,
+      "m_ecosphereMax": 5
+    },
+    {
+      "m_class": "F",
+      "m_scale": 0.3,
+      "m_ecosphereMin": 4,
+      "m_ecosphereMax": 6
+    },
+    {
+      "m_class": "A",
+      "m_scale": 0.4,
+      "m_ecosphereMin": 5,
+      "m_ecosphereMax": 7
+    },
+    {
+      "m_class": "B",
+      "m_scale": 0.5,
+      "m_ecosphereMin": 6,
+      "m_ecosphereMax": 8
+    },
+    {
+      "m_class": "O",
+      "m_scale": 0.6,
+      "m_ecosphereMin": 7,
+      "m_ecosphereMax": 8
+    }
   ]
 }

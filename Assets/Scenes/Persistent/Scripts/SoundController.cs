@@ -13,6 +13,7 @@ public class SoundController : MonoBehaviour
 		Open,
 		Transport,
 		DockingBayDoorOpen,
+		DockingBayDoorClose,
 		Decompression,
 		Launch,
 		Countdown,
@@ -37,6 +38,7 @@ public class SoundController : MonoBehaviour
 	public AudioClip m_open;
 	public AudioClip m_transport;
 	public AudioClip m_dockingBayDoorOpen;
+	public AudioClip m_dockingBayDoorClose;
 	public AudioClip m_decompression;
 	public AudioClip m_launch;
 	public AudioClip m_countdown;
@@ -75,6 +77,7 @@ public class SoundController : MonoBehaviour
 		m_soundList[ (int) Sound.Open ] = m_open;
 		m_soundList[ (int) Sound.Transport ] = m_transport;
 		m_soundList[ (int) Sound.DockingBayDoorOpen ] = m_dockingBayDoorOpen;
+		m_soundList[ (int) Sound.DockingBayDoorClose ] = m_dockingBayDoorClose;
 		m_soundList[ (int) Sound.Decompression ] = m_decompression;
 		m_soundList[ (int) Sound.Launch ] = m_launch;
 		m_soundList[ (int) Sound.Countdown ] = m_countdown;

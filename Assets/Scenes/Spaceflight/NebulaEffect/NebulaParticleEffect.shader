@@ -1,5 +1,5 @@
 
-Shader "Custom/NebulaEffect" 
+Shader "Custom/NebulaParticleEffect" 
 {
 	Properties 
 	{
@@ -9,10 +9,10 @@ Shader "Custom/NebulaEffect"
 		_Lacunarity( "Lacunarity", Float ) = 1.92
 		_Persistence( "Persistence", Float ) = 0.8
 		_Offset( "Offset", Vector ) = ( 0.0, 0.0, 0.0, 0.0 )
-		_AnimSpeed( "Animation Speed", Float ) = 1.0
-		_LowColor( "Low Color", Vector ) = ( 0.0, 0.0, 0.0, 1.0 )
-		_HighColor( "High Color", Vector ) = ( 1.0, 1.0, 1.0, 1.0 )
-		_Scale( "Scale", Float ) = 1.0
+		_AnimSpeed("Animation Speed", Float ) = 1.0
+		_LowColor( "Low Color", Color ) = ( 0.0, 0.0, 0.0, 1.0 )
+		_HighColor("High Color", Color ) = ( 1.0, 1.0, 1.0, 1.0 )
+		_Scale("Scale", Float) = 1.0
 	}
 
 	CGINCLUDE
@@ -107,6 +107,7 @@ Shader "Custom/NebulaEffect"
 		}
 
 		Blend SrcAlpha One
+		BlendOp Max
 		Cull Off
 		Lighting Off
 		ZWrite Off
@@ -122,7 +123,9 @@ Shader "Custom/NebulaEffect"
 					#pragma fragment frag
 					#pragma glsl
 					#pragma target 3.0
-		
+
+					#include "UnityCG.cginc"
+
 					fixed _Octaves;
 					float _Frequency;
 					float _Amplitude;
@@ -137,14 +140,17 @@ Shader "Custom/NebulaEffect"
 					struct vs_in
 					{
 						float4 position : POSITION;
-						float3 color : COLOR0;
+						float2 texcoord : TEXCOORD0;
+						float4 color : COLOR0;
+						UNITY_VERTEX_INPUT_INSTANCE_ID
 					};
 
 					struct vs_out
 					{
 						float4 position : SV_POSITION;
-						float3 texcoord : TEXCOORD0;
-						float3 color : COLOR0;
+						float2 texcoord0 : TEXCOORD0;
+						float3 texcoord1 : TEXCOORD1;
+						float4 color : COLOR0;
 					};
 
 					vs_out vert( vs_in v )
@@ -152,21 +158,26 @@ Shader "Custom/NebulaEffect"
 						vs_out o;
 
 						o.position = UnityObjectToClipPos( v.position );
-						o.texcoord = float3( v.position.xy * _Scale, _Time.y * _AnimSpeed );
+						o.texcoord0 = v.texcoord;
+						o.texcoord1 = float3( v.position.xz * _Scale, _Time.y * _AnimSpeed );
 						o.color = v.color;
 
 						return o;
 					}
 
-					fixed4 frag( vs_out v ) : SV_Target
+					fixed3 frag( vs_out v ) : SV_Target
 					{
-						float t = PerlinBillowed( v.texcoord, _Octaves, _Offset, _Frequency, _Amplitude, _Lacunarity, _Persistence );
+						fixed t = PerlinBillowed( v.texcoord1, _Octaves, _Offset, _Frequency, _Amplitude, _Lacunarity, _Persistence );
 
-						fixed3 color = lerp( _LowColor, _HighColor, t );
+						fixed a = v.color.a * 2.0 - 1.0;
 
-						fixed alpha = smoothstep( 0, 1, v.color.r ) * color.g;
+						fixed d = saturate( length( v.texcoord0 - fixed2( 0.5, 0.5 ) ) * 4.0 - a );
 
-						return fixed4( color, alpha );
+						d = 1.0 - ( d * d );
+
+						fixed3 color = lerp( _LowColor, _HighColor, t ) * v.color.rgb * d;
+
+						return fixed3( color );
 					}
 
 				ENDCG

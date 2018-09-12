@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class PlanetController : MonoBehaviour
 {
+	public const int c_arthPlanetTypeId = 57;
+
 	// the current planet this controller is controlling
 	public Planet m_planet;
 
@@ -15,8 +17,11 @@ public class PlanetController : MonoBehaviour
 	// access to the starport model
 	public GameObject m_starportModel;
 
+	// the current scale
+	public float m_scale;
+
 	// the current rotation angle
-	float m_rotationAngle;
+	public float m_rotationAngle;
 
 	// access to the mesh renderer (to get to the material)
 	MeshRenderer m_meshRenderer;
@@ -74,6 +79,16 @@ public class PlanetController : MonoBehaviour
 		}
 	}
 
+	// call this to get the distance to the player
+	public float GetDistanceToPlayer()
+	{
+		// get to the player data
+		PlayerData playerData = DataController.m_instance.m_playerData;
+
+		// return the distance from the player to the planet
+		return Vector3.Distance( playerData.m_starflight.m_systemCoordinates, transform.localPosition );
+	}
+
 	// call this to force this planet to update
 	public void ForceUpdate()
 	{
@@ -100,16 +115,16 @@ public class PlanetController : MonoBehaviour
 			// show or hide the starport model depending on whether or not this planet is Arth
 			if ( m_starportModel != null )
 			{
-				m_starportModel.SetActive( ( planet.m_planetTypeId == 57 ) );
+				m_starportModel.SetActive( ( planet.m_planetTypeId == c_arthPlanetTypeId ) );
 			}
 
 			// scale the planet based on its mass
-			float scale = Mathf.Lerp( 32.0f, 320.0f, Mathf.Sqrt( ( planet.m_mass - 6.0f ) / 500000.0f ) );
-			m_planetModel.transform.localScale = new Vector3( scale, scale, scale );
-			Debug.Log( "Planet " + planet.m_id + " mass is " + planet.m_mass + " so scale is " + scale );
+			m_scale = Mathf.Lerp( 32.0f, 320.0f, Mathf.Sqrt( ( planet.m_mass - 6.0f ) / 500000.0f ) );
+			m_planetModel.transform.localScale = new Vector3( m_scale, m_scale, m_scale );
+			Debug.Log( "Planet " + planet.m_id + " mass is " + planet.m_mass + " so scale is " + m_scale );
 
 			// move the planet to be just below the zero plane
-			m_planetModel.transform.localPosition = new Vector3( 0.0f, -16.0f - scale, 0.0f );
+			m_planetModel.transform.localPosition = new Vector3( 0.0f, -16.0f - m_scale, 0.0f );
 
 			// generate the texture maps for this planet
 			GenerateTextureMaps();

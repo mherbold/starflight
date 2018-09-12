@@ -29,6 +29,7 @@ public class GameData : GameDataFile
 	public Flux[] m_fluxList;
 	public Territory[] m_territoryList;
 	public Nebula[] m_nebulaList;
+	public SpectralClass[] m_spectralClassList;
 
 	public void Initialize()
 	{

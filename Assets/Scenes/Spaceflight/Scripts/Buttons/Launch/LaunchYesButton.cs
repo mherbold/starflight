@@ -116,10 +116,7 @@ public class LaunchYesButton : ShipButton
 						if ( y >= 1024.0f )
 						{
 							// update the player location
-							playerData.m_starflight.m_location = Starflight.Location.JustLaunched;
-
-							// switch modes
-							m_spaceflightController.SwitchMode();
+							m_spaceflightController.SwitchLocation( Starflight.Location.JustLaunched );
 
 							// yep - fix us at exactly 1024 units above the zero plane
 							y = 1024.0f;
@@ -143,7 +140,7 @@ public class LaunchYesButton : ShipButton
 						m_spaceflightController.m_player.DollyCamera( 2048.0f - y );
 
 						// fade the map out
-						m_spaceflightController.m_spaceflightUI.FadeMap( 1.0f - ( y / 1024.0f ) );
+						m_spaceflightController.m_spaceflightUI.FadeMap( 0.0f, 7.0f );
 					}
 					else
 					{

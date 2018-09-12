@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class ManeuverButton : ShipButton
 {
+	PlanetController m_orbitPlanetController;
+
 	public override string GetLabel()
 	{
 		return "Maneuver";
@@ -29,10 +31,7 @@ public class ManeuverButton : ShipButton
 			case Starflight.Location.JustLaunched:
 
 				// yes - switch to the star system location
-				playerData.m_starflight.m_location = Starflight.Location.StarSystem;
-
-				// switch to the correct mode
-				m_spaceflightController.SwitchMode();
+				m_spaceflightController.SwitchLocation( Starflight.Location.StarSystem );
 
 				// show the system display
 				m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_systemDisplay );
@@ -73,6 +72,24 @@ public class ManeuverButton : ShipButton
 
 			// turn off the engines
 			m_spaceflightController.m_player.TurnOffEngines();
+
+			// do we have a planet to orbit?
+			if ( m_orbitPlanetController != null )
+			{
+				// yes - is this arth?
+				if ( m_orbitPlanetController.m_planet.m_planetTypeId == PlanetController.c_arthPlanetTypeId )
+				{
+					// yes - switch to the docking bay
+					m_spaceflightController.SwitchLocation( Starflight.Location.DockingBay );
+
+					// play the docking bay door close animation
+					m_spaceflightController.m_dockingBay.CloseDockingBayDoors();
+
+					// turn off the map and fade it in
+					m_spaceflightController.m_spaceflightUI.FadeMap( 0.0f, 0.0f );
+					m_spaceflightController.m_spaceflightUI.FadeMap( 1.0f, 2.0f );
+				}
+			}
 		}
 		else
 		{
@@ -105,16 +122,13 @@ public class ManeuverButton : ShipButton
 		// are we in a star system?
 		if ( playerData.m_starflight.m_location == Starflight.Location.StarSystem )
 		{
+			// get to the current star
+			Star star = gameData.m_starList[ playerData.m_starflight.m_currentStarId ];
+
 			// yes - did we just leave it?
 			if ( Vector3.Magnitude( playerData.m_starflight.m_systemCoordinates ) >= 8192.0f )
 			{
-				// yes - transition to hyperspace!
-				playerData.m_starflight.m_location = Starflight.Location.Hyperspace;
-
-				// get to the current star
-				Star star = gameData.m_starList[ playerData.m_starflight.m_currentStarId ];
-
-				// calculate the position of the ship in hyperspace
+				// yes - calculate the position of the ship in hyperspace
 				Vector3 newPosition = playerData.m_starflight.m_systemCoordinates;
 
 				newPosition.Normalize();
@@ -132,8 +146,40 @@ public class ManeuverButton : ShipButton
 				playerData.m_starflight.m_currentSpeed = Mathf.Min( playerData.m_starflight.m_currentSpeed, m_spaceflightController.m_maximumShipSpeedHyperspace );
 
 				// switch modes now
-				m_spaceflightController.SwitchMode();
+				m_spaceflightController.SwitchLocation( Starflight.Location.Hyperspace );
 			}
+			else
+			{
+				// get the nearest planet controller to the player
+				m_orbitPlanetController = m_spaceflightController.m_systemController.GetNearestPlanetController();
+
+				// did we get a planet controller?
+				if ( m_orbitPlanetController != null )
+				{
+					// yes - get the distance of the player is to the planet
+					float distanceToPlanet = m_orbitPlanetController.GetDistanceToPlayer();
+
+					// are we close enough to orbit the planet?
+					if ( distanceToPlanet <= m_orbitPlanetController.m_scale )
+					{
+						// yes - let the player know
+						m_spaceflightController.m_spaceflightUI.m_messages.text = "Ship is within orbital range.";
+					}
+					else
+					{
+						// no - forget this planet
+						m_orbitPlanetController = null;
+
+						// display the spectral class and ecosphere
+						m_spaceflightController.m_spaceflightUI.m_messages.text = "<u>Stellar Parameters</u>\nSpectral Class: <#4FEDED>" + star.m_class + "</color>\nEcosphere: <#4FEDED>" + star.m_spectralClass.m_ecosphereMin + " - " + star.m_spectralClass.m_ecosphereMax + "</color>";
+					}
+				}
+			}
+		}
+		else
+		{
+			// display no messages
+			m_spaceflightController.m_spaceflightUI.m_messages.text = "";
 		}
 
 		// returning true prevents the default spaceflight update from running

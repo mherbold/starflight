@@ -92,7 +92,7 @@ public class SystemDisplay : ShipDisplay
 				m_orbitGameObject[ i ].SetActive( true );
 
 				// check if this is the arth station (special case)
-				if ( planet.m_planetTypeId == 57 )
+				if ( planet.m_planetTypeId == PlanetController.c_arthPlanetTypeId )
 				{
 					// yep - hide the planet object and show the arth station instead
 					m_planetImage[ planet.m_orbitPosition ].gameObject.SetActive( false );
