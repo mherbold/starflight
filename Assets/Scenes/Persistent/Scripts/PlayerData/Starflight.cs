@@ -21,7 +21,7 @@ public class Starflight
 	public Location m_location;
 
 	// the player coordinates
-	public SerializableVector3 m_starportCoordinates; // TODO: use this
+	public SerializableVector3 m_starportCoordinates;
 	public SerializableVector3 m_systemCoordinates;
 	public SerializableVector3 m_hyperspaceCoordinates;
 

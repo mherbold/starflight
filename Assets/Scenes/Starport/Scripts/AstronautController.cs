@@ -69,6 +69,15 @@ public class AstronautController : MonoBehaviour
 		// reset the timers
 		m_transitionTimer = 0.0f;
 		m_danceWaitTimer = 0.0f;
+
+		// get to the player data
+		PlayerData playerData = DataController.m_instance.m_playerData;
+
+		// put the astronaut where he should be
+		m_navMeshAgent.Warp( playerData.m_starflight.m_starportCoordinates );
+
+		// make sure he is facing south
+		transform.rotation = Quaternion.Euler( 0.0f, 180.0f, 0.0f );
 	}
 
 	// unity update
@@ -269,6 +278,12 @@ public class AstronautController : MonoBehaviour
 			// no - just move the astronaut to where the NavMeshAgent component is telling us to move him to
 			transform.position = m_navMeshAgent.nextPosition;
 		}
+
+		// get to the player data
+		PlayerData playerData = DataController.m_instance.m_playerData;
+
+		// save the player position
+		playerData.m_starflight.m_starportCoordinates = m_navMeshAgent.nextPosition;
 	}
 
 	// unity on trigger enter
