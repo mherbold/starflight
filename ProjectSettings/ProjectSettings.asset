@@ -631,11 +631,11 @@ PlayerSettings:
       daydreamIconForeground: {fileID: 0}
       daydreamIconBackground: {fileID: 0}
   cloudServicesEnabled:
-    Collab: 1
+    Collab: 0
     UNet: 1
   facebookSdkVersion: 7.9.1
   apiCompatibilityLevel: 2
-  cloudProjectId: 1bce0686-a49b-4d16-8b4d-a01bd33eace7
+  cloudProjectId: d6379dfe-0cda-4119-819e-90ef9ae0a441
   projectName: Starflight
   organizationId: brave-army-games
   cloudEnabled: 0
