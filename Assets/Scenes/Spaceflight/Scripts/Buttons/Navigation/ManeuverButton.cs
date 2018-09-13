@@ -3,8 +3,16 @@ using UnityEngine;
 
 public class ManeuverButton : ShipButton
 {
+	// the planet controller for the planet we could orbit around
 	PlanetController m_orbitPlanetController;
 
+	// if this is true we are transitioning to orbit or the docking bay
+	bool m_isTransitioning;
+
+	// what are we transitioning to?
+	Starflight.Location m_nextLocation;
+
+	// get the label for this button
 	public override string GetLabel()
 	{
 		return "Maneuver";
@@ -64,31 +72,81 @@ public class ManeuverButton : ShipButton
 		// get to the player data
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
+		// are we currently transitioning?
+		if ( m_isTransitioning )
+		{
+			// yes - get the current map fade amount
+			float mapFadeAmount = m_spaceflightController.m_spaceflightUI.GetCurrentMapFadeAmount();
+
+			// is it completely black yet?
+			if ( mapFadeAmount == 0.0f )
+			{
+				// yes - turn off the maneuver function
+				m_spaceflightController.m_buttonController.DeactivateButton();
+
+				// which location do we want to switch to?
+				switch ( m_nextLocation )
+				{
+					case Starflight.Location.DockingBay:
+
+						// switch to the docking bay location
+						m_spaceflightController.SwitchLocation( Starflight.Location.DockingBay );
+
+						// play the docking bay door close animation
+						m_spaceflightController.m_dockingBay.CloseDockingBayDoors();
+
+						break;
+
+					case Starflight.Location.InOrbit:
+
+						// switch to the in orbit location
+						m_spaceflightController.SwitchLocation( Starflight.Location.InOrbit );
+
+						break;
+				}
+			}
+
+			return true;
+		}
+
 		// check if we want to stop maneuvering
 		if ( InputController.m_instance.SubmitWasPressed() )
 		{
-			// turn off the maneuver function
-			m_spaceflightController.m_buttonController.DeactivateButton();
-
 			// turn off the engines
 			m_spaceflightController.m_player.TurnOffEngines();
 
 			// do we have a planet to orbit?
 			if ( m_orbitPlanetController != null )
 			{
-				// yes - is this arth?
+				// fade the map to black
+				m_spaceflightController.m_spaceflightUI.FadeMap( 0.0f, 2.0f );
+
+				// we are now transitioning
+				m_isTransitioning = true;
+
+				// play the activate sound
+				SoundController.m_instance.PlaySound( SoundController.Sound.Activate );
+
+				// is this arth?
 				if ( m_orbitPlanetController.m_planet.m_planetTypeId == PlanetController.c_arthPlanetTypeId )
 				{
-					// yes - switch to the docking bay
-					m_spaceflightController.SwitchLocation( Starflight.Location.DockingBay );
+					// yes - transition to the docking bay
+					m_nextLocation = Starflight.Location.DockingBay;
 
-					// play the docking bay door close animation
-					m_spaceflightController.m_dockingBay.CloseDockingBayDoors();
-
-					// turn off the map and fade it in
-					m_spaceflightController.m_spaceflightUI.FadeMap( 0.0f, 0.0f );
-					m_spaceflightController.m_spaceflightUI.FadeMap( 1.0f, 2.0f );
+					// display message
+					m_spaceflightController.m_spaceflightUI.m_messages.text = "Initiating docking procedure...";
 				}
+				else
+				{
+					// no - transition to in orbit
+					m_nextLocation = Starflight.Location.InOrbit;
+
+					// display message
+					m_spaceflightController.m_spaceflightUI.m_messages.text = "Initiating orbital maneuver...";
+				}
+
+				// stop here
+				return true;
 			}
 		}
 		else

@@ -36,7 +36,7 @@ public class SpaceflightUI : MonoBehaviour
 	bool m_animatingCountdownText;
 
 	// unity awake
-	private void Awake()
+	void Awake()
 	{
 	}
 
@@ -116,6 +116,12 @@ public class SpaceflightUI : MonoBehaviour
 			m_originalFadeAmount = m_map.color.r;
 			m_targetFadeAmount = targetFadeAmount;
 		}
+	}
+
+	// call this to get the current map fade amount
+	public float GetCurrentMapFadeAmount()
+	{
+		return m_map.color.r;
 	}
 
 	// call this to change the current officer text

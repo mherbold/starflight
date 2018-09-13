@@ -12,14 +12,11 @@ public class DockingBay : MonoBehaviour
 	public ParticleSystem m_decompressionParticleSystem;
 
 	// convenient access to the spaceflight controller
-	SpaceflightController m_spaceflightController;
+	public SpaceflightController m_spaceflightController;
 
 	// unity awake
 	private void Awake()
 	{
-		// get the spaceflight controller
-		GameObject controllersGameObject = GameObject.FindWithTag( "Spaceflight Controllers" );
-		m_spaceflightController = controllersGameObject.GetComponent<SpaceflightController>();
 	}
 
 	// unity start
@@ -72,6 +69,9 @@ public class DockingBay : MonoBehaviour
 
 		// reset the buttons
 		m_spaceflightController.m_buttonController.RestoreBridgeButtons();
+
+		// fade in the map
+		m_spaceflightController.m_spaceflightUI.FadeMap( 1.0f, 2.0f );
 
 		// play the docking bay music track
 		MusicController.m_instance.ChangeToTrack( MusicController.Track.DockingBay );

@@ -119,15 +119,15 @@ public class SystemController : MonoBehaviour
 		// turn off all the planets
 		for ( int i = 0; i < Star.c_maxNumPlanets; i++ )
 		{
-			m_planetController[ i ].SetPlanet( null );
+			m_planetController[ i ].DisablePlanet();
 		}
 
 		// turn on planets in this system
 		foreach ( Planet planet in star.m_planetList )
 		{
-			if ( planet != null )
+			if ( ( planet != null ) && ( planet.m_id != - 1 ) )
 			{
-				m_planetController[ planet.m_orbitPosition ].SetPlanet( planet );
+				m_planetController[ planet.m_orbitPosition ].EnablePlanet( planet );
 			}
 		}
 

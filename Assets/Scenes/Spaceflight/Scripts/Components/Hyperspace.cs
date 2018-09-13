@@ -9,6 +9,9 @@ public class Hyperspace : MonoBehaviour
 	// our flux template (that we will duplicate all over the place)
 	public GameObject m_fluxTemplate;
 
+	// convenient access to the spaceflight controller
+	public SpaceflightController m_spaceflightController;
+
 	// true if we are currently traveling through a flux
 	bool m_travelingThroughFlux;
 
@@ -24,15 +27,9 @@ public class Hyperspace : MonoBehaviour
 	// the ending point
 	Vector3 m_fluxTravelEndPosition;
 
-	// convenient access to the spaceflight controller
-	SpaceflightController m_spaceflightController;
-
 	// unity awake
-	private void Awake()
+	void Awake()
 	{
-		// get the spaceflight controller
-		GameObject controllersGameObject = GameObject.FindWithTag( "Spaceflight Controllers" );
-		m_spaceflightController = controllersGameObject.GetComponent<SpaceflightController>();
 	}
 
 	// unity start

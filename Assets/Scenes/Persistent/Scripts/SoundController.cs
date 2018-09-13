@@ -85,12 +85,12 @@ public class SoundController : MonoBehaviour
 		m_soundList[ (int) Sound.ExitWarp ] = m_exitWarp;
 	}
 
-	// use this for initialization
+	// unity start
 	void Start()
 	{
 	}
 
-	// update is called once per frame
+	// unity update
 	void Update()
 	{
 	}

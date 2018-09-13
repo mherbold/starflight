@@ -26,7 +26,7 @@ public class DisembarkButton : ShipButton
 				// switch to the starport location
 				m_spaceflightController.SwitchLocation( Starflight.Location.Starport );
 
-				break;
+				return true;
 
 			case Starflight.Location.JustLaunched:
 			case Starflight.Location.InOrbit:
@@ -43,5 +43,11 @@ public class DisembarkButton : ShipButton
 		}
 
 		return false;
+	}
+
+	public override bool Update()
+	{
+		// always return true to prevent player from chagning buttons while transitioning to the docking bay
+		return true;
 	}
 }

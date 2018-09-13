@@ -3,17 +3,15 @@ using UnityEngine;
 
 public class StarSystem : MonoBehaviour
 {
+	// the nebula overlay
 	public GameObject m_nebula;
 
 	// convenient access to the spaceflight controller
-	SpaceflightController m_spaceflightController;
+	public SpaceflightController m_spaceflightController;
 
 	// unity awake
-	private void Awake()
+	void Awake()
 	{
-		// get the spaceflight controller
-		GameObject controllersGameObject = GameObject.FindWithTag( "Spaceflight Controllers" );
-		m_spaceflightController = controllersGameObject.GetComponent<SpaceflightController>();
 	}
 
 	// unity start

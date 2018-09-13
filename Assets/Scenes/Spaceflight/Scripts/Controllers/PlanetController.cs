@@ -95,40 +95,41 @@ public class PlanetController : MonoBehaviour
 		Update();
 	}
 
+	// disable a planet
+	public void DisablePlanet()
+	{
+		// forget this planet
+		m_planet = null;
+
+		// disable the game object
+		gameObject.SetActive( false );
+	}
+
 	// change the planet we are controlling
-	public void SetPlanet( Planet planet )
+	public void EnablePlanet( Planet planet )
 	{
 		// change the planet we are controlling
 		m_planet = planet;
 
-		// if we are just turning off this planet then stop here
-		if ( planet == null )
+		// show this orbit
+		gameObject.SetActive( true );
+
+		// show or hide the starport model depending on whether or not this planet is Arth
+		if ( m_starportModel != null )
 		{
-			// hide this orbit
-			gameObject.SetActive( false );
+			m_starportModel.SetActive( ( planet.m_planetTypeId == c_arthPlanetTypeId ) );
 		}
-		else
-		{
-			// show this orbit
-			gameObject.SetActive( true );
 
-			// show or hide the starport model depending on whether or not this planet is Arth
-			if ( m_starportModel != null )
-			{
-				m_starportModel.SetActive( ( planet.m_planetTypeId == c_arthPlanetTypeId ) );
-			}
+		// scale the planet based on its mass
+		m_scale = Mathf.Lerp( 32.0f, 320.0f, Mathf.Sqrt( ( planet.m_mass - 6.0f ) / 500000.0f ) );
+		m_planetModel.transform.localScale = new Vector3( m_scale, m_scale, m_scale );
+		Debug.Log( "Planet " + planet.m_id + " mass is " + planet.m_mass + " so scale is " + m_scale );
 
-			// scale the planet based on its mass
-			m_scale = Mathf.Lerp( 32.0f, 320.0f, Mathf.Sqrt( ( planet.m_mass - 6.0f ) / 500000.0f ) );
-			m_planetModel.transform.localScale = new Vector3( m_scale, m_scale, m_scale );
-			Debug.Log( "Planet " + planet.m_id + " mass is " + planet.m_mass + " so scale is " + m_scale );
+		// move the planet to be just below the zero plane
+		m_planetModel.transform.localPosition = new Vector3( 0.0f, -16.0f - m_scale, 0.0f );
 
-			// move the planet to be just below the zero plane
-			m_planetModel.transform.localPosition = new Vector3( 0.0f, -16.0f - m_scale, 0.0f );
-
-			// generate the texture maps for this planet
-			GenerateTextureMaps();
-		}
+		// generate the texture maps for this planet
+		GenerateTextureMaps();
 	}
 
 	// generates the texture maps for this planet

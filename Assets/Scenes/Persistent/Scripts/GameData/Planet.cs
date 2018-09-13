@@ -27,6 +27,11 @@ public class Planet
 	public int m_temperatureIdB;
 	public int m_weatherId;
 
+	public Planet()
+	{
+		m_id = -1;
+	}
+
 	public void Initialize()
 	{
 		// make sure we don't go below mass of 6

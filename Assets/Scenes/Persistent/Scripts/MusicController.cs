@@ -9,6 +9,7 @@ public class MusicController : MonoBehaviour
 		Starport,
 		DockingBay,
 		StarSystem,
+		InOrbit,
 		Hyperspace,
 		Count
 	};
@@ -29,11 +30,19 @@ public class MusicController : MonoBehaviour
 	// how quickly we want to fade out and then into a new track
 	public float m_trackChangeTime = 2.0f;
 
-	// all of our music clips
-	public AudioClip[] m_musicTrackList;
+	// all of our sound clips
+	public AudioClip m_intro;
+	public AudioClip m_starport;
+	public AudioClip m_dockingBay;
+	public AudioClip m_starSystem;
+	public AudioClip m_inOrbit;
+	public AudioClip m_hyperspace;
 
 	// the audio source
 	AudioSource m_audioSource;
+
+	// the music list (to use with the enum)
+	AudioClip[] m_trackList;
 
 	// the track we are currently playing
 	Track m_currentTrack;
@@ -53,7 +62,7 @@ public class MusicController : MonoBehaviour
 	// the current transition phase
 	Phase m_phase;
 
-	// the constructor
+	// unity awake
 	void Awake()
 	{
 		// remember this instance to this
@@ -64,19 +73,24 @@ public class MusicController : MonoBehaviour
 
 		// we are not currently playing anything
 		m_currentTrack = m_nextTrack = Track.None;
+
+		// build the music list
+		m_trackList = new AudioClip[ (int) Track.Count ];
+
+		m_trackList[ (int) Track.Intro ] = m_intro;
+		m_trackList[ (int) Track.Starport ] = m_starport;
+		m_trackList[ (int) Track.DockingBay ] = m_dockingBay;
+		m_trackList[ (int) Track.StarSystem ] = m_starSystem;
+		m_trackList[ (int) Track.InOrbit ] = m_inOrbit;
+		m_trackList[ (int) Track.Hyperspace ] = m_hyperspace;
 	}
 
-	// use this for initialization
+	// unity start
 	void Start()
 	{
-		// make sure we have the right number of music tracks set up in the editor
-		if ( m_musicTrackList.Length != (int) Track.Count )
-		{
-			Debug.Log( "The number of music tracks should be " + Track.Count + "!" );
-		}
 	}
 
-	// update is called once per frame
+	// unity update
 	void Update()
 	{
 		// check if we are transitioning to a new track
@@ -119,7 +133,7 @@ public class MusicController : MonoBehaviour
 						m_phase = Phase.FadingIn;
 
 						// play the new track
-						m_audioSource.clip = m_musicTrackList[ (int) m_currentTrack ];
+						m_audioSource.clip = m_trackList[ (int) m_currentTrack ];
 						m_audioSource.loop = true;
 
 						m_audioSource.Play();
@@ -170,7 +184,7 @@ public class MusicController : MonoBehaviour
 				{
 					// nope - go ahead and fire up the new track without any transition
 					m_currentTrack = track;
-					m_audioSource.clip = m_musicTrackList[ (int) m_currentTrack ];
+					m_audioSource.clip = m_trackList[ (int) m_currentTrack ];
 
 					if ( track == Track.Intro )
 					{

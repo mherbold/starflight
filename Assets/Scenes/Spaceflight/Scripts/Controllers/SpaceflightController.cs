@@ -19,6 +19,7 @@ public class SpaceflightController : MonoBehaviour
 	public Player m_player;
 	public DockingBay m_dockingBay;
 	public StarSystem m_starSystem;
+	public InOrbit m_inOrbit;
 	public Hyperspace m_hyperspace;
 	public SpaceflightUI m_spaceflightUI;
 
@@ -113,33 +114,42 @@ public class SpaceflightController : MonoBehaviour
 		// update the player data
 		playerData.m_starflight.m_location = newLocation;
 
-		// hide all components
-		m_player.Hide();
-		m_dockingBay.Hide();
-		m_starSystem.Hide();
-		m_hyperspace.Hide();
-
-		// make sure the map is visible
-		m_spaceflightUI.FadeMap( 1.0f, 2.0f );
-
-		// switch the location
-		switch ( playerData.m_starflight.m_location )
+		// switching to starport is a special case
+		if ( playerData.m_starflight.m_location == Starflight.Location.Starport )
 		{
-			case Starflight.Location.DockingBay:
-				m_dockingBay.Show();
-				break;
-			case Starflight.Location.JustLaunched:
-				SwitchToJustLaunched();
-				break;
-			case Starflight.Location.StarSystem:
-				m_starSystem.Show();
-				break;
-			case Starflight.Location.Hyperspace:
-				m_hyperspace.Show();
-				break;
-			case Starflight.Location.Starport:
-				SwitchToStarport();
-				break;
+			// start fading out the spaceflight scene
+			SceneFadeController.m_instance.FadeOut( "Starport" );
+		}
+		else
+		{
+			// hide all components
+			m_player.Hide();
+			m_dockingBay.Hide();
+			m_starSystem.Hide();
+			m_hyperspace.Hide();
+
+			// make sure the map is visible
+			m_spaceflightUI.FadeMap( 1.0f, 2.0f );
+
+			// switch the location
+			switch ( playerData.m_starflight.m_location )
+			{
+				case Starflight.Location.DockingBay:
+					m_dockingBay.Show();
+					break;
+				case Starflight.Location.JustLaunched:
+					SwitchToJustLaunched();
+					break;
+				case Starflight.Location.StarSystem:
+					m_starSystem.Show();
+					break;
+				case Starflight.Location.InOrbit:
+					m_inOrbit.Show();
+					break;
+				case Starflight.Location.Hyperspace:
+					m_hyperspace.Show();
+					break;
+			}
 		}
 
 		// save the player data (since the location was most likely changed)
@@ -163,14 +173,5 @@ public class SpaceflightController : MonoBehaviour
 
 		// update the message shown
 		m_spaceflightUI.ChangeMessageText( "Starport clear.\nStanding by to maneuver." );
-	}
-
-	void SwitchToStarport()
-	{
-		// make sure the map overlay is black
-		m_spaceflightUI.FadeMap( 0.0f, 0.0f );
-
-		// tell the scene manager we want to switch scenes
-		SceneManager.LoadScene( "Starport" );
 	}
 }
