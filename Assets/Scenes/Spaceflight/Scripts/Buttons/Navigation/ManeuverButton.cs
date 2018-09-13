@@ -116,7 +116,12 @@ public class ManeuverButton : ShipButton
 			m_spaceflightController.m_player.TurnOffEngines();
 
 			// do we have a planet to orbit?
-			if ( m_orbitPlanetController != null )
+			if ( m_orbitPlanetController == null )
+			{
+				// nope - just turn off the maneuver function
+				m_spaceflightController.m_buttonController.DeactivateButton();
+			}
+			else
 			{
 				// fade the map to black
 				m_spaceflightController.m_spaceflightUI.FadeMap( 0.0f, 2.0f );
