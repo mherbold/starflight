@@ -1,6 +1,7 @@
 {
   "m_misc": {
     "m_arthStarId": 25,
+    "m_arthPlanetId": 93,
     "m_artifactAnalysisPrice": 500,
     "m_baseShipMass": 50,
     "m_baseShipVolume": 500,

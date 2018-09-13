@@ -7173,7 +7173,6 @@ MonoBehaviour:
   m_spaceflightUI: {fileID: 1871356017}
   m_buttonController: {fileID: 1137917436}
   m_displayController: {fileID: 1625867937}
-  m_systemController: {fileID: 626356947}
 --- !u!4 &280970586
 Transform:
   m_ObjectHideFlags: 0
@@ -8859,7 +8858,6 @@ GameObject:
   m_Component:
   - component: {fileID: 626356945}
   - component: {fileID: 626356946}
-  - component: {fileID: 626356947}
   m_Layer: 8
   m_Name: Star System
   m_TagString: Untagged
@@ -8902,19 +8900,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 205a0e2c73cde3f42a3cc3cc66262fba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_nebula: {fileID: 613705365}
-  m_spaceflightController: {fileID: 280970583}
---- !u!114 &626356947
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 626356944}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c88f33ad406d98e47acef01ac6fe685f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   m_planetController:
   - {fileID: 888856207}
   - {fileID: 1769079814}
@@ -8924,6 +8909,8 @@ MonoBehaviour:
   - {fileID: 1173938741}
   - {fileID: 502575364}
   - {fileID: 1106076620}
+  m_nebula: {fileID: 613705365}
+  m_spaceflightController: {fileID: 280970583}
   m_shine: {fileID: 845916771}
 --- !u!1001 &626727115
 Prefab:

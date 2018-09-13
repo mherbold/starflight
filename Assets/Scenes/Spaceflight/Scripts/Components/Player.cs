@@ -263,12 +263,24 @@ public class Player : MonoBehaviour
 	// call this to show the player (ship)
 	public void Show()
 	{
+		// if we are already active then don't do it again
+		if ( m_ship.gameObject.activeInHierarchy )
+		{
+			return;
+		}
+
+		Debug.Log( "Showing the player (ship)." );
+
+		// show the ship
 		m_ship.gameObject.SetActive( true );
 	}
 
 	// call this to hide the player (ship)
 	public void Hide()
 	{
+		Debug.Log( "Hiding the player (ship)." );
+
+		// hide the ship
 		m_ship.gameObject.SetActive( false );
 	}
 

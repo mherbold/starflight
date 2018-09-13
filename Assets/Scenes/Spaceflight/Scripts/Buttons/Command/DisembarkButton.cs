@@ -17,6 +17,8 @@ public class DisembarkButton : ShipButton
 		{
 			case Starflight.Location.DockingBay:
 
+				Debug.Log( "Player is disembarking - switching to starport." );
+
 				// play the update sound
 				SoundController.m_instance.PlaySound( SoundController.Sound.Update );
 

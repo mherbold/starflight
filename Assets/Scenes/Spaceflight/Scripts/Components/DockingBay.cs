@@ -1,6 +1,5 @@
 ﻿
 using UnityEngine;
-using TMPro;
 
 public class DockingBay : MonoBehaviour
 {
@@ -15,25 +14,25 @@ public class DockingBay : MonoBehaviour
 	public SpaceflightController m_spaceflightController;
 
 	// unity awake
-	private void Awake()
+	void Awake()
 	{
 	}
 
 	// unity start
 	void Start()
 	{
-
 	}
 
 	// unity update
 	void Update()
 	{
-
 	}
 
 	// call this to hide the docking bay
 	public void Hide()
 	{
+		Debug.Log( "Hiding the docking bay scene." );
+
 		// hide the docking bay
 		gameObject.SetActive( false );
 	}
@@ -41,6 +40,8 @@ public class DockingBay : MonoBehaviour
 	// call this to switch to the docking bay
 	public void Show()
 	{
+		Debug.Log( "Showing the docking bay scene." );
+
 		// show the docking bay
 		gameObject.SetActive( true );
 
@@ -63,6 +64,9 @@ public class DockingBay : MonoBehaviour
 
 		// freeze the player
 		m_spaceflightController.m_player.Freeze();
+
+		// configure the infinite starfield system to become visible at lower speeds
+		m_spaceflightController.m_player.SetStarfieldFullyVisibleSpeed( 5.0f );
 
 		// make sure we have the status display up
 		m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_statusDisplay );

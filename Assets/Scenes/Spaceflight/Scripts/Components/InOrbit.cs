@@ -40,6 +40,8 @@ public class InOrbit : MonoBehaviour
 			return;
 		}
 
+		Debug.Log( "Showing the in orbit scene." );
+
 		// show the in orbit objects
 		gameObject.SetActive( true );
 

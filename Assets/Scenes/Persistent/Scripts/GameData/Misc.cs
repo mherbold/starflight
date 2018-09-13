@@ -6,6 +6,7 @@ using System;
 public class Misc
 {
 	public int m_arthStarId;
+	public int m_arthPlanetId;
 
 	public int m_artifactAnalysisPrice;
 

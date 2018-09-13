@@ -27,9 +27,6 @@ public class LaunchYesButton : ShipButton
 			// update the messages log
 			m_spaceflightController.m_spaceflightUI.ChangeMessageText( "Opening docking bay doors..." );
 
-			// configure the infinite starfield system to become visible at lower speeds
-			m_spaceflightController.m_player.SetStarfieldFullyVisibleSpeed( 5.0f );
-
 			// reset the last countdown number shown
 			m_lastCountdownNumberShown = 0;
 
@@ -61,6 +58,12 @@ public class LaunchYesButton : ShipButton
 
 	public override bool Update()
 	{
+		// get to the game data
+		GameData gameData = DataController.m_instance.m_gameData;
+
+		// get to the player data
+		PlayerData playerData = DataController.m_instance.m_playerData;
+
 		// keep track of the cutscene time
 		m_timer += Time.deltaTime * ( m_spaceflightController.m_skipCinematics ? 20.0f : 1.0f );
 
@@ -98,9 +101,6 @@ public class LaunchYesButton : ShipButton
 				// have we reached zero in the countdown?
 				if ( currentNumber <= 0 )
 				{
-					// get to the player data
-					PlayerData playerData = DataController.m_instance.m_playerData;
-
 					// are we in the docking bay?
 					if ( playerData.m_starflight.m_location == Starflight.Location.DockingBay )
 					{
@@ -115,22 +115,21 @@ public class LaunchYesButton : ShipButton
 						// have we reached the end of the launch trip?
 						if ( y >= 1024.0f )
 						{
+							Debug.Log( "At end of launch cinematics - switching to the just launched location." );
+
 							// update the player location
 							m_spaceflightController.SwitchLocation( Starflight.Location.JustLaunched );
 
 							// yep - fix us at exactly 1024 units above the zero plane
 							y = 1024.0f;
 
-							// force the planet controller for the arth station to update now so all the planets are in the correct position
-							m_spaceflightController.m_systemController.m_planetController[ 2 ].ForceUpdate();
-
 							// calculate the new position of the player (just north of the arth spaceport)
-							Vector3 newPosition = m_spaceflightController.m_systemController.m_planetController[ 2 ].transform.position;
-							newPosition.y = 0.0f;
-							newPosition.z += 128.0f;
+							Vector3 playerPosition = gameData.m_planetList[ gameData.m_misc.m_arthPlanetId ].GetPosition();
+							playerPosition.y = 0.0f;
+							playerPosition.z += 128.0f;
 
 							// update the player's system coordinates to the new position
-							playerData.m_starflight.m_systemCoordinates = newPosition;
+							playerData.m_starflight.m_systemCoordinates = playerPosition;
 
 							// restore the bridge buttons (this also ends the launch function)
 							m_spaceflightController.m_buttonController.RestoreBridgeButtons();

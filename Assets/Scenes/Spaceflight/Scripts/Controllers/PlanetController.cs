@@ -3,13 +3,8 @@ using UnityEngine;
 
 public class PlanetController : MonoBehaviour
 {
-	public const int c_arthPlanetTypeId = 57;
-
 	// the current planet this controller is controlling
 	public Planet m_planet;
-
-	// the current orbit angle
-	public float m_orbitAngle;
 
 	// access to the planet model
 	public GameObject m_planetModel;
@@ -19,9 +14,6 @@ public class PlanetController : MonoBehaviour
 
 	// the current scale
 	public float m_scale;
-
-	// the current rotation angle
-	public float m_rotationAngle;
 
 	// access to the mesh renderer (to get to the material)
 	MeshRenderer m_meshRenderer;
@@ -53,28 +45,19 @@ public class PlanetController : MonoBehaviour
 			// get to the player data
 			PlayerData playerData = DataController.m_instance.m_playerData;
 
-			// calculate number of days per year for each planet based on orbit number - orbit 3 should = 366 days like earth
-			int daysPerYear = 122 * ( m_planet.m_orbitPosition + 1 );
-
-			// update the orbit angle
-			m_orbitAngle = ( playerData.m_starflight.m_gameTime + 1000.0f + ( m_planet.m_starId * 4 ) ) / daysPerYear;
+			// set the current position of the planet
+			transform.localPosition = m_planet.GetPosition();
 
 			// update the rotation angle
-			m_rotationAngle = ( playerData.m_starflight.m_gameTime + m_planet.m_orbitPosition );
-
-			float distance = Mathf.Lerp( 50.0f, 225.0f, m_planet.m_orbitPosition / 7.0f ) * ( 8192.0f / 256.0f );
-			float angle = m_orbitAngle * 2.0f * Mathf.PI;
-
-			// calculate the new position of the container
-			transform.localPosition = new Vector3( -Mathf.Sin( angle ) * distance, 0.0f, Mathf.Cos( angle ) * distance );
+			float rotationAngle = ( playerData.m_starflight.m_gameTime + m_planet.m_orbitPosition );
 
 			// update the rotation of the planet
-			m_planetModel.transform.localRotation = Quaternion.AngleAxis( -30.0f, Vector3.right ) * Quaternion.AngleAxis( m_rotationAngle * 360.0f, Vector3.forward );
+			m_planetModel.transform.localRotation = Quaternion.AngleAxis( -30.0f, Vector3.right ) * Quaternion.AngleAxis( rotationAngle * 360.0f, Vector3.forward );
 
 			// update the rotation of the starport
 			if ( m_starportModel != null )
 			{
-				m_starportModel.transform.localRotation = Quaternion.Euler( -90.0f, 0.0f, m_rotationAngle * 360.0f * 20.0f );
+				m_starportModel.transform.localRotation = Quaternion.Euler( -90.0f, 0.0f, rotationAngle * 360.0f * 20.0f );
 			}
 		}
 	}
@@ -108,6 +91,9 @@ public class PlanetController : MonoBehaviour
 	// change the planet we are controlling
 	public void EnablePlanet( Planet planet )
 	{
+		// get to the game data
+		GameData gameData = DataController.m_instance.m_gameData;
+
 		// change the planet we are controlling
 		m_planet = planet;
 
@@ -117,13 +103,13 @@ public class PlanetController : MonoBehaviour
 		// show or hide the starport model depending on whether or not this planet is Arth
 		if ( m_starportModel != null )
 		{
-			m_starportModel.SetActive( ( planet.m_planetTypeId == c_arthPlanetTypeId ) );
+			m_starportModel.SetActive( planet.m_id == gameData.m_misc.m_arthPlanetId );
 		}
 
 		// scale the planet based on its mass
 		m_scale = Mathf.Lerp( 32.0f, 320.0f, Mathf.Sqrt( ( planet.m_mass - 6.0f ) / 500000.0f ) );
 		m_planetModel.transform.localScale = new Vector3( m_scale, m_scale, m_scale );
-		Debug.Log( "Planet " + planet.m_id + " mass is " + planet.m_mass + " so scale is " + m_scale );
+		// Debug.Log( "Planet " + planet.m_id + " mass is " + planet.m_mass + " so scale is " + m_scale );
 
 		// move the planet to be just below the zero plane
 		m_planetModel.transform.localPosition = new Vector3( 0.0f, -16.0f - m_scale, 0.0f );

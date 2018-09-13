@@ -26,7 +26,6 @@ public class SpaceflightController : MonoBehaviour
 	// controllers
 	public ButtonController m_buttonController;
 	public DisplayController m_displayController;
-	public SystemController m_systemController;
 
 	// save game timer
 	float m_timer;
@@ -34,12 +33,6 @@ public class SpaceflightController : MonoBehaviour
 	// unity awake
 	void Awake()
 	{
-		// hide all components
-		m_player.Hide();
-		m_dockingBay.Hide();
-		m_starSystem.Hide();
-		m_hyperspace.Hide();
-
 		// check if we loaded the persistent scene
 		if ( DataController.m_instance == null )
 		{
@@ -122,12 +115,6 @@ public class SpaceflightController : MonoBehaviour
 		}
 		else
 		{
-			// hide all components
-			m_player.Hide();
-			m_dockingBay.Hide();
-			m_starSystem.Hide();
-			m_hyperspace.Hide();
-
 			// make sure the map is visible
 			m_spaceflightUI.FadeMap( 1.0f, 2.0f );
 
@@ -135,18 +122,39 @@ public class SpaceflightController : MonoBehaviour
 			switch ( playerData.m_starflight.m_location )
 			{
 				case Starflight.Location.DockingBay:
+					m_player.Hide();
 					m_dockingBay.Show();
+					m_starSystem.Hide();
+					m_hyperspace.Hide();
 					break;
+
 				case Starflight.Location.JustLaunched:
-					SwitchToJustLaunched();
+					m_player.Hide();
+					m_dockingBay.Hide();
+					m_starSystem.Hide();
+					m_hyperspace.Hide();
+					m_spaceflightUI.FadeMap( 0.0f, 0.0f );
+					m_spaceflightUI.ChangeMessageText( "Starport clear.\nStanding by to maneuver." );
 					break;
+
 				case Starflight.Location.StarSystem:
+					m_player.Show();
+					m_dockingBay.Hide();
 					m_starSystem.Show();
+					m_hyperspace.Hide();
 					break;
+
 				case Starflight.Location.InOrbit:
+					m_player.Hide();
+					m_dockingBay.Hide();
+					m_starSystem.Hide();
 					m_inOrbit.Show();
 					break;
+
 				case Starflight.Location.Hyperspace:
+					m_player.Show();
+					m_dockingBay.Hide();
+					m_starSystem.Hide();
 					m_hyperspace.Show();
 					break;
 			}
@@ -161,17 +169,5 @@ public class SpaceflightController : MonoBehaviour
 	{
 		// save the player data in case something has been updated
 		DataController.m_instance.SaveActiveGame();
-	}
-
-	void SwitchToJustLaunched()
-	{
-		// show the star system
-		m_starSystem.Show();
-
-		// make sure the map overlay is black
-		m_spaceflightUI.FadeMap( 0.0f, 0.0f );
-
-		// update the message shown
-		m_spaceflightUI.ChangeMessageText( "Starport clear.\nStanding by to maneuver." );
 	}
 }

@@ -22,18 +22,35 @@ public class SystemDisplay : ShipDisplay
 	// unity update
 	public override void Update()
 	{
+		// get to the game data
+		GameData gameData = DataController.m_instance.m_gameData;
+
+		// get to the player data
+		PlayerData playerData = DataController.m_instance.m_playerData;
+
+		// get to the star data
+		Star star = gameData.m_starList[ playerData.m_starflight.m_currentStarId ];
+
 		// update the positions of the planets
-		for ( int i = 0; i < Star.c_maxNumPlanets; i++ )
+		foreach ( Planet planet in star.m_planetList )
 		{
-			float angle = m_spaceflightController.m_systemController.m_planetController[ i ].m_orbitAngle * 360.0f;
+			if ( ( planet != null ) && ( planet.m_id != -1 ) )
+			{
+				// get the orbit angle
+				float orbitAngle = planet.GetOrbitAngle();
 
-			Quaternion rotation = Quaternion.AngleAxis( angle, Vector3.forward );
+				// calculate the game object rotation
+				Quaternion rotation = Quaternion.AngleAxis( orbitAngle, Vector3.forward );
 
-			m_orbitGameObject[ i ].transform.rotation = rotation;
+				// set the new rotation on the orbit game object
+				m_orbitGameObject[ planet.m_orbitPosition ].transform.rotation = rotation;
+			}
 		}
 
-		// update the position of the ship
+		// get the position of the ship and convert it to map coordinates
 		Vector3 position = m_spaceflightController.m_player.GetPosition() * 256.0f / 8192.0f;
+
+		// set the new position of the ship game object
 		m_shipGameObject.transform.localPosition = new Vector3( position.x, position.z );
 	}
 
@@ -46,11 +63,11 @@ public class SystemDisplay : ShipDisplay
 	// call this to change the system currently being displayed
 	public void ChangeSystem()
 	{
-		// get to the player data
-		PlayerData playerData = DataController.m_instance.m_playerData;
-
 		// get to the game data
 		GameData gameData = DataController.m_instance.m_gameData;
+
+		// get to the player data
+		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// get to the star data
 		Star star = gameData.m_starList[ playerData.m_starflight.m_currentStarId ];
@@ -81,21 +98,26 @@ public class SystemDisplay : ShipDisplay
 		// update each planet in the system
 		for ( int i = 0; i < Star.c_maxNumPlanets; i++ )
 		{
-			Planet planet = m_spaceflightController.m_systemController.m_planetController[ i ].m_planet;
+			Planet planet = m_spaceflightController.m_starSystem.m_planetController[ i ].m_planet;
 
-			if ( planet == null )
+			// is there a planet?
+			if ( ( planet == null ) || ( planet.m_id == -1 ) )
 			{
+				// no - disable the orbit game object
 				m_orbitGameObject[ i ].SetActive( false );
 			}
 			else
 			{
+				// yes - enable the orbit game object
 				m_orbitGameObject[ i ].SetActive( true );
 
 				// check if this is the arth station (special case)
-				if ( planet.m_planetTypeId == PlanetController.c_arthPlanetTypeId )
+				if ( planet.m_id == gameData.m_misc.m_arthPlanetId )
 				{
-					// yep - hide the planet object and show the arth station instead
+					// yep - hide the planet object 
 					m_planetImage[ planet.m_orbitPosition ].gameObject.SetActive( false );
+
+					// and show the arth station instead
 					m_arthGameObject.SetActive( true );
 				}
 				else

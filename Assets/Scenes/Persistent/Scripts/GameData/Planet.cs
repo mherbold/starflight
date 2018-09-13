@@ -1,4 +1,5 @@
 ﻿
+using UnityEngine;
 using System;
 
 [Serializable]
@@ -47,5 +48,31 @@ public class Planet
 		GameData gameData = DataController.m_instance.m_gameData;
 
 		return gameData.m_surfaceList[ m_surfaceId ];
+	}
+
+	// call this to get the orbit angle (in degrees) of the planet
+	public float GetOrbitAngle()
+	{
+		// get to the player data
+		PlayerData playerData = DataController.m_instance.m_playerData;
+
+		// calculate number of days per year for each planet based on orbit number - orbit 3 should = 366 days like earth
+		int daysPerYear = 122 * ( m_orbitPosition + 1 );
+
+		// update the orbit angle
+		return ( ( playerData.m_starflight.m_gameTime + 1000.0f + ( m_starId * 4 ) ) / daysPerYear ) * 360.0f;
+	}
+
+	// call this to get the position of the planet (in unity coordinates)
+	public Vector3 GetPosition()
+	{
+		// get the current orbit angle and convert to radians
+		float orbitAngle = GetOrbitAngle() * ( Mathf.PI / 180.0f );
+
+		// calculate the distance of the planet from the sun
+		float distance = Mathf.Lerp( 50.0f, 225.0f, m_orbitPosition / 7.0f ) * ( 8192.0f / 256.0f );
+
+		// calculate the position of the planet
+		return new Vector3( -Mathf.Sin( orbitAngle ) * distance, 0.0f, Mathf.Cos( orbitAngle ) * distance );
 	}
 }

@@ -86,9 +86,6 @@ public class Hyperspace : MonoBehaviour
 		// get to the game data
 		GameData gameData = DataController.m_instance.m_gameData;
 
-		// configure the infinite starfield system to become visible at lower speeds
-		m_spaceflightController.m_player.SetStarfieldFullyVisibleSpeed( 3.5f );
-
 		// are we travelling through a flux right now?
 		if ( m_travelingThroughFlux )
 		{
@@ -137,7 +134,7 @@ public class Hyperspace : MonoBehaviour
 
 				if ( distance < star.GetBreachDistance() )
 				{
-					Debug.Log( "Entering star system at " + star.m_xCoordinate + " x " + star.m_yCoordinate + ", distance = " + distance );
+					Debug.Log( "Entering star system at " + star.m_xCoordinate + " x " + star.m_yCoordinate + " - switching to the star system location." );
 
 					// change the system
 					playerData.m_starflight.m_currentStarId = star.m_id;
@@ -194,6 +191,8 @@ public class Hyperspace : MonoBehaviour
 	// call this to hide the hyperspace stuff
 	public void Hide()
 	{
+		Debug.Log( "Hiding the hyperspace scene." );
+
 		// hide the hyperspace objects
 		gameObject.SetActive( false );
 	}
@@ -206,6 +205,8 @@ public class Hyperspace : MonoBehaviour
 		{
 			return;
 		}
+
+		Debug.Log( "Showing the hyperspace scene." );
 
 		// show the hyperspace objects
 		gameObject.SetActive( true );
@@ -230,7 +231,10 @@ public class Hyperspace : MonoBehaviour
 
 		// unfreeze the player
 		m_spaceflightController.m_player.Unfreeze();
-	
+
+		// configure the infinite starfield system to become visible at lower speeds
+		m_spaceflightController.m_player.SetStarfieldFullyVisibleSpeed( 3.5f );
+
 		// fade in the map
 		m_spaceflightController.m_spaceflightUI.FadeMap( 1.0f, 2.0f );
 
