@@ -7887,7 +7887,6 @@ MonoBehaviour:
     m_weatherId: 0
   m_planetModel: {fileID: 1302927160}
   m_starportModel: {fileID: 0}
-  m_scale: 0
 --- !u!1 &507009621
 GameObject:
   m_ObjectHideFlags: 0
@@ -8936,6 +8935,7 @@ MonoBehaviour:
   m_nebula: {fileID: 613705365}
   m_spaceflightController: {fileID: 280970583}
   m_shine: {fileID: 845916771}
+  m_planetToOrbitId: 0
 --- !u!1001 &626727115
 Prefab:
   m_ObjectHideFlags: 0
@@ -10090,7 +10090,6 @@ MonoBehaviour:
     m_weatherId: 0
   m_planetModel: {fileID: 1964326727}
   m_starportModel: {fileID: 0}
-  m_scale: 0
 --- !u!1001 &896176607
 Prefab:
   m_ObjectHideFlags: 0
@@ -10608,13 +10607,13 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 935210465}
-  m_LocalRotation: {x: 0.8001032, y: -0.19134171, z: 0.46193978, w: 0.33141357}
+  m_LocalRotation: {x: 0.6830127, y: -0.18301274, z: 0.6830127, w: 0.18301274}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1.0000005, z: 1.0000005}
   m_Children: []
   m_Father: {fileID: 1812997202}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 135, y: -60, z: 0}
+  m_LocalEulerAnglesHint: {x: 150, y: -90, z: 0}
 --- !u!108 &935210467
 Light:
   m_ObjectHideFlags: 0
@@ -11572,7 +11571,6 @@ MonoBehaviour:
     m_weatherId: 0
   m_planetModel: {fileID: 1347341635}
   m_starportModel: {fileID: 0}
-  m_scale: 0
 --- !u!1 &1117387104
 GameObject:
   m_ObjectHideFlags: 0
@@ -16649,7 +16647,6 @@ MonoBehaviour:
     m_weatherId: 0
   m_planetModel: {fileID: 1136308534}
   m_starportModel: {fileID: 0}
-  m_scale: 0
 --- !u!1001 &1193430516
 Prefab:
   m_ObjectHideFlags: 0
@@ -22419,7 +22416,6 @@ MonoBehaviour:
     m_weatherId: 0
   m_planetModel: {fileID: 210579330}
   m_starportModel: {fileID: 0}
-  m_scale: 0
 --- !u!1 &1407748604
 GameObject:
   m_ObjectHideFlags: 0
@@ -28575,7 +28571,6 @@ MonoBehaviour:
     m_weatherId: 0
   m_planetModel: {fileID: 276947946}
   m_starportModel: {fileID: 0}
-  m_scale: 0
 --- !u!1 &1797406959
 GameObject:
   m_ObjectHideFlags: 0
@@ -28674,7 +28669,6 @@ MonoBehaviour:
     m_weatherId: 0
   m_planetModel: {fileID: 524147448}
   m_starportModel: {fileID: 161016316}
-  m_scale: 0
 --- !u!1 &1809499455
 GameObject:
   m_ObjectHideFlags: 0
@@ -30172,7 +30166,6 @@ MonoBehaviour:
     m_weatherId: 0
   m_planetModel: {fileID: 1215887724}
   m_starportModel: {fileID: 0}
-  m_scale: 0
 --- !u!1 &2048351697
 GameObject:
   m_ObjectHideFlags: 0

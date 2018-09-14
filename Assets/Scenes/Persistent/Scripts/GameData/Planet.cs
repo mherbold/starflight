@@ -63,7 +63,7 @@ public class Planet
 		return ( ( playerData.m_starflight.m_gameTime + 1000.0f + ( m_starId * 4 ) ) / daysPerYear ) * 360.0f;
 	}
 
-	// call this to get the position of the planet (in unity coordinates)
+	// call this to get the position of the planet (in world coordinates)
 	public Vector3 GetPosition()
 	{
 		// get the current orbit angle and convert to radians
@@ -74,5 +74,15 @@ public class Planet
 
 		// calculate the position of the planet
 		return new Vector3( -Mathf.Sin( orbitAngle ) * distance, 0.0f, Mathf.Cos( orbitAngle ) * distance );
+	}
+
+	// get the scale for this planet (in world units)
+	public Vector3 GetScale()
+	{
+		// scale the planet based on its mass
+		float scale = Mathf.Lerp( 32.0f, 320.0f, Mathf.Sqrt( ( m_mass - 6.0f ) / 500000.0f ) );
+
+		// return the scale as a vector
+		return new Vector3( scale, scale, scale );
 	}
 }

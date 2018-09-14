@@ -17,8 +17,6 @@ public class DisplayController : MonoBehaviour
 	// unity start
 	void Start()
 	{
-		// status display should be first
-		ChangeDisplay( m_statusDisplay );
 	}
 
 	// change the current display to a different one

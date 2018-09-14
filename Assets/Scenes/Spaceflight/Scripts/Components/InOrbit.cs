@@ -81,7 +81,7 @@ public class InOrbit : MonoBehaviour
 		gameObject.SetActive( true );
 
 		// make sure the camera is at the right height above the zero plane
-		m_spaceflightController.m_player.DollyCamera( 1024.0f );
+		m_spaceflightController.m_player.DollyCamera( 768.0f );
 
 		// move the player object
 		m_spaceflightController.m_player.transform.position = new Vector3( 0.0f, 0.0f, 0.0f );
@@ -107,7 +107,10 @@ public class InOrbit : MonoBehaviour
 		// get the planet controller
 		PlanetController planetController = m_spaceflightController.m_starSystem.GetPlanetController( playerData.m_starflight.m_currentPlanetId );
 
-		// apply the material to the orbit planet
+		// apply the material to the planet model
 		m_planet.material = planetController.GetMaterial();
+
+		// set the scale of the planet
+		m_planet.transform.localScale = planetController.m_planet.GetScale();
 	}
 }

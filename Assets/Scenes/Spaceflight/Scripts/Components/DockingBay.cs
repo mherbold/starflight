@@ -78,14 +78,14 @@ public class DockingBay : MonoBehaviour
 		// configure the infinite starfield system to become visible at lower speeds
 		m_spaceflightController.m_player.SetStarfieldFullyVisibleSpeed( 5.0f );
 
-		// make sure we have the status display up
-		m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_statusDisplay );
-
 		// reset the buttons
 		m_spaceflightController.m_buttonController.RestoreBridgeButtons();
 
 		// fade in the map
 		m_spaceflightController.m_spaceflightUI.FadeMap( 1.0f, 2.0f );
+
+		// make sure we have the status display up
+		m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_statusDisplay );
 
 		// play the docking bay music track
 		MusicController.m_instance.ChangeToTrack( MusicController.Track.DockingBay );

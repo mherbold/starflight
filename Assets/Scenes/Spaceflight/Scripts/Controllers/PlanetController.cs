@@ -12,9 +12,6 @@ public class PlanetController : MonoBehaviour
 	// access to the starport model
 	public GameObject m_starportModel;
 
-	// the current scale
-	public float m_scale;
-
 	// access to the mesh renderer (to get to the material)
 	MeshRenderer m_meshRenderer;
 
@@ -56,7 +53,7 @@ public class PlanetController : MonoBehaviour
 			}
 		}
 	}
-	
+
 	// call this before you enable the planet
 	public void InitializePlanet( Planet planet )
 	{
@@ -159,12 +156,10 @@ public class PlanetController : MonoBehaviour
 		}
 
 		// scale the planet based on its mass
-		m_scale = Mathf.Lerp( 32.0f, 320.0f, Mathf.Sqrt( ( m_planet.m_mass - 6.0f ) / 500000.0f ) );
-		m_planetModel.transform.localScale = new Vector3( m_scale, m_scale, m_scale );
-		// Debug.Log( "Planet " + planet.m_id + " mass is " + planet.m_mass + " so scale is " + m_scale );
+		m_planetModel.transform.localScale = m_planet.GetScale();
 
 		// move the planet to be just below the zero plane
-		m_planetModel.transform.localPosition = new Vector3( 0.0f, -16.0f - m_scale, 0.0f );
+		m_planetModel.transform.localPosition = new Vector3( 0.0f, -16.0f - m_planetModel.transform.localScale.y, 0.0f );
 	}
 
 	// call this to get the distance to the player

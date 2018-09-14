@@ -102,7 +102,7 @@ public class StarSystem : MonoBehaviour
 				float distanceToPlanet = orbitPlanetController.GetDistanceToPlayer();
 
 				// are we close enough to orbit the planet?
-				if ( distanceToPlanet <= orbitPlanetController.m_scale )
+				if ( distanceToPlanet <= orbitPlanetController.m_planetModel.transform.localScale.y )
 				{
 					// yes - remember this planet
 					m_planetToOrbitId = orbitPlanetController.m_planet.m_id;
@@ -208,6 +208,9 @@ public class StarSystem : MonoBehaviour
 
 		// show / hide the nebula depending on if we are in one
 		m_nebula.SetActive( m_currentStar.m_insideNebula );
+
+		// show the system display
+		m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_systemDisplay );
 
 		// play the star system music track
 		MusicController.m_instance.ChangeToTrack( MusicController.Track.StarSystem );

@@ -152,9 +152,6 @@ public class Hyperspace : MonoBehaviour
 
 					// switch to the star system location
 					m_spaceflightController.SwitchLocation( Starflight.Location.StarSystem );
-
-					// switch to the system display
-					m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_systemDisplay );
 				}
 			}
 
