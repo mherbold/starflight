@@ -55,6 +55,22 @@ public class ManeuverButton : ShipButton
 				m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_systemDisplay );
 
 				break;
+
+			case Starflight.Location.InOrbit:
+
+				// fade the map to black
+				m_spaceflightController.m_spaceflightUI.FadeMap( 0.0f, 2.0f );
+
+				// we are now transitioning
+				m_isTransitioning = true;
+
+				// transition to the star system
+				m_nextLocation = Starflight.Location.StarSystem;
+
+				// display message
+				m_spaceflightController.m_spaceflightUI.ChangeMessageText( "Leaving orbit..." );
+
+				break;
 		}
 
 		// reset the current speed
@@ -81,9 +97,6 @@ public class ManeuverButton : ShipButton
 			// is it completely black yet?
 			if ( mapFadeAmount == 0.0f )
 			{
-				// yes - turn off the maneuver function
-				m_spaceflightController.m_buttonController.DeactivateButton();
-
 				// we are not transitioning any more
 				m_isTransitioning = false;
 
@@ -100,6 +113,9 @@ public class ManeuverButton : ShipButton
 						// play the docking bay door close animation
 						m_spaceflightController.m_dockingBay.CloseDockingBayDoors();
 
+						// turn off the maneuver function
+						m_spaceflightController.m_buttonController.DeactivateButton();
+
 						break;
 
 					case Starflight.Location.InOrbit:
@@ -108,6 +124,18 @@ public class ManeuverButton : ShipButton
 
 						// switch to the in orbit location
 						m_spaceflightController.SwitchLocation( Starflight.Location.InOrbit );
+
+						// turn off the maneuver function
+						m_spaceflightController.m_buttonController.DeactivateButton();
+
+						break;
+
+					case Starflight.Location.StarSystem:
+
+						Debug.Log( "Player is breaking orbit - switching to the star system location." );
+
+						// switch to the in orbit location
+						m_spaceflightController.SwitchLocation( Starflight.Location.StarSystem );
 
 						break;
 				}
@@ -125,17 +153,17 @@ public class ManeuverButton : ShipButton
 			// are we in a star system?
 			if ( playerData.m_starflight.m_location == Starflight.Location.StarSystem )
 			{
-				// get the planet that we could be orbiting around
-				PlanetController orbitPlanetController = m_spaceflightController.m_starSystem.GetOrbitPlanetController();
-
 				// do we have a planet to orbit?
-				if ( orbitPlanetController == null )
+				if ( m_spaceflightController.m_starSystem.m_planetToOrbitId == -1 )
 				{
 					// nope - just turn off the maneuver function
 					m_spaceflightController.m_buttonController.DeactivateButton();
 				}
 				else
 				{
+					// yep - remember the planet
+					playerData.m_starflight.m_currentPlanetId = m_spaceflightController.m_starSystem.m_planetToOrbitId;
+
 					// fade the map to black
 					m_spaceflightController.m_spaceflightUI.FadeMap( 0.0f, 2.0f );
 
@@ -146,13 +174,13 @@ public class ManeuverButton : ShipButton
 					SoundController.m_instance.PlaySound( SoundController.Sound.Activate );
 
 					// is this arth?
-					if ( orbitPlanetController.m_planet.m_id == gameData.m_misc.m_arthPlanetId )
+					if ( m_spaceflightController.m_starSystem.m_planetToOrbitId == gameData.m_misc.m_arthPlanetId )
 					{
 						// yes - transition to the docking bay
 						m_nextLocation = Starflight.Location.DockingBay;
 
 						// display message
-						m_spaceflightController.m_spaceflightUI.m_messages.text = "Initiating docking procedure...";
+						m_spaceflightController.m_spaceflightUI.ChangeMessageText( "Initiating docking procedure..." );
 					}
 					else
 					{
@@ -160,7 +188,7 @@ public class ManeuverButton : ShipButton
 						m_nextLocation = Starflight.Location.InOrbit;
 
 						// display message
-						m_spaceflightController.m_spaceflightUI.m_messages.text = "Initiating orbital maneuver...";
+						m_spaceflightController.m_spaceflightUI.ChangeMessageText( "Initiating orbital maneuver..." );
 					}
 
 					// stop here

@@ -31,6 +31,11 @@ public class DockingBay : MonoBehaviour
 	// call this to hide the docking bay
 	public void Hide()
 	{
+		if ( !gameObject.activeInHierarchy )
+		{
+			return;
+		}
+
 		Debug.Log( "Hiding the docking bay scene." );
 
 		// hide the docking bay
@@ -40,6 +45,11 @@ public class DockingBay : MonoBehaviour
 	// call this to switch to the docking bay
 	public void Show()
 	{
+		if ( gameObject.activeInHierarchy )
+		{
+			return;
+		}
+
 		Debug.Log( "Showing the docking bay scene." );
 
 		// show the docking bay

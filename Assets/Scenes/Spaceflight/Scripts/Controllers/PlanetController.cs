@@ -24,11 +24,6 @@ public class PlanetController : MonoBehaviour
 	// unity awake
 	void Awake()
 	{
-		// mesh renderer component
-		m_meshRenderer = m_planetModel.GetComponent<MeshRenderer>();
-
-		// grab the material from the mesh renderer
-		m_material = m_meshRenderer.material;
 	}
 
 	// unity start
@@ -61,68 +56,33 @@ public class PlanetController : MonoBehaviour
 			}
 		}
 	}
-
-	// call this to get the distance to the player
-	public float GetDistanceToPlayer()
+	
+	// call this before you enable the planet
+	public void InitializePlanet( Planet planet )
 	{
-		// get to the player data
-		PlayerData playerData = DataController.m_instance.m_playerData;
-
-		// return the distance from the player to the planet
-		return Vector3.Distance( playerData.m_starflight.m_systemCoordinates, transform.localPosition );
-	}
-
-	// call this to force this planet to update
-	public void ForceUpdate()
-	{
-		Update();
-	}
-
-	// disable a planet
-	public void DisablePlanet()
-	{
-		// forget this planet
-		m_planet = null;
-
-		// disable the game object
-		gameObject.SetActive( false );
-	}
-
-	// change the planet we are controlling
-	public void EnablePlanet( Planet planet )
-	{
-		// get to the game data
-		GameData gameData = DataController.m_instance.m_gameData;
-
-		// change the planet we are controlling
-		m_planet = planet;
-
-		// show this orbit
-		gameObject.SetActive( true );
-
-		// show or hide the starport model depending on whether or not this planet is Arth
-		if ( m_starportModel != null )
+		// check if we have a planet
+		if ( ( planet == null ) || ( planet.m_id == -1 ) )
 		{
-			m_starportModel.SetActive( planet.m_id == gameData.m_misc.m_arthPlanetId );
+			// nope - forget this planet
+			m_planet = null;
+
+			// don't do anything more here
+			return;
 		}
 
-		// scale the planet based on its mass
-		m_scale = Mathf.Lerp( 32.0f, 320.0f, Mathf.Sqrt( ( planet.m_mass - 6.0f ) / 500000.0f ) );
-		m_planetModel.transform.localScale = new Vector3( m_scale, m_scale, m_scale );
-		// Debug.Log( "Planet " + planet.m_id + " mass is " + planet.m_mass + " so scale is " + m_scale );
+		// yep - remember the planet we are controlling
+		m_planet = planet;
 
-		// move the planet to be just below the zero plane
-		m_planetModel.transform.localPosition = new Vector3( 0.0f, -16.0f - m_scale, 0.0f );
+		// get the mesh renderer component
+		m_meshRenderer = m_planetModel.GetComponent<MeshRenderer>();
 
-		// generate the texture maps for this planet
-		GenerateTextureMaps();
-	}
+		// grab the material from the mesh renderer
+		m_material = m_meshRenderer.material;
 
-	// generates the texture maps for this planet
-	void GenerateTextureMaps()
-	{
+		// get to the original SF1 planet map data
 		PlanetMap planetMap = DataController.m_instance.m_planetData.m_planetMapList[ m_planet.m_id ];
 
+		// build a 1024x512 version of the original map
 		const int newWidth = 1024;
 		const int newHeight = 512;
 
@@ -165,11 +125,61 @@ public class PlanetController : MonoBehaviour
 			}
 		}
 
+		// compress the texture map
 		textureMap.Compress( true );
 
+		// set up uv wrapping modes
 		textureMap.wrapModeU = TextureWrapMode.Repeat;
 		textureMap.wrapModeV = TextureWrapMode.Clamp;
 
+		// apply the texture map to the material
 		m_material.SetTexture( "_MainTex", textureMap );
+	}
+
+	// disable a planet
+	public void DisablePlanet()
+	{
+		// disable the game object
+		gameObject.SetActive( false );
+	}
+
+	// change the planet we are controlling
+	public void EnablePlanet()
+	{
+		// get to the game data
+		GameData gameData = DataController.m_instance.m_gameData;
+
+		// show this orbit
+		gameObject.SetActive( true );
+
+		// show or hide the starport model depending on whether or not this planet is Arth
+		if ( m_starportModel != null )
+		{
+			m_starportModel.SetActive( m_planet.m_id == gameData.m_misc.m_arthPlanetId );
+		}
+
+		// scale the planet based on its mass
+		m_scale = Mathf.Lerp( 32.0f, 320.0f, Mathf.Sqrt( ( m_planet.m_mass - 6.0f ) / 500000.0f ) );
+		m_planetModel.transform.localScale = new Vector3( m_scale, m_scale, m_scale );
+		// Debug.Log( "Planet " + planet.m_id + " mass is " + planet.m_mass + " so scale is " + m_scale );
+
+		// move the planet to be just below the zero plane
+		m_planetModel.transform.localPosition = new Vector3( 0.0f, -16.0f - m_scale, 0.0f );
+	}
+
+	// call this to get the distance to the player
+	public float GetDistanceToPlayer()
+	{
+		// get to the player data
+		PlayerData playerData = DataController.m_instance.m_playerData;
+
+		// return the distance from the player to the planet
+		return Vector3.Distance( playerData.m_starflight.m_systemCoordinates, transform.localPosition );
+	}
+
+	// get the material for this planet
+	public Material GetMaterial()
+	{
+		return m_material;
 	}
 }

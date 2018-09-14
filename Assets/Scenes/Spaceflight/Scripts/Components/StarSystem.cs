@@ -15,8 +15,11 @@ public class StarSystem : MonoBehaviour
 	// the shine script (so we can change the color)
 	public Shine m_shine;
 
-	// the planet controller for the planet we could orbit around
-	PlanetController m_orbitPlanetController;
+	// the id number of the planet we could be orbiting
+	public int m_planetToOrbitId;
+
+	// remember the current star
+	Star m_currentStar;
 
 	// unity awake
 	void Awake()
@@ -34,14 +37,8 @@ public class StarSystem : MonoBehaviour
 		// get to the player data
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
-		// get to the game data
-		GameData gameData = DataController.m_instance.m_gameData;
-
-		// get to the star data
-		Star star = gameData.m_starList[ playerData.m_starflight.m_currentStarId ];
-
 		// calculate the time to next flare (in FP days)
-		float timeToFlare = star.m_daysToNextFlare - playerData.m_starflight.m_gameTime;
+		float timeToFlare = m_currentStar.m_daysToNextFlare - playerData.m_starflight.m_gameTime;
 
 		// did we flare already?
 		if ( timeToFlare <= 0.0f )
@@ -75,8 +72,8 @@ public class StarSystem : MonoBehaviour
 
 			newPosition.Normalize();
 
-			newPosition *= star.GetBreachDistance() + 16.0f;
-			newPosition += star.m_worldCoordinates;
+			newPosition *= m_currentStar.GetBreachDistance() + 16.0f;
+			newPosition += m_currentStar.m_worldCoordinates;
 
 			// update the player position
 			m_spaceflightController.m_player.transform.position = newPosition;
@@ -96,35 +93,76 @@ public class StarSystem : MonoBehaviour
 		else
 		{
 			// get the nearest planet controller to the player
-			m_orbitPlanetController = GetNearestPlanetController();
+			PlanetController orbitPlanetController = GetNearestPlanetController();
 
 			// did we get a planet controller?
-			if ( m_orbitPlanetController != null )
+			if ( orbitPlanetController != null )
 			{
 				// yes - get the distance of the player is to the planet
-				float distanceToPlanet = m_orbitPlanetController.GetDistanceToPlayer();
+				float distanceToPlanet = orbitPlanetController.GetDistanceToPlayer();
 
 				// are we close enough to orbit the planet?
-				if ( distanceToPlanet <= m_orbitPlanetController.m_scale )
+				if ( distanceToPlanet <= orbitPlanetController.m_scale )
 				{
-					// yes - let the player know
-					m_spaceflightController.m_spaceflightUI.m_messages.text = "Ship is within orbital range.";
+					// yes - remember this planet
+					m_planetToOrbitId = orbitPlanetController.m_planet.m_id;
+
+					// let the player know
+					m_spaceflightController.m_spaceflightUI.ChangeMessageText( "Ship is within orbital range." );
 				}
 				else
 				{
 					// no - forget this planet
-					m_orbitPlanetController = null;
+					m_planetToOrbitId = -1;
 
 					// display the spectral class and ecosphere
-					m_spaceflightController.m_spaceflightUI.m_messages.text = "<u>Stellar Parameters</u>\nSpectral Class: <#4FEDED>" + star.m_class + "</color>\nEcosphere: <#4FEDED>" + star.m_spectralClass.m_ecosphereMin + " - " + star.m_spectralClass.m_ecosphereMax + "</color>";
+					m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<u>Stellar Parameters</u>\nSpectral Class: <#4FEDED>" + m_currentStar.m_class + "</color>\nEcosphere: <#4FEDED>" + m_currentStar.m_spectralClass.m_ecosphereMin + " - " + m_currentStar.m_spectralClass.m_ecosphereMax + "</color>" );
 				}
 			}
 		}
 	}
 
+	// call this to initialize the star system before you show it
+	public void Initialize()
+	{
+		// get to the game data
+		GameData gameData = DataController.m_instance.m_gameData;
+
+		// get to the player data
+		PlayerData playerData = DataController.m_instance.m_playerData;
+
+		// did we change stars?
+		if ( ( m_currentStar != null ) && ( m_currentStar.m_id == playerData.m_starflight.m_currentStarId ) )
+		{
+			// nope - don't do anything
+			return;
+		}
+
+		Debug.Log( "Initializing the star system with star ID " + playerData.m_starflight.m_currentStarId );
+
+		// yes - so remember the current star
+		m_currentStar = gameData.m_starList[ playerData.m_starflight.m_currentStarId ];
+
+		// generate or load maps for each planet in this system
+		for ( int i = 0; i < Star.c_maxNumPlanets; i++ )
+		{
+			Planet planet = m_currentStar.m_planetList[ i ];
+
+			m_planetController[ i ].InitializePlanet( planet );
+		}
+
+		// update the system display
+		m_spaceflightController.m_displayController.m_systemDisplay.ChangeSystem();
+	}
+
 	// call this to hide the starsystem objects
 	public void Hide()
 	{
+		if ( !gameObject.activeInHierarchy )
+		{
+			return;
+		}
+
 		Debug.Log( "Hiding the star system scene." );
 
 		// hide the starsystem
@@ -134,7 +172,6 @@ public class StarSystem : MonoBehaviour
 	// call this to show the starsystem objects
 	public void Show()
 	{
-		// if we are already active then don't do it again
 		if ( gameObject.activeInHierarchy )
 		{
 			return;
@@ -142,14 +179,8 @@ public class StarSystem : MonoBehaviour
 
 		Debug.Log( "Showing the star system scene." );
 
-		// get to the game data
-		GameData gameData = DataController.m_instance.m_gameData;
-
 		// get to the player data
 		PlayerData playerData = DataController.m_instance.m_playerData;
-
-		// get to the star data
-		Star star = gameData.m_starList[ playerData.m_starflight.m_currentStarId ];
 
 		// show the starsystem
 		gameObject.SetActive( true );
@@ -176,7 +207,7 @@ public class StarSystem : MonoBehaviour
 		m_spaceflightController.m_spaceflightUI.FadeMap( 1.0f, 2.0f );
 
 		// show / hide the nebula depending on if we are in one
-		m_nebula.SetActive( star.m_insideNebula );
+		m_nebula.SetActive( m_currentStar.m_insideNebula );
 
 		// play the star system music track
 		MusicController.m_instance.ChangeToTrack( MusicController.Track.StarSystem );
@@ -184,7 +215,7 @@ public class StarSystem : MonoBehaviour
 		// change the color of the sun
 		Color color;
 
-		switch ( star.m_class )
+		switch ( m_currentStar.m_class )
 		{
 			case "M": color = new Color( 1.0f, 0.0f, 0.0f ); break;
 			case "K": color = new Color( 1.0f, 0.4f, 0.0f ); break;
@@ -205,16 +236,32 @@ public class StarSystem : MonoBehaviour
 		}
 
 		// turn on planets in this system
-		foreach ( Planet planet in star.m_planetList )
+		foreach ( Planet planet in m_currentStar.m_planetList )
 		{
 			if ( ( planet != null ) && ( planet.m_id != -1 ) )
 			{
-				m_planetController[ planet.m_orbitPosition ].EnablePlanet( planet );
+				m_planetController[ planet.m_orbitPosition ].EnablePlanet();
+			}
+		}
+	}
+
+	// find and return the planet controller that has the planet we are looking for
+	public PlanetController GetPlanetController( int planetId )
+	{
+		foreach ( PlanetController planetController in m_planetController )
+		{
+			if ( planetController.m_planet != null )
+			{
+				if ( planetController.m_planet.m_id == planetId )
+				{
+					return planetController;
+				}
 			}
 		}
 
-		// update the system display
-		m_spaceflightController.m_displayController.m_systemDisplay.ChangeSystem();
+		Debug.Log( "Warning - could not find planet " + planetId );
+
+		return null;
 	}
 
 	// call this to get th nearest planet controller to the player
@@ -241,9 +288,9 @@ public class StarSystem : MonoBehaviour
 		return nearestPlanetController;
 	}
 
-	// call this to get the planet we could be orbiting around
-	public PlanetController GetOrbitPlanetController()
+	// call this to get the id of the planet we could be orbiting around
+	public int GetPlanetToOrbit()
 	{
-		return m_orbitPlanetController;
+		return m_planetToOrbitId;
 	}
 }

@@ -43,6 +43,9 @@ public class Starflight
 	// the current star we are in (or the last star we visited if we are in hyperspace)
 	public int m_currentStarId;
 
+	// the current planet we are visiting (or the last planet we visited)
+	public int m_currentPlanetId;
+
 	// keep track of the player's current speed
 	public float m_currentSpeed;
 

@@ -197,6 +197,11 @@ public class Hyperspace : MonoBehaviour
 	// call this to hide the hyperspace stuff
 	public void Hide()
 	{
+		if ( !gameObject.activeInHierarchy )
+		{
+			return;
+		}
+
 		Debug.Log( "Hiding the hyperspace scene." );
 
 		// hide the hyperspace objects
@@ -206,7 +211,6 @@ public class Hyperspace : MonoBehaviour
 	// call this to show the hyperspace stuff
 	public void Show()
 	{
-		// if we are already active then don't do it again
 		if ( gameObject.activeInHierarchy )
 		{
 			return;
