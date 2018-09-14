@@ -85,4 +85,46 @@ public class Planet
 		// return the scale as a vector
 		return new Vector3( scale, scale, scale );
 	}
+
+	// get the atmosphere text
+	public string GetAtmosphereText()
+	{
+		GameData gameData = DataController.m_instance.m_gameData;
+
+		string text = gameData.m_atmosphereList[ m_atmosphereIdA ].m_name;
+
+		if ( m_atmosphereIdB != -1 )
+		{
+			text += ", " + gameData.m_atmosphereList[ m_atmosphereIdB ].m_name;
+		}
+
+		if ( m_atmosphereIdC != -1 )
+		{
+			text += ", " + gameData.m_atmosphereList[ m_atmosphereIdC ].m_name;
+		}
+
+		return text;
+	}
+
+	// get the hydrosphere text
+	public string GetHydrosphereText()
+	{
+		GameData gameData = DataController.m_instance.m_gameData;
+
+		string text = gameData.m_hydrosphereList[ m_hydrosphereId ].m_name;
+
+		return text;
+	}
+
+	// get the lithosphere text
+	public string GetLithosphereText()
+	{
+		GameData gameData = DataController.m_instance.m_gameData;
+
+		string text = gameData.m_elementList[ m_elementIdA ].m_name;
+		text += ", " + gameData.m_elementList[ m_elementIdB ].m_name;
+		text += ", " + gameData.m_elementList[ m_elementIdC ].m_name;
+
+		return text;
+	}
 }

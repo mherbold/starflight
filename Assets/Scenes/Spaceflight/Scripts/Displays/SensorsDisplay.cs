@@ -89,6 +89,16 @@ public class SensorsDisplay : ShipDisplay
 
 				// deactivate the sensor button
 				m_spaceflightController.m_buttonController.DeactivateButton();
+
+				// play the activate sound
+				SoundController.m_instance.PlaySound( SoundController.Sound.Activate );
+
+				string atmosphere = m_planet.GetAtmosphereText();
+				string hydrosphere = m_planet.GetHydrosphereText();
+				string lithosphere = m_planet.GetLithosphereText();
+
+				// update the messages text
+				m_spaceflightController.m_spaceflightUI.ChangeMessageText( "Atmosphere:\n<color=\"white\">" + atmosphere + "</color>\nHydrosphere:\n<color=\"white\">" + hydrosphere + "</color>\nLithosphere:\n<color=\"white\">" + lithosphere + "</color>" );
 			}
 
 			// calculate new image color
