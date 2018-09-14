@@ -14,7 +14,7 @@ public class RaiseShieldsButton : ShipButton
 		{
 			SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
-			m_spaceflightController.m_spaceflightUI.ChangeMessageText( "Ship is not equipped with shields." );
+			m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>Ship is not equipped with shields.</color>" );
 
 			m_spaceflightController.m_buttonController.UpdateButtonSprites();
 		}

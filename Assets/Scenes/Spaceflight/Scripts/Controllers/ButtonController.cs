@@ -202,11 +202,11 @@ public class ButtonController : MonoBehaviour
 		switch ( playerData.m_starflight.m_location )
 		{
 			case Starflight.Location.DockingBay:
-				m_spaceflightController.m_spaceflightUI.ChangeMessageText( "Ship computer activated.\r\nPre-launch procedures complete.\r\nStanding by to initiate launch." );
+				m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>Ship computer activated.\nPre-launch procedures complete.\nStanding by to initiate launch.</color>" );
 				break;
 
 			case Starflight.Location.JustLaunched:
-				m_spaceflightController.m_spaceflightUI.ChangeMessageText( "Starport clear.\r\nStanding by to maneuver." );
+				m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>Starport clear.\nStanding by to maneuver.</color>" );
 				break;
 		}
 	}

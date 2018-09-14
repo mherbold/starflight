@@ -17,7 +17,7 @@ public class HailButton : ShipButton
 
 				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
-				m_spaceflightController.m_spaceflightUI.ChangeMessageText( "There's no one to hail." );
+				m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>There's no one to hail.</color>" );
 
 				m_spaceflightController.m_buttonController.UpdateButtonSprites();
 

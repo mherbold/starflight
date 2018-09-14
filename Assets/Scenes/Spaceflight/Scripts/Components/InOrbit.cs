@@ -102,7 +102,7 @@ public class InOrbit : MonoBehaviour
 		MusicController.m_instance.ChangeToTrack( MusicController.Track.InOrbit );
 
 		// let the player know we've established orbit
-		m_spaceflightController.m_spaceflightUI.ChangeMessageText( "Orbit established." );
+		m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>Orbit established.</color>" );
 
 		// get the planet controller
 		PlanetController planetController = m_spaceflightController.m_starSystem.GetPlanetController( playerData.m_starflight.m_currentPlanetId );

@@ -37,7 +37,7 @@ public class DisembarkButton : ShipButton
 
 				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
-				m_spaceflightController.m_spaceflightUI.ChangeMessageText( "We can't disembark in space!" );
+				m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>We can't disembark in space!</color>" );
 
 				m_spaceflightController.m_buttonController.UpdateButtonSprites();
 

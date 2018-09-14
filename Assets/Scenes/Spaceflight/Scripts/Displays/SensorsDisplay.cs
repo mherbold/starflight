@@ -98,7 +98,7 @@ public class SensorsDisplay : ShipDisplay
 				string lithosphere = m_planet.GetLithosphereText();
 
 				// update the messages text
-				m_spaceflightController.m_spaceflightUI.ChangeMessageText( "Atmosphere:\n<color=\"white\">" + atmosphere + "</color>\nHydrosphere:\n<color=\"white\">" + hydrosphere + "</color>\nLithosphere:\n<color=\"white\">" + lithosphere + "</color>" );
+				m_spaceflightController.m_spaceflightUI.ChangeMessageText( "Atmosphere:\n<color=white>" + atmosphere + "</color>\nHydrosphere:\n<color=white>" + hydrosphere + "</color>\nLithosphere:\n<color=white>" + lithosphere + "</color>" );
 			}
 
 			// calculate new image color

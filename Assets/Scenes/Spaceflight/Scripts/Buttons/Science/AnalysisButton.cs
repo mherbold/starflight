@@ -15,7 +15,7 @@ public class AnalysisButton : ShipButton
 		{
 			SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
-			m_spaceflightController.m_spaceflightUI.ChangeMessageText( "I need a current senor reading." );
+			m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>I need a current senor reading.</color>" );
 
 			m_spaceflightController.m_buttonController.UpdateButtonSprites();
 		}

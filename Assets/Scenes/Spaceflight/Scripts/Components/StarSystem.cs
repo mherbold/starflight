@@ -111,7 +111,7 @@ public class StarSystem : MonoBehaviour
 						m_planetToOrbitId = orbitPlanetController.m_planet.m_id;
 
 						// let the player know
-						m_spaceflightController.m_spaceflightUI.ChangeMessageText( "Ship is within orbital range." );
+						m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>Ship is within orbital range.</color>" );
 					}
 				}
 				else
@@ -120,7 +120,7 @@ public class StarSystem : MonoBehaviour
 					m_planetToOrbitId = -1;
 
 					// display the spectral class and ecosphere
-					m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<u>Stellar Parameters</u>\nSpectral Class: <#4FEDED>" + m_currentStar.m_class + "</color>\nEcosphere: <#4FEDED>" + m_currentStar.m_spectralClass.m_ecosphereMin + " - " + m_currentStar.m_spectralClass.m_ecosphereMax + "</color>" );
+					m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>Stellar Parameters</color>\nSpectral Class: <color=white>" + m_currentStar.m_class + "</color>\nEcosphere: <color=white>" + m_currentStar.m_spectralClass.m_ecosphereMin + " - " + m_currentStar.m_spectralClass.m_ecosphereMax + "</color>" );
 				}
 			}
 		}

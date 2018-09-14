@@ -25,7 +25,7 @@ public class LaunchYesButton : ShipButton
 		if ( playerData.m_starflight.m_location == Starflight.Location.DockingBay )
 		{
 			// update the messages log
-			m_spaceflightController.m_spaceflightUI.ChangeMessageText( "Opening docking bay doors..." );
+			m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>Opening docking bay doors...</color>" );
 
 			// reset the last countdown number shown
 			m_lastCountdownNumberShown = 0;
@@ -105,7 +105,7 @@ public class LaunchYesButton : ShipButton
 					if ( playerData.m_starflight.m_location == Starflight.Location.DockingBay )
 					{
 						// yes - update the messages text
-						m_spaceflightController.m_spaceflightUI.ChangeMessageText( "Leaving starport..." );
+						m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>Leaving starport...</color>" );
 
 						// figure out how much to move the ship forward by (with an exponential acceleration curve)
 						float y = ( m_timer - 20.5f ) * 5.0f;

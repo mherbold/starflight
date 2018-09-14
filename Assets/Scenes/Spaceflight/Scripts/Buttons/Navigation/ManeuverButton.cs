@@ -29,7 +29,7 @@ public class ManeuverButton : ShipButton
 				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
 				// display the error message
-				m_spaceflightController.m_spaceflightUI.ChangeMessageText( "Standing by to launch." );
+				m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>Standing by to launch.</color>" );
 
 				// turn off the button light
 				m_spaceflightController.m_buttonController.UpdateButtonSprites();
@@ -58,7 +58,7 @@ public class ManeuverButton : ShipButton
 				m_nextLocation = Starflight.Location.StarSystem;
 
 				// display message
-				m_spaceflightController.m_spaceflightUI.ChangeMessageText( "Leaving orbit..." );
+				m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>Leaving orbit...</color>" );
 
 				break;
 		}
@@ -170,7 +170,7 @@ public class ManeuverButton : ShipButton
 						m_nextLocation = Starflight.Location.DockingBay;
 
 						// display message
-						m_spaceflightController.m_spaceflightUI.ChangeMessageText( "Initiating docking procedure..." );
+						m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>Initiating docking procedure...</color>" );
 					}
 					else
 					{
@@ -178,7 +178,7 @@ public class ManeuverButton : ShipButton
 						m_nextLocation = Starflight.Location.InOrbit;
 
 						// display message
-						m_spaceflightController.m_spaceflightUI.ChangeMessageText( "Initiating orbital maneuver..." );
+						m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>Initiating orbital maneuver...</color>" );
 					}
 
 					// stop here

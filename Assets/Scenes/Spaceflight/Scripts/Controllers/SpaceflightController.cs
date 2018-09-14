@@ -137,7 +137,7 @@ public class SpaceflightController : MonoBehaviour
 					m_inOrbit.Hide();
 					m_hyperspace.Hide();
 					m_spaceflightUI.FadeMap( 0.0f, 0.0f );
-					m_spaceflightUI.ChangeMessageText( "Starport clear.\nStanding by to maneuver." );
+					m_spaceflightUI.ChangeMessageText( "<color=white>Starport clear.\nStanding by to maneuver.</color>" );
 					break;
 
 				case Starflight.Location.StarSystem:
