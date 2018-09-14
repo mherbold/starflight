@@ -5,19 +5,19 @@ using UnityEngine.UI;
 public class SystemDisplay : ShipDisplay
 {
 	// the orbit rings
-	public GameObject[] m_orbitGameObject;
+	public GameObject[] m_orbit;
 
 	// the planets
-	public Image [] m_planetImage;
+	public Image [] m_planet;
 
 	// arth starport
-	public GameObject m_arthGameObject;
+	public GameObject m_arth;
 
 	// the star
-	public Image m_starImage;
+	public Image m_star;
 
 	// the ship
-	public GameObject m_shipGameObject;
+	public GameObject m_ship;
 
 	// unity update
 	public override void Update()
@@ -43,7 +43,7 @@ public class SystemDisplay : ShipDisplay
 				Quaternion rotation = Quaternion.AngleAxis( orbitAngle, Vector3.forward );
 
 				// set the new rotation on the orbit game object
-				m_orbitGameObject[ planet.m_orbitPosition ].transform.rotation = rotation;
+				m_orbit[ planet.m_orbitPosition ].transform.rotation = rotation;
 			}
 		}
 
@@ -51,7 +51,7 @@ public class SystemDisplay : ShipDisplay
 		Vector3 position = m_spaceflightController.m_player.GetPosition() * 256.0f / 8192.0f;
 
 		// set the new position of the ship game object
-		m_shipGameObject.transform.localPosition = new Vector3( position.x, position.z );
+		m_ship.transform.localPosition = new Vector3( position.x, position.z );
 	}
 
 	// the system map display label
@@ -73,10 +73,10 @@ public class SystemDisplay : ShipDisplay
 		Star star = gameData.m_starList[ playerData.m_starflight.m_currentStarId ];
 
 		// turn off the arth game object
-		m_arthGameObject.SetActive( false );
+		m_arth.SetActive( false );
 
 		// enable the 4th planet game object (in case it was previously disabled)
-		m_planetImage[ 3 ].gameObject.SetActive( true );
+		m_planet[ 3 ].gameObject.SetActive( true );
 
 		// change the color of the star based on the class
 		Color color;
@@ -93,7 +93,7 @@ public class SystemDisplay : ShipDisplay
 			default: color = new Color( 1.0f, 0.5f, 1.0f ); break;
 		}
 
-		m_starImage.color = color;
+		m_star.color = color;
 
 		// update each planet in the system
 		for ( int i = 0; i < Star.c_maxNumPlanets; i++ )
@@ -104,31 +104,31 @@ public class SystemDisplay : ShipDisplay
 			if ( ( planet == null ) || ( planet.m_id == -1 ) )
 			{
 				// no - disable the orbit game object
-				m_orbitGameObject[ i ].SetActive( false );
+				m_orbit[ i ].SetActive( false );
 			}
 			else
 			{
 				// yes - enable the orbit game object
-				m_orbitGameObject[ i ].SetActive( true );
+				m_orbit[ i ].SetActive( true );
 
 				// check if this is the arth station (special case)
 				if ( planet.m_id == gameData.m_misc.m_arthPlanetId )
 				{
 					// yep - hide the planet object 
-					m_planetImage[ planet.m_orbitPosition ].gameObject.SetActive( false );
+					m_planet[ planet.m_orbitPosition ].gameObject.SetActive( false );
 
 					// and show the arth station instead
-					m_arthGameObject.SetActive( true );
+					m_arth.SetActive( true );
 				}
 				else
 				{
 					// show the planet object (it may have been hidden by the arth orbit)
-					m_planetImage[ planet.m_orbitPosition ].gameObject.SetActive( true );
+					m_planet[ planet.m_orbitPosition ].gameObject.SetActive( true );
 
 					// change the display color for this planet
 					Surface surface = planet.GetSurface();
 					color = new Color( surface.m_colorR / 255.0f, surface.m_colorG / 255.0f, surface.m_colorB / 255.0f );
-					m_planetImage[ planet.m_orbitPosition ].color = color;
+					m_planet[ planet.m_orbitPosition ].color = color;
 					// Debug.Log( "Setting display color for planet " + planet.m_orbitPosition + " to R:" + surface.m_colorR + " G:" + surface.m_colorG + " B:" + surface.m_colorB );
 				}
 			}

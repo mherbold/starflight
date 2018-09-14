@@ -10,6 +10,15 @@ public class Player : MonoBehaviour
 	// the ship
 	public Transform m_ship;
 
+	// the missile launcher
+	public GameObject m_missileLauncher;
+
+	// the laser cannon
+	public GameObject m_laserCannon;
+
+	// the cargo pods
+	public GameObject[] m_cargoPods;
+
 	// the infinite starfield
 	public InfiniteStarfield m_infiniteStarfield;
 
@@ -70,6 +79,20 @@ public class Player : MonoBehaviour
 	// unity start
 	void Start()
 	{
+		// get to the player data
+		PlayerData playerData = DataController.m_instance.m_playerData;
+
+		// show only as many cargo pods as we have purchased
+		for ( int cargoPodId = 0; cargoPodId < m_cargoPods.Length; cargoPodId++ )
+		{
+			m_cargoPods[ cargoPodId ].SetActive( cargoPodId < playerData.m_ship.m_numCargoPods );
+		}
+
+		// hide or show the missile launchers depending on if we have them
+		m_missileLauncher.SetActive( playerData.m_ship.m_missileLauncherClass > 0 );
+
+		// hide or show the missile launchers depending on if we have them
+		m_laserCannon.SetActive( playerData.m_ship.m_laserCannonClass > 0 );
 	}
 
 	// unity update
