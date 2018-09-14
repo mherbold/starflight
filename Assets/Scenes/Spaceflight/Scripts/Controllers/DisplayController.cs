@@ -10,6 +10,7 @@ public class DisplayController : MonoBehaviour
 	// the controllers for each display
 	public StatusDisplay m_statusDisplay;
 	public SystemDisplay m_systemDisplay;
+	public SensorsDisplay m_sensorsDisplay;
 
 	// the current display
 	ShipDisplay m_currentDisplay;
@@ -17,14 +18,22 @@ public class DisplayController : MonoBehaviour
 	// unity start
 	void Start()
 	{
+		// show the status display by default
+		if ( m_currentDisplay == null )
+		{
+			ChangeDisplay( m_statusDisplay );
+		}
 	}
 
 	// change the current display to a different one
 	public void ChangeDisplay( ShipDisplay newDisplay )
 	{
+		Debug.Log( "Showing display " + newDisplay );
+
 		// inactivate all of the display UI
 		m_statusDisplay.Hide();
 		m_systemDisplay.Hide();
+		m_sensorsDisplay.Hide();
 
 		// change the current display
 		m_currentDisplay = newDisplay;

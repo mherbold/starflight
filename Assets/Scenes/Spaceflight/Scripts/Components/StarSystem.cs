@@ -104,11 +104,15 @@ public class StarSystem : MonoBehaviour
 				// are we close enough to orbit the planet?
 				if ( distanceToPlanet <= orbitPlanetController.m_planetModel.transform.localScale.y )
 				{
-					// yes - remember this planet
-					m_planetToOrbitId = orbitPlanetController.m_planet.m_id;
+					// is this a different planet?
+					if ( m_planetToOrbitId != orbitPlanetController.m_planet.m_id )
+					{
+						// yes - remember this planet
+						m_planetToOrbitId = orbitPlanetController.m_planet.m_id;
 
-					// let the player know
-					m_spaceflightController.m_spaceflightUI.ChangeMessageText( "Ship is within orbital range." );
+						// let the player know
+						m_spaceflightController.m_spaceflightUI.ChangeMessageText( "Ship is within orbital range." );
+					}
 				}
 				else
 				{

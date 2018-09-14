@@ -5,4 +5,15 @@ public class ShipsLogButton : ShipButton
 	{
 		return "Ships Log";
 	}
+
+	public override bool Execute()
+	{
+		SoundController.m_instance.PlaySound( SoundController.Sound.Error );
+
+		m_spaceflightController.m_spaceflightUI.ChangeMessageText( "Not yet implemented." );
+
+		m_spaceflightController.m_buttonController.UpdateButtonSprites();
+
+		return false;
+	}
 }

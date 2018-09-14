@@ -23,6 +23,16 @@ public class LandButton : ShipButton
 
 				break;
 
+			case Starflight.Location.InOrbit:
+
+				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
+
+				m_spaceflightController.m_spaceflightUI.ChangeMessageText( "Not yet implemented." );
+
+				m_spaceflightController.m_buttonController.UpdateButtonSprites();
+
+				break;
+
 			default:
 
 				SoundController.m_instance.PlaySound( SoundController.Sound.Error );

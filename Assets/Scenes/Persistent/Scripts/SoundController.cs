@@ -19,6 +19,7 @@ public class SoundController : MonoBehaviour
 		Countdown,
 		EnterWarp,
 		ExitWarp,
+		Scanning,
 		Count
 	};
 
@@ -44,12 +45,91 @@ public class SoundController : MonoBehaviour
 	public AudioClip m_countdown;
 	public AudioClip m_enterWarp;
 	public AudioClip m_exitWarp;
-
-	// the audio source
-	AudioSource[] m_audioSourceList;
+	public AudioClip m_scanning;
 
 	// the sound list (to use with the enum)
 	AudioClip[] m_soundList;
+
+	// the audio sources
+	class AudioSourceController
+	{
+		// the audio source
+		public AudioSource m_audioSource;
+
+		// how loud to play the sound
+		public float m_volume;
+
+		// are we fading this sound out?
+		public bool m_isFadingOut;
+
+		// the fade out time
+		public float m_fadeOutTime;
+
+		public AudioSourceController( GameObject gameObject )
+		{
+			m_audioSource = gameObject.AddComponent<AudioSource>();
+		}
+
+		public bool IsFree()
+		{
+			return !m_audioSource.isPlaying;
+		}
+
+		public bool IsPlaying( AudioClip clip )
+		{
+			if ( m_audioSource.isPlaying )
+			{
+				if ( m_audioSource.clip == clip )
+				{
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		public void Play( AudioClip clip, float volume )
+		{
+			m_volume = volume;
+
+			m_audioSource.clip = clip;
+			m_audioSource.volume = m_volume;
+
+			m_audioSource.Play();
+		}
+
+		public void FadeOut( float fadeOutTime )
+		{
+			m_isFadingOut = true;
+			m_fadeOutTime = fadeOutTime;
+		}
+
+		public void Update()
+		{
+			if ( m_isFadingOut )
+			{
+				if ( m_audioSource.isPlaying )
+				{
+					m_audioSource.volume -= Time.deltaTime * m_volume / m_fadeOutTime;
+
+					if ( m_audioSource.volume <= 0.0f )
+					{
+						m_audioSource.volume = 0.0f;
+
+						m_audioSource.Stop();
+
+						m_isFadingOut = false;
+					}
+				}
+				else
+				{
+					m_isFadingOut = false;
+				}
+			}
+		}
+	};
+
+	AudioSourceController[] m_audioSourceControllerList;
 
 	// unity awake
 	void Awake()
@@ -58,11 +138,11 @@ public class SoundController : MonoBehaviour
 		m_instance = this;
 
 		// create enough audio sources to be able to play the maximum number of sounds at once
-		m_audioSourceList = new AudioSource[ m_maxSimultaneousSounds ];
+		m_audioSourceControllerList = new AudioSourceController[ m_maxSimultaneousSounds ];
 
 		for ( int i = 0; i < m_maxSimultaneousSounds; i++ )
 		{
-			m_audioSourceList[ i ] = gameObject.AddComponent<AudioSource>();
+			m_audioSourceControllerList[ i ] = new AudioSourceController( gameObject );
 		}
 
 		// build the sound list
@@ -83,6 +163,7 @@ public class SoundController : MonoBehaviour
 		m_soundList[ (int) Sound.Countdown ] = m_countdown;
 		m_soundList[ (int) Sound.EnterWarp ] = m_enterWarp;
 		m_soundList[ (int) Sound.ExitWarp ] = m_exitWarp;
+		m_soundList[ (int) Sound.Scanning ] = m_scanning;
 	}
 
 	// unity start
@@ -93,25 +174,24 @@ public class SoundController : MonoBehaviour
 	// unity update
 	void Update()
 	{
+		foreach ( AudioSourceController audioSourceController in m_audioSourceControllerList )
+		{
+			audioSourceController.Update();
+		}
 	}
 
 	// play a sound
 	public void PlaySound( Sound sound )
 	{
-		// find the first free audio source (one that is not playing anything at the moment)
-		foreach ( AudioSource audioSource in m_audioSourceList )
+		// go through each audio source controller
+		foreach ( AudioSourceController audioSourceController in m_audioSourceControllerList )
 		{
 			// is this audio source playing something?
-			if ( !audioSource.isPlaying )
+			if ( audioSourceController.IsFree() )
 			{
-				// no - great so switch the clip in this audio source
-				audioSource.clip = m_soundList[ (int) sound ];
-
-				// play the clip
-				audioSource.Play();
-
-				// debug info
-				// Debug.Log( "Playing sound " + sound + "." );
+				// play the sound!
+				// TODO - use the volume level
+				audioSourceController.Play( m_soundList[ (int) sound ], 1.0f );
 
 				// nothing more to do here
 				return;
@@ -119,6 +199,21 @@ public class SoundController : MonoBehaviour
 		}
 
 		// we have failed to find a free audio source - complain
-		Debug.Log( "Could not find a free audio source to play sound " + sound + "." );
+		Debug.Log( "Could not find a free audio source to play sound " + sound );
+	}
+
+	// stop a sound
+	public void StopSound( Sound sound )
+	{
+		// go through each audio source controller
+		foreach ( AudioSourceController audioSourceController in m_audioSourceControllerList )
+		{
+			// is this audio source playing this sound?
+			if ( audioSourceController.IsPlaying( m_soundList[ (int) sound ] ) )
+			{
+				// fade out the sound
+				audioSourceController.FadeOut( 1.0f );
+			}
+		}
 	}
 }

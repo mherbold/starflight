@@ -23,13 +23,13 @@ abstract public class ShipDisplay : MonoBehaviour
 	}
 
 	// call this to show the display
-	public void Show()
+	public virtual void Show()
 	{
 		gameObject.SetActive( true );
 	}
 
 	// call this to hide the display
-	public void Hide()
+	public virtual void Hide()
 	{
 		gameObject.SetActive( false );
 	}

@@ -5305,6 +5305,7 @@ MonoBehaviour:
   m_gameData:
     m_misc:
       m_arthStarId: 0
+      m_arthPlanetId: 0
       m_artifactAnalysisPrice: 0
       m_baseShipMass: 0
       m_baseShipVolume: 0
@@ -5388,6 +5389,7 @@ MonoBehaviour:
       m_gameTime: 0
       m_hasCurrentSenorReading: 0
       m_currentStarId: 0
+      m_currentPlanetId: 0
       m_currentSpeed: 0
       m_currentDirection:
         m_x: 0
@@ -5481,6 +5483,7 @@ MonoBehaviour:
   m_countdown: {fileID: 8300000, guid: d233a21c34a0612448b5546b9b81ecd8, type: 3}
   m_enterWarp: {fileID: 8300000, guid: 371f49cae63e5594487c73c8045b1831, type: 3}
   m_exitWarp: {fileID: 8300000, guid: 1285081642ed8ec458b0f6d3c5b8e308, type: 3}
+  m_scanning: {fileID: 8300000, guid: ae3d9b46dea97014ebfbfbb672ba067f, type: 3}
 --- !u!114 &919755016
 MonoBehaviour:
   m_ObjectHideFlags: 0
