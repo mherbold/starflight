@@ -144,6 +144,12 @@ public class Hyperspace : MonoBehaviour
 					starToShip.Normalize();
 					playerData.m_starflight.m_systemCoordinates = starToShip * ( 8192.0f - 16.0f );
 
+					// compute the ratio of hyperspace to star system speed
+					float speedRatio = m_spaceflightController.m_player.m_maximumShipSpeedStarSystem / m_spaceflightController.m_player.m_maximumShipSpeedHyperspace;
+
+					// convert from hyperspace to star system speed
+					playerData.m_starflight.m_currentSpeed *= speedRatio;
+
 					// switch to the star system location
 					m_spaceflightController.SwitchLocation( Starflight.Location.StarSystem );
 

@@ -191,9 +191,10 @@
       "m_buyPrice": 0,
       "m_sellPrice": 0,
       "m_mass": 0,
-      "m_baseAcceleration": 0,
-      "m_accelerationMass": 50,
-      "m_accelerationScale": 0,
+      "m_minimumAcceleration": 0,
+      "m_maximumAcceleration": 0,
+      "m_powerCurve": 3.5,
+      "m_powerScale": 1.75,
       "m_fuelUsedPerCoordinate": 0
     },
     {
@@ -202,9 +203,10 @@
       "m_buyPrice": 1000,
       "m_sellPrice": 900,
       "m_mass": 50,
-      "m_baseAcceleration": 5,
-      "m_accelerationMass": 100,
-      "m_accelerationScale": 0.25,
+      "m_minimumAcceleration": 1,
+      "m_maximumAcceleration": 5,
+      "m_powerCurve": 3.5,
+      "m_powerScale": 1.75,
       "m_fuelUsedPerCoordinate": 0.48
     },
     {
@@ -213,9 +215,10 @@
       "m_buyPrice": 8000,
       "m_sellPrice": 7600,
       "m_mass": 50,
-      "m_baseAcceleration": 10,
-      "m_accelerationMass": 100,
-      "m_accelerationScale": 0.5,
+      "m_minimumAcceleration": 2,
+      "m_maximumAcceleration": 10,
+      "m_powerCurve": 3.5,
+      "m_powerScale": 1.75,
       "m_fuelUsedPerCoordinate": 0.4
     },
     {
@@ -224,9 +227,10 @@
       "m_buyPrice": 20000,
       "m_sellPrice": 19000,
       "m_mass": 50,
-      "m_baseAcceleration": 15,
-      "m_accelerationMass": 100,
-      "m_accelerationScale": 0.75,
+      "m_minimumAcceleration": 3,
+      "m_maximumAcceleration": 15,
+      "m_powerCurve": 3.5,
+      "m_powerScale": 1.75,
       "m_fuelUsedPerCoordinate": 0.32
     },
     {
@@ -235,9 +239,10 @@
       "m_buyPrice": 40000,
       "m_sellPrice": 38000,
       "m_mass": 50,
-      "m_baseAcceleration": 20,
-      "m_accelerationMass": 100,
-      "m_accelerationScale": 1,
+      "m_minimumAcceleration": 4,
+      "m_maximumAcceleration": 20,
+      "m_powerCurve": 3.5,
+      "m_powerScale": 1.75,
       "m_fuelUsedPerCoordinate": 0.24
     },
     {
@@ -246,9 +251,10 @@
       "m_buyPrice": 100000,
       "m_sellPrice": 95200,
       "m_mass": 50,
-      "m_baseAcceleration": 25,
-      "m_accelerationMass": 100,
-      "m_accelerationScale": 1.25,
+      "m_minimumAcceleration": 5,
+      "m_maximumAcceleration": 25,
+      "m_powerCurve": 3.5,
+      "m_powerScale": 1.75,
       "m_fuelUsedPerCoordinate": 0.16
     }
   ],

@@ -1,4 +1,5 @@
 ﻿
+using UnityEngine;
 using System;
 
 [Serializable]
@@ -157,7 +158,7 @@ public class Ship
 		Engines engines = GetEngines();
 
 		// this formula closely matches the original starflight game
-		m_acceleration = engines.m_baseAcceleration - Convert.ToInt32( Math.Sqrt( m_mass - engines.m_accelerationMass ) * engines.m_accelerationScale );
+		m_acceleration = Mathf.RoundToInt( Mathf.Pow( ( 500.0f - m_mass ) / 500.0f, engines.m_powerCurve ) * engines.m_powerScale * engines.m_maximumAcceleration + engines.m_minimumAcceleration );
 	}
 
 	public void AddCargoPod()

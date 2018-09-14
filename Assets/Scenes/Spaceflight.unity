@@ -7161,10 +7161,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_skipCinematics: 0
   m_forceResetToDockingBay: 0
-  m_maximumShipSpeedHyperspace: 128
-  m_maximumShipSpeedStarSystem: 512
-  m_timeToReachMaximumShipSpeed: 6
-  m_timeToStop: 0.5
   m_player: {fileID: 2052193865}
   m_dockingBay: {fileID: 219171248}
   m_starSystem: {fileID: 626356946}
@@ -7859,11 +7855,9 @@ MonoBehaviour:
     m_temperatureIdA: 0
     m_temperatureIdB: 0
     m_weatherId: 0
-  m_orbitAngle: 0
   m_planetModel: {fileID: 1302927160}
   m_starportModel: {fileID: 0}
   m_scale: 0
-  m_rotationAngle: 0
 --- !u!1 &507009621
 GameObject:
   m_ObjectHideFlags: 0
@@ -9974,11 +9968,9 @@ MonoBehaviour:
     m_temperatureIdA: 0
     m_temperatureIdB: 0
     m_weatherId: 0
-  m_orbitAngle: 0
   m_planetModel: {fileID: 1964326727}
   m_starportModel: {fileID: 0}
   m_scale: 0
-  m_rotationAngle: 0
 --- !u!1001 &896176607
 Prefab:
   m_ObjectHideFlags: 0
@@ -11382,11 +11374,9 @@ MonoBehaviour:
     m_temperatureIdA: 0
     m_temperatureIdB: 0
     m_weatherId: 0
-  m_orbitAngle: 0
   m_planetModel: {fileID: 1347341635}
   m_starportModel: {fileID: 0}
   m_scale: 0
-  m_rotationAngle: 0
 --- !u!1 &1117387104
 GameObject:
   m_ObjectHideFlags: 0
@@ -16461,11 +16451,9 @@ MonoBehaviour:
     m_temperatureIdA: 0
     m_temperatureIdB: 0
     m_weatherId: 0
-  m_orbitAngle: 0
   m_planetModel: {fileID: 1136308534}
   m_starportModel: {fileID: 0}
   m_scale: 0
-  m_rotationAngle: 0
 --- !u!1001 &1193430516
 Prefab:
   m_ObjectHideFlags: 0
@@ -22208,11 +22196,9 @@ MonoBehaviour:
     m_temperatureIdA: 0
     m_temperatureIdB: 0
     m_weatherId: 0
-  m_orbitAngle: 0
   m_planetModel: {fileID: 210579330}
   m_starportModel: {fileID: 0}
   m_scale: 0
-  m_rotationAngle: 0
 --- !u!1 &1407748604
 GameObject:
   m_ObjectHideFlags: 0
@@ -28337,11 +28323,9 @@ MonoBehaviour:
     m_temperatureIdA: 0
     m_temperatureIdB: 0
     m_weatherId: 0
-  m_orbitAngle: 0
   m_planetModel: {fileID: 276947946}
   m_starportModel: {fileID: 0}
   m_scale: 0
-  m_rotationAngle: 0
 --- !u!1 &1797406959
 GameObject:
   m_ObjectHideFlags: 0
@@ -28438,11 +28422,9 @@ MonoBehaviour:
     m_temperatureIdA: 0
     m_temperatureIdB: 0
     m_weatherId: 0
-  m_orbitAngle: 0
   m_planetModel: {fileID: 524147448}
   m_starportModel: {fileID: 161016316}
   m_scale: 0
-  m_rotationAngle: 0
 --- !u!1 &1809499455
 GameObject:
   m_ObjectHideFlags: 0
@@ -29921,11 +29903,9 @@ MonoBehaviour:
     m_temperatureIdA: 0
     m_temperatureIdB: 0
     m_weatherId: 0
-  m_orbitAngle: 0
   m_planetModel: {fileID: 1215887724}
   m_starportModel: {fileID: 0}
   m_scale: 0
-  m_rotationAngle: 0
 --- !u!1 &2048351697
 GameObject:
   m_ObjectHideFlags: 0
@@ -30092,6 +30072,10 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 7a2e4f41d1ff09f4a87d2528e83150b2, type: 3}
   m_spaceWarp: {fileID: 839097935}
   m_spaceflightController: {fileID: 280970583}
+  m_maximumShipSpeedHyperspace: 128
+  m_maximumShipSpeedStarSystem: 384
+  m_minimumTimeToReachMaximumShipSpeed: 1
+  m_timeToStop: 0.5
 --- !u!1 &2053083280
 GameObject:
   m_ObjectHideFlags: 0

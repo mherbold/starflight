@@ -28,6 +28,16 @@ public class Player : MonoBehaviour
 	// convenient access to the spaceflight controller
 	public SpaceflightController m_spaceflightController;
 
+	// the maximum speed of the ship
+	public float m_maximumShipSpeedHyperspace;
+	public float m_maximumShipSpeedStarSystem;
+
+	// the minimum time to reach the maximum speed
+	public float m_minimumTimeToReachMaximumShipSpeed;
+
+	// the time to slow down (coast) to a stop
+	public float m_timeToStop;
+
 	// keep track of the skybox rotation
 	Matrix4x4 m_skyboxRotation = Matrix4x4.identity;
 
@@ -88,10 +98,10 @@ public class Player : MonoBehaviour
 			if ( m_enginesAreOn )
 			{
 				// calculate the maximum ship speed (it is the same for all engine classes)
-				float maximumShipSpeed = ( playerData.m_starflight.m_location == Starflight.Location.Hyperspace ) ? m_spaceflightController.m_maximumShipSpeedHyperspace : m_spaceflightController.m_maximumShipSpeedStarSystem;
+				float maximumShipSpeed = ( playerData.m_starflight.m_location == Starflight.Location.Hyperspace ) ? m_maximumShipSpeedHyperspace : m_maximumShipSpeedStarSystem;
 
 				// calculate the acceleration
-				float acceleration = Time.deltaTime * playerData.m_ship.GetEngines().m_accelerationScale / m_spaceflightController.m_timeToReachMaximumShipSpeed;
+				float acceleration = Time.deltaTime * playerData.m_ship.m_acceleration / ( m_minimumTimeToReachMaximumShipSpeed * 25.0f );
 
 				// increase the current speed
 				playerData.m_starflight.m_currentSpeed = Mathf.Lerp( playerData.m_starflight.m_currentSpeed, maximumShipSpeed, acceleration );
@@ -122,7 +132,7 @@ public class Player : MonoBehaviour
 			else
 			{
 				// slow the ship to a stop
-				playerData.m_starflight.m_currentSpeed = Mathf.Lerp( playerData.m_starflight.m_currentSpeed, 0.0f, Time.deltaTime / m_spaceflightController.m_timeToStop );
+				playerData.m_starflight.m_currentSpeed = Mathf.Lerp( playerData.m_starflight.m_currentSpeed, 0.0f, Time.deltaTime / m_timeToStop );
 			}
 
 			// check if the ship is moving
@@ -321,18 +331,19 @@ public class Player : MonoBehaviour
 	// call this to temporarily stop the player from moving (e.g. while travelling in flux)
 	public void Freeze()
 	{
-		m_freezePlayer = true;
-	}
-
-	// call this to allow the player to move again
-	public void Unfreeze()
-	{
 		// get to the player data
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// make sure the player has no momentum to start with
 		playerData.m_starflight.m_currentSpeed = 0.0f;
 
+		// freeze the player
+		m_freezePlayer = true;
+	}
+
+	// call this to allow the player to move again
+	public void Unfreeze()
+	{
 		// unfreeze the player
 		m_freezePlayer = false;
 	}

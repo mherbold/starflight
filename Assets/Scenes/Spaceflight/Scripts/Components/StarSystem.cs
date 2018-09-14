@@ -84,8 +84,11 @@ public class StarSystem : MonoBehaviour
 			// save the player's position in the player data
 			playerData.m_starflight.m_hyperspaceCoordinates = newPosition;
 
-			// limit the ship speed to hyperspace speed
-			playerData.m_starflight.m_currentSpeed = Mathf.Min( playerData.m_starflight.m_currentSpeed, m_spaceflightController.m_maximumShipSpeedHyperspace );
+			// compute the ratio of star system to hyperspace speed
+			float speedRatio = m_spaceflightController.m_player.m_maximumShipSpeedHyperspace / m_spaceflightController.m_player.m_maximumShipSpeedStarSystem;
+
+			// convert from star system to hyperspace speed
+			playerData.m_starflight.m_currentSpeed *= speedRatio;
 
 			// switch modes now
 			m_spaceflightController.SwitchLocation( Starflight.Location.Hyperspace );

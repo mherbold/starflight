@@ -809,6 +809,10 @@ public class ShipConfigurationPanel : Panel
 					case 5: playerData.m_ship.m_laserCannonClass = 0; break;
 				}
 
+				// recalculate the ship mass and acceleration
+				playerData.m_ship.RecalculateMass();
+				playerData.m_ship.RecalculateAcceleration();
+
 				// update the screen
 				UpdateScreen();
 
@@ -861,6 +865,10 @@ public class ShipConfigurationPanel : Panel
 				case 4: playerData.m_ship.m_missileLauncherClass = classIndex; break;
 				case 5: playerData.m_ship.m_laserCannonClass = classIndex; break;
 			}
+
+			// recalculate the ship mass and acceleration
+			playerData.m_ship.RecalculateMass();
+			playerData.m_ship.RecalculateAcceleration();
 
 			// switch back to the buy part state
 			SwitchToBuyPartState();

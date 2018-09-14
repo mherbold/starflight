@@ -9,12 +9,6 @@ public class SpaceflightController : MonoBehaviour
 	public bool m_skipCinematics;
 	public bool m_forceResetToDockingBay;
 
-	// set this to the maximum speed of the ship
-	public float m_maximumShipSpeedHyperspace;
-	public float m_maximumShipSpeedStarSystem;
-	public float m_timeToReachMaximumShipSpeed;
-	public float m_timeToStop;
-
 	// the different components of the spaceflight scene
 	public Player m_player;
 	public DockingBay m_dockingBay;
