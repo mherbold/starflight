@@ -23,6 +23,9 @@ public class SensorsDisplay : ShipDisplay
 	// duration for scanning a 200% planet
 	public float m_maxDuration;
 
+	// do we have sensor data to analyze?
+	public bool m_hasSensorData;
+
 	// are we running the cinematics?
 	bool m_isDoingCinematics;
 
@@ -99,6 +102,9 @@ public class SensorsDisplay : ShipDisplay
 
 				// update the messages text
 				m_spaceflightController.m_spaceflightUI.ChangeMessageText( "Atmosphere:\n<color=white>" + atmosphere + "</color>\nHydrosphere:\n<color=white>" + hydrosphere + "</color>\nLithosphere:\n<color=white>" + lithosphere + "</color>" );
+
+				// we have something to analyze
+				m_hasSensorData = true;
 			}
 
 			// calculate new image color
@@ -146,5 +152,15 @@ public class SensorsDisplay : ShipDisplay
 		// start the cinematics
 		m_isDoingCinematics = true;
 		m_soundStopped = false;
+	}
+
+	// hide
+	public override void Hide()
+	{
+		// call base hide
+		base.Hide();
+
+		// no more sensor data available for analysis
+		m_hasSensorData = false;
 	}
 }

@@ -127,4 +127,48 @@ public class Planet
 
 		return text;
 	}
+
+	// get the predominant surface text
+	public string GetSurfaceText()
+	{
+		return "TODO";
+	}
+
+	// get the gravity text
+	public string GetGravityText()
+	{
+		string text = ( m_gravity / 100 ) + "." + ( m_gravity % 100 ) + " G";
+
+		return text;
+	}
+
+	// get the atmospheric density text
+	public string GetAtmosphericDensityText()
+	{
+		GameData gameData = DataController.m_instance.m_gameData;
+
+		string text = gameData.m_atmosphereDensityList[ m_atmosphereDensityId ].m_name;
+
+		return text;
+	}
+
+	// get the temperature text
+	public string GetTemperatureText()
+	{
+		GameData gameData = DataController.m_instance.m_gameData;
+
+		string text = gameData.m_temperatureList[ m_temperatureIdA ].m_name + " to " + gameData.m_temperatureList[ m_temperatureIdB ].m_name;
+
+		return text;
+	}
+
+	// get the global weather text
+	public string GetGlobalWeatherText()
+	{
+		GameData gameData = DataController.m_instance.m_gameData;
+
+		string text = gameData.m_weatherList[ m_weatherId ].m_name;
+
+		return text;
+	}
 }

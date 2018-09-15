@@ -37,9 +37,6 @@ public class Starflight
 
 	public float m_gameTime;
 
-	// temporary - this will be replaced
-	public bool m_hasCurrentSenorReading;
-
 	// the current star we are in (or the last star we visited if we are in hyperspace)
 	public int m_currentStarId;
 
@@ -72,9 +69,6 @@ public class Starflight
 		m_minute = 0;
 		m_second = 0;
 		m_millisecond = 0;
-
-		// reset flags
-		m_hasCurrentSenorReading = false;
 
 		// reset star id
 		GameData gameData = DataController.m_instance.m_gameData;
