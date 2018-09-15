@@ -49,6 +49,9 @@ public class AnalysisButton : ShipButton
 					// update the messages text
 					m_spaceflightController.m_spaceflightUI.ChangeMessageText( text );
 
+					// turn off the active button dot
+					m_spaceflightController.m_buttonController.UpdateButtonSprites();
+
 					break;
 
 				default:

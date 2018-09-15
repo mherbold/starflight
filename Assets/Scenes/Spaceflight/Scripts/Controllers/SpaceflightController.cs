@@ -72,10 +72,15 @@ public class SpaceflightController : MonoBehaviour
 			return;
 		}
 
-		// update the game time
+		// get to the player data
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
-		playerData.m_starflight.UpdateGameTime( Time.deltaTime );
+		// are we in the star system or hyperspace locations?
+		if ( ( playerData.m_starflight.m_location == Starflight.Location.StarSystem ) || ( playerData.m_starflight.m_location == Starflight.Location.Hyperspace ) )
+		{
+			// yes - update the game time
+			playerData.m_starflight.UpdateGameTime( Time.deltaTime );
+		}
 
 		// save the game once in a while
 		m_timer += Time.deltaTime;
