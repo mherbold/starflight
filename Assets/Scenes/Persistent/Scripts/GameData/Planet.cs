@@ -111,9 +111,7 @@ public class Planet
 	{
 		GameData gameData = DataController.m_instance.m_gameData;
 
-		string text = gameData.m_hydrosphereList[ m_hydrosphereId ].m_name;
-
-		return text;
+		return gameData.m_hydrosphereList[ m_hydrosphereId ].m_name;
 	}
 
 	// get the lithosphere text
@@ -131,15 +129,15 @@ public class Planet
 	// get the predominant surface text
 	public string GetSurfaceText()
 	{
-		return "TODO";
+		GameData gameData = DataController.m_instance.m_gameData;
+
+		return gameData.m_surfaceList[ m_surfaceId ].m_name;
 	}
 
 	// get the gravity text
 	public string GetGravityText()
 	{
-		string text = ( m_gravity / 100 ) + "." + ( m_gravity % 100 ) + " G";
-
-		return text;
+		return ( m_gravity / 100 ) + "." + ( m_gravity % 100 ) + " G";
 	}
 
 	// get the atmospheric density text
@@ -147,9 +145,7 @@ public class Planet
 	{
 		GameData gameData = DataController.m_instance.m_gameData;
 
-		string text = gameData.m_atmosphereDensityList[ m_atmosphereDensityId ].m_name;
-
-		return text;
+		return gameData.m_atmosphereDensityList[ m_atmosphereDensityId ].m_name;
 	}
 
 	// get the temperature text
@@ -157,9 +153,7 @@ public class Planet
 	{
 		GameData gameData = DataController.m_instance.m_gameData;
 
-		string text = gameData.m_temperatureList[ m_temperatureIdA ].m_name + " to " + gameData.m_temperatureList[ m_temperatureIdB ].m_name;
-
-		return text;
+		return gameData.m_temperatureList[ m_temperatureIdA ].m_name + " to " + gameData.m_temperatureList[ m_temperatureIdB ].m_name;
 	}
 
 	// get the global weather text
@@ -167,8 +161,6 @@ public class Planet
 	{
 		GameData gameData = DataController.m_instance.m_gameData;
 
-		string text = gameData.m_weatherList[ m_weatherId ].m_name;
-
-		return text;
+		return gameData.m_weatherList[ m_weatherId ].m_name;
 	}
 }
