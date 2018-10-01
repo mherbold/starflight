@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Planet Generator.unity
+    guid: 35d3b6da75861684eb2ca7e9a21240bf
+  - enabled: 1
     path: Assets/Scenes/Persistent.unity
     guid: dff3a08acb5c4aa41adeb2f72cb8a1db
   - enabled: 1

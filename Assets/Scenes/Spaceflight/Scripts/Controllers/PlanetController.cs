@@ -3,6 +3,10 @@ using UnityEngine;
 
 public class PlanetController : MonoBehaviour
 {
+	const int c_textureWidth = 1024;
+	const int c_textureHeight = 512;
+	const float c_textureScale = (float) PlanetMap.c_width / (float) c_textureWidth;
+
 	// the current planet this controller is controlling
 	public Planet m_planet;
 
@@ -73,64 +77,19 @@ public class PlanetController : MonoBehaviour
 		// get the mesh renderer component
 		m_meshRenderer = m_planetModel.GetComponent<MeshRenderer>();
 
-		// grab the material from the mesh renderer
-		m_material = m_meshRenderer.material;
+		// grab the material from the mesh renderer and make a clone of it
+		m_material = new Material( m_meshRenderer.material );
+
+		// set the cloned material on the mesh renderer
+		m_meshRenderer.material = m_material;
 
 		// get to the original SF1 planet map data
-		PlanetMap planetMap = DataController.m_instance.m_planetData.m_planetMapList[ m_planet.m_id ];
+		//PlanetMap planetMap = DataController.m_instance.m_planetData.m_planetMapList[ m_planet.m_id ];
 
-		// build a 1024x512 version of the original map
-		const int newWidth = 1024;
-		const int newHeight = 512;
+		//CreateOriginalMap( planetMap );
 
-		Texture2D textureMap = new Texture2D( newWidth, newHeight, TextureFormat.RGB24, false );
-
-		const int originalWidth = 48;
-		const int originalHeight = 24;
-
-		const float widthRatio = (float) originalWidth / (float) newWidth;
-		const float heightRatio = (float) originalHeight / (float) newHeight;
-
-		for ( int y = 0; y < newHeight; y++ )
-		{
-			float offsetY = (float) y * heightRatio;
-
-			for ( int x = 0; x < newWidth; x++ )
-			{
-				float offsetX = (float) x * widthRatio;
-
-				int offset = Mathf.FloorToInt( offsetY ) * originalWidth + Mathf.FloorToInt( offsetX );
-
-				int originalColor = 0;
-
-				if ( planetMap.m_map.Length == 0 )
-				{
-					originalColor = Random.Range( 0x00000000, 0x00FFFFFF );
-				}
-				else
-				{
-					originalColor = planetMap.m_map[ offset ];
-				}
-
-				float r = ( ( originalColor >> 16 ) & 0xFF ) / 255.0f;
-				float g = ( ( originalColor >> 8 ) & 0xFF ) / 255.0f;
-				float b = ( ( originalColor >> 0 ) & 0xFF ) / 255.0f;
-
-				Color color = new Color( r, g, b );
-
-				textureMap.SetPixel( x, newHeight - y - 1, color );
-			}
-		}
-
-		// compress the texture map
-		textureMap.Compress( true );
-
-		// set up uv wrapping modes
-		textureMap.wrapModeU = TextureWrapMode.Repeat;
-		textureMap.wrapModeV = TextureWrapMode.Clamp;
-
-		// apply the texture map to the material
-		m_material.SetTexture( "_MainTex", textureMap );
+		//CreateAlbedoMap( planetMap );
+		//CreateHeightMap( planetMap );
 	}
 
 	// disable a planet
@@ -177,4 +136,35 @@ public class PlanetController : MonoBehaviour
 	{
 		return m_material;
 	}
+	/*
+
+	// call this to create a height map
+	void CreateHeightMap( PlanetMap planetMap )
+	{
+		float radius = 1.0f / c_textureScale;
+		float damping = 0.5f / 8.0f;
+
+		Texture2D textureMap = new Texture2D( c_textureWidth, c_textureHeight, TextureFormat.RGB24, false );
+
+		for ( int y = 0; y < c_textureHeight; y++ )
+		{
+			for ( int x = 0; x < c_textureWidth; x++ )
+			{
+				float height = planetMap.GetFilteredHeightAt( x, y, radius, damping, c_textureScale );
+
+				textureMap.SetPixel( x, c_textureHeight - y - 1, new Color( height, height, height ) );
+			}
+		}
+
+		// compress the texture map
+		textureMap.Compress( true );
+
+		// set up uv wrapping modes
+		textureMap.wrapModeU = TextureWrapMode.Repeat;
+		textureMap.wrapModeV = TextureWrapMode.Clamp;
+
+		// apply the texture map to the material
+		m_material.SetTexture( "_ParallaxMap", textureMap );
+	}
+	*/
 }

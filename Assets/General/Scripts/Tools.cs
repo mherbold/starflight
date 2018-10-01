@@ -9,19 +9,19 @@ using System.Runtime.Serialization.Formatters.Binary;
 class Tools
 {
 	// convert from unity world coordinates to game coordinates
-	static public Vector3 WorldToGameCoordinates( Vector3 worldCoordinates )
+	public static Vector3 WorldToGameCoordinates( Vector3 worldCoordinates )
 	{
 		return new Vector3( worldCoordinates.x / 256.0f + 128.0f, 0.0f, worldCoordinates.z / 256.0f + 128.0f );
 	}
 
 	// convert from game coordinates to unity world coordinates
-	static public Vector3 GameToWorldCoordinates( Vector3 gameCoordinates )
+	public static Vector3 GameToWorldCoordinates( Vector3 gameCoordinates )
 	{
 		return new Vector3( ( gameCoordinates.x - 128.0f ) * 256.0f, 0.0f, ( gameCoordinates.z - 128.0f ) * 256.0f );
 	}
 
-	// call this to dump an object to the debug log
-	static public void Dump( string name, object someObject, int maxDepth = -1 )
+	// dump an object to the debug log
+	public static void Dump( string name, object someObject, int maxDepth = -1 )
 	{
 		string dumpString = ObjectToString( name, someObject, 1, maxDepth );
 
@@ -29,7 +29,7 @@ class Tools
 	}
 
 	// converts an object to a string
-	static private string ObjectToString( string name, object someObject, int currentDepth, int maxDepth )
+	static string ObjectToString( string name, object someObject, int currentDepth, int maxDepth )
 	{
 		string dumpString = "";
 
@@ -63,7 +63,7 @@ class Tools
 		return dumpString;
 	}
 
-	// call this to perform a deep clone of a serializable object
+	// perform a deep clone of a serializable object
 	public static T CloneObject<T>( T source )
 	{
 		// make the sure object is serializable
@@ -90,7 +90,7 @@ class Tools
 		}
 	}
 
-	// call this to find if one FP number is close to another FP number (within the given threshold)
+	// find if one FP number is close to another FP number (within the given threshold)
 	public static bool IsApproximatelyEqual( float a, float b, float threshold )
 	{
 		return Mathf.Abs( a - b ) <= threshold;
