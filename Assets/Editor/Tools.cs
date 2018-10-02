@@ -30,13 +30,11 @@ class Tools
 	{
 		var data = textureMap.EncodeToPNG();
 
-		var filenameWithExtension = filename + "png";
-
-		var directory = Path.GetDirectoryName( filenameWithExtension );
+		var directory = Path.GetDirectoryName( filename );
 
 		Directory.CreateDirectory( directory );
 
-		File.WriteAllBytes( filename + ".png", data );
+		File.WriteAllBytes( filename, data );
 	}
 
 	// saves a float array to file as png images
@@ -65,8 +63,6 @@ class Tools
 	// saves a color array to file as png images (color and alpha)
 	public static void SaveAsPNG( Color[,] colors, string filename )
 	{
-		var hasAlpha = false;
-
 		var width = colors.GetLength( 1 );
 		var height = colors.GetLength( 0 );
 
@@ -77,31 +73,11 @@ class Tools
 			for ( var x = 0; x < width; x++ )
 			{
 				textureMap.SetPixel( x, y, new Color( colors[ y, x ].r, colors[ y, x ].g, colors[ y, x ].b, 1.0f ) );
-
-				if ( colors[ y, x ].a < 1.0f )
-				{
-					hasAlpha = true;
-				}
 			}
 		}
 
 		textureMap.Apply();
 
 		SaveAsPNG( textureMap, filename );
-
-		if ( hasAlpha )
-		{
-			for ( var y = 0; y < height; y++ )
-			{
-				for ( var x = 0; x < width; x++ )
-				{
-					textureMap.SetPixel( x, y, new Color( colors[ y, x ].a, colors[ y, x ].a, colors[ y, x ].a, 1.0f ) );
-				}
-			}
-
-			textureMap.Apply();
-
-			SaveAsPNG( textureMap, filename + " Alpha" );
-		}
 	}
 }

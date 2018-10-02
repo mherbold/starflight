@@ -93,7 +93,7 @@ public class HydraulicErosion
 			{
 				var sample = noise.Perlin( 0, 256, x * 128.0f / m_width, y * 64.0f / m_height );
 
-				m_twistBuffer[ y, x ] = Random.Range( -31, 31 );
+				m_twistBuffer[ y, x ] = Mathf.RoundToInt( sample * 31.0f );
 			}
 		}
 

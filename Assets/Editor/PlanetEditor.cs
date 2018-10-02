@@ -1,17 +1,15 @@
 ﻿
 using UnityEngine;
 using UnityEditor;
+using System.IO;
 using System.Diagnostics;
 
 public class PlanetEditor : EditorWindow
 {
 	enum Mode
 	{
-		OriginalColorMap,
-		OriginalHeightMap,
-		Contours,
-		Blur,
-		Everything
+		SelectedPlanet,
+		AllPlanets
 	}
 
 	// user controlled parameters
@@ -52,7 +50,7 @@ public class PlanetEditor : EditorWindow
 	GameData m_gameData;
 	PlanetData m_planetData;
 	GameObject m_gameObject;
-	Material m_material;
+	MeshRenderer m_meshRenderer;
 	int m_textureMapScaleX;
 	int m_textureMapScaleY;
 	int m_mountainScalePowerOfTwo;
@@ -201,29 +199,14 @@ public class PlanetEditor : EditorWindow
 		m_gameObjectName = EditorGUILayout.TextField( "Game Object Name", m_gameObjectName );
 		m_planetId = EditorGUILayout.IntField( "Planet ID", m_planetId );
 
-		if ( GUILayout.Button( "Show Original Color Map" ) )
+		if ( GUILayout.Button( "Generate Texture Maps For Selected Planet" ) )
 		{
-			MakeSomeMagic( Mode.OriginalColorMap );
+			MakeSomeMagic( Mode.SelectedPlanet );
 		}
 
-		if ( GUILayout.Button( "Show Original Height Map" ) )
+		if ( GUILayout.Button( "Generate Texture Maps For ALL Planets" ) )
 		{
-			MakeSomeMagic( Mode.OriginalHeightMap );
-		}
-
-		if ( GUILayout.Button( "Show Contours" ) )
-		{
-			MakeSomeMagic( Mode.Contours );
-		}
-
-		if ( GUILayout.Button( "Show Blur" ) )
-		{
-			MakeSomeMagic( Mode.Blur );
-		}
-
-		if ( GUILayout.Button( "Generate Planet Texture Maps" ) )
-		{
-			MakeSomeMagic( Mode.Everything );
+			MakeSomeMagic( Mode.AllPlanets );
 		}
 	}
 
@@ -236,7 +219,7 @@ public class PlanetEditor : EditorWindow
 	void MakeSomeMagic( Mode mode )
 	{
 		// show progress bar
-		EditorUtility.DisplayProgressBar( "Planet Generator", "Initializing...", 0.0f );
+		EditorUtility.DisplayProgressBar( "Planet " + ( planet.m_id + 1 ), "Initializing...", 0.0f );
 
 		// load the game data
 		if ( !LoadGameData() )
@@ -261,19 +244,14 @@ public class PlanetEditor : EditorWindow
 		}
 
 		// get the mesh renderer from the game object
-		var meshRenderer = m_gameObject.GetComponent<MeshRenderer>();
+		m_meshRenderer = m_gameObject.GetComponent<MeshRenderer>();
 
-		if ( meshRenderer == null )
+		if ( m_meshRenderer == null )
 		{
 			ShowNotification( new GUIContent( "No mesh renderer component found on the game object." ) );
 
 			return;
 		}
-
-		// create a new material (clone settings from the shared material)
-		m_material = new Material( meshRenderer.sharedMaterial );
-
-		meshRenderer.sharedMaterial = m_material;
 
 		// calculate the texture map scale (and it must be an even number)
 		m_textureMapScaleX = Mathf.FloorToInt( (float) m_textureMapWidth / (float) PlanetMap.c_width );
@@ -301,33 +279,38 @@ public class PlanetEditor : EditorWindow
 		m_mountainScalePowerOfTwo = Mathf.RoundToInt( Mathf.Pow( 2, m_mountainScale - 1 ) );
 		m_hillScalePowerOfTwo = Mathf.RoundToInt( Mathf.Pow( 2, m_hillScale - 1 ) );
 
-		// get the planet data of the selected planet
-		var planet = m_gameData.m_planetList[ m_planetId ];
-
-		// get the planet map of the selected planet
-		var planetMap = m_planetData.m_planetMapList[ m_planetId ];
-
 		// run the selected subroutine
+		Planet planet;
+		PlanetMap planetMap;
+
 		switch ( mode )
 		{
-			case Mode.OriginalColorMap:
-				ShowOriginalColorMap( planetMap );
-				break;
+			case Mode.SelectedPlanet:
 
-			case Mode.OriginalHeightMap:
-				ShowOriginalHeightMap( planetMap );
-				break;
+				planet = m_gameData.m_planetList[ m_planetId ];
 
-			case Mode.Contours:
-				ShowContours( planetMap );
-				break;
+				planetMap = m_planetData.m_planetMapList[ m_planetId ];
 
-			case Mode.Blur:
-				ShowBlur( planetMap );
-				break;
-
-			case Mode.Everything:
 				GeneratePlanetTextureMaps( planet, planetMap );
+
+				break;
+
+			case Mode.AllPlanets:
+
+				for ( var i = 0; i < 811; i++ )
+				{
+					var path = m_outputPath + "\\" + i;
+
+					if ( !Directory.Exists( path ) )
+					{
+						planet = m_gameData.m_planetList[ i ];
+
+						planetMap = m_planetData.m_planetMapList[ i ];
+
+						GeneratePlanetTextureMaps( planet, planetMap );
+					}
+				}
+
 				break;
 		}
 
@@ -398,96 +381,40 @@ public class PlanetEditor : EditorWindow
 			}
 		}
 
+		for ( var i = 0; i < m_planetData.m_planetMapList.Length; i++ )
+		{
+			if ( m_planetData.m_planetMapList[ i ].m_badData )
+			{
+				var planet = m_gameData.m_planetList[ i ];
+
+				var star = m_gameData.m_starList[ planet.m_starId ];
+
+				UnityEngine.Debug.Log( "Suspicious planet #" + ( i + 1 ) + " at " + star.m_xCoordinate + ", " + star.m_yCoordinate + " orbit " + planet.m_orbitPosition );
+			}
+		}
+
 		UnityEngine.Debug.Log( "Load Planet Data - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
 
 		return true;
 	}
 
-	// call this function to create a diffuse map directly from the original map in the game
-	void ShowOriginalColorMap( PlanetMap planetMap )
+	// call this to generate the planet texture maps
+	void GeneratePlanetTextureMaps( Planet planet, PlanetMap planetMap )
 	{
-		// save png file
-		// Tools.SaveAsPNG( planetMap.m_color, "Original" );
+		// vars for the progress bar
+		var currentStep = 1;
+		var totalSteps = 9;
 
-		// albedo map
-		var textureMap = new Texture2D( PlanetMap.c_width, PlanetMap.c_height, TextureFormat.RGB24, false );
-
-		for ( var y = 0; y < PlanetMap.c_height; y++ )
-		{
-			for ( var x = 0; x < PlanetMap.c_width; x++ )
-			{
-				var color = planetMap.m_color[ y, x ];
-
-				textureMap.SetPixel( x, y, color );
-			}
-		}
-
-		// set up the filter mode
-		textureMap.filterMode = FilterMode.Point;
-
-		// set up the uv wrapping modes
-		textureMap.wrapModeU = TextureWrapMode.Repeat;
-		textureMap.wrapModeV = TextureWrapMode.Clamp;
-
-		// tell unity we are done updating this texture map
-		textureMap.Apply();
-
-		// apply the texture map to the material
-		m_material.SetTexture( "_Albedo", textureMap );
-
-		// remove the other maps
-		m_material.SetTexture( "_Effects", null );
-		m_material.SetTexture( "_Normal", null );
-	}
-
-	// call this function to create a diffuse map directly from the original map in the game
-	void ShowOriginalHeightMap( PlanetMap planetMap )
-	{
-		// save png file
-		// Tools.SaveAsPNG( planetMap.m_color, "Original" );
-
-		// albedo map
-		var textureMap = new Texture2D( PlanetMap.c_width, PlanetMap.c_height, TextureFormat.RGB24, false );
-
-		for ( var y = 0; y < PlanetMap.c_height; y++ )
-		{
-			for ( var x = 0; x < PlanetMap.c_width; x++ )
-			{
-				var height = planetMap.m_color[ y, x ].a;
-
-				var color = new Color( height, height, height );
-
-				textureMap.SetPixel( x, y, color );
-			}
-		}
-
-		// set up the filter mode
-		textureMap.filterMode = FilterMode.Point;
-
-		// set up the uv wrapping modes
-		textureMap.wrapModeU = TextureWrapMode.Repeat;
-		textureMap.wrapModeV = TextureWrapMode.Clamp;
-
-		// tell unity we are done updating this texture map
-		textureMap.Apply();
-
-		// apply the texture map to the material
-		m_material.SetTexture( "_Albedo", textureMap );
-
-		// remove the other maps
-		m_material.SetTexture( "_Effects", null );
-		m_material.SetTexture( "_Normal", null );
-	}
-
-	// call this to show the contours
-	void ShowContours( PlanetMap planetMap )
-	{
 		// get prepared source
+		EditorUtility.DisplayProgressBar( "Planet " + ( planet.m_id + 1 ), "Preparing original map...", (float) currentStep++ / totalSteps );
+
 		var heightBuffer = PrepareMap( planetMap );
 
 		// Tools.SaveAsPNG( heightBuffer, "Prepared" );
 
 		// contours pass
+		EditorUtility.DisplayProgressBar( "Planet " + ( planet.m_id + 1 ), "Doing contours pass...", (float) currentStep++ / totalSteps );
+
 		var contours = new Contours( heightBuffer );
 
 		heightBuffer = contours.Process( m_textureMapScaleX, m_textureMapScaleY, planetMap.m_legend );
@@ -495,251 +422,97 @@ public class PlanetEditor : EditorWindow
 		// Tools.SaveAsPNG( heightBuffer, "Contours" );
 
 		// scale to power of two
+		EditorUtility.DisplayProgressBar( "Planet " + ( planet.m_id + 1 ), "Scaling to power of two...", (float) currentStep++ / totalSteps );
+
 		var scaleToPowerOfTwo = new ScaleToPowerOfTwo( heightBuffer );
 
 		heightBuffer = scaleToPowerOfTwo.Process( m_textureMapScaleX, m_textureMapScaleY );
 
 		// Tools.SaveAsPNG( heightBuffer, "Scale to Power of Two" );
 
-		// albedo map
-		var width = heightBuffer.GetLength( 1 );
-		var height = heightBuffer.GetLength( 0 );
-
-		var textureMap = new Texture2D( width, height, TextureFormat.RGB24, true );
-
-		for ( var y = 0; y < height; y++ )
-		{
-			for ( var x = 0; x < width; x++ )
-			{
-				float a = heightBuffer[ y, x ];
-
-				textureMap.SetPixel( x, y, new Color( a, a, a, 1.0f ) );
-			}
-		}
-
-		// set up the filter mode
-		textureMap.filterMode = FilterMode.Trilinear;
-
-		// set up the uv wrapping modes
-		textureMap.wrapModeU = TextureWrapMode.Repeat;
-		textureMap.wrapModeV = TextureWrapMode.Clamp;
-
-		// tell unity we are done updating this texture map
-		textureMap.Apply();
-
-		// compress the texture
-		//EditorUtility.CompressTexture( textureMap, TextureFormat.DXT1, TextureCompressionQuality.Best );
-
-		// tell unity we are done updating this texture map
-		//textureMap.Apply();
-
-		// apply the texture map to the material
-		m_material.SetTexture( "_Albedo", textureMap );
-
-		// remove the other maps
-		m_material.SetTexture( "_Effects", null );
-		m_material.SetTexture( "_Normal", null );
-	}
-
-	// call this to show the blur
-	void ShowBlur( PlanetMap planetMap )
-	{
-		// get prepared source
-		var heightBuffer = PrepareMap( planetMap );
-
-		// Tools.SaveAsPNG( heightBuffer, "Prepared" );
-
-		// contours pass
-		var contours = new Contours( heightBuffer );
-
-		heightBuffer = contours.Process( m_textureMapScaleX, m_textureMapScaleY, planetMap.m_legend );
-
-		// Tools.SaveAsPNG( heightBuffer, "Contours" );
-
-		// scale to power of two
-		var scaleToPowerOfTwo = new ScaleToPowerOfTwo( heightBuffer );
-
-		var profileBuffer = heightBuffer = scaleToPowerOfTwo.Process( m_textureMapScaleX, m_textureMapScaleY );
-
-		// Tools.SaveAsPNG( heightBuffer, "Scale to Power of Two" );
-
 		// gaussian blur pass
+		EditorUtility.DisplayProgressBar( "Planet " + ( planet.m_id + 1 ), "Gaussian blur pass...", (float) currentStep++ / totalSteps );
+
 		var gaussianBlur = new GaussianBlur( heightBuffer );
 
 		heightBuffer = gaussianBlur.Process( m_landBlurRadius, m_waterBlurRadius );
 
 		// Tools.SaveAsPNG( heightBuffer, "Gaussian Blur" );
 
-		// SaveProfileCompareImage( heightBuffer, profileBuffer, "Gaussian Blur Profile" );
-
-		// albedo map
-		var width = heightBuffer.GetLength( 1 );
-		var height = heightBuffer.GetLength( 0 );
-
-		var textureMap = new Texture2D( width, height, TextureFormat.RGB24, true );
-
-		for ( var y = 0; y < height; y++ )
-		{
-			for ( var x = 0; x < width; x++ )
-			{
-				float a = heightBuffer[ y, x ];
-
-				textureMap.SetPixel( x, y, new Color( a, a, a, 1.0f ) );
-			}
-		}
-
-		// set up the filter mode
-		textureMap.filterMode = FilterMode.Trilinear;
-
-		// set up the uv wrapping modes
-		textureMap.wrapModeU = TextureWrapMode.Repeat;
-		textureMap.wrapModeV = TextureWrapMode.Clamp;
-
-		// tell unity we are done updating this texture map
-		textureMap.Apply();
-
-		// compress the texture
-		//EditorUtility.CompressTexture( textureMap, TextureFormat.DXT1, TextureCompressionQuality.Best );
-
-		// tell unity we are done updating this texture map
-		//textureMap.Apply();
-
-		// apply the texture map to the material
-		m_material.SetTexture( "_Albedo", textureMap );
-
-		// remove the other maps
-		m_material.SetTexture( "_Effects", null );
-		m_material.SetTexture( "_Normal", null );
-	}
-
-	// call this to generate the planet texture maps
-	void GeneratePlanetTextureMaps( Planet planet, PlanetMap planetMap )
-	{
-		var currentStep = 1;
-		var totalSteps = 9;
-
-		// show progress bar
-		EditorUtility.DisplayProgressBar( "Planet Generator", "Preparing original map...", (float) currentStep++ / totalSteps );
-
-		// get prepared source
-		var heightBuffer = PrepareMap( planetMap );
-
-		// Tools.SaveAsPNG( heightBuffer, "Prepared" );
-
-		// show progress bar
-		EditorUtility.DisplayProgressBar( "Planet Generator", "Doing contours pass...", (float) currentStep++ / totalSteps );
-
-		// contours pass
-		var contours = new Contours( heightBuffer );
-
-		heightBuffer = contours.Process( m_textureMapScaleX, m_textureMapScaleY, planetMap.m_legend );
-
-		// Tools.SaveAsPNG( heightBuffer, "Contours" );
-
-		// show progress bar
-		EditorUtility.DisplayProgressBar( "Planet Generator", "Scaling to power of two...", (float) currentStep++ / totalSteps );
-
-		// scale to power of two
-		var scaleToPowerOfTwo = new ScaleToPowerOfTwo( heightBuffer );
-
-		var profileBuffer = heightBuffer = scaleToPowerOfTwo.Process( m_textureMapScaleX, m_textureMapScaleY );
-
-		// Tools.SaveAsPNG( heightBuffer, "Scale to Power of Two" );
-
-		// show progress bar
-		EditorUtility.DisplayProgressBar( "Planet Generator", "Gaussian blur pass...", (float) currentStep++ / totalSteps );
-
-		// gaussian blur pass
-		var gaussianBlur = new GaussianBlur( heightBuffer );
-
-		heightBuffer = gaussianBlur.Process( m_landBlurRadius, m_waterBlurRadius );
-
-		// Tools.SaveAsPNG( heightBuffer, "Gaussian Blur" );
-
-		// SaveProfileCompareImage( heightBuffer, profileBuffer, "Gaussian Blur Profile" );
-
+		// reference to the albedo buffer we will generate
 		Color[,] albedoBuffer;
+
+		// build the path to the albedo texture map
+		var albedoFilename = m_outputPath + "\\" + planet.m_id + "\\Albedo.png";
 
 		// not a gas giant?
 		if ( planet.m_surfaceId != 1 )
 		{
-			// show progress bar
-			EditorUtility.DisplayProgressBar( "Planet Generator", "Creating mountains and hills...", (float) currentStep++ / totalSteps );
-
 			// mountains pass
+			EditorUtility.DisplayProgressBar( "Planet " + ( planet.m_id + 1 ), "Creating mountains and hills...", (float) currentStep++ / totalSteps );
+
 			var mountainsAndHills = new MountainsAndHills( heightBuffer );
 
 			heightBuffer = mountainsAndHills.Process( m_planetId, m_inputGain, m_octaves, m_mountainScalePowerOfTwo, m_hillScalePowerOfTwo, m_mountainPersistence, m_hillPersistence, m_mountainPower, m_mountainGain, m_hillGain );
 
 			// Tools.SaveAsPNG( heightBuffer, "Mountains and Hills" );
 
-			// SaveProfileCompareImage( heightBuffer, profileBuffer, "Mountains and Hills Profile" );
-
-			// show progress bar
-			EditorUtility.DisplayProgressBar( "Planet Generator", "Hydraulic erosion pass...", (float) currentStep++ / totalSteps );
-
 			// hydraulic erosion pass
+			EditorUtility.DisplayProgressBar( "Planet " + ( planet.m_id + 1 ), "Hydraulic erosion pass...", (float) currentStep++ / totalSteps );
+
 			var hydraulicErosion = new HydraulicErosion( heightBuffer );
 
 			heightBuffer = hydraulicErosion.Process( m_xyScaleToMeters, m_zScaleToMeters, m_rainWaterAmount, m_sedimentCapacity, m_gravityConstant, m_frictionConstant, m_evaporationConstant, m_depositionConstant, m_dissolvingConstant, m_stepDeltaTime, m_snapshotInterval, m_finalBlurRadius );
 
 			// Tools.SaveAsPNG( heightBuffer, "Hydraulic Erosion" );
 
-			// show progress bar
-			EditorUtility.DisplayProgressBar( "Planet Generator", "Albedo pass...", (float) currentStep++ / totalSteps );
-
 			// albedo pass
+			EditorUtility.DisplayProgressBar( "Planet " + ( planet.m_id + 1 ), "Albedo pass...", (float) currentStep++ / totalSteps );
+
 			var albedo = new Albedo( heightBuffer );
 
 			albedoBuffer = albedo.Process( m_planetId, m_inputGain, planetMap.m_legend );
 
-			Tools.SaveAsPNG( albedoBuffer, m_outputPath + "\\" + planet.m_id + "\\Albedo" );
+			Tools.SaveAsPNG( albedoBuffer, albedoFilename );
+
+			AssetDatabase.ImportAsset( albedoFilename );
 		}
 		else
 		{
+			// albedo pass (temporary 1x1 black pixel)
+			EditorUtility.DisplayProgressBar( "Planet " + ( planet.m_id + 1 ), "Albedo pass...", (float) currentStep++ / totalSteps );
+
 			albedoBuffer = new Color[ 1, 1 ];
 
 			albedoBuffer[ 0, 0 ] = Color.black;
+
+			Tools.SaveAsPNG( albedoBuffer, albedoFilename );
+
+			AssetDatabase.ImportAsset( albedoFilename );
 		}
 
-		// albedo map
+		// change import settings on albedo map
+		var textureImporter = TextureImporter.GetAtPath( albedoFilename ) as TextureImporter;
+
+		textureImporter.filterMode = FilterMode.Trilinear;
+		textureImporter.wrapModeU = TextureWrapMode.Repeat;
+		textureImporter.wrapModeV = TextureWrapMode.Clamp;
+
+		textureImporter.SaveAndReimport();
+
+		// apply the texture map to the material
+		var texture = AssetDatabase.LoadAssetAtPath( albedoFilename, typeof( Texture2D ) ) as Texture2D;
+
+		m_meshRenderer.material.SetTexture( "_Albedo", texture );
+
+		// now we can get the final width and height from the albedo buffer
 		var width = albedoBuffer.GetLength( 1 );
 		var height = albedoBuffer.GetLength( 0 );
 
-		var textureMap = new Texture2D( width, height, TextureFormat.RGB24, true );
+		// effects pass
+		EditorUtility.DisplayProgressBar( "Planet " + ( planet.m_id + 1 ), "Effects pass...", (float) currentStep++ / totalSteps );
 
-		for ( var y = 0; y < height; y++ )
-		{
-			for ( var x = 0; x < width; x++ )
-			{
-				textureMap.SetPixel( x, y, albedoBuffer[ y, x ] );
-			}
-		}
-
-		// set up the filter mode
-		textureMap.filterMode = FilterMode.Trilinear;
-
-		// set up the uv wrapping modes
-		textureMap.wrapModeU = TextureWrapMode.Repeat;
-		textureMap.wrapModeV = TextureWrapMode.Clamp;
-
-		// tell unity we are done updating this texture map
-		textureMap.Apply();
-
-		// compress the texture
-		//EditorUtility.CompressTexture( textureMap, TextureFormat.DXT1, TextureCompressionQuality.Best );
-
-		// tell unity we are done updating this texture map
-		//textureMap.Apply();
-
-		// apply the texture map to the material
-		m_material.SetTexture( "_Albedo", textureMap );
-
-		// show progress bar
-		EditorUtility.DisplayProgressBar( "Planet Generator", "Effects pass...", (float) currentStep++ / totalSteps );
-
-		// effects map
-		textureMap = new Texture2D( width, height, TextureFormat.RGB24, true );
+		var effectsBuffer = new Color[ height, width ];
 
 		Vector3 legendWaterColor = new Vector3( planetMap.m_legend[ 0 ].r, planetMap.m_legend[ 0 ].g, planetMap.m_legend[ 0 ].b );
 
@@ -771,70 +544,59 @@ public class PlanetEditor : EditorWindow
 				var reflectivity = ( 1.0f - roughness ) * 0.5f;
 
 				// put it all together
-				textureMap.SetPixel( x, y, new Color( roughness, water, reflectivity ) );
+				effectsBuffer[ y, x ] = new Color( roughness, water, reflectivity );
 			}
 		}
 
-		// set up the filter mode
-		textureMap.filterMode = FilterMode.Trilinear;
+		// save the generated map to file
+		var effectsFilename = m_outputPath + "\\" + planet.m_id + "\\Effects.png";
 
-		// set up the uv wrapping modes
-		textureMap.wrapModeU = TextureWrapMode.Repeat;
-		textureMap.wrapModeV = TextureWrapMode.Clamp;
+		Tools.SaveAsPNG( effectsBuffer, effectsFilename );
 
-		// tell unity we are done updating this texture map
-		textureMap.Apply();
+		AssetDatabase.ImportAsset( effectsFilename );
 
-		// Tools.SaveAsPNG( textureMap, "Effects" );
+		// change import settings on effects map
+		textureImporter = TextureImporter.GetAtPath( effectsFilename ) as TextureImporter;
 
-		// compress the texture
-		//EditorUtility.CompressTexture( textureMap, TextureFormat.DXT1, TextureCompressionQuality.Best );
+		textureImporter.filterMode = FilterMode.Trilinear;
+		textureImporter.wrapModeU = TextureWrapMode.Repeat;
+		textureImporter.wrapModeV = TextureWrapMode.Clamp;
 
-		// tell unity we are done updating this texture map
-		//textureMap.Apply();
+		textureImporter.SaveAndReimport();
 
 		// apply the texture map to the material
-		m_material.SetTexture( "_Effects", textureMap );
+		texture = AssetDatabase.LoadAssetAtPath( effectsFilename, typeof( Texture2D ) ) as Texture2D;
 
-		// show progress bar
-		EditorUtility.DisplayProgressBar( "Planet Generator", "Normals pass...", (float) currentStep++ / totalSteps );
+		m_meshRenderer.material.SetTexture( "_Effects", texture );
 
 		// normals pass
+		EditorUtility.DisplayProgressBar( "Planet " + ( planet.m_id + 1 ), "Normals pass...", (float) currentStep++ / totalSteps );
+
 		var normals = new Normals( heightBuffer );
 
 		var normalBuffer = normals.Process( m_normalScale );
 
-		// Tools.SaveAsPNG( normalBuffer, "Normals" );
+		// save the generated map to file
+		var normalsFilename = m_outputPath + "\\" + planet.m_id + "\\Normals.png";
 
-		// normal map
-		textureMap = new Texture2D( width, height, TextureFormat.RGB24, true );
+		Tools.SaveAsPNG( normalBuffer, normalsFilename );
 
-		for ( var y = 0; y < height; y++ )
-		{
-			for ( var x = 0; x < width; x++ )
-			{
-				textureMap.SetPixel( x, y, normalBuffer[ y, x ] );
-			}
-		}
+		AssetDatabase.ImportAsset( normalsFilename );
 
-		// set up the filter mode
-		textureMap.filterMode = FilterMode.Trilinear;
+		// change import settings on albedo map
+		textureImporter = TextureImporter.GetAtPath( normalsFilename ) as TextureImporter;
 
-		// set up the uv wrapping modes
-		textureMap.wrapModeU = TextureWrapMode.Repeat;
-		textureMap.wrapModeV = TextureWrapMode.Clamp;
+		textureImporter.textureType = TextureImporterType.NormalMap;
+		textureImporter.filterMode = FilterMode.Trilinear;
+		textureImporter.wrapModeU = TextureWrapMode.Repeat;
+		textureImporter.wrapModeV = TextureWrapMode.Clamp;
 
-		// tell unity we are done updating this texture map
-		textureMap.Apply();
-
-		// compress the texture
-		//EditorUtility.CompressTexture( textureMap, TextureFormat.DXT1, TextureCompressionQuality.Best );
-
-		// tell unity we are done updating this texture map
-		//textureMap.Apply();
+		textureImporter.SaveAndReimport();
 
 		// apply the texture map to the material
-		m_material.SetTexture( "_Normal", textureMap );
+		texture = AssetDatabase.LoadAssetAtPath( normalsFilename, typeof( Texture2D ) ) as Texture2D;
+
+		m_meshRenderer.material.SetTexture( "_Normal", texture );
 	}
 
 	float[,] PrepareMap( PlanetMap planetMap )
@@ -872,54 +634,5 @@ public class PlanetEditor : EditorWindow
 		}
 
 		return buffer;
-	}
-
-	void SaveProfileCompareImage( float [,] newBuffer, float[,] oldBuffer, string filename )
-	{
-		var width = newBuffer.GetLength( 1 );
-		var height = newBuffer.GetLength( 0 );
-
-		var compareBuffer = new Color[ 256, width ];
-
-		for ( var y = 0; y < 256; y++ )
-		{
-			for ( var x = 0; x < width; x++ )
-			{
-				compareBuffer[ y, x ] = Color.white;
-			}
-		}
-
-		for ( var x = 0; x < width; x++ )
-		{
-			var y = Mathf.FloorToInt( oldBuffer[ height / 4, x ] * 256 );
-
-			if ( y < 0 )
-			{
-				y = 0;
-			}
-
-			if ( y > 255 )
-			{
-				y = 255;
-			}
-
-			compareBuffer[ y, x ] = Color.red;
-
-			y = Mathf.FloorToInt( newBuffer[ height / 4, x ] * 256 );
-
-			if ( y < 0 )
-			{
-				y = 0;
-			}
-
-			if ( y > 255 )
-			{
-				y = 255;
-			}
-
-			compareBuffer[ y, x ] = Color.blue;
-		}
-
-		Tools.SaveAsPNG( compareBuffer, filename );
 	}
 }

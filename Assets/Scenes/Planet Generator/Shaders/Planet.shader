@@ -88,12 +88,18 @@ Shader "Custom/Planet"
 				{
 					float3 albedo = tex2D( _Albedo, i.tex0 );
 					float3 effects = tex2D( _Effects, i.tex0 );
-					float3 normal = tex2D(_Normal, i.tex0);
+					float4 normal = tex2D( _Normal, i.tex0 );
 					float4 water1 = tex2D( _Water, i.tex1.xy );
 					float4 water2 = tex2D( _Water, i.tex1.zw );
 
 					/* this converts from RGB24 to XYZ */
-					normal = normal * 2 - 1;
+					//normal = normal * 2 - 1;
+					/* */
+
+					/* this converts from DXT5NM to XYZ */
+					normal.x *= normal.w;
+					normal.xy = (normal.xy * 2 - 1 );
+					normal.z = sqrt( 1 - saturate( dot(normal.xy, normal.xy ) ) );
 					/* */
 
 					/* this converts from DXT5NM to XYZ */

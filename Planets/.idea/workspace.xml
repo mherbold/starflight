@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ed3ca016-f749-472d-a640-9e9af0f0c396" name="Default" comment="" />
+    <list default="true" id="ed3ca016-f749-472d-a640-9e9af0f0c396" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/../Assets/Editor/HydraulicErosion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Assets/Editor/HydraulicErosion.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assets/Editor/PlanetEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Assets/Editor/PlanetEditor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assets/Editor/ScaleToPowerOfTwo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Assets/Editor/ScaleToPowerOfTwo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assets/Scenes/Persistent/Scripts/PlanetData/PlanetMap.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Assets/Scenes/Persistent/Scripts/PlanetData/PlanetMap.cs" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -12,12 +17,12 @@
     <session id="1386787163">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="4" />
-          <entry key="project.open.time.0" value="1" />
+          <entry key="project.closed" value="5" />
+          <entry key="project.open.time.0" value="2" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.4" value="1" />
           <entry key="project.open.time.5" value="1" />
-          <entry key="project.opened" value="4" />
+          <entry key="project.opened" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
@@ -48,19 +53,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/index.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="262">
-              <caret line="303" column="38" selection-start-line="303" selection-start-column="36" selection-end-line="303" selection-end-column="38" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/convert.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="5" selection-start-column="5" selection-end-column="5" />
+            <state relative-caret-position="460">
+              <caret line="23" column="63" lean-forward="true" selection-start-line="23" selection-start-column="63" selection-end-line="23" selection-end-column="63" />
             </state>
           </provider>
         </entry>
@@ -126,7 +122,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -138,6 +133,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -184,6 +180,7 @@
       <workItem from="1536071120838" duration="282000" />
       <workItem from="1536098472551" duration="1571000" />
       <workItem from="1536161726801" duration="8000" />
+      <workItem from="1538438337225" duration="634000" />
     </task>
     <task id="LOCAL-00001" summary="Don't check in .idea files from PhpStorm">
       <created>1535658754793</created>
@@ -196,13 +193,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="28227000" />
+    <option name="totallyTimeSpent" value="28861000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="3456" height="1426" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12691401" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12750295" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -277,15 +274,15 @@
     <entry file="file://$PROJECT_DIR$/.gitignore" />
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="303" column="38" selection-start-line="303" selection-start-column="36" selection-end-line="303" selection-end-column="38" />
+        <state relative-caret-position="282">
+          <caret line="304" column="21" lean-forward="true" selection-start-line="304" selection-start-column="21" selection-end-line="304" selection-end-column="21" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/convert.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="5" selection-start-column="5" selection-end-column="5" />
+        <state relative-caret-position="460">
+          <caret line="23" column="63" lean-forward="true" selection-start-line="23" selection-start-column="63" selection-end-line="23" selection-end-column="63" />
         </state>
       </provider>
     </entry>

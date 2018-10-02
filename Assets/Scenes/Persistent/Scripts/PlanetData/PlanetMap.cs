@@ -15,6 +15,8 @@ public class PlanetMap
 	public Color[] m_legend { get; private set; }
 	public Color[,] m_color { get; private set; }
 
+	public bool m_badData;
+
 	public void Initialize()
 	{
 		var trueKeyLength = 1;
@@ -70,12 +72,23 @@ public class PlanetMap
 				var g = ( ( originalColor >> 8 ) & 0xFF ) / 255.0f;
 				var b = ( ( originalColor >> 0 ) & 0xFF ) / 255.0f;
 
+				var colorFound = false;
+
 				for ( var i = 0; i < trueKeyLength; i++ )
 				{
 					if ( ( r == m_legend[ i ].r ) && ( g == m_legend[ i ].g ) && ( b == m_legend[ i ].b ) )
 					{
 						m_color[ flippedY, x ] = m_legend[ i ];
+
+						colorFound = true;
+
+						break;
 					}
+				}
+
+				if ( !colorFound )
+				{
+					m_badData = true;
 				}
 			}
 		}

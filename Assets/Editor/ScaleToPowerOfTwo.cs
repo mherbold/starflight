@@ -66,14 +66,11 @@ public class ScaleToPowerOfTwo
 			if ( ( columnsDuplicated < numColumnsToBeDuplicatedByNow ) && isOnDuplicationInterval )
 			{
 				columnsDuplicated++;
-
-				if ( false )
-				{
-					for ( var y = 0; y < m_height; y++ )
-					{
-						outputBuffer[ y + numRowsToPad, x ] = 1.0f;
-					}
-				}
+				
+				//for ( var y = 0; y < m_height; y++ )
+				//{
+				//	outputBuffer[ y + numRowsToPad, x ] = 1.0f;
+				//}
 			}
 			else
 			{
