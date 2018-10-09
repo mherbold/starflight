@@ -2,10 +2,34 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ed3ca016-f749-472d-a640-9e9af0f0c396" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/../Assets/Editor/HydraulicErosion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Assets/Editor/HydraulicErosion.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assets/Editor/PlanetEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Assets/Editor/PlanetEditor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assets/Editor/ScaleToPowerOfTwo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Assets/Editor/ScaleToPowerOfTwo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assets/Scenes/Persistent/Scripts/PlanetData/PlanetMap.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Assets/Scenes/Persistent/Scripts/PlanetData/PlanetMap.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assets/Editor/Albedo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assets/Editor/Albedo.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assets/Editor/Contours.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assets/Editor/Contours.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assets/Editor/GaussianBlur.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assets/Editor/GaussianBlur.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assets/Editor/HydraulicErosion.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assets/Editor/HydraulicErosion.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assets/Editor/MountainsAndHills.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assets/Editor/MountainsAndHills.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assets/Editor/Noise.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assets/Editor/Noise.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assets/Editor/Normals.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assets/Editor/Normals.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assets/Editor/PlanetEditor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assets/Editor/PlanetEditor.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assets/Editor/ScaleToPowerOfTwo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assets/Editor/ScaleToPowerOfTwo.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assets/Editor/Tools.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assets/Editor/Tools.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assets/Planet Generator.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assets/Planet Maps.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assets/Scenes/Planet Generator/Resources/Starflight Game Data.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assets/Scenes/Planet Generator/Resources/Starflight Game Data.json.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assets/Scenes/Planet Generator/Resources/Starflight Planet Data.json" beforeDir="false" afterPath="$PROJECT_DIR$/../Assets/Scenes/Planet Generator/Resources/Starflight Planet Data.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/../Packages/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/convert.php" beforeDir="false" afterPath="$PROJECT_DIR$/convert.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,34 +41,39 @@
     <session id="1386787163">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="5" />
-          <entry key="project.open.time.0" value="2" />
+          <entry key="project.closed" value="7" />
+          <entry key="project.open.time.0" value="3" />
           <entry key="project.open.time.1" value="1" />
+          <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.4" value="1" />
           <entry key="project.open.time.5" value="1" />
-          <entry key="project.opened" value="5" />
+          <entry key="project.opened" value="7" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="gitignore" value="10" />
-          <entry key="php" value="400" />
+          <entry key="php" value="778" />
           <entry key="txt" value="42" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PHP" value="400" />
+          <entry key="PHP" value="778" />
           <entry key="PLAIN_TEXT" value="52" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="gitignore" value="1" />
+          <entry key="json" value="6" />
+          <entry key="php" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
+          <entry key="JSON" value="6" />
+          <entry key="PHP" value="1" />
           <entry key="PLAIN_TEXT" value="1" />
         </counts>
       </usages-collector>
@@ -55,8 +84,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/convert.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="460">
-              <caret line="23" column="63" lean-forward="true" selection-start-line="23" selection-start-column="63" selection-end-line="23" selection-end-column="63" />
+            <state relative-caret-position="320">
+              <caret line="16" column="32" selection-start-line="16" selection-start-column="32" selection-end-line="16" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -75,6 +104,8 @@
       <find>file</find>
       <find>false</find>
       <find>submit</find>
+      <find>Map</find>
+      <find>map</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -85,9 +116,9 @@
       <list>
         <option value="$PROJECT_DIR$/Planets.dat" />
         <option value="$PROJECT_DIR$/Planets.csv" />
-        <option value="$PROJECT_DIR$/convert.php" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/index.php" />
+        <option value="$PROJECT_DIR$/convert.php" />
       </list>
     </option>
   </component>
@@ -181,6 +212,8 @@
       <workItem from="1536098472551" duration="1571000" />
       <workItem from="1536161726801" duration="8000" />
       <workItem from="1538438337225" duration="634000" />
+      <workItem from="1538608718620" duration="2824000" />
+      <workItem from="1538658866403" duration="7000" />
     </task>
     <task id="LOCAL-00001" summary="Don't check in .idea files from PhpStorm">
       <created>1535658754793</created>
@@ -193,13 +226,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="28861000" />
+    <option name="totallyTimeSpent" value="31692000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="3456" height="1426" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12750295" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1286808" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -269,8 +302,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Planets.json" />
-    <entry file="file://$PROJECT_DIR$/Starflight Planet Data.json" />
     <entry file="file://$PROJECT_DIR$/.gitignore" />
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
@@ -279,10 +310,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/PlanetMetadata.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="3" column="18" selection-start-line="3" selection-start-column="7" selection-end-line="3" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Starflight Planet Data.json">
+      <provider selected="true" editor-type-id="LargeFileEditor">
+        <state relative-caret-position="700">
+          <caret line="53772" column="9" lean-forward="true" selection-start-line="53772" selection-start-column="9" selection-end-line="53772" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/convert.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="23" column="63" lean-forward="true" selection-start-line="23" selection-start-column="63" selection-end-line="23" selection-end-column="63" />
+        <state relative-caret-position="320">
+          <caret line="16" column="32" selection-start-line="16" selection-start-column="32" selection-end-line="16" selection-end-column="32" />
         </state>
       </provider>
     </entry>

@@ -6,13 +6,17 @@ ob_implicit_flush();
 
 echo 'Converting planet screenshots...<br>';
 
-$planetMapList = [];
+$planetMetadata = json_decode( file_get_contents( "PlanetMetadata.json" ), true );
+
+$planetMetadata = $planetMetadata[ 'm_planetList' ];
+
+$planetList = [];
 
 for ( $i = 1; $i < 812; $i++ )
 {
 	$filename = "images/$i.png";
-
-	$planetMap = [ 'm_key' => [], 'm_map' => [] ];
+	
+	$planet = [ 'm_id' => ( $i - 1 ), 'm_surfaceId' => $planetMetadata[ $i - 1 ][ "m_surfaceId" ], 'm_key' => [], 'm_map' => [] ];
 	
 	if ( file_exists( $filename ) )
 	{
@@ -31,7 +35,7 @@ for ( $i = 1; $i < 812; $i++ )
 			$g = ( $rgb >> 8 ) & 0xFF;
 			$b = ( $rgb >> 0 ) & 0xFF;
 			
-			$planetMap[ 'm_key' ][ $y ] = $rgb;
+			$planet[ 'm_key' ][ $y ] = $rgb;
 		}
 		
 		$map = imagecrop( $image, [ 'x' => 192, 'y' => 7, 'width' => 96, 'height' => 48 ] );
@@ -47,7 +51,7 @@ for ( $i = 1; $i < 812; $i++ )
 				$g = ( $rgb >> 8 ) & 0xFF;
 				$b = ( $rgb >> 0 ) & 0xFF;
 				
-				$planetMap[ 'm_map' ][ $y * 48 + $x ] = $rgb;
+				$planet[ 'm_map' ][ $y * 48 + $x ] = $rgb;
 			}
 		}
 	}
@@ -56,9 +60,9 @@ for ( $i = 1; $i < 812; $i++ )
 		echo "Image file '$filename' not found.<br>";
 	}
 	
-	$planetMapList[] = (object) $planetMap;
+	$planetList[] = (object)$planet;
 	
-	$planetData = (object) [ 'm_planetMapList' => $planetMapList ];
+	$planetData = (object)[ 'm_planetList' => $planetList ];
 }
 
 file_put_contents( 'Starflight Planet Data.json', json_encode( $planetData, JSON_PRETTY_PRINT ) );
