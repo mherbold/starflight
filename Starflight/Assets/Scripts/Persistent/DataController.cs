@@ -2,7 +2,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
+
 using System.IO;
+using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
 public class DataController : MonoBehaviour
@@ -89,7 +91,7 @@ public class DataController : MonoBehaviour
 			EventSystem.current.sendNavigationEvents = false;
 
 			// figure out which scene to load (based on the player location in the save data)
-			string nextSceneName = GetCurrentSceneName();
+			var nextSceneName = GetCurrentSceneName();
 
 			// load the next scene
 			SceneManager.LoadScene( nextSceneName );
@@ -102,11 +104,8 @@ public class DataController : MonoBehaviour
 		// debug info
 		Debug.Log( "Loading game data" );
 
-		// get the location of this game data file
-		string filePath = Path.Combine( "GameData", m_gameDataFileName );
-
 		// load it as a text asset
-		TextAsset textAsset = Resources.Load( filePath ) as TextAsset;
+		var textAsset = Resources.Load( m_gameDataFileName ) as TextAsset;
 
 		// convert it from the json string to our game data class
 		m_gameData = JsonUtility.FromJson<GameData>( textAsset.text );
@@ -119,19 +118,19 @@ public class DataController : MonoBehaviour
 	void LoadPlayerDataList()
 	{
 		// whether or not we have found the current game
-		bool currentGameFound = false;
+		var currentGameFound = false;
 
 		// create the player data list
 		m_playerDataList = new PlayerData[ c_numSaveGameSlots ];
 
 		// go through each save game slot
-		for ( int i = 0; i < c_numSaveGameSlots; i++ )
+		for ( var i = 0; i < c_numSaveGameSlots; i++ )
 		{
 			// get the path to the player data file
-			string filePath = Application.persistentDataPath + "/" + m_playerDataFileName + i + ".bin";
+			var filePath = Application.persistentDataPath + "/" + m_playerDataFileName + i + ".bin";
 
 			// keep track of whether or not we were able to load the player data file
-			bool loadSucceeded = false;
+			var loadSucceeded = false;
 
 			// check if the file exists
 			if ( File.Exists( filePath ) )
@@ -142,8 +141,18 @@ public class DataController : MonoBehaviour
 					Debug.Log( "Loading player data " + i );
 
 					// try to load the save game file now
-					FileStream file = File.Open( filePath, FileMode.Open );
-					BinaryFormatter binaryFormatter = new BinaryFormatter();
+					var file = File.Open( filePath, FileMode.Open );
+
+					// create the binary formatter
+					var binaryFormatter = new BinaryFormatter();
+
+					// add support for serializing / deserializing Unity.Vector3
+					var surrogateSelector = new SurrogateSelector();
+					var vector3SerializationSurrogate = new Vector3SerializationSurrogate();
+					surrogateSelector.AddSurrogate( typeof( Vector3 ), new StreamingContext( StreamingContextStates.All ), vector3SerializationSurrogate );
+					binaryFormatter.SurrogateSelector = surrogateSelector;
+
+					// load and deserialize the player data file
 					m_playerDataList[ i ] = (PlayerData) binaryFormatter.Deserialize( file );
 
 					// we were able to load the save game slots from file (version checking is next)
@@ -209,14 +218,23 @@ public class DataController : MonoBehaviour
 		Debug.Log( "Saving player data in game slot number " + saveGameSlotNumber );
 
 		// get the path to the player data file
-		string filePath = Application.persistentDataPath + "/" + m_playerDataFileName + saveGameSlotNumber + ".bin";
+		var filePath = Application.persistentDataPath + "/" + m_playerDataFileName + saveGameSlotNumber + ".bin";
 
 		try
 		{
 			// try to save the player data file
-			using ( FileStream file = File.Create( filePath ) )
+			using ( var file = File.Create( filePath ) )
 			{
-				BinaryFormatter binaryFormatter = new BinaryFormatter();
+				// create the binary formatter
+				var binaryFormatter = new BinaryFormatter();
+
+				// add support for serializing / deserializing Unity.Vector3
+				var surrogateSelector = new SurrogateSelector();
+				var vector3SerializationSurrogate = new Vector3SerializationSurrogate();
+				surrogateSelector.AddSurrogate( typeof( Vector3 ), new StreamingContext( StreamingContextStates.All ), vector3SerializationSurrogate );
+				binaryFormatter.SurrogateSelector = surrogateSelector;
+
+				// serialize and save the player data file
 				binaryFormatter.Serialize( file, m_playerDataList[ saveGameSlotNumber ] );
 			}
 		}
@@ -260,7 +278,7 @@ public class DataController : MonoBehaviour
 		SaveActiveGame();
 
 		// clone the player data
-		PlayerData clonedPlayerData = Tools.CloneObject( m_playerData );
+		var clonedPlayerData = Tools.CloneObject( m_playerData );
 
 		// the cloned copy is not the current game
 		clonedPlayerData.m_isCurrentGame = false;
@@ -288,7 +306,7 @@ public class DataController : MonoBehaviour
 		EventSystem.current.sendNavigationEvents = false;
 
 		// figure out which scene to load (based on the player location in the save data)
-		string nextSceneName = GetCurrentSceneName();
+		var nextSceneName = GetCurrentSceneName();
 
 		// load the next scene
 		SceneManager.LoadScene( nextSceneName );

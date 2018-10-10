@@ -109,62 +109,62 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Doors
-    second: {fileID: 2100000, guid: d405a2b2058627944b2b15b9e1590d18, type: 2}
+    second: {fileID: 2100000, guid: 46d5d22edcdbb574db700c6e75966b72, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Hull - Black
-    second: {fileID: 2100000, guid: 4c3669ed56f890c49bbf33fc9f38bc98, type: 2}
+    second: {fileID: 2100000, guid: fa8ec5e46648d404fab642e245a5ae19, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Hull - Dark
-    second: {fileID: 2100000, guid: 2f087bb5346fae74895eb41b2ef79ef1, type: 2}
+    second: {fileID: 2100000, guid: 58b314a963ae78d4593db2c0492c122e, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Hull - Edge
-    second: {fileID: 2100000, guid: 0bf89815f4db3284ea8be4fd19c66482, type: 2}
+    second: {fileID: 2100000, guid: d9b19fe64392a0c48bbf24d8735b83f9, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Hull - Light
-    second: {fileID: 2100000, guid: 79bea3e42cde2714192063425da63c54, type: 2}
+    second: {fileID: 2100000, guid: 400658d052e5ce34aac46e5b0d1017eb, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Hull - Logo
-    second: {fileID: 2100000, guid: cd9add0a2e5c11b4d909c87892e8d2e4, type: 2}
+    second: {fileID: 2100000, guid: ddf05dc7ce4e85f439ccf9661627200c, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Inside Wall
-    second: {fileID: 2100000, guid: 635ef135563f87d48b3d2c7b214229a8, type: 2}
+    second: {fileID: 2100000, guid: 82bec521951e83e469a478e68da79290, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Main Floor
-    second: {fileID: 2100000, guid: bf7c10a3620c0fb4bbe583a923022d52, type: 2}
+    second: {fileID: 2100000, guid: 3ffed953f8f2b164c8a48d5d727a72c9, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Pad - Edge
-    second: {fileID: 2100000, guid: 75201403405790a40939f52483cd910a, type: 2}
+    second: {fileID: 2100000, guid: b8063e2deef1b2b49ad08407bd305830, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Pad - Inside
-    second: {fileID: 2100000, guid: 94f8754d1f809a245949ff64792933d6, type: 2}
+    second: {fileID: 2100000, guid: a8af339f31b796444a6f2e42ffcbcd02, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Pad - Outside
-    second: {fileID: 2100000, guid: beeec93f240411b458d17dc047988794, type: 2}
+    second: {fileID: 2100000, guid: 921a4cd9e5d0d2a4fa68d72e3df61bb5, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
     materialSearch: 1
-    materialLocation: 0
+    materialLocation: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0

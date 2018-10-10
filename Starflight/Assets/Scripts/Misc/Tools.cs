@@ -23,7 +23,7 @@ class Tools
 	// dump an object to the debug log
 	public static void Dump( string name, object someObject, int maxDepth = -1 )
 	{
-		string dumpString = ObjectToString( name, someObject, 1, maxDepth );
+		var dumpString = ObjectToString( name, someObject, 1, maxDepth );
 
 		Debug.Log( dumpString );
 	}
@@ -31,11 +31,12 @@ class Tools
 	// converts an object to a string
 	static string ObjectToString( string name, object someObject, int currentDepth, int maxDepth )
 	{
-		string dumpString = "";
+		var dumpString = "";
 
 		foreach ( PropertyDescriptor descriptor in TypeDescriptor.GetProperties( someObject ) )
 		{
-			string combinedName = name + "." + descriptor.Name;
+			var combinedName = name + "." + descriptor.Name;
+
 			object value = null;
 
 			try
@@ -78,15 +79,24 @@ class Tools
 			return default( T );
 		}
 
-		// copy the object by serializing and then deserializing it
-		IFormatter formatter = new BinaryFormatter();
-		Stream stream = new MemoryStream();
+		// create the binary formatter
+		var binaryFormatter = new BinaryFormatter();
 
+		// add support for serializing / deserializing Unity.Vector3
+		var surrogateSelector = new SurrogateSelector();
+		var vector3SerializationSurrogate = new Vector3SerializationSurrogate();
+		surrogateSelector.AddSurrogate( typeof( Vector3 ), new StreamingContext( StreamingContextStates.All ), vector3SerializationSurrogate );
+		binaryFormatter.SurrogateSelector = surrogateSelector;
+
+		// create a new memory stream
+		var stream = new MemoryStream();
+
+		// copy the object by serializing and then deserializing it
 		using ( stream )
 		{
-			formatter.Serialize( stream, source );
+			binaryFormatter.Serialize( stream, source );
 			stream.Seek( 0, SeekOrigin.Begin );
-			return (T) formatter.Deserialize( stream );
+			return (T) binaryFormatter.Deserialize( stream );
 		}
 	}
 

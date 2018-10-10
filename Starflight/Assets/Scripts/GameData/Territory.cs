@@ -58,7 +58,7 @@ public class Territory : IComparable
 
 		m_currentDistance -= m_size;
 
-		// m_penetrationDistance = Mathf.Max( 0.0f, -m_currentDistance );
+		m_penetrationDistance = Mathf.Max( 0.0f, -m_currentDistance );
 
 		m_currentDistance = Mathf.Max( 0.0f, m_currentDistance );
 	}

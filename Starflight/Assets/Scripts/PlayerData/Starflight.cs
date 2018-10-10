@@ -56,7 +56,7 @@ public class Starflight
 		m_location = Location.Starport;
 
 		// reset coordinates
-		m_starportCoordinates = new Vector3( 0.0f, 0.0f, 0.0f );
+		m_starportCoordinates = new Vector3( -35.18f, 0.0f, 20.86f );
 		m_systemCoordinates = new Vector3( 0.0f, 0.0f, 0.0f );
 		m_hyperspaceCoordinates = new Vector3( 0.0f, 0.0f, 0.0f );
 
