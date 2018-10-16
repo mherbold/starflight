@@ -45,8 +45,6 @@ public class Contours
 			}
 		}
 
-		// Tools.SaveAsPNG( squareCorner, "Square Corner" );
-
 		// create inside corner
 		var insideCorner = new float[ halfScaleY, halfScaleX ];
 
@@ -74,8 +72,6 @@ public class Contours
 				insideCorner[ y, x ] = subPixelsCovered / 256.0f;
 			}
 		} );
-
-		// Tools.SaveAsPNG( insideCorner, "Inside Corner" );
 
 		// create outside corner
 		var outsideCorner = new float[ halfScaleY, halfScaleX ];
@@ -105,8 +101,6 @@ public class Contours
 			}
 		} );
 
-		// Tools.SaveAsPNG( outsideCorner, "Outside Corner" );
-
 		// output buffer
 		var outputWidth = m_width * xScale;
 		var outputHeight = m_height * yScale;
@@ -116,17 +110,13 @@ public class Contours
 		// initalize water level
 		var level = legend[ 0 ].a;
 
-		for ( var y = 0; y < outputHeight; y++ )
+		Parallel.For( 0, m_height, parallelOptions, y =>
 		{
 			for ( var x = 0; x < outputWidth; x++ )
 			{
 				outputBuffer[ y, x ] = level;
 			}
-		}
-
-		UnityEngine.Debug.Log( "Initialize - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
-
-		stopwatch.Restart();
+		} );
 
 		// go through each elevation step
 		for ( var i = 1; i < legend.Length; i++ )
@@ -284,7 +274,7 @@ public class Contours
 		return outputBuffer;
 	}
 
-	void BitBlt( float level, float[,] block, float[,] outputBuffer, int x, int y, bool flipX, bool flipY )
+	void BitBlt( float elevation, float[,] block, float[,] outputBuffer, int x, int y, bool flipX, bool flipY )
 	{
 		var width = block.GetLength( 1 );
 		var height = block.GetLength( 0 );
@@ -293,35 +283,32 @@ public class Contours
 		{
 			for ( var xOffset = 0; xOffset < width; xOffset++ )
 			{
-				float blockLevel;
+				float alpha;
 
 				if ( flipX )
 				{
 					if ( flipY )
 					{
-						blockLevel = block[ height - yOffset - 1, width - xOffset - 1];
+						alpha = block[ height - yOffset - 1, width - xOffset - 1];
 					}
 					else
 					{
-						blockLevel = block[ yOffset, width - xOffset - 1 ];
+						alpha = block[ yOffset, width - xOffset - 1 ];
 					}
 				}
 				else
 				{
 					if ( flipY )
 					{
-						blockLevel = block[ height - yOffset - 1, xOffset ];
+						alpha = block[ height - yOffset - 1, xOffset ];
 					}
 					else
 					{
-						blockLevel = block[ yOffset, xOffset ];
+						alpha = block[ yOffset, xOffset ];
 					}
 				}
 
-				var srcLevel = level * blockLevel;
-				var dstLevel = outputBuffer[ y + yOffset, x + xOffset ] * ( 1 - blockLevel );
-
-				outputBuffer[ y + yOffset, x + xOffset ] = dstLevel + srcLevel;
+				outputBuffer[ y + yOffset, x + xOffset ] = Mathf.Lerp( outputBuffer[ y + yOffset, x + xOffset ], elevation, alpha );
 			}
 		}
 	}

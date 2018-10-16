@@ -1,9 +1,11 @@
 ﻿
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlanetEffects : MonoBehaviour
 {
 	public Renderer m_renderer;
+	public Image m_image;
 	public float m_waterAnimationSpeed = 0.1f;
 	public float m_waterAnimationRadius = 1.0f;
 	public float m_waterScaleA = 4.0f;
@@ -34,7 +36,15 @@ public class PlanetEffects : MonoBehaviour
 		m_waterScale = new Vector4( m_waterScaleA, m_waterScaleA, m_waterScaleB, m_waterScaleB );
 		m_waterOffset = new Vector4( Mathf.Sin( m_angle1 ), Mathf.Cos( m_angle1 ), Mathf.Sin( m_angle2 ), Mathf.Cos( m_angle2 ) ) * m_waterAnimationRadius;
 
-		m_renderer.material.SetVector( "_WaterScale", m_waterScale );
-		m_renderer.material.SetVector( "_WaterOffset", m_waterOffset );
+		if ( m_renderer != null )
+		{
+			m_renderer.material.SetVector( "_WaterScale", m_waterScale );
+			m_renderer.material.SetVector( "_WaterOffset", m_waterOffset );
+		}
+		else
+		{
+			m_image.material.SetVector( "_WaterScale", m_waterScale );
+			m_image.material.SetVector( "_WaterOffset", m_waterOffset );
+		}
 	}
 }

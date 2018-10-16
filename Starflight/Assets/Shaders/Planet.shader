@@ -1,5 +1,4 @@
-﻿// Unity built-in shader source. Copyright (c) 2016 Unity Technologies. MIT license (see license.txt)
-
+﻿
 Shader "Custom/Planet"
 {
 	Properties
@@ -15,13 +14,12 @@ Shader "Custom/Planet"
 	{
 		Tags
 		{
+			"Queue" = "Geometry"
 			"RenderType" = "Opaque"
 		}
 
 		Pass
 		{
-			Name "DEFERRED"
-
 			Tags
 			{
 				"LightMode" = "Deferred"
@@ -66,9 +64,9 @@ Shader "Custom/Planet"
 				{
 					VertexOutputPlanet o;
 
-					float4 posWorld = mul( unity_ObjectToWorld, v.vertex );
+					float4 posWorld = mul( unity_ObjectToWorld, float4( v.vertex, 1.0 ) );
 
-					o.pos = mul( UNITY_MATRIX_VP, float4( posWorld.xyz, 1 ) );
+					o.pos = mul( UNITY_MATRIX_VP, posWorld );
 					o.tex0 = v.uv0.xy;
 					o.tex1 = float4( v.uv0.xy, v.uv0.xy ) * _WaterScale + _WaterOffset;
 					o.eyeDir = normalize( posWorld.xyz - _WorldSpaceCameraPos );
@@ -98,7 +96,7 @@ Shader "Custom/Planet"
 
 					/* this converts from DXT5NM to XYZ */
 					normal.x *= normal.w;
-					normal.xy = (normal.xy * 2 - 1 );
+					normal.xy = ( normal.xy * 2 - 1 );
 					normal.z = sqrt( 1 - saturate( dot(normal.xy, normal.xy ) ) );
 					/* */
 

@@ -28,6 +28,8 @@ public class PG_Planet
 		{
 			m_mapIsValid = false;
 
+			Debug.Log( "Planet " + m_id + " - Map size is wrong." );
+
 			return;
 		}
 
@@ -40,8 +42,6 @@ public class PG_Planet
 				trueKeyLength++;
 			}
 		}
-
-		Debug.Log( "...true key length = " + trueKeyLength );
 
 		m_mapLegend = new Color[ trueKeyLength ];
 
@@ -61,9 +61,7 @@ public class PG_Planet
 			var g = ( ( originalColor >> 8 ) & 0xFF ) / 255.0f;
 			var b = ( ( originalColor >> 0 ) & 0xFF ) / 255.0f;
 
-			var height = Mathf.Lerp( 0.0f, 1.0f, (float) keyIndex / (float) ( trueKeyLength - 1 ) );
-
-			m_mapLegend[ keyIndex ] = new Color( r, g, b, height );
+			m_mapLegend[ keyIndex ] = new Color( r, g, b, keyIndex );
 
 			lastColor = originalColor;
 
@@ -103,6 +101,10 @@ public class PG_Planet
 				if ( !colorFound )
 				{
 					m_mapIsValid = false;
+
+					Debug.Log( "Planet " + m_id + " - Could not find color " + r + ", " + g + ", " + b );
+
+					return;
 				}
 			}
 		}

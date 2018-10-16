@@ -59,7 +59,7 @@ public class ScaleToPowerOfTwo
 				outputBuffer[ y + numRowsToPad, x ] = m_buffer[ y, x2 ];
 			}
 
-			var numColumnsToBeDuplicatedByNow = Mathf.RoundToInt( (float) x / (float) width * (float) numColumnsToPad );
+			var numColumnsToBeDuplicatedByNow = Mathf.CeilToInt( (float) x / (float) width * (float) numColumnsToPad );
 
 			bool isOnDuplicationInterval = ( ( ( x2 - halfScaleX ) % xScale ) == 0 );
 

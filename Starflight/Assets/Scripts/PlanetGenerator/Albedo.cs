@@ -18,7 +18,7 @@ public class Albedo
 		m_height = buffer.GetLength( 0 );
 	}
 
-	public Color[,] Process( int seed, float gain, Color[] legend )
+	public Color[,] Process( Color[] legend )
 	{
 		UnityEngine.Debug.Log( "*** Albedo Process ***" );
 
@@ -28,44 +28,11 @@ public class Albedo
 
 		var parallelOptions = new ParallelOptions() { MaxDegreeOfParallelism = -1 };
 
-		// build color map
-		var colorMap = new Color[ 256 ];
+		// for blending water
+		var shoreWaterColor = legend[ 0 ] * legend[ 1 ];
 
-		colorMap[ 0 ] = legend[ 0 ];
-
-		colorMap[ 0 ].a = 1.0f;
-
-		for ( var i = 1; i < 256; i++ )
-		{
-			var level = i / 256.0f * ( legend.Length - 1 );
-
-			if ( level < 0.25f )
-			{
-				colorMap[ i ] = Color.Lerp( legend[ 0 ], legend[ 1 ], level * 4.0f );
-			}
-			else if ( level < 0.5f )
-			{
-				colorMap[ i ] = legend[ 1 ];
-			}
-			else if ( level >= ( legend.Length - 1.5f ) )
-			{
-				colorMap[ i ] = legend[ legend.Length - 1 ];
-			}
-			else
-			{
-				var levelA = Mathf.FloorToInt( level - 0.5f ) + 1;
-				var levelB = levelA + 1;
-
-				var colorA = legend[ levelA ];
-				var colorB = legend[ levelB ];
-
-				var t = level - ( levelA - 0.5f );
-
-				colorMap[ i ] = Color.Lerp( colorA, colorB, t );
-			}
-
-			colorMap[ i ].a = 1.0f;
-		}
+		// max elevation
+		var maxElevation = legend[ legend.Length - 1 ].a;
 
 		// output buffer
 		var outputBuffer = new Color[ m_height, m_width ];
@@ -74,22 +41,43 @@ public class Albedo
 		{
 			for ( var x = 0; x < m_width; x++ )
 			{
-				var height = m_buffer[ y, x ] / gain;
+				var level = m_buffer[ y, x ];
 
-				var colorMapIndex = Mathf.FloorToInt( height * 255.0f );
-
-				if ( colorMapIndex < 0 )
+				if ( level < 0.25f )
 				{
-					colorMapIndex = 0;
+					outputBuffer[ y, x ] = Color.Lerp( legend[ 0 ], shoreWaterColor, 4.0f * level );
 				}
-				else if ( colorMapIndex > 255 )
+				else if ( level < 0.5f )
 				{
-					colorMapIndex = 255;
+					outputBuffer[ y, x ] = Color.Lerp( shoreWaterColor, legend[ 1 ], 4.0f * ( level - 0.25f ) );
+				}
+				else if ( level < 1.0f )
+				{
+					outputBuffer[ y, x ] = legend[ 1 ];
+				}
+				else
+				{
+					level = ( level - 1.0f ) * ( legend.Length - 1 ) / ( legend.Length ) + 1.0f;
+
+					if ( level >= maxElevation )
+					{
+						outputBuffer[ y, x ] = legend[ legend.Length - 1 ];
+					}
+					else
+					{
+						var levelA = Mathf.FloorToInt( level );
+						var levelB = levelA + 1;
+
+						var colorA = legend[ levelA ];
+						var colorB = legend[ levelB ];
+
+						var t = level - levelA;
+
+						outputBuffer[ y, x ] = Color.Lerp( colorA, colorB, t );
+					}
 				}
 
-				// TODO: perhaps lerp between color map cells?
-
-				outputBuffer[ y, x ] = colorMap[ colorMapIndex ];
+				outputBuffer[ y, x ].a = m_buffer[ y, x ];
 			}
 		} );
 

@@ -10,8 +10,8 @@ public class Normals
 	int m_width;
 	int m_height;
 
-	readonly int[] c_offsetX = { -1, 0, 1, -1, 0, 1, -1, 0, 1 };
-	readonly int[] c_offsetY = { -1, -1, -1, 0, 0, 0, 1, 1, 1 };
+	readonly int[] c_offsetX = { -1, 0, 1, -1, 1, -1, 0, 1 };
+	readonly int[] c_offsetY = { -1, -1, -1, 0, 0, 1, 1, 1 };
 
 	public Normals( float[,] buffer )
 	{
@@ -37,53 +37,61 @@ public class Normals
 
 		// make magic happen
 
-		Parallel.For( 0, m_height, parallelOptions, y =>
+		var steps = 16;
+		var stepSize = m_height / steps;
+
+		Parallel.For( 0, steps, parallelOptions, step =>
 		{
-			for ( var x = 0; x < m_width; x++ )
+			var y1 = step * stepSize;
+			var y2 = y1 + stepSize;
+
+			for ( var y = y1; y < y2; y++ )
 			{
-				var centerHeight = m_buffer[ y, x ];
-
-				var normal = Vector3.zero;
-
-				for ( int i = 0; i < 9; i++ )
+				for ( var x = 0; x < m_width; x++ )
 				{
-					var srcX = x + c_offsetX[ i ];
-					var srcY = y + c_offsetY[ i ];
+					var centerHeight = m_buffer[ y, x ];
 
-					if ( srcY < 0 )
+					var normal = Vector3.zero;
+
+					for ( int i = 0; i < 8; i++ )
 					{
-						srcY = 0;
+						var srcX = x + c_offsetX[ i ];
+						var srcY = y + c_offsetY[ i ];
+
+						if ( srcY < 0 )
+						{
+							srcY = 0;
+						}
+
+						if ( srcY >= m_height )
+						{
+							srcY = m_height - 1;
+						}
+
+						if ( srcX < 0 )
+						{
+							srcX += m_width;
+						}
+
+						if ( srcX >= m_width )
+						{
+							srcX -= m_width;
+						}
+
+						var deltaHeight = ( m_buffer[ srcY, srcX ] - centerHeight ) * scale;
+
+						var vector = new Vector3( c_offsetX[ i ], c_offsetY[ i ], deltaHeight );
+
+						var right = Vector3.Cross( vector, Vector3.forward );
+
+						var up = Vector3.Cross( right, vector );
+
+						normal += Vector3.Normalize( up );
 					}
+					normal = normal * 0.0625f + half;
 
-					if ( srcY >= m_height )
-					{
-						srcY = m_height - 1;
-					}
-
-					if ( srcX < 0 )
-					{
-						srcX += m_width;
-					}
-
-					if ( srcX >= m_width )
-					{
-						srcX -= m_width;
-					}
-
-					var deltaHeight = ( m_buffer[ srcY, srcX ] - centerHeight ) * scale;
-
-					var vector = new Vector3( c_offsetX[ i ], c_offsetY[ i ], deltaHeight );
-
-					var right = Vector3.Cross( vector, Vector3.forward );
-
-					var up = Vector3.Cross( right, vector );
-
-					normal += Vector3.Normalize( up );
+					normalBuffer[ y, x ] = new Color( normal.x, normal.y, normal.z );
 				}
-
-				normal = normal / 9.0f * 0.5f + half;
-
-				normalBuffer[ y, x ] = new Color( normal.x, normal.y, normal.z );
 			}
 		} );
 

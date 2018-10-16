@@ -24,7 +24,7 @@ public class MountainsAndHills
 		m_height = buffer.GetLength( 0 );
 	}
 
-	public float[,] Process( int seed, float inputGain, int octaves, int mountainScale, int hillScale, float mountainPersistence, float hillPersistence, float mountainPower, float mountainGain, float hillGain )
+	public float[,] Process( int seed, int octaves, int mountainScale, int hillScale, float mountainPersistence, float hillPersistence, float mountainGain, float hillGain )
 	{
 		UnityEngine.Debug.Log( "*** Mountains and Hills Process ***" );
 
@@ -85,24 +85,26 @@ public class MountainsAndHills
 		{
 			for ( var x = 0; x < m_width; x++ )
 			{
-				float inputHeight = m_buffer[ y, x ];
+				var inputHeight = m_buffer[ y, x ];
 
-				float mountainStart = 0.25f;
-				float mountainRange = 0.75f;
-				float mountainMultiplier = Mathf.Lerp( 0.0f, 1.0f, ( m_buffer[ y, x ] - mountainStart ) / mountainRange );
+				var mountainStart = 0.5f;
+				var mountainRange = 3.0f;
+				var mountainMultiplier = Mathf.Lerp( 0.0f, 1.0f, ( m_buffer[ y, x ] - mountainStart ) / mountainRange );
+				var mountainElevation = mountainMultiplier * Mathf.Pow( mountainGain * mountainBuffer[ y, x ], 2.0f );
 
-				float hillCenter = 0.50f;
-				float hillRange = 0.45f;
-				float hillMultiplier = Mathf.Lerp( 1.0f, 0.0f, Mathf.Abs( hillCenter - m_buffer[ y, x ] ) / hillRange );
+				var hillCenter = 2.0f;
+				var hillRange = 2.0f;
+				var hillMultiplier = Mathf.Lerp( 1.0f, 0.0f, Mathf.Abs( hillCenter - m_buffer[ y, x ] ) / hillRange );
+				var hillElevation = hillMultiplier * hillGain * hillBuffer[ y, x ];
 
-				float p1 = m_height / (float) 10.0f * 0.1f;
-				float p2 = m_height / (float) 10.0f * 3.0f;
-				float p3 = m_height / (float) 10.0f * 7.0f;
-				float p4 = m_height / (float) 10.0f * 9.9f;
+				var p1 = m_height / (float) 10.0f * 0.1f;
+				var p2 = m_height / (float) 10.0f * 3.0f;
+				var p3 = m_height / (float) 10.0f * 7.0f;
+				var p4 = m_height / (float) 10.0f * 9.9f;
 
-				float poleMultiplier = Mathf.Lerp( 0.0f, 1.0f, ( y - p1 ) / ( p2 - p1 ) ) * Mathf.Lerp( 1.0f, 0.0f, ( y - p3 ) / ( p4 - p3 ) );
+				var poleMultiplier = Mathf.Lerp( 0.0f, 1.0f, ( y - p1 ) / ( p2 - p1 ) ) * Mathf.Lerp( 1.0f, 0.0f, ( y - p3 ) / ( p4 - p3 ) );
 
-				outputBuffer[ y, x ] = inputGain * inputHeight + poleMultiplier * ( mountainGain * mountainMultiplier * ( inputHeight * Mathf.Pow( mountainBuffer[ y, x ], mountainPower ) ) + hillGain * hillMultiplier * hillBuffer[ y, x ] );
+				outputBuffer[ y, x ] = inputHeight + poleMultiplier * ( mountainElevation + hillElevation );
 			}
 		} );
 
@@ -114,14 +116,13 @@ public class MountainsAndHills
 
 	float StandardTurbulence( float x, float y )
 	{
-		int scale = m_scale;
-
-		float amplitude = 1.0f;
-		float sum = 0;
+		var scale = m_scale;
+		var amplitude = 1.0f;
+		var sum = 0.0f;
 
 		for ( var i = 0; i < m_octaves; i++ )
 		{
-			float coordinateScale = (float) scale / (float) m_width;
+			var coordinateScale = (float) scale / (float) m_width;
 
 			sum += amplitude * m_noise.Perlin( i, scale, x * coordinateScale, y * coordinateScale );
 
@@ -134,14 +135,13 @@ public class MountainsAndHills
 
 	float BillowedTurbulence( float x, float y )
 	{
-		int scale = m_scale;
-
-		float amplitude = 1.0f;
-		float sum = 0;
+		var scale = m_scale;
+		var amplitude = 1.0f;
+		var sum = 0.0f;
 
 		for ( var i = 0; i < m_octaves; i++ )
 		{
-			float coordinateScale = (float) scale / (float) m_width;
+			var coordinateScale = (float) scale / (float) m_width;
 
 			sum += amplitude * Mathf.Abs( m_noise.Perlin( i, scale, x * coordinateScale, y * coordinateScale ) );
 
@@ -154,14 +154,13 @@ public class MountainsAndHills
 
 	float RidgedTurbulence( float x, float y )
 	{
-		int scale = m_scale;
-
-		float amplitude = 1.0f;
-		float sum = 0;
+		var scale = m_scale;
+		var amplitude = 1.0f;
+		var sum = 0.0f;
 
 		for ( var i = 0; i < m_octaves; i++ )
 		{
-			float coordinateScale = (float) scale / (float) m_width;
+			var coordinateScale = (float) scale / (float) m_width;
 
 			sum += amplitude * ( 1.0f - Mathf.Abs( m_noise.Perlin( i, scale, x * coordinateScale, y * coordinateScale ) ) );
 

@@ -104,10 +104,10 @@ public class DataController : MonoBehaviour
 		// debug info
 		Debug.Log( "Loading game data" );
 
-		// load it as a text asset
+		// load it as an asset
 		var textAsset = Resources.Load( m_gameDataFileName ) as TextAsset;
 
-		// convert it from the json string to our game data class
+		// convert it from the json string to our planet data class
 		m_gameData = JsonUtility.FromJson<GameData>( textAsset.text );
 
 		// initalize the game data

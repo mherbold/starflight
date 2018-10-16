@@ -1,6 +1,8 @@
 ﻿
 public class LandButton : ShipButton
 {
+	private readonly ShipButton[] m_buttons = { new SelectSiteButton(), new DescendButton(), new AbortButton() };
+
 	public override string GetLabel()
 	{
 		return "Land";
@@ -25,13 +27,13 @@ public class LandButton : ShipButton
 
 			case Starflight.Location.InOrbit:
 
-				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
+				// show the terrian map display
+				m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_terrainMapDisplay );
 
-				m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=red>Not yet implemented.</color>" );
+				// change the buttons
+				m_spaceflightController.m_buttonController.UpdateButtons( m_buttons );
 
-				m_spaceflightController.m_buttonController.UpdateButtonSprites();
-
-				break;
+				return true;
 
 			default:
 

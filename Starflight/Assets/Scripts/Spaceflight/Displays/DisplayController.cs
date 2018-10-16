@@ -11,6 +11,7 @@ public class DisplayController : MonoBehaviour
 	public StatusDisplay m_statusDisplay;
 	public SystemDisplay m_systemDisplay;
 	public SensorsDisplay m_sensorsDisplay;
+	public TerrainMapDisplay m_terrainMapDisplay;
 
 	// the current display
 	ShipDisplay m_currentDisplay;
@@ -34,6 +35,7 @@ public class DisplayController : MonoBehaviour
 		m_statusDisplay.Hide();
 		m_systemDisplay.Hide();
 		m_sensorsDisplay.Hide();
+		m_terrainMapDisplay.Hide();
 
 		// change the current display
 		m_currentDisplay = newDisplay;

@@ -38,7 +38,7 @@ public class InOrbit : MonoBehaviour
 		}
 
 		// calculate the new rotation quaternion
-		Quaternion newRotation = Quaternion.Euler( 0.0f, 0.0f, m_spin );
+		var newRotation = Quaternion.Euler( 0.0f, 0.0f, m_spin );
 
 		// apply it to the planet
 		m_planet.transform.localRotation = newRotation;
@@ -69,19 +69,27 @@ public class InOrbit : MonoBehaviour
 		Debug.Log( "Showing the in orbit scene." );
 
 		// get to the game data
-		GameData gameData = DataController.m_instance.m_gameData;
+		var gameData = DataController.m_instance.m_gameData;
 
 		// get to the player data
-		PlayerData playerData = DataController.m_instance.m_playerData;
+		var playerData = DataController.m_instance.m_playerData;
 
 		// get to the star data
-		Star star = gameData.m_starList[ playerData.m_starflight.m_currentStarId ];
+		var star = gameData.m_starList[ playerData.m_starflight.m_currentStarId ];
 
 		// show the in orbit objects
 		gameObject.SetActive( true );
 
+		// get the planet controller
+		var planetController = m_spaceflightController.m_starSystem.GetPlanetController( playerData.m_starflight.m_currentPlanetId );
+
+		// set the scale of the planet
+		m_planet.transform.localScale = planetController.m_planet.GetScale();
+
 		// make sure the camera is at the right height above the zero plane
-		m_spaceflightController.m_player.DollyCamera( 768.0f );
+		var orbitHeight = Mathf.Lerp( 256.0f, 768.0f, m_planet.transform.localScale.z / 320.0f );
+
+		m_spaceflightController.m_player.DollyCamera( orbitHeight );
 
 		// move the player object
 		m_spaceflightController.m_player.transform.position = new Vector3( 0.0f, 0.0f, 0.0f );
@@ -104,13 +112,7 @@ public class InOrbit : MonoBehaviour
 		// let the player know we've established orbit
 		m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>Orbit established.</color>" );
 
-		// get the planet controller
-		PlanetController planetController = m_spaceflightController.m_starSystem.GetPlanetController( playerData.m_starflight.m_currentPlanetId );
-
 		// apply the material to the planet model
 		m_planet.material = planetController.GetMaterial();
-
-		// set the scale of the planet
-		m_planet.transform.localScale = planetController.m_planet.GetScale();
 	}
 }

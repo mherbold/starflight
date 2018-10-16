@@ -31,14 +31,6 @@ public class Planet
 	public int m_temperatureIdB;
 	public int m_weatherId;
 
-	public bool m_mapIsValid;
-
-	public Color[] m_mapLegend;
-	public Color[,] m_mapColor;
-
-	public Color m_mostUsedColorTop;
-	public Color m_mostUsedColorBottom;
-
 	public Planet()
 	{
 		m_id = -1;

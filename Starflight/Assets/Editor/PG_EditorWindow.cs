@@ -2,39 +2,42 @@
 using UnityEngine;
 using UnityEditor;
 
-using Newtonsoft.Json;
-
-using System;
 using System.IO;
-using System.Diagnostics;
 using System.IO.Compression;
+using System.Diagnostics;
 
 public class PG_EditorWindow : EditorWindow
 {
-	enum Mode
-	{
-		SelectedPlanet,
-		AllPlanets
-	}
+	// version number
+	const int c_versionNumber = 1;
 
-	// user controlled parameters
-	string m_gameDataFileName;
+	// other settings
 	string m_planetDataFileName;
 	string m_resourcesPath;
+	bool m_debugMode;
+
+	// non-gas giant planet settings
 	int m_textureMapWidth;
 	int m_textureMapHeight;
 	int m_numPolePaddingRows;
-	int m_landBlurRadius;
-	int m_waterBlurRadius;
-	float m_inputGain;
+	int m_highBlurRadius;
+	int m_lowBlurRadius;
+
+	// base mountain and hill settings
 	int m_octaves;
+
+	// mountain settings
 	int m_mountainScale;
 	float m_mountainPersistence;
-	float m_mountainPower;
 	float m_mountainGain;
+
+	// hill settings
 	int m_hillScale;
 	float m_hillPersistence;
 	float m_hillGain;
+
+	// hydraulic erosion settings
+	bool m_doHydraulicErosionPass;
 	float m_xyScaleToMeters;
 	float m_zScaleToMeters;
 	float m_rainWaterAmount;
@@ -45,14 +48,9 @@ public class PG_EditorWindow : EditorWindow
 	float m_depositionConstant;
 	float m_dissolvingConstant;
 	float m_stepDeltaTime;
-	int m_snapshotInterval;
 	int m_finalBlurRadius;
-	float m_normalScale;
-	string m_gameObjectName;
-	int m_planetId;
 
 	// generated parameters
-	GameData m_gameData;
 	PG_PlanetData m_pgPlanetData;
 	GameObject m_gameObject;
 	MeshRenderer m_meshRenderer;
@@ -62,9 +60,9 @@ public class PG_EditorWindow : EditorWindow
 	int m_hillScalePowerOfTwo;
 
 #if DEBUG
-	[MenuItem( "Window/Starflight Remake/Planet Editor (Debug Build)" )]
+	[MenuItem( "Starflight Remake/Planet Generator (Debug Build)" )]
 #else
-	[MenuItem( "Window/Starflight Remake/Planet Editor (Release Build)" )]
+	[MenuItem( "Starflight Remake/Planet Generator (Release Build)" )]
 #endif
 
 	public static void ShowWindow()
@@ -74,104 +72,115 @@ public class PG_EditorWindow : EditorWindow
 
 	void OnEnable()
 	{
-		m_gameDataFileName = EditorPrefs.GetString( "PlanetEditor_GameDataFileName" );
-		m_planetDataFileName = EditorPrefs.GetString( "PlanetEditor_PlanetDataFileName" );
-		m_resourcesPath = EditorPrefs.GetString( "PlanetEditor_ResourcesPath" );
-		m_numPolePaddingRows = EditorPrefs.GetInt( "PlanetEditor_NumPolePaddingRows", 3 );
-		m_landBlurRadius = EditorPrefs.GetInt( "PlanetEditor_LandBlurRadius", 45 );
-		m_waterBlurRadius = EditorPrefs.GetInt( "PlanetEditor_WaterBlurRadius", 11 );
-		m_inputGain = EditorPrefs.GetFloat( "PlanetEditor_InputGain", 0.5f );
-		m_octaves = EditorPrefs.GetInt( "PlanetEditor_Octaves", 8 );
-		m_mountainScale = EditorPrefs.GetInt( "PlanetEditor_MountainScale", 4 );
-		m_mountainPersistence = EditorPrefs.GetFloat( "PlanetEditor_MountainPersistence", 0.5f );
-		m_mountainPower = EditorPrefs.GetFloat( "PlanetEditor_MountainPower", 3.0f );
-		m_mountainGain = EditorPrefs.GetFloat( "PlanetEditor_MountainGain", 0.075f );
-		m_hillScale = EditorPrefs.GetInt( "PlanetEditor_HillScale", 4 );
-		m_hillPersistence = EditorPrefs.GetFloat( "PlanetEditor_HillPersistence", 0.9f );
-		m_hillGain = EditorPrefs.GetFloat( "PlanetEditor_HillGain", 0.05f );
-		m_xyScaleToMeters = EditorPrefs.GetFloat( "PlanetEditor_XYScaleToMeters", 100.0f );
-		m_zScaleToMeters = EditorPrefs.GetFloat( "PlanetEditor_ZScaleToMeters", 1500.0f );
-		m_rainWaterAmount = EditorPrefs.GetFloat( "PlanetEditor_RainWaterAmount", 50.0f );
-		m_gravityConstant = EditorPrefs.GetFloat( "PlanetEditor_GravityConstant", 9.8f );
-		m_frictionConstant = EditorPrefs.GetFloat( "PlanetEditor_FrictionConstant", 0.5f );
-		m_evaporationConstant = EditorPrefs.GetFloat( "PlanetEditor_EvaporationConstant", 0.02f );
-		m_sedimentCapacity = EditorPrefs.GetFloat( "PlanetEditor_SedimentCapacity", 1.0f );
-		m_depositionConstant = EditorPrefs.GetFloat( "PlanetEditor_DepositionConstant", 0.05f );
-		m_dissolvingConstant = EditorPrefs.GetFloat( "PlanetEditor_DissolvingConstant", 0.04f );
-		m_stepDeltaTime = EditorPrefs.GetFloat( "PlanetEditor_StepDeltaTime", 0.005f );
-		m_snapshotInterval = EditorPrefs.GetInt( "PlanetEditor_SnapshotInterval", 8192 );
-		m_finalBlurRadius = EditorPrefs.GetInt( "PlanetEditor_FinalBlurRadius", 5 );
-		m_normalScale = EditorPrefs.GetFloat( "PlanetEditor_NormalScale", 50.0f );
-		m_gameObjectName = EditorPrefs.GetString( "PlanetEditor_GameObjectName" );
-		m_planetId = EditorPrefs.GetInt( "PlanetEditor_PlanetId" );
+		// other settings
+		m_planetDataFileName = EditorPrefs.GetString( "PlanetGenerator_PlanetDataFileName" );
+		m_resourcesPath = EditorPrefs.GetString( "PlanetGenerator_ResourcesPath" );
+		m_debugMode = EditorPrefs.GetBool( "PlanetGenerator_DebugMode" );
 
-		int textureMapHeight = EditorPrefs.GetInt( "PlanetEditor_TextureMapHeight" );
+		// non-gas giant planet settings
+		m_numPolePaddingRows = EditorPrefs.GetInt( "PlanetGenerator_NumPolePaddingRows", 3 );
+		m_highBlurRadius = EditorPrefs.GetInt( "PlanetGenerator_HighBlurRadius", 45 );
+		m_lowBlurRadius = EditorPrefs.GetInt( "PlanetGenerator_LowBlurRadius", 11 );
+
+		int textureMapHeight = EditorPrefs.GetInt( "PlanetGenerator_TextureMapHeight", 1024 );
 
 		m_textureMapWidth = textureMapHeight * 2;
 		m_textureMapHeight = textureMapHeight;
+
+		// base mountain and hill settings
+		m_octaves = EditorPrefs.GetInt( "PlanetGenerator_Octaves", 10 );
+
+		// mountain settings
+		m_mountainScale = EditorPrefs.GetInt( "PlanetGenerator_MountainScale", 4 );
+		m_mountainPersistence = EditorPrefs.GetFloat( "PlanetGenerator_MountainPersistence", 0.5f );
+		m_mountainGain = EditorPrefs.GetFloat( "PlanetGenerator_MountainGain", 0.075f );
+
+		// hill settings
+		m_hillScale = EditorPrefs.GetInt( "PlanetGenerator_HillScale", 4 );
+		m_hillPersistence = EditorPrefs.GetFloat( "PlanetGenerator_HillPersistence", 0.9f );
+		m_hillGain = EditorPrefs.GetFloat( "PlanetGenerator_HillGain", 0.05f );
+
+		// hydraulic erosion settings
+		m_doHydraulicErosionPass = EditorPrefs.GetBool( "PlanetGenerator_DoHydraulicErosionPass", true );
+		m_xyScaleToMeters = EditorPrefs.GetFloat( "PlanetGenerator_XYScaleToMeters", 10.0f );
+		m_zScaleToMeters = EditorPrefs.GetFloat( "PlanetGenerator_ZScaleToMeters", 400.0f );
+		m_rainWaterAmount = EditorPrefs.GetFloat( "PlanetGenerator_RainWaterAmount", 1.0f );
+		m_sedimentCapacity = EditorPrefs.GetFloat( "PlanetGenerator_SedimentCapacity", 100.0f );
+		m_gravityConstant = EditorPrefs.GetFloat( "PlanetGenerator_GravityConstant", -9.8f );
+		m_frictionConstant = EditorPrefs.GetFloat( "PlanetGenerator_FrictionConstant", 0.5f );
+		m_evaporationConstant = EditorPrefs.GetFloat( "PlanetGenerator_EvaporationConstant", 1.0f );
+		m_depositionConstant = EditorPrefs.GetFloat( "PlanetGenerator_DepositionConstant", 5.0f );
+		m_dissolvingConstant = EditorPrefs.GetFloat( "PlanetGenerator_DissolvingConstant", 4.0f );
+		m_stepDeltaTime = EditorPrefs.GetFloat( "PlanetGenerator_StepDeltaTime", 0.005f );
+		m_finalBlurRadius = EditorPrefs.GetInt( "PlanetGenerator_FinalBlurRadius", 3 );
 	}
 
 	void OnDisable()
 	{
-		EditorPrefs.SetString( "PlanetEditor_GameDataFileName", m_gameDataFileName );
-		EditorPrefs.SetString( "PlanetEditor_PlanetDataFileName", m_planetDataFileName );
-		EditorPrefs.SetString( "PlanetEditor_ResourcesPath", m_resourcesPath );
-		EditorPrefs.SetInt( "PlanetEditor_TextureMapHeight", m_textureMapHeight );
-		EditorPrefs.SetInt( "PlanetEditor_NumPolePaddingRows", m_numPolePaddingRows );
-		EditorPrefs.SetInt( "PlanetEditor_LandBlurRadius", m_landBlurRadius );
-		EditorPrefs.SetInt( "PlanetEditor_WaterBlurRadius", m_waterBlurRadius );
-		EditorPrefs.SetFloat( "PlanetEditor_InputGain", m_inputGain );
-		EditorPrefs.SetInt( "PlanetEditor_Octaves", m_octaves );
-		EditorPrefs.SetInt( "PlanetEditor_MountainScale", m_mountainScale );
-		EditorPrefs.SetFloat( "PlanetEditor_MountainPersistence", m_mountainPersistence );
-		EditorPrefs.SetFloat( "PlanetEditor_MountainPower", m_mountainPower );
-		EditorPrefs.SetFloat( "PlanetEditor_MountainGain", m_mountainGain );
-		EditorPrefs.SetInt( "PlanetEditor_HillScale", m_hillScale );
-		EditorPrefs.SetFloat( "PlanetEditor_HillPersistence", m_hillPersistence );
-		EditorPrefs.SetFloat( "PlanetEditor_HillGain", m_hillGain );
-		EditorPrefs.SetFloat( "PlanetEditor_XYScaleToMeters", m_xyScaleToMeters );
-		EditorPrefs.SetFloat( "PlanetEditor_ZScaleToMeters", m_zScaleToMeters );
-		EditorPrefs.SetFloat( "PlanetEditor_RainWaterAmount", m_rainWaterAmount );
-		EditorPrefs.SetFloat( "PlanetEditor_GravityConstant", m_gravityConstant );
-		EditorPrefs.SetFloat( "PlanetEditor_FrictionConstant", m_frictionConstant );
-		EditorPrefs.SetFloat( "PlanetEditor_EvaporationConstant", m_evaporationConstant );
-		EditorPrefs.SetFloat( "PlanetEditor_SedimentCapacity", m_sedimentCapacity );
-		EditorPrefs.SetFloat( "PlanetEditor_DepositionConstant", m_depositionConstant );
-		EditorPrefs.SetFloat( "PlanetEditor_DissolvingConstant", m_dissolvingConstant );
-		EditorPrefs.SetFloat( "PlanetEditor_StepDeltaTime", m_stepDeltaTime );
-		EditorPrefs.SetInt( "PlanetEditor_SnapshotInterval", m_snapshotInterval );
-		EditorPrefs.SetInt( "PlanetEditor_FinalBlurRadius", m_finalBlurRadius );
-		EditorPrefs.SetFloat( "PlanetEditor_NormalScale", m_normalScale );
-		EditorPrefs.SetString( "PlanetEditor_GameObjectName", m_gameObjectName );
-		EditorPrefs.SetInt( "PlanetEditor_PlanetId", m_planetId );
+		// other settings
+		EditorPrefs.SetString( "PlanetGenerator_PlanetDataFileName", m_planetDataFileName );
+		EditorPrefs.SetString( "PlanetGenerator_ResourcesPath", m_resourcesPath );
+		EditorPrefs.SetBool( "PlanetGenerator_DebugMode", m_debugMode );
+
+		// non-gas giant planet settings
+		EditorPrefs.SetInt( "PlanetGenerator_TextureMapHeight", m_textureMapHeight );
+		EditorPrefs.SetInt( "PlanetGenerator_NumPolePaddingRows", m_numPolePaddingRows );
+		EditorPrefs.SetInt( "PlanetGenerator_HighBlurRadius", m_highBlurRadius );
+		EditorPrefs.SetInt( "PlanetGenerator_LowBlurRadius", m_lowBlurRadius );
+
+		// base mountain and hill settings
+		EditorPrefs.SetInt( "PlanetGenerator_Octaves", m_octaves );
+
+		// mountain settings
+		EditorPrefs.SetInt( "PlanetGenerator_MountainScale", m_mountainScale );
+		EditorPrefs.SetFloat( "PlanetGenerator_MountainPersistence", m_mountainPersistence );
+		EditorPrefs.SetFloat( "PlanetGenerator_MountainGain", m_mountainGain );
+
+		// hill settings
+		EditorPrefs.SetInt( "PlanetGenerator_HillScale", m_hillScale );
+		EditorPrefs.SetFloat( "PlanetGenerator_HillPersistence", m_hillPersistence );
+		EditorPrefs.SetFloat( "PlanetGenerator_HillGain", m_hillGain );
+
+		// hydraulic erosion settings
+		EditorPrefs.SetBool( "PlanetGenerator_DoHydraulicErosionPass", m_doHydraulicErosionPass );
+		EditorPrefs.SetFloat( "PlanetGenerator_XYScaleToMeters", m_xyScaleToMeters );
+		EditorPrefs.SetFloat( "PlanetGenerator_ZScaleToMeters", m_zScaleToMeters );
+		EditorPrefs.SetFloat( "PlanetGenerator_RainWaterAmount", m_rainWaterAmount );
+		EditorPrefs.SetFloat( "PlanetGenerator_SedimentCapacity", m_sedimentCapacity );
+		EditorPrefs.SetFloat( "PlanetGenerator_GravityConstant", m_gravityConstant );
+		EditorPrefs.SetFloat( "PlanetGenerator_FrictionConstant", m_frictionConstant );
+		EditorPrefs.SetFloat( "PlanetGenerator_EvaporationConstant", m_evaporationConstant );
+		EditorPrefs.SetFloat( "PlanetGenerator_DepositionConstant", m_depositionConstant );
+		EditorPrefs.SetFloat( "PlanetGenerator_DissolvingConstant", m_dissolvingConstant );
+		EditorPrefs.SetFloat( "PlanetGenerator_StepDeltaTime", m_stepDeltaTime );
+		EditorPrefs.SetInt( "PlanetGenerator_FinalBlurRadius", m_finalBlurRadius );
 	}
 
 	void OnGUI()
 	{
 		GUILayout.Label( "Other Settings", EditorStyles.boldLabel );
 
-		m_gameDataFileName = EditorGUILayout.TextField( "Game Data File Name", m_gameDataFileName );
 		m_planetDataFileName = EditorGUILayout.TextField( "Planet Data File Name", m_planetDataFileName );
-		m_resourcesPath = EditorGUILayout.TextField( "Resources Path", m_resourcesPath );
+		m_resourcesPath = EditorGUILayout.TextField( "Planet Resources Path", m_resourcesPath );
+		m_debugMode = EditorGUILayout.Toggle( "Debug Mode", m_debugMode );
 
 		GUILayout.Label( "Non-Gas Giant Planet Settings", EditorStyles.boldLabel );
 
 		m_textureMapHeight = EditorGUILayout.IntField( "Texture Map Height", m_textureMapHeight );
-		m_textureMapWidth = m_textureMapHeight * 2;
 		m_numPolePaddingRows = EditorGUILayout.IntSlider( "Num Pole Padding Rows", m_numPolePaddingRows, 0, 8 );
-		m_landBlurRadius = EditorGUILayout.IntSlider( "Land Blur Radius", m_landBlurRadius, 1, 512 );
-		m_waterBlurRadius = EditorGUILayout.IntSlider( "Water Blur Radius", m_waterBlurRadius, 1, 512 );
+		m_highBlurRadius = EditorGUILayout.IntSlider( "High Blur Radius", m_highBlurRadius, 0, 256 );
+		m_lowBlurRadius = EditorGUILayout.IntSlider( "Low Blur Radius", m_lowBlurRadius, 0, 256 );
+
+		m_textureMapWidth = m_textureMapHeight * 2;
 
 		GUILayout.Label( "Base Mountain and Hill Settings", EditorStyles.boldLabel );
 
-		m_inputGain = EditorGUILayout.Slider( "Input Gain", m_inputGain, 0.0f, 1.0f );
 		m_octaves = EditorGUILayout.IntSlider( "Octaves", m_octaves, 1, 12 );
 
 		GUILayout.Label( "Mountain Settings", EditorStyles.boldLabel );
 
 		m_mountainScale = EditorGUILayout.IntSlider( "Scale", m_mountainScale, 1, 12 );
 		m_mountainPersistence = EditorGUILayout.Slider( "Persistence", m_mountainPersistence, 0.0f, 1.0f );
-		m_mountainPower = EditorGUILayout.Slider( "Power", m_mountainPower, 1.0f, 10.0f );
 		m_mountainGain = EditorGUILayout.Slider( "Output Gain", m_mountainGain, 0.0f, 1.0f );
 
 		GUILayout.Label( "Hill Settings", EditorStyles.boldLabel );
@@ -182,93 +191,29 @@ public class PG_EditorWindow : EditorWindow
 
 		GUILayout.Label( "Hydraulic Erosion Settings", EditorStyles.boldLabel );
 
-		m_xyScaleToMeters = EditorGUILayout.FloatField( "XY Scale To Meters", m_xyScaleToMeters );
-		m_zScaleToMeters = EditorGUILayout.FloatField( "Z Scale To Meters", m_zScaleToMeters );
-		m_rainWaterAmount = EditorGUILayout.FloatField( "Rain Water Amount", m_rainWaterAmount );
-		m_sedimentCapacity = EditorGUILayout.FloatField( "Sediment Capacity", m_sedimentCapacity );
-		m_gravityConstant = EditorGUILayout.FloatField( "Gravity Constant", m_gravityConstant );
-		m_frictionConstant = EditorGUILayout.FloatField( "Friction Constant", m_frictionConstant );
-		m_evaporationConstant = EditorGUILayout.FloatField( "Evaporation Constant", m_evaporationConstant );
-		m_depositionConstant = EditorGUILayout.FloatField( "Deposition Constant", m_depositionConstant );
-		m_dissolvingConstant = EditorGUILayout.FloatField( "Dissolving Constant", m_dissolvingConstant );
-		m_stepDeltaTime = EditorGUILayout.FloatField( "Step Delta Time", m_stepDeltaTime );
-		m_snapshotInterval = EditorGUILayout.IntField( "Snapshot Interval", m_snapshotInterval );
-		m_finalBlurRadius = EditorGUILayout.IntField( "Final Blur Radius", m_finalBlurRadius );
+		m_doHydraulicErosionPass = EditorGUILayout.Toggle( "Enable Hydraulic Erosion", m_doHydraulicErosionPass );
+		m_xyScaleToMeters = EditorGUILayout.Slider( "XY Scale To Meters", m_xyScaleToMeters, 0.001f, 100.0f );
+		m_zScaleToMeters = EditorGUILayout.Slider( "Z Scale To Meters", m_zScaleToMeters, 1.0f, 10000.0f );
+		m_rainWaterAmount = EditorGUILayout.Slider( "Rain Water Amount", m_rainWaterAmount, 0.001f, 10.0f );
+		m_sedimentCapacity = EditorGUILayout.Slider( "Sediment Capacity", m_sedimentCapacity, 0.001f, 500.0f );
+		m_gravityConstant = EditorGUILayout.Slider( "Gravity Constant", m_gravityConstant, -20.0f, 0.0f );
+		m_frictionConstant = EditorGUILayout.Slider( "Friction Constant", m_frictionConstant, 0.0f, 10.0f );
+		m_evaporationConstant = EditorGUILayout.Slider( "Evaporation Constant", m_evaporationConstant, 0.0f, 10.0f );
+		m_depositionConstant = EditorGUILayout.Slider( "Deposition Constant", m_depositionConstant, 0.001f, 100.0f );
+		m_dissolvingConstant = EditorGUILayout.Slider( "Dissolving Constant", m_dissolvingConstant, 0.001f, 100.0f );
+		m_stepDeltaTime = EditorGUILayout.Slider( "Step Delta Time", m_stepDeltaTime, 0.001f, 1.0f );
+		m_finalBlurRadius = EditorGUILayout.IntSlider( "Final Blur Radius", m_finalBlurRadius, 0, 256 );
 
-		GUILayout.Label( "Normal Map Settings", EditorStyles.boldLabel );
+		GUILayout.Space( 15 );
 
-		m_normalScale = EditorGUILayout.Slider( "Scale", m_normalScale, 1.0f, 200.0f );
-
-		GUILayout.Label( "Preview Settings", EditorStyles.boldLabel );
-
-		m_gameObjectName = EditorGUILayout.TextField( "Game Object Name", m_gameObjectName );
-		m_planetId = EditorGUILayout.IntField( "Planet ID", m_planetId );
-
-		if ( GUILayout.Button( "Update Game Data File" ) )
+		if ( GUILayout.Button( "Generate Delta Map For All Planets" ) )
 		{
-			UpdateGameDataFile();
+			MakeSomeMagic();
 		}
-
-		if ( GUILayout.Button( "Generate Texture Maps For Selected Planet" ) )
-		{
-			MakeSomeMagic( Mode.SelectedPlanet );
-		}
-
-		if ( GUILayout.Button( "Generate Texture Maps For ALL Planets" ) )
-		{
-			MakeSomeMagic( Mode.AllPlanets );
-		}
-	}
-
-	void OnInspectorUpdate()
-	{
-		Repaint();
-	}
-
-	// updates the game data file
-	void UpdateGameDataFile()
-	{
-		// show progress bar
-		EditorUtility.DisplayProgressBar( "Planet Generator", "Initializing...", 0.0f );
-
-		// load the planet data
-		if ( LoadPlanetData() )
-		{
-			// load the game data
-			if ( LoadGameData() )
-			{
-				// update the game data
-				for ( var i = 0; i < m_pgPlanetData.m_planetList.Length; i++ )
-				{
-					PG_Planet pgPlanet = m_pgPlanetData.m_planetList[ i ];
-
-					EditorUtility.DisplayProgressBar( "Updating Game Data", "Planet " + ( pgPlanet.m_id + 1 ) + " of " + m_pgPlanetData.m_planetList.Length, (float) pgPlanet.m_id / m_pgPlanetData.m_planetList.Length );
-
-					Planet planet = m_gameData.m_planetList[ pgPlanet.m_id ];
-
-					planet.m_mapIsValid = pgPlanet.m_mapIsValid;
-
-					if ( pgPlanet.m_mapIsValid )
-					{
-						planet.m_mapLegend = pgPlanet.m_mapLegend;
-						planet.m_mapColor = pgPlanet.m_mapColor;
-
-						planet.m_mostUsedColorTop = pgPlanet.GetMostUsedColor( 0 );
-						planet.m_mostUsedColorBottom = pgPlanet.GetMostUsedColor( PG_Planet.c_mapHeight - 1 );
-					}
-				}
-
-				// save the game data
-				SaveGameData();
-			}
-		}
-
-		// show progress bar
-		EditorUtility.ClearProgressBar();
 	}
 
 	// generate maps and show them on the planet game object
-	void MakeSomeMagic( Mode mode )
+	void MakeSomeMagic()
 	{
 		// show progress bar
 		EditorUtility.DisplayProgressBar( "Planet Generator", "Initializing...", 0.0f );
@@ -276,26 +221,6 @@ public class PG_EditorWindow : EditorWindow
 		// load the planet data
 		if ( !LoadPlanetData() )
 		{
-			return;
-		}
-
-		// find the game object
-		m_gameObject = GameObject.Find( m_gameObjectName );
-
-		if ( m_gameObject == null )
-		{
-			ShowNotification( new GUIContent( "Game object could not be found." ) );
-
-			return;
-		}
-
-		// get the mesh renderer from the game object
-		m_meshRenderer = m_gameObject.GetComponent<MeshRenderer>();
-
-		if ( m_meshRenderer == null )
-		{
-			ShowNotification( new GUIContent( "No mesh renderer component found on the game object." ) );
-
 			return;
 		}
 
@@ -325,46 +250,22 @@ public class PG_EditorWindow : EditorWindow
 		m_mountainScalePowerOfTwo = Mathf.RoundToInt( Mathf.Pow( 2, m_mountainScale - 1 ) );
 		m_hillScalePowerOfTwo = Mathf.RoundToInt( Mathf.Pow( 2, m_hillScale - 1 ) );
 
-		// run the selected subroutine
+		// do some magic
 		PG_Planet pgPlanet;
 
-		switch ( mode )
+		for ( var i = 0; i < m_pgPlanetData.m_planetList.Length; i++ )
 		{
-			case Mode.SelectedPlanet:
+			pgPlanet = m_pgPlanetData.m_planetList[ i ];
 
-				pgPlanet = m_pgPlanetData.m_planetList[ m_planetId ];
+			if ( pgPlanet.m_mapIsValid )
+			{
+				var filename = Application.dataPath + "/" + m_resourcesPath + "/Planets/" + pgPlanet.m_id + ".bytes";
 
-				if ( pgPlanet.m_mapIsValid )
+				if ( !File.Exists( filename ) )
 				{
-					ShowNotification( new GUIContent( "Planet data is bad for this planet." ) );
+					GeneratePlanetTextureMaps( pgPlanet, filename );
 				}
-				else
-				{
-					var filename = m_resourcesPath + "\\preview.dat";
-
-					GeneratePlanetTextureMaps( pgPlanet, filename, true );
-				}
-
-				break;
-
-			case Mode.AllPlanets:
-
-				for ( var i = 0; i < m_pgPlanetData.m_planetList.Length; i++ )
-				{
-					pgPlanet = m_pgPlanetData.m_planetList[ i ];
-
-					if ( !pgPlanet.m_mapIsValid )
-					{
-						var filename = Application.dataPath + "\\" + m_resourcesPath + "\\Planets\\" + pgPlanet.m_id + ".dat";
-
-						if ( !File.Exists( filename ) )
-						{
-							GeneratePlanetTextureMaps( pgPlanet, filename, false );
-						}
-					}
-				}
-
-				break;
+			}
 		}
 
 		// show progress bar
@@ -381,65 +282,18 @@ public class PG_EditorWindow : EditorWindow
 		// clear out the old data
 		m_pgPlanetData = null;
 
-		// load it as a text asset
-		var textAsset = Resources.Load( m_planetDataFileName ) as TextAsset;
+		// load it as text
+		var text =  File.ReadAllText( Application.dataPath + "/Editor/" + m_planetDataFileName + ".json" );
 
-		if ( textAsset == null )
+		// convert it from the json string to our planet data class
+		m_pgPlanetData = JsonUtility.FromJson<PG_PlanetData>( text );
+
+		// prep each planet map for generation (speed optimization)
+		foreach ( var pgPlanet in m_pgPlanetData.m_planetList )
 		{
-			ShowNotification( new GUIContent( "Planet data file not found." ) );
+			EditorUtility.DisplayProgressBar( "Initializing Planets", "Planet " + ( pgPlanet.m_id + 1 ) + " of " + m_pgPlanetData.m_planetList.Length, (float) pgPlanet.m_id / m_pgPlanetData.m_planetList.Length );
 
-			return false;
-		}
-		else
-		{
-			// convert it from the json string to our planet data class
-			m_pgPlanetData = JsonUtility.FromJson<PG_PlanetData>( textAsset.text );
-
-			// prep each planet map for generation (speed optimization)
-			foreach ( var pgPlanet in m_pgPlanetData.m_planetList )
-			{
-				EditorUtility.DisplayProgressBar( "Initializing Planets", "Planet " + ( pgPlanet.m_id + 1 ) + " of " + m_pgPlanetData.m_planetList.Length, (float) pgPlanet.m_id / m_pgPlanetData.m_planetList.Length );
-
-				pgPlanet.Initialize();
-			}
-		}
-
-		for ( var i = 0; i < m_pgPlanetData.m_planetList.Length; i++ )
-		{
-			if ( m_pgPlanetData.m_planetList[ i ].m_mapIsValid )
-			{
-				UnityEngine.Debug.Log( "Planet " + i + " has bad data." );
-			}
-		}
-
-		UnityEngine.Debug.Log( "Load Game Data - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
-
-		return true;
-	}
-
-	// load the game data file
-	bool LoadGameData()
-	{
-		var stopwatch = new Stopwatch();
-
-		stopwatch.Start();
-
-		// clear out the old data
-		m_gameData = null;
-
-		// load it as a text asset
-		var textAsset = Resources.Load( m_gameDataFileName ) as TextAsset;
-
-		if ( textAsset == null )
-		{
-			ShowNotification( new GUIContent( "Game data file not found." ) );
-
-			return false;
-		}
-		else
-		{
-			// convert it from the json string to our planet data class
-			m_gameData = JsonUtility.FromJson<GameData>( textAsset.text );
+			pgPlanet.Initialize();
 		}
 
 		UnityEngine.Debug.Log( "Load Planet Data - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
@@ -447,111 +301,167 @@ public class PG_EditorWindow : EditorWindow
 		return true;
 	}
 
-	// save the game data file
-	bool SaveGameData()
-	{
-		var stopwatch = new Stopwatch();
-
-		stopwatch.Start();
-
-		// convert the game data to a json string
-		var jsonResolver = new PG_ContractResolver();
-
-		jsonResolver.IncludeProperty( typeof( Color ), "r", "g", "b", "a" );
-
-		var jsonSerializerSettings = new JsonSerializerSettings()
-		{
-			ContractResolver = jsonResolver
-		};
-
-		var text = JsonConvert.SerializeObject( m_gameData, Formatting.Indented, jsonSerializerSettings );
-
-		// save it
-		using ( var fileStream = new FileStream( Application.dataPath + "\\" + m_resourcesPath + "\\" + m_gameDataFileName, FileMode.Create ) )
-		{
-			using ( StreamWriter writer = new StreamWriter( fileStream ) )
-			{
-				writer.Write( text );
-			}
-		}
-
-		AssetDatabase.Refresh();
-
-		UnityEngine.Debug.Log( "Save Game Data - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
-
-		return true;
-	}
-
 	// call this to generate the planet texture maps
-	void GeneratePlanetTextureMaps( PG_Planet pgPlanet, string filename, bool preview )
+	void GeneratePlanetTextureMaps( PG_Planet pgPlanet, string filename )
 	{
-		if ( pgPlanet.m_surfaceId == 1 )
-		{
-			return;
-		}
-
 		// vars for the progress bar
 		var currentStep = 1;
 		var totalSteps = 9;
 
-		// get prepared source
+		// get prepared source (and save a copy of it for writing out to the header)
 		EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Preparing original map...", (float) currentStep++ / totalSteps );
 
-		var heightBuffer = PrepareMap( pgPlanet );
+		var preparedMap = PrepareMap( pgPlanet );
 
-		// contours pass
-		EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Doing contours pass...", (float) currentStep++ / totalSteps );
+		float minimumDifference;
+		float maximumDifference;
+		byte[] differenceBuffer;
 
-		var contours = new Contours( heightBuffer );
-
-		heightBuffer = contours.Process( m_textureMapScaleX, m_textureMapScaleY, pgPlanet.m_mapLegend );
-
-		// scale to power of two
-		EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Scaling to power of two...", (float) currentStep++ / totalSteps );
-
-		var scaleToPowerOfTwo = new ScaleToPowerOfTwo( heightBuffer );
-
-		heightBuffer = scaleToPowerOfTwo.Process( m_textureMapScaleX, m_textureMapScaleY );
-
-		// gaussian blur pass
-		EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Gaussian blur pass...", (float) currentStep++ / totalSteps );
-
-		var gaussianBlur = new GaussianBlur( heightBuffer );
-
-		heightBuffer = gaussianBlur.Process( m_landBlurRadius, m_waterBlurRadius );
-
-		// not a gas giant?
-		if ( pgPlanet.m_surfaceId != 1 )
+		// gas giant or not?
+		if ( pgPlanet.m_surfaceId == 1 )
 		{
-			// the height buffer we have now is our base height buffer
-			var baseHeightBuffer = heightBuffer;
+			// yes - no difference buffer
+			minimumDifference = 0.0f;
+			maximumDifference = 0.0f;
+			differenceBuffer = null;
+		}
+		else
+		{
+			// contours pass
+			EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Doing contours pass...", (float) currentStep++ / totalSteps );
 
-			// mountains pass
-			EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Creating mountains and hills...", (float) currentStep++ / totalSteps );
+			var contours = new Contours( preparedMap );
 
-			var mountainsAndHills = new MountainsAndHills( heightBuffer );
+			var elevationBuffer = contours.Process( m_textureMapScaleX, m_textureMapScaleY, pgPlanet.m_mapLegend );
 
-			heightBuffer = mountainsAndHills.Process( m_planetId, m_inputGain, m_octaves, m_mountainScalePowerOfTwo, m_hillScalePowerOfTwo, m_mountainPersistence, m_hillPersistence, m_mountainPower, m_mountainGain, m_hillGain );
+			// scale to power of two
+			EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Scaling to power of two...", (float) currentStep++ / totalSteps );
 
-			// hydraulic erosion pass
-			EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Hydraulic erosion pass...", (float) currentStep++ / totalSteps );
+			var scaleToPowerOfTwo = new ScaleToPowerOfTwo( elevationBuffer );
 
-			var hydraulicErosion = new HydraulicErosion( heightBuffer );
+			elevationBuffer = scaleToPowerOfTwo.Process( m_textureMapScaleX, m_textureMapScaleY );
 
-			heightBuffer = hydraulicErosion.Process( m_xyScaleToMeters, m_zScaleToMeters, m_rainWaterAmount, m_sedimentCapacity, m_gravityConstant, m_frictionConstant, m_evaporationConstant, m_depositionConstant, m_dissolvingConstant, m_stepDeltaTime, m_snapshotInterval, m_finalBlurRadius );
+			if ( m_debugMode )
+			{
+				var albedo = new Albedo( elevationBuffer );
 
-			// save height difference as a one channel byte stream
-			var width = heightBuffer.GetLength( 1 );
-			var height = heightBuffer.GetLength( 0 );
+				var albedoBuffer = albedo.Process( pgPlanet.m_mapLegend );
 
-			var minimumDifference = heightBuffer[ 0, 0 ] - baseHeightBuffer[ 0, 0 ];
-			var maximumDifference = minimumDifference;
+				PG_Tools.SaveAsEXR( albedoBuffer, Application.dataPath + "/Editor/" + "Scale to Power of Two.exr" );
+			}
+
+			// at this point we want to save the current elevation buffer to use when calculating the difference map later
+			var baseElevationBuffer = elevationBuffer;
+
+			// now we know what the final width and height of our map is
+			var width = elevationBuffer.GetLength( 1 );
+			var height = elevationBuffer.GetLength( 0 );
+
+			// gaussian blur pass (low)
+			EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Gaussian blur pass (low)...", (float) currentStep++ / totalSteps );
+
+			var gaussianBlur = new GaussianBlur( elevationBuffer );
+
+			var lowBlurredElevationBuffer = gaussianBlur.Process( m_lowBlurRadius, m_lowBlurRadius );
+
+			if ( m_debugMode )
+			{
+				var albedo = new Albedo( lowBlurredElevationBuffer );
+
+				var albedoBuffer = albedo.Process( pgPlanet.m_mapLegend );
+
+				PG_Tools.SaveAsEXR( albedoBuffer, Application.dataPath + "/Editor/" + "Gaussian Blur (Low).exr" );
+			}
+
+			// gaussian blur pass (high)
+			EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Gaussian blur pass (high)...", (float) currentStep++ / totalSteps );
+
+			var highBlurredElevationBuffer = gaussianBlur.Process( m_highBlurRadius, m_highBlurRadius );
+
+			if ( m_debugMode )
+			{
+				var albedo = new Albedo( highBlurredElevationBuffer );
+
+				var albedoBuffer = albedo.Process( pgPlanet.m_mapLegend );
+
+				PG_Tools.SaveAsEXR( albedoBuffer, Application.dataPath + "/Editor/" + "Gaussian Blur (High).exr" );
+			}
+
+			// blend the high and low blur buffers
+			elevationBuffer = new float[ height, width ];
 
 			for ( var y = 0; y < height; y++ )
 			{
 				for ( var x = 0; x < width; x++ )
 				{
-					var difference = heightBuffer[ y, x ] - baseHeightBuffer[ y, x ];
+					var lowBlurredElevation = lowBlurredElevationBuffer[ y, x ];
+					var highBlurredElevation = highBlurredElevationBuffer[ y, x ];
+
+					var t = highBlurredElevation;
+
+					elevationBuffer[ y, x ] = Mathf.Lerp( lowBlurredElevation, highBlurredElevation, t );
+				}
+			}
+
+			if ( m_debugMode )
+			{
+				var albedo = new Albedo( elevationBuffer );
+
+				var albedoBuffer = albedo.Process( pgPlanet.m_mapLegend );
+
+				PG_Tools.SaveAsEXR( albedoBuffer, Application.dataPath + "/Editor/" + "Gaussian Blur (Blended).exr" );
+			}
+
+			// mountains pass
+			EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Creating mountains and hills...", (float) currentStep++ / totalSteps );
+
+			var mountainsAndHills = new MountainsAndHills( elevationBuffer );
+
+			elevationBuffer = mountainsAndHills.Process( pgPlanet.m_id, m_octaves, m_mountainScalePowerOfTwo, m_hillScalePowerOfTwo, m_mountainPersistence, m_hillPersistence, m_mountainGain, m_hillGain );
+
+			if ( m_debugMode )
+			{
+				var albedo = new Albedo( elevationBuffer );
+
+				var albedoBuffer = albedo.Process( pgPlanet.m_mapLegend );
+
+				PG_Tools.SaveAsEXR( albedoBuffer, Application.dataPath + "/Editor/" + "Mountains and Hills.exr" );
+			}
+
+			// hydraulic erosion pass
+			if ( m_doHydraulicErosionPass )
+			{
+				EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Hydraulic erosion pass...", (float) currentStep++ / totalSteps );
+
+				var hydraulicErosion = new HydraulicErosion( elevationBuffer );
+
+				elevationBuffer = hydraulicErosion.Process( m_xyScaleToMeters, m_zScaleToMeters, m_rainWaterAmount, m_sedimentCapacity, m_gravityConstant, m_frictionConstant, m_evaporationConstant, m_depositionConstant, m_dissolvingConstant, m_stepDeltaTime, m_finalBlurRadius );
+
+				if ( m_debugMode )
+				{
+					var albedo = new Albedo( elevationBuffer );
+
+					var albedoBuffer = albedo.Process( pgPlanet.m_mapLegend );
+
+					PG_Tools.SaveAsEXR( albedoBuffer, Application.dataPath + "/Editor/" + "Hydraulic Erosion.exr" );
+				}
+			}
+			else
+			{
+				currentStep++;
+			}
+
+			// figure out what our minimum and maximum deltas are
+			EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Computing deltas...", (float) currentStep++ / totalSteps );
+
+			minimumDifference = elevationBuffer[ 0, 0 ] - baseElevationBuffer[ 0, 0 ];
+			maximumDifference = elevationBuffer[ 0, 0 ] - baseElevationBuffer[ 0, 0 ];
+
+			for ( var y = 0; y < height; y++ )
+			{
+				for ( var x = 0; x < width; x++ )
+				{
+					var difference = elevationBuffer[ y, x ] - baseElevationBuffer[ y, x ];
 
 					if ( difference < minimumDifference )
 					{
@@ -565,160 +475,93 @@ public class PG_EditorWindow : EditorWindow
 				}
 			}
 
+			// rescale float deltas to 0 to 255
 			var elevationScale = 255.0f / ( maximumDifference - minimumDifference );
 
-			var differenceBuffer = new byte[ width * height ];
+			differenceBuffer = new byte[ width * height ];
 
 			for ( var y = 0; y < height; y++ )
 			{
 				for ( var x = 0; x < width; x++ )
 				{
-					var difference = heightBuffer[ y, x ] - baseHeightBuffer[ y, x ];
+					var difference = (byte) Mathf.RoundToInt( ( elevationBuffer[ y, x ] - baseElevationBuffer[ y, x ] - minimumDifference ) * elevationScale );
 
-					differenceBuffer[ y * width + x ] = (byte) Mathf.RoundToInt( ( difference - minimumDifference ) * elevationScale );
+					differenceBuffer[ y * width + x ] = difference;
+
+					elevationBuffer[ y, x ] = difference / 255.0f;
 				}
 			}
 
-			using ( var fileStream = new FileStream( filename, FileMode.Create ) )
+			if ( m_debugMode )
 			{
-				using ( var gZipStream = new GZipStream( fileStream, CompressionMode.Compress, false ) )
+				var albedo = new Albedo( elevationBuffer );
+
+				var albedoBuffer = albedo.Process( pgPlanet.m_mapLegend );
+
+				PG_Tools.SaveAsEXR( albedoBuffer, Application.dataPath + "/Editor/" + "Difference Buffer.exr" );
+			}
+		}
+
+		// save the map!
+		EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Compressing and saving the map...", (float) currentStep++ / totalSteps );
+
+		SavePlanetMap( filename, pgPlanet, preparedMap, minimumDifference, maximumDifference, differenceBuffer );
+	}
+
+	void SavePlanetMap( string filename, PG_Planet pgPlanet, float[,] preparedMap, float minimumDifference, float maximumDifference, byte[] differenceBuffer )
+	{
+		// save map to compressed bytes file with a header
+		using ( var fileStream = new FileStream( filename, FileMode.Create ) )
+		{
+			using ( var gZipStream = new GZipStream( fileStream, CompressionMode.Compress, false ) )
+			{
+				var binaryWriter = new BinaryWriter( gZipStream );
+
+				// version number
+				binaryWriter.Write( c_versionNumber );
+
+				// legend length
+				var legendLength = pgPlanet.m_mapLegend.Length;
+
+				binaryWriter.Write( legendLength );
+
+				// legend
+				for ( var i = 0; i < legendLength; i++ )
 				{
-					gZipStream.Write( BitConverter.GetBytes( minimumDifference ), 0, 4 );
-					gZipStream.Write( BitConverter.GetBytes( maximumDifference ), 0, 4 );
+					binaryWriter.Write( pgPlanet.m_mapLegend[ i ].r );
+					binaryWriter.Write( pgPlanet.m_mapLegend[ i ].g );
+					binaryWriter.Write( pgPlanet.m_mapLegend[ i ].b );
+					binaryWriter.Write( pgPlanet.m_mapLegend[ i ].a );
+				}
 
-					gZipStream.Write( differenceBuffer, 0, differenceBuffer.Length );
+				// prepared map width and height
+				var preparedMapWidth = preparedMap.GetLength( 1 );
+				var preparedMapHeight = preparedMap.GetLength( 0 );
 
+				binaryWriter.Write( preparedMapWidth );
+				binaryWriter.Write( preparedMapHeight );
+
+				// prepared map
+				for ( var y = 0; y < preparedMapHeight; y++ )
+				{
+					for ( var x = 0; x < preparedMapWidth; x++ )
+					{
+						binaryWriter.Write( preparedMap[ y, x ] );
+					}
+				}
+
+				// gas giants have no difference buffer
+				if ( differenceBuffer != null )
+				{
+					// minimum and maximum difference
+					binaryWriter.Write( minimumDifference );
+					binaryWriter.Write( maximumDifference );
+
+					// difference buffer
+					binaryWriter.Write( differenceBuffer );
 				}
 			}
-
-			// albedo pass
-/*
-			EditorUtility.DisplayProgressBar( "Planet " + ( planet.m_id + 1 ), "Albedo pass...", (float) currentStep++ / totalSteps );
-
-			var albedo = new Albedo( heightBuffer );
-
-			albedoBuffer = albedo.Process( m_planetId, m_inputGain, planetMap.m_legend );
-
-			AssetDatabase.ImportAsset( albedoFilename );
-*/
 		}
-		else
-		{
-			// albedo pass (temporary 1x1 black pixel)
-/*
-			EditorUtility.DisplayProgressBar( "Planet " + ( planet.m_id + 1 ), "Albedo pass...", (float) currentStep++ / totalSteps );
-
-			albedoBuffer = new Color[ 1, 1 ];
-
-			albedoBuffer[ 0, 0 ] = Color.black;
-
-			AssetDatabase.ImportAsset( albedoFilename );
-*/
-		}
-/*
-		// change import settings on albedo map
-		var textureImporter = TextureImporter.GetAtPath( albedoFilename ) as TextureImporter;
-
-		textureImporter.filterMode = FilterMode.Trilinear;
-		textureImporter.wrapModeU = TextureWrapMode.Repeat;
-		textureImporter.wrapModeV = TextureWrapMode.Clamp;
-
-		textureImporter.SaveAndReimport();
-
-		// apply the texture map to the material
-		var texture = AssetDatabase.LoadAssetAtPath( albedoFilename, typeof( Texture2D ) ) as Texture2D;
-
-		m_meshRenderer.material.SetTexture( "_Albedo", texture );
-
-		// now we can get the final width and height from the albedo buffer
-		var width = albedoBuffer.GetLength( 1 );
-		var height = albedoBuffer.GetLength( 0 );
-
-		// effects pass
-		EditorUtility.DisplayProgressBar( "Planet " + ( planet.m_id + 1 ), "Effects pass...", (float) currentStep++ / totalSteps );
-
-		var effectsBuffer = new Color[ height, width ];
-
-		Vector3 legendWaterColor = new Vector3( planetMap.m_legend[ 0 ].r, planetMap.m_legend[ 0 ].g, planetMap.m_legend[ 0 ].b );
-
-		for ( var y = 0; y < height; y++ )
-		{
-			for ( var x = 0; x < width; x++ )
-			{
-				// get the albedo color
-				var color = albedoBuffer[ y, x ];
-
-				// get the terrain height
-				var terrainHeight = heightBuffer[ y, x ];
-
-				// calculate the difference between this color and the legend water color
-				var difference = new Vector3( color.r, color.g, color.b ) - legendWaterColor;
-
-				// calculate roughness based on the difference (water = sharp gloss, not water = dull gloss)
-				var roughnessFactor = difference.magnitude * 4.0f;
-
-				var roughness = Mathf.SmoothStep( 0.3f, 1.0f, roughnessFactor );
-
-				// calculate where we want to add in water waves (1 = waves, 0 = no waves)
-				var water = Mathf.Lerp( 1.0f, 0.0f, roughnessFactor );
-
-				// add in roughness due to snow on mountains (snow = add in sharp gloss)
-				roughness = Mathf.Lerp( roughness, 0.2f, ( terrainHeight - 0.25f ) * 3.0f );
-
-				// calculate reflectivity based on roughness (sharp gloss = also reflective, dull gloss = not so reflective)
-				var reflectivity = ( 1.0f - roughness ) * 0.5f;
-
-				// put it all together
-				effectsBuffer[ y, x ] = new Color( roughness, water, reflectivity );
-			}
-		}
-
-		// save the generated map to file
-		var effectsFilename = m_outputPath + "\\" + planet.m_id + "\\Effects.png";
-
-		AssetDatabase.ImportAsset( effectsFilename );
-
-		// change import settings on effects map
-		textureImporter = TextureImporter.GetAtPath( effectsFilename ) as TextureImporter;
-
-		textureImporter.filterMode = FilterMode.Trilinear;
-		textureImporter.wrapModeU = TextureWrapMode.Repeat;
-		textureImporter.wrapModeV = TextureWrapMode.Clamp;
-
-		textureImporter.SaveAndReimport();
-
-		// apply the texture map to the material
-		texture = AssetDatabase.LoadAssetAtPath( effectsFilename, typeof( Texture2D ) ) as Texture2D;
-
-		m_meshRenderer.material.SetTexture( "_Effects", texture );
-
-		// normals pass
-		EditorUtility.DisplayProgressBar( "Planet " + ( planet.m_id + 1 ), "Normals pass...", (float) currentStep++ / totalSteps );
-
-		var normals = new Normals( heightBuffer );
-
-		var normalBuffer = normals.Process( m_normalScale );
-
-		// save the generated map to file
-		var normalsFilename = m_outputPath + "\\" + planet.m_id + "\\Normals.png";
-
-		AssetDatabase.ImportAsset( normalsFilename );
-
-		// change import settings on albedo map
-		textureImporter = TextureImporter.GetAtPath( normalsFilename ) as TextureImporter;
-
-		textureImporter.textureType = TextureImporterType.NormalMap;
-		textureImporter.filterMode = FilterMode.Trilinear;
-		textureImporter.wrapModeU = TextureWrapMode.Repeat;
-		textureImporter.wrapModeV = TextureWrapMode.Clamp;
-
-		textureImporter.SaveAndReimport();
-
-		// apply the texture map to the material
-		texture = AssetDatabase.LoadAssetAtPath( normalsFilename, typeof( Texture2D ) ) as Texture2D;
-
-		m_meshRenderer.material.SetTexture( "_Normal", texture );
-*/
 	}
 
 	// this function generates a copy of the original planet map and adds a number of rows to the top and bottom of the map (to prevent pole pinching)

@@ -25,10 +25,22 @@ class PG_Tools
 		}
 	}
 
-	// saves a texture map to file as png images (color and alpha)
+	// saves a texture map to file as a png image
 	public static void SaveAsPNG( Texture2D textureMap, string filename )
 	{
 		var data = textureMap.EncodeToPNG();
+
+		var directory = Path.GetDirectoryName( filename );
+
+		Directory.CreateDirectory( directory );
+
+		File.WriteAllBytes( filename, data );
+	}
+
+	// saves a texture map to file as an exr images
+	public static void SaveAsEXR( Texture2D textureMap, string filename )
+	{
+		var data = textureMap.EncodeToEXR();
 
 		var directory = Path.GetDirectoryName( filename );
 
@@ -60,7 +72,7 @@ class PG_Tools
 		SaveAsPNG( textureMap, filename );
 	}
 
-	// saves a color array to file as png images (color and alpha)
+	// saves a color array to file as a png image
 	public static void SaveAsPNG( Color[,] colors, string filename )
 	{
 		var width = colors.GetLength( 1 );
@@ -79,5 +91,26 @@ class PG_Tools
 		textureMap.Apply();
 
 		SaveAsPNG( textureMap, filename );
+	}
+
+	// saves a color array to file as an exr image
+	public static void SaveAsEXR( Color[,] colors, string filename )
+	{
+		var width = colors.GetLength( 1 );
+		var height = colors.GetLength( 0 );
+
+		var textureMap = new Texture2D( width, height, TextureFormat.RGBAFloat, false );
+
+		for ( var y = 0; y < height; y++ )
+		{
+			for ( var x = 0; x < width; x++ )
+			{
+				textureMap.SetPixel( x, y, new Color( colors[ y, x ].r, colors[ y, x ].g, colors[ y, x ].b, colors[ y, x ].a ) );
+			}
+		}
+
+		textureMap.Apply();
+
+		SaveAsEXR( textureMap, filename );
 	}
 }

@@ -35,10 +35,10 @@ public class StarSystem : MonoBehaviour
 	void Update()
 	{
 		// get to the player data
-		PlayerData playerData = DataController.m_instance.m_playerData;
+		var playerData = DataController.m_instance.m_playerData;
 
 		// calculate the time to next flare (in FP days)
-		float timeToFlare = m_currentStar.m_daysToNextFlare - playerData.m_starflight.m_gameTime;
+		var timeToFlare = m_currentStar.m_daysToNextFlare - playerData.m_starflight.m_gameTime;
 
 		// did we flare already?
 		if ( timeToFlare <= 0.0f )
@@ -52,10 +52,10 @@ public class StarSystem : MonoBehaviour
 		}
 		else
 		{
-			float size = 1.0f / timeToFlare;
+			var size = 1.0f / timeToFlare;
 
-			float minSize = 128.0f + size * 64.0f;
-			float maxSize = 129.0f + size * 128.0f;
+			var minSize = 128.0f + size * 64.0f;
+			var maxSize = 129.0f + size * 128.0f;
 
 			m_shine.SetSize( minSize, maxSize );
 
@@ -68,7 +68,7 @@ public class StarSystem : MonoBehaviour
 			Debug.Log( "Player leaving the star system - switching to the hyperspace location." );
 
 			// yes - calculate the position of the ship in hyperspace
-			Vector3 newPosition = playerData.m_starflight.m_systemCoordinates;
+			var newPosition = playerData.m_starflight.m_systemCoordinates;
 
 			newPosition.Normalize();
 
@@ -82,7 +82,7 @@ public class StarSystem : MonoBehaviour
 			playerData.m_starflight.m_hyperspaceCoordinates = newPosition;
 
 			// compute the ratio of star system to hyperspace speed
-			float speedRatio = m_spaceflightController.m_player.m_maximumShipSpeedHyperspace / m_spaceflightController.m_player.m_maximumShipSpeedStarSystem;
+			var speedRatio = m_spaceflightController.m_player.m_maximumShipSpeedHyperspace / m_spaceflightController.m_player.m_maximumShipSpeedStarSystem;
 
 			// convert from star system to hyperspace speed
 			playerData.m_starflight.m_currentSpeed *= speedRatio;
@@ -93,13 +93,13 @@ public class StarSystem : MonoBehaviour
 		else
 		{
 			// get the nearest planet controller to the player
-			PlanetController orbitPlanetController = GetNearestPlanetController();
+			var orbitPlanetController = GetNearestPlanetController();
 
 			// did we get a planet controller?
 			if ( orbitPlanetController != null )
 			{
 				// yes - get the distance of the player is to the planet
-				float distanceToPlanet = orbitPlanetController.GetDistanceToPlayer();
+				var distanceToPlanet = orbitPlanetController.GetDistanceToPlayer();
 
 				// are we close enough to orbit the planet?
 				if ( distanceToPlanet <= orbitPlanetController.m_planetModel.transform.localScale.y )
@@ -132,10 +132,10 @@ public class StarSystem : MonoBehaviour
 	public void Initialize()
 	{
 		// get to the game data
-		GameData gameData = DataController.m_instance.m_gameData;
+		var gameData = DataController.m_instance.m_gameData;
 
 		// get to the player data
-		PlayerData playerData = DataController.m_instance.m_playerData;
+		var playerData = DataController.m_instance.m_playerData;
 
 		// did we change stars?
 		if ( ( m_currentStar != null ) && ( m_currentStar.m_id == playerData.m_starflight.m_currentStarId ) )
@@ -150,7 +150,7 @@ public class StarSystem : MonoBehaviour
 		m_currentStar = gameData.m_starList[ playerData.m_starflight.m_currentStarId ];
 
 		// generate or load maps for each planet in this system
-		for ( int i = 0; i < Star.c_maxNumPlanets; i++ )
+		for ( var i = 0; i < Star.c_maxNumPlanets; i++ )
 		{
 			var planet = m_currentStar.GetPlanet( i );
 
@@ -186,7 +186,7 @@ public class StarSystem : MonoBehaviour
 		Debug.Log( "Showing the star system scene." );
 
 		// get to the player data
-		PlayerData playerData = DataController.m_instance.m_playerData;
+		var playerData = DataController.m_instance.m_playerData;
 
 		// show the starsystem
 		gameObject.SetActive( true );
@@ -198,7 +198,7 @@ public class StarSystem : MonoBehaviour
 		m_spaceflightController.m_player.transform.position = playerData.m_starflight.m_systemCoordinates;
 
 		// calculate the new rotation of the player
-		Quaternion newRotation = Quaternion.LookRotation( playerData.m_starflight.m_currentDirection, Vector3.up );
+		var newRotation = Quaternion.LookRotation( playerData.m_starflight.m_currentDirection, Vector3.up );
 
 		// update the player rotation
 		m_spaceflightController.m_player.m_ship.rotation = newRotation;
@@ -259,7 +259,7 @@ public class StarSystem : MonoBehaviour
 	// find and return the planet controller that has the planet we are looking for
 	public PlanetController GetPlanetController( int planetId )
 	{
-		foreach ( PlanetController planetController in m_planetController )
+		foreach ( var planetController in m_planetController )
 		{
 			if ( planetController.m_planet != null )
 			{
@@ -282,7 +282,7 @@ public class StarSystem : MonoBehaviour
 
 		PlanetController nearestPlanetController = null;
 
-		foreach ( PlanetController planetController in m_planetController )
+		foreach ( var planetController in m_planetController )
 		{
 			if ( planetController.m_planet != null )
 			{

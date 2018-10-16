@@ -4,6 +4,7 @@
 /[Bb]uild/
 /[Bb]uilds/
 /Assets/AssetStoreTools*
+/.vs/
 
 # Visual Studio 2015 cache directory
 /Starflight/.vs/
