@@ -10621,7 +10621,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_spaceflightController: {fileID: 280970583}
-  m_image: {fileID: 814568155}
+  m_mapImage: {fileID: 814568155}
+  m_legendImage: {fileID: 423006335}
 --- !u!114 &851218160
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -71,9 +71,11 @@ Shader "Custom/PlanetSprite"
 					float3 fakeWorldPos = float3( v.uv0.x * 4 - 2, v.uv0.y * 2 - 1, 100 );
 					float3 fakeCameraPos = float3( 0, 0, 0 );
 
+					float2 adjustedUV = float2( v.uv0.x, v.uv0.y * 0.8 + 0.1 );
+
 					o.pos = mul( UNITY_MATRIX_VP, posWorld );
-					o.tex0 = v.uv0.xy;
-					o.tex1 = float4( v.uv0.xy, v.uv0.xy ) * _WaterScale + _WaterOffset;
+					o.tex0 = adjustedUV;
+					o.tex1 = float4( adjustedUV.xy, adjustedUV.xy ) * _WaterScale + _WaterOffset;
 					o.eyeDir = normalize( fakeWorldPos - fakeCameraPos );
 
 					float3 normalWorld = normalize( mul( v.normal, (float3x3) unity_WorldToObject ) );

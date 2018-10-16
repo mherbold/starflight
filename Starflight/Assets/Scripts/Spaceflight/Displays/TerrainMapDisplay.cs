@@ -6,7 +6,8 @@ using TMPro;
 public class TerrainMapDisplay : ShipDisplay
 {
 	// the planet
-	public Image m_image;
+	public Image m_mapImage;
+	public Image m_legendImage;
 
 	// unity start
 	public override void Start()
@@ -36,11 +37,18 @@ public class TerrainMapDisplay : ShipDisplay
 		// get the planet controller
 		var planetController = m_spaceflightController.m_starSystem.GetPlanetController( playerData.m_starflight.m_currentPlanetId );
 
-		// apply the material to the planet model
-		m_image.material = new Material( planetController.GetMaterial() )
+		// create a new material for the map
+		m_mapImage.material = new Material( planetController.GetMaterial() )
 		{
 			shader = Shader.Find( "Custom/PlanetSprite" )
 		};
+
+		// create a new material for the legend
+		var legendTexture = planetController.GetLegendTexture();
+
+		var sprite = Sprite.Create( legendTexture, new Rect( 0.0f, 0.0f, legendTexture.width, legendTexture.height ), new Vector2( 0.5f, 0.5f ) );
+
+		m_legendImage.sprite = sprite;
 	}
 
 	// hide

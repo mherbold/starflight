@@ -34,6 +34,9 @@ public class PlanetController : MonoBehaviour
 	// set this to the material for this planet model
 	Material m_material;
 
+	// the legend texture
+	Texture2D m_legendTexture;
+
 	// unity awake
 	void Awake()
 	{
@@ -144,7 +147,13 @@ public class PlanetController : MonoBehaviour
 		return m_material;
 	}
 
-	// generate the texture maps for this planet
+	// get the legend texture for this planet
+	public Texture2D GetLegendTexture()
+	{
+		return m_legendTexture;
+	}
+
+	// generate the texture maps and legend texture for this planet
 	void GenerateMaps()
 	{
 		int textureMapScaleX;
@@ -353,7 +362,7 @@ public class PlanetController : MonoBehaviour
 		// normals texture
 		var normals = new Normals( elevationBuffer );
 
-		var normalBuffer = normals.Process( c_normalScale );
+		var normalBuffer = normals.Process( ( m_planet.m_surfaceId == 1 ) ? 1.0f : c_normalScale );
 
 		textureMap = new Texture2D( width, height, TextureFormat.RGBA32, true );
 
@@ -378,6 +387,19 @@ public class PlanetController : MonoBehaviour
 		m_material.SetTexture( "_Normal", textureMap );
 
 		m_meshRenderer.material = m_material;
+
+		// legend texture
+		m_legendTexture = new Texture2D( 1, legend.Length, TextureFormat.RGB24, false );
+
+		for ( var i = 0; i < legend.Length; i++ )
+		{
+			m_legendTexture.SetPixel( 0, i, legend[ i ] );
+		}
+
+		m_legendTexture.filterMode = FilterMode.Bilinear;
+		m_legendTexture.wrapMode = TextureWrapMode.Clamp;
+
+		m_legendTexture.Apply();
 	}
 
 	// generates the map for a planet we don't have data for
