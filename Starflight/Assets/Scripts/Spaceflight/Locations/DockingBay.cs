@@ -13,6 +13,9 @@ public class DockingBay : MonoBehaviour
 	// convenient access to the spaceflight controller
 	public SpaceflightController m_spaceflightController;
 
+	// the distance from the doors we want to park the ship
+	float m_parkedPosition;
+
 	// unity awake
 	void Awake()
 	{
@@ -69,8 +72,16 @@ public class DockingBay : MonoBehaviour
 		playerData.m_starflight.m_systemCoordinates = new Vector3( 0.0f, 0.0f, 0.0f );
 		m_spaceflightController.m_player.transform.position = playerData.m_starflight.m_systemCoordinates;
 
-		// dolly the camera to the start of the cinematic sequence
-		m_spaceflightController.m_player.DollyCamera( 2048.0f );
+		// recalculate what the starting camera distance from the doors should be
+		var verticalFieldOfView = m_spaceflightController.m_spaceflightUI.m_playerCamera.fieldOfView;
+		var horizontalFieldOfView = 2.0f * Mathf.Atan( Mathf.Tan( verticalFieldOfView * Mathf.Deg2Rad * 0.5f ) * m_spaceflightController.m_spaceflightUI.m_playerCamera.aspect );
+		var angle = Mathf.Deg2Rad * ( 180.0f - 90.0f - horizontalFieldOfView * Mathf.Rad2Deg * 0.5f );
+		var tanAngle = Mathf.Tan( angle );
+		var halfDoorWidth = 276.5f;
+		
+		m_parkedPosition = Mathf.Min( 2048.0f, m_dockingBayDoorTop.transform.position.y + halfDoorWidth * tanAngle );
+
+		m_spaceflightController.m_player.DollyCamera( m_parkedPosition );
 
 		// freeze the player
 		m_spaceflightController.m_player.Freeze();
@@ -121,5 +132,11 @@ public class DockingBay : MonoBehaviour
 
 		// play the docking bay door open sound
 		SoundController.m_instance.PlaySound( SoundController.Sound.DockingBayDoorClose );
+	}
+
+	// return the distance from the doors the ship is parked at
+	public float GetParkedPosition()
+	{
+		return m_parkedPosition;
 	}
 }

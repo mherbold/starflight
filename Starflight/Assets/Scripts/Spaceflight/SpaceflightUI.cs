@@ -10,6 +10,9 @@ public class SpaceflightUI : MonoBehaviour
 	public TextMeshProUGUI m_currentOfficer;
 	public TextMeshProUGUI m_coordinates;
 
+	// the player camera
+	public Camera m_playerCamera;
+
 	// the map object
 	public RawImage m_map;
 
@@ -45,6 +48,32 @@ public class SpaceflightUI : MonoBehaviour
 	{
 		// we are not currently animating the countdown text
 		m_animatingCountdownText = false;
+
+		// force the canvas to update (so rectTransform is updated and correct)
+		Canvas.ForceUpdateCanvases();
+
+		// get the current map size (in pixels)
+		var scaleFactor = m_map.canvas.scaleFactor;
+
+		var mapSize = new Vector2( m_map.rectTransform.rect.width, m_map.rectTransform.rect.height ) * m_map.canvas.scaleFactor;
+
+		// create a new render texture
+		var renderTexture = new RenderTexture( Mathf.CeilToInt( mapSize.x ), Mathf.CeilToInt( mapSize.y ), 24, RenderTextureFormat.ARGB32 )
+		{
+			antiAliasing = 1,
+			useMipMap = false,
+			autoGenerateMips = false,
+			useDynamicScale = false,
+			wrapMode = TextureWrapMode.Clamp,
+			filterMode = FilterMode.Point,
+			anisoLevel = 0
+		};
+
+		// update the map to use the new render texture
+		m_map.texture = renderTexture;
+
+		// update the camera to use the new render texture
+		m_playerCamera.targetTexture = renderTexture;
 	}
 
 	// unity update
@@ -92,7 +121,7 @@ public class SpaceflightUI : MonoBehaviour
 				m_isFading = false;
 			}
 
-			float alpha = Mathf.SmoothStep( m_originalFadeAmount, m_targetFadeAmount, m_fadeTimer / m_fadeDuration );
+			var alpha = Mathf.SmoothStep( m_originalFadeAmount, m_targetFadeAmount, m_fadeTimer / m_fadeDuration );
 
 			m_map.color = new Color( alpha, alpha, alpha );
 		}
@@ -155,12 +184,12 @@ public class SpaceflightUI : MonoBehaviour
 	// call this to update the coordinates above the map display
 	public void UpdateCoordinates()
 	{
-		PlayerData playerData = DataController.m_instance.m_playerData;
+		var playerData = DataController.m_instance.m_playerData;
 
-		Vector3 gameCoordinates = Tools.WorldToGameCoordinates( playerData.m_starflight.m_hyperspaceCoordinates );
+		var gameCoordinates = Tools.WorldToGameCoordinates( playerData.m_starflight.m_hyperspaceCoordinates );
 
-		int x = Mathf.RoundToInt( gameCoordinates.x );
-		int y = Mathf.RoundToInt( gameCoordinates.z );
+		var x = Mathf.RoundToInt( gameCoordinates.x );
+		var y = Mathf.RoundToInt( gameCoordinates.z );
 
 		m_coordinates.text = x.ToString() + "   " + y.ToString();
 	}

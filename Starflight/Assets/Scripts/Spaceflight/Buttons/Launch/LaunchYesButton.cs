@@ -136,7 +136,7 @@ public class LaunchYesButton : ShipButton
 						}
 
 						// update the position of the camera
-						m_spaceflightController.m_player.DollyCamera( 2048.0f - y );
+						m_spaceflightController.m_player.DollyCamera( m_spaceflightController.m_dockingBay.GetParkedPosition() - y );
 
 						// fade the map out
 						m_spaceflightController.m_spaceflightUI.FadeMap( 0.0f, 7.0f );
