@@ -156,7 +156,7 @@ public class HydraulicErosion
 		for ( var step = 0; step < snapshotSteps; step++ )
 		{
 			// show progress bar
-			EditorUtility.DisplayProgressBar( "Planet Generator", "Making it rain...", (float) step / ( snapshotSteps - 1 ) );
+			// EditorUtility.DisplayProgressBar( "Planet Generator", "Making it rain...", (float) step / ( snapshotSteps - 1 ) );
 
 			var offset = step * snapshotInterval;
 
