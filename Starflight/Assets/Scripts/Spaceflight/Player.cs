@@ -184,7 +184,7 @@ public class Player : MonoBehaviour
 				m_ship.rotation = Quaternion.LookRotation( playerData.m_starflight.m_currentDirection, Vector3.up );
 
 				// figure out how fast to rotate the skybox
-				float multiplier = ( playerData.m_starflight.m_location == Starflight.Location.Hyperspace ) ? ( 2.0f / 30.0f ) : ( 1.0f / 30.0f );
+				float multiplier = ( playerData.m_starflight.m_location == Starflight.Location.Hyperspace ) ? ( 1.0f / 30.0f ) : ( 1.0f / 60.0f );
 
 				// rotate the skybox
 				RotateSkybox( playerData.m_starflight.m_currentDirection, playerData.m_starflight.m_currentSpeed * Time.deltaTime * multiplier );

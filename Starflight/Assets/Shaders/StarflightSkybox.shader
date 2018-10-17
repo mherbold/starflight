@@ -67,12 +67,12 @@ Shader "Custom/Starflight Skybox"
 
 			float4x4 projectionMatrix = UNITY_MATRIX_P;
 
-			float halfFov = atan( 1.0 / projectionMatrix._11 );
+			//float halfFov = atan( 1.0 / projectionMatrix._11 );
 
-			halfFov *= 1.5;
+			//halfFov *= 1.5;
 
-			projectionMatrix._11 = 1 / tan( halfFov );
-			projectionMatrix._22 = -projectionMatrix._11;
+			//projectionMatrix._11 = 1 / tan( halfFov );
+			//projectionMatrix._22 = -projectionMatrix._11;
 
 			o.position = mul( projectionMatrix, viewPosition );
 			o.texcoord = vd.texcoord;
