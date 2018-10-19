@@ -161,7 +161,7 @@ ModelImporter:
       name: Pad - Outside
     second: {fileID: 2100000, guid: 921a4cd9e5d0d2a4fa68d72e3df61bb5, type: 2}
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -231,7 +231,6 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     rootMotionBoneName: 
-    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
