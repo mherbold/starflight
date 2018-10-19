@@ -3436,6 +3436,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 672907609}
     m_Modifications:
+    - target: {fileID: 2300000, guid: 5026f57b575c8e34f8130ed1682794b0, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5026f57b575c8e34f8130ed1682794b0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 25
@@ -3484,6 +3488,18 @@ Prefab:
       propertyPath: m_Name
       value: Planet
       objectReference: {fileID: 0}
+    - target: {fileID: 3300000, guid: 5026f57b575c8e34f8130ed1682794b0, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: 5026f57b575c8e34f8130ed1682794b0, type: 3}
+    - target: {fileID: 2300000, guid: 5026f57b575c8e34f8130ed1682794b0, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: aba894507df7f404b870996e31b1c321, type: 2}
+    - target: {fileID: 2300000, guid: 5026f57b575c8e34f8130ed1682794b0, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: aba894507df7f404b870996e31b1c321, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5026f57b575c8e34f8130ed1682794b0, type: 3}
   m_IsPrefabAsset: 0
