@@ -89,6 +89,24 @@ public class Planet
 		return new Vector3( scale, scale, scale );
 	}
 
+	// whether or not this planet is a gas giant
+	public bool IsGasGiant()
+	{
+		return ( m_surfaceId == 1 );
+	}
+
+	// whether or not this planet has an atmosphere
+	public bool HasAtmosphere()
+	{
+		return !IsGasGiant() && ( m_atmosphereDensityId != 0 );
+	}
+
+	// return the atmosphere density as a float
+	public float GetAtmosphereDensity()
+	{
+		return ( m_atmosphereDensityId - 1.0f ) / 4.0f;
+	}
+
 	// get the atmosphere text
 	public string GetAtmosphereText()
 	{

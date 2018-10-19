@@ -97,7 +97,7 @@ Shader "Custom/Planet"
 					/* this converts from DXT5NM to XYZ */
 					normal.x *= normal.w;
 					normal.xy = ( normal.xy * 2 - 1 );
-					normal.z = sqrt( 1 - saturate( dot(normal.xy, normal.xy ) ) );
+					normal.z = sqrt( 1 - saturate( dot( normal.xy, normal.xy ) ) );
 					/* */
 
 					/* this converts from DXT5NM to XYZ */
@@ -120,7 +120,7 @@ Shader "Custom/Planet"
 					normalWorld = normalize( normalWorld );
 					tangentWorld = normalize( tangentWorld - normalWorld * dot( tangentWorld, normalWorld ) );
 					half3 normalCrossTangent = cross( normalWorld, tangentWorld );
-					binormalWorld = normalCrossTangent * sign( dot(normalCrossTangent, binormalWorld ) );
+					binormalWorld = normalCrossTangent * sign( dot( normalCrossTangent, binormalWorld ) );
 					/* */
 
 					/* compute world space normal */
@@ -240,7 +240,7 @@ Shader "Custom/Planet"
 					/* this converts from DXT5NM to XYZ */
 					normal.x *= normal.w;
 					normal.xy = ( normal.xy * 2 - 1 );
-					normal.z = sqrt( 1 - saturate( dot(normal.xy, normal.xy ) ) );
+					normal.z = sqrt( 1 - saturate( dot( normal.xy, normal.xy ) ) );
 					/* */
 
 					/* this converts from DXT5NM to XYZ */
@@ -263,7 +263,7 @@ Shader "Custom/Planet"
 					normalWorld = normalize( normalWorld );
 					tangentWorld = normalize( tangentWorld - normalWorld * dot( tangentWorld, normalWorld ) );
 					half3 normalCrossTangent = cross( normalWorld, tangentWorld );
-					binormalWorld = normalCrossTangent * sign( dot(normalCrossTangent, binormalWorld ) );
+					binormalWorld = normalCrossTangent * sign( dot( normalCrossTangent, binormalWorld ) );
 					/* */
 
 					/* compute world space normal */

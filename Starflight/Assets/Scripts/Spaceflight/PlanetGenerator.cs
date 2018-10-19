@@ -202,7 +202,7 @@ public class PlanetGenerator
 							}
 						}
 
-						if ( m_planet.m_surfaceId != 1 )
+						if ( !m_planet.IsGasGiant() )
 						{
 							m_minimumDifference = binaryReader.ReadSingle();
 							m_maximumDifference = binaryReader.ReadSingle();
@@ -225,7 +225,7 @@ public class PlanetGenerator
 
 	void DoContours()
 	{
-		if ( m_planet.m_surfaceId == 1 )
+		if ( m_planet.IsGasGiant() )
 		{
 			m_textureMapScaleX = c_gasGiantTextureMapScaleX;
 			m_textureMapScaleY = c_gasGiantTextureMapScaleY;
@@ -257,7 +257,7 @@ public class PlanetGenerator
 		m_textureWidth = m_elevationBuffer.GetLength( 1 );
 		m_textureHeight = m_elevationBuffer.GetLength( 0 );
 
-		if ( m_planet.m_surfaceId == 1 )
+		if ( m_planet.IsGasGiant() )
 		{
 			var gaussianBlur = new GaussianBlur( m_elevationBuffer );
 
@@ -330,7 +330,7 @@ public class PlanetGenerator
 				// get the albedo color
 				var color = m_albedoBuffer[ y, x ];
 
-				var water = ( ( m_planet.m_surfaceId != 1 ) && ( color.a < 0.5f ) ) ? 1.0f : 0.0f;
+				var water = ( !m_planet.IsGasGiant() && ( color.a < 0.5f ) ) ? 1.0f : 0.0f;
 
 				// make it shiny where water is
 				var roughness = ( water == 1.0f ) ? 0.3f : 1.0f;
@@ -382,7 +382,7 @@ public class PlanetGenerator
 	{
 		var normals = new Normals( m_elevationBuffer );
 
-		m_normalBuffer = normals.Process( ( m_planet.m_surfaceId == 1 ) ? 1.0f : c_normalScale );
+		m_normalBuffer = normals.Process( m_planet.IsGasGiant() ? 1.0f : c_normalScale );
 
 		m_currentStep++;
 	}

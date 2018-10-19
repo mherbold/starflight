@@ -1,0 +1,119 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: LowCloud
+  m_Shader: {fileID: 4800000, guid: ac2b0859971724c4f9138c653f11b8a0, type: 3}
+  m_ShaderKeywords: _ALPHABLEND_ON _EMISSION
+  m_LightmapFlags: 1
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap:
+    RenderType: Transparent
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DensityMap:
+        m_Texture: {fileID: 2800000, guid: 779866668e015bc4c9c39d404c6e22da, type: 3}
+        m_Scale: {x: 0.5, y: 0.5}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Octave0:
+        m_Texture: {fileID: 2800000, guid: baad7a7a551467f40971f262f976a1c2, type: 3}
+        m_Scale: {x: 2, y: 2}
+        m_Offset: {x: 1, y: 1}
+    - _Octave1:
+        m_Texture: {fileID: 2800000, guid: cb1089d6c978048dfbc7db16dbbd6f57, type: 3}
+        m_Scale: {x: 2, y: 2}
+        m_Offset: {x: 1, y: 1}
+    - _Octave2:
+        m_Texture: {fileID: 2800000, guid: 779866668e015bc4c9c39d404c6e22da, type: 3}
+        m_Scale: {x: 5, y: 4.8}
+        m_Offset: {x: 0, y: 0}
+    - _Octave3:
+        m_Texture: {fileID: 2800000, guid: 9b33bcedc0d330344b920874d80e05b1, type: 3}
+        m_Scale: {x: 6, y: 5.9}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ScatterMap0:
+        m_Texture: {fileID: 2800000, guid: baad7a7a551467f40971f262f976a1c2, type: 3}
+        m_Scale: {x: 0.5, y: 0.5}
+        m_Offset: {x: 0, y: 0}
+    - _ScatterMap1:
+        m_Texture: {fileID: 2800000, guid: 918c11da1b5e132479069533b81df005, type: 3}
+        m_Scale: {x: 0.5, y: 0.5}
+        m_Offset: {x: 0, y: 0}
+    - _TextureMap:
+        m_Texture: {fileID: 2800000, guid: 9b33bcedc0d330344b920874d80e05b1, type: 3}
+        m_Scale: {x: 0.5, y: 0.5}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Alpha: 2
+    - _Brightness: 0.2
+    - _BumpScale: 1
+    - _Cutoff: 0.5
+    - _Density: 1.4
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 10
+    - _Emptiness: 0.096
+    - _GlossMapScale: 1
+    - _Glossiness: 0.5
+    - _GlossyReflections: 1
+    - _Metallic: 0
+    - _Mode: 2
+    - _OcclusionStrength: 1
+    - _Parallax: 0.02
+    - _Sharpness: 0.712
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _Speed: -0.25
+    - _SrcBlend: 5
+    - _UVSec: 0
+    - _ZWrite: 0
+    m_Colors:
+    - _CloudColor: {r: 1, g: 1, b: 1, a: 0.19607843}
+    - _Color: {r: 1, g: 1, b: 1, a: 0.422}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _SkyColor: {r: 0, g: 0.036156174, b: 0.16911763, a: 1}
+    - _SkyColor0: {r: 0.6503027, g: 0.70802695, b: 0.71323526, a: 0.5}
+    - _SkyColor1: {r: 0.3825692, g: 0.42283732, b: 0.42647058, a: 0.5}

@@ -6,8 +6,11 @@ public class InOrbit : MonoBehaviour
 	// the nebula overlay
 	public GameObject m_nebula;
 
-	// the planet
-	public MeshRenderer m_planet;
+	// the planet model
+	public MeshRenderer m_planetModel;
+
+	// the planet cloud
+	public MeshRenderer m_planetClouds;
 
 	// convenient access to the spaceflight controller
 	public SpaceflightController m_spaceflightController;
@@ -29,7 +32,7 @@ public class InOrbit : MonoBehaviour
 	void Update()
 	{
 		// slowly spin the planet
-		m_spin += Time.deltaTime;
+		m_spin += Time.deltaTime * 0.1f;
 
 		// wrap the spin around to avoid FP issues
 		if ( m_spin >= 360.0f )
@@ -41,7 +44,7 @@ public class InOrbit : MonoBehaviour
 		var newRotation = Quaternion.Euler( 0.0f, 0.0f, m_spin );
 
 		// apply it to the planet
-		m_planet.transform.localRotation = newRotation;
+		m_planetModel.transform.localRotation = newRotation;
 	}
 
 	// call this to hide the in orbit objects
@@ -83,11 +86,12 @@ public class InOrbit : MonoBehaviour
 		// get the planet controller
 		var planetController = m_spaceflightController.m_starSystem.GetPlanetController( playerData.m_starflight.m_currentPlanetId );
 
-		// set the scale of the planet
-		m_planet.transform.localScale = planetController.m_planet.GetScale();
+		// set the scale of the planet model
+		m_planetModel.transform.localScale = planetController.m_planet.GetScale();
+		m_planetClouds.transform.localScale = m_planetModel.transform.localScale * 1.01f;
 
 		// make sure the camera is at the right height above the zero plane
-		var orbitHeight = Mathf.Lerp( 256.0f, 768.0f, m_planet.transform.localScale.z / 320.0f );
+		var orbitHeight = Mathf.Lerp( 256.0f, 768.0f, m_planetModel.transform.localScale.z / 320.0f );
 
 		m_spaceflightController.m_player.DollyCamera( orbitHeight );
 
@@ -113,7 +117,31 @@ public class InOrbit : MonoBehaviour
 		m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>Orbit established.</color>" );
 
 		// set the position of the sun
-		m_planet.material.SetVector( "_SunPosition", new Vector4( -10000.0f, 5000.0f, 0.0f, 0.0f ) );
+		Vector4 sunPosition = new Vector4( -10000.0f, 5000.0f, 0.0f, 0.0f );
+
+		m_planetModel.material.SetVector( "_SunPosition", sunPosition );
+		m_planetClouds.material.SetVector( "_SunPosition", sunPosition );
+
+		// does the planet have an atmosphere?
+		if ( planetController.m_planet.HasAtmosphere() )
+		{
+			// yes - show the clouds
+			m_planetClouds.gameObject.SetActive( true );
+
+			// get the atmosphere density
+			var atmosphereDensity = planetController.m_planet.GetAtmosphereDensity();
+
+			// set the density of the clouds
+			m_planetClouds.material.SetFloat( "_Density", 2.0f - atmosphereDensity );
+
+			// set the opacity of the clouds
+			m_planetClouds.material.SetColor( "_Color", new Color( 1.0f, 1.0f, 1.0f, atmosphereDensity * 0.5f + 0.5f ) );
+		}
+		else
+		{
+			// no - hide the clouds
+			m_planetClouds.gameObject.SetActive( false );
+		}
 
 		// apply the material to the planet model
 		MaterialUpdated();
@@ -130,7 +158,7 @@ public class InOrbit : MonoBehaviour
 			var planetController = m_spaceflightController.m_starSystem.GetPlanetController( playerData.m_starflight.m_currentPlanetId );
 
 			// apply the material to the planet model
-			m_planet.material = planetController.GetMaterial();
+			m_planetModel.material = planetController.GetMaterial();
 		}
 	}
 }

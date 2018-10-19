@@ -16,6 +16,9 @@ public class PlanetController : MonoBehaviour
 	// access to the planet model
 	public GameObject m_planetModel;
 
+	// access to the planet clouds
+	public MeshRenderer m_planetClouds;
+
 	// access to the starport model
 	public GameObject m_starportModel;
 
@@ -69,7 +72,11 @@ public class PlanetController : MonoBehaviour
 			}
 
 			// set the position of the sun based on location
-			m_material.SetVector( "_SunPosition", new Vector4( 0.0f, 2048.0f, 0.0f, 0.0f ) );
+			Vector4 sunPosition = new Vector4( 0.0f, 2048.0f, 0.0f, 0.0f );
+
+			m_material.SetVector( "_SunPosition", sunPosition );
+
+			m_planetClouds.material.SetVector( "_SunPosition", sunPosition );
 		}
 	}
 
@@ -133,9 +140,32 @@ public class PlanetController : MonoBehaviour
 
 		// scale the planet based on its mass
 		m_planetModel.transform.localScale = m_planet.GetScale();
+		m_planetClouds.transform.localScale = m_planetModel.transform.localScale * 1.01f;
 
 		// move the planet to be just below the zero plane
 		m_planetModel.transform.localPosition = new Vector3( 0.0f, -16.0f - m_planetModel.transform.localScale.y, 0.0f );
+		m_planetClouds.transform.localPosition = m_planetModel.transform.localPosition;
+
+		// does the planet have an atmosphere?
+		if ( m_planet.HasAtmosphere() )
+		{
+			// yes - show the clouds
+			m_planetClouds.gameObject.SetActive( true );
+
+			// get the atmosphere density
+			var atmosphereDensity = m_planet.GetAtmosphereDensity();
+
+			// set the density of the clouds
+			m_planetClouds.material.SetFloat( "_Density", 2.0f - atmosphereDensity );
+
+			// set the opacity of the clouds
+			m_planetClouds.material.SetColor( "_Color", new Color( 1.0f, 1.0f, 1.0f, atmosphereDensity * 0.5f + 0.5f ) );
+		}
+		else
+		{
+			// no - hide the clouds
+			m_planetClouds.gameObject.SetActive( false );
+		}
 	}
 
 	// call this to get the distance to the player
