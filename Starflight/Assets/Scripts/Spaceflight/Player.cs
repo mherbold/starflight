@@ -295,7 +295,7 @@ public class Player : MonoBehaviour
 			return;
 		}
 
-		Debug.Log( "Showing the player (ship)." );
+		// Debug.Log( "Showing the player (ship)." );
 
 		// show the ship
 		m_ship.gameObject.SetActive( true );
@@ -309,7 +309,7 @@ public class Player : MonoBehaviour
 			return;
 		}
 
-		Debug.Log( "Hiding the player (ship)." );
+		// Debug.Log( "Hiding the player (ship)." );
 
 		// hide the ship
 		m_ship.gameObject.SetActive( false );
@@ -404,7 +404,7 @@ public class Player : MonoBehaviour
 	// utility to switch a set of skybox textures (which = "A" or "B")
 	void SwitchSkyboxTextures( string which, string race )
 	{
-		Debug.Log( "Switching skybox " + which + " to " + race + "." );
+		// Debug.Log( "Switching skybox " + which + " to " + race + "." );
 
 		// figure out which set of textures we want to use
 		Texture[] textureList;

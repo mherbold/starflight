@@ -21,9 +21,9 @@ public class GaussianBlur
 
 	public float[,] Process( int xBlurRadius, int yBlurRadius )
 	{
-		UnityEngine.Debug.Log( "*** Gaussian Blur Process ***" );
+		// UnityEngine.Debug.Log( "*** Gaussian Blur Process ***" );
 
-		var stopwatch = new Stopwatch();
+		// var stopwatch = new Stopwatch();
 
 		var parallelOptions = new ParallelOptions() { MaxDegreeOfParallelism = -1 };
 
@@ -46,7 +46,7 @@ public class GaussianBlur
 
 		// blur X
 
-		stopwatch.Start();
+		// stopwatch.Start();
 
 		var steps = 16;
 		var stepSize = m_height / steps;
@@ -82,7 +82,7 @@ public class GaussianBlur
 			}
 		} );
 
-		UnityEngine.Debug.Log( "Blur X - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
+		// UnityEngine.Debug.Log( "Blur X - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
 
 		// compute blur kernel
 
@@ -100,7 +100,7 @@ public class GaussianBlur
 
 		// blur Y
 
-		stopwatch.Restart();
+		// stopwatch.Restart();
 
 		stepSize = m_width / steps;
 
@@ -135,9 +135,9 @@ public class GaussianBlur
 			}
 		} );
 
-		UnityEngine.Debug.Log( "Blur Y - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
+		// UnityEngine.Debug.Log( "Blur Y - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
 
-		stopwatch.Restart();
+		// stopwatch.Restart();
 
 		// return the processed buffer
 

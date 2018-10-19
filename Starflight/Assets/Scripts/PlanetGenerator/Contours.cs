@@ -20,11 +20,11 @@ public class Contours
 
 	public float[,] Process( int xScale, int yScale, Color[] legend )
 	{
-		UnityEngine.Debug.Log( "*** Contours Process ***" );
+		// UnityEngine.Debug.Log( "*** Contours Process ***" );
 
-		var stopwatch = new Stopwatch();
+		// var stopwatch = new Stopwatch();
 
-		stopwatch.Start();
+		// stopwatch.Start();
 
 		var parallelOptions = new ParallelOptions() { MaxDegreeOfParallelism = -1 };
 
@@ -269,7 +269,7 @@ public class Contours
 			} );
 		}
 
-		UnityEngine.Debug.Log( "Total - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
+		// UnityEngine.Debug.Log( "Total - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
 
 		return outputBuffer;
 	}

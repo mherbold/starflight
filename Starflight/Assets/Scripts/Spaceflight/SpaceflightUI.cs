@@ -19,6 +19,11 @@ public class SpaceflightUI : MonoBehaviour
 	// the countdown text
 	public TextMeshProUGUI m_countdown;
 
+	// the pop up message box
+	public GameObject m_popup;
+	public TextMeshProUGUI m_popupMessage;
+	public RectTransform m_popupFill;
+
 	// our countdown text animation timer
 	float m_countdownTimer;
 
@@ -192,5 +197,19 @@ public class SpaceflightUI : MonoBehaviour
 		var y = Mathf.RoundToInt( gameCoordinates.z );
 
 		m_coordinates.text = x.ToString() + "   " + y.ToString();
+	}
+
+	public void ShowPopup( string message, float progress )
+	{
+		m_popup.SetActive( true );
+
+		m_popupMessage.text = message;
+
+		m_popupFill.anchorMax = new Vector2( progress, 1.0f );
+	}
+
+	public void HidePopup()
+	{
+		m_popup.SetActive( false );
 	}
 }

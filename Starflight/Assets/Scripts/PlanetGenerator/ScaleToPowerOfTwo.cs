@@ -19,11 +19,11 @@ public class ScaleToPowerOfTwo
 
 	public float[,] Process( int xScale, int yScale )
 	{
-		UnityEngine.Debug.Log( "*** Scale to Power of Two Process ***" );
+		// UnityEngine.Debug.Log( "*** Scale to Power of Two Process ***" );
 
-		var stopwatch = new Stopwatch();
+		// var stopwatch = new Stopwatch();
 
-		stopwatch.Start();
+		// stopwatch.Start();
 
 		var height = GetNextPowerOfTwo( m_height );
 		var width = GetNextPowerOfTwo( m_width );
@@ -78,7 +78,7 @@ public class ScaleToPowerOfTwo
 			}
 		}
 
-		UnityEngine.Debug.Log( "Total - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
+		// UnityEngine.Debug.Log( "Total - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
 
 		// return the processed buffer
 

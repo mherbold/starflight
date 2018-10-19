@@ -29,7 +29,7 @@ public class DisplayController : MonoBehaviour
 	// change the current display to a different one
 	public void ChangeDisplay( ShipDisplay newDisplay )
 	{
-		Debug.Log( "Showing display " + newDisplay );
+		// Debug.Log( "Showing display " + newDisplay );
 
 		// inactivate all of the display UI
 		m_statusDisplay.Hide();

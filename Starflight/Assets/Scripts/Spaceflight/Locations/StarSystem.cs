@@ -144,7 +144,7 @@ public class StarSystem : MonoBehaviour
 			return;
 		}
 
-		Debug.Log( "Initializing the star system with star ID " + playerData.m_starflight.m_currentStarId );
+		// Debug.Log( "Initializing the star system with star ID " + playerData.m_starflight.m_currentStarId );
 
 		// yes - so remember the current star
 		m_currentStar = gameData.m_starList[ playerData.m_starflight.m_currentStarId ];
@@ -169,7 +169,7 @@ public class StarSystem : MonoBehaviour
 			return;
 		}
 
-		Debug.Log( "Hiding the star system scene." );
+		// Debug.Log( "Hiding the star system scene." );
 
 		// hide the starsystem
 		gameObject.SetActive( false );
@@ -183,7 +183,7 @@ public class StarSystem : MonoBehaviour
 			return;
 		}
 
-		Debug.Log( "Showing the star system scene." );
+		// Debug.Log( "Showing the star system scene." );
 
 		// get to the player data
 		var playerData = DataController.m_instance.m_playerData;
@@ -303,5 +303,38 @@ public class StarSystem : MonoBehaviour
 	public int GetPlanetToOrbit()
 	{
 		return m_planetToOrbitId;
+	}
+
+	public bool GeneratingPlanets()
+	{
+		foreach ( var planetController in m_planetController )
+		{
+			if ( !planetController.MapsGenerated() )
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public float GeneratePlanets()
+	{
+		var totalProgress = 0.0f;
+
+		foreach ( var planetController in m_planetController )
+		{
+			if ( !planetController.MapsGenerated() )
+			{
+				var progress = planetController.GenerateMaps();
+
+				totalProgress += progress / 1.2f / 8.0f;
+				break;
+			}
+
+			totalProgress += 1.0f / 8.0f;
+		}
+
+		return totalProgress;
 	}
 }

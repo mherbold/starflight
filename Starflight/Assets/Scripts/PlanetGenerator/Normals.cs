@@ -23,11 +23,11 @@ public class Normals
 
 	public Color[,] Process( float scale )
 	{
-		UnityEngine.Debug.Log( "*** Normals Process ***" );
+		// UnityEngine.Debug.Log( "*** Normals Process ***" );
 
-		var stopwatch = new Stopwatch();
+		// var stopwatch = new Stopwatch();
 
-		stopwatch.Start();
+		// stopwatch.Start();
 
 		var parallelOptions = new ParallelOptions() { MaxDegreeOfParallelism = -1 };
 
@@ -95,7 +95,7 @@ public class Normals
 			}
 		} );
 
-		UnityEngine.Debug.Log( "Total - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
+		// UnityEngine.Debug.Log( "Total - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
 
 		// return the processed buffer
 

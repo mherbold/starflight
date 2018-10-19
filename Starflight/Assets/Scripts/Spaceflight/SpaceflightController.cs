@@ -66,10 +66,26 @@ public class SpaceflightController : MonoBehaviour
 	// unity update
 	void Update()
 	{
+		// Debug.Log( "Update()" );
+
 		// don't do anything if we have a panel open
 		if ( PanelController.m_instance.HasActivePanel() )
 		{
 			return;
+		}
+
+		// update planet generation
+		if ( m_starSystem.GeneratingPlanets() )
+		{
+			var totalProgress = m_starSystem.GeneratePlanets();
+
+			m_spaceflightUI.ShowPopup( "Commencing System Penetration", totalProgress );
+
+			return;
+		}
+		else
+		{
+			m_spaceflightUI.HidePopup();
 		}
 
 		// get to the player data

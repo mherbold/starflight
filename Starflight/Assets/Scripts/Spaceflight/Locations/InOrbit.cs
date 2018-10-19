@@ -112,7 +112,25 @@ public class InOrbit : MonoBehaviour
 		// let the player know we've established orbit
 		m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>Orbit established.</color>" );
 
+		// set the position of the sun
+		m_planet.material.SetVector( "_SunPosition", new Vector4( -10000.0f, 5000.0f, 0.0f, 0.0f ) );
+
 		// apply the material to the planet model
-		m_planet.material = planetController.GetMaterial();
+		MaterialUpdated();
+	}
+
+	public void MaterialUpdated()
+	{
+		if ( gameObject.activeInHierarchy )
+		{
+			// get to the player data
+			var playerData = DataController.m_instance.m_playerData;
+
+			// get the planet controller
+			var planetController = m_spaceflightController.m_starSystem.GetPlanetController( playerData.m_starflight.m_currentPlanetId );
+
+			// apply the material to the planet model
+			m_planet.material = planetController.GetMaterial();
+		}
 	}
 }

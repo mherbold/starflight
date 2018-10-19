@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Diagnostics;
 
 public class DataController : MonoBehaviour
 {
@@ -54,7 +55,7 @@ public class DataController : MonoBehaviour
 		LoadPlayerDataList();
 
 		// debug info
-		Debug.Log( "Loading scene " + m_sceneToLoad );
+		UnityEngine.Debug.Log( "Loading scene " + m_sceneToLoad );
 
 		// load the next scene
 		SceneManager.LoadScene( m_sceneToLoad );
@@ -67,7 +68,7 @@ public class DataController : MonoBehaviour
 		if ( m_targetSaveGameSlotNumber != m_activeSaveGameSlotNumber )
 		{
 			// report the change
-			Debug.Log( "Switching to save game slot number " + m_targetSaveGameSlotNumber );
+			UnityEngine.Debug.Log( "Switching to save game slot number " + m_targetSaveGameSlotNumber );
 
 			// make the current slot not the current game
 			m_playerData.m_isCurrentGame = false;
@@ -101,8 +102,10 @@ public class DataController : MonoBehaviour
 	// load the game data files
 	void LoadGameData()
 	{
-		// debug info
-		Debug.Log( "Loading game data" );
+		// use stopwatch to report load times
+		var stopwatch = new Stopwatch();
+
+		stopwatch.Start();
 
 		// load it as an asset
 		var textAsset = Resources.Load( m_gameDataFileName ) as TextAsset;
@@ -112,11 +115,19 @@ public class DataController : MonoBehaviour
 
 		// initalize the game data
 		m_gameData.Initialize();
+
+		// report load time
+		UnityEngine.Debug.Log( "LoadGameData() - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
 	}
 
 	// this loads the save game slots from disk
 	void LoadPlayerDataList()
 	{
+		// use stopwatch to report load times
+		var stopwatch = new Stopwatch();
+
+		stopwatch.Start();
+
 		// whether or not we have found the current game
 		var currentGameFound = false;
 
@@ -137,9 +148,6 @@ public class DataController : MonoBehaviour
 			{
 				try
 				{
-					// debug info
-					Debug.Log( "Loading player data " + i );
-
 					// try to load the save game file now
 					var file = File.Open( filePath, FileMode.Open );
 
@@ -160,7 +168,6 @@ public class DataController : MonoBehaviour
 				}
 				catch
 				{
-					Debug.Log( "...failed" );
 				}
 			}
 
@@ -168,7 +175,7 @@ public class DataController : MonoBehaviour
 			if ( !loadSucceeded || !m_playerDataList[ i ].IsCurrentVersion() )
 			{
 				// debug info
-				Debug.Log( "Creating and resetting player data " + i );
+				UnityEngine.Debug.Log( "Creating and resetting player data " + i );
 
 				m_playerDataList[ i ] = new PlayerData();
 
@@ -202,8 +209,8 @@ public class DataController : MonoBehaviour
 		// set the target save game slot number to be the same as the active one
 		m_targetSaveGameSlotNumber = m_activeSaveGameSlotNumber;
 
-		// debug info
-		Debug.Log( "Active save game slot number is " + m_activeSaveGameSlotNumber );
+		// report load time
+		UnityEngine.Debug.Log( "LoadPlayerDataList() - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
 	}
 
 	// this saves our current save game slot to disk
@@ -215,8 +222,6 @@ public class DataController : MonoBehaviour
 	// this saves a save game slot to disk
 	public void SavePlayerData( int saveGameSlotNumber )
 	{
-		Debug.Log( "Saving player data in game slot number " + saveGameSlotNumber );
-
 		// get the path to the player data file
 		var filePath = Application.persistentDataPath + "/" + m_playerDataFileName + saveGameSlotNumber + ".bin";
 
@@ -241,7 +246,7 @@ public class DataController : MonoBehaviour
 		catch ( IOException exception )
 		{
 			// report if we got an exception
-			Debug.Log( "...failed - " + exception.Message );
+			UnityEngine.Debug.Log( "Saving player data failed - " + exception.Message );
 		}
 	}
 

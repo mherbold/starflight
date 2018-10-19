@@ -20,11 +20,11 @@ public class Albedo
 
 	public Color[,] Process( Color[] legend )
 	{
-		UnityEngine.Debug.Log( "*** Albedo Process ***" );
+		// UnityEngine.Debug.Log( "*** Albedo Process ***" );
 
-		var stopwatch = new Stopwatch();
+		// var stopwatch = new Stopwatch();
 
-		stopwatch.Start();
+		// stopwatch.Start();
 
 		var parallelOptions = new ParallelOptions() { MaxDegreeOfParallelism = -1 };
 
@@ -37,51 +37,61 @@ public class Albedo
 		// output buffer
 		var outputBuffer = new Color[ m_height, m_width ];
 
-		Parallel.For( 0, m_height, parallelOptions, y =>
+		// make colors
+		var steps = 16;
+		var stepSize = m_height / steps;
+
+		Parallel.For( 0, steps, parallelOptions, step =>
 		{
-			for ( var x = 0; x < m_width; x++ )
+			var y1 = step * stepSize;
+			var y2 = y1 + stepSize;
+
+			for ( var y = y1; y < y2; y++ )
 			{
-				var level = m_buffer[ y, x ];
+				for ( var x = 0; x < m_width; x++ )
+				{
+					var level = m_buffer[ y, x ];
 
-				if ( level < 0.25f )
-				{
-					outputBuffer[ y, x ] = Color.Lerp( legend[ 0 ], shoreWaterColor, 4.0f * level );
-				}
-				else if ( level < 0.5f )
-				{
-					outputBuffer[ y, x ] = Color.Lerp( shoreWaterColor, legend[ 1 ], 4.0f * ( level - 0.25f ) );
-				}
-				else if ( level < 1.0f )
-				{
-					outputBuffer[ y, x ] = legend[ 1 ];
-				}
-				else
-				{
-					level = ( level - 1.0f ) * ( legend.Length - 1 ) / ( legend.Length ) + 1.0f;
-
-					if ( level >= maxElevation )
+					if ( level < 0.25f )
 					{
-						outputBuffer[ y, x ] = legend[ legend.Length - 1 ];
+						outputBuffer[ y, x ] = Color.Lerp( legend[ 0 ], shoreWaterColor, 4.0f * level );
+					}
+					else if ( level < 0.5f )
+					{
+						outputBuffer[ y, x ] = Color.Lerp( shoreWaterColor, legend[ 1 ], 4.0f * ( level - 0.25f ) );
+					}
+					else if ( level < 1.0f )
+					{
+						outputBuffer[ y, x ] = legend[ 1 ];
 					}
 					else
 					{
-						var levelA = Mathf.FloorToInt( level );
-						var levelB = levelA + 1;
+						level = ( level - 1.0f ) * ( legend.Length - 1 ) / ( legend.Length ) + 1.0f;
 
-						var colorA = legend[ levelA ];
-						var colorB = legend[ levelB ];
+						if ( level >= maxElevation )
+						{
+							outputBuffer[ y, x ] = legend[ legend.Length - 1 ];
+						}
+						else
+						{
+							var levelA = Mathf.FloorToInt( level );
+							var levelB = levelA + 1;
 
-						var t = level - levelA;
+							var colorA = legend[ levelA ];
+							var colorB = legend[ levelB ];
 
-						outputBuffer[ y, x ] = Color.Lerp( colorA, colorB, t );
+							var t = level - levelA;
+
+							outputBuffer[ y, x ] = Color.Lerp( colorA, colorB, t );
+						}
 					}
-				}
 
-				outputBuffer[ y, x ].a = m_buffer[ y, x ];
+					outputBuffer[ y, x ].a = m_buffer[ y, x ];
+				}
 			}
 		} );
 
-		UnityEngine.Debug.Log( "Output Buffer - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
+		// UnityEngine.Debug.Log( "Output Buffer - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
 
 		// return the processed buffer
 		return outputBuffer;
