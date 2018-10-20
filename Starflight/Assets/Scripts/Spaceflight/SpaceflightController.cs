@@ -54,10 +54,13 @@ public class SpaceflightController : MonoBehaviour
 		EventSystem.current.sendNavigationEvents = false;
 
 		// get to the player data
-		PlayerData playerData = DataController.m_instance.m_playerData;
+		var playerData = DataController.m_instance.m_playerData;
 
 		// switch to the current location
 		SwitchLocation( playerData.m_starflight.m_location );
+
+		// make sure the scene is blacked out
+		SceneFadeController.m_instance.BlackOut();
 
 		// reset the save game timer
 		m_timer = 0.0f;
@@ -106,7 +109,7 @@ public class SpaceflightController : MonoBehaviour
 		}
 
 		// get to the player data
-		PlayerData playerData = DataController.m_instance.m_playerData;
+		var playerData = DataController.m_instance.m_playerData;
 
 		// are we in the star system or hyperspace locations?
 		if ( ( playerData.m_starflight.m_location == Starflight.Location.StarSystem ) || ( playerData.m_starflight.m_location == Starflight.Location.Hyperspace ) )
@@ -141,7 +144,7 @@ public class SpaceflightController : MonoBehaviour
 		Debug.Log( "Switching to location " + newLocation );
 
 		// get to the player data
-		PlayerData playerData = DataController.m_instance.m_playerData;
+		var playerData = DataController.m_instance.m_playerData;
 
 		// update the player data
 		playerData.m_starflight.m_location = newLocation;

@@ -94,11 +94,8 @@ public class SceneFadeController : MonoBehaviour
 	// call this to start fading the scene in
 	public void FadeIn()
 	{
-		// make sure fade image alpha is correct
-		m_fadeImage.color = new Color( 0.0f, 0.0f, 0.0f, 1.0f );
-
-		// turn the fade image on
-		m_fadeImage.gameObject.SetActive( true );
+		// black out the scene
+		BlackOut();
 
 		// we are now fading in
 		m_fadeIn = true;
@@ -128,5 +125,15 @@ public class SceneFadeController : MonoBehaviour
 			// remember the name of the next scene
 			m_nextSceneName = nextSceneName;
 		}
+	}
+
+	// call this to instantly black out the scene
+	public void BlackOut()
+	{
+		// make sure fade image alpha is correct
+		m_fadeImage.color = new Color( 0.0f, 0.0f, 0.0f, 1.0f );
+
+		// turn the fade image on
+		m_fadeImage.gameObject.SetActive( true );
 	}
 }
