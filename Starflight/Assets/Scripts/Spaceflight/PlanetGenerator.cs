@@ -9,10 +9,10 @@ public class PlanetGenerator
 	const int c_rockyPlanetTextureMapScaleX = 42;
 	const int c_rockyPlanetTextureMapScaleY = 34;
 
-	const int c_gasGiantTextureMapScaleX = 10;
-	const int c_gasGiantTextureMapScaleY = 8;
+	const int c_gasGiantTextureMapScaleX = 4;
+	const int c_gasGiantTextureMapScaleY = 4;
 
-	const int c_xBlurRadiusGasGiant = 255;
+	const int c_xBlurRadiusGasGiant = 127;
 	const int c_yBlurRadiusGasGiant = 5;
 
 	const float c_normalScale = 10.0f;
@@ -314,7 +314,10 @@ public class PlanetGenerator
 
 		m_albedoTexture.Apply();
 
-		m_albedoTexture.Compress( true );
+		if ( !m_planet.IsGasGiant() )
+		{
+			m_albedoTexture.Compress( true );
+		}
 
 		m_currentStep++;
 	}
@@ -373,7 +376,10 @@ public class PlanetGenerator
 
 		m_effectsTexture.Apply();
 
-		m_effectsTexture.Compress( true );
+		if ( !m_planet.IsGasGiant() )
+		{
+			m_effectsTexture.Compress( true );
+		}
 
 		m_currentStep++;
 	}
@@ -382,7 +388,7 @@ public class PlanetGenerator
 	{
 		var normals = new Normals( m_elevationBuffer );
 
-		m_normalBuffer = normals.Process( m_planet.IsGasGiant() ? 1.0f : c_normalScale );
+		m_normalBuffer = normals.Process( m_planet.IsGasGiant() ? 0.0f : c_normalScale );
 
 		m_currentStep++;
 	}
