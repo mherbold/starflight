@@ -103,10 +103,7 @@ public class PlanetController : MonoBehaviour
 		m_meshRenderer = m_planetModel.GetComponent<MeshRenderer>();
 
 		// grab the material from the mesh renderer and make a clone of it
-		m_material = new Material( m_meshRenderer.material );
-
-		// set the cloned material on the mesh renderer
-		m_meshRenderer.material = m_material;
+		m_material = m_meshRenderer.material;
 
 		// start the maps generation process
 		m_planetGenerator = new PlanetGenerator();
@@ -146,26 +143,8 @@ public class PlanetController : MonoBehaviour
 		m_planetModel.transform.localPosition = new Vector3( 0.0f, -16.0f - m_planetModel.transform.localScale.y, 0.0f );
 		m_planetClouds.transform.localPosition = m_planetModel.transform.localPosition;
 
-		// does the planet have an atmosphere?
-		if ( m_planet.HasAtmosphere() )
-		{
-			// yes - show the clouds
-			m_planetClouds.gameObject.SetActive( true );
-
-			// get the atmosphere density
-			var atmosphereDensity = m_planet.GetAtmosphereDensity();
-
-			// set the density of the clouds
-			m_planetClouds.material.SetFloat( "_Density", 2.0f - atmosphereDensity );
-
-			// set the opacity of the clouds
-			m_planetClouds.material.SetColor( "_Color", new Color( 1.0f, 1.0f, 1.0f, atmosphereDensity * 0.5f + 0.5f ) );
-		}
-		else
-		{
-			// no - hide the clouds
-			m_planetClouds.gameObject.SetActive( false );
-		}
+		// set up the clouds
+		SetupClouds( m_planetClouds );
 	}
 
 	// call this to get the distance to the player
@@ -218,5 +197,45 @@ public class PlanetController : MonoBehaviour
 		}
 
 		return progress;
+	}
+
+	// sets up the clouds based on planet properties
+	public void SetupClouds( MeshRenderer planetClouds )
+	{
+		// does the planet have an atmosphere?
+		if ( m_planet.HasAtmosphere() )
+		{
+			// yes - show the clouds
+			planetClouds.gameObject.SetActive( true );
+
+			// get the atmosphere density
+			var atmosphereDensity = m_planet.GetAtmosphereDensity();
+
+			// set the density of the clouds
+			planetClouds.material.SetFloat( "_Density", 2.0f - atmosphereDensity );
+
+			// pick the color for the clouds
+			Color color;
+
+			if ( m_planet.IsMolten() )
+			{
+				color = new Color( 0.15f, 0.15f, 0.15f );
+			}
+			else
+			{
+				color = new Color( 0.75f, 0.75f, 0.75f );
+			}
+
+			// set the opactiy
+			color.a = atmosphereDensity * 0.5f + 0.5f;
+
+			// apply the color to the clouds
+			planetClouds.material.SetColor( "_Color", color );
+		}
+		else
+		{
+			// no - hide the clouds
+			planetClouds.gameObject.SetActive( false );
+		}
 	}
 }

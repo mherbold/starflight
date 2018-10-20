@@ -95,6 +95,12 @@ public class Planet
 		return ( m_surfaceId == 1 );
 	}
 
+	// whether or not this planet is molten
+	public bool IsMolten()
+	{
+		return ( m_surfaceId == 3 );
+	}
+
 	// whether or not this planet has an atmosphere
 	public bool HasAtmosphere()
 	{

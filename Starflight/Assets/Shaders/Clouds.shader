@@ -4,15 +4,14 @@ Shader "Custom/Clouds"
 	Properties
 	{
 		_Color( "Color", Color ) = ( 1, 1, 1, 1 )
+		_SpecularColor( "Specular Color", Color ) = ( 0.3, 0.3, 0.3, 1 )
+		_SpecularPower( "Specular Power", Range( 0.0, 100.0 ) ) = 0.5
 		_Density( "Density", Range( 0.0, 2.0 ) ) = 0.2
 		_Speed( "Speed", Range( -1.0, 1.0 ) ) = 0.1
 
 		_ScatterMap0( "Scatter Map 1", 2D ) = "white" {}
 		_ScatterMap1( "Scatter Map 2", 2D ) = "white" {}
-
 		_DensityMap( "Density Map", 2D ) = "white" {}
-		_DensityMap_NRM( "Density Normal Map", 2D ) = "bump" {}
-
 		_TextureMap( "Texture Map", 2D ) = "white" {}
 		_TextureMap_NRM( "Texture Normal Map", 2D ) = "bump" {}
 	}
@@ -44,7 +43,9 @@ Shader "Custom/Clouds"
 				#pragma vertex vertClouds
 				#pragma fragment fragClouds
 
-				fixed4 _Color;
+				float4 _Color;
+				float4 _SpecularColor;
+				float _SpecularPower;
 
 				sampler2D _ScatterMap0;
 				float4 _ScatterMap0_ST;
@@ -56,21 +57,19 @@ Shader "Custom/Clouds"
 				float4 _DensityMap_ST;
 
 				sampler2D _TextureMap;
+				sampler2D _TextureMap_NRM;
 				float4 _TextureMap_ST;
 
-				sampler2D _DensityMap_NRM;
-				sampler2D _TextureMap_NRM;
-
-				fixed _Speed;
-				fixed _Density;
+				float _Speed;
+				float _Density;
 
 				float3 _SunPosition;
 
 				struct VertexInputClouds
 				{
 					float3 vertex	: POSITION;
-					half3 normal	: NORMAL;
-					half4 tangent	: TANGENT;
+					float3 normal	: NORMAL;
+					float4 tangent	: TANGENT;
 					float2 uv0		: TEXCOORD0;
 				};
 
@@ -96,10 +95,10 @@ Shader "Custom/Clouds"
 
 					#define TRANSFORM_TEX( tex, name ) ( tex.xy * name##_ST.xy + name##_ST.zw )
 
-					o.tex0.xy = TRANSFORM_TEX( v.uv0, _ScatterMap0 ) * fixed2( 2, 2 ) + _Time.x * _Speed * fixed2( 1.5, 1.0 );
-					o.tex0.zw = TRANSFORM_TEX( v.uv0, _ScatterMap1 ) * fixed2( 2, 2 ) + _Time.x * _Speed * fixed2( 1.0, 1.2 );
-					o.tex1.xy = TRANSFORM_TEX( v.uv0, _DensityMap ) * fixed2( 10, 10.5 ) + _Time.x * _Speed * fixed2( 0.75, 0.5 );
-					o.tex1.zw = TRANSFORM_TEX( v.uv0, _TextureMap ) * fixed2( 10.6, 10 ) + _Time.x * _Speed * fixed2( 0.5, 0.6 );
+					o.tex0.xy = TRANSFORM_TEX( v.uv0, _ScatterMap0 ) * float2( 2, 2 ) + _Time.x * _Speed * float2( 1.5, 1.0 );
+					o.tex0.zw = TRANSFORM_TEX( v.uv0, _ScatterMap1 ) * float2( 2, 2 ) + _Time.x * _Speed * float2( 1.0, 1.2 );
+					o.tex1.xy = TRANSFORM_TEX( v.uv0, _DensityMap ) * float2( 10, 10.5 ) + _Time.x * _Speed * float2( 0.75, 0.5 );
+					o.tex1.zw = TRANSFORM_TEX( v.uv0, _TextureMap ) * float2( 10.6, 10 ) + _Time.x * _Speed * float2( 0.5, 0.6 );
 
 					o.eyeDir = normalize( posWorld.xyz - _WorldSpaceCameraPos );
 
@@ -116,45 +115,36 @@ Shader "Custom/Clouds"
 					return o;
 				}
 
-				half4 fragClouds( VertexOutputClouds i ) : SV_Target
+				float4 fragClouds( VertexOutputClouds i ) : SV_Target
 				{
 					/* sample height maps */
-					fixed3 h0 = tex2D( _ScatterMap0, i.tex0.xy );
-					fixed3 h1 = tex2D( _ScatterMap1, i.tex0.zw );
-					fixed3 h2 = tex2D( _DensityMap, i.tex1.xy );
-					fixed3 h3 = tex2D( _TextureMap, i.tex1.zw );
+					float3 h0 = tex2D( _ScatterMap0, i.tex0.xy );
+					float3 h1 = tex2D( _ScatterMap1, i.tex0.zw );
+					float3 h2 = tex2D( _DensityMap, i.tex1.xy );
+					float3 h3 = tex2D( _TextureMap, i.tex1.zw );
 
-					/* sample normal maps */
-					fixed4 n0 = tex2D( _DensityMap_NRM, i.tex1.xy );
-					fixed4 n1 = tex2D( _TextureMap_NRM, i.tex1.zw );
-
-					/* this converts from DXT5NM to XYZ */
-					n0.x *= n0.w;
-					n0.xy = ( n0.xy * 2 - 1 );
-					n0.z = sqrt( 1 - saturate( dot( n0.xy, n0.xy ) ) );
+					/* sample normal map */
+					float4 normal = tex2D( _TextureMap_NRM, i.tex1.zw );
 
 					/* this converts from DXT5NM to XYZ */
-					n1.x *= n1.w;
-					n1.xy = ( n1.xy * 2 - 1 );
-					n1.z = sqrt( 1 - saturate( dot( n1.xy, n1.xy ) ) );
+					normal.x *= normal.w;
+					normal.xy = ( normal.xy * 2 - 1 );
+					normal.z = sqrt( 1 - saturate( dot( normal.xy, normal.xy ) ) );
 
 					/* alpha */
-					fixed3 fbm = saturate( h0 + h1 + h2 + h3 - _Density );
+					float3 fbm = saturate( h0 + h1 + h2 + h3 - _Density );
 
-					fixed alpha = saturate( fbm.xyz * _Color.a * 2 );
-
-					/* normal */
-					fixed3 normal = normalize( n0 + n1 );
+					float alpha = saturate( fbm.xyz * _Color.a * 2 );
 
 					/* tangent space */
-					half3 tangentWorld = i.tangentWorld;
-					half3 binormalWorld = i.binormalWorld;
-					half3 normalWorld = i.normalWorld;
+					float3 tangentWorld = i.tangentWorld;
+					float3 binormalWorld = i.binormalWorld;
+					float3 normalWorld = i.normalWorld;
 
 					/* this part is optional - get rid of it if we run into shader instruction count problems */
 					normalWorld = normalize( normalWorld );
 					tangentWorld = normalize( tangentWorld - normalWorld * dot( tangentWorld, normalWorld ) );
-					half3 normalCrossTangent = cross( normalWorld, tangentWorld );
+					float3 normalCrossTangent = cross( normalWorld, tangentWorld );
 					binormalWorld = normalCrossTangent * sign( dot(normalCrossTangent, binormalWorld ) );
 					/* */
 
@@ -164,18 +154,18 @@ Shader "Custom/Clouds"
 					/* diffuse light */
 					float3 sunPosition = _SunPosition;
 
-					half3 lightDir = normalize( sunPosition - i.posWorld );
+					float3 lightDir = normalize( sunPosition - i.posWorld );
 
-					half3 diffuse = 1.5f * dot( lightDir, normalWorld );
+					float3 diffuse = 1.5f * dot( lightDir, normalWorld );
 
 					/* specular light */
-					half3 reflectedEyeDir = reflect( i.eyeDir, normalWorld );
-					half3 specular = pow( saturate( dot( lightDir, reflectedEyeDir ) ), 10 );
+					float3 reflectedEyeDir = reflect( i.eyeDir, normalWorld );
+					float3 specular = _SpecularColor * pow( saturate( dot( lightDir, reflectedEyeDir ) ), _SpecularPower );
 
 					/* finalize */
-					half3 finalColor = _Color * diffuse + specular;
+					float3 finalColor = _Color * diffuse + specular;
 
-					return half4( finalColor * alpha, alpha );
+					return float4( finalColor * alpha, alpha );
 				}
 
 			ENDCG

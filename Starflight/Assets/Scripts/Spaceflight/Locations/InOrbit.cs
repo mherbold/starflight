@@ -122,26 +122,8 @@ public class InOrbit : MonoBehaviour
 		m_planetModel.material.SetVector( "_SunPosition", sunPosition );
 		m_planetClouds.material.SetVector( "_SunPosition", sunPosition );
 
-		// does the planet have an atmosphere?
-		if ( planetController.m_planet.HasAtmosphere() )
-		{
-			// yes - show the clouds
-			m_planetClouds.gameObject.SetActive( true );
-
-			// get the atmosphere density
-			var atmosphereDensity = planetController.m_planet.GetAtmosphereDensity();
-
-			// set the density of the clouds
-			m_planetClouds.material.SetFloat( "_Density", 2.0f - atmosphereDensity );
-
-			// set the opacity of the clouds
-			m_planetClouds.material.SetColor( "_Color", new Color( 1.0f, 1.0f, 1.0f, atmosphereDensity * 0.5f + 0.5f ) );
-		}
-		else
-		{
-			// no - hide the clouds
-			m_planetClouds.gameObject.SetActive( false );
-		}
+		// set up the clouds
+		planetController.SetupClouds( m_planetClouds );
 
 		// apply the material to the planet model
 		MaterialUpdated();
