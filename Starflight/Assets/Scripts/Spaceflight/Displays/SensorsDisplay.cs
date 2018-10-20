@@ -37,6 +37,9 @@ public class SensorsDisplay : ShipDisplay
 	// what are we scanning
 	public ScanType m_scanType;
 
+	// the image material
+	Material m_material;
+
 	// are we running the cinematics?
 	bool m_isDoingCinematics;
 
@@ -49,14 +52,6 @@ public class SensorsDisplay : ShipDisplay
 	// unity start
 	public override void Start()
 	{
-		// get to the material
-		Material material = m_image.material;
-
-		// replace it with a copy (so when we modify it it doesn't modify the original material)
-		material = new Material( material );
-
-		// set the copy into image
-		m_image.material = material;
 	}
 
 	// unity update
@@ -99,6 +94,11 @@ public class SensorsDisplay : ShipDisplay
 		m_isDoingCinematics = true;
 		m_soundStopped = false;
 
+		// make a copy of the material so the file doesn't get updated
+		m_material = new Material( m_image.material );
+
+		m_image.material = m_material;
+
 		// switch to the scan type initialize subroutine
 		switch ( m_scanType )
 		{
@@ -131,11 +131,8 @@ public class SensorsDisplay : ShipDisplay
 		// get the planet we are currently orbiting about
 		Planet m_planet = gameData.m_planetList[ playerData.m_starflight.m_currentPlanetId ];
 
-		// get to the material
-		Material material = m_image.material;
-
 		// swap the mask to the planet mask
-		material.SetTexture( "_MaskTex", m_planetMaskTexture );
+		m_material.SetTexture( "_MaskTex", m_planetMaskTexture );
 
 		// change the size of the image based on the size of the planet
 		m_image.transform.localScale = m_planet.GetScale() / 320.0f * 0.5f + new Vector3( 0.5f, 0.5f, 0.5f );
@@ -234,7 +231,7 @@ public class SensorsDisplay : ShipDisplay
 		m_image.color = new Color( r, g, b );
 
 		// give the main (noise) texture a random posititon
-		m_image.material.SetTextureOffset( "_MainTex", new Vector2( Random.Range( 0.0f, 1.0f ), Random.Range( 0.0f, 1.0f ) ) );
+		m_material.SetTextureOffset( "_MainTex", new Vector2( Random.Range( 0.0f, 1.0f ), Random.Range( 0.0f, 1.0f ) ) );
 
 		// let the caller know if it is time to stop the scan cinematics
 		return !m_isDoingCinematics;
