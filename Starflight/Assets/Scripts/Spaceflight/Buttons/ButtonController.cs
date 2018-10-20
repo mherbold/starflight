@@ -68,6 +68,12 @@ public class ButtonController : MonoBehaviour
 			return;
 		}
 
+		// don't do anything if we have a pop up dialog open
+		if ( PopupController.m_instance.IsActive() )
+		{
+			return;
+		}
+
 		// check if we are activating the currently selected button
 		if ( m_activatingButton )
 		{

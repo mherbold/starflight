@@ -19,11 +19,6 @@ public class SpaceflightUI : MonoBehaviour
 	// the countdown text
 	public TextMeshProUGUI m_countdown;
 
-	// the pop up message box
-	public GameObject m_popup;
-	public TextMeshProUGUI m_popupMessage;
-	public RectTransform m_popupFill;
-
 	// our countdown text animation timer
 	float m_countdownTimer;
 
@@ -116,19 +111,23 @@ public class SpaceflightUI : MonoBehaviour
 		// are we fading the map?
 		if ( m_isFading )
 		{
-			// update the timer
-			m_fadeTimer += Time.deltaTime;
-
-			// are we done?
-			if ( m_fadeTimer >= m_fadeDuration )
+			// make sure the pop up dialog is not visible
+			if ( !PopupController.m_instance.IsActive() )
 			{
-				// yes - stop fading
-				m_isFading = false;
+				// update the timer
+				m_fadeTimer += Time.deltaTime;
+
+				// are we done?
+				if ( m_fadeTimer >= m_fadeDuration )
+				{
+					// yes - stop fading
+					m_isFading = false;
+				}
+
+				var alpha = Mathf.SmoothStep( m_originalFadeAmount, m_targetFadeAmount, m_fadeTimer / m_fadeDuration );
+
+				m_map.color = new Color( alpha, alpha, alpha );
 			}
-
-			var alpha = Mathf.SmoothStep( m_originalFadeAmount, m_targetFadeAmount, m_fadeTimer / m_fadeDuration );
-
-			m_map.color = new Color( alpha, alpha, alpha );
 		}
 	}
 
@@ -197,19 +196,5 @@ public class SpaceflightUI : MonoBehaviour
 		var y = Mathf.RoundToInt( gameCoordinates.z );
 
 		m_coordinates.text = x.ToString() + "   " + y.ToString();
-	}
-
-	public void ShowPopup( string message, float progress )
-	{
-		m_popup.SetActive( true );
-
-		m_popupMessage.text = message;
-
-		m_popupFill.anchorMax = new Vector2( progress, 1.0f );
-	}
-
-	public void HidePopup()
-	{
-		m_popup.SetActive( false );
 	}
 }

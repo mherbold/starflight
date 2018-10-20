@@ -67,7 +67,7 @@ public class Player : MonoBehaviour
 	void Awake()
 	{
 		// get to the global skybox material
-		Material skyboxMaterial = RenderSettings.skybox;
+		var skyboxMaterial = RenderSettings.skybox;
 
 		// replace it with a copy (so when we call settexture it doesn't modify the material on disk)
 		skyboxMaterial = new Material( skyboxMaterial );
@@ -80,7 +80,7 @@ public class Player : MonoBehaviour
 	void Start()
 	{
 		// get to the player data
-		PlayerData playerData = DataController.m_instance.m_playerData;
+		var playerData = DataController.m_instance.m_playerData;
 
 		// show only as many cargo pods as we have purchased
 		for ( int cargoPodId = 0; cargoPodId < m_cargoPods.Length; cargoPodId++ )
@@ -98,14 +98,26 @@ public class Player : MonoBehaviour
 	// unity update
 	void Update()
 	{
+		// don't do anything if we have a panel open
+		if ( PanelController.m_instance.HasActivePanel() )
+		{
+			return;
+		}
+
+		// don't do anything if we have a pop up dialog open
+		if ( PopupController.m_instance.IsActive() )
+		{
+			return;
+		}
+
 		// get to the game data
-		GameData gameData = DataController.m_instance.m_gameData;
+		var gameData = DataController.m_instance.m_gameData;
 
 		// get to the player data
-		PlayerData playerData = DataController.m_instance.m_playerData;
+		var playerData = DataController.m_instance.m_playerData;
 
 		// get the amount of enduruium remaining in storage
-		ElementReference elementReference = playerData.m_ship.m_elementStorage.Find( 5 );
+		var elementReference = playerData.m_ship.m_elementStorage.Find( 5 );
 
 		// do this part only if we havent frozen the player (in flux travel)
 		if ( !m_freezePlayer )
@@ -121,10 +133,10 @@ public class Player : MonoBehaviour
 			if ( m_enginesAreOn )
 			{
 				// calculate the maximum ship speed (it is the same for all engine classes)
-				float maximumShipSpeed = ( playerData.m_starflight.m_location == Starflight.Location.Hyperspace ) ? m_maximumShipSpeedHyperspace : m_maximumShipSpeedStarSystem;
+				var maximumShipSpeed = ( playerData.m_starflight.m_location == Starflight.Location.Hyperspace ) ? m_maximumShipSpeedHyperspace : m_maximumShipSpeedStarSystem;
 
 				// calculate the acceleration
-				float acceleration = Time.deltaTime * playerData.m_ship.m_acceleration / ( m_minimumTimeToReachMaximumShipSpeed * 25.0f );
+				var acceleration = Time.deltaTime * playerData.m_ship.m_acceleration / ( m_minimumTimeToReachMaximumShipSpeed * 25.0f );
 
 				// increase the current speed
 				playerData.m_starflight.m_currentSpeed = Mathf.Lerp( playerData.m_starflight.m_currentSpeed, maximumShipSpeed, acceleration );
@@ -133,7 +145,7 @@ public class Player : MonoBehaviour
 				if ( playerData.m_starflight.m_location == Starflight.Location.Hyperspace )
 				{
 					// get the engines
-					Engines engines = playerData.m_ship.GetEngines();
+					var engines = playerData.m_ship.GetEngines();
 
 					// calculate the amount of fuel used up
 					playerData.m_ship.m_fuelUsed += ( playerData.m_starflight.m_currentSpeed * engines.m_fuelUsedPerCoordinate / 256.0f ) * Time.deltaTime;
@@ -162,7 +174,7 @@ public class Player : MonoBehaviour
 			if ( playerData.m_starflight.m_currentSpeed >= 0.1f )
 			{
 				// calculate the new position of the player
-				Vector3 newPosition = transform.position + (Vector3) playerData.m_starflight.m_currentDirection * playerData.m_starflight.m_currentSpeed * Time.deltaTime;
+				var newPosition = transform.position + (Vector3) playerData.m_starflight.m_currentDirection * playerData.m_starflight.m_currentSpeed * Time.deltaTime;
 
 				// make sure the ship stays on the zero plane
 				newPosition.y = 0.0f;
@@ -184,7 +196,7 @@ public class Player : MonoBehaviour
 				m_ship.rotation = Quaternion.LookRotation( playerData.m_starflight.m_currentDirection, Vector3.up );
 
 				// figure out how fast to rotate the skybox
-				float multiplier = ( playerData.m_starflight.m_location == Starflight.Location.Hyperspace ) ? ( 1.0f / 30.0f ) : ( 1.0f / 60.0f );
+				var multiplier = ( playerData.m_starflight.m_location == Starflight.Location.Hyperspace ) ? ( 1.0f / 30.0f ) : ( 1.0f / 60.0f );
 
 				// rotate the skybox
 				RotateSkybox( playerData.m_starflight.m_currentDirection, playerData.m_starflight.m_currentSpeed * Time.deltaTime * multiplier );
@@ -195,16 +207,16 @@ public class Player : MonoBehaviour
 		}
 
 		// get to the global skybox material
-		Material skyboxMaterial = RenderSettings.skybox;
+		var skyboxMaterial = RenderSettings.skybox;
 
 		// update the skybox rotation on the material
 		skyboxMaterial.SetMatrix( "_ModelMatrix", m_skyboxRotation );
 
 		// get the current hyperspace coordinates (if in hyperspace get it from the player position due to flux travel not updating m_hyperspaceCoordinats)
-		Vector3 hyperspaceCoordinates = ( playerData.m_starflight.m_location == Starflight.Location.Hyperspace ) ? transform.position : playerData.m_starflight.m_hyperspaceCoordinates;
+		var hyperspaceCoordinates = ( playerData.m_starflight.m_location == Starflight.Location.Hyperspace ) ? transform.position : playerData.m_starflight.m_hyperspaceCoordinates;
 
 		// figure out how far we are from each territory
-		foreach ( Territory territory in gameData.m_territoryList )
+		foreach ( var territory in gameData.m_territoryList )
 		{
 			territory.Update( hyperspaceCoordinates );
 		}
@@ -247,7 +259,7 @@ public class Player : MonoBehaviour
 			}
 
 			// blend factor is simply how much we are penetrating into the alien territory
-			float blendFactor = Mathf.Min( 1.0f, gameData.m_territoryList[ 0 ].GetPenetrationDistance() / 1024.0f );
+			var blendFactor = Mathf.Min( 1.0f, gameData.m_territoryList[ 0 ].GetPenetrationDistance() / 1024.0f );
 			skyboxMaterial.SetFloat( "_BlendFactor", blendFactor );
 		}
 		else
@@ -269,10 +281,10 @@ public class Player : MonoBehaviour
 			}
 
 			// blend factor is the ratio of penetration distances
-			float blendFactorA = Mathf.Min( 1.0f, gameData.m_territoryList[ 1 ].GetPenetrationDistance() / 1024.0f );
-			float blendFactorB = Mathf.Min( 1.0f, gameData.m_territoryList[ 0 ].GetPenetrationDistance() / 1024.0f );
+			var blendFactorA = Mathf.Min( 1.0f, gameData.m_territoryList[ 1 ].GetPenetrationDistance() / 1024.0f );
+			var blendFactorB = Mathf.Min( 1.0f, gameData.m_territoryList[ 0 ].GetPenetrationDistance() / 1024.0f );
 
-			float blendFactor = ( blendFactorB * 0.5f ) - ( blendFactorA * 0.5f ) + 0.5f;
+			var blendFactor = ( blendFactorB * 0.5f ) - ( blendFactorA * 0.5f ) + 0.5f;
 
 			skyboxMaterial.SetFloat( "_BlendFactor", blendFactor );
 		}
@@ -331,7 +343,7 @@ public class Player : MonoBehaviour
 	public void DollyCamera( float distance )
 	{
 		// calculate the camera vector
-		Vector3 cameraPosition = new Vector3( 0.0f, distance, 0.0f );
+		var cameraPosition = new Vector3( 0.0f, distance, 0.0f );
 
 		// set it on the camera
 		m_camera.transform.localPosition = cameraPosition;
@@ -353,7 +365,7 @@ public class Player : MonoBehaviour
 	public void Freeze()
 	{
 		// get to the player data
-		PlayerData playerData = DataController.m_instance.m_playerData;
+		var playerData = DataController.m_instance.m_playerData;
 
 		// make sure the player has no momentum to start with
 		playerData.m_starflight.m_currentSpeed = 0.0f;
@@ -385,10 +397,10 @@ public class Player : MonoBehaviour
 	public void RotateSkybox( Vector3 direction, float amount )
 	{
 		// compute the rotation quaternion
-		Quaternion rotation = Quaternion.LookRotation( direction, Vector3.up );
+		var rotation = Quaternion.LookRotation( direction, Vector3.up );
 
 		// we want to rotate the skybox by the right vector
-		Vector3 currentRightVector = rotation * Vector3.right;
+		var currentRightVector = rotation * Vector3.right;
 
 		// compute the skybox rotation delta
 		rotation = Quaternion.AngleAxis( amount, currentRightVector );
@@ -397,7 +409,7 @@ public class Player : MonoBehaviour
 		m_skyboxRotation = Matrix4x4.Rotate( rotation ) * m_skyboxRotation;
 
 		// update the skybox rotation parameter on the material
-		Material skyboxMaterial = RenderSettings.skybox;
+		var skyboxMaterial = RenderSettings.skybox;
 		skyboxMaterial.SetMatrix( "_Rotation", m_skyboxRotation );
 	}
 
@@ -424,7 +436,7 @@ public class Player : MonoBehaviour
 		}
 
 		// get to the global skybox material
-		Material skyboxMaterial = RenderSettings.skybox;
+		var skyboxMaterial = RenderSettings.skybox;
 
 		// switch the textures
 		skyboxMaterial.SetTexture( "_FrontTex" + which, textureList[ 0 ] );

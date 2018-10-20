@@ -24,6 +24,9 @@ public class SpaceflightController : MonoBehaviour
 	// save game timer
 	float m_timer;
 
+	// remember whether or not we have faded in the scene already
+	bool m_alreadyFadedIn;
+
 	// unity awake
 	void Awake()
 	{
@@ -56,9 +59,6 @@ public class SpaceflightController : MonoBehaviour
 		// switch to the current location
 		SwitchLocation( playerData.m_starflight.m_location );
 
-		// fade in the scene
-		SceneFadeController.m_instance.FadeIn();
-
 		// reset the save game timer
 		m_timer = 0.0f;
 	}
@@ -68,24 +68,41 @@ public class SpaceflightController : MonoBehaviour
 	{
 		// Debug.Log( "Update()" );
 
+		// are we generating planets?
+		if ( m_starSystem.GeneratingPlanets() )
+		{
+			// yes - continue generating planets
+			var totalProgress = m_starSystem.GeneratePlanets();
+
+			// show / update the pop up dialog
+			PopupController.m_instance.ShowPopup( "Commencing System Penetration", totalProgress );
+		}
+		else
+		{
+			// hide the pop up dialog
+			PopupController.m_instance.HidePopup();
+
+			// fade in the scene if we haven't already
+			if ( !m_alreadyFadedIn )
+			{
+				// fade in the scene
+				SceneFadeController.m_instance.FadeIn();
+
+				// remember that we have faded in the scene
+				m_alreadyFadedIn = true;
+			}
+		}
+
 		// don't do anything if we have a panel open
 		if ( PanelController.m_instance.HasActivePanel() )
 		{
 			return;
 		}
 
-		// update planet generation
-		if ( m_starSystem.GeneratingPlanets() )
+		// don't do anything if we have a pop up dialog open
+		if ( PopupController.m_instance.IsActive() )
 		{
-			var totalProgress = m_starSystem.GeneratePlanets();
-
-			m_spaceflightUI.ShowPopup( "Commencing System Penetration", totalProgress );
-
 			return;
-		}
-		else
-		{
-			m_spaceflightUI.HidePopup();
 		}
 
 		// get to the player data

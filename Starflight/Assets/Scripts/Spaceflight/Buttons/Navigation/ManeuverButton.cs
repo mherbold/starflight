@@ -20,7 +20,7 @@ public class ManeuverButton : ShipButton
 		// get to the player data
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
-		// are we still in the docking bay?
+		// where are we?
 		switch ( playerData.m_starflight.m_location )
 		{
 			case Starflight.Location.DockingBay:
