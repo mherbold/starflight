@@ -219,7 +219,7 @@ public class PlanetController : MonoBehaviour
 
 			if ( m_planet.IsMolten() )
 			{
-				color = new Color( 0.15f, 0.15f, 0.15f );
+				color = new Color( 0.25f, 0.25f, 0.25f );
 			}
 			else
 			{
