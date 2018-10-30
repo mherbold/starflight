@@ -17,7 +17,7 @@ public class NavigationButton : ShipButton
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// get the personnel file on this officer
-		Personnel.PersonnelFile personnelFile = playerData.m_crewAssignment.GetPersonnelFile( CrewAssignment.Role.Navigator );
+		PD_Personnel.PD_PersonnelFile personnelFile = playerData.m_crewAssignment.GetPersonnelFile( PD_CrewAssignment.Role.Navigator );
 
 		// set the name of the officer
 		m_spaceflightController.m_spaceflightUI.ChangeOfficerText( "Officer " + personnelFile.m_name );

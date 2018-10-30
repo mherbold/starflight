@@ -39,7 +39,7 @@ public class DockingBay : MonoBehaviour
 			return;
 		}
 
-		Debug.Log( "Hiding the docking bay scene." );
+		Debug.Log( "Hiding the docking bay location." );
 
 		// hide the docking bay
 		gameObject.SetActive( false );
@@ -53,7 +53,7 @@ public class DockingBay : MonoBehaviour
 			return;
 		}
 
-		Debug.Log( "Showing the docking bay scene." );
+		Debug.Log( "Showing the docking bay location." );
 
 		// show the docking bay
 		gameObject.SetActive( true );

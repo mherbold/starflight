@@ -135,7 +135,7 @@ public class OperationsPanel : Panel
 
 		for ( int noticeId = 0; noticeId < gameData.m_noticeList.Length; noticeId++ )
 		{
-			Notice notice = gameData.m_noticeList[ noticeId ];
+			GD_Notice notice = gameData.m_noticeList[ noticeId ];
 
 			if ( string.Compare( playerData.m_starflight.m_currentStardateYMD, notice.m_stardate ) >= 0 )
 			{
@@ -305,7 +305,7 @@ public class OperationsPanel : Panel
 		GameData gameData = DataController.m_instance.m_gameData;
 
 		// get the current notice
-		Notice currentNotice = gameData.m_noticeList[ m_currentNoticeId ];
+		GD_Notice currentNotice = gameData.m_noticeList[ m_currentNoticeId ];
 
 		// check if we are displaying the first line
 		if ( m_currentLine == 0 )

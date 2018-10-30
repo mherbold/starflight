@@ -55,7 +55,7 @@ public class InOrbit : MonoBehaviour
 			return;
 		}
 
-		Debug.Log( "Hiding the in orbit scene." );
+		Debug.Log( "Hiding the in orbit location." );
 
 		// hide the starsystem
 		gameObject.SetActive( false );
@@ -69,7 +69,7 @@ public class InOrbit : MonoBehaviour
 			return;
 		}
 
-		Debug.Log( "Showing the in orbit scene." );
+		Debug.Log( "Showing the in orbit location." );
 
 		// get to the game data
 		var gameData = DataController.m_instance.m_gameData;

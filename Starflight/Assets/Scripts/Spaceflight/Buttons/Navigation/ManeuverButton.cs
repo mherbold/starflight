@@ -7,7 +7,7 @@ public class ManeuverButton : ShipButton
 	bool m_isTransitioning;
 
 	// what are we transitioning to?
-	Starflight.Location m_nextLocation;
+	PD_General.Location m_nextLocation;
 
 	// get the label for this button
 	public override string GetLabel()
@@ -23,7 +23,7 @@ public class ManeuverButton : ShipButton
 		// where are we?
 		switch ( playerData.m_starflight.m_location )
 		{
-			case Starflight.Location.DockingBay:
+			case PD_General.Location.DockingBay:
 
 				// play the error sound
 				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
@@ -37,23 +37,23 @@ public class ManeuverButton : ShipButton
 				// return false to not make the button active
 				return false;
 
-			case Starflight.Location.JustLaunched:
+			case PD_General.Location.JustLaunched:
 
 				Debug.Log( "Player is maneuvering - switching to the star system location." );
 
 				// yes - switch to the star system location
-				m_spaceflightController.SwitchLocation( Starflight.Location.StarSystem );
+				m_spaceflightController.SwitchLocation( PD_General.Location.StarSystem );
 
 				break;
 
-			case Starflight.Location.StarSystem:
+			case PD_General.Location.StarSystem:
 
 				// show the system display
 				m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_systemDisplay );
 
 				break;
 
-			case Starflight.Location.InOrbit:
+			case PD_General.Location.InOrbit:
 
 				// fade the map to black
 				m_spaceflightController.m_spaceflightUI.FadeMap( 0.0f, 2.0f );
@@ -62,7 +62,7 @@ public class ManeuverButton : ShipButton
 				m_isTransitioning = true;
 
 				// transition to the star system
-				m_nextLocation = Starflight.Location.StarSystem;
+				m_nextLocation = PD_General.Location.StarSystem;
 
 				// display message
 				m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>Leaving orbit...</color>" );
@@ -100,12 +100,12 @@ public class ManeuverButton : ShipButton
 				// which location do we want to switch to?
 				switch ( m_nextLocation )
 				{
-					case Starflight.Location.DockingBay:
+					case PD_General.Location.DockingBay:
 
 						Debug.Log( "Player exited maneuver while near starport - switching to the docking bay location." );
 
 						// switch to the docking bay location
-						m_spaceflightController.SwitchLocation( Starflight.Location.DockingBay );
+						m_spaceflightController.SwitchLocation( PD_General.Location.DockingBay );
 
 						// play the docking bay door close animation
 						m_spaceflightController.m_dockingBay.CloseDockingBayDoors();
@@ -115,24 +115,24 @@ public class ManeuverButton : ShipButton
 
 						break;
 
-					case Starflight.Location.InOrbit:
+					case PD_General.Location.InOrbit:
 
 						Debug.Log( "Player exited maneuver while near a planet - switching to the in orbit location." );
 
 						// switch to the in orbit location
-						m_spaceflightController.SwitchLocation( Starflight.Location.InOrbit );
+						m_spaceflightController.SwitchLocation( PD_General.Location.InOrbit );
 
 						// turn off the maneuver function
 						m_spaceflightController.m_buttonController.DeactivateButton();
 
 						break;
 
-					case Starflight.Location.StarSystem:
+					case PD_General.Location.StarSystem:
 
 						Debug.Log( "Player is breaking orbit - switching to the star system location." );
 
 						// switch to the in orbit location
-						m_spaceflightController.SwitchLocation( Starflight.Location.StarSystem );
+						m_spaceflightController.SwitchLocation( PD_General.Location.StarSystem );
 
 						break;
 				}
@@ -148,7 +148,7 @@ public class ManeuverButton : ShipButton
 			m_spaceflightController.m_player.TurnOffEngines();
 
 			// are we in a star system?
-			if ( playerData.m_starflight.m_location == Starflight.Location.StarSystem )
+			if ( playerData.m_starflight.m_location == PD_General.Location.StarSystem )
 			{
 				// do we have a planet to orbit?
 				if ( m_spaceflightController.m_starSystem.m_planetToOrbitId == -1 )
@@ -174,7 +174,7 @@ public class ManeuverButton : ShipButton
 					if ( m_spaceflightController.m_starSystem.m_planetToOrbitId == gameData.m_misc.m_arthPlanetId )
 					{
 						// yes - transition to the docking bay
-						m_nextLocation = Starflight.Location.DockingBay;
+						m_nextLocation = PD_General.Location.DockingBay;
 
 						// display message
 						m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>Initiating docking procedure...</color>" );
@@ -182,7 +182,7 @@ public class ManeuverButton : ShipButton
 					else
 					{
 						// no - transition to in orbit
-						m_nextLocation = Starflight.Location.InOrbit;
+						m_nextLocation = PD_General.Location.InOrbit;
 
 						// display message
 						m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>Initiating orbital maneuver...</color>" );

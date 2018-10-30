@@ -28,7 +28,7 @@ public class BankPanel : Panel
 		base.Open();
 
 		// get access to the bank player data
-		Bank bank = DataController.m_instance.m_playerData.m_bank;
+		PD_Bank bank = DataController.m_instance.m_playerData.m_bank;
 
 		// update the date, transactions, and amount list text
 		m_dateListText.text = "";
@@ -37,7 +37,7 @@ public class BankPanel : Panel
 
 		for ( int transactionId = 0; transactionId < bank.m_transactionList.Count; transactionId++ )
 		{
-			Bank.Transaction transaction = bank.m_transactionList[ transactionId ];
+			PD_Bank.Transaction transaction = bank.m_transactionList[ transactionId ];
 
 			DateTime dateTime = DateTime.ParseExact( transaction.m_stardate, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture );
 			m_dateListText.text += dateTime.ToShortDateString();

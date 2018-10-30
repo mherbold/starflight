@@ -49,6 +49,9 @@ public class SpaceflightUI : MonoBehaviour
 		// we are not currently animating the countdown text
 		m_animatingCountdownText = false;
 
+		// disable the countdown text object
+		m_countdown.gameObject.SetActive( false );
+
 		// force the canvas to update (so rectTransform is updated and correct)
 		Canvas.ForceUpdateCanvases();
 

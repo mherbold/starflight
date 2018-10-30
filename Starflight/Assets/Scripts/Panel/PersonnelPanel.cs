@@ -114,7 +114,7 @@ public class PersonnelPanel : Panel
 
 		if ( deltaBalance > 0 )
 		{
-			Bank.Transaction transaction = new Bank.Transaction( DataController.m_instance.m_playerData.m_starflight.m_currentStardateYMD, "Personnel", deltaBalance.ToString() + "-" );
+			PD_Bank.Transaction transaction = new PD_Bank.Transaction( DataController.m_instance.m_playerData.m_starflight.m_currentStardateYMD, "Personnel", deltaBalance.ToString() + "-" );
 
 			DataController.m_instance.m_playerData.m_bank.m_transactionList.Add( transaction );
 		}
@@ -488,7 +488,7 @@ public class PersonnelPanel : Panel
 		else
 		{
 			// get access to the current personnel file we are looking at
-			Personnel.PersonnelFile personnelFile = playerData.m_personnel.m_personnelList[ m_currentFileIndex ];
+			PD_Personnel.PD_PersonnelFile personnelFile = playerData.m_personnel.m_personnelList[ m_currentFileIndex ];
 
 			// update the current race index
 			m_currentRaceIndex = personnelFile.m_raceIndex;
@@ -555,7 +555,7 @@ public class PersonnelPanel : Panel
 		buttonIsInteractable[ (int) Buttons.CancelButton ] = true;
 
 		// get the current race game data
-		Race race = DataController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
+		GD_Race race = DataController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
 
 		// update the skill values text to show the race's initial values
 		m_skillValuesText.text = "";
@@ -651,7 +651,7 @@ public class PersonnelPanel : Panel
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// get access to the current personnel file we are looking at
-		Personnel.PersonnelFile personnelFile = playerData.m_personnel.m_personnelList[ m_currentFileIndex ];
+		PD_Personnel.PD_PersonnelFile personnelFile = playerData.m_personnel.m_personnelList[ m_currentFileIndex ];
 
 		// update the skill values with the ones in this personnel file
 		m_skillValuesText.text = "";
@@ -671,7 +671,7 @@ public class PersonnelPanel : Panel
 	private void ShowRace( bool[] gameObjectIsVisible )
 	{
 		// get the current race game data
-		Race race = DataController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
+		GD_Race race = DataController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
 
 		// update the race name
 		m_raceNameText.text = race.m_name;
@@ -694,7 +694,7 @@ public class PersonnelPanel : Panel
 	private void UpdateBankBalanceText()
 	{
 		// get access to the bank player data
-		Bank bank = DataController.m_instance.m_playerData.m_bank;
+		PD_Bank bank = DataController.m_instance.m_playerData.m_bank;
 
 		// update the bank balance
 		m_bankBalanceText.text = "Bank balance: " + string.Format( "{0:n0}", bank.m_currentBalance ) + " M.U.";
@@ -756,7 +756,7 @@ public class PersonnelPanel : Panel
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// get access to the bank player data
-		Bank bank = playerData.m_bank;
+		PD_Bank bank = playerData.m_bank;
 
 		if ( bank.m_currentBalance < 300 )
 		{
@@ -767,10 +767,10 @@ public class PersonnelPanel : Panel
 		else
 		{
 			// get access to the current personnel file we are looking at
-			Personnel.PersonnelFile personnelFile = playerData.m_personnel.m_personnelList[ m_currentFileIndex ];
+			PD_Personnel.PD_PersonnelFile personnelFile = playerData.m_personnel.m_personnelList[ m_currentFileIndex ];
 
 			// get access to the race data for this personnel file
-			Race race = DataController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
+			GD_Race race = DataController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
 
 			// calculate the current skill and maximum skill points for the selected skill
 			int currentSkill = personnelFile.GetSkill( m_currentSkillIndex );
@@ -868,10 +868,10 @@ public class PersonnelPanel : Panel
 			PlayerData playerData = DataController.m_instance.m_playerData;
 
 			// get access to the current personnel file we are looking at
-			Personnel.PersonnelFile personnelFile = playerData.m_personnel.m_personnelList[ m_currentFileIndex ];
+			PD_Personnel.PD_PersonnelFile personnelFile = playerData.m_personnel.m_personnelList[ m_currentFileIndex ];
 
 			// get access to the race data for this personnel file
-			Race race = DataController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
+			GD_Race race = DataController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
 
 			// enable the train button only if the current personnel is not maxxed out
 			int maxTotalPoints = 0;
@@ -935,7 +935,7 @@ public class PersonnelPanel : Panel
 	public void YesClicked()
 	{
 		// get to the personnel player data
-		Personnel personnel = DataController.m_instance.m_playerData.m_personnel;
+		PD_Personnel personnel = DataController.m_instance.m_playerData.m_personnel;
 
 		// delete the crewmember
 		personnel.m_personnelList.RemoveAt( m_currentFileIndex );
@@ -977,10 +977,10 @@ public class PersonnelPanel : Panel
 		else
 		{
 			// get the current race game data
-			Race race = DataController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
+			GD_Race race = DataController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
 
 			// create a new personnel file
-			Personnel.PersonnelFile personnelFile = DataController.m_instance.m_playerData.m_personnel.CreateNewPersonnel();
+			PD_Personnel.PD_PersonnelFile personnelFile = DataController.m_instance.m_playerData.m_personnel.CreateNewPersonnel();
 
 			// set up the personnel file
 			personnelFile.m_name = m_nameInputField.text;

@@ -15,7 +15,7 @@ public class DisembarkButton : ShipButton
 
 		switch ( playerData.m_starflight.m_location )
 		{
-			case Starflight.Location.DockingBay:
+			case PD_General.Location.DockingBay:
 
 				Debug.Log( "Player is disembarking - switching to starport." );
 
@@ -26,14 +26,14 @@ public class DisembarkButton : ShipButton
 				playerData.m_starflight.m_starportCoordinates = new Vector3( 0.0f, 0.5f, 0.0f );
 
 				// switch to the starport location
-				m_spaceflightController.SwitchLocation( Starflight.Location.Starport );
+				m_spaceflightController.SwitchLocation( PD_General.Location.Starport );
 
 				return true;
 
-			case Starflight.Location.JustLaunched:
-			case Starflight.Location.InOrbit:
-			case Starflight.Location.StarSystem:
-			case Starflight.Location.Hyperspace:
+			case PD_General.Location.JustLaunched:
+			case PD_General.Location.InOrbit:
+			case PD_General.Location.StarSystem:
+			case PD_General.Location.Hyperspace:
 
 				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 

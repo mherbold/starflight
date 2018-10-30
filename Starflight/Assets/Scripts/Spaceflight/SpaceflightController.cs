@@ -43,6 +43,10 @@ public class SpaceflightController : MonoBehaviour
 			// nope - so then do it now and tell it to skip the intro scene
 			DataController.m_sceneToLoad = "Spaceflight";
 
+			// debug info
+			Debug.Log( "Loading scene Persistent" );
+
+			// load the persistent scene
 			SceneManager.LoadScene( "Persistent" );
 		}
 	}
@@ -112,7 +116,7 @@ public class SpaceflightController : MonoBehaviour
 		var playerData = DataController.m_instance.m_playerData;
 
 		// are we in the star system or hyperspace locations?
-		if ( ( playerData.m_starflight.m_location == Starflight.Location.StarSystem ) || ( playerData.m_starflight.m_location == Starflight.Location.Hyperspace ) )
+		if ( ( playerData.m_starflight.m_location == PD_General.Location.StarSystem ) || ( playerData.m_starflight.m_location == PD_General.Location.Hyperspace ) )
 		{
 			// yes - update the game time
 			playerData.m_starflight.UpdateGameTime( Time.deltaTime );
@@ -138,7 +142,7 @@ public class SpaceflightController : MonoBehaviour
 	}
 
 	// call this to switch to the correct location
-	public void SwitchLocation( Starflight.Location newLocation )
+	public void SwitchLocation( PD_General.Location newLocation )
 	{
 		// switch to the correct mode
 		Debug.Log( "Switching to location " + newLocation );
@@ -150,7 +154,7 @@ public class SpaceflightController : MonoBehaviour
 		playerData.m_starflight.m_location = newLocation;
 
 		// switching to starport is a special case
-		if ( playerData.m_starflight.m_location == Starflight.Location.Starport )
+		if ( playerData.m_starflight.m_location == PD_General.Location.Starport )
 		{
 			// start fading out the spaceflight scene
 			SceneFadeController.m_instance.FadeOut( "Starport" );
@@ -163,7 +167,7 @@ public class SpaceflightController : MonoBehaviour
 			// switch the location
 			switch ( playerData.m_starflight.m_location )
 			{
-				case Starflight.Location.DockingBay:
+				case PD_General.Location.DockingBay:
 					m_player.Hide();
 					m_dockingBay.Show();
 					m_starSystem.Hide();
@@ -171,7 +175,7 @@ public class SpaceflightController : MonoBehaviour
 					m_hyperspace.Hide();
 					break;
 
-				case Starflight.Location.JustLaunched:
+				case PD_General.Location.JustLaunched:
 					m_player.Hide();
 					m_dockingBay.Hide();
 					m_starSystem.Hide();
@@ -181,7 +185,7 @@ public class SpaceflightController : MonoBehaviour
 					m_spaceflightUI.ChangeMessageText( "<color=white>Starport clear.\nStanding by to maneuver.</color>" );
 					break;
 
-				case Starflight.Location.StarSystem:
+				case PD_General.Location.StarSystem:
 					m_player.Show();
 					m_dockingBay.Hide();
 					m_starSystem.Initialize();
@@ -190,7 +194,7 @@ public class SpaceflightController : MonoBehaviour
 					m_hyperspace.Hide();
 					break;
 
-				case Starflight.Location.InOrbit:
+				case PD_General.Location.InOrbit:
 					m_player.Hide();
 					m_dockingBay.Hide();
 					m_starSystem.Initialize();
@@ -199,7 +203,7 @@ public class SpaceflightController : MonoBehaviour
 					m_hyperspace.Hide();
 					break;
 
-				case Starflight.Location.Hyperspace:
+				case PD_General.Location.Hyperspace:
 					m_player.Show();
 					m_dockingBay.Hide();
 					m_starSystem.Hide();

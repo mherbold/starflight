@@ -15,7 +15,7 @@ public class LandButton : ShipButton
 
 		switch ( playerData.m_starflight.m_location )
 		{
-			case Starflight.Location.JustLaunched:
+			case PD_General.Location.JustLaunched:
 
 				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
@@ -25,7 +25,7 @@ public class LandButton : ShipButton
 
 				break;
 
-			case Starflight.Location.InOrbit:
+			case PD_General.Location.InOrbit:
 
 				// show the terrian map display
 				m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_terrainMapDisplay );

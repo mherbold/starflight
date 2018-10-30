@@ -14,6 +14,10 @@ public class StarportController : MonoBehaviour
 			// nope - so then do it now and tell it to skip the intro scene
 			DataController.m_sceneToLoad = "Starport";
 
+			// debug info
+			Debug.Log( "Loading scene Persistent" );
+
+			// load the persistent scene
 			SceneManager.LoadScene( "Persistent" );
 		}
 	}
@@ -30,7 +34,7 @@ public class StarportController : MonoBehaviour
 		// make sure we are in the right scene
 		switch ( playerData.m_starflight.m_location )
 		{
-			case Starflight.Location.Starport:
+			case PD_General.Location.Starport:
 
 				// start playing the starport music
 				MusicController.m_instance.ChangeToTrack( MusicController.Track.Starport );
@@ -41,7 +45,13 @@ public class StarportController : MonoBehaviour
 				break;
 
 			default:
+
+				// debug info
+				Debug.Log( "Loading scene Spaceflight" );
+
+				// load the spaceflight scene
 				SceneManager.LoadScene( "Spaceflight" );
+
 				break;
 		}
 	}

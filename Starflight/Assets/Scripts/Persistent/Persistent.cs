@@ -8,6 +8,5 @@ public class Persistent : MonoBehaviour
 	{
 		// tell unity to not delete this game object when the scene unloads
 		DontDestroyOnLoad( this );
-
 	}
 }

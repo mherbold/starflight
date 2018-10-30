@@ -53,7 +53,7 @@ public class StatusDisplay : ShipDisplay
 		m_values.text += cargoUsage.ToString( "N1" ) + "% Full\n";
 
 		// get to the endurium in the ship storage
-		ElementReference elementReference = playerData.m_ship.m_elementStorage.Find( 5 );
+		PD_ElementReference elementReference = playerData.m_ship.m_elementStorage.Find( 5 );
 
 		// update the amount of energy remaining
 		if ( elementReference == null )

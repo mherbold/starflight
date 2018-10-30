@@ -13,7 +13,7 @@ public class LogPlanetButton : ShipButton
 
 		switch ( playerData.m_starflight.m_location )
 		{
-			case Starflight.Location.JustLaunched:
+			case PD_General.Location.JustLaunched:
 
 				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
@@ -23,9 +23,9 @@ public class LogPlanetButton : ShipButton
 
 				break;
 
-			case Starflight.Location.Hyperspace:
-			case Starflight.Location.StarSystem:
-			case Starflight.Location.DockingBay:
+			case PD_General.Location.Hyperspace:
+			case PD_General.Location.StarSystem:
+			case PD_General.Location.DockingBay:
 
 				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
@@ -35,7 +35,7 @@ public class LogPlanetButton : ShipButton
 
 				break;
 
-			case Starflight.Location.InOrbit:
+			case PD_General.Location.InOrbit:
 
 				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 

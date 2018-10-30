@@ -5,64 +5,64 @@ using System;
 
 public class GameData
 {
-	public Misc m_misc;
-	public Notice[] m_noticeList;
-	public Race[] m_raceList;
-	public Engines[] m_enginesList;
-	public Sheilding[] m_shieldingList;
-	public Armor[] m_armorList;
-	public MissileLauncher[] m_missileLauncherList;
-	public LaserCannon[] m_laserCannonList;
-	public Artifact[] m_artifactList;
-	public Element[] m_elementList;
-	public Star[] m_starList;
-	public Planet[] m_planetList;
-	public PlanetType[] m_planetTypeList;
-	public Atmosphere[] m_atmosphereList;
-	public AtmosphereDensity[] m_atmosphereDensityList;
-	public Hydrosphere[] m_hydrosphereList;
-	public Surface[] m_surfaceList;
-	public Temperature[] m_temperatureList;
-	public Weather[] m_weatherList;
-	public Flux[] m_fluxList;
-	public Territory[] m_territoryList;
-	public Nebula[] m_nebulaList;
-	public SpectralClass[] m_spectralClassList;
-	public Encounter[] m_encounterList;
-	public EncounterType[] m_encounterTypeList;
+	public GD_Misc m_misc;
+	public GD_Notice[] m_noticeList;
+	public GD_Race[] m_raceList;
+	public GD_Engines[] m_enginesList;
+	public GD_Sheilding[] m_shieldingList;
+	public GD_Armor[] m_armorList;
+	public GD_MissileLauncher[] m_missileLauncherList;
+	public GD_LaserCannon[] m_laserCannonList;
+	public GD_Artifact[] m_artifactList;
+	public GD_Element[] m_elementList;
+	public GD_Star[] m_starList;
+	public GD_Planet[] m_planetList;
+	public GD_PlanetType[] m_planetTypeList;
+	public GD_Atmosphere[] m_atmosphereList;
+	public GD_AtmosphereDensity[] m_atmosphereDensityList;
+	public GD_Hydrosphere[] m_hydrosphereList;
+	public GD_Surface[] m_surfaceList;
+	public GD_Temperature[] m_temperatureList;
+	public GD_Weather[] m_weatherList;
+	public GD_Flux[] m_fluxList;
+	public GD_Territory[] m_territoryList;
+	public GD_Nebula[] m_nebulaList;
+	public GD_SpectralClass[] m_spectralClassList;
+	public GD_Encounter[] m_encounterList;
+	public GD_EncounterType[] m_encounterTypeList;
 
 	public void Initialize()
 	{
 		// go through each planet
-		foreach ( Planet planet in m_planetList )
+		foreach ( GD_Planet planet in m_planetList )
 		{
 			// initialize it
 			planet.Initialize();
 		}
 
 		// go through each star
-		foreach ( Star star in m_starList )
+		foreach ( GD_Star star in m_starList )
 		{
 			// initialize it
 			star.Initialize( this );
 		}
 
 		// go through each flux
-		foreach ( Flux flux in m_fluxList )
+		foreach ( GD_Flux flux in m_fluxList )
 		{
 			// initialize it
 			flux.Initialize();
 		}
 
 		// go through each territory
-		foreach ( Territory territory in m_territoryList )
+		foreach ( GD_Territory territory in m_territoryList )
 		{
 			// initialize it
 			territory.Initialize();
 		}
 
 		// go through each nebula
-		foreach ( Nebula nebula in m_nebulaList )
+		foreach ( GD_Nebula nebula in m_nebulaList )
 		{
 			// initialize it
 			nebula.Initialize();

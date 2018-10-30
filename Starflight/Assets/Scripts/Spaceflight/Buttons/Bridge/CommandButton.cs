@@ -17,7 +17,7 @@ public class CommandButton : ShipButton
 		// change the buttons
 		switch ( playerData.m_starflight.m_location )
 		{
-			case Starflight.Location.DockingBay:
+			case PD_General.Location.DockingBay:
 				m_spaceflightController.m_buttonController.UpdateButtons( m_buttonSetA );
 				break;
 
@@ -27,7 +27,7 @@ public class CommandButton : ShipButton
 		}
 
 		// get the personnel file on our captain
-		Personnel.PersonnelFile personnelFile = playerData.m_crewAssignment.GetPersonnelFile( CrewAssignment.Role.Captain );
+		PD_Personnel.PD_PersonnelFile personnelFile = playerData.m_crewAssignment.GetPersonnelFile( PD_CrewAssignment.Role.Captain );
 
 		// set the name of the captain
 		m_spaceflightController.m_spaceflightUI.ChangeOfficerText( "Captain " + personnelFile.m_name );

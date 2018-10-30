@@ -13,7 +13,7 @@ public class SensorsButton : ShipButton
 
 		switch ( playerData.m_starflight.m_location )
 		{
-			case Starflight.Location.InOrbit:
+			case PD_General.Location.InOrbit:
 
 				// show the system display
 				m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_sensorsDisplay );
@@ -23,8 +23,8 @@ public class SensorsButton : ShipButton
 
 				return true;
 
-			case Starflight.Location.DockingBay:
-			case Starflight.Location.JustLaunched:
+			case PD_General.Location.DockingBay:
+			case PD_General.Location.JustLaunched:
 
 				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 

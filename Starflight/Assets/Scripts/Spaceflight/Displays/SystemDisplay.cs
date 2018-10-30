@@ -8,16 +8,16 @@ public class SystemDisplay : ShipDisplay
 	public GameObject[] m_orbit;
 
 	// the planets
-	public Image [] m_planet;
+	public SVGImage[] m_planet;
 
 	// arth starport
 	public GameObject m_arth;
 
 	// the star
-	public Image m_star;
+	public SVGImage m_star;
 
 	// the ship
-	public GameObject m_ship;
+	public GameObject m_player;
 
 	// unity update
 	public override void Update()
@@ -29,7 +29,7 @@ public class SystemDisplay : ShipDisplay
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// get to the star data
-		Star star = gameData.m_starList[ playerData.m_starflight.m_currentStarId ];
+		GD_Star star = gameData.m_starList[ playerData.m_starflight.m_currentStarId ];
 
 		// update the positions of the planets
 		var planetList = star.GetPlanetList();
@@ -53,7 +53,7 @@ public class SystemDisplay : ShipDisplay
 		Vector3 position = m_spaceflightController.m_player.GetPosition() * 256.0f / 8192.0f;
 
 		// set the new position of the ship game object
-		m_ship.transform.localPosition = new Vector3( position.x, position.z );
+		m_player.transform.localPosition = new Vector3( position.x, position.z );
 	}
 
 	// the system map display label
@@ -72,7 +72,7 @@ public class SystemDisplay : ShipDisplay
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// get to the star data
-		Star star = gameData.m_starList[ playerData.m_starflight.m_currentStarId ];
+		GD_Star star = gameData.m_starList[ playerData.m_starflight.m_currentStarId ];
 
 		// turn off the arth game object
 		m_arth.SetActive( false );
@@ -98,9 +98,9 @@ public class SystemDisplay : ShipDisplay
 		m_star.color = color;
 
 		// update each planet in the system
-		for ( int i = 0; i < Star.c_maxNumPlanets; i++ )
+		for ( int i = 0; i < GD_Star.c_maxNumPlanets; i++ )
 		{
-			Planet planet = m_spaceflightController.m_starSystem.m_planetController[ i ].m_planet;
+			GD_Planet planet = m_spaceflightController.m_starSystem.m_planetController[ i ].m_planet;
 
 			// is there a planet?
 			if ( ( planet == null ) || ( planet.m_id == -1 ) )
@@ -128,7 +128,7 @@ public class SystemDisplay : ShipDisplay
 					m_planet[ planet.m_orbitPosition ].gameObject.SetActive( true );
 
 					// change the display color for this planet
-					Surface surface = planet.GetSurface();
+					GD_Surface surface = planet.GetSurface();
 					color = new Color( surface.m_colorR / 255.0f, surface.m_colorG / 255.0f, surface.m_colorB / 255.0f );
 					m_planet[ planet.m_orbitPosition ].color = color;
 					// Debug.Log( "Setting display color for planet " + planet.m_orbitPosition + " to R:" + surface.m_colorR + " G:" + surface.m_colorG + " B:" + surface.m_colorB );

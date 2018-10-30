@@ -32,7 +32,7 @@ public class CrewAssignmentPanel : Panel
 
 	// private stuff we don't want the editor to see
 	State m_currentState;
-	CrewAssignment.Role m_currentRole;
+	PD_CrewAssignment.Role m_currentRole;
 	int m_currentPersonnelId;
 	Vector3 m_baseSelectionOffsetMin;
 	Vector3 m_baseSelectionOffsetMax;
@@ -97,7 +97,7 @@ public class CrewAssignmentPanel : Panel
 	public void UpdateControllerForAssignPersonnelState()
 	{
 		// get access to the personnel player data
-		Personnel personnel = DataController.m_instance.m_playerData.m_personnel;
+		PD_Personnel personnel = DataController.m_instance.m_playerData.m_personnel;
 
 		// keep track if we have centered both x and y
 		bool xIsCentered = false;
@@ -141,7 +141,7 @@ public class CrewAssignmentPanel : Panel
 				{
 					m_ignoreControllerTimer = 0.3f;
 
-					if ( m_currentRole < ( CrewAssignment.Role.Length - 1 ) )
+					if ( m_currentRole < ( PD_CrewAssignment.Role.Length - 1 ) )
 					{
 						ChangeCurrentRole( m_currentRole + 1 );
 
@@ -155,7 +155,7 @@ public class CrewAssignmentPanel : Panel
 				{
 					m_ignoreControllerTimer = 0.3f;
 
-					if ( m_currentRole > CrewAssignment.Role.First )
+					if ( m_currentRole > PD_CrewAssignment.Role.First )
 					{
 						ChangeCurrentRole( m_currentRole - 1 );
 
@@ -206,7 +206,7 @@ public class CrewAssignmentPanel : Panel
 		UpdateAssignedCrewmemberList();
 
 		// get access to the personnel player data
-		Personnel personnel = DataController.m_instance.m_playerData.m_personnel;
+		PD_Personnel personnel = DataController.m_instance.m_playerData.m_personnel;
 
 		// check if we have at least one living crewmember in personnel
 		if ( personnel.AnyLiving() )
@@ -255,7 +255,7 @@ public class CrewAssignmentPanel : Panel
 		m_currentState = State.AssignPersonnel;
 
 		// start with the captain
-		ChangeCurrentRole( CrewAssignment.Role.Captain );
+		ChangeCurrentRole( PD_CrewAssignment.Role.Captain );
 
 		// show the crewmember panel
 		m_bottomPanelGameObject.SetActive( true );
@@ -264,7 +264,7 @@ public class CrewAssignmentPanel : Panel
 		m_selectionXform.SetActive( true );
 
 		// get access to the personnel player data
-		Personnel personnel = DataController.m_instance.m_playerData.m_personnel;
+		PD_Personnel personnel = DataController.m_instance.m_playerData.m_personnel;
 
 		// show the enabled arrows only if we have more than one personnel on file
 		if ( personnel.m_personnelList.Count > 1 )
@@ -288,19 +288,19 @@ public class CrewAssignmentPanel : Panel
 	void UpdateAssignedCrewmemberList()
 	{
 		// get access to the crew assignment player data
-		CrewAssignment crewAssignment = DataController.m_instance.m_playerData.m_crewAssignment;
+		PD_CrewAssignment crewAssignment = DataController.m_instance.m_playerData.m_crewAssignment;
 
 		// start with an empty text string
 		m_positionValuesText.text = "";
 
 		// go through each position
-		for ( CrewAssignment.Role role = CrewAssignment.Role.First; role < CrewAssignment.Role.Length; role++ )
+		for ( PD_CrewAssignment.Role role = PD_CrewAssignment.Role.First; role < PD_CrewAssignment.Role.Length; role++ )
 		{
 			// get the file id for the assigned crewmember
 			if ( crewAssignment.IsAssigned( role ) )
 			{
 				// get the personnel file for that role
-				Personnel.PersonnelFile personnelFile = crewAssignment.GetPersonnelFile( role );
+				PD_Personnel.PD_PersonnelFile personnelFile = crewAssignment.GetPersonnelFile( role );
 
 				// add the crewmember's name
 				m_positionValuesText.text += personnelFile.m_name;
@@ -311,20 +311,20 @@ public class CrewAssignmentPanel : Panel
 				m_positionValuesText.text += "[Not Assigned]";
 			}
 
-			if ( role < ( CrewAssignment.Role.Length - 1 ) )
+			if ( role < ( PD_CrewAssignment.Role.Length - 1 ) )
 			{
 				m_positionValuesText.text += Environment.NewLine;
 			}
 		}
 	}
 
-	void ChangeCurrentRole( CrewAssignment.Role role )
+	void ChangeCurrentRole( PD_CrewAssignment.Role role )
 	{
 		// update the current position index
 		m_currentRole = role;
 
 		// get access to the crew assignment player data
-		CrewAssignment crewAssignment = DataController.m_instance.m_playerData.m_crewAssignment;
+		PD_CrewAssignment crewAssignment = DataController.m_instance.m_playerData.m_crewAssignment;
 
 		// check if we have don't have someone assigned to this position
 		if ( !crewAssignment.IsAssigned( m_currentRole ) )
@@ -338,7 +338,7 @@ public class CrewAssignmentPanel : Panel
 			int fileId = crewAssignment.GetFileId( m_currentRole );
 
 			// get access to the personnel player data
-			Personnel personnel = DataController.m_instance.m_playerData.m_personnel;
+			PD_Personnel personnel = DataController.m_instance.m_playerData.m_personnel;
 
 			// update the current personnel id
 			m_currentPersonnelId = personnel.GetPersonnelId( fileId );
@@ -357,13 +357,13 @@ public class CrewAssignmentPanel : Panel
 			m_currentPersonnelId = personnelId;
 
 			// get access to the crew assignment player data
-			CrewAssignment crewAssignment = DataController.m_instance.m_playerData.m_crewAssignment;
+			PD_CrewAssignment crewAssignment = DataController.m_instance.m_playerData.m_crewAssignment;
 
 			// get access to the personnel player data
-			Personnel personnel = DataController.m_instance.m_playerData.m_personnel;
+			PD_Personnel personnel = DataController.m_instance.m_playerData.m_personnel;
 
 			// get the personnel file
-			Personnel.PersonnelFile personnelFile = personnel.m_personnelList[ m_currentPersonnelId ];
+			PD_Personnel.PD_PersonnelFile personnelFile = personnel.m_personnelList[ m_currentPersonnelId ];
 
 			// assign this personnel to this position
 			crewAssignment.Assign( m_currentRole, personnelFile.m_fileId );
@@ -379,23 +379,23 @@ public class CrewAssignmentPanel : Panel
 	void UpdateDisplay()
 	{
 		// show the up arrow only if we are not at the first position index
-		m_upArrowImage.gameObject.SetActive( m_currentRole != CrewAssignment.Role.First );
+		m_upArrowImage.gameObject.SetActive( m_currentRole != PD_CrewAssignment.Role.First );
 
 		// show the down arrow only if we are not at the last position index
-		m_downArrowImage.gameObject.SetActive( m_currentRole != ( CrewAssignment.Role.Length - 1 ) );
+		m_downArrowImage.gameObject.SetActive( m_currentRole != ( PD_CrewAssignment.Role.Length - 1 ) );
 
 		// put the position selection box in the right place
-		float offset = (int) m_currentRole * m_positionValuesText.renderedHeight / (int) CrewAssignment.Role.Length;
+		float offset = (int) m_currentRole * m_positionValuesText.renderedHeight / (int) PD_CrewAssignment.Role.Length;
 
 		RectTransform rectTransform = m_selectionXform.GetComponent<RectTransform>();
 		rectTransform.offsetMin = m_baseSelectionOffsetMin + new Vector3( 0.0f, -offset, 0.0f );
 		rectTransform.offsetMax = m_baseSelectionOffsetMax + new Vector3( 0.0f, -offset, 0.0f );
 
 		// get access to the personnel player data
-		Personnel personnel = DataController.m_instance.m_playerData.m_personnel;
+		PD_Personnel personnel = DataController.m_instance.m_playerData.m_personnel;
 
 		// get the personnel file
-		Personnel.PersonnelFile personnelFile = personnel.m_personnelList[ m_currentPersonnelId ];
+		PD_Personnel.PD_PersonnelFile personnelFile = personnel.m_personnelList[ m_currentPersonnelId ];
 
 		// update the crewmember name
 		if ( personnelFile.m_vitality > 0 )

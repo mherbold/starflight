@@ -11,7 +11,7 @@ public class PlanetController : MonoBehaviour
 	const int c_numPolePaddingRows = 3;
 
 	// the current planet this controller is controlling
-	public Planet m_planet;
+	public GD_Planet m_planet;
 
 	// access to the planet model
 	public GameObject m_planetModel;
@@ -81,7 +81,7 @@ public class PlanetController : MonoBehaviour
 	}
 
 	// call this before you enable the planet
-	public void InitializePlanet( Planet planet )
+	public void InitializePlanet( GD_Planet planet )
 	{
 		// check if we have a planet
 		if ( ( planet == null ) || ( planet.m_id == -1 ) )

@@ -142,7 +142,7 @@ public class Player : MonoBehaviour
 			if ( m_enginesAreOn )
 			{
 				// calculate the maximum ship speed (it is the same for all engine classes)
-				var maximumShipSpeed = ( playerData.m_starflight.m_location == Starflight.Location.Hyperspace ) ? m_maximumShipSpeedHyperspace : m_maximumShipSpeedStarSystem;
+				var maximumShipSpeed = ( playerData.m_starflight.m_location == PD_General.Location.Hyperspace ) ? m_maximumShipSpeedHyperspace : m_maximumShipSpeedStarSystem;
 
 				// calculate the acceleration
 				var acceleration = Time.deltaTime * playerData.m_ship.m_acceleration / ( m_minimumTimeToReachMaximumShipSpeed * 25.0f );
@@ -151,7 +151,7 @@ public class Player : MonoBehaviour
 				playerData.m_starflight.m_currentSpeed = Mathf.Lerp( playerData.m_starflight.m_currentSpeed, maximumShipSpeed, acceleration );
 
 				// are we in hyperspace?
-				if ( playerData.m_starflight.m_location == Starflight.Location.Hyperspace )
+				if ( playerData.m_starflight.m_location == PD_General.Location.Hyperspace )
 				{
 					// get the engines
 					var engines = playerData.m_ship.GetEngines();
@@ -192,7 +192,7 @@ public class Player : MonoBehaviour
 				transform.position = newPosition;
 
 				// update the player data (it will save out to disk eventually)
-				if ( playerData.m_starflight.m_location != Starflight.Location.Hyperspace )
+				if ( playerData.m_starflight.m_location != PD_General.Location.Hyperspace )
 				{
 					playerData.m_starflight.m_systemCoordinates = newPosition;
 				}
@@ -202,7 +202,7 @@ public class Player : MonoBehaviour
 				}
 
 				// figure out how fast to rotate the skybox
-				var multiplier = ( playerData.m_starflight.m_location == Starflight.Location.Hyperspace ) ? ( 1.0f / 30.0f ) : ( 1.0f / 60.0f );
+				var multiplier = ( playerData.m_starflight.m_location == PD_General.Location.Hyperspace ) ? ( 1.0f / 30.0f ) : ( 1.0f / 60.0f );
 
 				// rotate the skybox
 				RotateSkybox( playerData.m_starflight.m_currentDirection, playerData.m_starflight.m_currentSpeed * Time.deltaTime * multiplier );
@@ -232,8 +232,6 @@ public class Player : MonoBehaviour
 			// interpolate towards the new banking angle
 			m_currentBankingAngle = Mathf.Lerp( m_currentBankingAngle, bankingAngle, 0.1f );
 
-			Debug.Log( m_currentBankingAngle );
-
 			// bank the ship based on the calculated angle
 			m_ship.rotation = Quaternion.AngleAxis( m_currentBankingAngle, playerData.m_starflight.m_currentDirection ) * m_ship.rotation;
 
@@ -248,7 +246,7 @@ public class Player : MonoBehaviour
 		skyboxMaterial.SetMatrix( "_ModelMatrix", m_skyboxRotation );
 
 		// get the current hyperspace coordinates (if in hyperspace get it from the player position due to flux travel not updating m_hyperspaceCoordinats)
-		var hyperspaceCoordinates = ( playerData.m_starflight.m_location == Starflight.Location.Hyperspace ) ? transform.position : playerData.m_starflight.m_hyperspaceCoordinates;
+		var hyperspaceCoordinates = ( playerData.m_starflight.m_location == PD_General.Location.Hyperspace ) ? transform.position : playerData.m_starflight.m_hyperspaceCoordinates;
 
 		// figure out how far we are from each territory
 		foreach ( var territory in gameData.m_territoryList )

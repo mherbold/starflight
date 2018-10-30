@@ -111,7 +111,7 @@ public class TradeDepotPanel : Panel
 		{
 			string sign = ( deltaBalance > 0 ) ? "-" : "+";
 
-			Bank.Transaction transaction = new Bank.Transaction( DataController.m_instance.m_playerData.m_starflight.m_currentStardateYMD, "Trade depot", deltaBalance.ToString() + sign );
+			PD_Bank.Transaction transaction = new PD_Bank.Transaction( DataController.m_instance.m_playerData.m_starflight.m_currentStardateYMD, "Trade depot", deltaBalance.ToString() + sign );
 
 			DataController.m_instance.m_playerData.m_bank.m_transactionList.Add( transaction );
 		}
@@ -576,7 +576,7 @@ public class TradeDepotPanel : Panel
 					else
 					{
 						// the maximum amount is however much the player has in the ships cargo hold
-						ElementReference elementReference = playerData.m_ship.m_elementStorage.Find( elementId );
+						PD_ElementReference elementReference = playerData.m_ship.m_elementStorage.Find( elementId );
 
 						maximumAmount = elementReference.m_volume;
 					}
@@ -636,20 +636,20 @@ public class TradeDepotPanel : Panel
 					m_rowCount++;
 
 					// get access to the ship cargo data for elements
-					ElementStorage elementStorage = playerData.m_ship.m_elementStorage;
+					PD_ElementStorage elementStorage = playerData.m_ship.m_elementStorage;
 
 					if ( ( m_currentState == State.BuyItem ) || ( m_currentState == State.BuyAmount ) )
 					{
 						// add all elements available to buy in starport
 						for ( int elementId = 0; elementId < gameData.m_elementList.Length; elementId++ )
 						{
-							Element elementGameData = gameData.m_elementList[ elementId ];
+							GD_Element elementGameData = gameData.m_elementList[ elementId ];
 
 							if ( elementGameData.m_availableInStarport )
 							{
 								m_itemListText.text += elementGameData.m_name + Environment.NewLine;
 
-								ElementReference elementReference = elementStorage.Find( elementId );
+								PD_ElementReference elementReference = elementStorage.Find( elementId );
 
 								if ( elementReference == null )
 								{
@@ -669,9 +669,9 @@ public class TradeDepotPanel : Panel
 					else if ( ( m_currentState == State.SellItem ) || ( m_currentState == State.SellAmount ) )
 					{
 						// add all elements in the ship cargo hold
-						foreach ( ElementReference elementReference in elementStorage.m_elementList )
+						foreach ( PD_ElementReference elementReference in elementStorage.m_elementList )
 						{
-							Element elementGameData = elementReference.GetElementGameData();
+							GD_Element elementGameData = elementReference.GetElementGameData();
 
 							m_itemListText.text += elementGameData.m_name + Environment.NewLine;
 							m_volumeListText.text += ( elementReference.m_volume / 10 ) + "." + ( elementReference.m_volume % 10 ) + Environment.NewLine;
@@ -692,12 +692,12 @@ public class TradeDepotPanel : Panel
 					m_rowCount++;
 
 					// get access to the starport data for artifacts
-					ArtifactStorage artifactStorage = playerData.m_starport.m_artifactStorage;
+					PD_ArtifactStorage artifactStorage = playerData.m_starport.m_artifactStorage;
 
 					// add all artifacts available to buy in starport
-					foreach (  ArtifactReference artifactReference in artifactStorage.m_artifactList )
+					foreach (  PD_ArtifactReference artifactReference in artifactStorage.m_artifactList )
 					{
-						Artifact artifactGameData = artifactReference.GetArtifactGameData();
+						GD_Artifact artifactGameData = artifactReference.GetArtifactGameData();
 
 						m_itemListText.text += artifactGameData.m_name + Environment.NewLine;
 						m_volumeListText.text += ( artifactGameData.m_volume / 10 ) + "." + ( artifactGameData.m_volume % 10 ) + Environment.NewLine;
@@ -717,12 +717,12 @@ public class TradeDepotPanel : Panel
 					m_rowCount++;
 
 					// get access to the ship storage for artifacts
-					ArtifactStorage artifactStorage = playerData.m_ship.m_artifactStorage;
+					PD_ArtifactStorage artifactStorage = playerData.m_ship.m_artifactStorage;
 
 					// add all artifacts in the ship cargo hold
-					foreach ( ArtifactReference artifactReference in artifactStorage.m_artifactList )
+					foreach ( PD_ArtifactReference artifactReference in artifactStorage.m_artifactList )
 					{
-						Artifact artifactGameData = artifactReference.GetArtifactGameData();
+						GD_Artifact artifactGameData = artifactReference.GetArtifactGameData();
 
 						m_itemListText.text += artifactGameData.m_name + Environment.NewLine;
 						m_volumeListText.text += ( artifactGameData.m_volume / 10 ) + "." + ( artifactGameData.m_volume % 10 ) + Environment.NewLine;
@@ -1058,7 +1058,7 @@ public class TradeDepotPanel : Panel
 			PlayerData playerData = DataController.m_instance.m_playerData;
 
 			// get access to the artifact data
-			Artifact artifactGameData = gameData.m_artifactList[ item.m_id ];
+			GD_Artifact artifactGameData = gameData.m_artifactList[ item.m_id ];
 
 			// it's an artifact - check if the player can afford it
 			if ( playerData.m_bank.m_currentBalance < artifactGameData.m_starportPrice )

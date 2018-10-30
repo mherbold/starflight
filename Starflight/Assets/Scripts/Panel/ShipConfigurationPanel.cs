@@ -101,7 +101,7 @@ public class ShipConfigurationPanel : Panel
 		{
 			string sign = ( deltaBalance > 0 ) ? "-" : "+";
 
-			Bank.Transaction transaction = new Bank.Transaction( DataController.m_instance.m_playerData.m_starflight.m_currentStardateYMD, "Ship Configuration", deltaBalance.ToString() + sign );
+			PD_Bank.Transaction transaction = new PD_Bank.Transaction( DataController.m_instance.m_playerData.m_starflight.m_currentStardateYMD, "Ship Configuration", deltaBalance.ToString() + sign );
 
 			DataController.m_instance.m_playerData.m_bank.m_transactionList.Add( transaction );
 		}
@@ -494,7 +494,7 @@ public class ShipConfigurationPanel : Panel
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// get the ship player data
-		Ship ship = playerData.m_ship;
+		PD_PlayerShip ship = playerData.m_ship;
 
 		// update configuration values
 		m_configurationValuesText.text = ship.m_numCargoPods.ToString() + Environment.NewLine;
@@ -525,7 +525,7 @@ public class ShipConfigurationPanel : Panel
 		m_statusValuesText.text += ship.m_acceleration + " G" + Environment.NewLine;
 
 		// report the amount of endurium on the ship
-		ElementReference elementReference = playerData.m_ship.m_elementStorage.Find( "Endurium" );
+		PD_ElementReference elementReference = playerData.m_ship.m_elementStorage.Find( "Endurium" );
 
 		if ( elementReference == null )
 		{
@@ -785,7 +785,7 @@ public class ShipConfigurationPanel : Panel
 				GameData gameData = DataController.m_instance.m_gameData;
 
 				// get the part list
-				ShipPart[] shipPartList = null;
+				GD_ShipPart[] shipPartList = null;
 
 				switch ( m_currentPartIndex )
 				{
@@ -828,7 +828,7 @@ public class ShipConfigurationPanel : Panel
 		GameData gameData = DataController.m_instance.m_gameData;
 
 		// get the ship part list
-		ShipPart[] shipPartList = null;
+		GD_ShipPart[] shipPartList = null;
 
 		switch ( m_currentPartIndex )
 		{
@@ -927,7 +927,7 @@ public class ShipConfigurationPanel : Panel
 		// update part class prices (if we have anything but cargo pods selected)
 		if ( m_currentPartIndex > 0 )
 		{
-			ShipPart[] shipPartList = null;
+			GD_ShipPart[] shipPartList = null;
 
 			switch ( m_currentPartIndex )
 			{

@@ -22,7 +22,7 @@ public class LaunchYesButton : ShipButton
 		// get to the player data
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
-		if ( playerData.m_starflight.m_location == Starflight.Location.DockingBay )
+		if ( playerData.m_starflight.m_location == PD_General.Location.DockingBay )
 		{
 			// update the messages log
 			m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>Opening docking bay doors...</color>" );
@@ -102,7 +102,7 @@ public class LaunchYesButton : ShipButton
 				if ( currentNumber <= 0 )
 				{
 					// are we in the docking bay?
-					if ( playerData.m_starflight.m_location == Starflight.Location.DockingBay )
+					if ( playerData.m_starflight.m_location == PD_General.Location.DockingBay )
 					{
 						// yes - update the messages text
 						m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>Leaving starport...</color>" );
@@ -118,7 +118,7 @@ public class LaunchYesButton : ShipButton
 							Debug.Log( "At end of launch cinematics - switching to the just launched location." );
 
 							// update the player location
-							m_spaceflightController.SwitchLocation( Starflight.Location.JustLaunched );
+							m_spaceflightController.SwitchLocation( PD_General.Location.JustLaunched );
 
 							// yep - fix us at exactly 1024 units above the zero plane
 							y = 1024.0f;

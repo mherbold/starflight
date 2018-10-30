@@ -61,7 +61,7 @@ public class Hyperspace : MonoBehaviour
 		m_starTemplate.SetActive( false );
 
 		// make copies of the flux template
-		foreach ( Flux flux in gameData.m_fluxList )
+		foreach ( GD_Flux flux in gameData.m_fluxList )
 		{
 			// clone the flux
 			var clonedFlux = Instantiate( m_fluxTemplate, flux.GetFrom(), Quaternion.identity, transform );
@@ -127,7 +127,7 @@ public class Hyperspace : MonoBehaviour
 		else
 		{
 			// go through each star in the game
-			foreach ( Star star in gameData.m_starList )
+			foreach ( GD_Star star in gameData.m_starList )
 			{
 				// did we breach it?
 				float distance = Vector3.Distance( playerData.m_starflight.m_hyperspaceCoordinates, star.GetWorldCoordinates() );
@@ -151,12 +151,12 @@ public class Hyperspace : MonoBehaviour
 					playerData.m_starflight.m_currentSpeed *= speedRatio;
 
 					// switch to the star system location
-					m_spaceflightController.SwitchLocation( Starflight.Location.StarSystem );
+					m_spaceflightController.SwitchLocation( PD_General.Location.StarSystem );
 				}
 			}
 
 			// go through each flux in the game
-			foreach ( Flux flux in gameData.m_fluxList )
+			foreach ( GD_Flux flux in gameData.m_fluxList )
 			{
 				// did we breach it?
 				var distance = Vector3.Distance( playerData.m_starflight.m_hyperspaceCoordinates, flux.GetFrom() );
@@ -199,7 +199,7 @@ public class Hyperspace : MonoBehaviour
 			return;
 		}
 
-		Debug.Log( "Hiding the hyperspace scene." );
+		Debug.Log( "Hiding the hyperspace location." );
 
 		// hide the hyperspace objects
 		gameObject.SetActive( false );
@@ -213,7 +213,7 @@ public class Hyperspace : MonoBehaviour
 			return;
 		}
 
-		Debug.Log( "Showing the hyperspace scene." );
+		Debug.Log( "Showing the hyperspace location." );
 
 		// show the hyperspace objects
 		gameObject.SetActive( true );

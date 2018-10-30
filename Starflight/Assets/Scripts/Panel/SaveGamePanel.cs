@@ -297,25 +297,25 @@ public class SaveGamePanel : Panel
 
 			switch ( playerData.m_starflight.m_location )
 			{
-				case Starflight.Location.Starport:
+				case PD_General.Location.Starport:
 					description += "Starport</color>\n";
 					break;
-				case Starflight.Location.DockingBay:
+				case PD_General.Location.DockingBay:
 					description += "Docking Bay</color>\n";
 					break;
-				case Starflight.Location.JustLaunched:
+				case PD_General.Location.JustLaunched:
 					description += "Just Launched</color>\n";
 					break;
-				case Starflight.Location.StarSystem:
+				case PD_General.Location.StarSystem:
 					description += "Star System</color>   Coordinates: <color=\"blue\">" + Mathf.RoundToInt( hyperspaceCoordinates.x ) + ", " + Mathf.RoundToInt( hyperspaceCoordinates.z ) + "</color>\n";
 					break;
-				case Starflight.Location.Hyperspace:
+				case PD_General.Location.Hyperspace:
 					description += "Hyperspace</color>   Coordinates: <color=\"blue\">" + Mathf.RoundToInt( hyperspaceCoordinates.x ) + ", " + Mathf.RoundToInt( hyperspaceCoordinates.z ) + "</color>\n";
 					break;
-				case Starflight.Location.InOrbit:
+				case PD_General.Location.InOrbit:
 					description += "In Orbit</color>\n";
 					break;
-				case Starflight.Location.OnPlanet:
+				case PD_General.Location.OnPlanet:
 					description += "On Planet</color>\n";
 					break;
 			}

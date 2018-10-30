@@ -6,7 +6,6 @@ using UnityEngine.EventSystems;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Diagnostics;
 
 public class DataController : MonoBehaviour
 {
@@ -55,7 +54,7 @@ public class DataController : MonoBehaviour
 		LoadPlayerDataList();
 
 		// debug info
-		UnityEngine.Debug.Log( "Loading scene " + m_sceneToLoad );
+		Debug.Log( "Loading scene " + m_sceneToLoad );
 
 		// load the next scene
 		SceneManager.LoadScene( m_sceneToLoad );
@@ -94,6 +93,9 @@ public class DataController : MonoBehaviour
 			// figure out which scene to load (based on the player location in the save data)
 			var nextSceneName = GetCurrentSceneName();
 
+			// debug info
+			Debug.Log( "Loading scene " + nextSceneName );
+
 			// load the next scene
 			SceneManager.LoadScene( nextSceneName );
 		}
@@ -102,11 +104,6 @@ public class DataController : MonoBehaviour
 	// load the game data files
 	void LoadGameData()
 	{
-		// use stopwatch to report load times
-		var stopwatch = new Stopwatch();
-
-		stopwatch.Start();
-
 		// load it as an asset
 		var textAsset = Resources.Load( m_gameDataFileName ) as TextAsset;
 
@@ -115,19 +112,11 @@ public class DataController : MonoBehaviour
 
 		// initalize the game data
 		m_gameData.Initialize();
-
-		// report load time
-		UnityEngine.Debug.Log( "LoadGameData() - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
 	}
 
 	// this loads the save game slots from disk
 	void LoadPlayerDataList()
 	{
-		// use stopwatch to report load times
-		var stopwatch = new Stopwatch();
-
-		stopwatch.Start();
-
 		// whether or not we have found the current game
 		var currentGameFound = false;
 
@@ -175,7 +164,7 @@ public class DataController : MonoBehaviour
 			if ( !loadSucceeded || !m_playerDataList[ i ].IsCurrentVersion() )
 			{
 				// debug info
-				UnityEngine.Debug.Log( "Creating and resetting player data " + i );
+				Debug.Log( "Creating and resetting player data " + i );
 
 				m_playerDataList[ i ] = new PlayerData();
 
@@ -208,9 +197,6 @@ public class DataController : MonoBehaviour
 
 		// set the target save game slot number to be the same as the active one
 		m_targetSaveGameSlotNumber = m_activeSaveGameSlotNumber;
-
-		// report load time
-		UnityEngine.Debug.Log( "LoadPlayerDataList() - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
 	}
 
 	// this saves our current save game slot to disk
@@ -246,7 +232,7 @@ public class DataController : MonoBehaviour
 		catch ( IOException exception )
 		{
 			// report if we got an exception
-			UnityEngine.Debug.Log( "Saving player data failed - " + exception.Message );
+			Debug.Log( "Saving player data failed - " + exception.Message );
 		}
 	}
 
@@ -256,12 +242,12 @@ public class DataController : MonoBehaviour
 		// figure out what the current scene is
 		switch ( m_playerData.m_starflight.m_location )
 		{
-			case Starflight.Location.DockingBay:
-			case Starflight.Location.Hyperspace:
-			case Starflight.Location.InOrbit:
-			case Starflight.Location.JustLaunched:
-			case Starflight.Location.OnPlanet:
-			case Starflight.Location.StarSystem:
+			case PD_General.Location.DockingBay:
+			case PD_General.Location.Hyperspace:
+			case PD_General.Location.InOrbit:
+			case PD_General.Location.JustLaunched:
+			case PD_General.Location.OnPlanet:
+			case PD_General.Location.StarSystem:
 				return "Spaceflight";
 
 			default:
@@ -312,6 +298,9 @@ public class DataController : MonoBehaviour
 
 		// figure out which scene to load (based on the player location in the save data)
 		var nextSceneName = GetCurrentSceneName();
+
+		// debug info
+		Debug.Log( "Loading scene " + nextSceneName );
 
 		// load the next scene
 		SceneManager.LoadScene( nextSceneName );

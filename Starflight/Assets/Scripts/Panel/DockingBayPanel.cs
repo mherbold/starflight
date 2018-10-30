@@ -49,7 +49,7 @@ public class DockingBayPanel : Panel
 		m_errorText.text = "";
 
 		// do we have all of the crew positions assigned?
-		for ( CrewAssignment.Role role = CrewAssignment.Role.First; role < CrewAssignment.Role.Length; role++ )
+		for ( PD_CrewAssignment.Role role = PD_CrewAssignment.Role.First; role < PD_CrewAssignment.Role.Length; role++ )
 		{
 			if ( !playerData.m_crewAssignment.IsAssigned( role ) )
 			{
@@ -58,7 +58,7 @@ public class DockingBayPanel : Panel
 				break;
 			}
 
-			Personnel.PersonnelFile personnelFile = playerData.m_crewAssignment.GetPersonnelFile( role );
+			PD_Personnel.PD_PersonnelFile personnelFile = playerData.m_crewAssignment.GetPersonnelFile( role );
 
 			if ( personnelFile.m_vitality == 0 )
 			{
@@ -165,7 +165,7 @@ public class DockingBayPanel : Panel
 				PlayerData playerData = DataController.m_instance.m_playerData;
 
 				// update the player location
-				playerData.m_starflight.m_location = Starflight.Location.DockingBay;
+				playerData.m_starflight.m_location = PD_General.Location.DockingBay;
 
 				// save the player data
 				DataController.m_instance.SaveActiveGame();

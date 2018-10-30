@@ -11,7 +11,7 @@ public class StarmapButton : ShipButton
 		// get to the player data
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
-		if ( playerData.m_starflight.m_location != Starflight.Location.Hyperspace )
+		if ( playerData.m_starflight.m_location != PD_General.Location.Hyperspace )
 		{
 			SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 

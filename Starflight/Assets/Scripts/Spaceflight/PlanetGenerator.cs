@@ -18,7 +18,7 @@ public class PlanetGenerator
 	const float c_normalScale = 20.0f;
 
 	// the planet
-	Planet m_planet;
+	GD_Planet m_planet;
 
 	// remember where we were in the maps generation process
 	int m_currentStep;
@@ -63,7 +63,7 @@ public class PlanetGenerator
 	public Texture2D m_waterMaskTexture;
 	public Texture2D m_legendTexture;
 
-	public void Start( Planet planet )
+	public void Start( GD_Planet planet )
 	{
 		m_planet = planet;
 		m_mapsGenerated = false;

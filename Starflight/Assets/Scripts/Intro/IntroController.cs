@@ -42,6 +42,10 @@ public class IntroController : MonoBehaviour
 			// nope - so then do it now and tell it to skip the intro scene
 			DataController.m_sceneToLoad = "Intro";
 
+			// debug info
+			Debug.Log( "Loading scene Persistent" );
+
+			// load the persistent scene
 			SceneManager.LoadScene( "Persistent" );
 		}
 	}

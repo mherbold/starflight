@@ -19,7 +19,7 @@ public class StarSystem : MonoBehaviour
 	public int m_planetToOrbitId;
 
 	// remember the current star
-	Star m_currentStar;
+	GD_Star m_currentStar;
 
 	// unity awake
 	void Awake()
@@ -88,7 +88,7 @@ public class StarSystem : MonoBehaviour
 			playerData.m_starflight.m_currentSpeed *= speedRatio;
 
 			// switch modes now
-			m_spaceflightController.SwitchLocation( Starflight.Location.Hyperspace );
+			m_spaceflightController.SwitchLocation( PD_General.Location.Hyperspace );
 		}
 		else
 		{
@@ -150,7 +150,7 @@ public class StarSystem : MonoBehaviour
 		m_currentStar = gameData.m_starList[ playerData.m_starflight.m_currentStarId ];
 
 		// generate or load maps for each planet in this system
-		for ( var i = 0; i < Star.c_maxNumPlanets; i++ )
+		for ( var i = 0; i < GD_Star.c_maxNumPlanets; i++ )
 		{
 			var planet = m_currentStar.GetPlanet( i );
 
@@ -169,7 +169,7 @@ public class StarSystem : MonoBehaviour
 			return;
 		}
 
-		// Debug.Log( "Hiding the star system scene." );
+		Debug.Log( "Hiding the star system location." );
 
 		// hide the starsystem
 		gameObject.SetActive( false );
@@ -183,7 +183,7 @@ public class StarSystem : MonoBehaviour
 			return;
 		}
 
-		// Debug.Log( "Showing the star system scene." );
+		Debug.Log( "Showing the star system location." );
 
 		// get to the player data
 		var playerData = DataController.m_instance.m_playerData;
@@ -239,7 +239,7 @@ public class StarSystem : MonoBehaviour
 		m_shine.SetColor( color );
 
 		// turn off all the planets
-		for ( var i = 0; i < Star.c_maxNumPlanets; i++ )
+		for ( var i = 0; i < GD_Star.c_maxNumPlanets; i++ )
 		{
 			m_planetController[ i ].DisablePlanet();
 		}

@@ -20,10 +20,10 @@ public class AnalysisButton : ShipButton
 			// yes - where are we at?
 			switch ( playerData.m_starflight.m_location )
 			{
-				case Starflight.Location.InOrbit:
+				case PD_General.Location.InOrbit:
 
 					// get to the planet
-					Planet planet = gameData.m_planetList[ playerData.m_starflight.m_currentPlanetId ];
+					GD_Planet planet = gameData.m_planetList[ playerData.m_starflight.m_currentPlanetId ];
 
 					// start building the new messages text
 					string text = "<color=white>Analysis of Last Sensor Reading</color>\n";

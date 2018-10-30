@@ -77,6 +77,9 @@ public class SceneFadeController : MonoBehaviour
 				// we are done
 				m_fadeOut = false;
 
+				// debug info
+				Debug.Log( "Loading scene " + m_nextSceneName );
+
 				// load the next scene
 				SceneManager.LoadScene( m_nextSceneName );
 			}
