@@ -63,6 +63,12 @@ public class Player : MonoBehaviour
 	// set to true to prevent the player from moving (temporarily)
 	bool m_freezePlayer;
 
+	// keep track of the last direction (for banking the ship)
+	Vector3 m_lastDirection;
+
+	// keep track of the last banking angle (for interpolation)
+	float m_currentBankingAngle;
+
 	// unity awake
 	void Awake()
 	{
@@ -93,6 +99,9 @@ public class Player : MonoBehaviour
 
 		// hide or show the missile launchers depending on if we have them
 		m_laserCannon.SetActive( playerData.m_ship.m_laserCannonClass > 0 );
+
+		// jump start the last direction
+		m_lastDirection = playerData.m_starflight.m_currentDirection;
 	}
 
 	// unity update
@@ -192,9 +201,6 @@ public class Player : MonoBehaviour
 					playerData.m_starflight.m_hyperspaceCoordinates = newPosition;
 				}
 
-				// set the rotation of the ship
-				m_ship.rotation = Quaternion.LookRotation( playerData.m_starflight.m_currentDirection, Vector3.up );
-
 				// figure out how fast to rotate the skybox
 				var multiplier = ( playerData.m_starflight.m_location == Starflight.Location.Hyperspace ) ? ( 1.0f / 30.0f ) : ( 1.0f / 60.0f );
 
@@ -204,6 +210,35 @@ public class Player : MonoBehaviour
 				// update the map coordinates
 				m_spaceflightController.m_spaceflightUI.UpdateCoordinates();
 			}
+
+			// set the rotation of the ship
+			m_ship.rotation = Quaternion.LookRotation( playerData.m_starflight.m_currentDirection, Vector3.up );
+
+			// get the number of degrees we are turning the ship (compared to the last frame)
+			var bankingAngle = Vector3.Angle( playerData.m_starflight.m_currentDirection, m_lastDirection );
+
+			// scale the angle enough so we actually see the ship banking (but max it out at 60 degrees)
+			bankingAngle = Mathf.Min( 60.0f, bankingAngle * 12.0f );
+
+			// get the direction in which the ship is turning
+			var crossVector = Vector3.Cross( playerData.m_starflight.m_currentDirection, m_lastDirection );
+
+			// flip over the angle if we are turning left instead of right
+			if ( crossVector.y < 0.0f )
+			{
+				bankingAngle = -bankingAngle;
+			}
+
+			// interpolate towards the new banking angle
+			m_currentBankingAngle = Mathf.Lerp( m_currentBankingAngle, bankingAngle, 0.1f );
+
+			Debug.Log( m_currentBankingAngle );
+
+			// bank the ship based on the calculated angle
+			m_ship.rotation = Quaternion.AngleAxis( m_currentBankingAngle, playerData.m_starflight.m_currentDirection ) * m_ship.rotation;
+
+			// update the last direction
+			m_lastDirection = playerData.m_starflight.m_currentDirection;
 		}
 
 		// get to the global skybox material
@@ -297,6 +332,8 @@ public class Player : MonoBehaviour
 
 		// sort the results
 		Array.Sort( gameData.m_nebulaList );
+
+		// TODO: affect shields
 	}
 
 	// call this to show the player (ship)
