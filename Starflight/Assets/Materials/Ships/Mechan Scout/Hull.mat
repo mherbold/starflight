@@ -15,7 +15,8 @@ Material:
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
-  disabledShaderPasses: []
+  disabledShaderPasses:
+  - BlendPrePass
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -220,9 +221,10 @@ Material:
     - AlphaPrePass: 0
     - ApplyOcclusionToAlbedo: 1
     - BlendDst: 0
+    - BlendPrePass: 0
     - BlendSrc: 1
     - CastShadows: 1
-    - OcclusionPower: 1
+    - OcclusionPower: 2
     - OrthonormalizeTextureSpace: 0
     - Smoothness: 0.5
     - UIToggle: 0
