@@ -1,0 +1,26 @@
+
+Questionable Data
+
+	m_planetList
+	
+		m_id = 82
+		Homeworld orbit position must be 3.
+		Verify.
+		
+		m_id = 120
+		Unsure what orbit position homeworld planet is on - assuming "1" for now
+		Could be any orbit position (0 to 7)
+		
+		m_id = 45
+		Unsure what orbit position homeworld planet is on - assuming "5" for now
+		Could be 5 or 6 or 7
+		
+		m_id = 136
+		Unsure what orbit position homeworld planet is on - assuming "2" for now
+		Could be 1 or 2.
+		
+	m_encounterList
+	
+		Need to check which orbit positions the Veloxi drones are on.
+		
+	

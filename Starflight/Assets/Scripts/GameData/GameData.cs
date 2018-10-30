@@ -28,6 +28,8 @@ public class GameData
 	public Territory[] m_territoryList;
 	public Nebula[] m_nebulaList;
 	public SpectralClass[] m_spectralClassList;
+	public Encounter[] m_encounterList;
+	public EncounterType[] m_encounterTypeList;
 
 	public void Initialize()
 	{
