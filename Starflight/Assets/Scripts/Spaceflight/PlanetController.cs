@@ -169,6 +169,7 @@ public class PlanetController : MonoBehaviour
 		return m_planetGenerator.m_legendTexture;
 	}
 
+	// return true if all maps have been generated or false if not
 	public bool MapsGenerated()
 	{
 		if ( m_planetGenerator == null )
@@ -179,6 +180,7 @@ public class PlanetController : MonoBehaviour
 		return m_mapsGenerated;
 	}
 
+	// continue generating maps for this planet
 	public float GenerateMaps()
 	{
 		float progress = m_planetGenerator.Process();
@@ -187,9 +189,10 @@ public class PlanetController : MonoBehaviour
 		{
 			m_mapsGenerated = true;
 
-			m_material.SetTexture( "_Albedo", m_planetGenerator.m_albedoTexture );
-			m_material.SetTexture( "_Effects", m_planetGenerator.m_effectsTexture );
-			m_material.SetTexture( "_Normal", m_planetGenerator.m_normalTexture );
+			m_material.SetTexture( "AlbedoMap", m_planetGenerator.m_albedoTexture );
+			m_material.SetTexture( "SpecularMap", m_planetGenerator.m_specularTexture );
+			m_material.SetTexture( "NormalMap", m_planetGenerator.m_normalTexture );
+			m_material.SetTexture( "WaterMaskMap", m_planetGenerator.m_waterMaskTexture );
 
 			m_meshRenderer.material = m_material;
 

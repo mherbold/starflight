@@ -328,7 +328,7 @@ public class StarSystem : MonoBehaviour
 			{
 				var progress = planetController.GenerateMaps();
 
-				totalProgress += progress / 1.2f / 8.0f;
+				totalProgress += progress / 1.4f / 8.0f;
 				break;
 			}
 

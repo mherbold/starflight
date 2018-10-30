@@ -209,11 +209,8 @@ public class DockingBayPanel : Panel
 			// get the material
 			Material material = m_astronautRenderer.materials[ i ];
 
-			// get the current color
-			Color color = material.color;
-
-			// update the material color with the new opacity
-			material.color = new Color( color.r, color.g, color.b, opacity );
+			// update the material opacity
+			material.SetFloat( "Alpha", opacity );
 		}
 	}
 

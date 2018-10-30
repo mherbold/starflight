@@ -7,8 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Straps Fade
-  m_Shader: {fileID: 4800000, guid: 74fd7095aae83944b99b70c2d330339c, type: 3}
-  m_ShaderKeywords: _ALPHABLEND_ON
+  m_Shader: {fileID: 4800000, guid: f694b88833815c84cabbf5b042632277, type: 3}
+  m_ShaderKeywords: ALPHA_ON BLENDPREPASS_ON CASTSHADOWS_ON FORWARDSHADOWS_ON ORTHONORMALIZETEXTURESPACE_ON
+    SPECULAR_ON TEXTURESPACE_ORTHONORMALIZE
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -19,6 +20,38 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - AlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - EmissiveMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - NormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - SpecularMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - WaterMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - WaterMaskMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _AlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -39,11 +72,19 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _EmissiveMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -55,23 +96,61 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SpecularMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _WaterMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _WaterMaskMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Alpha: 0.5
+    - AlphaPrePass: 0
+    - ApplyOcclusionToAlbedo: 0
+    - BlendDst: 10
+    - BlendPrePass: 1
+    - BlendSrc: 1
+    - CastShadows: 1
+    - OcclusionPower: 1
+    - OrthonormalizeTextureSpace: 1
+    - Smoothness: 0
+    - UIToggle: 0
+    - _ApplyOcclusionToAlbedo: 0
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
-    - _DstBlend: 10
+    - _DstBlend: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.25
     - _GlossyReflections: 1
     - _Metallic: 0
-    - _Mode: 2
+    - _Mode: 0
+    - _OcclusionPower: 1
     - _OcclusionStrength: 1
+    - _OrthonormalizeTextureSpace: 0
     - _Parallax: 0.02
+    - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _SrcBlend: 5
+    - _SrcBlend: 1
     - _UVSec: 0
-    - _ZWrite: 0
+    - _ZWrite: 1
     m_Colors:
+    - AlbedoColor: {r: 0.5882353, g: 0.21960786, b: 0.07450981, a: 1}
+    - EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
+    - NormalMapScaleOffset: {r: 1, g: 1, b: 0, a: 0}
+    - SpecularColor: {r: 0.25, g: 0.25, b: 0.25, a: 1}
+    - UILightColor: {r: 1, g: 1, b: 1, a: 1}
+    - UILightDirection: {r: 0, g: 0, b: 1, a: 0}
+    - WaterScale: {r: 1, g: 1, b: 1, a: 1}
+    - _AlbedoColor: {r: 0.5882353, g: 0.21960786, b: 0.07450981, a: 1}
     - _Color: {r: 0.5882353, g: 0.21960786, b: 0.07450981, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
+    - _EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
+    - _SpecularColor: {r: 0.25, g: 0.25, b: 0.25, a: 1}
+    - _WaterScale: {r: 1, g: 1, b: 1, a: 1}

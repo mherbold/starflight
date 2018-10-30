@@ -4,19 +4,57 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Windows
-  m_Shader: {fileID: 45, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _EMISSION _NORMALMAP _SPECGLOSSMAP
+  m_Shader: {fileID: 4800000, guid: f67073489be24934c9032d00068b6661, type: 3}
+  m_ShaderKeywords: EMISSIVEMAP_ON FORWARDSHADOWS_ON SPECULAR_ON _EMISSION _NORMALMAP
+    _SPECGLOSSMAP
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - AlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - EmissiveMap:
+        m_Texture: {fileID: 2800000, guid: 31baf747778871349ae953bdeebc46d7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - NormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - SpecularMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - WaterMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - WaterMaskMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Albedo:
+        m_Texture: {fileID: 2800000, guid: cb631d607880a504b9de69def6f88465, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _AlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 2800000, guid: 87eddd639e1fdca41be82c6fbb612252, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -37,6 +75,14 @@ Material:
         m_Texture: {fileID: 2800000, guid: 31baf747778871349ae953bdeebc46d7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Emissive:
+        m_Texture: {fileID: 2800000, guid: 31baf747778871349ae953bdeebc46d7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissiveMap:
+        m_Texture: {fileID: 2800000, guid: 31baf747778871349ae953bdeebc46d7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: cb631d607880a504b9de69def6f88465, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -45,8 +91,20 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _OcclusionMap:
+    - _Normal:
+        m_Texture: {fileID: 2800000, guid: 87eddd639e1fdca41be82c6fbb612252, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Occlusion:
+        m_Texture: {fileID: 2800000, guid: 7f2944fc535d68e47a598308059efdd1, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 2800000, guid: 7f2944fc535d68e47a598308059efdd1, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
@@ -57,7 +115,26 @@ Material:
         m_Texture: {fileID: 2800000, guid: 6ba92ba7240ac2b4b8adf61e87a2eccb, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Specular:
+        m_Texture: {fileID: 2800000, guid: 6ba92ba7240ac2b4b8adf61e87a2eccb, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SpecularMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Alpha: 1
+    - AlphaPrePass: 0
+    - ApplyOcclusionToAlbedo: 0
+    - BlendDst: 0
+    - BlendSrc: 1
+    - CastShadows: 1
+    - OcclusionPower: 1
+    - OrthonormalizeTextureSpace: 0
+    - Smoothness: 0.8
+    - UIToggle: 0
+    - _ApplyOcclusionToAlbedo: 0
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
@@ -67,14 +144,27 @@ Material:
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
+    - _OcclusionPower: 3
     - _OcclusionStrength: 1
+    - _OrthonormalizeTextureSpace: 0
     - _Parallax: 0.02
+    - _Smoothness: 0.8
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
+    - AlbedoColor: {r: 0, g: 0, b: 0, a: 1}
+    - EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
+    - NormalMapScaleOffset: {r: 1, g: 1, b: 0, a: 0}
+    - SpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - UILightColor: {r: 1, g: 1, b: 1, a: 1}
+    - UILightDirection: {r: 0, g: 0, b: 1, a: 0}
+    - WaterScale: {r: 1, g: 1, b: 1, a: 1}
+    - _AlbedoColor: {r: 0, g: 0, b: 0, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+    - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}

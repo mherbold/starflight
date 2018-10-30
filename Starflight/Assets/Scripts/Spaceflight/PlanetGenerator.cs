@@ -15,7 +15,7 @@ public class PlanetGenerator
 	const int c_xBlurRadiusGasGiant = 127;
 	const int c_yBlurRadiusGasGiant = 5;
 
-	const float c_normalScale = 10.0f;
+	const float c_normalScale = 20.0f;
 
 	// the planet
 	Planet m_planet;
@@ -49,16 +49,18 @@ public class PlanetGenerator
 
 	// the buffers
 	Color[,] m_albedoBuffer;
-	Color[,] m_effectsBuffer;
+	Color[,] m_specularBuffer;
 	Color[,] m_normalBuffer;
+	Color[,] m_waterMaskBuffer;
 
 	// remember if we are done
 	public bool m_mapsGenerated;
 
 	// the texture maps
 	public Texture2D m_albedoTexture;
-	public Texture2D m_effectsTexture;
+	public Texture2D m_specularTexture;
 	public Texture2D m_normalTexture;
+	public Texture2D m_waterMaskTexture;
 	public Texture2D m_legendTexture;
 
 	public void Start( Planet planet )
@@ -105,24 +107,32 @@ public class PlanetGenerator
 				return 0.7f;
 
 			case 8:
-				CreateEffectsBuffer();
+				CreateSpecularBuffer();
 				return 0.8f;
 
 			case 9:
-				CreateEffectsTexture();
+				CreateSpecularTexture();
 				return 0.9f;
 
 			case 10:
-				CreateNormalBuffer();
+				CreateWaterMaskBuffer();
 				return 1.0f;
 
 			case 11:
-				CreateNormalTexture();
+				CreateWaterMaskTexture();
 				return 1.1f;
 
 			case 12:
-				CreateLegendTexture();
+				CreateNormalBuffer();
 				return 1.2f;
+
+			case 13:
+				CreateNormalTexture();
+				return 1.3f;
+
+			case 14:
+				CreateLegendTexture();
+				return 1.4f;
 
 			default:
 
@@ -322,63 +332,116 @@ public class PlanetGenerator
 		m_currentStep++;
 	}
 
-	void CreateEffectsBuffer()
+	void CreateSpecularBuffer()
 	{
-		m_effectsBuffer = new Color[ m_textureHeight, m_textureWidth ];
+		m_specularBuffer = new Color[ m_textureHeight, m_textureWidth ];
 
-		for ( var y = 0; y < m_textureHeight; y++ )
+		for ( var y = 0; y < m_textureHeight / 4; y++ )
 		{
-			for ( var x = 0; x < m_textureWidth; x++ )
+			for ( var x = 0; x < m_textureWidth / 4; x++ )
 			{
 				// get the albedo color
-				var color = m_albedoBuffer[ y, x ];
+				var color = m_albedoBuffer[ y * 4, x * 4 ];
 
 				var water = ( !m_planet.IsGasGiant() && ( color.a < 0.5f ) ) ? 1.0f : 0.0f;
 
 				// make it shiny where water is
-				var roughness = ( water == 1.0f ) ? 0.3f : 1.0f;
+				var smoothness = ( water == 1.0f ) ? 0.75f : 0.0f;
 
-				// add in roughness due to snow on mountains (snow = add in sharp gloss)
-				roughness = Mathf.Lerp( roughness, 0.3f, ( color.a - 2.0f ) * 0.5f );
+				// add in shininess due to snow on mountains
+				smoothness = Mathf.Lerp( smoothness, 0.5f, ( color.a - 2.0f ) * 0.5f );
 
-				// calculate reflectivity based on roughness (sharp gloss = also reflective, dull gloss = not so reflective)
-				var reflectivity = ( 1.0f - roughness ) * 0.5f;
+				// calculate reflectivity based on smoothness (sharp gloss = also reflective, dull gloss = not so reflective)
+				var intensity = smoothness * 0.5f;
 
 				// put it all together
-				m_effectsBuffer[ y, x ] = new Color( roughness, water, reflectivity );
+				m_specularBuffer[ y, x ] = new Color( intensity, smoothness, 1.0f );
 			}
 		}
 
 		m_currentStep++;
 	}
 
-	void CreateEffectsTexture()
+	void CreateSpecularTexture()
 	{
-		var pixels = new Color[ m_textureWidth * m_textureHeight ];
+		var pixels = new Color[ ( m_textureWidth / 4 ) * ( m_textureHeight / 4 ) ];
 
 		var index = 0;
 
-		for ( var y = 0; y < m_textureHeight; y++ )
+		for ( var y = 0; y < m_textureHeight / 4; y++ )
 		{
-			for ( var x = 0; x < m_textureWidth; x++ )
+			for ( var x = 0; x < m_textureWidth / 4; x++ )
 			{
-				pixels[ index++ ] = m_effectsBuffer[ y, x ];
+				pixels[ index++ ] = m_specularBuffer[ y, x ];
 			}
 		}
 
-		m_effectsTexture = new Texture2D( m_textureWidth, m_textureHeight, TextureFormat.RGB24, true );
+		m_specularTexture = new Texture2D( m_textureWidth / 4, m_textureHeight / 4, TextureFormat.RGB24, true );
 
-		m_effectsTexture.SetPixels( pixels );
+		m_specularTexture.SetPixels( pixels );
 
-		m_effectsTexture.filterMode = FilterMode.Trilinear;
-		m_effectsTexture.wrapModeU = TextureWrapMode.Repeat;
-		m_effectsTexture.wrapModeV = TextureWrapMode.Clamp;
+		m_specularTexture.filterMode = FilterMode.Trilinear;
+		m_specularTexture.wrapModeU = TextureWrapMode.Repeat;
+		m_specularTexture.wrapModeV = TextureWrapMode.Clamp;
 
-		m_effectsTexture.Apply();
+		m_specularTexture.Apply();
 
 		if ( !m_planet.IsGasGiant() )
 		{
-			m_effectsTexture.Compress( true );
+			m_specularTexture.Compress( true );
+		}
+
+		m_currentStep++;
+	}
+
+	void CreateWaterMaskBuffer()
+	{
+		m_waterMaskBuffer = new Color[ m_textureHeight / 4, m_textureWidth / 4 ];
+
+		for ( var y = 0; y < m_textureHeight / 4; y++ )
+		{
+			for ( var x = 0; x < m_textureWidth / 4; x++ )
+			{
+				// get the albedo color
+				var color = m_albedoBuffer[ y * 4, x * 4 ];
+
+				var water = ( !m_planet.IsGasGiant() && ( color.a < 0.5f ) ) ? 1.0f : 0.0f;
+
+				// put it all together
+				m_waterMaskBuffer[ y, x ] = new Color( water, 1.0f, 1.0f );
+			}
+		}
+
+		m_currentStep++;
+	}
+
+	void CreateWaterMaskTexture()
+	{
+		var pixels = new Color[ ( m_textureWidth / 4 ) * ( m_textureHeight / 4 ) ];
+
+		var index = 0;
+
+		for ( var y = 0; y < m_textureHeight / 4; y++ )
+		{
+			for ( var x = 0; x < m_textureWidth / 4; x++ )
+			{
+				pixels[ index++ ] = m_waterMaskBuffer[ y, x ];
+			}
+		}
+
+		m_waterMaskTexture = new Texture2D( m_textureWidth / 4, m_textureHeight / 4, TextureFormat.RGB24, true );
+
+		m_waterMaskTexture.SetPixels( pixels );
+
+		m_waterMaskTexture.filterMode = FilterMode.Trilinear;
+		m_waterMaskTexture.wrapModeU = TextureWrapMode.Repeat;
+		m_waterMaskTexture.wrapModeV = TextureWrapMode.Clamp;
+
+		m_waterMaskTexture.Apply();
+
+		if ( !m_planet.IsGasGiant() )
+		{
+			m_waterMaskTexture.Compress( true );
 		}
 
 		m_currentStep++;
@@ -444,8 +507,9 @@ public class PlanetGenerator
 		m_elevationBuffer = null;
 		m_differenceBuffer = null;
 		m_albedoBuffer = null;
-		m_effectsBuffer = null;
+		m_specularBuffer = null;
 		m_normalBuffer = null;
+		m_waterMaskBuffer = null;
 	}
 
 	// generates the map for a planet we don't have data for

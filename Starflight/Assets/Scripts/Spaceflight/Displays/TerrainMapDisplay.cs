@@ -9,6 +9,8 @@ public class TerrainMapDisplay : ShipDisplay
 	public Image m_mapImage;
 	public Image m_legendImage;
 
+	bool m_materialSwapped;
+
 	// unity start
 	public override void Start()
 	{
@@ -38,10 +40,19 @@ public class TerrainMapDisplay : ShipDisplay
 		var planetController = m_spaceflightController.m_starSystem.GetPlanetController( playerData.m_starflight.m_currentPlanetId );
 
 		// create a new material for the map
-		m_mapImage.material = new Material( planetController.GetMaterial() )
+		var material = planetController.GetMaterial();
+
+		if ( !m_materialSwapped )
 		{
-			shader = Shader.Find( "Custom/PlanetSprite" )
-		};
+			m_mapImage.material = new Material( m_mapImage.material );
+
+			m_materialSwapped = true;
+		}
+
+		m_mapImage.material.SetTexture( "AlbedoMap", material.GetTexture( "AlbedoMap" ) );
+		m_mapImage.material.SetTexture( "SpecularMap", material.GetTexture( "SpecularMap" ) );
+		m_mapImage.material.SetTexture( "NormalMap", material.GetTexture( "NormalMap" ) );
+		m_mapImage.material.SetTexture( "WaterMaskMap", material.GetTexture( "WaterMaskMap" ) );
 
 		// create a new material for the legend
 		var legendTexture = planetController.GetLegendTexture();
