@@ -142,7 +142,7 @@ public class Hyperspace : MonoBehaviour
 					// set the position of the player inside this system
 					var starToShip = playerData.m_general.m_hyperspaceCoordinates - star.GetWorldCoordinates();
 					starToShip.Normalize();
-					playerData.m_general.m_systemCoordinates = starToShip * ( 8192.0f - 16.0f );
+					playerData.m_general.m_starSystemCoordinates = starToShip * ( 8192.0f - 16.0f );
 
 					// scale the speed of the player
 					playerData.m_general.m_currentSpeed *= 4.0f;

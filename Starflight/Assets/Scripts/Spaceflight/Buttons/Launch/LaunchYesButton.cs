@@ -135,7 +135,7 @@ public class LaunchYesButton : ShipButton
 							playerPosition.z += 128.0f;
 
 							// update the player's system coordinates to the new position
-							playerData.m_general.m_systemCoordinates = playerPosition;
+							playerData.m_general.m_starSystemCoordinates = playerPosition;
 
 							// restore the bridge buttons (this also ends the launch function)
 							m_spaceflightController.m_buttonController.RestoreBridgeButtons();

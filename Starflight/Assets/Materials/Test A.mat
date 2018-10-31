@@ -8,16 +8,17 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: Test A
   m_Shader: {fileID: 4800000, guid: f694b88833815c84cabbf5b042632277, type: 3}
-  m_ShaderKeywords: ALBEDOMAP_ON ALPHA_ON BLENDPREPASS_ON CASTSHADOWS_ON FORWARDSHADOWS_ON
-    NORMALMAP_COMPRESSED NORMALMAP_ON ORTHONORMALIZETEXTURESPACE_ON SPECULAR_ON TEXTURESPACE_ON
-    TEXTURESPACE_ORTHONORMALIZE _ALPHAPREMULTIPLY_ON _NORMALMAP _SPECGLOSSMAP
+  m_ShaderKeywords: ALBEDOMAP_ON BLENDPREPASS_ON CASTSHADOWS_ON FORWARDSHADOWS_ON
+    NORMALMAP_COMPRESSED NORMALMAP_ISCOMPRESSED NORMALMAP_ON ORTHONORMALIZETEXTURESPACE_ON
+    SPECULAR_ON TEXTURESPACE_ON TEXTURESPACE_ORTHONORMALIZE _ALPHAPREMULTIPLY_ON _NORMALMAP
+    _SPECGLOSSMAP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
-  stringTagMap:
-    RenderType: Transparent
-  disabledShaderPasses: []
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses:
+  - BlendPrePass
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -134,15 +135,20 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Alpha: 0.25
+    - AlbedoOcclusionOn: 0
+    - Alpha: 1
     - AlphaPrePass: 0
     - ApplyOcclusionToAlbedo: 0
-    - BlendDst: 10
+    - BlendDst: 0
     - BlendPrePass: 1
+    - BlendPrePassOn: 0
     - BlendSrc: 1
     - CastShadows: 1
+    - LightOverrideOn: 0
     - OcclusionPower: 1
+    - OrthonormalizeOn: 0
     - OrthonormalizeTextureSpace: 1
+    - ShadowCasterOn: 1
     - Smoothness: 0.5
     - UIToggle: 0
     - _Amount: 0.1
@@ -169,6 +175,8 @@ Material:
     m_Colors:
     - AlbedoColor: {r: 1, g: 1, b: 1, a: 1}
     - EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
+    - LightOverrideColor: {r: 1, g: 1, b: 1, a: 1}
+    - LightOverrideDirection: {r: 0, g: 0, b: 1, a: 0}
     - NormalMapScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SpecularColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - UILightColor: {r: 1.319508, g: 1.319508, b: 1.319508, a: 1}

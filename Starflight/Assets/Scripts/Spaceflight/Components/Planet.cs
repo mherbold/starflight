@@ -150,7 +150,7 @@ public class Planet : MonoBehaviour
 		var playerData = DataController.m_instance.m_playerData;
 
 		// return the distance from the player to the planet
-		return Vector3.Distance( playerData.m_general.m_systemCoordinates, transform.localPosition );
+		return Vector3.Distance( playerData.m_general.m_starSystemCoordinates, transform.localPosition );
 	}
 
 	// get the material for this planet

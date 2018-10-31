@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: a42f4740a3e3ccd4fb54206c3486dc3f
+guid: 2bc433315020e134b840c6b0b2786033
 ScriptedImporter:
   fileIDToRecycleName:
-    100000: gameObject/Radar
-    400000: gameObject/Radar/Transform
-    21200000: gameObject/Radar/SpriteRenderer
+    100000: gameObject/Sweep
+    400000: gameObject/Sweep/Transform
+    21200000: gameObject/Sweep/SpriteRenderer
     21300000: sprite
     100100000: gameObject
   externalObjects: {}
@@ -51,5 +51,5 @@ ScriptedImporter:
         y: 0
         width: 0
         height: 0
-      spriteID: 0199ddb2840b1f644b57c4b665f52bee
+      spriteID: 19716ae95341dbc4f8c89360762aa157
     PhysicsOutlines: []

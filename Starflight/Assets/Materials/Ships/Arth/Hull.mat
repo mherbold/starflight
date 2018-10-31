@@ -8,15 +8,16 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: Hull
   m_Shader: {fileID: 4800000, guid: f67073489be24934c9032d00068b6661, type: 3}
-  m_ShaderKeywords: APPLYOCCLUSIONTOALBEDO_ON ETC1_EXTERNAL_ALPHA FORWARDSHADOWS_ON
-    OCCLUSIONMAP_ON OCCLUSION_APPLYTOALBEDO SPECULAR_ON _APPLYOCCLUSIONTOALBEDO_ON
-    _NORMALMAP _SPECGLOSSMAP
+  m_ShaderKeywords: ALBEDOOCCLUSIONON_ON ALBEDOOCCLUSION_ON APPLYOCCLUSIONTOALBEDO_ON
+    ETC1_EXTERNAL_ALPHA FORWARDSHADOWS_ON OCCLUSIONMAP_ON OCCLUSION_APPLYTOALBEDO
+    SPECULAR_ON _APPLYOCCLUSIONTOALBEDO_ON _NORMALMAP _SPECGLOSSMAP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
-  disabledShaderPasses: []
+  disabledShaderPasses:
+  - BlendPrePass
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -129,14 +130,20 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - AlbedoOcclusionOn: 1
     - Alpha: 1
     - AlphaPrePass: 0
     - ApplyOcclusionToAlbedo: 1
     - BlendDst: 0
+    - BlendPrePass: 0
+    - BlendPrePassOn: 0
     - BlendSrc: 1
     - CastShadows: 1
+    - LightOverrideOn: 0
     - OcclusionPower: 1
+    - OrthonormalizeOn: 0
     - OrthonormalizeTextureSpace: 0
+    - ShadowCasterOn: 1
     - Smoothness: 0.8
     - UIToggle: 0
     - _ApplyOcclusionToAlbedo: 1
@@ -162,6 +169,8 @@ Material:
     m_Colors:
     - AlbedoColor: {r: 0.70980394, g: 0.70980394, b: 0.70980394, a: 1}
     - EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
+    - LightOverrideColor: {r: 1, g: 1, b: 1, a: 1}
+    - LightOverrideDirection: {r: 0, g: 0, b: 1, a: 0}
     - NormalMapScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - UILightColor: {r: 1, g: 1, b: 1, a: 1}

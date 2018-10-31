@@ -17,7 +17,7 @@ void fragUberDeferred( UberShaderVertexOutput i, out half4 outGBuffer0 : SV_Targ
 	float3 normal = ComputeNormal( i );
 	float3 emissive = ComputeEmissive( i );
 
-#if OCCLUSION_APPLYTOALBEDO
+#if ALBEDOOCCLUSION_ON
 
 	diffuseColor *= occlusion;
 

@@ -4,19 +4,50 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Not Assigned
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: 
+  m_Shader: {fileID: 4800000, guid: f67073489be24934c9032d00068b6661, type: 3}
+  m_ShaderKeywords: FORWARDSHADOWS_ON ORTHONORMALIZEON_ON ORTHONORMALIZE_ON SHADOWCASTERON_ON
+    SPECULAR_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
-  disabledShaderPasses: []
+  disabledShaderPasses:
+  - BlendPrePass
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - AlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - EmissiveMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - NormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - SpecularMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - WaterMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - WaterMaskMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -54,6 +85,16 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - AlbedoOcclusionOn: 0
+    - Alpha: 1
+    - BlendDst: 0
+    - BlendPrePassOn: 0
+    - BlendSrc: 1
+    - LightOverrideOn: 0
+    - OcclusionPower: 1
+    - OrthonormalizeOn: 1
+    - ShadowCasterOn: 1
+    - Smoothness: 0.5
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
@@ -71,5 +112,12 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
+    - AlbedoColor: {r: 0.9339623, g: 0.110137045, b: 0.7906892, a: 1}
+    - EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
+    - LightOverrideColor: {r: 1, g: 1, b: 1, a: 1}
+    - LightOverrideDirection: {r: 0, g: 0, b: 1, a: 0}
+    - NormalMapScaleOffset: {r: 1, g: 1, b: 0, a: 0}
+    - SpecularColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - WaterScale: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 0.312733, g: 0.1854091, b: 0.31654677, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

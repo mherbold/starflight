@@ -14,11 +14,11 @@ Shader "Starflight/UberShader"
 
 		OcclusionMap( "Occlusion Map", 2D ) = "white" {}
 		OcclusionPower( "Occlusion Power", Range( 0, 10 ) ) = 1
-		[MaterialToggle] ApplyOcclusionToAlbedo( "Apply Occlusion to Albedo", Float ) = 0
+		[MaterialToggle] AlbedoOcclusionOn( "Albedo Occlusion", Float ) = 0
 
 		NormalMap( "Normal Map", 2D ) = "bump" {}
 		NormalMapScaleOffset( "Normal Map Scale Offset", Vector ) = ( 1, 1, 0, 0 )
-		[MaterialToggle] OrthonormalizeTextureSpace( "Orthonormalize Texture Space", Float ) = 0
+		[MaterialToggle] OrthonormalizeOn( "Orthonormalize", Float ) = 0
 
 		EmissiveMap( "Emissive Map", 2D ) = "black" {}
 		EmissiveColor( "Emissive Color", Color ) = ( 0, 0, 0, 1 )
@@ -30,13 +30,13 @@ Shader "Starflight/UberShader"
 
 		[Enum(UnityEngine.Rendering.BlendMode)] BlendSrc( "Blend Src", Float ) = 1
 		[Enum(UnityEngine.Rendering.BlendMode)] BlendDst( "Blend Dst", Float ) = 0
-		[MaterialToggle] BlendPrePass( "BlendPrePass", Float ) = 0
+		[MaterialToggle] BlendPrePassOn( "Blend Pre-Pass", Float ) = 0
 
-		[MaterialToggle] CastShadows( "Cast Shadows", Float ) = 1
+		[MaterialToggle] ShadowCasterOn( "Shadow Caster", Float ) = 1
 
-		[MaterialToggle] UIToggle( "UI Toggle", Float ) = 0
-		UILightDirection( "UI Light Direction", Vector ) = ( 0, 0, 1, 0 )
-		[HDR] UILightColor( "UI Light Color", Color ) = ( 1, 1, 1, 1 )
+		[MaterialToggle] LightOverrideOn( "Light Override", Float ) = 0
+		LightOverrideDirection( "Light Override Direction", Vector ) = ( 0, 0, 1, 0 )
+		[HDR] LightOverrideColor( "Light Override Color", Color ) = ( 1, 1, 1, 1 )
 	}
 
 	SubShader
@@ -89,13 +89,13 @@ Shader "Starflight/UberShader"
 				#pragma shader_feature ALBEDOMAP_ON
 				#pragma shader_feature SPECULARMAP_ON
 				#pragma shader_feature OCCLUSIONMAP_ON
-				#pragma shader_feature OCCLUSION_APPLYTOALBEDO
+				#pragma shader_feature ALBEDOOCCLUSION_ON
 				#pragma shader_feature NORMALMAP_ON
-				#pragma shader_feature NORMALMAP_COMPRESSED
-				#pragma shader_feature TEXTURESPACE_ORTHONORMALIZE
+				#pragma shader_feature NORMALMAP_ISCOMPRESSED
+				#pragma shader_feature ORTHONORMALIZE_ON
 				#pragma shader_feature EMISSIVEMAP_ON
 				#pragma shader_feature WATERMAP_ON
-				#pragma shader_feature WATERMAP_COMPRESSED
+				#pragma shader_feature WATERMAP_ISCOMPRESSED
 				#pragma shader_feature WATERMASKMAP_ON
 
 				#pragma vertex vertUberDeferred
@@ -127,15 +127,15 @@ Shader "Starflight/UberShader"
 				#pragma shader_feature SPECULARMAP_ON
 				#pragma shader_feature SPECULAR_ON
 				#pragma shader_feature OCCLUSIONMAP_ON
-				#pragma shader_feature OCCLUSION_APPLYTOALBEDO
+				#pragma shader_feature ALBEDOOCCLUSION_ON
 				#pragma shader_feature NORMALMAP_ON
-				#pragma shader_feature NORMALMAP_COMPRESSED
-				#pragma shader_feature TEXTURESPACE_ORTHONORMALIZE
+				#pragma shader_feature NORMALMAP_ISCOMPRESSED
+				#pragma shader_feature ORTHONORMALIZE_ON
 				#pragma shader_feature EMISSIVEMAP_ON
 				#pragma shader_feature WATERMAP_ON
-				#pragma shader_feature WATERMAP_COMPRESSED
+				#pragma shader_feature WATERMAP_ISCOMPRESSED
 				#pragma shader_feature WATERMASKMAP_ON
-				#pragma shader_feature UI_ON
+				#pragma shader_feature LIGHTOVERRIDE_ON
 				#pragma shader_feature FORWARDSHADOWS_ON
 
 				#pragma vertex vertUberForwardBase

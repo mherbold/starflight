@@ -31,8 +31,8 @@ float4 WaterScale;
 
 sampler2D WaterMaskMap;
 
-float3 UILightDirection;
-float3 UILightColor;
+float3 LightOverrideDirection;
+float3 LightOverrideColor;
 
 struct UberShaderVertexInput
 {
@@ -172,17 +172,17 @@ float3 ComputeNormal( UberShaderVertexOutput i )
 
 	float4 normalMap = tex2D( NormalMap, i.texCoord0 * NormalMapScaleOffset.xy + NormalMapScaleOffset.zw );
 
-#if NORMALMAP_COMPRESSED
+#if NORMALMAP_ISCOMPRESSED
 
 	normalMap.x *= normalMap.w;
 	normalMap.xy = ( normalMap.xy * 2 - 1 );
 	normalMap.z = sqrt( 1 - saturate( dot( normalMap.xy, normalMap.xy ) ) );
 
-#else // !NORMALMAP_COMPRESSED
+#else // !NORMALMAP_ISCOMPRESSED
 
 	normalMap = normalMap * 2 - 1;
 
-#endif // NORMALMAP_COMPRESSED
+#endif // NORMALMAP_ISCOMPRESSED
 
 	normalMap.xyz = normalize( normalMap.xyz );
 
@@ -209,7 +209,7 @@ float3 ComputeNormal( UberShaderVertexOutput i )
 	texCoord = mul( scaledTexCoord, minus120 ) + waterOffset;
 	float4 waterMapC = tex2D( WaterMap, texCoord );
 
-#if WATERMAP_COMPRESSED
+#if WATERMAP_ISCOMPRESSED
 
 	waterMapA.x *= waterMapA.w;
 	waterMapA.xy = ( waterMapA.xy * 2 - 1 );
@@ -223,13 +223,13 @@ float3 ComputeNormal( UberShaderVertexOutput i )
 	waterMapC.xy = ( waterMapC.xy * 2 - 1 );
 	waterMapC.z = sqrt( 1 - saturate( dot( waterMapC.xy, waterMapC.xy ) ) );
 
-#else // !WATERMAP_COMPRESSED
+#else // !WATERMAP_ISCOMPRESSED
 
 	waterMapA = waterMapA * 2 - 1;
 	waterMapB = waterMapB * 2 - 1;
 	waterMapC = waterMapC * 2 - 1;
 
-#endif // WATERMAP_COMPRESSED
+#endif // WATERMAP_ISCOMPRESSED
 
 	float3 waterMap = waterMapA.xyz + waterMapB.xyz + waterMapC.xyz;
 
@@ -251,28 +251,28 @@ float3 ComputeNormal( UberShaderVertexOutput i )
 	float3 tangentWorld = i.tangentWorld;
 	float3 binormalWorld = i.binormalWorld;
 
-#if TEXTURESPACE_ORTHONORMALIZE
+#if ORTHONORMALIZE_ON
 
 	normalWorld = normalize( i.normalWorld );
 	tangentWorld = normalize( tangentWorld - normalWorld * dot( tangentWorld, normalWorld ) );
 	float3 normalCrossTangent = cross( normalWorld, tangentWorld );
 	binormalWorld = normalCrossTangent * sign( dot( normalCrossTangent, binormalWorld ) );
 
-#endif // TEXTURESPACE_ORTHONORMALIZE
+#endif // ORTHONORMALIZE_ON
 
 normalWorld = normalize( tangentWorld * normalMap.x + binormalWorld * normalMap.y + normalWorld * normalMap.z );
 
 #else // !NORMALMAP_ON && !WATERMAP_ON
 
-#if TEXTURESPACE_ORTHONORMALIZE
+#if ORTHONORMALIZE_ON
 
 	float3 normalWorld = normalize( i.normalWorld );
 
-#else // !TEXTURESPACE_ORTHONORMALIZE
+#else // !ORTHONORMALIZE_ON
 
 	float3 normalWorld = i.normalWorld;
 
-#endif // TEXTURESPACE_ORTHONORMALIZE
+#endif // ORTHONORMALIZE_ON
 
 #endif // NORMALMAP_ON || WATERMAP_ON
 
@@ -298,17 +298,17 @@ float3 ComputeEmissive( UberShaderVertexOutput i )
 
 float4 ComputeLighting( UberShaderVertexOutput i, float4 diffuseColor, float4 specular, float3 emissive, float3 normal )
 {
-#if UI_ON
+#if LIGHTOVERRIDE_ON
 
-	float3 lightDirectionWorld = UILightDirection;
-	float3 lightColor = UILightColor;
+	float3 lightDirectionWorld = LightOverrideDirection;
+	float3 lightColor = LightOverrideColor;
 
-#else // !UI_ON
+#else // !LIGHTOVERRIDE_ON
 
 	float3 lightDirectionWorld = _WorldSpaceLightPos0.xyz;
 	float3 lightColor = _LightColor0;
 
-#endif // UI_ON
+#endif // LIGHTOVERRIDE_ON
 
 	float3 lightDiffuse = lightColor * saturate( dot( lightDirectionWorld, normal ) );
 

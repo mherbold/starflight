@@ -69,8 +69,8 @@ public class DockingBay : MonoBehaviour
 		playerData.m_general.m_hyperspaceCoordinates = Tools.GameToWorldCoordinates( new Vector3( 125.0f, 0.0f, 100.0f ) );
 
 		// put us in the right spot for the docking bay launch sequence
-		playerData.m_general.m_systemCoordinates = new Vector3( 0.0f, 0.0f, 0.0f );
-		m_spaceflightController.m_player.transform.position = playerData.m_general.m_systemCoordinates;
+		playerData.m_general.m_starSystemCoordinates = new Vector3( 0.0f, 0.0f, 0.0f );
+		m_spaceflightController.m_player.transform.position = playerData.m_general.m_starSystemCoordinates;
 
 		// recalculate what the starting camera distance from the doors should be
 		var verticalFieldOfView = m_spaceflightController.m_map.m_playerCamera.fieldOfView;

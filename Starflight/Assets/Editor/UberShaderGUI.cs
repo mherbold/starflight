@@ -8,18 +8,18 @@ class UberShaderGUI : ShaderGUI
 	{
 		public static GUIContent albedoText = EditorGUIUtility.TrTextContent( "Albedo", "Albedo Map: UV1, RGB=Color, Alpha (Transparency)" );
 		public static GUIContent specularText = EditorGUIUtility.TrTextContent( "Specular", "Specular Map: UV1, R=Intensity, G=Smoothness" );
-		public static GUIContent occlusionText = EditorGUIUtility.TrTextContent( "Occlusion", "Occlusion Map: UV2, R=Intensity; Apply to Albedo Toggle" );
-		public static GUIContent normalText = EditorGUIUtility.TrTextContent( "Normal", "Normal Map: UV1, RGB=Uncompressed Normal, GA=DXT5 Compressed Normal; Orthonormalize Texture Space Toggle" );
+		public static GUIContent occlusionText = EditorGUIUtility.TrTextContent( "Occlusion", "Occlusion Map: UV2, R=Intensity; Albedo Occlusion Enabled" );
+		public static GUIContent normalText = EditorGUIUtility.TrTextContent( "Normal", "Normal Map: UV1, RGB=Uncompressed Normal, GA=DXT5 Compressed Normal; Orthonormalize Enabled" );
 		public static GUIContent emissiveText = EditorGUIUtility.TrTextContent( "Emissive", "Emissive Map: UV1, RGB=Color" );
 		public static GUIContent waterText = EditorGUIUtility.TrTextContent( "Water", "Water Map: UV1, RGB=Uncompressed Normal, GA=DXT5 Compressed Normal" );
 		public static GUIContent waterMaskText = EditorGUIUtility.TrTextContent( "Water Mask", "Water Mask: UV1, R=Opacity" );
 		public static GUIContent blendSrcText = EditorGUIUtility.TrTextContent( "Source Blend", "" );
 		public static GUIContent blendDstText = EditorGUIUtility.TrTextContent( "Destination Blend", "" );
-		public static GUIContent blendPrePassText = EditorGUIUtility.TrTextContent( "Blend Z Pre-Pass Toggle", "" );
+		public static GUIContent blendPrePassText = EditorGUIUtility.TrTextContent( "Blend Z Pre-Pass", "" );
 		public static GUIContent castShadowsText = EditorGUIUtility.TrTextContent( "Cast Shadows", "" );
-		public static GUIContent uiToggleText = EditorGUIUtility.TrTextContent( "UI Toggle", "" );
-		public static GUIContent uiLightDirectionText = EditorGUIUtility.TrTextContent( "UI Light Direction", "" );
-		public static GUIContent uiLightColorText = EditorGUIUtility.TrTextContent( "UI Light Color", "" );
+		public static GUIContent lightOverrideText = EditorGUIUtility.TrTextContent( "Light Override", "" );
+		public static GUIContent lightOverrideDirectionText = EditorGUIUtility.TrTextContent( "Light Override Direction", "" );
+		public static GUIContent lightOverrideColorText = EditorGUIUtility.TrTextContent( "Light Override Color", "" );
 
 		public static string mainText = "Starflight Uber Shader Properties";
 	}
@@ -35,11 +35,11 @@ class UberShaderGUI : ShaderGUI
 
 	MaterialProperty m_occlusionMap = null;
 	MaterialProperty m_occlusionPower = null;
-	MaterialProperty m_applyOcclusionToAlbedo = null;
+	MaterialProperty m_albedoOcclusionOn = null;
 
 	MaterialProperty m_normalMap = null;
 	MaterialProperty m_normalMapScaleOffset = null;
-	MaterialProperty m_orthonormalizeTextureSpace = null;
+	MaterialProperty m_orthonormalizeOn = null;
 
 	MaterialProperty m_emissiveMap = null;
 	MaterialProperty m_emissiveColor = null;
@@ -51,13 +51,13 @@ class UberShaderGUI : ShaderGUI
 
 	MaterialProperty m_blendSrc = null;
 	MaterialProperty m_blendDst = null;
-	MaterialProperty m_blendPrePass = null;
+	MaterialProperty m_blendPrePassOn = null;
 
-	MaterialProperty m_castShadows = null;
+	MaterialProperty m_shadowCasterOn = null;
 
-	MaterialProperty m_uiToggle = null;
-	MaterialProperty m_uiLightDirection = null;
-	MaterialProperty m_uiLightColor = null;
+	MaterialProperty m_lightOverrideOn = null;
+	MaterialProperty m_lightOverrideDirection = null;
+	MaterialProperty m_lightOverrideColor = null;
 
 	MaterialEditor m_MaterialEditor;
 
@@ -90,32 +90,83 @@ class UberShaderGUI : ShaderGUI
 
 	public void ShaderPropertiesGUI( Material material )
 	{
-		// Use default labelWidth
+		// use default label width
 		EditorGUIUtility.labelWidth = 0.0f;
 
-		// Detect any changes to the material
+		// fetect any changes to the material
 		EditorGUI.BeginChangeCheck();
 
-		// Primary properties
+		// primary properties
 		GUILayout.Label( Styles.mainText, EditorStyles.boldLabel );
 
-		m_MaterialEditor.TexturePropertySingleLine( Styles.albedoText, m_albedoMap, m_albedoColor, m_alpha );
-		m_MaterialEditor.TexturePropertySingleLine( Styles.specularText, m_specularMap, m_specularColor, m_smoothness );
-		m_MaterialEditor.TexturePropertySingleLine( Styles.occlusionText, m_occlusionMap, m_occlusionPower, m_applyOcclusionToAlbedo );
-		m_MaterialEditor.TexturePropertySingleLine( Styles.normalText, m_normalMap, m_normalMapScaleOffset, m_orthonormalizeTextureSpace );
-		m_MaterialEditor.TexturePropertySingleLine( Styles.emissiveText, m_emissiveMap, m_emissiveColor );
-		m_MaterialEditor.TexturePropertySingleLine( Styles.waterText, m_waterMap, m_waterScale );
-		m_MaterialEditor.TexturePropertySingleLine( Styles.waterMaskText, m_waterMaskMap );
-		m_MaterialEditor.ShaderProperty( m_blendSrc, Styles.blendSrcText );
-		m_MaterialEditor.ShaderProperty( m_blendDst, Styles.blendDstText );
-		m_MaterialEditor.ShaderProperty( m_blendPrePass, Styles.blendPrePassText );
-		m_MaterialEditor.ShaderProperty( m_castShadows, Styles.castShadowsText );
-		m_MaterialEditor.ShaderProperty( m_uiToggle, Styles.uiToggleText );
-
-		if ( material.GetFloat( "UIToggle" ) == 1.0f )
+		if ( m_albedoMap != null && m_albedoColor != null && m_alpha != null )
 		{
-			m_MaterialEditor.ShaderProperty( m_uiLightDirection, Styles.uiLightDirectionText, 1 );
-			m_MaterialEditor.ShaderProperty( m_uiLightColor, Styles.uiLightColorText, 1 );
+			m_MaterialEditor.TexturePropertySingleLine( Styles.albedoText, m_albedoMap, m_albedoColor, m_alpha );
+		}
+		else if ( m_albedoColor != null && m_alpha != null )
+		{
+			m_MaterialEditor.ShaderProperty( m_albedoColor, Styles.albedoText );
+			m_MaterialEditor.ShaderProperty( m_alpha, Styles.albedoText );
+		}
+
+		if ( m_specularMap != null && m_specularColor != null && m_smoothness != null )
+		{
+			m_MaterialEditor.TexturePropertySingleLine( Styles.specularText, m_specularMap, m_specularColor, m_smoothness );
+		}
+
+		if ( m_occlusionMap != null && m_occlusionPower != null && m_albedoOcclusionOn != null )
+		{
+			m_MaterialEditor.TexturePropertySingleLine( Styles.occlusionText, m_occlusionMap, m_occlusionPower, m_albedoOcclusionOn );
+		}
+
+		if ( m_normalMap != null && m_normalMapScaleOffset != null && m_orthonormalizeOn != null )
+		{
+			m_MaterialEditor.TexturePropertySingleLine( Styles.normalText, m_normalMap, m_normalMapScaleOffset, m_orthonormalizeOn );
+		}
+
+		if ( m_emissiveMap != null && m_emissiveColor != null )
+		{
+			m_MaterialEditor.TexturePropertySingleLine( Styles.emissiveText, m_emissiveMap, m_emissiveColor );
+		}
+
+		if ( m_waterMap != null && m_waterScale != null )
+		{
+			m_MaterialEditor.TexturePropertySingleLine( Styles.waterText, m_waterMap, m_waterScale );
+		}
+
+		if ( m_waterMaskMap != null )
+		{
+			if ( HasTextureMap( material, "WaterMap" ) )
+			{
+				m_MaterialEditor.TexturePropertySingleLine( Styles.waterMaskText, m_waterMaskMap );
+			}
+		}
+
+		if ( m_blendSrc != null && m_blendDst != null )
+		{
+			m_MaterialEditor.ShaderProperty( m_blendSrc, Styles.blendSrcText );
+			m_MaterialEditor.ShaderProperty( m_blendDst, Styles.blendDstText );
+		}
+
+		if ( m_blendPrePassOn != null )
+		{
+			m_MaterialEditor.ShaderProperty( m_blendPrePassOn, Styles.blendPrePassText );
+		}
+
+		if ( m_shadowCasterOn != null )
+		{
+			m_MaterialEditor.ShaderProperty( m_shadowCasterOn, Styles.castShadowsText );
+		}
+
+		if ( m_lightOverrideOn != null )
+		{
+			m_MaterialEditor.ShaderProperty( m_lightOverrideOn, Styles.lightOverrideText );
+
+			if ( IsSwitchedOn( material, "LightOverrideOn" ) )
+			{
+				m_MaterialEditor.ShaderProperty( m_lightOverrideDirection, Styles.lightOverrideDirectionText, 1 );
+				m_MaterialEditor.ShaderProperty( m_lightOverrideColor, Styles.lightOverrideColorText, 1 );
+			}
 		}
 
 		if ( EditorGUI.EndChangeCheck() )
@@ -126,62 +177,75 @@ class UberShaderGUI : ShaderGUI
 
 	void FindProperties( MaterialProperty[] materialPropertyList )
 	{
-		m_albedoMap = FindProperty( "AlbedoMap", materialPropertyList );
-		m_albedoColor = FindProperty( "AlbedoColor", materialPropertyList );
+		m_albedoMap = FindProperty( "AlbedoMap", materialPropertyList, false );
+		m_albedoColor = FindProperty( "AlbedoColor", materialPropertyList, false );
 
-		m_alpha = FindProperty( "Alpha", materialPropertyList );
+		m_alpha = FindProperty( "Alpha", materialPropertyList, false );
 
-		m_specularMap = FindProperty( "SpecularMap", materialPropertyList );
-		m_specularColor = FindProperty( "SpecularColor", materialPropertyList );
-		m_smoothness = FindProperty( "Smoothness", materialPropertyList );
+		m_specularMap = FindProperty( "SpecularMap", materialPropertyList, false );
+		m_specularColor = FindProperty( "SpecularColor", materialPropertyList, false );
+		m_smoothness = FindProperty( "Smoothness", materialPropertyList, false );
 
-		m_occlusionMap = FindProperty( "OcclusionMap", materialPropertyList );
-		m_occlusionPower = FindProperty( "OcclusionPower", materialPropertyList );
-		m_applyOcclusionToAlbedo = FindProperty( "ApplyOcclusionToAlbedo", materialPropertyList );
+		m_occlusionMap = FindProperty( "OcclusionMap", materialPropertyList, false );
+		m_occlusionPower = FindProperty( "OcclusionPower", materialPropertyList, false );
+		m_albedoOcclusionOn = FindProperty( "AlbedoOcclusionOn", materialPropertyList, false );
 
-		m_normalMap = FindProperty( "NormalMap", materialPropertyList );
-		m_normalMapScaleOffset = FindProperty( "NormalMapScaleOffset", materialPropertyList );
-		m_orthonormalizeTextureSpace = FindProperty( "OrthonormalizeTextureSpace", materialPropertyList );
+		m_normalMap = FindProperty( "NormalMap", materialPropertyList, false );
+		m_normalMapScaleOffset = FindProperty( "NormalMapScaleOffset", materialPropertyList, false );
+		m_orthonormalizeOn = FindProperty( "OrthonormalizeOn", materialPropertyList, false );
 
-		m_emissiveMap = FindProperty( "EmissiveMap", materialPropertyList );
-		m_emissiveColor = FindProperty( "EmissiveColor", materialPropertyList );
+		m_emissiveMap = FindProperty( "EmissiveMap", materialPropertyList, false );
+		m_emissiveColor = FindProperty( "EmissiveColor", materialPropertyList, false );
 
-		m_waterMap = FindProperty( "WaterMap", materialPropertyList );
-		m_waterScale = FindProperty( "WaterScale", materialPropertyList );
+		m_waterMap = FindProperty( "WaterMap", materialPropertyList, false );
+		m_waterScale = FindProperty( "WaterScale", materialPropertyList, false );
 
-		m_waterMaskMap = FindProperty( "WaterMaskMap", materialPropertyList );
+		m_waterMaskMap = FindProperty( "WaterMaskMap", materialPropertyList, false );
 
-		m_blendSrc = FindProperty( "BlendSrc", materialPropertyList );
-		m_blendDst = FindProperty( "BlendDst", materialPropertyList );
-		m_blendPrePass = FindProperty( "BlendPrePass", materialPropertyList );
+		m_blendSrc = FindProperty( "BlendSrc", materialPropertyList, false );
+		m_blendDst = FindProperty( "BlendDst", materialPropertyList, false );
+		m_blendPrePassOn = FindProperty( "BlendPrePassOn", materialPropertyList, false );
 
-		m_castShadows = FindProperty( "CastShadows", materialPropertyList );
+		m_shadowCasterOn = FindProperty( "ShadowCasterOn", materialPropertyList, false );
 
-		m_uiToggle = FindProperty( "UIToggle", materialPropertyList );
-		m_uiLightDirection = FindProperty( "UILightDirection", materialPropertyList );
-		m_uiLightColor = FindProperty( "UILightColor", materialPropertyList );
+		m_lightOverrideOn = FindProperty( "LightOverrideOn", materialPropertyList, false );
+		m_lightOverrideDirection = FindProperty( "LightOverrideDirection", materialPropertyList, false );
+		m_lightOverrideColor = FindProperty( "LightOverrideColor", materialPropertyList, false );
 	}
 
 	void MaterialChanged( Material material )
 	{
-		bool albedoMapOn = material.GetTexture( "AlbedoMap" );
-		bool alphaOn = ( material.GetFloat( "Alpha" ) < 1.0f );
-		bool specularMapOn = material.GetTexture( "SpecularMap" );
-		bool specularOn = ( material.GetColor( "SpecularColor" ) != Color.black );
-		bool occlusionMapOn = material.GetTexture( "OcclusionMap" );
-		bool occlusionApplyToAlbedo = ( material.GetFloat( "ApplyOcclusionToAlbedo" ) == 1.0f );
-		bool normalMapOn = material.GetTexture( "NormalMap" );
-		bool normalMapCompressed = false;
-		bool emissiveMapOn = material.GetTexture( "EmissiveMap" );
-		bool waterMapOn = material.GetTexture( "WaterMap" );
-		bool waterMapCompressed = false;
-		bool waterMaskMapOn = material.GetTexture( "WaterMaskMap" );
-		bool textureSpaceOrthonormalize = ( material.GetFloat( "OrthonormalizeTextureSpace" ) == 1.0f );
-		bool blendEnabled = ( ( (int) material.GetFloat( "BlendSrc" ) != (int) UnityEngine.Rendering.BlendMode.One ) || ( (int) material.GetFloat( "BlendDst" ) != (int) UnityEngine.Rendering.BlendMode.Zero ) );
-		bool blendPrePassEnabled = ( material.GetFloat( "BlendPrePass" ) == 1.0f );
-		bool castShadowsEnabled = ( material.GetFloat( "CastShadows" ) == 1.0f );
-		bool uiOn = ( material.GetFloat( "UIToggle" ) == 1.0f );
-		bool forwardShadowsOn = !uiOn;
+		// texture maps on/off
+		bool albedoMapOn = HasTextureMap( material, "AlbedoMap" );
+		bool specularMapOn = HasTextureMap( material, "SpecularMap" );
+		bool occlusionMapOn = HasTextureMap( material, "OcclusionMap" );
+		bool normalMapOn = HasTextureMap( material, "NormalMap" );
+		bool emissiveMapOn = HasTextureMap( material, "EmissiveMap" );
+		bool waterMapOn = HasTextureMap( material, "WaterMap" );
+		bool waterMaskMapOn = HasTextureMap( material, "WaterMaskMap" );
+
+		// texture compression
+		bool normalMapIsCompressed = TextureIsCompressed( material, "NormalMap" );
+		bool waterMapIsCompressed = TextureIsCompressed( material, "WaterMap" );
+
+		// toggle switches on/off
+		bool albedoOcclusionOn = IsSwitchedOn( material, "AlbedoOcclusionOn" );
+		bool orthonormalizeOn = IsSwitchedOn( material, "OrthonormalizeOn" );
+		bool blendPrePassOn = IsSwitchedOn( material, "BlendPrePassOn" );
+		bool shadowCasterOn = IsSwitchedOn( material, "ShadowCasterOn" );
+		bool lightOverrideOn = IsSwitchedOn( material, "LightOverrideOn" );
+
+		// disable forward shadow rendering if light override is enabled
+		bool forwardShadowsOn = !lightOverrideOn;
+
+		// start with alpha disabled
+		bool alphaOn = false;
+
+		// enable alpha if alpha is less than 1
+		if ( material.HasProperty( "Alpha" ) )
+		{
+			alphaOn = ( material.GetFloat( "Alpha" ) < 1.0f );
+		}
 
 		// enable alpha if the albedo map is enabled and it has an alpha channel and it is set up as transparency
 		if ( albedoMapOn )
@@ -217,42 +281,36 @@ class UberShaderGUI : ShaderGUI
 			}
 		}
 
-		// force alpha and blend pre-pass off if blending is not enabled
-		if ( !blendEnabled )
+		// enable blending if blendsrc != one or blenddst != zero
+		bool blendOn = false;
+
+		if ( material.HasProperty( "BlendSrc" ) && material.HasProperty( "BlendDst" ) )
 		{
-			alphaOn = false;
-			blendPrePassEnabled = false;
+			blendOn = ( ( (int) material.GetFloat( "BlendSrc" ) != (int) UnityEngine.Rendering.BlendMode.One ) || ( (int) material.GetFloat( "BlendDst" ) != (int) UnityEngine.Rendering.BlendMode.Zero ) );
 		}
 
-		// force specular map off if specular color is black
+		// if blending is not enabled there is no point in having alpha turned on and no point in having the blend prepass enabled
+		if ( !blendOn )
+		{
+			alphaOn = false;
+			blendPrePassOn = false;
+		}
+
+		// enable specular if specular color is not black
+		bool specularOn = false;
+
+		if ( material.HasProperty( "SpecularColor" ) )
+		{
+			specularOn = ( material.GetColor( "SpecularColor" ) != Color.black );
+		}
+
+		// if specular is not on then there is no point in having a specular map
 		if ( !specularOn )
 		{
 			specularMapOn = false;
 		}
 
-		// if the normal map is on then check whether it is compressed (DXT5)
-		if ( normalMapOn )
-		{
-			Texture2D normalMap = material.GetTexture( "NormalMap" ) as Texture2D;
-
-			if ( normalMap.format == TextureFormat.DXT5 )
-			{
-				normalMapCompressed = true;
-			}
-		}
-
-		// if the water map is on then check whether it is compressed (DXT5)
-		if ( waterMapOn )
-		{
-			Texture2D waterMap = material.GetTexture( "WaterMap" ) as Texture2D;
-
-			if ( waterMap.format == TextureFormat.DXT5 )
-			{
-				waterMapCompressed = true;
-			}
-		}
-
-		// force water map mask off if water map is off
+		// if water is not on then there is no point in having a water mask map
 		if ( !waterMapOn )
 		{
 			waterMaskMapOn = false;
@@ -267,19 +325,19 @@ class UberShaderGUI : ShaderGUI
 		SetKeyword( material, "SPECULARMAP_ON", specularMapOn );
 		SetKeyword( material, "SPECULAR_ON", specularOn );
 		SetKeyword( material, "OCCLUSIONMAP_ON", occlusionMapOn );
-		SetKeyword( material, "OCCLUSION_APPLYTOALBEDO", occlusionApplyToAlbedo );
+		SetKeyword( material, "ALBEDOOCCLUSION_ON", albedoOcclusionOn );
 		SetKeyword( material, "NORMALMAP_ON", normalMapOn );
-		SetKeyword( material, "NORMALMAP_COMPRESSED", normalMapCompressed );
-		SetKeyword( material, "TEXTURESPACE_ORTHONORMALIZE", textureSpaceOrthonormalize );
+		SetKeyword( material, "NORMALMAP_ISCOMPRESSED", normalMapIsCompressed );
+		SetKeyword( material, "ORTHONORMALIZE_ON", orthonormalizeOn );
 		SetKeyword( material, "EMISSIVEMAP_ON", emissiveMapOn );
 		SetKeyword( material, "WATERMAP_ON", waterMapOn );
-		SetKeyword( material, "WATERMAP_COMPRESSED", waterMapCompressed );
+		SetKeyword( material, "WATERMAP_ISCOMPRESSED", waterMapIsCompressed );
 		SetKeyword( material, "WATERMASKMAP_ON", waterMaskMapOn );
-		SetKeyword( material, "UI_ON", uiOn );
+		SetKeyword( material, "LIGHTOVERRIDE_ON", lightOverrideOn );
 		SetKeyword( material, "FORWARDSHADOWS_ON", forwardShadowsOn );
 
-		// if either blending or ui is on then force material to be transparent (this also disables the deferred pass automatically)
-		if ( blendEnabled || uiOn )
+		// if blending is on then force material to be transparent (this also disables the deferred pass automatically)
+		if ( blendOn )
 		{
 			m_debugLogMessage[ 1 ] += " " + "TYPE:TRANSPARENT";
 
@@ -292,28 +350,31 @@ class UberShaderGUI : ShaderGUI
 			material.renderQueue = -1;
 		}
 
-		// disable the shadow caster pass if the material does not want to cast shadows
-		material.SetShaderPassEnabled( "ShadowCaster", castShadowsEnabled );
+		// disable the shadow caster pass if the material does not want to cast shadows (does not work!)
+		material.SetShaderPassEnabled( "SHADOWCASTER", shadowCasterOn );
 
-		if ( !castShadowsEnabled )
+		if ( !shadowCasterOn )
 		{
-			m_debugLogMessage[ 1 ] += " " + " SHADOWS:OFF";
+			m_debugLogMessage[ 1 ] += " " + " SHADOWCASTER:OFF";
 		}
 
-		// enabled or disable the blend pre pass
-		material.SetShaderPassEnabled( "BlendPrePass", blendPrePassEnabled );
+		// enabled or disable the blend pre pass (does not work!)
+		material.SetShaderPassEnabled( "BLENDPREPASS", blendPrePassOn );
 
-		if ( !blendPrePassEnabled )
+		if ( !blendPrePassOn )
 		{
 			m_debugLogMessage[ 1 ] += " " + " BLENDPREPASS:OFF";
 		}
 
-		// normalize the light direction
-		var uiLightDirection = material.GetVector( "UILightDirection" );
+		// normalize the light override direction
+		if ( material.HasProperty( "LightOverrideDirection" ) )
+		{
+			var lightOverrideDirection = material.GetVector( "LightOverrideDirection" );
 
-		uiLightDirection = Vector3.Normalize( uiLightDirection );
+			lightOverrideDirection = Vector3.Normalize( lightOverrideDirection );
 
-		material.SetVector( "UILightDirection", uiLightDirection );
+			material.SetVector( "LightOverrideDirection", lightOverrideDirection );
+		}
 
 		// debug log
 		if ( ( m_debugLogMessage[ 0 ] == null ) || ( m_debugLogMessage[ 0 ] != m_debugLogMessage[ 1 ] ) )
@@ -336,5 +397,40 @@ class UberShaderGUI : ShaderGUI
 		{
 			material.DisableKeyword( keyword );
 		}
+	}
+
+	bool HasTextureMap( Material material, string propertyName )
+	{
+		if ( material.HasProperty( propertyName ) )
+		{
+			return material.GetTexture( propertyName );
+		}
+
+		return false;
+	}
+
+	bool IsSwitchedOn( Material material, string propertyName )
+	{
+		if ( material.HasProperty( propertyName ) )
+		{
+			return ( material.GetFloat( propertyName ) == 1.0f );
+		}
+
+		return false;
+	}
+
+	bool TextureIsCompressed( Material material, string propertyName )
+	{
+		if ( HasTextureMap( material, propertyName ) )
+		{
+			Texture2D texture = material.GetTexture( propertyName ) as Texture2D;
+
+			if ( texture.format == TextureFormat.DXT5 )
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 }

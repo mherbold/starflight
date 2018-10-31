@@ -193,7 +193,7 @@ public class Player : MonoBehaviour
 				// update the player data (it will save out to disk eventually)
 				if ( playerData.m_general.m_location != PD_General.Location.Hyperspace )
 				{
-					playerData.m_general.m_systemCoordinates = newPosition;
+					playerData.m_general.m_starSystemCoordinates = newPosition;
 				}
 				else
 				{

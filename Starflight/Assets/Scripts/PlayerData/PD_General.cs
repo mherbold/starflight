@@ -22,7 +22,7 @@ public class PD_General
 
 	// the player coordinates
 	public Vector3 m_starportCoordinates;
-	public Vector3 m_systemCoordinates;
+	public Vector3 m_starSystemCoordinates;
 	public Vector3 m_hyperspaceCoordinates;
 
 	// game time stuff
@@ -58,7 +58,7 @@ public class PD_General
 
 		// reset coordinates
 		m_starportCoordinates = new Vector3( -35.18f, 0.0f, 20.86f );
-		m_systemCoordinates = new Vector3( 0.0f, 0.0f, 0.0f );
+		m_starSystemCoordinates = new Vector3( 0.0f, 0.0f, 0.0f );
 		m_hyperspaceCoordinates = new Vector3( 0.0f, 0.0f, 0.0f );
 
 		// reset the current stardate

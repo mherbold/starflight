@@ -19,7 +19,7 @@ float4 fragUberForwardBase( UberShaderVertexOutput i ) : SV_Target
 	float3 normal = ComputeNormal( i );
 	float3 emissive = ComputeEmissive( i );
 
-#if OCCLUSION_APPLYTOALBEDO
+#if ALBEDOOCCLUSION_ON
 
 	diffuseColor *= occlusion;
 

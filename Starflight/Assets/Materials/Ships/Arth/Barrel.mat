@@ -14,7 +14,8 @@ Material:
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
-  disabledShaderPasses: []
+  disabledShaderPasses:
+  - BlendPrePass
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -99,14 +100,20 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - AlbedoOcclusionOn: 0
     - Alpha: 1
     - AlphaPrePass: 0
     - ApplyOcclusionToAlbedo: 0
     - BlendDst: 0
+    - BlendPrePass: 0
+    - BlendPrePassOn: 0
     - BlendSrc: 1
     - CastShadows: 1
+    - LightOverrideOn: 0
     - OcclusionPower: 1
+    - OrthonormalizeOn: 0
     - OrthonormalizeTextureSpace: 0
+    - ShadowCasterOn: 1
     - Smoothness: 0.8
     - UIToggle: 0
     - _ApplyOcclusionToAlbedo: 0
@@ -132,6 +139,8 @@ Material:
     m_Colors:
     - AlbedoColor: {r: 0.1509434, g: 0.1509434, b: 0.1509434, a: 1}
     - EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
+    - LightOverrideColor: {r: 1, g: 1, b: 1, a: 1}
+    - LightOverrideDirection: {r: 0, g: 0, b: 1, a: 0}
     - NormalMapScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - UILightColor: {r: 1, g: 1, b: 1, a: 1}

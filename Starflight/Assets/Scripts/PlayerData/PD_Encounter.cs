@@ -9,7 +9,7 @@ public class PD_Encounter
 {
 	public int m_encounterId;
 
-	public Vector3 m_position;
+	public Vector3 m_coordinates;
 
 	GD_Encounter m_encounter;
 
@@ -29,7 +29,7 @@ public class PD_Encounter
 		var encounter = gameData.m_encounterList[ encounterId ];
 
 		// reset the position
-		m_position = new Vector3( encounter.m_xCoordinate, 0.0f, encounter.m_yCoordinate );
+		m_coordinates = new Vector3( encounter.m_xCoordinate, 0.0f, encounter.m_yCoordinate );
 	}
 
 	public void Initialize()
