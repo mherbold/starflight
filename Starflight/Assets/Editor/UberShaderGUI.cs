@@ -27,8 +27,6 @@ class UberShaderGUI : ShaderGUI
 	MaterialProperty m_albedoMap = null;
 	MaterialProperty m_albedoColor = null;
 
-	MaterialProperty m_alpha = null;
-
 	MaterialProperty m_specularMap = null;
 	MaterialProperty m_specularColor = null;
 	MaterialProperty m_smoothness = null;
@@ -99,14 +97,13 @@ class UberShaderGUI : ShaderGUI
 		// primary properties
 		GUILayout.Label( Styles.mainText, EditorStyles.boldLabel );
 
-		if ( m_albedoMap != null && m_albedoColor != null && m_alpha != null )
+		if ( m_albedoMap != null && m_albedoColor != null )
 		{
-			m_MaterialEditor.TexturePropertySingleLine( Styles.albedoText, m_albedoMap, m_albedoColor, m_alpha );
+			m_MaterialEditor.TexturePropertySingleLine( Styles.albedoText, m_albedoMap, m_albedoColor );
 		}
-		else if ( m_albedoColor != null && m_alpha != null )
+		else if ( m_albedoColor != null )
 		{
 			m_MaterialEditor.ShaderProperty( m_albedoColor, Styles.albedoText );
-			m_MaterialEditor.ShaderProperty( m_alpha, Styles.albedoText );
 		}
 
 		if ( m_specularMap != null && m_specularColor != null && m_smoothness != null )
@@ -180,8 +177,6 @@ class UberShaderGUI : ShaderGUI
 		m_albedoMap = FindProperty( "AlbedoMap", materialPropertyList, false );
 		m_albedoColor = FindProperty( "AlbedoColor", materialPropertyList, false );
 
-		m_alpha = FindProperty( "Alpha", materialPropertyList, false );
-
 		m_specularMap = FindProperty( "SpecularMap", materialPropertyList, false );
 		m_specularColor = FindProperty( "SpecularColor", materialPropertyList, false );
 		m_smoothness = FindProperty( "Smoothness", materialPropertyList, false );
@@ -242,9 +237,11 @@ class UberShaderGUI : ShaderGUI
 		bool alphaOn = false;
 
 		// enable alpha if alpha is less than 1
-		if ( material.HasProperty( "Alpha" ) )
+		if ( material.HasProperty( "AlbedoColor" ) )
 		{
-			alphaOn = ( material.GetFloat( "Alpha" ) < 1.0f );
+			var color = material.GetColor( "AlbedoColor" );
+
+			alphaOn = ( color.a < 1.0f );
 		}
 
 		// enable alpha if the albedo map is enabled and it has an alpha channel and it is set up as transparency

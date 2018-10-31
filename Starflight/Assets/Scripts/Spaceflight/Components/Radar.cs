@@ -12,7 +12,7 @@ public class Radar : MonoBehaviour
 	void Start()
 	{
 		// hide the radar outline
-		m_ring.color = new Color( 1, 1, 1, 0 );
+		m_ring.material.SetColor( "AlbedoColor", new Color( 1, 1, 1, 0 ) );
 
 		// start sweep angle at zero
 		m_sweepAngle = 0.0f;
@@ -28,7 +28,7 @@ public class Radar : MonoBehaviour
 		if ( ( playerData.m_general.m_location != PD_General.Location.Hyperspace ) && ( playerData.m_general.m_location != PD_General.Location.StarSystem ) )
 		{
 			// hide the radar outline
-			m_ring.color = new Color( 1, 1, 1, 0 );
+			m_ring.material.SetColor( "AlbedoColor", new Color( 1, 1, 1, 0 ) );
 
 			// nothing more to do here
 			return;

@@ -9,9 +9,7 @@
 #include "UberShaderUnity.cginc"
 
 sampler2D AlbedoMap;
-float3 AlbedoColor;
-
-float Alpha;
+float4 AlbedoColor;
 
 sampler2D SpecularMap;
 float3 SpecularColor;
@@ -340,7 +338,7 @@ float4 ComputeLighting( UberShaderVertexOutput i, float4 diffuseColor, float4 sp
 
 #if ALPHA_ON
 
-	float alpha = Alpha * diffuseColor.a;
+	float alpha = AlbedoColor.a * diffuseColor.a;
 
 	return float4( ( color * shadow + emissive ) * alpha, alpha );
 

@@ -4,9 +4,7 @@ Shader "Starflight/UberShader-UI"
 	Properties
 	{
 		AlbedoMap( "Albedo Map", 2D ) = "white" {}
-		AlbedoColor( "AlbedoColor", Color ) = ( 1, 1, 1, 1 )
-
-		Alpha( "Alpha", Range( 0, 1 ) ) = 1
+		AlbedoColor( "Albedo Color", Color ) = ( 1, 1, 1, 1 )
 
 		[Enum(UnityEngine.Rendering.BlendMode)] BlendSrc( "Blend Src", Float ) = 1
 		[Enum(UnityEngine.Rendering.BlendMode)] BlendDst( "Blend Dst", Float ) = 0
@@ -54,7 +52,7 @@ Shader "Starflight/UberShader-UI"
 					
 #if ALPHA_ON
 
-					float alpha = Alpha * diffuseColor.a;
+					float alpha = AlbedoColor.a * diffuseColor.a;
 
 					return float4( diffuseColor.rgb * alpha, alpha );
 

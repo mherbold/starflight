@@ -21,7 +21,7 @@ float4 fragUberShadowCaster( float4 svPosition : SV_POSITION, UberShaderVertexOu
 
 	float4 diffuseColor = ComputeDiffuseColor( i );
 
-	float alphaRef = tex3D( _DitherMaskLOD, float3( svPosition.xy * 0.25, Alpha * diffuseColor.a * 0.9375 ) ).a;
+	float alphaRef = tex3D( _DitherMaskLOD, float3( svPosition.xy * 0.25, AlbedoColor.a * diffuseColor.a * 0.9375 ) ).a;
 
 	clip( alphaRef - 0.01 );
 

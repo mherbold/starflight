@@ -42,14 +42,14 @@ public class DockingBayPanel : Panel
 	public override bool Open()
 	{
 		// get to the player data
-		PlayerData playerData = DataController.m_instance.m_playerData;
+		var playerData = DataController.m_instance.m_playerData;
 
 		// let's start the pre-flight check
-		bool preflightCheckPassed = true;
+		var preflightCheckPassed = true;
 		m_errorText.text = "";
 
 		// do we have all of the crew positions assigned?
-		for ( PD_CrewAssignment.Role role = PD_CrewAssignment.Role.First; role < PD_CrewAssignment.Role.Length; role++ )
+		for ( var role = PD_CrewAssignment.Role.First; role < PD_CrewAssignment.Role.Length; role++ )
 		{
 			if ( !playerData.m_crewAssignment.IsAssigned( role ) )
 			{
@@ -58,7 +58,7 @@ public class DockingBayPanel : Panel
 				break;
 			}
 
-			PD_Personnel.PD_PersonnelFile personnelFile = playerData.m_crewAssignment.GetPersonnelFile( role );
+			var personnelFile = playerData.m_crewAssignment.GetPersonnelFile( role );
 
 			if ( personnelFile.m_vitality == 0 )
 			{
@@ -105,10 +105,10 @@ public class DockingBayPanel : Panel
 			gameObject.SetActive( true );
 
 			// get a copy of the materials array
-			Material[] astronautMaterials = m_astronautRenderer.materials;
+			var astronautMaterials = m_astronautRenderer.materials;
 
 			// go through all the materials on the astronaut
-			for ( int i = 0; i < astronautMaterials.Length; i++ )
+			for ( var i = 0; i < astronautMaterials.Length; i++ )
 			{
 				// switch the shader to the two pass standard shader
 				astronautMaterials[ i ] = m_fadeAstronautMaterials[ i ];
@@ -162,7 +162,7 @@ public class DockingBayPanel : Panel
 				m_isTransporting = false;
 
 				// get to the player data
-				PlayerData playerData = DataController.m_instance.m_playerData;
+				var playerData = DataController.m_instance.m_playerData;
 
 				// update the player location
 				playerData.m_general.m_location = PD_General.Location.DockingBay;
@@ -185,7 +185,7 @@ public class DockingBayPanel : Panel
 			else if ( m_timer >= m_fadeStartTime )
 			{
 				// calculate the astronaut opacity
-				float opacity = Mathf.Lerp( 1.0f, 0.0f, ( m_timer - m_fadeStartTime ) / m_fadeDuration );
+				var opacity = Mathf.Lerp( 1.0f, 0.0f, ( m_timer - m_fadeStartTime ) / m_fadeDuration );
 
 				// update the astronaut opacity
 				UpdateOpacity( opacity );
@@ -204,13 +204,16 @@ public class DockingBayPanel : Panel
 	void UpdateOpacity( float opacity )
 	{
 		// go through all the materials on the astronaut
-		for ( int i = 0; i < m_astronautRenderer.materials.Length; i++ )
+		for ( var i = 0; i < m_astronautRenderer.materials.Length; i++ )
 		{
 			// get the material
-			Material material = m_astronautRenderer.materials[ i ];
+			var material = m_astronautRenderer.materials[ i ];
 
-			// update the material opacity
-			material.SetFloat( "Alpha", opacity );
+			// get the current albedo color of the material
+			var albedoColor = material.GetColor( "AlbedoColor" );
+
+			// update the albedo color with the new opacity
+			material.SetColor( "AlbedoColor", new Color( albedoColor.r, albedoColor.g, albedoColor.b, opacity ) );
 		}
 	}
 

@@ -147,7 +147,7 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - AlbedoColor: {r: 0.5882353, g: 0.21960786, b: 0.07450981, a: 1}
+    - AlbedoColor: {r: 0.5882353, g: 0.21960786, b: 0.07450981, a: 0.5019608}
     - EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
     - LightOverrideColor: {r: 1, g: 1, b: 1, a: 1}
     - LightOverrideDirection: {r: 0, g: 0, b: 1, a: 0}

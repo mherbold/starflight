@@ -4,9 +4,7 @@ Shader "Starflight/UberShader-ShadowCasterOff"
 	Properties
 	{
 		AlbedoMap( "Albedo Map", 2D ) = "white" {}
-		AlbedoColor( "AlbedoColor", Color ) = ( 1, 1, 1, 1 )
-
-		Alpha( "Alpha", Range( 0, 1 ) ) = 1
+		AlbedoColor( "Albedo Color", Color ) = ( 1, 1, 1, 1 )
 
 		SpecularMap( "Specular Map", 2D ) = "gray" {}
 		SpecularColor( "Specular Color", Color ) = ( 0.5, 0.5, 0.5, 1 )
