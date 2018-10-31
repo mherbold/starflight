@@ -43,8 +43,9 @@ public class PD_General
 	// the current planet we are visiting (or the last planet we visited)
 	public int m_currentPlanetId;
 
-	// keep track of the player's current speed
+	// keep track of the player's current speed and maximum speed
 	public float m_currentSpeed;
+	public float m_currentMaximumSpeed;
 
 	// keep track of the player's current direction
 	public Vector3 m_currentDirection;
@@ -79,6 +80,7 @@ public class PD_General
 
 		// not moving
 		m_currentSpeed = 0.0f;
+		m_currentMaximumSpeed = 10.0f;
 	}
 	
 	// this updates the game time

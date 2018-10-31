@@ -13,7 +13,7 @@ public class LaunchButton : ShipButton
 		// get to the player data
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
-		if ( playerData.m_starflight.m_location == PD_General.Location.DockingBay )
+		if ( playerData.m_general.m_location == PD_General.Location.DockingBay )
 		{
 			m_spaceflightController.m_messages.ChangeText( "<color=yellow>Confirm launch?</color>" );
 

@@ -22,7 +22,7 @@ public class LaunchYesButton : ShipButton
 		// get to the player data
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
-		if ( playerData.m_starflight.m_location == PD_General.Location.DockingBay )
+		if ( playerData.m_general.m_location == PD_General.Location.DockingBay )
 		{
 			// update the messages log
 			m_spaceflightController.m_messages.ChangeText( "<color=white>Opening docking bay doors...</color>" );
@@ -91,8 +91,10 @@ public class LaunchYesButton : ShipButton
 			{
 				if ( currentNumber != m_lastCountdownNumberShown )
 				{
+					// remember the current number
 					m_lastCountdownNumberShown = currentNumber;
 
+					// animate it
 					m_spaceflightController.m_countdown.SetCountdownText( currentNumber.ToString() );
 				}
 			}
@@ -102,7 +104,7 @@ public class LaunchYesButton : ShipButton
 				if ( currentNumber <= 0 )
 				{
 					// are we in the docking bay?
-					if ( playerData.m_starflight.m_location == PD_General.Location.DockingBay )
+					if ( playerData.m_general.m_location == PD_General.Location.DockingBay )
 					{
 						// yes - update the messages text
 						m_spaceflightController.m_messages.ChangeText( "<color=white>Leaving starport...</color>" );
@@ -111,6 +113,10 @@ public class LaunchYesButton : ShipButton
 						float y = ( m_timer - 20.5f ) * 5.0f;
 
 						y *= y;
+
+						// fudge the speed of the ship (to make infinite starfield appear)
+						playerData.m_general.m_currentMaximumSpeed = 128.0f;
+						playerData.m_general.m_currentSpeed = ( m_timer - 20.5f ) / 6.0f * playerData.m_general.m_currentMaximumSpeed;
 
 						// have we reached the end of the launch trip?
 						if ( y >= 1024.0f )
@@ -129,7 +135,7 @@ public class LaunchYesButton : ShipButton
 							playerPosition.z += 128.0f;
 
 							// update the player's system coordinates to the new position
-							playerData.m_starflight.m_systemCoordinates = playerPosition;
+							playerData.m_general.m_systemCoordinates = playerPosition;
 
 							// restore the bridge buttons (this also ends the launch function)
 							m_spaceflightController.m_buttonController.RestoreBridgeButtons();

@@ -63,7 +63,7 @@ public class GD_Planet
 		var daysPerYear = 122 * ( m_orbitPosition + 1 );
 
 		// update the orbit angle
-		return ( ( playerData.m_starflight.m_gameTime + 1000.0f + ( m_starId * 4 ) ) / daysPerYear ) * 360.0f;
+		return ( ( playerData.m_general.m_gameTime + 1000.0f + ( m_starId * 4 ) ) / daysPerYear ) * 360.0f;
 	}
 
 	// call this to get the position of the planet (in world coordinates)
@@ -83,7 +83,7 @@ public class GD_Planet
 	public Vector3 GetScale()
 	{
 		// scale the planet based on its mass
-		var scale = Mathf.Lerp( 32.0f, 320.0f, Mathf.Sqrt( ( m_mass - 6.0f ) / 500000.0f ) );
+		var scale = Mathf.Lerp( 32.0f, 256.0f, Mathf.Sqrt( ( m_mass - 6.0f ) / 500000.0f ) );
 
 		// return the scale as a vector
 		return new Vector3( scale, scale, scale );

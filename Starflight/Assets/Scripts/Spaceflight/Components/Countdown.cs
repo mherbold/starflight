@@ -21,11 +21,6 @@ public class Countdown : MonoBehaviour
 	// unity start
 	void Start()
 	{
-		// we are not currently animating the countdown text
-		m_animatingCountdownText = false;
-
-		// disable the countdown text object
-		m_countdown.gameObject.SetActive( false );
 	}
 
 	// unity update
@@ -55,8 +50,8 @@ public class Countdown : MonoBehaviour
 				// stop animating the countdown text
 				m_animatingCountdownText = false;
 
-				// disable the countdown text object
-				m_countdown.gameObject.SetActive( false );
+				// disable this object
+				Hide();
 			}
 		}
 	}
@@ -67,13 +62,23 @@ public class Countdown : MonoBehaviour
 		// change the countdown text
 		m_countdown.text = newText;
 
-		// make it active
-		m_countdown.gameObject.SetActive( true );
+		// make sure the number is invisible to start with
+		m_countdown.alpha = 0.0f;
 
 		// reset the timer
 		m_countdownTimer = 0.0f;
 
 		// we are now animating the countdown text
 		m_animatingCountdownText = true;
+
+		// enable this object
+		gameObject.SetActive( true );
+	}
+
+	// call this to hide the countdown object
+	public void Hide()
+	{
+		// disable the countdown object
+		gameObject.SetActive( false );
 	}
 }

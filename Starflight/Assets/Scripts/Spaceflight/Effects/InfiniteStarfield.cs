@@ -6,14 +6,12 @@ public class InfiniteStarfield : MonoBehaviour
 	public int m_maximumNumberOfStars = 1000;
 	public float m_sizeOfStars = 1.0f;
 	public float m_maximumDistanceOfStars = 10.0f;
-	public float m_fullyVisibleSpeed = 1.0f;
 	public float m_fullyInvisibleSpeed = 0.0f;
 	public Color32 m_colorOfStars = Color.white;
 
 	private ParticleSystem m_particleSystem;
 	private Material m_material;
 	private ParticleSystem.Particle[] m_particles;
-	private Vector3 m_lastPosition;
 
 	void Start()
 	{
@@ -32,15 +30,13 @@ public class InfiniteStarfield : MonoBehaviour
 		}
 
 		m_particleSystem.SetParticles( m_particles, m_particles.Length );
-
-		m_lastPosition = transform.position;
 	}
 
 	void Update()
 	{
-		Vector3 deltaPosition = m_lastPosition - transform.position;
+		var playerData = DataController.m_instance.m_playerData;
 
-		float speed = deltaPosition.magnitude;
+		float speed = playerData.m_general.m_currentSpeed;
 
 		float alpha;
 
@@ -48,18 +44,18 @@ public class InfiniteStarfield : MonoBehaviour
 		{
 			alpha = 0.0f;
 		}
-		else if ( speed >= m_fullyVisibleSpeed )
+		else if ( speed >= playerData.m_general.m_currentMaximumSpeed )
 		{
 			alpha = 1.0f;
 		}
 		else
 		{
-			alpha = ( speed - m_fullyInvisibleSpeed ) / ( m_fullyVisibleSpeed - m_fullyInvisibleSpeed );
+			alpha = ( speed - m_fullyInvisibleSpeed ) / ( playerData.m_general.m_currentMaximumSpeed - m_fullyInvisibleSpeed );
 		}
 
 		m_material.SetFloat( "_Alpha", alpha );
 
-		if ( speed >= 0.0001f )
+		if ( speed != 0.0f )
 		{
 			Vector3 centerToCorner = Vector3.one * m_maximumDistanceOfStars;
 
@@ -118,8 +114,6 @@ public class InfiniteStarfield : MonoBehaviour
 			{
 				GetComponent<ParticleSystem>().SetParticles( m_particles, m_particles.Length );
 			}
-
-			m_lastPosition = transform.position;
 		}
 	}
 }

@@ -40,6 +40,7 @@ public class SpaceflightController : MonoBehaviour
 		m_starSystem.Hide();
 		m_inOrbit.Hide();
 		m_hyperspace.Hide();
+		m_countdown.Hide();
 
 		// check if we loaded the persistent scene
 		if ( DataController.m_instance == null )
@@ -65,7 +66,7 @@ public class SpaceflightController : MonoBehaviour
 		var playerData = DataController.m_instance.m_playerData;
 
 		// switch to the current location
-		SwitchLocation( playerData.m_starflight.m_location );
+		SwitchLocation( playerData.m_general.m_location );
 
 		// make sure the scene is blacked out
 		SceneFadeController.m_instance.BlackOut();
@@ -120,10 +121,10 @@ public class SpaceflightController : MonoBehaviour
 		var playerData = DataController.m_instance.m_playerData;
 
 		// are we in the star system or hyperspace locations?
-		if ( ( playerData.m_starflight.m_location == PD_General.Location.StarSystem ) || ( playerData.m_starflight.m_location == PD_General.Location.Hyperspace ) )
+		if ( ( playerData.m_general.m_location == PD_General.Location.StarSystem ) || ( playerData.m_general.m_location == PD_General.Location.Hyperspace ) )
 		{
 			// yes - update the game time
-			playerData.m_starflight.UpdateGameTime( Time.deltaTime );
+			playerData.m_general.UpdateGameTime( Time.deltaTime );
 		}
 
 		// save the game once in a while
@@ -155,10 +156,10 @@ public class SpaceflightController : MonoBehaviour
 		var playerData = DataController.m_instance.m_playerData;
 
 		// update the player data
-		playerData.m_starflight.m_location = newLocation;
+		playerData.m_general.m_location = newLocation;
 
 		// switching to starport is a special case
-		if ( playerData.m_starflight.m_location == PD_General.Location.Starport )
+		if ( playerData.m_general.m_location == PD_General.Location.Starport )
 		{
 			// start fading out the spaceflight scene
 			SceneFadeController.m_instance.FadeOut( "Starport" );
@@ -169,7 +170,7 @@ public class SpaceflightController : MonoBehaviour
 			m_map.StartFade( 1.0f, 2.0f );
 
 			// switch the location
-			switch ( playerData.m_starflight.m_location )
+			switch ( playerData.m_general.m_location )
 			{
 				case PD_General.Location.DockingBay:
 					m_player.Hide();

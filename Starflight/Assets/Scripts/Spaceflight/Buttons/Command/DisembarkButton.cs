@@ -13,7 +13,7 @@ public class DisembarkButton : ShipButton
 		// get to the player data
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
-		switch ( playerData.m_starflight.m_location )
+		switch ( playerData.m_general.m_location )
 		{
 			case PD_General.Location.DockingBay:
 
@@ -23,7 +23,7 @@ public class DisembarkButton : ShipButton
 				SoundController.m_instance.PlaySound( SoundController.Sound.Update );
 
 				// make sure we are standing in the middle of the transporter pad
-				playerData.m_starflight.m_starportCoordinates = new Vector3( 0.0f, 0.5f, 0.0f );
+				playerData.m_general.m_starportCoordinates = new Vector3( 0.0f, 0.5f, 0.0f );
 
 				// switch to the starport location
 				m_spaceflightController.SwitchLocation( PD_General.Location.Starport );

@@ -56,7 +56,7 @@ public class Planet : MonoBehaviour
 			transform.localPosition = m_planet.GetPosition();
 
 			// update the rotation angle
-			float rotationAngle = ( playerData.m_starflight.m_gameTime + m_planet.m_orbitPosition );
+			float rotationAngle = ( playerData.m_general.m_gameTime + m_planet.m_orbitPosition );
 
 			// update the rotation of the planet
 			m_planetModel.transform.localRotation = Quaternion.AngleAxis( -30.0f, Vector3.right ) * Quaternion.AngleAxis( rotationAngle * 360.0f, Vector3.forward );
@@ -150,7 +150,7 @@ public class Planet : MonoBehaviour
 		var playerData = DataController.m_instance.m_playerData;
 
 		// return the distance from the player to the planet
-		return Vector3.Distance( playerData.m_starflight.m_systemCoordinates, transform.localPosition );
+		return Vector3.Distance( playerData.m_general.m_systemCoordinates, transform.localPosition );
 	}
 
 	// get the material for this planet

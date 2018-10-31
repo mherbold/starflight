@@ -69,21 +69,21 @@ public class DockingBayPanel : Panel
 		}
 
 		// did we name the ship?
-		if ( playerData.m_ship.m_name.Length == 0 )
+		if ( playerData.m_playerShip.m_name.Length == 0 )
 		{
 			m_errorText.text += "\u2022 Report to Ship Configuration to christen ship.\n";
 			preflightCheckPassed = false;
 		}
 
 		// does the ship have engines?
-		if ( playerData.m_ship.m_enginesClass == 0 )
+		if ( playerData.m_playerShip.m_enginesClass == 0 )
 		{
 			m_errorText.text += "\u2022 Report to Ship Configuration to purchase engines.\n";
 			preflightCheckPassed = false;
 		}
 
 		// do we have fuel?
-		if ( playerData.m_ship.m_elementStorage.Find( 5 ) == null )
+		if ( playerData.m_playerShip.m_elementStorage.Find( 5 ) == null )
 		{
 			m_errorText.text += "\u2022 Report to Trade Depot to purchase fuel.\n";
 			preflightCheckPassed = false;
@@ -165,7 +165,7 @@ public class DockingBayPanel : Panel
 				PlayerData playerData = DataController.m_instance.m_playerData;
 
 				// update the player location
-				playerData.m_starflight.m_location = PD_General.Location.DockingBay;
+				playerData.m_general.m_location = PD_General.Location.DockingBay;
 
 				// save the player data
 				DataController.m_instance.SaveActiveGame();

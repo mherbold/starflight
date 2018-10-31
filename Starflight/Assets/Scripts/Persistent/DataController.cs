@@ -240,7 +240,7 @@ public class DataController : MonoBehaviour
 	public string GetCurrentSceneName()
 	{
 		// figure out what the current scene is
-		switch ( m_playerData.m_starflight.m_location )
+		switch ( m_playerData.m_general.m_location )
 		{
 			case PD_General.Location.DockingBay:
 			case PD_General.Location.Hyperspace:

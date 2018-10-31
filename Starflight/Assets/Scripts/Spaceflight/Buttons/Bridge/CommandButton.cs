@@ -15,7 +15,7 @@ public class CommandButton : ShipButton
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// change the buttons
-		switch ( playerData.m_starflight.m_location )
+		switch ( playerData.m_general.m_location )
 		{
 			case PD_General.Location.DockingBay:
 				m_spaceflightController.m_buttonController.UpdateButtons( m_buttonSetA );

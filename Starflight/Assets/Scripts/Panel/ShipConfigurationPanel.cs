@@ -101,7 +101,7 @@ public class ShipConfigurationPanel : Panel
 		{
 			string sign = ( deltaBalance > 0 ) ? "-" : "+";
 
-			PD_Bank.Transaction transaction = new PD_Bank.Transaction( DataController.m_instance.m_playerData.m_starflight.m_currentStardateYMD, "Ship Configuration", deltaBalance.ToString() + sign );
+			PD_Bank.Transaction transaction = new PD_Bank.Transaction( DataController.m_instance.m_playerData.m_general.m_currentStardateYMD, "Ship Configuration", deltaBalance.ToString() + sign );
 
 			DataController.m_instance.m_playerData.m_bank.m_transactionList.Add( transaction );
 		}
@@ -397,7 +397,7 @@ public class ShipConfigurationPanel : Panel
 		UpdateScreen();
 
 		// set the current text input to the current name of the ship
-		m_nameInputField.text = DataController.m_instance.m_playerData.m_ship.m_name;
+		m_nameInputField.text = DataController.m_instance.m_playerData.m_playerShip.m_name;
 
 		// select the text input by default
 		m_nameInputField.Select();
@@ -494,7 +494,7 @@ public class ShipConfigurationPanel : Panel
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// get the ship player data
-		PD_PlayerShip ship = playerData.m_ship;
+		PD_PlayerShip ship = playerData.m_playerShip;
 
 		// update configuration values
 		m_configurationValuesText.text = ship.m_numCargoPods.ToString() + Environment.NewLine;
@@ -525,7 +525,7 @@ public class ShipConfigurationPanel : Panel
 		m_statusValuesText.text += ship.m_acceleration + " G" + Environment.NewLine;
 
 		// report the amount of endurium on the ship
-		PD_ElementReference elementReference = playerData.m_ship.m_elementStorage.Find( "Endurium" );
+		PD_ElementReference elementReference = playerData.m_playerShip.m_elementStorage.Find( "Endurium" );
 
 		if ( elementReference == null )
 		{
@@ -705,7 +705,7 @@ public class ShipConfigurationPanel : Panel
 	public void OnEndEdit()
 	{
 		// update the ship name in the player data
-		DataController.m_instance.m_playerData.m_ship.m_name = m_nameInputField.text;
+		DataController.m_instance.m_playerData.m_playerShip.m_name = m_nameInputField.text;
 
 		// switch to the menu bar state
 		SwitchToMenuBarState();
@@ -732,11 +732,11 @@ public class ShipConfigurationPanel : Panel
 
 			switch ( m_currentPartIndex )
 			{
-				case 1: currentClass = playerData.m_ship.m_enginesClass; break;
-				case 2: currentClass = playerData.m_ship.m_shieldingClass; break;
-				case 3: currentClass = playerData.m_ship.m_armorClass; break;
-				case 4: currentClass = playerData.m_ship.m_missileLauncherClass; break;
-				case 5: currentClass = playerData.m_ship.m_laserCannonClass; break;
+				case 1: currentClass = playerData.m_playerShip.m_enginesClass; break;
+				case 2: currentClass = playerData.m_playerShip.m_shieldingClass; break;
+				case 3: currentClass = playerData.m_playerShip.m_armorClass; break;
+				case 4: currentClass = playerData.m_playerShip.m_missileLauncherClass; break;
+				case 5: currentClass = playerData.m_playerShip.m_laserCannonClass; break;
 			}
 
 			// check if the ship has this part installed already
@@ -771,11 +771,11 @@ public class ShipConfigurationPanel : Panel
 
 			switch ( m_currentPartIndex )
 			{
-				case 1: currentClass = playerData.m_ship.m_enginesClass; break;
-				case 2: currentClass = playerData.m_ship.m_shieldingClass; break;
-				case 3: currentClass = playerData.m_ship.m_armorClass; break;
-				case 4: currentClass = playerData.m_ship.m_missileLauncherClass; break;
-				case 5: currentClass = playerData.m_ship.m_laserCannonClass; break;
+				case 1: currentClass = playerData.m_playerShip.m_enginesClass; break;
+				case 2: currentClass = playerData.m_playerShip.m_shieldingClass; break;
+				case 3: currentClass = playerData.m_playerShip.m_armorClass; break;
+				case 4: currentClass = playerData.m_playerShip.m_missileLauncherClass; break;
+				case 5: currentClass = playerData.m_playerShip.m_laserCannonClass; break;
 			}
 
 			// check if the ship has this part installed already
@@ -802,16 +802,16 @@ public class ShipConfigurationPanel : Panel
 				// remove the part from the ship
 				switch ( m_currentPartIndex )
 				{
-					case 1: playerData.m_ship.m_enginesClass = 0; break;
-					case 2: playerData.m_ship.m_shieldingClass = 0; break;
-					case 3: playerData.m_ship.m_armorClass = 0; break;
-					case 4: playerData.m_ship.m_missileLauncherClass = 0; break;
-					case 5: playerData.m_ship.m_laserCannonClass = 0; break;
+					case 1: playerData.m_playerShip.m_enginesClass = 0; break;
+					case 2: playerData.m_playerShip.m_shieldingClass = 0; break;
+					case 3: playerData.m_playerShip.m_armorClass = 0; break;
+					case 4: playerData.m_playerShip.m_missileLauncherClass = 0; break;
+					case 5: playerData.m_playerShip.m_laserCannonClass = 0; break;
 				}
 
 				// recalculate the ship mass and acceleration
-				playerData.m_ship.RecalculateMass();
-				playerData.m_ship.RecalculateAcceleration();
+				playerData.m_playerShip.RecalculateMass();
+				playerData.m_playerShip.RecalculateAcceleration();
 
 				// update the screen
 				UpdateScreen();
@@ -859,16 +859,16 @@ public class ShipConfigurationPanel : Panel
 			// upgrade the ship part
 			switch ( m_currentPartIndex )
 			{
-				case 1: playerData.m_ship.m_enginesClass = classIndex; break;
-				case 2: playerData.m_ship.m_shieldingClass = classIndex; break;
-				case 3: playerData.m_ship.m_armorClass = classIndex; break;
-				case 4: playerData.m_ship.m_missileLauncherClass = classIndex; break;
-				case 5: playerData.m_ship.m_laserCannonClass = classIndex; break;
+				case 1: playerData.m_playerShip.m_enginesClass = classIndex; break;
+				case 2: playerData.m_playerShip.m_shieldingClass = classIndex; break;
+				case 3: playerData.m_playerShip.m_armorClass = classIndex; break;
+				case 4: playerData.m_playerShip.m_missileLauncherClass = classIndex; break;
+				case 5: playerData.m_playerShip.m_laserCannonClass = classIndex; break;
 			}
 
 			// recalculate the ship mass and acceleration
-			playerData.m_ship.RecalculateMass();
-			playerData.m_ship.RecalculateAcceleration();
+			playerData.m_playerShip.RecalculateMass();
+			playerData.m_playerShip.RecalculateAcceleration();
 
 			// switch back to the buy part state
 			SwitchToBuyPartState();
@@ -890,7 +890,7 @@ public class ShipConfigurationPanel : Panel
 		if ( m_currentState == State.SellPart )
 		{
 			// hide the sell prices for cargo pods if we don't have any
-			if ( playerData.m_ship.m_numCargoPods == 0 )
+			if ( playerData.m_playerShip.m_numCargoPods == 0 )
 			{
 				includeCargoPods = false;
 			}
@@ -917,11 +917,11 @@ public class ShipConfigurationPanel : Panel
 
 		switch ( m_currentPartIndex )
 		{
-			case 1: currentClass = playerData.m_ship.m_enginesClass; break;
-			case 2: currentClass = playerData.m_ship.m_shieldingClass; break;
-			case 3: currentClass = playerData.m_ship.m_armorClass; break;
-			case 4: currentClass = playerData.m_ship.m_missileLauncherClass; break;
-			case 5: currentClass = playerData.m_ship.m_laserCannonClass; break;
+			case 1: currentClass = playerData.m_playerShip.m_enginesClass; break;
+			case 2: currentClass = playerData.m_playerShip.m_shieldingClass; break;
+			case 3: currentClass = playerData.m_playerShip.m_armorClass; break;
+			case 4: currentClass = playerData.m_playerShip.m_missileLauncherClass; break;
+			case 5: currentClass = playerData.m_playerShip.m_laserCannonClass; break;
 		}
 
 		// update part class prices (if we have anything but cargo pods selected)
@@ -972,7 +972,7 @@ public class ShipConfigurationPanel : Panel
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// check if we have room for another cargo pod
-		if ( playerData.m_ship.m_numCargoPods == 16 )
+		if ( playerData.m_playerShip.m_numCargoPods == 16 )
 		{
 			// nope - show an error message
 			SwitchToErrorMessageState( "No cargo pod bays available" );
@@ -991,7 +991,7 @@ public class ShipConfigurationPanel : Panel
 				playerData.m_bank.m_currentBalance -= gameData.m_misc.m_cargoPodBuyPrice;
 
 				// add one cargo pod to the ship
-				playerData.m_ship.AddCargoPod();
+				playerData.m_playerShip.AddCargoPod();
 
 				// update the screen
 				UpdateScreen();
@@ -1012,13 +1012,13 @@ public class ShipConfigurationPanel : Panel
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// check if we have room for another cargo pod
-		if ( playerData.m_ship.m_numCargoPods > 0 )
+		if ( playerData.m_playerShip.m_numCargoPods > 0 )
 		{
 			// pay for the cargo pod into the player's bank balance
 			playerData.m_bank.m_currentBalance += gameData.m_misc.m_cargoPodSellPrice;
 
 			// remove one cargo pod from the ship
-			playerData.m_ship.RemoveCargoPod();
+			playerData.m_playerShip.RemoveCargoPod();
 
 			// update the screen
 			UpdateScreen();

@@ -189,7 +189,7 @@ public class PD_PlayerShip
 		var playerData = DataController.m_instance.m_playerData;
 
 		// calculate and return the amount of space remaining in the cargo hold
-		return m_volume - playerData.m_ship.m_volumeUsed;
+		return m_volume - playerData.m_playerShip.m_volumeUsed;
 	}
 
 	public void AddElement( int elementId, int volume )

@@ -78,13 +78,13 @@ public class InOrbit : MonoBehaviour
 		var playerData = DataController.m_instance.m_playerData;
 
 		// get to the star data
-		var star = gameData.m_starList[ playerData.m_starflight.m_currentStarId ];
+		var star = gameData.m_starList[ playerData.m_general.m_currentStarId ];
 
 		// show the in orbit objects
 		gameObject.SetActive( true );
 
 		// get the planet controller
-		var planetController = m_spaceflightController.m_starSystem.GetPlanetController( playerData.m_starflight.m_currentPlanetId );
+		var planetController = m_spaceflightController.m_starSystem.GetPlanetController( playerData.m_general.m_currentPlanetId );
 
 		// set the scale of the planet model
 		m_planetModel.transform.localScale = planetController.m_planet.GetScale();
@@ -137,7 +137,7 @@ public class InOrbit : MonoBehaviour
 			var playerData = DataController.m_instance.m_playerData;
 
 			// get the planet controller
-			var planetController = m_spaceflightController.m_starSystem.GetPlanetController( playerData.m_starflight.m_currentPlanetId );
+			var planetController = m_spaceflightController.m_starSystem.GetPlanetController( playerData.m_general.m_currentPlanetId );
 
 			// apply the material to the planet model
 			m_planetModel.material = planetController.GetMaterial();

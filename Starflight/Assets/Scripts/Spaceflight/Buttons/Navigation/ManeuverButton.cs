@@ -21,7 +21,7 @@ public class ManeuverButton : ShipButton
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// where are we?
-		switch ( playerData.m_starflight.m_location )
+		switch ( playerData.m_general.m_location )
 		{
 			case PD_General.Location.DockingBay:
 
@@ -71,7 +71,7 @@ public class ManeuverButton : ShipButton
 		}
 
 		// reset the current speed
-		playerData.m_starflight.m_currentSpeed = 0.0f;
+		playerData.m_general.m_currentSpeed = 0.0f;
 
 		// return true to keep the button lit and active
 		return true;
@@ -148,7 +148,7 @@ public class ManeuverButton : ShipButton
 			m_spaceflightController.m_player.TurnOffEngines();
 
 			// are we in a star system?
-			if ( playerData.m_starflight.m_location == PD_General.Location.StarSystem )
+			if ( playerData.m_general.m_location == PD_General.Location.StarSystem )
 			{
 				// do we have a planet to orbit?
 				if ( m_spaceflightController.m_starSystem.m_planetToOrbitId == -1 )
@@ -159,7 +159,7 @@ public class ManeuverButton : ShipButton
 				else
 				{
 					// yep - remember the planet
-					playerData.m_starflight.m_currentPlanetId = m_spaceflightController.m_starSystem.m_planetToOrbitId;
+					playerData.m_general.m_currentPlanetId = m_spaceflightController.m_starSystem.m_planetToOrbitId;
 
 					// fade the map to black
 					m_spaceflightController.m_map.StartFade( 0.0f, 2.0f );
@@ -209,7 +209,7 @@ public class ManeuverButton : ShipButton
 				moveVector.Normalize();
 
 				// update the direction
-				playerData.m_starflight.m_currentDirection = Vector3.Slerp( playerData.m_starflight.m_currentDirection, moveVector, Time.deltaTime * 2.0f );
+				playerData.m_general.m_currentDirection = Vector3.Slerp( playerData.m_general.m_currentDirection, moveVector, Time.deltaTime * 2.0f );
 
 				// turn the engines on
 				m_spaceflightController.m_player.TurnOnEngines();

@@ -119,7 +119,7 @@ public class Map : MonoBehaviour
 	{
 		var playerData = DataController.m_instance.m_playerData;
 
-		var gameCoordinates = Tools.WorldToGameCoordinates( playerData.m_starflight.m_hyperspaceCoordinates );
+		var gameCoordinates = Tools.WorldToGameCoordinates( playerData.m_general.m_hyperspaceCoordinates );
 
 		var x = Mathf.RoundToInt( gameCoordinates.x );
 		var y = Mathf.RoundToInt( gameCoordinates.z );

@@ -287,15 +287,15 @@ public class SaveGamePanel : Panel
 			PlayerData playerData = DataController.m_instance.m_playerDataList[ i ];
 
 			// the date and time
-			string description = "Date: <color=\"blue\">" + playerData.m_starflight.m_currentStardateYMD + "</color>   Time: <color=\"blue\">" + playerData.m_starflight.m_hour.ToString( "D2" ) + ":" + playerData.m_starflight.m_minute.ToString( "D2" ) + "</color>\n";
+			string description = "Date: <color=\"blue\">" + playerData.m_general.m_currentStardateYMD + "</color>   Time: <color=\"blue\">" + playerData.m_general.m_hour.ToString( "D2" ) + ":" + playerData.m_general.m_minute.ToString( "D2" ) + "</color>\n";
 
 			// calculate game hyperspace coordinates
-			Vector3 hyperspaceCoordinates = Tools.WorldToGameCoordinates( playerData.m_starflight.m_hyperspaceCoordinates );
+			Vector3 hyperspaceCoordinates = Tools.WorldToGameCoordinates( playerData.m_general.m_hyperspaceCoordinates );
 
 			// the location
 			description += "Location: <color=\"blue\">";
 
-			switch ( playerData.m_starflight.m_location )
+			switch ( playerData.m_general.m_location )
 			{
 				case PD_General.Location.Starport:
 					description += "Starport</color>\n";
@@ -321,20 +321,20 @@ public class SaveGamePanel : Panel
 			}
 
 			// the ship name and cargo
-			string shipName = ( playerData.m_ship.m_name == "" ) ? "No Name" : playerData.m_ship.m_name;
-			string numCargoPods = ( playerData.m_ship.m_numCargoPods == 0 ) ? "None" : playerData.m_ship.m_numCargoPods.ToString();
-			float cargoUsage = (float) playerData.m_ship.m_volumeUsed / (float) playerData.m_ship.m_volume * 100.0f;
+			string shipName = ( playerData.m_playerShip.m_name == "" ) ? "No Name" : playerData.m_playerShip.m_name;
+			string numCargoPods = ( playerData.m_playerShip.m_numCargoPods == 0 ) ? "None" : playerData.m_playerShip.m_numCargoPods.ToString();
+			float cargoUsage = (float) playerData.m_playerShip.m_volumeUsed / (float) playerData.m_playerShip.m_volume * 100.0f;
 
 			description += "Ship: <color=\"blue\">" + shipName + "</color>";
 			description += "   Cargo Pods: <color=\"blue\">" + numCargoPods + "</color>";
 			description += "   Cargo: <color=\"blue\">" + cargoUsage.ToString( "N1" ) + "% Full</color>\n";
 
 			// ship part classes
-			description += "Engines: <color=\"blue\">" + playerData.m_ship.GetEngines().m_name + "</color>";
-			description += "   Shields: <color=\"blue\">" + playerData.m_ship.GetSheilding().m_name + "</color>";
-			description += "   Armor: <color=\"blue\">" + playerData.m_ship.GetArmor().m_name + "</color>";
-			description += "   Missle Launcher: <color=\"blue\">" + playerData.m_ship.GetMissileLauncher().m_name + "</color>";
-			description += "   Laser Cannon: <color=\"blue\">" + playerData.m_ship.GetLaserCannon().m_name + "</color>";
+			description += "Engines: <color=\"blue\">" + playerData.m_playerShip.GetEngines().m_name + "</color>";
+			description += "   Shields: <color=\"blue\">" + playerData.m_playerShip.GetSheilding().m_name + "</color>";
+			description += "   Armor: <color=\"blue\">" + playerData.m_playerShip.GetArmor().m_name + "</color>";
+			description += "   Missle Launcher: <color=\"blue\">" + playerData.m_playerShip.GetMissileLauncher().m_name + "</color>";
+			description += "   Laser Cannon: <color=\"blue\">" + playerData.m_playerShip.GetLaserCannon().m_name + "</color>";
 
 			// replace the description text for this save game slot
 			m_slotDescriptionText[ i ].text = description;

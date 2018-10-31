@@ -38,7 +38,7 @@ public class StarSystem : MonoBehaviour
 		var playerData = DataController.m_instance.m_playerData;
 
 		// calculate the time to next flare (in FP days)
-		var timeToFlare = m_currentStar.m_daysToNextFlare - playerData.m_starflight.m_gameTime;
+		var timeToFlare = m_currentStar.m_daysToNextFlare - playerData.m_general.m_gameTime;
 
 		// did we flare already?
 		if ( timeToFlare <= 0.0f )
@@ -63,29 +63,27 @@ public class StarSystem : MonoBehaviour
 		}
 
 		// yes - did we just leave it?
-		if ( Vector3.Magnitude( playerData.m_starflight.m_systemCoordinates ) >= 8192.0f )
+		if ( Vector3.Magnitude( playerData.m_general.m_systemCoordinates ) >= 8192.0f )
 		{
 			Debug.Log( "Player leaving the star system - switching to the hyperspace location." );
 
 			// yes - calculate the position of the ship in hyperspace
-			var newPosition = playerData.m_starflight.m_systemCoordinates;
+			var newPosition = playerData.m_general.m_systemCoordinates;
 
 			newPosition.Normalize();
 
 			newPosition *= m_currentStar.GetBreachDistance() + 16.0f;
 			newPosition += m_currentStar.GetWorldCoordinates();
 
+			// scale the speed of the player
+			playerData.m_general.m_currentSpeed /= 4.0f;
+			playerData.m_general.m_currentMaximumSpeed /= 4.0f;
+
 			// update the player position
 			m_spaceflightController.m_player.transform.position = newPosition;
 
 			// save the player's position in the player data
-			playerData.m_starflight.m_hyperspaceCoordinates = newPosition;
-
-			// compute the ratio of star system to hyperspace speed
-			var speedRatio = m_spaceflightController.m_player.m_maximumShipSpeedHyperspace / m_spaceflightController.m_player.m_maximumShipSpeedStarSystem;
-
-			// convert from star system to hyperspace speed
-			playerData.m_starflight.m_currentSpeed *= speedRatio;
+			playerData.m_general.m_hyperspaceCoordinates = newPosition;
 
 			// switch modes now
 			m_spaceflightController.SwitchLocation( PD_General.Location.Hyperspace );
@@ -138,7 +136,7 @@ public class StarSystem : MonoBehaviour
 		var playerData = DataController.m_instance.m_playerData;
 
 		// did we change stars?
-		if ( ( m_currentStar != null ) && ( m_currentStar.m_id == playerData.m_starflight.m_currentStarId ) )
+		if ( ( m_currentStar != null ) && ( m_currentStar.m_id == playerData.m_general.m_currentStarId ) )
 		{
 			// nope - don't do anything
 			return;
@@ -147,7 +145,7 @@ public class StarSystem : MonoBehaviour
 		// Debug.Log( "Initializing the star system with star ID " + playerData.m_starflight.m_currentStarId );
 
 		// yes - so remember the current star
-		m_currentStar = gameData.m_starList[ playerData.m_starflight.m_currentStarId ];
+		m_currentStar = gameData.m_starList[ playerData.m_general.m_currentStarId ];
 
 		// generate or load maps for each planet in this system
 		for ( var i = 0; i < GD_Star.c_maxNumPlanets; i++ )
@@ -195,19 +193,16 @@ public class StarSystem : MonoBehaviour
 		m_spaceflightController.m_player.DollyCamera( 1024.0f );
 
 		// move the player object
-		m_spaceflightController.m_player.transform.position = playerData.m_starflight.m_systemCoordinates;
+		m_spaceflightController.m_player.transform.position = playerData.m_general.m_systemCoordinates;
 
 		// calculate the new rotation of the player
-		var newRotation = Quaternion.LookRotation( playerData.m_starflight.m_currentDirection, Vector3.up );
+		var newRotation = Quaternion.LookRotation( playerData.m_general.m_currentDirection, Vector3.up );
 
 		// update the player rotation
 		m_spaceflightController.m_player.m_ship.rotation = newRotation;
 
 		// unfreeze the player
 		m_spaceflightController.m_player.Unfreeze();
-
-		// configure the infinite starfield system to become fully visible at higher speeds
-		m_spaceflightController.m_player.SetStarfieldFullyVisibleSpeed( 15.0f );
 
 		// fade in the map
 		m_spaceflightController.m_map.StartFade( 1.0f, 2.0f );

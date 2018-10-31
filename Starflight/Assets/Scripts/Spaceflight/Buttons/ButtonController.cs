@@ -209,10 +209,10 @@ public class ButtonController : MonoBehaviour
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// change the current officer label to the name of the ship
-		ChangeOfficerText( "ISS " + playerData.m_ship.m_name );
+		ChangeOfficerText( "ISS " + playerData.m_playerShip.m_name );
 
 		// update the message
-		switch ( playerData.m_starflight.m_location )
+		switch ( playerData.m_general.m_location )
 		{
 			case PD_General.Location.DockingBay:
 				m_spaceflightController.m_messages.ChangeText( "<color=white>Ship computer activated.\nPre-launch procedures complete.\nStanding by to initiate launch.</color>" );

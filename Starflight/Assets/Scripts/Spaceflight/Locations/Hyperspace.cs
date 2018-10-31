@@ -99,7 +99,7 @@ public class Hyperspace : MonoBehaviour
 			var newPosition = Vector3.Lerp( m_fluxTravelStartPosition, m_fluxTravelEndPosition, t );
 
 			// update the ship position
-			playerData.m_starflight.m_hyperspaceCoordinates = m_spaceflightController.m_player.transform.position = newPosition;
+			playerData.m_general.m_hyperspaceCoordinates = m_spaceflightController.m_player.transform.position = newPosition;
 
 			// rotate the skybox in the direction of the flux travel
 			var direction = Vector3.Normalize( m_fluxTravelStartPosition - m_fluxTravelEndPosition );
@@ -130,25 +130,23 @@ public class Hyperspace : MonoBehaviour
 			foreach ( GD_Star star in gameData.m_starList )
 			{
 				// did we breach it?
-				float distance = Vector3.Distance( playerData.m_starflight.m_hyperspaceCoordinates, star.GetWorldCoordinates() );
+				float distance = Vector3.Distance( playerData.m_general.m_hyperspaceCoordinates, star.GetWorldCoordinates() );
 
 				if ( distance < star.GetBreachDistance() )
 				{
 					Debug.Log( "Entering star system at " + star.m_xCoordinate + " x " + star.m_yCoordinate + " - switching to the star system location." );
 
 					// change the system
-					playerData.m_starflight.m_currentStarId = star.m_id;
+					playerData.m_general.m_currentStarId = star.m_id;
 
 					// set the position of the player inside this system
-					var starToShip = playerData.m_starflight.m_hyperspaceCoordinates - star.GetWorldCoordinates();
+					var starToShip = playerData.m_general.m_hyperspaceCoordinates - star.GetWorldCoordinates();
 					starToShip.Normalize();
-					playerData.m_starflight.m_systemCoordinates = starToShip * ( 8192.0f - 16.0f );
+					playerData.m_general.m_systemCoordinates = starToShip * ( 8192.0f - 16.0f );
 
-					// compute the ratio of hyperspace to star system speed
-					var speedRatio = m_spaceflightController.m_player.m_maximumShipSpeedStarSystem / m_spaceflightController.m_player.m_maximumShipSpeedHyperspace;
-
-					// convert from hyperspace to star system speed
-					playerData.m_starflight.m_currentSpeed *= speedRatio;
+					// scale the speed of the player
+					playerData.m_general.m_currentSpeed *= 4.0f;
+					playerData.m_general.m_currentMaximumSpeed *= 4.0f;
 
 					// switch to the star system location
 					m_spaceflightController.SwitchLocation( PD_General.Location.StarSystem );
@@ -159,7 +157,7 @@ public class Hyperspace : MonoBehaviour
 			foreach ( GD_Flux flux in gameData.m_fluxList )
 			{
 				// did we breach it?
-				var distance = Vector3.Distance( playerData.m_starflight.m_hyperspaceCoordinates, flux.GetFrom() );
+				var distance = Vector3.Distance( playerData.m_general.m_hyperspaceCoordinates, flux.GetFrom() );
 
 				if ( distance < flux.GetBreachDistance() )
 				{
@@ -175,8 +173,8 @@ public class Hyperspace : MonoBehaviour
 					m_fluxTravelDuration = Mathf.Max( 2.0f, Vector3.Distance( flux.GetFrom(), flux.GetTo() ) / 2048.0f );
 
 					// compute the starting and ending point of the flux travel
-					m_fluxTravelStartPosition = playerData.m_starflight.m_hyperspaceCoordinates;
-					m_fluxTravelEndPosition = flux.GetTo() + (Vector3) playerData.m_starflight.m_currentDirection * ( flux.GetBreachDistance() + 16.0f );
+					m_fluxTravelStartPosition = playerData.m_general.m_hyperspaceCoordinates;
+					m_fluxTravelEndPosition = flux.GetTo() + (Vector3) playerData.m_general.m_currentDirection * ( flux.GetBreachDistance() + 16.0f );
 
 					// start the warp cinematics
 					m_travelingThroughFlux = true;
@@ -228,19 +226,16 @@ public class Hyperspace : MonoBehaviour
 		var playerData = DataController.m_instance.m_playerData;
 
 		// move the ship to where we are in hyperspace
-		m_spaceflightController.m_player.transform.position = playerData.m_starflight.m_hyperspaceCoordinates;
+		m_spaceflightController.m_player.transform.position = playerData.m_general.m_hyperspaceCoordinates;
 
 		// calculate the new rotation of the player
-		var newRotation = Quaternion.LookRotation( playerData.m_starflight.m_currentDirection, Vector3.up );
+		var newRotation = Quaternion.LookRotation( playerData.m_general.m_currentDirection, Vector3.up );
 
 		// update the player rotation
 		m_spaceflightController.m_player.m_ship.rotation = newRotation;
 
 		// unfreeze the player
 		m_spaceflightController.m_player.Unfreeze();
-
-		// configure the infinite starfield system to become visible at lower speeds
-		m_spaceflightController.m_player.SetStarfieldFullyVisibleSpeed( 3.5f );
 
 		// fade in the map
 		m_spaceflightController.m_map.StartFade( 1.0f, 2.0f );

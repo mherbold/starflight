@@ -127,7 +127,7 @@ public class OperationsPanel : Panel
 		GameData gameData = DataController.m_instance.m_gameData;
 
 		// update the stardate text
-		DateTime dateTime = DateTime.ParseExact( playerData.m_starflight.m_currentStardateYMD, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture );
+		DateTime dateTime = DateTime.ParseExact( playerData.m_general.m_currentStardateYMD, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture );
 		m_stardateText.text = "Today is " + dateTime.ToLongDateString();
 
 		// figure out which notice we should be showing (current notice)
@@ -137,7 +137,7 @@ public class OperationsPanel : Panel
 		{
 			GD_Notice notice = gameData.m_noticeList[ noticeId ];
 
-			if ( string.Compare( playerData.m_starflight.m_currentStardateYMD, notice.m_stardate ) >= 0 )
+			if ( string.Compare( playerData.m_general.m_currentStardateYMD, notice.m_stardate ) >= 0 )
 			{
 				m_latestNoticeId = noticeId;
 

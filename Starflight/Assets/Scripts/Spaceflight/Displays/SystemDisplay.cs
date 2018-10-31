@@ -29,7 +29,7 @@ public class SystemDisplay : ShipDisplay
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// get to the star data
-		GD_Star star = gameData.m_starList[ playerData.m_starflight.m_currentStarId ];
+		GD_Star star = gameData.m_starList[ playerData.m_general.m_currentStarId ];
 
 		// update the positions of the planets
 		var planetList = star.GetPlanetList();
@@ -72,7 +72,7 @@ public class SystemDisplay : ShipDisplay
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// get to the star data
-		GD_Star star = gameData.m_starList[ playerData.m_starflight.m_currentStarId ];
+		GD_Star star = gameData.m_starList[ playerData.m_general.m_currentStarId ];
 
 		// turn off the arth game object
 		m_arth.SetActive( false );

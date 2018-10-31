@@ -129,7 +129,7 @@ public class SensorsDisplay : ShipDisplay
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// get the planet we are currently orbiting about
-		GD_Planet m_planet = gameData.m_planetList[ playerData.m_starflight.m_currentPlanetId ];
+		GD_Planet m_planet = gameData.m_planetList[ playerData.m_general.m_currentPlanetId ];
 
 		// swap the mask to the planet mask
 		m_material.SetTexture( "_MaskTex", m_planetMaskTexture );
@@ -148,7 +148,7 @@ public class SensorsDisplay : ShipDisplay
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// get the planet we are currently orbiting about
-		GD_Planet m_planet = gameData.m_planetList[ playerData.m_starflight.m_currentPlanetId ];
+		GD_Planet m_planet = gameData.m_planetList[ playerData.m_general.m_currentPlanetId ];
 
 		// calculate the duration of the scan
 		float scanDuration = Mathf.Lerp( m_minDuration, m_maxDuration, ( m_planet.m_bioDensity + m_planet.m_mineralDensity ) / 200.0f );

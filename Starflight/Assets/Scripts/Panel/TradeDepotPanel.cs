@@ -111,7 +111,7 @@ public class TradeDepotPanel : Panel
 		{
 			string sign = ( deltaBalance > 0 ) ? "-" : "+";
 
-			PD_Bank.Transaction transaction = new PD_Bank.Transaction( DataController.m_instance.m_playerData.m_starflight.m_currentStardateYMD, "Trade depot", deltaBalance.ToString() + sign );
+			PD_Bank.Transaction transaction = new PD_Bank.Transaction( DataController.m_instance.m_playerData.m_general.m_currentStardateYMD, "Trade depot", deltaBalance.ToString() + sign );
 
 			DataController.m_instance.m_playerData.m_bank.m_transactionList.Add( transaction );
 		}
@@ -557,7 +557,7 @@ public class TradeDepotPanel : Panel
 							return;
 						}
 
-						int remainingVolume = playerData.m_ship.GetRemainingVolme();
+						int remainingVolume = playerData.m_playerShip.GetRemainingVolme();
 
 						if ( remainingVolume == 0 )
 						{
@@ -576,7 +576,7 @@ public class TradeDepotPanel : Panel
 					else
 					{
 						// the maximum amount is however much the player has in the ships cargo hold
-						PD_ElementReference elementReference = playerData.m_ship.m_elementStorage.Find( elementId );
+						PD_ElementReference elementReference = playerData.m_playerShip.m_elementStorage.Find( elementId );
 
 						maximumAmount = elementReference.m_volume;
 					}
@@ -636,7 +636,7 @@ public class TradeDepotPanel : Panel
 					m_rowCount++;
 
 					// get access to the ship cargo data for elements
-					PD_ElementStorage elementStorage = playerData.m_ship.m_elementStorage;
+					PD_ElementStorage elementStorage = playerData.m_playerShip.m_elementStorage;
 
 					if ( ( m_currentState == State.BuyItem ) || ( m_currentState == State.BuyAmount ) )
 					{
@@ -717,7 +717,7 @@ public class TradeDepotPanel : Panel
 					m_rowCount++;
 
 					// get access to the ship storage for artifacts
-					PD_ArtifactStorage artifactStorage = playerData.m_ship.m_artifactStorage;
+					PD_ArtifactStorage artifactStorage = playerData.m_playerShip.m_artifactStorage;
 
 					// add all artifacts in the ship cargo hold
 					foreach ( PD_ArtifactReference artifactReference in artifactStorage.m_artifactList )
@@ -839,7 +839,7 @@ public class TradeDepotPanel : Panel
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// check if the player has something to sell
-		if ( ( playerData.m_ship.m_artifactStorage.m_artifactList.Count == 0 ) && ( playerData.m_ship.m_elementStorage.m_elementList.Count == 0 ) )
+		if ( ( playerData.m_playerShip.m_artifactStorage.m_artifactList.Count == 0 ) && ( playerData.m_playerShip.m_elementStorage.m_elementList.Count == 0 ) )
 		{
 			// the player has nothing to sell - block the action
 			SwitchToErrorMessageState( "Starship hold is empty" );
@@ -861,7 +861,7 @@ public class TradeDepotPanel : Panel
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// check if the player has something to analyze
-		if ( ( playerData.m_ship.m_artifactStorage.m_artifactList.Count == 0 ) && ( playerData.m_ship.m_elementStorage.m_elementList.Count == 0 ) && ( playerData.m_starport.m_artifactStorage.m_artifactList.Count == 0 ) )
+		if ( ( playerData.m_playerShip.m_artifactStorage.m_artifactList.Count == 0 ) && ( playerData.m_playerShip.m_elementStorage.m_elementList.Count == 0 ) && ( playerData.m_starport.m_artifactStorage.m_artifactList.Count == 0 ) )
 		{
 			// the player has nothing to analyze - block the action
 			SwitchToErrorMessageState( "There are no artifacts to analyze" );
@@ -986,7 +986,7 @@ public class TradeDepotPanel : Panel
 					PlayerData playerData = DataController.m_instance.m_playerData;
 
 					// check if the ship has room in the cargo hold
-					if ( desiredAmount > playerData.m_ship.GetRemainingVolme() )
+					if ( desiredAmount > playerData.m_playerShip.GetRemainingVolme() )
 					{
 						SwitchToErrorMessageState( "Insufficient cargo space" );
 					}
@@ -1002,7 +1002,7 @@ public class TradeDepotPanel : Panel
 						playerData.m_bank.m_currentBalance -= starportPrice * desiredAmount / 10;
 
 						// transfer the element to the ship
-						playerData.m_ship.AddElement( elementId, desiredAmount );
+						playerData.m_playerShip.AddElement( elementId, desiredAmount );
 
 						// switch back to the buy item state
 						SwitchToBuyItemState( false );
@@ -1027,7 +1027,7 @@ public class TradeDepotPanel : Panel
 				playerData.m_bank.m_currentBalance += sellPrice * desiredAmount / 10;
 
 				// transfer the element to starport
-				playerData.m_ship.RemoveElement( elementId, desiredAmount );
+				playerData.m_playerShip.RemoveElement( elementId, desiredAmount );
 
 				// switch back to the sell item state
 				SwitchToSellItemState( false );
@@ -1069,14 +1069,14 @@ public class TradeDepotPanel : Panel
 				Debug.Log( "playerData.m_bankPlayerData.m_currentBalance = " + playerData.m_bank.m_currentBalance );
 				Debug.Log( "artifactGameData.m_starportPrice = " + artifactGameData.m_starportPrice );
 			}
-			else if ( artifactGameData.m_volume > playerData.m_ship.GetRemainingVolme() )
+			else if ( artifactGameData.m_volume > playerData.m_playerShip.GetRemainingVolme() )
 			{
 				// player's ship has no room for it - show an error message
 				SwitchToErrorMessageState( "Insufficient cargo space" );
 
-				Debug.Log( "playerData.m_shipCargoPlayerData.m_volumeUsed = " + playerData.m_ship.m_volumeUsed );
+				Debug.Log( "playerData.m_shipCargoPlayerData.m_volumeUsed = " + playerData.m_playerShip.m_volumeUsed );
 				Debug.Log( "artifactGameData.m_volume = " + artifactGameData.m_volume );
-				Debug.Log( "playerData.m_shipConfigurationPlayerData.m_volume = " + playerData.m_ship.m_volume );
+				Debug.Log( "playerData.m_shipConfigurationPlayerData.m_volume = " + playerData.m_playerShip.m_volume );
 			}
 			else
 			{
@@ -1085,7 +1085,7 @@ public class TradeDepotPanel : Panel
 
 				// transfer the artifact from the starport to the ship
 				playerData.m_starport.m_artifactStorage.Remove( item.m_id );
-				playerData.m_ship.AddArtifact( item.m_id );
+				playerData.m_playerShip.AddArtifact( item.m_id );
 
 				// update the screen
 				UpdateScreen();
@@ -1120,7 +1120,7 @@ public class TradeDepotPanel : Panel
 
 			// transfer the artifact from the ship to the starport
 			playerData.m_starport.m_artifactStorage.Add( item.m_id );
-			playerData.m_ship.RemoveArtifact( item.m_id );
+			playerData.m_playerShip.RemoveArtifact( item.m_id );
 
 			// update the screen
 			UpdateScreen();

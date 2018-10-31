@@ -114,7 +114,7 @@ public class PersonnelPanel : Panel
 
 		if ( deltaBalance > 0 )
 		{
-			PD_Bank.Transaction transaction = new PD_Bank.Transaction( DataController.m_instance.m_playerData.m_starflight.m_currentStardateYMD, "Personnel", deltaBalance.ToString() + "-" );
+			PD_Bank.Transaction transaction = new PD_Bank.Transaction( DataController.m_instance.m_playerData.m_general.m_currentStardateYMD, "Personnel", deltaBalance.ToString() + "-" );
 
 			DataController.m_instance.m_playerData.m_bank.m_transactionList.Add( transaction );
 		}

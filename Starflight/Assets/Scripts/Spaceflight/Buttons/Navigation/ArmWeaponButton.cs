@@ -10,7 +10,7 @@ public class ArmWeaponButton : ShipButton
 	{
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
-		if ( ( playerData.m_ship.m_laserCannonClass == 0 ) && ( playerData.m_ship.m_missileLauncherClass == 0 ) )
+		if ( ( playerData.m_playerShip.m_laserCannonClass == 0 ) && ( playerData.m_playerShip.m_missileLauncherClass == 0 ) )
 		{
 			SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 

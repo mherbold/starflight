@@ -11,7 +11,7 @@ public class LogPlanetButton : ShipButton
 		// get to the player data
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
-		switch ( playerData.m_starflight.m_location )
+		switch ( playerData.m_general.m_location )
 		{
 			case PD_General.Location.JustLaunched:
 

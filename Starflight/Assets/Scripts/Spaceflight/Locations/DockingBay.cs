@@ -65,12 +65,12 @@ public class DockingBay : MonoBehaviour
 		GameData gameData = DataController.m_instance.m_gameData;
 
 		// put us in the arth system (just in case)
-		playerData.m_starflight.m_currentStarId = gameData.m_misc.m_arthStarId;
-		playerData.m_starflight.m_hyperspaceCoordinates = Tools.GameToWorldCoordinates( new Vector3( 125.0f, 0.0f, 100.0f ) );
+		playerData.m_general.m_currentStarId = gameData.m_misc.m_arthStarId;
+		playerData.m_general.m_hyperspaceCoordinates = Tools.GameToWorldCoordinates( new Vector3( 125.0f, 0.0f, 100.0f ) );
 
 		// put us in the right spot for the docking bay launch sequence
-		playerData.m_starflight.m_systemCoordinates = new Vector3( 0.0f, 0.0f, 0.0f );
-		m_spaceflightController.m_player.transform.position = playerData.m_starflight.m_systemCoordinates;
+		playerData.m_general.m_systemCoordinates = new Vector3( 0.0f, 0.0f, 0.0f );
+		m_spaceflightController.m_player.transform.position = playerData.m_general.m_systemCoordinates;
 
 		// recalculate what the starting camera distance from the doors should be
 		var verticalFieldOfView = m_spaceflightController.m_map.m_playerCamera.fieldOfView;
@@ -78,16 +78,13 @@ public class DockingBay : MonoBehaviour
 		var angle = Mathf.Deg2Rad * ( 180.0f - 90.0f - horizontalFieldOfView * Mathf.Rad2Deg * 0.5f );
 		var tanAngle = Mathf.Tan( angle );
 		var halfDoorWidth = 276.5f;
-		
+
 		m_parkedPosition = Mathf.Min( 2048.0f, m_dockingBayDoorTop.transform.position.y + halfDoorWidth * tanAngle );
 
 		m_spaceflightController.m_player.DollyCamera( m_parkedPosition );
 
 		// freeze the player
 		m_spaceflightController.m_player.Freeze();
-
-		// configure the infinite starfield system to become visible at lower speeds
-		m_spaceflightController.m_player.SetStarfieldFullyVisibleSpeed( 5.0f );
 
 		// reset the buttons
 		m_spaceflightController.m_buttonController.RestoreBridgeButtons();
