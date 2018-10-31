@@ -14,6 +14,7 @@ public class ButtonController : MonoBehaviour
 	public Sprite m_buttonActiveSprite;
 	public Image[] m_buttonImageList;
 	public TextMeshProUGUI[] m_buttonLabelList;
+	public TextMeshProUGUI m_currentOfficer;
 
 	// buttons
 	private ShipButton[] m_buttonList;
@@ -189,6 +190,12 @@ public class ButtonController : MonoBehaviour
 		}
 	}
 
+	// call this to change the current officer text
+	public void ChangeOfficerText( string newOfficer )
+	{
+		m_currentOfficer.text = newOfficer;
+	}
+
 	// restore the bridge buttons
 	public void RestoreBridgeButtons()
 	{
@@ -202,17 +209,17 @@ public class ButtonController : MonoBehaviour
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// change the current officer label to the name of the ship
-		m_spaceflightController.m_spaceflightUI.ChangeOfficerText( "ISS " + playerData.m_ship.m_name );
+		ChangeOfficerText( "ISS " + playerData.m_ship.m_name );
 
 		// update the message
 		switch ( playerData.m_starflight.m_location )
 		{
 			case PD_General.Location.DockingBay:
-				m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>Ship computer activated.\nPre-launch procedures complete.\nStanding by to initiate launch.</color>" );
+				m_spaceflightController.m_messages.ChangeText( "<color=white>Ship computer activated.\nPre-launch procedures complete.\nStanding by to initiate launch.</color>" );
 				break;
 
 			case PD_General.Location.JustLaunched:
-				m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>Starport clear.\nStanding by to maneuver.</color>" );
+				m_spaceflightController.m_messages.ChangeText( "<color=white>Starport clear.\nStanding by to maneuver.</color>" );
 				break;
 		}
 	}

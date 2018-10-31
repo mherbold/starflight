@@ -115,7 +115,7 @@ public class Hyperspace : MonoBehaviour
 				m_spaceflightController.m_player.Unfreeze();
 
 				// update the map coordinates
-				m_spaceflightController.m_spaceflightUI.UpdateCoordinates();
+				m_spaceflightController.m_map.UpdateCoordinates();
 
 				// play the exit warp sound
 				SoundController.m_instance.PlaySound( SoundController.Sound.ExitWarp );
@@ -243,7 +243,7 @@ public class Hyperspace : MonoBehaviour
 		m_spaceflightController.m_player.SetStarfieldFullyVisibleSpeed( 3.5f );
 
 		// fade in the map
-		m_spaceflightController.m_spaceflightUI.FadeMap( 1.0f, 2.0f );
+		m_spaceflightController.m_map.StartFade( 1.0f, 2.0f );
 
 		// show the status display
 		m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_statusDisplay );

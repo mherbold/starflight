@@ -15,7 +15,7 @@ public class LaunchButton : ShipButton
 
 		if ( playerData.m_starflight.m_location == PD_General.Location.DockingBay )
 		{
-			m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=yellow>Confirm launch?</color>" );
+			m_spaceflightController.m_messages.ChangeText( "<color=yellow>Confirm launch?</color>" );
 
 			m_spaceflightController.m_buttonController.UpdateButtons( m_buttons );
 

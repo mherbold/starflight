@@ -73,8 +73,8 @@ public class DockingBay : MonoBehaviour
 		m_spaceflightController.m_player.transform.position = playerData.m_starflight.m_systemCoordinates;
 
 		// recalculate what the starting camera distance from the doors should be
-		var verticalFieldOfView = m_spaceflightController.m_spaceflightUI.m_playerCamera.fieldOfView;
-		var horizontalFieldOfView = 2.0f * Mathf.Atan( Mathf.Tan( verticalFieldOfView * Mathf.Deg2Rad * 0.5f ) * m_spaceflightController.m_spaceflightUI.m_playerCamera.aspect );
+		var verticalFieldOfView = m_spaceflightController.m_map.m_playerCamera.fieldOfView;
+		var horizontalFieldOfView = 2.0f * Mathf.Atan( Mathf.Tan( verticalFieldOfView * Mathf.Deg2Rad * 0.5f ) * m_spaceflightController.m_map.m_playerCamera.aspect );
 		var angle = Mathf.Deg2Rad * ( 180.0f - 90.0f - horizontalFieldOfView * Mathf.Rad2Deg * 0.5f );
 		var tanAngle = Mathf.Tan( angle );
 		var halfDoorWidth = 276.5f;
@@ -93,7 +93,7 @@ public class DockingBay : MonoBehaviour
 		m_spaceflightController.m_buttonController.RestoreBridgeButtons();
 
 		// fade in the map
-		m_spaceflightController.m_spaceflightUI.FadeMap( 1.0f, 2.0f );
+		m_spaceflightController.m_map.StartFade( 1.0f, 2.0f );
 
 		// make sure we have the status display up
 		m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_statusDisplay );

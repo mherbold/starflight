@@ -19,7 +19,7 @@ public class LandButton : ShipButton
 
 				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
-				m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>We can't land on Arth.</color>" );
+				m_spaceflightController.m_messages.ChangeText( "<color=white>We can't land on Arth.</color>" );
 
 				m_spaceflightController.m_buttonController.UpdateButtonSprites();
 
@@ -39,7 +39,7 @@ public class LandButton : ShipButton
 
 				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
-				m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>We're not in orbit.</color>" );
+				m_spaceflightController.m_messages.ChangeText( "<color=white>We're not in orbit.</color>" );
 
 				m_spaceflightController.m_buttonController.UpdateButtonSprites();
 

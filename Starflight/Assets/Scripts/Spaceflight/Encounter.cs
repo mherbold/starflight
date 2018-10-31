@@ -1,7 +1,7 @@
 ﻿
 using UnityEngine;
 
-public class EncounterController : MonoBehaviour
+public class Encounter : MonoBehaviour
 {
 	// unity start
 	void Start()

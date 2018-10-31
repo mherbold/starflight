@@ -208,7 +208,7 @@ public class Player : MonoBehaviour
 				RotateSkybox( playerData.m_starflight.m_currentDirection, playerData.m_starflight.m_currentSpeed * Time.deltaTime * multiplier );
 
 				// update the map coordinates
-				m_spaceflightController.m_spaceflightUI.UpdateCoordinates();
+				m_spaceflightController.m_map.UpdateCoordinates();
 			}
 
 			// set the rotation of the ship

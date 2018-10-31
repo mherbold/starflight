@@ -4,7 +4,7 @@ using UnityEngine;
 public class StarSystem : MonoBehaviour
 {
 	// our planet controllers
-	public PlanetController[] m_planetController;
+	public Planet[] m_planetController;
 
 	// the nebula overlay
 	public GameObject m_nebula;
@@ -111,7 +111,7 @@ public class StarSystem : MonoBehaviour
 						m_planetToOrbitId = orbitPlanetController.m_planet.m_id;
 
 						// let the player know
-						m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>Ship is within orbital range.</color>" );
+						m_spaceflightController.m_messages.ChangeText( "<color=white>Ship is within orbital range.</color>" );
 					}
 				}
 				else
@@ -122,7 +122,7 @@ public class StarSystem : MonoBehaviour
 					var spectralClass = m_currentStar.GetSpectralClass();
 
 					// display the spectral class and ecosphere
-					m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>Stellar Parameters</color>\nSpectral Class: <color=white>" + m_currentStar.m_class + "</color>\nEcosphere: <color=white>" + spectralClass.m_ecosphereMin + " - " + spectralClass.m_ecosphereMax + "</color>" );
+					m_spaceflightController.m_messages.ChangeText( "<color=white>Stellar Parameters</color>\nSpectral Class: <color=white>" + m_currentStar.m_class + "</color>\nEcosphere: <color=white>" + spectralClass.m_ecosphereMin + " - " + spectralClass.m_ecosphereMax + "</color>" );
 				}
 			}
 		}
@@ -210,7 +210,7 @@ public class StarSystem : MonoBehaviour
 		m_spaceflightController.m_player.SetStarfieldFullyVisibleSpeed( 15.0f );
 
 		// fade in the map
-		m_spaceflightController.m_spaceflightUI.FadeMap( 1.0f, 2.0f );
+		m_spaceflightController.m_map.StartFade( 1.0f, 2.0f );
 
 		// show / hide the nebula depending on if we are in one
 		m_nebula.SetActive( m_currentStar.m_insideNebula );
@@ -257,7 +257,7 @@ public class StarSystem : MonoBehaviour
 	}
 
 	// find and return the planet controller that has the planet we are looking for
-	public PlanetController GetPlanetController( int planetId )
+	public Planet GetPlanetController( int planetId )
 	{
 		foreach ( var planetController in m_planetController )
 		{
@@ -276,11 +276,11 @@ public class StarSystem : MonoBehaviour
 	}
 
 	// call this to get th nearest planet controller to the player
-	public PlanetController GetNearestPlanetController()
+	public Planet GetNearestPlanetController()
 	{
 		float nearestDistanceToPlayer = 0.0f;
 
-		PlanetController nearestPlanetController = null;
+		Planet nearestPlanetController = null;
 
 		foreach ( var planetController in m_planetController )
 		{

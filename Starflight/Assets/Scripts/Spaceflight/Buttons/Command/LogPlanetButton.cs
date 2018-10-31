@@ -17,7 +17,7 @@ public class LogPlanetButton : ShipButton
 
 				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
-				m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>That's Arth you fool!</color>" );
+				m_spaceflightController.m_messages.ChangeText( "<color=white>That's Arth you fool!</color>" );
 
 				m_spaceflightController.m_buttonController.UpdateButtonSprites();
 
@@ -29,7 +29,7 @@ public class LogPlanetButton : ShipButton
 
 				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
-				m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>We're not in orbit.</color>" );
+				m_spaceflightController.m_messages.ChangeText( "<color=white>We're not in orbit.</color>" );
 
 				m_spaceflightController.m_buttonController.UpdateButtonSprites();
 
@@ -39,7 +39,7 @@ public class LogPlanetButton : ShipButton
 
 				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
-				m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=red>Not yet implemented.</color>" );
+				m_spaceflightController.m_messages.ChangeText( "<color=red>Not yet implemented.</color>" );
 
 				m_spaceflightController.m_buttonController.UpdateButtonSprites();
 

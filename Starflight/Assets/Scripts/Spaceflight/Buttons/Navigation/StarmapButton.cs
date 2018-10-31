@@ -15,7 +15,7 @@ public class StarmapButton : ShipButton
 		{
 			SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
-			m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>We're not in hyperspace, captain.</color>" );
+			m_spaceflightController.m_messages.ChangeText( "<color=white>We're not in hyperspace, captain.</color>" );
 
 			m_spaceflightController.m_buttonController.UpdateButtonSprites();
 		}

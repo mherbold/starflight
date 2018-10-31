@@ -105,7 +105,7 @@ public class InOrbit : MonoBehaviour
 		m_spaceflightController.m_buttonController.RestoreBridgeButtons();
 
 		// fade in the map
-		m_spaceflightController.m_spaceflightUI.FadeMap( 1.0f, 2.0f );
+		m_spaceflightController.m_map.StartFade( 1.0f, 2.0f );
 
 		// show / hide the nebula depending on if we are in one
 		m_nebula.SetActive( star.m_insideNebula );
@@ -114,7 +114,7 @@ public class InOrbit : MonoBehaviour
 		MusicController.m_instance.ChangeToTrack( MusicController.Track.InOrbit );
 
 		// let the player know we've established orbit
-		m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>Orbit established.</color>" );
+		m_spaceflightController.m_messages.ChangeText( "<color=white>Orbit established.</color>" );
 
 		// set the position of the sun
 		Vector4 sunPosition = new Vector4( -10000.0f, 5000.0f, 0.0f, 0.0f );

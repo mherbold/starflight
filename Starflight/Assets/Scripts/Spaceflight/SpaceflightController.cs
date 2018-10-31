@@ -15,11 +15,15 @@ public class SpaceflightController : MonoBehaviour
 	public StarSystem m_starSystem;
 	public InOrbit m_inOrbit;
 	public Hyperspace m_hyperspace;
-	public SpaceflightUI m_spaceflightUI;
+	public Messages m_messages;
 
 	// controllers
 	public ButtonController m_buttonController;
 	public DisplayController m_displayController;
+
+	// components
+	public Map m_map;
+	public Countdown m_countdown;
 
 	// save game timer
 	float m_timer;
@@ -162,7 +166,7 @@ public class SpaceflightController : MonoBehaviour
 		else
 		{
 			// make sure the map is visible
-			m_spaceflightUI.FadeMap( 1.0f, 2.0f );
+			m_map.StartFade( 1.0f, 2.0f );
 
 			// switch the location
 			switch ( playerData.m_starflight.m_location )
@@ -181,8 +185,8 @@ public class SpaceflightController : MonoBehaviour
 					m_starSystem.Hide();
 					m_inOrbit.Hide();
 					m_hyperspace.Hide();
-					m_spaceflightUI.FadeMap( 0.0f, 0.0f );
-					m_spaceflightUI.ChangeMessageText( "<color=white>Starport clear.\nStanding by to maneuver.</color>" );
+					m_map.StartFade( 0.0f, 0.0f );
+					m_messages.ChangeText( "<color=white>Starport clear.\nStanding by to maneuver.</color>" );
 					break;
 
 				case PD_General.Location.StarSystem:

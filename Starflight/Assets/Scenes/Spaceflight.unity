@@ -7568,9 +7568,11 @@ MonoBehaviour:
   m_starSystem: {fileID: 626356946}
   m_inOrbit: {fileID: 1812997203}
   m_hyperspace: {fileID: 1706819838}
-  m_spaceflightUI: {fileID: 1871356017}
+  m_messages: {fileID: 392032226}
   m_buttonController: {fileID: 1137917436}
   m_displayController: {fileID: 1625867937}
+  m_map: {fileID: 1384696239}
+  m_countdown: {fileID: 507440703}
 --- !u!114 &280970584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7867,6 +7869,7 @@ GameObject:
   - component: {fileID: 392032223}
   - component: {fileID: 392032225}
   - component: {fileID: 392032224}
+  - component: {fileID: 392032226}
   m_Layer: 5
   m_Name: Messages
   m_TagString: Untagged
@@ -8023,6 +8026,18 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 392032222}
   m_CullTransparentMesh: 0
+--- !u!114 &392032226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 392032222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33b907628034cdc40b7eab11fad7f977, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_messages: {fileID: 392032224}
 --- !u!4 &396146922 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 0b7c772b5e064d746a02130191893d4b,
@@ -8443,6 +8458,7 @@ GameObject:
   - component: {fileID: 507440700}
   - component: {fileID: 507440702}
   - component: {fileID: 507440701}
+  - component: {fileID: 507440703}
   m_Layer: 5
   m_Name: Countdown
   m_TagString: Untagged
@@ -8563,11 +8579,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -8588,6 +8604,18 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 507440699}
   m_CullTransparentMesh: 0
+--- !u!114 &507440703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 507440699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78696a6112324f64a838088c3c1b9eba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_countdown: {fileID: 507440701}
 --- !u!1 &512699734
 GameObject:
   m_ObjectHideFlags: 0
@@ -13059,6 +13087,7 @@ MonoBehaviour:
   - {fileID: 1384549382}
   - {fileID: 2090744178}
   - {fileID: 1117387106}
+  m_currentOfficer: {fileID: 1729061564}
 --- !u!1001 &1141407240
 Prefab:
   m_ObjectHideFlags: 0
@@ -23729,6 +23758,7 @@ GameObject:
   - component: {fileID: 1384696238}
   - component: {fileID: 1384696241}
   - component: {fileID: 1384696240}
+  - component: {fileID: 1384696239}
   m_Layer: 5
   m_Name: Map
   m_TagString: Untagged
@@ -23754,6 +23784,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1384696239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1384696237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4873b29c53238845ad5bde5e0e08fe0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_coordinates: {fileID: 1706506494}
+  m_playerCamera: {fileID: 839097932}
+  m_map: {fileID: 1384696240}
 --- !u!114 &1384696240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26396,11 +26440,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_messages: {fileID: 392032224}
-  m_currentOfficer: {fileID: 1729061564}
-  m_coordinates: {fileID: 1706506494}
-  m_playerCamera: {fileID: 839097932}
-  m_map: {fileID: 1384696240}
-  m_countdown: {fileID: 507440701}
 --- !u!1 &1882980893
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,11 +3,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class SpaceflightUI : MonoBehaviour
+public class Map : MonoBehaviour
 {
 	// text elements
-	public TextMeshProUGUI m_messages;
-	public TextMeshProUGUI m_currentOfficer;
 	public TextMeshProUGUI m_coordinates;
 
 	// the player camera
@@ -16,27 +14,18 @@ public class SpaceflightUI : MonoBehaviour
 	// the map object
 	public RawImage m_map;
 
-	// the countdown text
-	public TextMeshProUGUI m_countdown;
-
-	// our countdown text animation timer
-	float m_countdownTimer;
-
 	// set to true to run the fade sequence
 	bool m_isFading;
 
-	// our map fade timer
+	// our fade timer
 	float m_fadeTimer;
 
-	// how long to fade the map
+	// how long to fade
 	float m_fadeDuration;
 
 	// the original and target fade
 	float m_originalFadeAmount;
 	float m_targetFadeAmount;
-
-	// whether or not we are currently animating the countdown text
-	bool m_animatingCountdownText;
 
 	// unity awake
 	void Awake()
@@ -46,12 +35,6 @@ public class SpaceflightUI : MonoBehaviour
 	// unity start
 	void Start()
 	{
-		// we are not currently animating the countdown text
-		m_animatingCountdownText = false;
-
-		// disable the countdown text object
-		m_countdown.gameObject.SetActive( false );
-
 		// force the canvas to update (so rectTransform is updated and correct)
 		Canvas.ForceUpdateCanvases();
 
@@ -82,35 +65,6 @@ public class SpaceflightUI : MonoBehaviour
 	// unity update
 	void Update()
 	{
-		// are we animating the countdown text?
-		if ( m_animatingCountdownText )
-		{
-			// update the timer
-			m_countdownTimer += Time.deltaTime;
-
-			// animate the opacity and the size of the numbers
-			if ( m_countdownTimer < 0.1f )
-			{
-				// fade in
-				m_countdown.alpha = m_countdownTimer * 10.0f;
-				m_countdown.fontSize = 240.0f;
-			}
-			else if ( m_countdownTimer < 1.0f )
-			{
-				// fade out and shrink
-				m_countdown.alpha = 1.0f - ( m_countdownTimer - 0.1f ) / 0.9f;
-				m_countdown.fontSize = 140.0f + m_countdown.alpha * 100.0f;
-			}
-			else
-			{
-				// stop animating the countdown text
-				m_animatingCountdownText = false;
-
-				// disable the countdown text object
-				m_countdown.gameObject.SetActive( false );
-			}
-		}
-
 		// are we fading the map?
 		if ( m_isFading )
 		{
@@ -135,7 +89,7 @@ public class SpaceflightUI : MonoBehaviour
 	}
 
 	// call this to fade in or out the map
-	public void FadeMap( float targetFadeAmount, float fadeDuration )
+	public void StartFade( float targetFadeAmount, float fadeDuration )
 	{
 		// do we want to set it instantly?
 		if ( fadeDuration == 0.0f )
@@ -155,40 +109,12 @@ public class SpaceflightUI : MonoBehaviour
 	}
 
 	// call this to get the current map fade amount
-	public float GetCurrentMapFadeAmount()
+	public float GetCurrentFadeAmount()
 	{
 		return m_map.color.r;
 	}
 
-	// call this to change the current officer text
-	public void ChangeOfficerText( string newOfficer )
-	{
-		m_currentOfficer.text = newOfficer;
-	}
-
-	// call this to change the message text
-	public void ChangeMessageText( string newMessage )
-	{
-		m_messages.text = newMessage;
-	}
-
-	// call this to display the countdown text and animate it
-	public void SetCountdownText( string newText )
-	{
-		// change the countdown text
-		m_countdown.text = newText;
-
-		// make it active
-		m_countdown.gameObject.SetActive( true );
-
-		// reset the timer
-		m_countdownTimer = 0.0f;
-
-		// we are now animating the countdown text
-		m_animatingCountdownText = true;
-	}
-
-	// call this to update the coordinates above the map display
+	// call this to update the coordinates
 	public void UpdateCoordinates()
 	{
 		var playerData = DataController.m_instance.m_playerData;

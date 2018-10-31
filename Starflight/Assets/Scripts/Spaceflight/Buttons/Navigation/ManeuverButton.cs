@@ -29,7 +29,7 @@ public class ManeuverButton : ShipButton
 				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
 				// display the error message
-				m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>Standing by to launch.</color>" );
+				m_spaceflightController.m_messages.ChangeText( "<color=white>Standing by to launch.</color>" );
 
 				// turn off the button light
 				m_spaceflightController.m_buttonController.UpdateButtonSprites();
@@ -56,7 +56,7 @@ public class ManeuverButton : ShipButton
 			case PD_General.Location.InOrbit:
 
 				// fade the map to black
-				m_spaceflightController.m_spaceflightUI.FadeMap( 0.0f, 2.0f );
+				m_spaceflightController.m_map.StartFade( 0.0f, 2.0f );
 
 				// we are now transitioning
 				m_isTransitioning = true;
@@ -65,7 +65,7 @@ public class ManeuverButton : ShipButton
 				m_nextLocation = PD_General.Location.StarSystem;
 
 				// display message
-				m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>Leaving orbit...</color>" );
+				m_spaceflightController.m_messages.ChangeText( "<color=white>Leaving orbit...</color>" );
 
 				break;
 		}
@@ -89,7 +89,7 @@ public class ManeuverButton : ShipButton
 		if ( m_isTransitioning )
 		{
 			// yes - get the current map fade amount
-			float mapFadeAmount = m_spaceflightController.m_spaceflightUI.GetCurrentMapFadeAmount();
+			float mapFadeAmount = m_spaceflightController.m_map.GetCurrentFadeAmount();
 
 			// is it completely black yet?
 			if ( mapFadeAmount == 0.0f )
@@ -162,7 +162,7 @@ public class ManeuverButton : ShipButton
 					playerData.m_starflight.m_currentPlanetId = m_spaceflightController.m_starSystem.m_planetToOrbitId;
 
 					// fade the map to black
-					m_spaceflightController.m_spaceflightUI.FadeMap( 0.0f, 2.0f );
+					m_spaceflightController.m_map.StartFade( 0.0f, 2.0f );
 
 					// we are now transitioning
 					m_isTransitioning = true;
@@ -177,7 +177,7 @@ public class ManeuverButton : ShipButton
 						m_nextLocation = PD_General.Location.DockingBay;
 
 						// display message
-						m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>Initiating docking procedure...</color>" );
+						m_spaceflightController.m_messages.ChangeText( "<color=white>Initiating docking procedure...</color>" );
 					}
 					else
 					{
@@ -185,7 +185,7 @@ public class ManeuverButton : ShipButton
 						m_nextLocation = PD_General.Location.InOrbit;
 
 						// display message
-						m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>Initiating orbital maneuver...</color>" );
+						m_spaceflightController.m_messages.ChangeText( "<color=white>Initiating orbital maneuver...</color>" );
 					}
 
 					// stop here

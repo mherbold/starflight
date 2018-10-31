@@ -1,11 +1,7 @@
 ﻿
 using UnityEngine;
 
-using System.IO;
-using System.IO.Compression;
-using System.Threading.Tasks;
-
-public class PlanetController : MonoBehaviour
+public class Planet : MonoBehaviour
 {
 	// various constants that control the planet generator
 	const int c_numPolePaddingRows = 3;

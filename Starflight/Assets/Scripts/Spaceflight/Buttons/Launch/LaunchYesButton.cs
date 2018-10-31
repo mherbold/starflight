@@ -25,7 +25,7 @@ public class LaunchYesButton : ShipButton
 		if ( playerData.m_starflight.m_location == PD_General.Location.DockingBay )
 		{
 			// update the messages log
-			m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>Opening docking bay doors...</color>" );
+			m_spaceflightController.m_messages.ChangeText( "<color=white>Opening docking bay doors...</color>" );
 
 			// reset the last countdown number shown
 			m_lastCountdownNumberShown = 0;
@@ -93,7 +93,7 @@ public class LaunchYesButton : ShipButton
 				{
 					m_lastCountdownNumberShown = currentNumber;
 
-					m_spaceflightController.m_spaceflightUI.SetCountdownText( currentNumber.ToString() );
+					m_spaceflightController.m_countdown.SetCountdownText( currentNumber.ToString() );
 				}
 			}
 			else
@@ -105,7 +105,7 @@ public class LaunchYesButton : ShipButton
 					if ( playerData.m_starflight.m_location == PD_General.Location.DockingBay )
 					{
 						// yes - update the messages text
-						m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>Leaving starport...</color>" );
+						m_spaceflightController.m_messages.ChangeText( "<color=white>Leaving starport...</color>" );
 
 						// figure out how much to move the ship forward by (with an exponential acceleration curve)
 						float y = ( m_timer - 20.5f ) * 5.0f;
@@ -139,7 +139,7 @@ public class LaunchYesButton : ShipButton
 						m_spaceflightController.m_player.DollyCamera( m_spaceflightController.m_dockingBay.GetParkedPosition() - y );
 
 						// fade the map out
-						m_spaceflightController.m_spaceflightUI.FadeMap( 0.0f, 7.0f );
+						m_spaceflightController.m_map.StartFade( 0.0f, 7.0f );
 					}
 					else
 					{

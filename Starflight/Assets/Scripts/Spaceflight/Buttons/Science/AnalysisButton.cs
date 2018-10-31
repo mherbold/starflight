@@ -47,7 +47,7 @@ public class AnalysisButton : ShipButton
 					text += "Global Weather: <color=white>" + planet.GetGlobalWeatherText() + "</color>";
 
 					// update the messages text
-					m_spaceflightController.m_spaceflightUI.ChangeMessageText( text );
+					m_spaceflightController.m_messages.ChangeText( text );
 
 					// turn off the active button dot
 					m_spaceflightController.m_buttonController.UpdateButtonSprites();
@@ -58,7 +58,7 @@ public class AnalysisButton : ShipButton
 
 					SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
-					m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=red>Not yet implemented.</color>" );
+					m_spaceflightController.m_messages.ChangeText( "<color=red>Not yet implemented.</color>" );
 
 					m_spaceflightController.m_buttonController.UpdateButtonSprites();
 
@@ -71,7 +71,7 @@ public class AnalysisButton : ShipButton
 			SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
 			// complain to the player
-			m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=white>I need a current senor reading.</color>" );
+			m_spaceflightController.m_messages.ChangeText( "<color=white>I need a current senor reading.</color>" );
 
 			// turn off the active button
 			m_spaceflightController.m_buttonController.UpdateButtonSprites();

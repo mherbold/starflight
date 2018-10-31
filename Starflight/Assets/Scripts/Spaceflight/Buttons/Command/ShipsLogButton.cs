@@ -10,7 +10,7 @@ public class ShipsLogButton : ShipButton
 	{
 		SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
-		m_spaceflightController.m_spaceflightUI.ChangeMessageText( "<color=red>Not yet implemented.</color>" );
+		m_spaceflightController.m_messages.ChangeText( "<color=red>Not yet implemented.</color>" );
 
 		m_spaceflightController.m_buttonController.UpdateButtonSprites();
 
