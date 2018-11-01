@@ -214,19 +214,10 @@ public class Player : MonoBehaviour
 			m_ship.rotation = Quaternion.LookRotation( playerData.m_general.m_currentDirection, Vector3.up );
 
 			// get the number of degrees we are turning the ship (compared to the last frame)
-			var bankingAngle = Vector3.Angle( playerData.m_general.m_currentDirection, m_lastDirection );
+			var bankingAngle = Vector3.SignedAngle( playerData.m_general.m_currentDirection, m_lastDirection, Vector3.up );
 
-			// scale the angle enough so we actually see the ship banking (but max it out at 60 degrees)
-			bankingAngle = Mathf.Min( 60.0f, bankingAngle * 12.0f );
-
-			// get the direction in which the ship is turning
-			var crossVector = Vector3.Cross( playerData.m_general.m_currentDirection, m_lastDirection );
-
-			// flip over the angle if we are turning left instead of right
-			if ( crossVector.y < 0.0f )
-			{
-				bankingAngle = -bankingAngle;
-			}
+			// scale the angle enough so we actually see the ship banking (but max it out at 60 degrees in either direction)
+			bankingAngle = Mathf.Max( -60.0f, Mathf.Min( 60.0f, bankingAngle * 12.0f ) );
 
 			// interpolate towards the new banking angle
 			m_currentBankingAngle = Mathf.Lerp( m_currentBankingAngle, bankingAngle, 0.1f );

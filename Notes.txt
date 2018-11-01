@@ -22,5 +22,4 @@ Questionable Data
 	m_encounterList
 	
 		Need to check which orbit positions the Veloxi drones are on.
-		
 	

@@ -183,6 +183,9 @@ public class DataController : MonoBehaviour
 				// we have found the current game
 				currentGameFound = true;
 			}
+
+			// initialize the player data
+			m_playerDataList[ i ].Initialize();
 		}
 
 		// did we not find the current game?

@@ -35,6 +35,7 @@ float3 LightOverrideColor;
 struct UberShaderVertexInput
 {
 	float4 position			: POSITION;
+	float3 color			: COLOR;
 	float3 normal			: NORMAL;
 	float4 tangent			: TANGENT;
 	float2 texCoord0		: TEXCOORD0;
@@ -44,6 +45,7 @@ struct UberShaderVertexInput
 struct UberShaderVertexOutput
 {
 	float4 positionClip		: SV_POSITION;
+	float3 color			: COLOR;
 	float2 texCoord0		: TEXCOORD0;
 	float2 texCoord1		: TEXCOORD1;
 
@@ -81,6 +83,7 @@ UberShaderVertexOutput ComputeVertexShaderOutput( UberShaderVertexInput v )
 	float3 normalWorld = normalize( mul( v.normal, (float3x3) unity_WorldToObject ) );
 
 	o.positionClip = mul( UNITY_MATRIX_VP, positionWorld );
+	o.color = v.color;
 	o.texCoord0 = v.texCoord0;
 	o.texCoord1 = v.texCoord1;
 
@@ -127,7 +130,7 @@ float4 ComputeDiffuseColor( UberShaderVertexOutput i )
 
 #endif // ALBEDOMAP_ON
 
-	return float4( AlbedoColor * albedoMap.rgb, albedoMap.a );
+	return float4( i.color * AlbedoColor.rgb * albedoMap.rgb, albedoMap.a );
 }
 
 float ComputeOcclusion( UberShaderVertexOutput i )

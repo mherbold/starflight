@@ -22,6 +22,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _DensityMap:
+        m_Texture: {fileID: 2800000, guid: 238266dd1a82b6a4eb4b9c301a2b2ca7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -54,11 +58,28 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _ScatterMap0:
+        m_Texture: {fileID: 2800000, guid: baad7a7a551467f40971f262f976a1c2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ScatterMap1:
+        m_Texture: {fileID: 2800000, guid: 02c3a2de36ef1614a940fbe60a4cf610, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureMap:
+        m_Texture: {fileID: 2800000, guid: 9b33bcedc0d330344b920874d80e05b1, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureMap_NRM:
+        m_Texture: {fileID: 2800000, guid: 76ebdfff9bc22b54081eebc36b4300a4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - _Amplitude: 1
     - _AnimSpeed: 1
     - _BumpScale: 1
     - _Cutoff: 0.5
+    - _Density: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _Frequency: 16
@@ -75,6 +96,8 @@ Material:
     - _Persistence: 1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
+    - _SpecularPower: 1
+    - _Speed: 0.1
     - _SrcBlend: 1
     - _Transparency: 1
     - _UVSec: 0
@@ -84,3 +107,4 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _SpecularColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}

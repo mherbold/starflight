@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: a42f4740a3e3ccd4fb54206c3486dc3f
+guid: a096d692dfdefdf4a84fc6d22510e56a
 ScriptedImporter:
   fileIDToRecycleName:
-    100002: gameObject/Ring
-    400002: gameObject/Ring/Transform
-    21200002: gameObject/Ring/SpriteRenderer
+    100000: gameObject/Blip
+    400000: gameObject/Blip/Transform
+    21200000: gameObject/Blip/SpriteRenderer
     21300000: sprite
     100100000: gameObject
   externalObjects: {}
@@ -51,5 +51,5 @@ ScriptedImporter:
         y: 0
         width: 0
         height: 0
-      spriteID: 0199ddb2840b1f644b57c4b665f52bee
+      spriteID: 0f0577c4556ac884eba7583a2e431e87
     PhysicsOutlines: []

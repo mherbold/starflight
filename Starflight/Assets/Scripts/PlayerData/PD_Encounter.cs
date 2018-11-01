@@ -5,7 +5,7 @@ using System;
 
 [Serializable]
 
-public class PD_Encounter
+public class PD_Encounter : IComparable
 {
 	public int m_encounterId;
 
@@ -16,6 +16,8 @@ public class PD_Encounter
 	PD_General.Location m_location;
 
 	int m_starId;
+
+	float m_currentDistance;
 
 	public void Reset( int encounterId )
 	{
@@ -29,7 +31,7 @@ public class PD_Encounter
 		var encounter = gameData.m_encounterList[ encounterId ];
 
 		// reset the position
-		m_coordinates = new Vector3( encounter.m_xCoordinate, 0.0f, encounter.m_yCoordinate );
+		m_coordinates = Tools.GameToWorldCoordinates( new Vector3( encounter.m_xCoordinate, 0.0f, encounter.m_yCoordinate ) );
 	}
 
 	public void Initialize()
@@ -40,7 +42,7 @@ public class PD_Encounter
 		// get access to the encounter
 		m_encounter = gameData.m_encounterList[ m_encounterId ];
 
-		// return the location (translated)
+		// set the location (translated)
 		switch ( m_encounter.m_location )
 		{
 			case 0: m_location = PD_General.Location.Hyperspace; break;
@@ -72,5 +74,42 @@ public class PD_Encounter
 	public int GetStarId()
 	{
 		return m_starId;
+	}
+
+	public int CompareTo( object obj )
+	{
+		if ( obj is PD_Encounter )
+		{
+			int compareTo = m_currentDistance.CompareTo( ( obj as PD_Encounter ).m_currentDistance );
+
+			if ( compareTo == 0 )
+			{
+				return ( obj as PD_Encounter ).m_currentDistance.CompareTo( m_currentDistance );
+			}
+			else
+			{
+				return compareTo;
+			}
+		}
+
+		throw new ArgumentException( "Object is not a PD_Encounter" );
+	}
+
+	public void Update( PD_General.Location location, int starId, Vector3 coordinates )
+	{
+		// update distance from the player to the encounter
+		if ( ( location != m_location ) || ( m_location == PD_General.Location.InOrbit ) || ( ( m_location == PD_General.Location.StarSystem ) && ( starId != m_starId ) ) )
+		{
+			m_currentDistance = float.MaxValue;
+		}
+		else
+		{
+			m_currentDistance = Vector3.Distance( coordinates, m_coordinates );
+		}
+	}
+
+	public float GetDistance()
+	{
+		return m_currentDistance;
 	}
 }

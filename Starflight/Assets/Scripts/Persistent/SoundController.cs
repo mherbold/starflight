@@ -20,6 +20,7 @@ public class SoundController : MonoBehaviour
 		EnterWarp,
 		ExitWarp,
 		Scanning,
+		RadarBlip,
 		Count
 	};
 
@@ -46,6 +47,7 @@ public class SoundController : MonoBehaviour
 	public AudioClip m_enterWarp;
 	public AudioClip m_exitWarp;
 	public AudioClip m_scanning;
+	public AudioClip m_radarBlip;
 
 	// the sound list (to use with the enum)
 	AudioClip[] m_soundList;
@@ -164,6 +166,7 @@ public class SoundController : MonoBehaviour
 		m_soundList[ (int) Sound.EnterWarp ] = m_enterWarp;
 		m_soundList[ (int) Sound.ExitWarp ] = m_exitWarp;
 		m_soundList[ (int) Sound.Scanning ] = m_scanning;
+		m_soundList[ (int) Sound.RadarBlip ] = m_radarBlip;
 	}
 
 	// unity start
@@ -181,7 +184,7 @@ public class SoundController : MonoBehaviour
 	}
 
 	// play a sound
-	public void PlaySound( Sound sound )
+	public void PlaySound( Sound sound, float volume = 1.0f )
 	{
 		// go through each audio source controller
 		foreach ( AudioSourceController audioSourceController in m_audioSourceControllerList )
@@ -190,8 +193,7 @@ public class SoundController : MonoBehaviour
 			if ( audioSourceController.IsFree() )
 			{
 				// play the sound!
-				// TODO - use the volume level
-				audioSourceController.Play( m_soundList[ (int) sound ], 1.0f );
+				audioSourceController.Play( m_soundList[ (int) sound ], volume );
 
 				// nothing more to do here
 				return;
