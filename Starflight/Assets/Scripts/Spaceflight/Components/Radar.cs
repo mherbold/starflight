@@ -20,11 +20,14 @@ public class Radar : MonoBehaviour
 		}
 	}
 
+	public float m_maxDetectionDistance = 1024.0f;
+
 	public SVGImage m_ring;
 	public SVGImage m_sweep;
 	public SVGImage[] m_blips;
 
 	float m_sweepAngle;
+	float m_timeSinceLastDetection;
 
 	Detection[] m_detectionList;
 
@@ -34,11 +37,11 @@ public class Radar : MonoBehaviour
 		// clone material and make them all invisible
 		m_ring.material = new Material( m_ring.material );
 
-//		m_ring.material.SetColor( "AlbedoColor", new Color( 1, 1, 1, 0 ) );
+		m_ring.material.SetColor( "AlbedoColor", new Color( 1, 1, 1, 0 ) );
 
 		m_sweep.material = new Material( m_sweep.material );
 
-//		m_sweep.material.SetColor( "AlbedoColor", new Color( 1, 1, 1, 0 ) );
+		m_sweep.material.SetColor( "AlbedoColor", new Color( 1, 1, 1, 0 ) );
 
 		foreach ( var blip in m_blips )
 		{
@@ -69,7 +72,7 @@ public class Radar : MonoBehaviour
 		if ( ( playerData.m_general.m_location != PD_General.Location.Hyperspace ) && ( playerData.m_general.m_location != PD_General.Location.StarSystem ) )
 		{
 			// hide the radar outline
-//			m_ring.material.SetColor( "AlbedoColor", new Color( 1, 1, 1, 0 ) );
+			m_ring.material.SetColor( "AlbedoColor", new Color( 1, 1, 1, 0 ) );
 
 			// nothing more to do here
 			return;
@@ -123,7 +126,7 @@ public class Radar : MonoBehaviour
 		foreach ( var encounter in playerData.m_encounterList )
 		{
 			// are they close enough for us to detect them?
-			if ( encounter.GetDistance() > 2048.0f )
+			if ( encounter.GetDistance() > m_maxDetectionDistance )
 			{
 				// no - stop now (the list is sorted so all remaining encounters are further away)
 				break;
@@ -199,7 +202,7 @@ public class Radar : MonoBehaviour
 				if ( detectionToUse != null )
 				{
 					// calculate the blip opacity
-					var opacity = Mathf.Lerp( 0.3f, 1.0f, 1.0f - ( encounter.GetDistance() / 2048.0f ) );
+					var opacity = Mathf.Lerp( 0.3f, 1.0f, 1.0f - ( encounter.GetDistance() / m_maxDetectionDistance ) );
 
 					// yes - update the blip material
 					detectionToUse.m_blip.material.SetColor( "AlbedoColor", new Color( 1, 1, 1, opacity ) );
@@ -216,10 +219,22 @@ public class Radar : MonoBehaviour
 					// remember the opacity
 					detectionToUse.m_initialOpacity = opacity;
 
+					// reset time since last detection
+					m_timeSinceLastDetection = 0.0f;
+
 					// play the radar blip sound
-					SoundController.m_instance.PlaySound( SoundController.Sound.RadarBlip, opacity * 0.5f );
+					SoundController.m_instance.PlaySound( SoundController.Sound.RadarBlip, Mathf.Pow( opacity, 2.0f ) );
 				}
 			}
+		}
+
+		{
+			m_timeSinceLastDetection = Mathf.Min( 3600.0f, m_timeSinceLastDetection + Time.deltaTime );
+
+			var opacity = Mathf.Lerp( 1.0f, 0.0f, ( m_timeSinceLastDetection - 12.0f ) / 6.0f );
+
+			m_ring.material.SetColor( "AlbedoColor", new Color( 1, 1, 1, opacity ) );
+			m_sweep.material.SetColor( "AlbedoColor", new Color( 1, 1, 1, opacity ) );
 		}
 	}
 }
