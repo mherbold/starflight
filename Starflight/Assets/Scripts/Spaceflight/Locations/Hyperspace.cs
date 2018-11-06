@@ -201,6 +201,9 @@ public class Hyperspace : MonoBehaviour
 
 		// hide the hyperspace objects
 		gameObject.SetActive( false );
+
+		// hide the radar
+		m_spaceflightController.m_radar.Hide();
 	}
 
 	// call this to show the hyperspace stuff
@@ -242,6 +245,9 @@ public class Hyperspace : MonoBehaviour
 
 		// show the status display
 		m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_statusDisplay );
+
+		// show the radar
+		m_spaceflightController.m_radar.Show();
 
 		// play the star system music track
 		MusicController.m_instance.ChangeToTrack( MusicController.Track.Hyperspace );

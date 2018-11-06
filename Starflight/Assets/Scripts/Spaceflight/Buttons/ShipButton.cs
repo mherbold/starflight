@@ -8,7 +8,7 @@ abstract public class ShipButton
 
 	public ShipButton()
 	{
-		GameObject controllersGameObject = GameObject.FindWithTag( "Spaceflight Controllers" );
+		var controllersGameObject = GameObject.FindWithTag( "Spaceflight Controllers" );
 
 		m_spaceflightController = controllersGameObject.GetComponent<SpaceflightController>();
 	}

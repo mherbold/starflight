@@ -6,7 +6,7 @@ using System;
 public class PlayerData
 {
 	// the current save game version - increment this to invalidate obsolete save game files
-	const int c_currentVersion = 9;
+	const int c_currentVersion = 13;
 
 	// the current version of this player data file
 	public int m_version;
@@ -54,15 +54,6 @@ public class PlayerData
 			m_encounterList[ i ] = new PD_Encounter();
 
 			m_encounterList[ i ].Reset( i );
-		}
-	}
-
-	// initialize some parts of the player data
-	public void Initialize()
-	{
-		for ( var i = 0; i < m_encounterList.Length; i++ )
-		{
-			m_encounterList[ i ].Initialize();
 		}
 	}
 

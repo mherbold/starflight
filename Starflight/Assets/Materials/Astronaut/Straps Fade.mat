@@ -152,6 +152,7 @@ Material:
     - SF_OrthonormalizeOn: 0
     - SF_RenderQueueOffset: -1
     - SF_Smoothness: 0
+    - SF_ZWriteOn: 1
     - ShadowCasterOn: 1
     - Smoothness: 0
     - UIToggle: 0
@@ -181,7 +182,7 @@ Material:
     - LightOverrideColor: {r: 1, g: 1, b: 1, a: 1}
     - LightOverrideDirection: {r: 0, g: 0, b: 1, a: 0}
     - NormalMapScaleOffset: {r: 1, g: 1, b: 0, a: 0}
-    - SF_AlbedoColor: {r: 0.5882353, g: 0.2196078, b: 0.07450979, a: 0.5019608}
+    - SF_AlbedoColor: {r: 0.5882353, g: 0.21960777, b: 0.07450978, a: 1}
     - SF_EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
     - SF_NormalMapScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SF_SpecularColor: {r: 0.25, g: 0.25, b: 0.25, a: 1}

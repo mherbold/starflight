@@ -28,19 +28,7 @@ public class PD_Encounter : IComparable
 		m_encounterId = encounterId;
 
 		// get access to the encounter
-		var encounter = gameData.m_encounterList[ encounterId ];
-
-		// reset the position
-		m_coordinates = Tools.GameToWorldCoordinates( new Vector3( encounter.m_xCoordinate, 0.0f, encounter.m_yCoordinate ) );
-	}
-
-	public void Initialize()
-	{
-		// get access to the game data
-		var gameData = DataController.m_instance.m_gameData;
-
-		// get access to the encounter
-		m_encounter = gameData.m_encounterList[ m_encounterId ];
+		m_encounter = gameData.m_encounterList[ encounterId ];
 
 		// set the location (translated)
 		switch ( m_encounter.m_location )
@@ -63,6 +51,22 @@ public class PD_Encounter : IComparable
 					}
 				}
 			}
+		}
+
+		// reset the position
+		if ( m_location == PD_General.Location.Hyperspace )
+		{
+			m_coordinates = Tools.GameToWorldCoordinates( new Vector3( m_encounter.m_xCoordinate, 0.0f, m_encounter.m_yCoordinate ) );
+		}
+		else if ( m_location == PD_General.Location.StarSystem )
+		{
+			var randomPosition = UnityEngine.Random.insideUnitCircle * ( 8192.0f - 512.0f );
+
+			m_coordinates = new Vector3( randomPosition.x, 0.0f, randomPosition.y );
+		}
+		else
+		{
+			m_coordinates = Vector3.zero;
 		}
 	}
 

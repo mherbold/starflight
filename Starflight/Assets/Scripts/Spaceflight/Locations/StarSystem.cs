@@ -171,6 +171,9 @@ public class StarSystem : MonoBehaviour
 
 		// hide the starsystem
 		gameObject.SetActive( false );
+
+		// hide the radar
+		m_spaceflightController.m_radar.Hide();
 	}
 
 	// call this to show the starsystem objects
@@ -212,6 +215,9 @@ public class StarSystem : MonoBehaviour
 
 		// show the system display
 		m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_systemDisplay );
+
+		// show the radar
+		m_spaceflightController.m_radar.Show();
 
 		// play the star system music track
 		MusicController.m_instance.ChangeToTrack( MusicController.Track.StarSystem );

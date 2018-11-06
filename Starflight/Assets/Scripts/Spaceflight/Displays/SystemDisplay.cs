@@ -62,6 +62,9 @@ public class SystemDisplay : ShipDisplay
 
 		// set the new position of the ship game object
 		m_player.transform.localPosition = new Vector3( position.x, position.z, -30.0f );
+
+		// hide the player dot if we are in orbit
+		m_player.gameObject.SetActive( playerData.m_general.m_location != PD_General.Location.InOrbit );
 	}
 
 	// the system map display label

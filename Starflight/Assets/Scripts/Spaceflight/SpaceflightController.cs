@@ -24,6 +24,7 @@ public class SpaceflightController : MonoBehaviour
 	// components
 	public Map m_map;
 	public Countdown m_countdown;
+	public Radar m_radar;
 
 	// save game timer
 	float m_timer;
@@ -182,10 +183,10 @@ public class SpaceflightController : MonoBehaviour
 			{
 				case PD_General.Location.DockingBay:
 					m_player.Hide();
-					m_dockingBay.Show();
 					m_starSystem.Hide();
 					m_inOrbit.Hide();
 					m_hyperspace.Hide();
+					m_dockingBay.Show();
 					break;
 
 				case PD_General.Location.JustLaunched:
@@ -199,28 +200,28 @@ public class SpaceflightController : MonoBehaviour
 					break;
 
 				case PD_General.Location.StarSystem:
-					m_player.Show();
-					m_dockingBay.Hide();
 					m_starSystem.Initialize();
-					m_starSystem.Show();
+					m_dockingBay.Hide();
 					m_inOrbit.Hide();
 					m_hyperspace.Hide();
+					m_player.Show();
+					m_starSystem.Show();
 					break;
 
 				case PD_General.Location.InOrbit:
+					m_starSystem.Initialize();
 					m_player.Hide();
 					m_dockingBay.Hide();
-					m_starSystem.Initialize();
 					m_starSystem.Hide();
-					m_inOrbit.Show();
 					m_hyperspace.Hide();
+					m_inOrbit.Show();
 					break;
 
 				case PD_General.Location.Hyperspace:
-					m_player.Show();
 					m_dockingBay.Hide();
 					m_starSystem.Hide();
 					m_inOrbit.Hide();
+					m_player.Show();
 					m_hyperspace.Show();
 					break;
 			}

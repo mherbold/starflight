@@ -20,7 +20,8 @@ public class Radar : MonoBehaviour
 		}
 	}
 
-	public float m_maxDetectionDistance = 1024.0f;
+	public float m_maxHyperspaceDetectionDistance = 1024.0f;
+	public float m_maxStarSystemDetectionDistance = 4096.0f;
 
 	public MeshRenderer m_ring;
 	public MeshRenderer m_sweep;
@@ -31,23 +32,23 @@ public class Radar : MonoBehaviour
 
 	Detection[] m_detectionList;
 
+	SpaceflightController m_spaceflightController;
+
 	// unity start
 	void Start()
 	{
-		// clone material and make them all invisible
+		// get access to the spaceflight controller
+		var controllersGameObject = GameObject.FindWithTag( "Spaceflight Controllers" );
+
+		m_spaceflightController = controllersGameObject.GetComponent<SpaceflightController>();
+
+		// clone materials
 		m_ring.material = new Material( m_ring.material );
-
-		SetOpacity( m_ring.material, 0 );
-
 		m_sweep.material = new Material( m_sweep.material );
-
-		SetOpacity( m_sweep.material, 0 );
 
 		foreach ( var blip in m_blips )
 		{
 			blip.material = new Material( blip.material );
-
-			SetOpacity( blip.material, 0 );
 		}
 
 		// start sweep angle at zero
@@ -60,23 +61,21 @@ public class Radar : MonoBehaviour
 		{
 			m_detectionList[ i ] = new Detection( m_blips[ i ] );
 		}
+
+		// make everything invisible
+		Show();
 	}
 
 	// unity update
 	void Update()
 	{
+		float opacity;
+
 		// get to the player data
 		var playerData = DataController.m_instance.m_playerData;
 
-		// radar is visible only in hyperspace or in the star system
-		if ( ( playerData.m_general.m_location != PD_General.Location.Hyperspace ) && ( playerData.m_general.m_location != PD_General.Location.StarSystem ) )
-		{
-			// hide the radar outline
-			SetOpacity( m_ring.material, 0 );
-
-			// nothing more to do here
-			return;
-		}
+		// update time since last detection
+		m_timeSinceLastDetection = Mathf.Min( 3600.0f, m_timeSinceLastDetection + Time.deltaTime );
 
 		// rotate the sweep (60 degrees per second, 6 seconds = full sweep)
 		m_sweepAngle += Time.deltaTime * 60.0f;
@@ -87,27 +86,6 @@ public class Radar : MonoBehaviour
 		}
 
 		m_sweep.transform.localRotation = Quaternion.Euler( 0.0f, 0.0f, m_sweepAngle );
-
-		// update detection list - drop out detections older than 6 seconds
-		foreach ( var detection in m_detectionList )
-		{
-			detection.m_timeSinceDetection += Time.deltaTime;
-
-			if ( detection.m_timeSinceDetection >= 6.0f )
-			{
-				detection.m_timeSinceDetection = 6.0f;
-
-				detection.m_encounter = null;
-
-				SetOpacity( detection.m_blip.material, 0 );
-			}
-			else if ( detection.m_timeSinceDetection >= 3.0f )
-			{
-				var opacity = Mathf.Lerp( detection.m_initialOpacity, 0.0f, ( detection.m_timeSinceDetection - 3.0f ) / 3.0f );
-
-				SetOpacity( detection.m_blip.material, opacity );
-			}
-		}
 
 		// figure out which coordinate to use for encounter distances
 		var coordinates = ( playerData.m_general.m_location == PD_General.Location.Hyperspace ) ? playerData.m_general.m_hyperspaceCoordinates : playerData.m_general.m_starSystemCoordinates;
@@ -122,11 +100,14 @@ public class Radar : MonoBehaviour
 		// sort the results
 		Array.Sort( playerData.m_encounterList );
 
+		// get our current radar detection distance
+		var maxDetectionDistance = ( playerData.m_general.m_location == PD_General.Location.Hyperspace ) ? m_maxHyperspaceDetectionDistance : m_maxStarSystemDetectionDistance;
+
 		// go through each potential encounter
 		foreach ( var encounter in playerData.m_encounterList )
 		{
 			// are they close enough for us to detect them?
-			if ( encounter.GetDistance() > m_maxDetectionDistance )
+			if ( encounter.GetDistance() > maxDetectionDistance )
 			{
 				// no - stop now (the list is sorted so all remaining encounters are further away)
 				break;
@@ -202,10 +183,7 @@ public class Radar : MonoBehaviour
 				if ( detectionToUse != null )
 				{
 					// calculate the blip opacity
-					var opacity = Mathf.Lerp( 0.3f, 1.0f, 1.0f - ( encounter.GetDistance() / m_maxDetectionDistance ) );
-
-					// yes - update the blip material
-					SetOpacity( detectionToUse.m_blip.material, opacity );
+					opacity = Mathf.Lerp( 0.3f, 1.0f, 1.0f - ( encounter.GetDistance() / maxDetectionDistance ) );
 
 					// set the rotation (position really) of the blip
 					detectionToUse.m_blip.transform.localRotation = Quaternion.Euler( 0.0f, 0.0f, angle );
@@ -228,22 +206,78 @@ public class Radar : MonoBehaviour
 			}
 		}
 
+		// get the current map fade amount
+		var currentMapFadeAmount = m_spaceflightController.m_map.GetCurrentFadeAmount();
+
+		// go through each detection in the detection list
+		foreach ( var detection in m_detectionList )
 		{
-			m_timeSinceLastDetection = Mathf.Min( 3600.0f, m_timeSinceLastDetection + Time.deltaTime );
+			// is this blip active?
+			if ( detection.m_encounter != null )
+			{
+				// yes - update the time since detected
+				detection.m_timeSinceDetection += Time.deltaTime;
 
-			var opacity = Mathf.Lerp( 1.0f, 0.0f, ( m_timeSinceLastDetection - 12.0f ) / 6.0f );
+				// has it been more than 6 seconds?
+				if ( detection.m_timeSinceDetection >= 6.0f )
+				{
+					// yes - drop this blip (free it up)
+					detection.m_timeSinceDetection = 6.0f;
 
-			SetOpacity( m_ring.material, opacity );
-			SetOpacity( m_sweep.material, opacity );
+					detection.m_encounter = null;
+
+					Tools.SetOpacity( detection.m_blip.material, 0 );
+				}
+				else
+				{
+					// has it been more than 3 seconds?
+					if ( detection.m_timeSinceDetection >= 3.0f )
+					{
+						// yes - calculate the fade amount
+						opacity = Mathf.Lerp( detection.m_initialOpacity, 0.0f, ( detection.m_timeSinceDetection - 3.0f ) / 3.0f );
+					}
+					else
+					{
+						// no - it should be fully visible
+						opacity = detection.m_initialOpacity;
+					}
+
+					// update the opacity of the blip
+					Tools.SetOpacity( detection.m_blip.material, opacity * currentMapFadeAmount );
+				}
+			}
 		}
+
+		// update the opacity of the ring and sweep indicator
+		opacity = Mathf.Lerp( 1.0f, 0.0f, ( m_timeSinceLastDetection - 12.0f ) / 6.0f );
+
+		Tools.SetOpacity( m_ring.material, opacity * currentMapFadeAmount );
+		Tools.SetOpacity( m_sweep.material, opacity * currentMapFadeAmount );
 	}
 
-	void SetOpacity( Material material, float opacity )
+	// hide the radar
+	public void Hide()
 	{
-		var color = material.GetColor( "SF_AlbedoColor" );
+		// make this game object not active
+		gameObject.SetActive( false );
+	}
 
-		color.a = opacity;
+	// show the radar
+	public void Show()
+	{
+		// make this game object active
+		gameObject.SetActive( true );
 
-		material.SetColor( "SF_AlbedoColor", color );
+		// reset the time since last detection
+		m_timeSinceLastDetection = 3600.0f;
+
+		// make everything invisible to start with
+		Tools.SetOpacity( m_ring.material, 0 );
+		Tools.SetOpacity( m_sweep.material, 0 );
+
+		foreach ( var blip in m_blips )
+		{
+			Tools.SetOpacity( blip.material, 0 );
+		}
 	}
 }

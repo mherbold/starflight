@@ -141,7 +141,7 @@ Material:
     - SF_OrthonormalizeOn: 1
     - SF_RenderQueueOffset: 0
     - SF_Smoothness: 0.4
-    - SF_Speed: 0.005
+    - SF_Speed: 0.025
     - SF_ZWriteOn: 1
     - Smoothness: 0.4
     - Speed: 0.005

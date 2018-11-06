@@ -7776,6 +7776,7 @@ MonoBehaviour:
   m_displayController: {fileID: 1625867937}
   m_map: {fileID: 1384696239}
   m_countdown: {fileID: 507440703}
+  m_radar: {fileID: 752486863}
 --- !u!114 &280970584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10624,7 +10625,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29b48272bd0eb84f8996325ef5d64e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_maxDetectionDistance: 1024
+  m_maxHyperspaceDetectionDistance: 1024
+  m_maxStarSystemDetectionDistance: 4096
   m_ring: {fileID: 1442733575}
   m_sweep: {fileID: 1116705206}
   m_blips:
@@ -10938,7 +10940,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 845916767}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -16, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 626356945}

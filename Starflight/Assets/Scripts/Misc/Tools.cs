@@ -105,4 +105,14 @@ class Tools
 	{
 		return Mathf.Abs( a - b ) <= threshold;
 	}
+
+	// set the opacity of a material using a SF shader
+	public static void SetOpacity( Material material, float opacity )
+	{
+		var color = material.GetColor( "SF_AlbedoColor" );
+
+		color.a = opacity;
+
+		material.SetColor( "SF_AlbedoColor", color );
+	}
 }
