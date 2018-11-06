@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Radar Ring
+  m_Name: System Map Planet
   m_Shader: {fileID: 4800000, guid: 0cfd5caef9a7f0a4b9cbc1d319476789, type: 3}
   m_ShaderKeywords: ALPHA_ON SF_ALBEDOMAP_ON SF_ALPHA_ON UITOGGLE_ON
   m_LightmapFlags: 4
@@ -38,7 +38,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - SF_AlbedoMap:
-        m_Texture: {fileID: 2800000, guid: 69ddae5f183331240876793ef6ac2c6e, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7348eb45b3bae3b43853beec85f56e82, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - SpecularMap:
@@ -96,16 +96,16 @@ Material:
     m_Floats:
     - Alpha: 0.3
     - ApplyOcclusionToAlbedo: 0
-    - BlendDst: 1
+    - BlendDst: 10
     - BlendPrePass: 0
     - BlendSrc: 5
     - CastShadows: 0
     - OcclusionPower: 1
     - OrthonormalizeTextureSpace: 0
-    - SF_BlendDst: 1
+    - SF_BlendDst: 10
     - SF_BlendSrc: 1
     - SF_RenderQueueOffset: 0
-    - SF_ZWriteOn: 1
+    - SF_ZWriteOn: 0
     - Smoothness: 0.5
     - UIToggle: 1
     - _BumpScale: 1
@@ -133,10 +133,10 @@ Material:
     - _UseUIAlphaClip: 0
     - _ZWrite: 1
     m_Colors:
-    - AlbedoColor: {r: 0.1, g: 0.065000005, b: 0.065000005, a: 0.9019608}
+    - AlbedoColor: {r: 0.2125, g: 0.85, b: 0.2125, a: 0.9019608}
     - EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
     - NormalMapScaleOffset: {r: 1, g: 1, b: 0, a: 0}
-    - SF_AlbedoColor: {r: 0.24999997, g: 0.12499998, b: 0.12499998, a: 1}
+    - SF_AlbedoColor: {r: 1, g: 1, b: 1, a: 1}
     - SpecularColor: {r: 0, g: 0, b: 0, a: 1}
     - UILightColor: {r: 1, g: 1, b: 1, a: 1}
     - UILightDirection: {r: 0, g: 0, b: 0, a: 0}

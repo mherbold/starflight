@@ -4,11 +4,11 @@ using UnityEngine.UI;
 
 public class TerrainMapDisplay : ShipDisplay
 {
-	// the planet
-	public MeshRenderer m_square;
-	public Image m_legendImage;
+	// the map
+	public MeshRenderer m_map;
 
-	bool m_materialSwapped;
+	// the legend
+	public Image m_legendImage;
 
 	// unity start
 	public override void Start()
@@ -39,7 +39,7 @@ public class TerrainMapDisplay : ShipDisplay
 		var planetController = m_spaceflightController.m_starSystem.GetPlanetController( playerData.m_general.m_currentPlanetId );
 
 		// switch to the planet controller's material
-		m_square.material = planetController.GetMaterial();
+		m_map.material = planetController.GetMaterial();
 
 		// create a new material for the legend
 		var legendTexture = planetController.GetLegendTexture();

@@ -139,7 +139,7 @@ public class Radar : MonoBehaviour
 			var angle = Vector3.SignedAngle( Vector3.forward, encounterDirection, Vector3.up );
 
 			// is it close to our current sweep direction for this frame?
-			if ( ( angle > m_sweepAngle ) && ( angle < ( m_sweepAngle + 15.0f ) ) )
+			if ( ( angle > m_sweepAngle - 15.0f ) && ( angle < m_sweepAngle ) )
 			{
 				// yes - go through detection list
 				bool ignoreEncounter = false;

@@ -48,6 +48,6 @@ public class ScaleMeshToRectBounds : MonoBehaviour
 		}
 
 		// apply the scale to the mesh
-		transform.localScale = new Vector3( xScale, yScale, 1 );
+		rectTransform.localScale = new Vector3( xScale, yScale, 1 );
 	}
 }
