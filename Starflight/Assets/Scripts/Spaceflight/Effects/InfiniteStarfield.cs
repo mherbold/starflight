@@ -3,11 +3,7 @@ using UnityEngine;
 
 public class InfiniteStarfield : MonoBehaviour
 {
-	public int m_maximumNumberOfStars = 1000;
-	public float m_sizeOfStars = 1.0f;
 	public float m_maximumDistanceOfStars = 10.0f;
-	public float m_fullyInvisibleSpeed = 0.0f;
-	public Color32 m_colorOfStars = Color.white;
 
 	private ParticleSystem m_particleSystem;
 	private Material m_material;
@@ -19,13 +15,13 @@ public class InfiniteStarfield : MonoBehaviour
 
 		m_material = m_particleSystem.GetComponent<ParticleSystemRenderer>().material;
 
-		m_particles = new ParticleSystem.Particle[ m_maximumNumberOfStars ];
+		m_particles = new ParticleSystem.Particle[ m_particleSystem.main.maxParticles ];
 
-		for ( int i = 0; i < m_maximumNumberOfStars; i++ )
+		for ( int i = 0; i < m_particles.Length; i++ )
 		{
 			m_particles[ i ].position = ( new Vector3( Random.value, Random.value, Random.value ) * 2.0f - Vector3.one ) * m_maximumDistanceOfStars + transform.position;
-			m_particles[ i ].startColor = m_colorOfStars;
-			m_particles[ i ].startSize = m_sizeOfStars;
+			m_particles[ i ].startColor = m_particleSystem.main.startColor.Evaluate( 0.0f );
+			m_particles[ i ].startSize = m_particleSystem.main.startSize.Evaluate( 0.0f );
 			m_particles[ i ].velocity = Vector3.zero;
 		}
 
@@ -38,22 +34,13 @@ public class InfiniteStarfield : MonoBehaviour
 
 		float speed = playerData.m_general.m_currentSpeed;
 
-		float alpha;
+		float alpha = Mathf.Lerp( 0.0f, 1.0f, speed / playerData.m_general.m_currentMaximumSpeed );
 
-		if ( speed < m_fullyInvisibleSpeed )
-		{
-			alpha = 0.0f;
-		}
-		else if ( speed >= playerData.m_general.m_currentMaximumSpeed )
-		{
-			alpha = 1.0f;
-		}
-		else
-		{
-			alpha = ( speed - m_fullyInvisibleSpeed ) / ( playerData.m_general.m_currentMaximumSpeed - m_fullyInvisibleSpeed );
-		}
+		var color = m_material.GetColor( "SF_AlbedoColor" );
 
-		m_material.SetFloat( "_Alpha", alpha );
+		color.a = alpha;
+
+		m_material.SetColor( "SF_AlbedoColor", color );
 
 		if ( speed != 0.0f )
 		{
@@ -64,7 +51,7 @@ public class InfiniteStarfield : MonoBehaviour
 
 			bool somethingChanged = false;
 
-			for ( int i = 0; i < m_maximumNumberOfStars; i++ )
+			for ( int i = 0; i < m_particles.Length; i++ )
 			{
 				Vector3 position = m_particles[ i ].position;
 

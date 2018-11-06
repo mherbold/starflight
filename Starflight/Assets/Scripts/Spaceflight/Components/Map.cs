@@ -1,6 +1,5 @@
 ﻿
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class Map : MonoBehaviour
@@ -12,7 +11,7 @@ public class Map : MonoBehaviour
 	public Camera m_playerCamera;
 
 	// the map object
-	public RawImage m_map;
+	Material m_material;
 
 	// set to true to run the fade sequence
 	bool m_isFading;
@@ -38,10 +37,28 @@ public class Map : MonoBehaviour
 		// force the canvas to update (so rectTransform is updated and correct)
 		Canvas.ForceUpdateCanvases();
 
-		// get the current map size (in pixels)
-		var scaleFactor = m_map.canvas.scaleFactor;
+		// get the mesh renderer component
+		var meshRenderer = GetComponent<MeshRenderer>();
 
-		var mapSize = new Vector2( m_map.rectTransform.rect.width, m_map.rectTransform.rect.height ) * m_map.canvas.scaleFactor;
+		// make a copy of the material so it doesnt' get permanently modified
+		m_material = new Material( meshRenderer.material );
+
+		// set the material on the mesh renderer
+		meshRenderer.material = m_material;
+
+		// get the rect transform component
+		var rectTransform = GetComponent<RectTransform>();
+
+		// find the main ui gameobject with the canvas
+		var uiGameObject = GameObject.Find( "UI" );
+
+		// get the canvas component
+		var canvas = uiGameObject.GetComponent<Canvas>();
+
+		// get the current map size (in pixels)
+		var scaleFactor = canvas.scaleFactor;
+
+		var mapSize = new Vector2( rectTransform.rect.width, rectTransform.rect.height ) * canvas.scaleFactor;
 
 		// create a new render texture
 		var renderTexture = new RenderTexture( Mathf.CeilToInt( mapSize.x ), Mathf.CeilToInt( mapSize.y ), 24, RenderTextureFormat.ARGB32 )
@@ -55,8 +72,8 @@ public class Map : MonoBehaviour
 			anisoLevel = 0
 		};
 
-		// update the map to use the new render texture
-		m_map.texture = renderTexture;
+		// update the material to use the new render texture as the albedo map
+		m_material.SetTexture( "SF_AlbedoMap", renderTexture );
 
 		// update the camera to use the new render texture
 		m_playerCamera.targetTexture = renderTexture;
@@ -83,7 +100,7 @@ public class Map : MonoBehaviour
 
 				var alpha = Mathf.SmoothStep( m_originalFadeAmount, m_targetFadeAmount, m_fadeTimer / m_fadeDuration );
 
-				m_map.color = new Color( alpha, alpha, alpha );
+				m_material.SetColor( "SF_AlbedoColor", new Color( alpha, alpha, alpha ) );
 			}
 		}
 	}
@@ -95,23 +112,32 @@ public class Map : MonoBehaviour
 		if ( fadeDuration == 0.0f )
 		{
 			// yes - make it so
-			m_map.color = new Color( targetFadeAmount, targetFadeAmount, targetFadeAmount );
+			m_material.SetColor( "SF_AlbedoColor", new Color( targetFadeAmount, targetFadeAmount, targetFadeAmount ) );
 		}
-		else if ( ( ( m_isFading == false ) && ( targetFadeAmount != m_map.color.r ) ) || ( targetFadeAmount != m_targetFadeAmount ) )
+		else
 		{
-			// no - set up a smooth fade transition
-			m_isFading = true;
-			m_fadeTimer = 0.0f;
-			m_fadeDuration = fadeDuration;
-			m_originalFadeAmount = m_map.color.r;
-			m_targetFadeAmount = targetFadeAmount;
+			var currentFadeAmount = GetCurrentFadeAmount();
+
+			if ( ( ( m_isFading == false ) && ( targetFadeAmount != currentFadeAmount ) ) || ( targetFadeAmount != m_targetFadeAmount ) )
+			{
+				// no - set up a smooth fade transition
+				m_isFading = true;
+				m_fadeTimer = 0.0f;
+				m_fadeDuration = fadeDuration;
+				m_originalFadeAmount = currentFadeAmount;
+				m_targetFadeAmount = targetFadeAmount;
+			}
 		}
 	}
 
 	// call this to get the current map fade amount
 	public float GetCurrentFadeAmount()
 	{
-		return m_map.color.r;
+		// get the current color
+		var color = m_material.GetColor( "SF_AlbedoColor" );
+		
+		// return the current fade amount
+		return color.r;
 	}
 
 	// call this to update the coordinates

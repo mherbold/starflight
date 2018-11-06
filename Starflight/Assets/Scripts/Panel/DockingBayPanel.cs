@@ -210,10 +210,10 @@ public class DockingBayPanel : Panel
 			var material = m_astronautRenderer.materials[ i ];
 
 			// get the current albedo color of the material
-			var albedoColor = material.GetColor( "AlbedoColor" );
+			var albedoColor = material.GetColor( "SF_AlbedoColor" );
 
 			// update the albedo color with the new opacity
-			material.SetColor( "AlbedoColor", new Color( albedoColor.r, albedoColor.g, albedoColor.b, opacity ) );
+			material.SetColor( "SF_AlbedoColor", new Color( albedoColor.r, albedoColor.g, albedoColor.b, opacity ) );
 		}
 	}
 

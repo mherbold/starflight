@@ -376,7 +376,7 @@ public class PlanetGenerator
 			}
 		}
 
-		m_specularTexture = new Texture2D( m_textureWidth / 4, m_textureHeight / 4, TextureFormat.RGB24, true );
+		m_specularTexture = new Texture2D( m_textureWidth / 4, m_textureHeight / 4, TextureFormat.RGB24, true, true );
 
 		m_specularTexture.SetPixels( pixels );
 
@@ -429,7 +429,7 @@ public class PlanetGenerator
 			}
 		}
 
-		m_waterMaskTexture = new Texture2D( m_textureWidth / 4, m_textureHeight / 4, TextureFormat.RGB24, true );
+		m_waterMaskTexture = new Texture2D( m_textureWidth / 4, m_textureHeight / 4, TextureFormat.RGB24, true, true );
 
 		m_waterMaskTexture.SetPixels( pixels );
 
@@ -466,11 +466,11 @@ public class PlanetGenerator
 		{
 			for ( var x = 0; x < m_textureWidth; x++ )
 			{
-				pixels[ index++ ] = m_normalBuffer[ y, x ];
+				pixels[ index++ ] = new Color( 0.0f, m_normalBuffer[ y, x ].g, 0.0f, m_normalBuffer[ y, x ].r );
 			}
 		}
 
-		m_normalTexture = new Texture2D( m_textureWidth, m_textureHeight, TextureFormat.RGBA32, true );
+		m_normalTexture = new Texture2D( m_textureWidth, m_textureHeight, TextureFormat.RGBA32, true, true );
 
 		m_normalTexture.SetPixels( pixels );
 

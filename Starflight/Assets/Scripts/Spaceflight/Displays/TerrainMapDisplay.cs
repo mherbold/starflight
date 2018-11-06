@@ -1,12 +1,11 @@
 ﻿
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class TerrainMapDisplay : ShipDisplay
 {
 	// the planet
-	public Image m_mapImage;
+	public MeshRenderer m_square;
 	public Image m_legendImage;
 
 	bool m_materialSwapped;
@@ -39,20 +38,8 @@ public class TerrainMapDisplay : ShipDisplay
 		// get the planet controller
 		var planetController = m_spaceflightController.m_starSystem.GetPlanetController( playerData.m_general.m_currentPlanetId );
 
-		// create a new material for the map
-		var material = planetController.GetMaterial();
-
-		if ( !m_materialSwapped )
-		{
-			m_mapImage.material = new Material( m_mapImage.material );
-
-			m_materialSwapped = true;
-		}
-
-		m_mapImage.material.SetTexture( "AlbedoMap", material.GetTexture( "AlbedoMap" ) );
-		m_mapImage.material.SetTexture( "SpecularMap", material.GetTexture( "SpecularMap" ) );
-		m_mapImage.material.SetTexture( "NormalMap", material.GetTexture( "NormalMap" ) );
-		m_mapImage.material.SetTexture( "WaterMaskMap", material.GetTexture( "WaterMaskMap" ) );
+		// switch to the planet controller's material
+		m_square.material = planetController.GetMaterial();
 
 		// create a new material for the legend
 		var legendTexture = planetController.GetLegendTexture();

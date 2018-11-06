@@ -88,6 +88,7 @@ public class Normals
 
 						normal += Vector3.Normalize( up );
 					}
+
 					normal = normal * 0.0625f + half;
 
 					normalBuffer[ y, x ] = new Color( normal.x, normal.y, normal.z );

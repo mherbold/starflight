@@ -8,10 +8,10 @@ public class Radar : MonoBehaviour
 	{
 		public PD_Encounter m_encounter;
 		public float m_timeSinceDetection;
-		public SVGImage m_blip;
+		public MeshRenderer m_blip;
 		public float m_initialOpacity;
 
-		public Detection( SVGImage blip )
+		public Detection( MeshRenderer blip )
 		{
 			m_encounter = null;
 			m_timeSinceDetection = 3600.0f;
@@ -22,9 +22,9 @@ public class Radar : MonoBehaviour
 
 	public float m_maxDetectionDistance = 1024.0f;
 
-	public SVGImage m_ring;
-	public SVGImage m_sweep;
-	public SVGImage[] m_blips;
+	public MeshRenderer m_ring;
+	public MeshRenderer m_sweep;
+	public MeshRenderer[] m_blips;
 
 	float m_sweepAngle;
 	float m_timeSinceLastDetection;
@@ -37,17 +37,17 @@ public class Radar : MonoBehaviour
 		// clone material and make them all invisible
 		m_ring.material = new Material( m_ring.material );
 
-		m_ring.material.SetColor( "AlbedoColor", new Color( 1, 1, 1, 0 ) );
+		SetOpacity( m_ring.material, 0 );
 
 		m_sweep.material = new Material( m_sweep.material );
 
-		m_sweep.material.SetColor( "AlbedoColor", new Color( 1, 1, 1, 0 ) );
+		SetOpacity( m_sweep.material, 0 );
 
 		foreach ( var blip in m_blips )
 		{
 			blip.material = new Material( blip.material );
 
-			blip.material.SetColor( "AlbedoColor", new Color( 1, 1, 1, 0 ) );
+			SetOpacity( blip.material, 0 );
 		}
 
 		// start sweep angle at zero
@@ -72,21 +72,21 @@ public class Radar : MonoBehaviour
 		if ( ( playerData.m_general.m_location != PD_General.Location.Hyperspace ) && ( playerData.m_general.m_location != PD_General.Location.StarSystem ) )
 		{
 			// hide the radar outline
-			m_ring.material.SetColor( "AlbedoColor", new Color( 1, 1, 1, 0 ) );
+			SetOpacity( m_ring.material, 0 );
 
 			// nothing more to do here
 			return;
 		}
 
 		// rotate the sweep (60 degrees per second, 6 seconds = full sweep)
-		m_sweepAngle -= Time.deltaTime * 60.0f;
+		m_sweepAngle += Time.deltaTime * 60.0f;
 
-		if ( m_sweepAngle <= -180.0f )
+		if ( m_sweepAngle >= 180.0f )
 		{
-			m_sweepAngle += 360.0f;
+			m_sweepAngle -= 360.0f;
 		}
 
-		m_sweep.rectTransform.localRotation = Quaternion.Euler( 0.0f, 0.0f, m_sweepAngle );
+		m_sweep.transform.localRotation = Quaternion.Euler( 0.0f, 0.0f, m_sweepAngle );
 
 		// update detection list - drop out detections older than 6 seconds
 		foreach ( var detection in m_detectionList )
@@ -99,13 +99,13 @@ public class Radar : MonoBehaviour
 
 				detection.m_encounter = null;
 
-				detection.m_blip.material.SetColor( "AlbedoColor", new Color( 1, 1, 1, 0 ) );
+				SetOpacity( detection.m_blip.material, 0 );
 			}
 			else if ( detection.m_timeSinceDetection >= 3.0f )
 			{
 				var opacity = Mathf.Lerp( detection.m_initialOpacity, 0.0f, ( detection.m_timeSinceDetection - 3.0f ) / 3.0f );
 
-				detection.m_blip.material.SetColor( "AlbedoColor", new Color( 1, 1, 1, opacity ) );
+				SetOpacity( detection.m_blip.material, opacity );
 			}
 		}
 
@@ -136,7 +136,7 @@ public class Radar : MonoBehaviour
 			var encounterDirection = encounter.m_coordinates - coordinates;
 
 			// calculate the angle of the encounter
-			var angle = Vector3.SignedAngle( Vector3.forward, encounterDirection, Vector3.down );
+			var angle = Vector3.SignedAngle( Vector3.forward, encounterDirection, Vector3.up );
 
 			// is it close to our current sweep direction for this frame?
 			if ( ( angle > m_sweepAngle ) && ( angle < ( m_sweepAngle + 15.0f ) ) )
@@ -205,10 +205,10 @@ public class Radar : MonoBehaviour
 					var opacity = Mathf.Lerp( 0.3f, 1.0f, 1.0f - ( encounter.GetDistance() / m_maxDetectionDistance ) );
 
 					// yes - update the blip material
-					detectionToUse.m_blip.material.SetColor( "AlbedoColor", new Color( 1, 1, 1, opacity ) );
+					SetOpacity( detectionToUse.m_blip.material, opacity );
 
 					// set the rotation (position really) of the blip
-					detectionToUse.m_blip.rectTransform.localRotation = Quaternion.Euler( 0.0f, 0.0f, angle );
+					detectionToUse.m_blip.transform.localRotation = Quaternion.Euler( 0.0f, 0.0f, angle );
 
 					// reset time since detection
 					detectionToUse.m_timeSinceDetection = 0.0f;
@@ -233,8 +233,17 @@ public class Radar : MonoBehaviour
 
 			var opacity = Mathf.Lerp( 1.0f, 0.0f, ( m_timeSinceLastDetection - 12.0f ) / 6.0f );
 
-			m_ring.material.SetColor( "AlbedoColor", new Color( 1, 1, 1, opacity ) );
-			m_sweep.material.SetColor( "AlbedoColor", new Color( 1, 1, 1, opacity ) );
+			SetOpacity( m_ring.material, opacity );
+			SetOpacity( m_sweep.material, opacity );
 		}
+	}
+
+	void SetOpacity( Material material, float opacity )
+	{
+		var color = material.GetColor( "SF_AlbedoColor" );
+
+		color.a = opacity;
+
+		material.SetColor( "SF_AlbedoColor", color );
 	}
 }

@@ -54,5 +54,13 @@ public class StarportController : MonoBehaviour
 
 				break;
 		}
+
+		// connect the persistent ui canvas to the main camera
+		var persistentUI = GameObject.FindWithTag( "Persistent UI" );
+		var uiCamera = GameObject.FindWithTag( "UI Camera" );
+		var canvas = persistentUI.GetComponent<Canvas>();
+		var camera = uiCamera.GetComponent<Camera>();
+		canvas.worldCamera = camera;
+		canvas.planeDistance = 15.0f;
 	}
 }

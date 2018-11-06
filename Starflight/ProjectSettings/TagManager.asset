@@ -14,6 +14,8 @@ TagManager:
   - Spaceflight Controllers
   - Scene Fade
   - Save Game Panel
+  - Persistent UI
+  - UI Camera
   layers:
   - Default
   - TransparentFX
@@ -23,8 +25,8 @@ TagManager:
   - UI
   - 
   - 
-  - Render to Texture (Main)
-  - Render to Texture (UI)
+  - 
+  - 
   - 
   - 
   - 

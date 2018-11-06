@@ -36,6 +36,9 @@ public class SaveGamePanel : Panel
 	// the resume button
 	public Button m_resumeButton;
 
+	// the quit button
+	public Button m_quit;
+
 	// the switch cancel button
 	public Button m_switchCancelButton;
 
@@ -167,6 +170,16 @@ public class SaveGamePanel : Panel
 	{
 		// close this panel
 		PanelController.m_instance.Close();
+	}
+
+	// called when the player clicks on quit
+	public void QuitClicked()
+	{
+		// save the game
+		DataController.m_instance.SaveActiveGame();
+
+		// quit the game
+		Application.Quit();
 	}
 
 	// called when player switches save game slots

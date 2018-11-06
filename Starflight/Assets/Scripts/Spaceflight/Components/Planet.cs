@@ -3,9 +3,6 @@ using UnityEngine;
 
 public class Planet : MonoBehaviour
 {
-	// various constants that control the planet generator
-	const int c_numPolePaddingRows = 3;
-
 	// the current planet this controller is controlling
 	public GD_Planet m_planet;
 
@@ -66,13 +63,6 @@ public class Planet : MonoBehaviour
 			{
 				m_starportModel.transform.localRotation = Quaternion.Euler( -90.0f, 0.0f, rotationAngle * 360.0f * 20.0f );
 			}
-
-			// set the position of the sun based on location
-			Vector4 sunPosition = new Vector4( 0.0f, 2048.0f, 0.0f, 0.0f );
-
-			m_material.SetVector( "_SunPosition", sunPosition );
-
-			m_planetClouds.material.SetVector( "_SunPosition", sunPosition );
 		}
 	}
 
@@ -185,10 +175,10 @@ public class Planet : MonoBehaviour
 		{
 			m_mapsGenerated = true;
 
-			m_material.SetTexture( "AlbedoMap", m_planetGenerator.m_albedoTexture );
-			m_material.SetTexture( "SpecularMap", m_planetGenerator.m_specularTexture );
-			m_material.SetTexture( "NormalMap", m_planetGenerator.m_normalTexture );
-			m_material.SetTexture( "WaterMaskMap", m_planetGenerator.m_waterMaskTexture );
+			m_material.SetTexture( "SF_AlbedoMap", m_planetGenerator.m_albedoTexture );
+			m_material.SetTexture( "SF_SpecularMap", m_planetGenerator.m_specularTexture );
+			m_material.SetTexture( "SF_NormalMap", m_planetGenerator.m_normalTexture );
+			m_material.SetTexture( "SF_WaterMaskMap", m_planetGenerator.m_waterMaskTexture );
 
 			m_meshRenderer.material = m_material;
 
@@ -211,7 +201,7 @@ public class Planet : MonoBehaviour
 			var atmosphereDensity = m_planet.GetAtmosphereDensity();
 
 			// set the density of the clouds
-			planetClouds.material.SetFloat( "_Density", 1.5f - atmosphereDensity );
+			planetClouds.material.SetFloat( "SF_Density", 2.0f - atmosphereDensity );
 
 			// pick the color for the clouds
 			Color color;
@@ -222,14 +212,11 @@ public class Planet : MonoBehaviour
 			}
 			else
 			{
-				color = new Color( 0.75f, 0.75f, 0.75f );
+				color = new Color( 0.95f, 0.95f, 0.95f );
 			}
 
-			// set the opactiy
-			color.a = atmosphereDensity * 0.5f + 0.5f;
-
 			// apply the color to the clouds
-			planetClouds.material.SetColor( "_Color", color );
+			planetClouds.material.SetColor( "SF_AlbedoColor", color );
 		}
 		else
 		{
