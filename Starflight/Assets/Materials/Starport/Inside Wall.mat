@@ -149,7 +149,8 @@ Material:
     - SF_OcclusionPower: 1
     - SF_OrthonormalizeOn: 0
     - SF_RenderQueueOffset: 0
-    - SF_Smoothness: 0.25
+    - SF_Smoothness: 0.35
+    - SF_ZWriteOn: 1
     - ShadowCasterOn: 1
     - Smoothness: 0.25
     - UIToggle: 0
