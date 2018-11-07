@@ -26,6 +26,10 @@ public class SpaceflightController : MonoBehaviour
 	public Countdown m_countdown;
 	public Radar m_radar;
 
+	// some settings
+	public float alienHyperspaceRadarDistance;
+	public float alienStarSystemRadarDistance;
+
 	// save game timer
 	float m_timer;
 
@@ -236,5 +240,58 @@ public class SpaceflightController : MonoBehaviour
 	{
 		// save the player data in case something has been updated
 		DataController.m_instance.SaveActiveGame();
+	}
+
+	// updates the encounters (call only from hyperspace or starsystem locations)
+	public void UpdateEncounters()
+	{
+		var playerData = DataController.m_instance.m_playerData;
+
+		var location = playerData.m_general.m_location;
+
+		var starId = playerData.m_general.m_currentStarId;
+
+		var coordinates = ( location == PD_General.Location.Hyperspace ) ? playerData.m_general.m_hyperspaceCoordinates : playerData.m_general.m_starSystemCoordinates;
+
+		var radarDistance = ( location == PD_General.Location.Hyperspace ) ? alienHyperspaceRadarDistance : alienStarSystemRadarDistance;
+
+		// go through each potential encounter
+		foreach ( var encounter in playerData.m_encounterList )
+		{
+			encounter.SetDistance( float.MaxValue );
+
+			var encounterLocation = encounter.GetLocation();
+
+			if ( encounterLocation == PD_General.Location.InOrbit )
+			{
+				continue;
+			}
+
+			if ( location == PD_General.Location.StarSystem )
+			{
+				if ( ( encounterLocation != PD_General.Location.StarSystem ) || (  starId != encounter.GetStarId() ) )
+				{
+					continue;
+				}
+			}
+			else
+			{
+				if ( encounterLocation != PD_General.Location.Hyperspace )
+				{
+					continue;
+				}
+			}
+
+			var distance = encounter.CalculateDistance( coordinates );
+
+			if ( distance < radarDistance )
+			{
+				encounter.MoveTowards( coordinates );
+			}
+			else
+			{
+				encounter.GoHome();
+			}
+		}
 	}
 }

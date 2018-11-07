@@ -7,9 +7,14 @@ using System;
 
 public class PD_Encounter : IComparable
 {
+	const float c_alienHyperspaceMoveSpeed = 32.0f;
+	const float c_alienStarSystemMoveSpeed = 128.0f;
+
 	public int m_encounterId;
 
-	public Vector3 m_coordinates;
+	public Vector3 m_homeCoordinates;
+
+	public Vector3 m_currentCoordinates;
 
 	GD_Encounter m_encounter;
 
@@ -53,21 +58,24 @@ public class PD_Encounter : IComparable
 			}
 		}
 
-		// reset the position
+		// set the home position
 		if ( m_location == PD_General.Location.Hyperspace )
 		{
-			m_coordinates = Tools.GameToWorldCoordinates( new Vector3( m_encounter.m_xCoordinate, 0.0f, m_encounter.m_yCoordinate ) );
+			m_homeCoordinates = Tools.GameToWorldCoordinates( new Vector3( m_encounter.m_xCoordinate, 0.0f, m_encounter.m_yCoordinate ) );
 		}
 		else if ( m_location == PD_General.Location.StarSystem )
 		{
 			var randomPosition = UnityEngine.Random.insideUnitCircle * ( 8192.0f - 512.0f );
 
-			m_coordinates = new Vector3( randomPosition.x, 0.0f, randomPosition.y );
+			m_homeCoordinates = new Vector3( randomPosition.x, 0.0f, randomPosition.y );
 		}
 		else
 		{
-			m_coordinates = Vector3.zero;
+			m_homeCoordinates = Vector3.zero;
 		}
+
+		// set the current coordinates to be at home
+		m_currentCoordinates = m_homeCoordinates;
 	}
 
 	public PD_General.Location GetLocation()
@@ -99,21 +107,34 @@ public class PD_Encounter : IComparable
 		throw new ArgumentException( "Object is not a PD_Encounter" );
 	}
 
-	public void Update( PD_General.Location location, int starId, Vector3 coordinates )
+	public float CalculateDistance( Vector3 coordinates )
 	{
-		// update distance from the player to the encounter
-		if ( ( location != m_location ) || ( m_location == PD_General.Location.InOrbit ) || ( ( m_location == PD_General.Location.StarSystem ) && ( starId != m_starId ) ) )
-		{
-			m_currentDistance = float.MaxValue;
-		}
-		else
-		{
-			m_currentDistance = Vector3.Distance( coordinates, m_coordinates );
-		}
+		m_currentDistance = Vector3.Distance( coordinates, m_currentCoordinates );
+
+		return m_currentDistance;
+	}
+
+	public void SetDistance( float distance )
+	{
+		m_currentDistance = distance;
 	}
 
 	public float GetDistance()
 	{
 		return m_currentDistance;
+	}
+
+	public void MoveTowards( Vector3 coordinates )
+	{
+		// get the move speed
+		var moveSpeed = ( m_location == PD_General.Location.Hyperspace ) ? c_alienHyperspaceMoveSpeed : c_alienStarSystemMoveSpeed;
+
+		// go torwards given coordinates
+		m_currentCoordinates += Vector3.Normalize( coordinates - m_currentCoordinates ) * Time.deltaTime * moveSpeed;
+	}
+
+	public void GoHome()
+	{
+		MoveTowards( m_homeCoordinates );
 	}
 }

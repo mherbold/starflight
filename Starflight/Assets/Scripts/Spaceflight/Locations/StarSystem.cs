@@ -87,43 +87,47 @@ public class StarSystem : MonoBehaviour
 
 			// switch modes now
 			m_spaceflightController.SwitchLocation( PD_General.Location.Hyperspace );
+
+			// don't do anything more here now
+			return;
 		}
-		else
+
+		// get the nearest planet controller to the player
+		var orbitPlanetController = GetNearestPlanetController();
+
+		// did we get a planet controller?
+		if ( orbitPlanetController != null )
 		{
-			// get the nearest planet controller to the player
-			var orbitPlanetController = GetNearestPlanetController();
+			// yes - get the distance of the player is to the planet
+			var distanceToPlanet = orbitPlanetController.GetDistanceToPlayer();
 
-			// did we get a planet controller?
-			if ( orbitPlanetController != null )
+			// are we close enough to orbit the planet?
+			if ( distanceToPlanet <= orbitPlanetController.m_planetModel.transform.localScale.y )
 			{
-				// yes - get the distance of the player is to the planet
-				var distanceToPlanet = orbitPlanetController.GetDistanceToPlayer();
-
-				// are we close enough to orbit the planet?
-				if ( distanceToPlanet <= orbitPlanetController.m_planetModel.transform.localScale.y )
+				// is this a different planet?
+				if ( m_planetToOrbitId != orbitPlanetController.m_planet.m_id )
 				{
-					// is this a different planet?
-					if ( m_planetToOrbitId != orbitPlanetController.m_planet.m_id )
-					{
-						// yes - remember this planet
-						m_planetToOrbitId = orbitPlanetController.m_planet.m_id;
+					// yes - remember this planet
+					m_planetToOrbitId = orbitPlanetController.m_planet.m_id;
 
-						// let the player know
-						m_spaceflightController.m_messages.ChangeText( "<color=white>Ship is within orbital range.</color>" );
-					}
-				}
-				else
-				{
-					// no - forget this planet
-					m_planetToOrbitId = -1;
-
-					var spectralClass = m_currentStar.GetSpectralClass();
-
-					// display the spectral class and ecosphere
-					m_spaceflightController.m_messages.ChangeText( "<color=white>Stellar Parameters</color>\nSpectral Class: <color=white>" + m_currentStar.m_class + "</color>\nEcosphere: <color=white>" + spectralClass.m_ecosphereMin + " - " + spectralClass.m_ecosphereMax + "</color>" );
+					// let the player know
+					m_spaceflightController.m_messages.ChangeText( "<color=white>Ship is within orbital range.</color>" );
 				}
 			}
+			else
+			{
+				// no - forget this planet
+				m_planetToOrbitId = -1;
+
+				var spectralClass = m_currentStar.GetSpectralClass();
+
+				// display the spectral class and ecosphere
+				m_spaceflightController.m_messages.ChangeText( "<color=white>Stellar Parameters</color>\nSpectral Class: <color=white>" + m_currentStar.m_class + "</color>\nEcosphere: <color=white>" + spectralClass.m_ecosphereMin + " - " + spectralClass.m_ecosphereMax + "</color>" );
+			}
 		}
+
+		// update encounters
+		m_spaceflightController.UpdateEncounters();
 	}
 
 	// call this to initialize the star system before you show it

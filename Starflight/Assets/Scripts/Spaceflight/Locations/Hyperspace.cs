@@ -186,6 +186,9 @@ public class Hyperspace : MonoBehaviour
 					SoundController.m_instance.PlaySound( SoundController.Sound.EnterWarp );
 				}
 			}
+
+			// update encounters
+			m_spaceflightController.UpdateEncounters();
 		}
 	}
 

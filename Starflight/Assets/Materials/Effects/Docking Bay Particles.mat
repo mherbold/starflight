@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Additive Particles
+  m_Name: Docking Bay Particles
   m_Shader: {fileID: 4800000, guid: 0cfd5caef9a7f0a4b9cbc1d319476789, type: 3}
   m_ShaderKeywords: SF_ALBEDOMAP_ON SF_ALPHA_ON
   m_LightmapFlags: 4
