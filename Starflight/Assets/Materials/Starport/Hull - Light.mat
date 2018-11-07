@@ -9,7 +9,7 @@ Material:
   m_Name: Hull - Light
   m_Shader: {fileID: 4800000, guid: f67073489be24934c9032d00068b6661, type: 3}
   m_ShaderKeywords: CASTSHADOWS_ON FORWARDSHADOWS_ON SF_FORWARDSHADOWSON_ON SF_FORWARDSHADOWS_ON
-    TEXTURESPACE_ON
+    SF_SPECULAR_ON TEXTURESPACE_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -148,7 +148,8 @@ Material:
     - SF_OcclusionPower: 1
     - SF_OrthonormalizeOn: 0
     - SF_RenderQueueOffset: 0
-    - SF_Smoothness: 0
+    - SF_Smoothness: 0.5
+    - SF_ZWriteOn: 1
     - ShadowCasterOn: 1
     - Smoothness: 0
     - UIToggle: 0
@@ -181,7 +182,7 @@ Material:
     - SF_AlbedoColor: {r: 0.6666667, g: 0.6666667, b: 0.6666667, a: 1}
     - SF_EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
     - SF_NormalMapScaleOffset: {r: 1, g: 1, b: 0, a: 0}
-    - SF_SpecularColor: {r: 0, g: 0, b: 0, a: 1}
+    - SF_SpecularColor: {r: 0.75, g: 0.75, b: 0.75, a: 1}
     - SpecularColor: {r: 0, g: 0, b: 0, a: 1}
     - UILightColor: {r: 1, g: 1, b: 1, a: 1}
     - UILightDirection: {r: 0, g: 0, b: 1, a: 0}
