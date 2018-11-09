@@ -113,6 +113,9 @@ public class Map : MonoBehaviour
 		{
 			// yes - make it so
 			m_material.SetColor( "SF_AlbedoColor", new Color( targetFadeAmount, targetFadeAmount, targetFadeAmount ) );
+
+			// if we were previously fading - stop it
+			m_isFading = false;
 		}
 		else
 		{
@@ -145,7 +148,7 @@ public class Map : MonoBehaviour
 	{
 		var playerData = DataController.m_instance.m_playerData;
 
-		var gameCoordinates = Tools.WorldToGameCoordinates( playerData.m_general.m_hyperspaceCoordinates );
+		var gameCoordinates = Tools.WorldToGameCoordinates( playerData.m_general.m_coordinates );
 
 		var x = Mathf.RoundToInt( gameCoordinates.x );
 		var y = Mathf.RoundToInt( gameCoordinates.z );

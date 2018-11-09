@@ -23,7 +23,7 @@ public class DisembarkButton : ShipButton
 				SoundController.m_instance.PlaySound( SoundController.Sound.Update );
 
 				// make sure we are standing in the middle of the transporter pad
-				playerData.m_general.m_starportCoordinates = new Vector3( 0.0f, 0.5f, 0.0f );
+				playerData.m_general.m_lastStarportCoordinates = new Vector3( 0.0f, 0.5f, 0.0f );
 
 				// switch to the starport location
 				m_spaceflightController.SwitchLocation( PD_General.Location.Starport );
@@ -34,6 +34,7 @@ public class DisembarkButton : ShipButton
 			case PD_General.Location.InOrbit:
 			case PD_General.Location.StarSystem:
 			case PD_General.Location.Hyperspace:
+			case PD_General.Location.Encounter:
 
 				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 

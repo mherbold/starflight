@@ -284,7 +284,7 @@ public class SaveGamePanel : Panel
 	// call this to update the active slot indicators
 	void UpdateActive()
 	{
-		for ( int i = 0; i < DataController.c_numSaveGameSlots; i++ )
+		for ( var i = 0; i < DataController.c_numSaveGameSlots; i++ )
 		{
 			m_slotActiveText[ i ].SetActive( i == DataController.m_instance.m_activeSaveGameSlotNumber );
 		}
@@ -294,19 +294,18 @@ public class SaveGamePanel : Panel
 	void UpdateDescriptions()
 	{
 		// go through each save game slot
-		for ( int i = 0; i < DataController.c_numSaveGameSlots; i++ )
+		for ( var i = 0; i < DataController.c_numSaveGameSlots; i++ )
 		{
 			// get the player data for that save game slot
-			PlayerData playerData = DataController.m_instance.m_playerDataList[ i ];
+			var playerData = DataController.m_instance.m_playerDataList[ i ];
 
 			// the date and time
-			string description = "Date: <color=\"blue\">" + playerData.m_general.m_currentStardateYMD + "</color>   Time: <color=\"blue\">" + playerData.m_general.m_hour.ToString( "D2" ) + ":" + playerData.m_general.m_minute.ToString( "D2" ) + "</color>\n";
-
-			// calculate game hyperspace coordinates
-			Vector3 hyperspaceCoordinates = Tools.WorldToGameCoordinates( playerData.m_general.m_hyperspaceCoordinates );
+			var description = "Date: <color=\"blue\">" + playerData.m_general.m_currentStardateYMD + "</color>   Time: <color=\"blue\">" + playerData.m_general.m_hour.ToString( "D2" ) + ":" + playerData.m_general.m_minute.ToString( "D2" ) + "</color>\n";
 
 			// the location
 			description += "Location: <color=\"blue\">";
+
+			Vector3 coordinates;
 
 			switch ( playerData.m_general.m_location )
 			{
@@ -320,10 +319,12 @@ public class SaveGamePanel : Panel
 					description += "Just Launched</color>\n";
 					break;
 				case PD_General.Location.StarSystem:
-					description += "Star System</color>   Coordinates: <color=\"blue\">" + Mathf.RoundToInt( hyperspaceCoordinates.x ) + ", " + Mathf.RoundToInt( hyperspaceCoordinates.z ) + "</color>\n";
+					coordinates = Tools.WorldToGameCoordinates( playerData.m_general.m_lastStarSystemCoordinates );
+					description += "Star System</color>   Coordinates: <color=\"blue\">" + Mathf.RoundToInt( coordinates.x ) + ", " + Mathf.RoundToInt( coordinates.z ) + "</color>\n";
 					break;
 				case PD_General.Location.Hyperspace:
-					description += "Hyperspace</color>   Coordinates: <color=\"blue\">" + Mathf.RoundToInt( hyperspaceCoordinates.x ) + ", " + Mathf.RoundToInt( hyperspaceCoordinates.z ) + "</color>\n";
+					coordinates = Tools.WorldToGameCoordinates( playerData.m_general.m_lastHyperspaceCoordinates );
+					description += "Hyperspace</color>   Coordinates: <color=\"blue\">" + Mathf.RoundToInt( coordinates.x ) + ", " + Mathf.RoundToInt( coordinates.z ) + "</color>\n";
 					break;
 				case PD_General.Location.InOrbit:
 					description += "In Orbit</color>\n";
@@ -331,12 +332,15 @@ public class SaveGamePanel : Panel
 				case PD_General.Location.OnPlanet:
 					description += "On Planet</color>\n";
 					break;
+				case PD_General.Location.Encounter:
+					description += "In Encounter</color>\n";
+					break;
 			}
 
 			// the ship name and cargo
-			string shipName = ( playerData.m_playerShip.m_name == "" ) ? "No Name" : playerData.m_playerShip.m_name;
-			string numCargoPods = ( playerData.m_playerShip.m_numCargoPods == 0 ) ? "None" : playerData.m_playerShip.m_numCargoPods.ToString();
-			float cargoUsage = (float) playerData.m_playerShip.m_volumeUsed / (float) playerData.m_playerShip.m_volume * 100.0f;
+			var shipName = ( playerData.m_playerShip.m_name == "" ) ? "No Name" : playerData.m_playerShip.m_name;
+			var numCargoPods = ( playerData.m_playerShip.m_numCargoPods == 0 ) ? "None" : playerData.m_playerShip.m_numCargoPods.ToString();
+			var cargoUsage = (float) playerData.m_playerShip.m_volumeUsed / (float) playerData.m_playerShip.m_volume * 100.0f;
 
 			description += "Ship: <color=\"blue\">" + shipName + "</color>";
 			description += "   Cargo Pods: <color=\"blue\">" + numCargoPods + "</color>";

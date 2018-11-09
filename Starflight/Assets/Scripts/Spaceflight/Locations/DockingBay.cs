@@ -59,18 +59,10 @@ public class DockingBay : MonoBehaviour
 		gameObject.SetActive( true );
 
 		// get to the player data
-		PlayerData playerData = DataController.m_instance.m_playerData;
-
-		// get to the game data
-		GameData gameData = DataController.m_instance.m_gameData;
-
-		// put us in the arth system (just in case)
-		playerData.m_general.m_currentStarId = gameData.m_misc.m_arthStarId;
-		playerData.m_general.m_hyperspaceCoordinates = Tools.GameToWorldCoordinates( new Vector3( 125.0f, 0.0f, 100.0f ) );
+		var playerData = DataController.m_instance.m_playerData;
 
 		// put us in the right spot for the docking bay launch sequence
-		playerData.m_general.m_starSystemCoordinates = new Vector3( 0.0f, 0.0f, 0.0f );
-		m_spaceflightController.m_player.transform.position = playerData.m_general.m_starSystemCoordinates;
+		m_spaceflightController.m_player.transform.position = playerData.m_general.m_coordinates = new Vector3( 0.0f, 0.0f, 0.0f );
 
 		// recalculate what the starting camera distance from the doors should be
 		var verticalFieldOfView = m_spaceflightController.m_map.m_playerCamera.fieldOfView;

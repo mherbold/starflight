@@ -86,17 +86,16 @@ public class InOrbit : MonoBehaviour
 		// get the planet controller
 		var planetController = m_spaceflightController.m_starSystem.GetPlanetController( playerData.m_general.m_currentPlanetId );
 
-		// set the scale of the planet model
-		m_planetModel.transform.localScale = planetController.m_planet.GetScale();
+		// set the scale of the planet model and clouds
+		var scale = planetController.m_planet.GetScale();
+		m_planetModel.transform.localScale = scale * 1.75f;
 		m_planetClouds.transform.localScale = m_planetModel.transform.localScale * 1.01f;
 
-		// make sure the camera is at the right height above the zero plane
-		var orbitHeight = Mathf.Lerp( 256.0f, 768.0f, m_planetModel.transform.localScale.z / 320.0f );
-
-		m_spaceflightController.m_player.DollyCamera( orbitHeight );
-
 		// move the player object
-		m_spaceflightController.m_player.transform.position = new Vector3( 0.0f, 0.0f, 0.0f );
+		m_spaceflightController.m_player.transform.position = playerData.m_general.m_coordinates = new Vector3( 0.0f, 0.0f, 0.0f );
+
+		// make sure the camera dolly is the right distance
+		m_spaceflightController.m_player.DollyCamera( 1024.0f );
 
 		// freeze the player
 		m_spaceflightController.m_player.Freeze();

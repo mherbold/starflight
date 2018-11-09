@@ -36,11 +36,7 @@ public class InfiniteStarfield : MonoBehaviour
 
 		float alpha = Mathf.Lerp( 0.0f, 1.0f, speed / playerData.m_general.m_currentMaximumSpeed );
 
-		var color = m_material.GetColor( "SF_AlbedoColor" );
-
-		color.a = alpha;
-
-		m_material.SetColor( "SF_AlbedoColor", color );
+		Tools.SetOpacity( m_material, alpha );
 
 		if ( speed != 0.0f )
 		{

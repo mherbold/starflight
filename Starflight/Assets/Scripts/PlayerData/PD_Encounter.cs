@@ -13,7 +13,6 @@ public class PD_Encounter : IComparable
 	public int m_encounterId;
 
 	public Vector3 m_homeCoordinates;
-
 	public Vector3 m_currentCoordinates;
 
 	GD_Encounter m_encounter;
@@ -23,6 +22,8 @@ public class PD_Encounter : IComparable
 	int m_starId;
 
 	float m_currentDistance;
+
+	PD_AlienShip[] m_alienShipList;
 
 	public void Reset( int encounterId )
 	{
@@ -76,6 +77,18 @@ public class PD_Encounter : IComparable
 
 		// set the current coordinates to be at home
 		m_currentCoordinates = m_homeCoordinates;
+
+		// allocate and initialize each of the alien ships in the encounter
+		m_alienShipList = new PD_AlienShip[ m_encounter.m_maxNumShips ];
+
+		for ( var i = 0; i < m_alienShipList.Length; i++ )
+		{
+			var alienShip = new PD_AlienShip();
+
+			alienShip.Initialize( m_encounter );
+
+			m_alienShipList[ i ] = alienShip;
+		}
 	}
 
 	public PD_General.Location GetLocation()
@@ -136,5 +149,10 @@ public class PD_Encounter : IComparable
 	public void GoHome()
 	{
 		MoveTowards( m_homeCoordinates );
+	}
+
+	public PD_AlienShip[] GetAlienShipList()
+	{
+		return m_alienShipList;
 	}
 }

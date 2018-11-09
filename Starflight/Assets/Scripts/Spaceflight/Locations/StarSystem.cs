@@ -63,12 +63,12 @@ public class StarSystem : MonoBehaviour
 		}
 
 		// yes - did we just leave it?
-		if ( Vector3.Magnitude( playerData.m_general.m_starSystemCoordinates ) >= 8192.0f )
+		if ( Vector3.Magnitude( playerData.m_general.m_coordinates ) >= 8192.0f )
 		{
 			Debug.Log( "Player leaving the star system - switching to the hyperspace location." );
 
 			// yes - calculate the position of the ship in hyperspace
-			var newPosition = playerData.m_general.m_starSystemCoordinates;
+			var newPosition = playerData.m_general.m_coordinates;
 
 			newPosition.Normalize();
 
@@ -83,7 +83,8 @@ public class StarSystem : MonoBehaviour
 			m_spaceflightController.m_player.transform.position = newPosition;
 
 			// save the player's position in the player data
-			playerData.m_general.m_hyperspaceCoordinates = newPosition;
+			playerData.m_general.m_coordinates = newPosition;
+			playerData.m_general.m_lastHyperspaceCoordinates = playerData.m_general.m_coordinates;
 
 			// switch modes now
 			m_spaceflightController.SwitchLocation( PD_General.Location.Hyperspace );
@@ -200,7 +201,7 @@ public class StarSystem : MonoBehaviour
 		m_spaceflightController.m_player.DollyCamera( 1024.0f );
 
 		// move the player object
-		m_spaceflightController.m_player.transform.position = playerData.m_general.m_starSystemCoordinates;
+		m_spaceflightController.m_player.transform.position = playerData.m_general.m_coordinates = playerData.m_general.m_lastStarSystemCoordinates;
 
 		// calculate the new rotation of the player
 		var newRotation = Quaternion.LookRotation( playerData.m_general.m_currentDirection, Vector3.up );

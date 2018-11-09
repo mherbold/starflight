@@ -15,6 +15,7 @@ public class SpaceflightController : MonoBehaviour
 	public StarSystem m_starSystem;
 	public InOrbit m_inOrbit;
 	public Hyperspace m_hyperspace;
+	public Encounter m_encounter;
 	public Messages m_messages;
 
 	// controllers
@@ -27,8 +28,9 @@ public class SpaceflightController : MonoBehaviour
 	public Radar m_radar;
 
 	// some settings
-	public float alienHyperspaceRadarDistance;
-	public float alienStarSystemRadarDistance;
+	public float m_alienHyperspaceRadarDistance;
+	public float m_alienStarSystemRadarDistance;
+	public float m_encounterRange;
 
 	// save game timer
 	float m_timer;
@@ -45,6 +47,7 @@ public class SpaceflightController : MonoBehaviour
 		m_starSystem.Hide();
 		m_inOrbit.Hide();
 		m_hyperspace.Hide();
+		m_encounter.Hide();
 		m_countdown.Hide();
 
 		// check if we loaded the persistent scene
@@ -190,6 +193,7 @@ public class SpaceflightController : MonoBehaviour
 					m_starSystem.Hide();
 					m_inOrbit.Hide();
 					m_hyperspace.Hide();
+					m_encounter.Hide();
 					m_dockingBay.Show();
 					break;
 
@@ -199,6 +203,7 @@ public class SpaceflightController : MonoBehaviour
 					m_starSystem.Hide();
 					m_inOrbit.Hide();
 					m_hyperspace.Hide();
+					m_encounter.Hide();
 					m_map.StartFade( 0.0f, 0.0f );
 					m_messages.ChangeText( "<color=white>Starport clear.\nStanding by to maneuver.</color>" );
 					break;
@@ -208,6 +213,7 @@ public class SpaceflightController : MonoBehaviour
 					m_dockingBay.Hide();
 					m_inOrbit.Hide();
 					m_hyperspace.Hide();
+					m_encounter.Hide();
 					m_player.Show();
 					m_starSystem.Show();
 					break;
@@ -218,6 +224,7 @@ public class SpaceflightController : MonoBehaviour
 					m_dockingBay.Hide();
 					m_starSystem.Hide();
 					m_hyperspace.Hide();
+					m_encounter.Hide();
 					m_inOrbit.Show();
 					break;
 
@@ -225,8 +232,18 @@ public class SpaceflightController : MonoBehaviour
 					m_dockingBay.Hide();
 					m_starSystem.Hide();
 					m_inOrbit.Hide();
+					m_encounter.Hide();
 					m_player.Show();
 					m_hyperspace.Show();
+					break;
+
+				case PD_General.Location.Encounter:
+					m_dockingBay.Hide();
+					m_starSystem.Hide();
+					m_inOrbit.Hide();
+					m_hyperspace.Hide();
+					m_player.Show();
+					m_encounter.Show();
 					break;
 			}
 		}
@@ -245,52 +262,79 @@ public class SpaceflightController : MonoBehaviour
 	// updates the encounters (call only from hyperspace or starsystem locations)
 	public void UpdateEncounters()
 	{
+		// get to the player data
 		var playerData = DataController.m_instance.m_playerData;
 
+		// get the current player location
 		var location = playerData.m_general.m_location;
 
+		// get the current star id
 		var starId = playerData.m_general.m_currentStarId;
 
-		var coordinates = ( location == PD_General.Location.Hyperspace ) ? playerData.m_general.m_hyperspaceCoordinates : playerData.m_general.m_starSystemCoordinates;
+		// get the coordinates
+		var coordinates = playerData.m_general.m_coordinates;
 
-		var radarDistance = ( location == PD_General.Location.Hyperspace ) ? alienHyperspaceRadarDistance : alienStarSystemRadarDistance;
+		// get the correct alien radar distance
+		var alienRadarDistance = ( location == PD_General.Location.Hyperspace ) ? m_alienHyperspaceRadarDistance : m_alienStarSystemRadarDistance;
 
 		// go through each potential encounter
 		foreach ( var encounter in playerData.m_encounterList )
 		{
+			// assume this encounter is in a different location
 			encounter.SetDistance( float.MaxValue );
 
+			// get the encounter location
 			var encounterLocation = encounter.GetLocation();
 
+			// orbit encounters are handled in maneuver
 			if ( encounterLocation == PD_General.Location.InOrbit )
 			{
 				continue;
 			}
 
+			// are we in the star system location?
 			if ( location == PD_General.Location.StarSystem )
 			{
+				// yes - is this encounter a star system encounter and in the same star system?
 				if ( ( encounterLocation != PD_General.Location.StarSystem ) || (  starId != encounter.GetStarId() ) )
 				{
+					// no - skip it
 					continue;
 				}
 			}
 			else
 			{
+				// no - is this encounter a hyperspace encounter?
 				if ( encounterLocation != PD_General.Location.Hyperspace )
 				{
+					// no - skip it
 					continue;
 				}
 			}
 
+			// calculate the distance from the player to the encounter
 			var distance = encounter.CalculateDistance( coordinates );
 
-			if ( distance < radarDistance )
+			// can the aliens detect the player?
+			if ( distance < alienRadarDistance )
 			{
+				// yes - move the aliens towards the player (at a fixed speed)
 				encounter.MoveTowards( coordinates );
 			}
 			else
 			{
+				// no - move the aliens towards their home coordinates (at a fixed speed)
 				encounter.GoHome();
+			}
+
+			// are the aliens and the player within encounter range?
+			if ( distance < m_encounterRange )
+			{
+				// yes - save encounter information in the player data
+				playerData.m_general.m_currentEncounterId = encounter.m_encounterId;
+
+				// switch to the encounter location
+				SwitchLocation( PD_General.Location.Encounter );
 			}
 		}
 	}

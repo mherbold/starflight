@@ -14,16 +14,21 @@ public class PD_General
 		StarSystem,
 		Hyperspace,
 		InOrbit,
-		OnPlanet
+		OnPlanet,
+		Encounter,
 	}
 
 	// the player location
 	public Location m_location;
 
 	// the player coordinates
-	public Vector3 m_starportCoordinates;
-	public Vector3 m_starSystemCoordinates;
-	public Vector3 m_hyperspaceCoordinates;
+	public Vector3 m_coordinates;
+
+	// the last known coordinates for various locations
+	public Vector3 m_lastStarportCoordinates;
+	public Vector3 m_lastHyperspaceCoordinates;
+	public Vector3 m_lastStarSystemCoordinates;
+	public Vector3 m_lastEncounterCoordinates;
 
 	// game time stuff
 	public string m_currentStardateYMD;
@@ -43,6 +48,9 @@ public class PD_General
 	// the current planet we are visiting (or the last planet we visited)
 	public int m_currentPlanetId;
 
+	// the current encounter we are in (or the last encounter we were in)
+	public int m_currentEncounterId;
+
 	// keep track of the player's current speed and maximum speed
 	public float m_currentSpeed;
 	public float m_currentMaximumSpeed;
@@ -53,16 +61,24 @@ public class PD_General
 	// this resets everything to initial game state
 	public void Reset()
 	{
+		// get to the game data
+		var gameData = DataController.m_instance.m_gameData;
+
 		// reset location
 		m_location = Location.Starport;
 
-		// reset coordinates
-		m_starportCoordinates = new Vector3( -35.18f, 0.0f, 20.86f );
-		m_starSystemCoordinates = new Vector3( 0.0f, 0.0f, 0.0f );
-		m_hyperspaceCoordinates = new Vector3( 0.0f, 0.0f, 0.0f );
+		// reset coordinates (standing in front of the operations door)
+		m_coordinates = new Vector3( -35.18f, 0.0f, 20.86f );
+
+		// reset last coordinates
+		m_lastStarportCoordinates = m_coordinates;
+		m_lastHyperspaceCoordinates = Tools.GameToWorldCoordinates( new Vector3( 125.0f, 0.0f, 100.0f ) );
+		m_lastStarSystemCoordinates = Vector3.zero;
+		m_lastEncounterCoordinates = Vector3.zero;
 
 		// reset the current stardate
 		m_currentStardateYMD = "4620-01-01";
+		m_currentStardateDHMY = "01.00-01-4620";
 
 		// reset the current game time
 		m_day = 0;
@@ -71,9 +87,10 @@ public class PD_General
 		m_second = 0;
 		m_millisecond = 0;
 
-		// reset star id
-		var gameData = DataController.m_instance.m_gameData;
+		// reset current ids
 		m_currentStarId = gameData.m_misc.m_arthStarId;
+		m_currentPlanetId = 0;
+		m_currentEncounterId = 0;
 
 		// facing north
 		m_currentDirection = Vector3.forward;

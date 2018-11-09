@@ -103,11 +103,8 @@ public class Radar : MonoBehaviour
 				break;
 			}
 
-			// get either the hyperpace or the star system coordinates
-			var coordinates = ( playerData.m_general.m_location == PD_General.Location.Hyperspace ) ? playerData.m_general.m_hyperspaceCoordinates : playerData.m_general.m_starSystemCoordinates;
-
 			// calculate the direction of the encounter relative to the player
-			var encounterDirection = encounter.m_currentCoordinates - coordinates;
+			var encounterDirection = encounter.m_currentCoordinates - playerData.m_general.m_coordinates;
 
 			// calculate the angle of the encounter
 			var angle = Vector3.SignedAngle( Vector3.forward, encounterDirection, Vector3.up );

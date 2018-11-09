@@ -99,7 +99,7 @@ public class Hyperspace : MonoBehaviour
 			var newPosition = Vector3.Lerp( m_fluxTravelStartPosition, m_fluxTravelEndPosition, t );
 
 			// update the ship position
-			playerData.m_general.m_hyperspaceCoordinates = m_spaceflightController.m_player.transform.position = newPosition;
+			playerData.m_general.m_coordinates = m_spaceflightController.m_player.transform.position = newPosition;
 
 			// rotate the skybox in the direction of the flux travel
 			var direction = Vector3.Normalize( m_fluxTravelStartPosition - m_fluxTravelEndPosition );
@@ -117,6 +117,9 @@ public class Hyperspace : MonoBehaviour
 				// update the map coordinates
 				m_spaceflightController.m_map.UpdateCoordinates();
 
+				// update the last hyperspace location
+				playerData.m_general.m_lastHyperspaceCoordinates = newPosition;
+
 				// play the exit warp sound
 				SoundController.m_instance.PlaySound( SoundController.Sound.ExitWarp );
 
@@ -130,7 +133,7 @@ public class Hyperspace : MonoBehaviour
 			foreach ( GD_Star star in gameData.m_starList )
 			{
 				// did we breach it?
-				float distance = Vector3.Distance( playerData.m_general.m_hyperspaceCoordinates, star.GetWorldCoordinates() );
+				float distance = Vector3.Distance( playerData.m_general.m_coordinates, star.GetWorldCoordinates() );
 
 				if ( distance < star.GetBreachDistance() )
 				{
@@ -140,9 +143,10 @@ public class Hyperspace : MonoBehaviour
 					playerData.m_general.m_currentStarId = star.m_id;
 
 					// set the position of the player inside this system
-					var starToShip = playerData.m_general.m_hyperspaceCoordinates - star.GetWorldCoordinates();
+					var starToShip = playerData.m_general.m_coordinates - star.GetWorldCoordinates();
 					starToShip.Normalize();
-					playerData.m_general.m_starSystemCoordinates = starToShip * ( 8192.0f - 16.0f );
+					playerData.m_general.m_coordinates = starToShip * ( 8192.0f - 16.0f );
+					playerData.m_general.m_lastStarSystemCoordinates = playerData.m_general.m_coordinates;
 
 					// scale the speed of the player
 					playerData.m_general.m_currentSpeed *= 4.0f;
@@ -157,7 +161,7 @@ public class Hyperspace : MonoBehaviour
 			foreach ( GD_Flux flux in gameData.m_fluxList )
 			{
 				// did we breach it?
-				var distance = Vector3.Distance( playerData.m_general.m_hyperspaceCoordinates, flux.GetFrom() );
+				var distance = Vector3.Distance( playerData.m_general.m_coordinates, flux.GetFrom() );
 
 				if ( distance < flux.GetBreachDistance() )
 				{
@@ -173,7 +177,7 @@ public class Hyperspace : MonoBehaviour
 					m_fluxTravelDuration = Mathf.Max( 2.0f, Vector3.Distance( flux.GetFrom(), flux.GetTo() ) / 2048.0f );
 
 					// compute the starting and ending point of the flux travel
-					m_fluxTravelStartPosition = playerData.m_general.m_hyperspaceCoordinates;
+					m_fluxTravelStartPosition = playerData.m_general.m_coordinates;
 					m_fluxTravelEndPosition = flux.GetTo() + (Vector3) playerData.m_general.m_currentDirection * ( flux.GetBreachDistance() + 16.0f );
 
 					// start the warp cinematics
@@ -232,7 +236,7 @@ public class Hyperspace : MonoBehaviour
 		var playerData = DataController.m_instance.m_playerData;
 
 		// move the ship to where we are in hyperspace
-		m_spaceflightController.m_player.transform.position = playerData.m_general.m_hyperspaceCoordinates;
+		m_spaceflightController.m_player.transform.position = playerData.m_general.m_coordinates = playerData.m_general.m_lastHyperspaceCoordinates;
 
 		// calculate the new rotation of the player
 		var newRotation = Quaternion.LookRotation( playerData.m_general.m_currentDirection, Vector3.up );

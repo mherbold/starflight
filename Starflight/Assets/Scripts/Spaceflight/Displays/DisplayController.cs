@@ -45,8 +45,5 @@ public class DisplayController : MonoBehaviour
 
 		// update the display label
 		m_displayLabel.text = m_currentDisplay.GetLabel();
-
-		// run the update
-		m_currentDisplay.Update();
 	}
 }

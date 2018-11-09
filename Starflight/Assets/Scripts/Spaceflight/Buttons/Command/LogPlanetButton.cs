@@ -26,6 +26,7 @@ public class LogPlanetButton : ShipButton
 			case PD_General.Location.Hyperspace:
 			case PD_General.Location.StarSystem:
 			case PD_General.Location.DockingBay:
+			case PD_General.Location.Encounter:
 
 				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 

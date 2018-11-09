@@ -71,10 +71,10 @@ public class AstronautController : MonoBehaviour
 		m_danceWaitTimer = 0.0f;
 
 		// get to the player data
-		PlayerData playerData = DataController.m_instance.m_playerData;
+		var playerData = DataController.m_instance.m_playerData;
 
 		// put the astronaut where he should be
-		m_navMeshAgent.Warp( playerData.m_general.m_starportCoordinates );
+		m_navMeshAgent.Warp( playerData.m_general.m_lastStarportCoordinates );
 
 		// make sure he is facing south
 		transform.rotation = Quaternion.Euler( 0.0f, 180.0f, 0.0f );
@@ -99,11 +99,11 @@ public class AstronautController : MonoBehaviour
 		if ( !PanelController.m_instance.HasActivePanel() && !m_dockingBayPanel.IsTransporting() )
 		{
 			// get the controller stick position
-			float x = InputController.m_instance.m_x;
-			float z = InputController.m_instance.m_y;
+			var x = InputController.m_instance.m_x;
+			var z = InputController.m_instance.m_y;
 
 			// create our 3d move vector from the controller position
-			Vector3 moveVector = new Vector3( x, 0.0f, z );
+			var moveVector = new Vector3( x, 0.0f, z );
 
 			// check if the move vector will actually move the astronaut (controller is not centered)
 			if ( moveVector.magnitude > 0.5f )
@@ -268,7 +268,7 @@ public class AstronautController : MonoBehaviour
 			}
 
 			// smooth out the astronaut's height above the floor changes (remove popping)
-			float heightAboveFloor = Mathf.SmoothStep( m_currentHeightAboveFloor, m_targetHeightAboveFloor, m_transitionTimer / m_heightTransitionTime );
+			var heightAboveFloor = Mathf.SmoothStep( m_currentHeightAboveFloor, m_targetHeightAboveFloor, m_transitionTimer / m_heightTransitionTime );
 
 			// move the astronaut to where the NavMeshAgent component is telling us to move him to (except we are smoothing out the height changes)
 			transform.position = new Vector3( m_navMeshAgent.nextPosition.x, heightAboveFloor, m_navMeshAgent.nextPosition.z );
@@ -280,10 +280,11 @@ public class AstronautController : MonoBehaviour
 		}
 
 		// get to the player data
-		PlayerData playerData = DataController.m_instance.m_playerData;
+		var playerData = DataController.m_instance.m_playerData;
 
 		// save the player position
-		playerData.m_general.m_starportCoordinates = m_navMeshAgent.nextPosition;
+		playerData.m_general.m_coordinates = m_navMeshAgent.nextPosition;
+		playerData.m_general.m_lastStarportCoordinates = playerData.m_general.m_coordinates;
 	}
 
 	// unity on trigger enter

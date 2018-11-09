@@ -70,6 +70,7 @@ Material:
     - SF_BlendDst: 0
     - SF_BlendSrc: 1
     - SF_RenderQueueOffset: 0
+    - SF_ZWriteOn: 1
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1

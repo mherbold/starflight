@@ -106,28 +106,26 @@ public class LaunchYesButton : ShipButton
 					// are we in the docking bay?
 					if ( playerData.m_general.m_location == PD_General.Location.DockingBay )
 					{
+						// yes - fade the map out
+						m_spaceflightController.m_map.StartFade( 0.0f, 7.0f );
+
 						// yes - update the messages text
 						m_spaceflightController.m_messages.ChangeText( "<color=white>Leaving starport...</color>" );
 
 						// figure out how much to move the ship forward by (with an exponential acceleration curve)
-						float y = ( m_timer - 20.5f ) * 5.0f;
-
-						y *= y;
+						float y = Mathf.Pow( ( m_timer - 20.5f ) * 5.0f, 2.0f );
 
 						// fudge the speed of the ship (to make infinite starfield appear)
 						playerData.m_general.m_currentMaximumSpeed = 128.0f;
-						playerData.m_general.m_currentSpeed = ( m_timer - 20.5f ) / 6.0f * playerData.m_general.m_currentMaximumSpeed;
+						playerData.m_general.m_currentSpeed = Mathf.Lerp( 0.0f, playerData.m_general.m_currentMaximumSpeed, ( m_timer - 20.5f ) / 2.0f );
+
+						// update the position of the camera
+						m_spaceflightController.m_player.DollyCamera( m_spaceflightController.m_dockingBay.GetParkedPosition() - y );
 
 						// have we reached the end of the launch trip?
 						if ( y >= 1024.0f )
 						{
 							Debug.Log( "At end of launch cinematics - switching to the just launched location." );
-
-							// update the player location
-							m_spaceflightController.SwitchLocation( PD_General.Location.JustLaunched );
-
-							// yep - fix us at exactly 1024 units above the zero plane
-							y = 1024.0f;
 
 							// calculate the new position of the player (just north of the arth spaceport)
 							Vector3 playerPosition = gameData.m_planetList[ gameData.m_misc.m_arthPlanetId ].GetPosition();
@@ -135,17 +133,14 @@ public class LaunchYesButton : ShipButton
 							playerPosition.z += 128.0f;
 
 							// update the player's system coordinates to the new position
-							playerData.m_general.m_starSystemCoordinates = playerPosition;
+							playerData.m_general.m_lastStarSystemCoordinates = playerPosition;
+
+							// update the player location
+							m_spaceflightController.SwitchLocation( PD_General.Location.JustLaunched );
 
 							// restore the bridge buttons (this also ends the launch function)
 							m_spaceflightController.m_buttonController.RestoreBridgeButtons();
 						}
-
-						// update the position of the camera
-						m_spaceflightController.m_player.DollyCamera( m_spaceflightController.m_dockingBay.GetParkedPosition() - y );
-
-						// fade the map out
-						m_spaceflightController.m_map.StartFade( 0.0f, 7.0f );
 					}
 					else
 					{

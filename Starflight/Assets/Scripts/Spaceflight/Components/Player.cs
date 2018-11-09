@@ -191,13 +191,22 @@ public class Player : MonoBehaviour
 				transform.position = newPosition;
 
 				// update the player data (it will save out to disk eventually)
-				if ( playerData.m_general.m_location != PD_General.Location.Hyperspace )
+				playerData.m_general.m_coordinates = newPosition;
+
+				// update the last coordinate based on the location
+				switch ( playerData.m_general.m_location )
 				{
-					playerData.m_general.m_starSystemCoordinates = newPosition;
-				}
-				else
-				{
-					playerData.m_general.m_hyperspaceCoordinates = newPosition;
+					case PD_General.Location.Hyperspace:
+						playerData.m_general.m_lastHyperspaceCoordinates = playerData.m_general.m_coordinates;
+						break;
+
+					case PD_General.Location.StarSystem:
+						playerData.m_general.m_lastStarSystemCoordinates = playerData.m_general.m_coordinates;
+						break;
+
+					case PD_General.Location.Encounter:
+						playerData.m_general.m_lastEncounterCoordinates = playerData.m_general.m_coordinates;
+						break;
 				}
 
 				// figure out how fast to rotate the skybox
@@ -235,8 +244,8 @@ public class Player : MonoBehaviour
 		// update the skybox rotation on the material
 		skyboxMaterial.SetMatrix( "_ModelMatrix", m_skyboxRotation );
 
-		// get the current hyperspace coordinates (if in hyperspace get it from the player position due to flux travel not updating m_hyperspaceCoordinats)
-		var hyperspaceCoordinates = ( playerData.m_general.m_location == PD_General.Location.Hyperspace ) ? transform.position : playerData.m_general.m_hyperspaceCoordinates;
+		// get the current hyperspace coordinates (if in hyperspace get it from the player transform due to flux travel not updating m_hyperspaceCoordinates)
+		var hyperspaceCoordinates = ( playerData.m_general.m_location == PD_General.Location.Hyperspace ) ? transform.position : playerData.m_general.m_lastHyperspaceCoordinates;
 
 		// figure out how far we are from each territory
 		foreach ( var territory in gameData.m_territoryList )
