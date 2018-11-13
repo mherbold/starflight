@@ -7,10 +7,20 @@ public class Encounter : MonoBehaviour
 	public SpaceflightController m_spaceflightController;
 
 	// alien ship models (need 8)
-	public GameObject[] m_alienShipList;
+	public GameObject[] m_alienShipModelList;
 
 	// template models that we will clone as needed (need 23)
-	public GameObject[] m_alienShipTemplate;
+	public GameObject[] m_alienShipModelTemplate;
+
+	// the current encounter data (both player and game)
+	public PD_Encounter m_pdEncounter;
+	public GD_Encounter m_gdEncounter;
+
+	// alien ship data
+	PD_AlienShip[] m_alienShipList;
+
+	// current dolly distance
+	float m_currentDollyDistance;
 
 	// unity awake
 	void Awake()
@@ -25,6 +35,49 @@ public class Encounter : MonoBehaviour
 	// unity update
 	void Update()
 	{
+		// get to the player data
+		var playerData = DataController.m_instance.m_playerData;
+
+		// remember the extents
+		var xExtent = 0.0f;
+		var zExtent = 0.0f;
+
+		// update the position and rotation of the active alien ship models
+		for ( var i = 0; i < m_alienShipModelList.Length; i++ )
+		{
+			var alienShipModel = m_alienShipModelList[ i ];
+
+			if ( alienShipModel.activeInHierarchy )
+			{
+				var alienShip = m_alienShipList[ i ];
+
+				alienShipModel.transform.SetPositionAndRotation( alienShip.m_coordinate, Quaternion.LookRotation( alienShip.m_direction, Vector3.up ) );
+
+				var playerToShip = alienShip.m_coordinate - playerData.m_general.m_coordinates;
+
+				xExtent = Mathf.Max( xExtent, Mathf.Abs( playerToShip.x ) );
+				zExtent = Mathf.Max( zExtent, Mathf.Abs( playerToShip.z ) );
+			}
+		}
+
+		// add some space around the extents
+		xExtent += 192.0f;
+		zExtent += 192.0f;
+
+		// recalculate what the camera distance from the zero plane should be
+		var verticalFieldOfView = m_spaceflightController.m_map.m_playerCamera.fieldOfView * Mathf.Deg2Rad;
+		var horizontalFieldOfView = 2.0f * Mathf.Atan( Mathf.Tan( verticalFieldOfView * 0.5f ) * m_spaceflightController.m_map.m_playerCamera.aspect );
+		var horizontalAngle = Mathf.Deg2Rad * ( 180.0f - 90.0f - horizontalFieldOfView * Mathf.Rad2Deg * 0.5f );
+		var verticalAngle = Mathf.Deg2Rad * ( 180.0f - 90.0f - verticalFieldOfView * Mathf.Rad2Deg * 0.5f );
+		var tanHorizontalAngle = Mathf.Tan( horizontalAngle );
+		var tanVerticalAngle = Mathf.Tan( verticalAngle );
+
+		var targetDollyDistance = Mathf.Max( xExtent * tanHorizontalAngle, zExtent * tanVerticalAngle, 1024.0f );
+
+		// slowly dolly the camera
+		m_currentDollyDistance = Mathf.Lerp( m_currentDollyDistance, targetDollyDistance, Time.deltaTime * 0.25f );
+
+		m_spaceflightController.m_player.DollyCamera( m_currentDollyDistance );
 	}
 
 	// call this to hide the encounter stuff
@@ -58,7 +111,9 @@ public class Encounter : MonoBehaviour
 		m_spaceflightController.m_player.Show();
 
 		// make sure the camera is at the right height above the zero plane
-		m_spaceflightController.m_player.DollyCamera( 1024.0f );
+		m_currentDollyDistance = 1024.0f;
+
+		m_spaceflightController.m_player.DollyCamera( m_currentDollyDistance );
 
 		// get to the player data
 		var playerData = DataController.m_instance.m_playerData;
@@ -84,8 +139,11 @@ public class Encounter : MonoBehaviour
 		// hide the radar
 		m_spaceflightController.m_radar.Hide();
 
+		// reset the encounter
+		Reset();
+
 		// add the alien ships to the encounter
-		AddAlienShips();
+		AddAlienShips( true );
 
 		// play the star system music track
 		MusicController.m_instance.ChangeToTrack( MusicController.Track.Encounter );
@@ -94,8 +152,7 @@ public class Encounter : MonoBehaviour
 		SoundController.m_instance.PlaySound( SoundController.Sound.Alarm );
 	}
 
-	// adds a number of alien ships to the encounter - up to the maximum allowed by the encounter
-	void AddAlienShips()
+	void Reset()
 	{
 		// get to the game data
 		var gameData = DataController.m_instance.m_gameData;
@@ -106,34 +163,109 @@ public class Encounter : MonoBehaviour
 		// get the current encounter id
 		var encounterId = playerData.m_general.m_currentEncounterId;
 
+		// get to the encounter game data
+		m_gdEncounter = gameData.m_encounterList[ encounterId ];
+
+		// find the encounter in the player data (the list is continually sorted by distance so we have to search)
+		foreach ( var encounter in playerData.m_encounterList )
+		{
+			if ( encounter.m_encounterId == encounterId )
+			{
+				m_pdEncounter = encounter;
+				break;
+			}
+		}
+
 		// get to the list of alien ships
-		var alienShipList = playerData.m_encounterList[ encounterId ].GetAlienShipList();
+		var alienShipList = m_pdEncounter.GetAlienShipList();
 
-		// get the encounter game data
-		var encounter = gameData.m_encounterList[ encounterId ];
-
-		// we currently have no ships in this encounter
-		var alienShipCount = 0;
-
-		// go through all of the alien ships in the encounter and add them, up to the maximum allowed
+		// reset all of the alien ships
 		foreach ( var alienShip in alienShipList )
 		{
-			// is this ship dead?
-			if ( alienShip.m_isDead )
+			// this alien ship has not been added yet
+			alienShip.m_addedToEncounter = false;
+		}
+
+		// inactivate all of the alien ship models
+		foreach ( var alienShip in m_alienShipModelList )
+		{
+			alienShip.SetActive( false );
+		}
+
+		// allocate array for alien ship list
+		m_alienShipList = new PD_AlienShip[ m_alienShipModelList.Length ];
+	}
+
+	// adds a number of alien ships to the encounter - up to the maximum allowed by the encounter
+	void AddAlienShips( bool justEnteredEncounter )
+	{
+		// get to the player data
+		var playerData = DataController.m_instance.m_playerData;
+
+		// get to the list of alien ships
+		var alienShipList = m_pdEncounter.GetAlienShipList();
+
+		// go through alien ship slots (up to the maximum allowed at once)
+		for ( var alienShipIndex = 0; alienShipIndex < m_gdEncounter.m_maxNumShipsAtOnce; alienShipIndex++ )
+		{
+			// is this slot active right now?
+			if ( m_alienShipModelList[ alienShipIndex ].activeInHierarchy )
 			{
 				// yes - skip it
 				continue;
 			}
 
-			// LEFT OFF HERE
-
-			// up the ship count
-			alienShipCount++;
-
-			// are we at the limit?
-			if ( alienShipCount == encounter.m_maxNumShipsAtOnce )
+			// no - go through all of the alien ships in the encounter and add the next one
+			foreach ( var alienShip in alienShipList )
 			{
-				// yes - ok stop now
+				// has this alien ship already been added to the encounter?
+				if ( alienShip.m_addedToEncounter )
+				{
+					// yes - skip it
+					continue;
+				}
+
+				// is this alien ship dead?
+				if ( alienShip.m_isDead )
+				{
+					// yes - skip it
+					continue;
+				}
+
+				// generate a random position inside of a unit circle
+				var randomPosition = Random.insideUnitCircle;
+
+				Vector3 coordinates;
+
+				if ( justEnteredEncounter )
+				{
+					// put alien ship in area approximately in the correct direction of approach
+					coordinates = new Vector3( randomPosition.x, 0.0f, randomPosition.y ) * 256.0f + Vector3.Normalize( m_pdEncounter.m_currentCoordinates - playerData.m_general.m_lastHyperspaceCoordinates ) * 2048.0f;
+				}
+				else
+				{
+					// put alien ship in a random position on a circle around the player
+					coordinates = Vector3.Normalize( new Vector3( randomPosition.x, 0.0f, randomPosition.y ) ) * 2048.0f;
+				}
+
+				// make alien ship face the center of the encounter space
+				var direction = -Vector3.Normalize( coordinates );
+
+				// update the position and direction of the alien ship
+				alienShip.SetCoordinate( coordinates );
+				alienShip.SetDirection( direction );
+
+				// clone the model
+				Instantiate( m_alienShipModelTemplate[ alienShip.m_encounterTypeId ], Vector3.zero, Quaternion.Euler( -90.0f, 0.0f, 0.0f ), m_alienShipModelList[ alienShipIndex ].transform );
+
+				// show the model
+				m_alienShipModelList[ alienShipIndex ].SetActive( true );
+
+				// remember the alien ship associated with this model
+				m_alienShipList[ alienShipIndex ] = alienShip;
+
+				// we are done adding an alien ship to this slot
+				alienShip.m_addedToEncounter = true;
 				break;
 			}
 		}

@@ -19,6 +19,9 @@ public class PD_AlienShip
 	// is this ship dead?
 	public bool m_isDead;
 
+	// is this ship in the encounter already?
+	public bool m_addedToEncounter;
+
 	// this is called when the player data is created
 	public void Initialize( GD_Encounter encounter )
 	{
@@ -63,17 +66,17 @@ public class PD_AlienShip
 
 		m_encounterTypeId = possibleEncounterTypes[ randomIndex ];
 
-		// put alien ship in a random position on a circle around the player
-		var randomPosition = UnityEngine.Random.insideUnitCircle;
-
-		m_coordinate = new Vector3( randomPosition.x, 0.0f, randomPosition.y );
-
-		m_coordinate = Vector3.Normalize( m_coordinate ) * 2048.0f;
-
-		// make alien ship face the center of the encounter space
-		m_direction = -Vector3.Normalize( m_coordinate );
-
 		// the ship is not dead
 		m_isDead = false;
+	}
+
+	public void SetCoordinate( Vector3 coordinate )
+	{
+		m_coordinate = coordinate;
+	}
+
+	public void SetDirection( Vector3 direction )
+	{
+		m_direction = direction;
 	}
 }

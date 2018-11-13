@@ -209,11 +209,14 @@ public class Player : MonoBehaviour
 						break;
 				}
 
-				// figure out how fast to rotate the skybox
-				var multiplier = 8.0f;
+				// rotate the skybox only if we are not in encounter
+				{
+					// figure out how fast to rotate the skybox
+					var multiplier = ( playerData.m_general.m_location != PD_General.Location.Encounter ) ? 8.0f : 1.0f;
 
-				// rotate the skybox
-				RotateSkybox( playerData.m_general.m_currentDirection, playerData.m_general.m_currentSpeed / playerData.m_general.m_currentMaximumSpeed * Time.deltaTime * multiplier );
+					// rotate the skybox
+					RotateSkybox( playerData.m_general.m_currentDirection, playerData.m_general.m_currentSpeed / playerData.m_general.m_currentMaximumSpeed * Time.deltaTime * multiplier );
+				}
 
 				// update the map coordinates
 				m_spaceflightController.m_map.UpdateCoordinates();
@@ -381,6 +384,9 @@ public class Player : MonoBehaviour
 
 		// set it on the camera
 		m_camera.transform.localPosition = cameraPosition;
+
+		// update the far clip plane
+		m_camera.farClipPlane = Mathf.Max( distance + 512.0f, 1024.0f + 512.0f );
 	}
 
 	// call this to get the current position of the player
