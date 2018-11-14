@@ -11,7 +11,10 @@ public class PD_AlienShip
 	public int m_encounterTypeId;
 
 	// the current position of the alien
-	public Vector3 m_coordinate;
+	public Vector3 m_coordinates;
+
+	// current target coordinates
+	public Vector3 m_targetCoordinates;
 
 	// the current direction of the alien
 	public Vector3 m_direction;
@@ -68,15 +71,5 @@ public class PD_AlienShip
 
 		// the ship is not dead
 		m_isDead = false;
-	}
-
-	public void SetCoordinate( Vector3 coordinate )
-	{
-		m_coordinate = coordinate;
-	}
-
-	public void SetDirection( Vector3 direction )
-	{
-		m_direction = direction;
 	}
 }

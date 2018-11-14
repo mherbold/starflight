@@ -6,6 +6,12 @@ public class Encounter : MonoBehaviour
 	// convenient access to the spaceflight controller
 	public SpaceflightController m_spaceflightController;
 
+	// the speed the alien ships move at
+	public float m_alienShipSpeed;
+
+	// the rate the alien ships turn at
+	public float m_alienShipTurnRate;
+
 	// alien ship models (need 8)
 	public GameObject[] m_alienShipModelList;
 
@@ -35,8 +41,34 @@ public class Encounter : MonoBehaviour
 	// unity update
 	void Update()
 	{
+		// get to the game data
+		var gameData = DataController.m_instance.m_gameData;
+
 		// get to the player data
 		var playerData = DataController.m_instance.m_playerData;
+
+		// update the position and rotation of the active alien ship models
+		for ( var i = 0; i < m_alienShipModelList.Length; i++ )
+		{
+			var alienShipModel = m_alienShipModelList[ i ];
+
+			if ( alienShipModel.activeInHierarchy )
+			{
+				var alienShip = m_alienShipList[ i ];
+
+				var encounterType = gameData.m_encounterTypeList[ alienShip.m_encounterTypeId ];
+
+				switch ( encounterType.m_scriptId )
+				{
+					case 3:
+						MechanUpdate( alienShip, alienShipModel );
+						break;
+
+					default:
+						break;
+				}
+			}
+		}
 
 		// remember the extents
 		var xExtent = 0.0f;
@@ -51,9 +83,9 @@ public class Encounter : MonoBehaviour
 			{
 				var alienShip = m_alienShipList[ i ];
 
-				alienShipModel.transform.SetPositionAndRotation( alienShip.m_coordinate, Quaternion.LookRotation( alienShip.m_direction, Vector3.up ) );
+				alienShipModel.transform.SetPositionAndRotation( alienShip.m_coordinates, Quaternion.LookRotation( alienShip.m_direction, Vector3.up ) );
 
-				var playerToShip = alienShip.m_coordinate - playerData.m_general.m_coordinates;
+				var playerToShip = alienShip.m_coordinates - playerData.m_general.m_coordinates;
 
 				xExtent = Mathf.Max( xExtent, Mathf.Abs( playerToShip.x ) );
 				zExtent = Mathf.Max( zExtent, Mathf.Abs( playerToShip.z ) );
@@ -252,8 +284,11 @@ public class Encounter : MonoBehaviour
 				var direction = -Vector3.Normalize( coordinates );
 
 				// update the position and direction of the alien ship
-				alienShip.SetCoordinate( coordinates );
-				alienShip.SetDirection( direction );
+				alienShip.m_coordinates = coordinates;
+				alienShip.m_direction = direction;
+
+				// set the target coordinates to be the player
+				alienShip.m_targetCoordinates = Vector3.zero;
 
 				// clone the model
 				Instantiate( m_alienShipModelTemplate[ alienShip.m_encounterTypeId ], Vector3.zero, Quaternion.Euler( -90.0f, 0.0f, 0.0f ), m_alienShipModelList[ alienShipIndex ].transform );
@@ -269,5 +304,29 @@ public class Encounter : MonoBehaviour
 				break;
 			}
 		}
+	}
+
+	void MechanUpdate( PD_AlienShip alienShip, GameObject alienShipModel )
+	{
+		// get to the player data
+		var playerData = DataController.m_instance.m_playerData;
+
+		// 1 in 150 chance target coordinates will change
+		var randomNumber = Random.Range( 1, 150 );
+
+		if ( randomNumber == 25 )
+		{
+			var randomCoordinates = Random.insideUnitCircle;
+
+			alienShip.m_targetCoordinates = playerData.m_general.m_coordinates + Vector3.Normalize( new Vector3( randomCoordinates.x, 0.0f, randomCoordinates.y ) ) * 256.0f;
+		}
+
+		// steer the alien ship towards the target coordinates
+		var desiredDirection = Vector3.Normalize( alienShip.m_targetCoordinates - alienShip.m_coordinates );
+
+		alienShip.m_direction = Vector3.Slerp( alienShip.m_direction, desiredDirection, Time.deltaTime * m_alienShipTurnRate );
+
+		// move the alien ship forward
+		alienShip.m_coordinates += alienShip.m_direction * Time.deltaTime * m_alienShipSpeed;
 	}
 }
