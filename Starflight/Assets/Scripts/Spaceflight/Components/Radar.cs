@@ -13,9 +13,15 @@ public class Radar : MonoBehaviour
 
 		public Detection( MeshRenderer blip )
 		{
+			m_blip = blip;
+
+			Reset();
+		}
+
+		public void Reset()
+		{
 			m_encounter = null;
 			m_timeSinceDetection = 3600.0f;
-			m_blip = blip;
 			m_initialOpacity = 0.0f;
 		}
 	}
@@ -268,6 +274,15 @@ public class Radar : MonoBehaviour
 		foreach ( var blip in m_blips )
 		{
 			Tools.SetOpacity( blip.material, 0 );
+		}
+
+		// reset all detections
+		if ( m_detectionList != null )
+		{
+			foreach ( var detection in m_detectionList )
+			{
+				detection.Reset();
+			}
 		}
 	}
 }

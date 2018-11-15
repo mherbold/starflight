@@ -171,8 +171,18 @@ public class SpaceflightController : MonoBehaviour
 		// get to the player data
 		var playerData = DataController.m_instance.m_playerData;
 
+		// are we switching to a new location?
+		if ( playerData.m_general.m_location != newLocation )
+		{
+			// yes - remember the last location
+			playerData.m_general.m_lastLocation = playerData.m_general.m_location;
+		}
+
 		// update the player data
 		playerData.m_general.m_location = newLocation;
+
+		// hide the radar
+		m_radar.Hide();
 
 		// switching to starport is a special case
 		if ( playerData.m_general.m_location == PD_General.Location.Starport )
@@ -332,6 +342,9 @@ public class SpaceflightController : MonoBehaviour
 			{
 				// yes - save encounter information in the player data
 				playerData.m_general.m_currentEncounterId = encounter.m_encounterId;
+
+				// put the player in the middle of the encounter
+				playerData.m_general.m_lastEncounterCoordinates = Vector3.zero;
 
 				// switch to the encounter location
 				SwitchLocation( PD_General.Location.Encounter );

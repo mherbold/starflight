@@ -17,7 +17,16 @@ public class PD_AlienShip
 	public Vector3 m_targetCoordinates;
 
 	// the current direction of the alien
-	public Vector3 m_direction;
+	public Vector3 m_currentDirection;
+
+	// keep track of the last direction (for banking the ship)
+	public Vector3 m_lastDirection;
+
+	// keep track of the last banking angle (for interpolation)
+	public float m_currentBankingAngle;
+
+	// number of seconds since the last time we updated the target coordinates
+	public float m_timeSinceLastTargetCoordinateChange;
 
 	// is this ship dead?
 	public bool m_isDead;
@@ -69,7 +78,14 @@ public class PD_AlienShip
 
 		m_encounterTypeId = possibleEncounterTypes[ randomIndex ];
 
-		// the ship is not dead
+		// reset some important stuff
+		m_coordinates = Vector3.zero;
+		m_targetCoordinates = Vector3.zero;
+		m_currentDirection = Vector3.forward;
+		m_lastDirection = Vector3.forward;
+		m_currentBankingAngle = 0.0f;
+		m_timeSinceLastTargetCoordinateChange = 0.0f;
 		m_isDead = false;
+		m_addedToEncounter = false;
 	}
 }

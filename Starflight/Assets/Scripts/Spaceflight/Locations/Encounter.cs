@@ -12,6 +12,12 @@ public class Encounter : MonoBehaviour
 	// the rate the alien ships turn at
 	public float m_alienShipTurnRate;
 
+	// the camera dolly speed
+	public float m_cameraDollySpeed;
+
+	// how often to update the target coordinates
+	public float m_targetCoordinateUpdateFrequency;
+
 	// alien ship models (need 8)
 	public GameObject[] m_alienShipModelList;
 
@@ -48,13 +54,13 @@ public class Encounter : MonoBehaviour
 		var playerData = DataController.m_instance.m_playerData;
 
 		// update the position and rotation of the active alien ship models
-		for ( var i = 0; i < m_alienShipModelList.Length; i++ )
+		for ( var alienShipIndex = 0; alienShipIndex < m_alienShipModelList.Length; alienShipIndex++ )
 		{
-			var alienShipModel = m_alienShipModelList[ i ];
+			var alienShipModel = m_alienShipModelList[ alienShipIndex ];
 
 			if ( alienShipModel.activeInHierarchy )
 			{
-				var alienShip = m_alienShipList[ i ];
+				var alienShip = m_alienShipList[ alienShipIndex ];
 
 				var encounterType = gameData.m_encounterTypeList[ alienShip.m_encounterTypeId ];
 
@@ -65,51 +71,36 @@ public class Encounter : MonoBehaviour
 						break;
 
 					default:
+						DefaultUpdate( alienShip, alienShipModel );
 						break;
 				}
 			}
 		}
 
-		// remember the extents
-		var xExtent = 0.0f;
-		var zExtent = 0.0f;
+		// finalize alien ships and camera transform
+		FinalizeUpdate();
 
-		// update the position and rotation of the active alien ship models
-		for ( var i = 0; i < m_alienShipModelList.Length; i++ )
+		// has the player left the encounter?
+		if ( playerData.m_general.m_coordinates.magnitude >= 4096.0f )
 		{
-			var alienShipModel = m_alienShipModelList[ i ];
+			// calculate the normalized exit direction vector
+			var exitDirection = Vector3.Normalize( playerData.m_general.m_coordinates );
 
-			if ( alienShipModel.activeInHierarchy )
+			// was the last location in hyperspace?
+			if ( playerData.m_general.m_lastLocation == PD_General.Location.Hyperspace )
 			{
-				var alienShip = m_alienShipList[ i ];
-
-				alienShipModel.transform.SetPositionAndRotation( alienShip.m_coordinates, Quaternion.LookRotation( alienShip.m_direction, Vector3.up ) );
-
-				var playerToShip = alienShip.m_coordinates - playerData.m_general.m_coordinates;
-
-				xExtent = Mathf.Max( xExtent, Mathf.Abs( playerToShip.x ) );
-				zExtent = Mathf.Max( zExtent, Mathf.Abs( playerToShip.z ) );
+				// yes - update the last hyperspace coordinates
+				playerData.m_general.m_lastHyperspaceCoordinates += exitDirection * m_spaceflightController.m_encounterRange * 1.25f;
 			}
+			else 
+			{
+				// no - update the last star system coordinates
+				playerData.m_general.m_lastStarSystemCoordinates += exitDirection * m_spaceflightController.m_encounterRange * 1.25f;
+			}
+
+			// yes - switch back to the last location
+			m_spaceflightController.SwitchLocation( playerData.m_general.m_lastLocation );
 		}
-
-		// add some space around the extents
-		xExtent += 192.0f;
-		zExtent += 192.0f;
-
-		// recalculate what the camera distance from the zero plane should be
-		var verticalFieldOfView = m_spaceflightController.m_map.m_playerCamera.fieldOfView * Mathf.Deg2Rad;
-		var horizontalFieldOfView = 2.0f * Mathf.Atan( Mathf.Tan( verticalFieldOfView * 0.5f ) * m_spaceflightController.m_map.m_playerCamera.aspect );
-		var horizontalAngle = Mathf.Deg2Rad * ( 180.0f - 90.0f - horizontalFieldOfView * Mathf.Rad2Deg * 0.5f );
-		var verticalAngle = Mathf.Deg2Rad * ( 180.0f - 90.0f - verticalFieldOfView * Mathf.Rad2Deg * 0.5f );
-		var tanHorizontalAngle = Mathf.Tan( horizontalAngle );
-		var tanVerticalAngle = Mathf.Tan( verticalAngle );
-
-		var targetDollyDistance = Mathf.Max( xExtent * tanHorizontalAngle, zExtent * tanVerticalAngle, 1024.0f );
-
-		// slowly dolly the camera
-		m_currentDollyDistance = Mathf.Lerp( m_currentDollyDistance, targetDollyDistance, Time.deltaTime * 0.25f );
-
-		m_spaceflightController.m_player.DollyCamera( m_currentDollyDistance );
 	}
 
 	// call this to hide the encounter stuff
@@ -168,14 +159,14 @@ public class Encounter : MonoBehaviour
 		// show the status display
 		m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_statusDisplay );
 
-		// hide the radar
-		m_spaceflightController.m_radar.Hide();
-
 		// reset the encounter
 		Reset();
 
 		// add the alien ships to the encounter
 		AddAlienShips( true );
+
+		// center the encounter coordinates on the player
+		m_pdEncounter.m_currentCoordinates = playerData.m_general.m_coordinates;
 
 		// play the star system music track
 		MusicController.m_instance.ChangeToTrack( MusicController.Track.Encounter );
@@ -240,8 +231,10 @@ public class Encounter : MonoBehaviour
 		// go through alien ship slots (up to the maximum allowed at once)
 		for ( var alienShipIndex = 0; alienShipIndex < m_gdEncounter.m_maxNumShipsAtOnce; alienShipIndex++ )
 		{
+			var alienShipModel = m_alienShipModelList[ alienShipIndex ];
+
 			// is this slot active right now?
-			if ( m_alienShipModelList[ alienShipIndex ].activeInHierarchy )
+			if ( alienShipModel.activeInHierarchy )
 			{
 				// yes - skip it
 				continue;
@@ -272,35 +265,44 @@ public class Encounter : MonoBehaviour
 				if ( justEnteredEncounter )
 				{
 					// put alien ship in area approximately in the correct direction of approach
-					coordinates = new Vector3( randomPosition.x, 0.0f, randomPosition.y ) * 256.0f + Vector3.Normalize( m_pdEncounter.m_currentCoordinates - playerData.m_general.m_lastHyperspaceCoordinates ) * 2048.0f;
+					coordinates = new Vector3( randomPosition.x, 0.0f, randomPosition.y ) * 256.0f + Vector3.Normalize( m_pdEncounter.m_currentCoordinates - playerData.m_general.m_lastHyperspaceCoordinates ) * 4096.0f;
 				}
 				else
 				{
 					// put alien ship in a random position on a circle around the player
-					coordinates = Vector3.Normalize( new Vector3( randomPosition.x, 0.0f, randomPosition.y ) ) * 2048.0f;
+					coordinates = Vector3.Normalize( new Vector3( randomPosition.x, 0.0f, randomPosition.y ) ) * 4096.0f;
 				}
 
 				// make alien ship face the center of the encounter space
 				var direction = -Vector3.Normalize( coordinates );
 
-				// update the position and direction of the alien ship
+				// update the alien ship
 				alienShip.m_coordinates = coordinates;
-				alienShip.m_direction = direction;
-
-				// set the target coordinates to be the player
 				alienShip.m_targetCoordinates = Vector3.zero;
+				alienShip.m_currentDirection = direction;
+				alienShip.m_lastDirection = direction;
+				alienShip.m_currentBankingAngle = 0.0f;
+				alienShip.m_timeSinceLastTargetCoordinateChange = alienShipIndex / m_gdEncounter.m_maxNumShipsAtOnce * m_targetCoordinateUpdateFrequency;
+				alienShip.m_addedToEncounter = true;
+
+				// remove old model
+				Tools.DestroyChildrenOf( alienShipModel );
+
+				// reset the transform of the model
+				alienShipModel.transform.SetPositionAndRotation( Vector3.zero, Quaternion.identity );
 
 				// clone the model
-				Instantiate( m_alienShipModelTemplate[ alienShip.m_encounterTypeId ], Vector3.zero, Quaternion.Euler( -90.0f, 0.0f, 0.0f ), m_alienShipModelList[ alienShipIndex ].transform );
+				var alienShipModelTemplate = m_alienShipModelTemplate[ alienShip.m_encounterTypeId ];
+
+				Instantiate( alienShipModelTemplate, alienShipModelTemplate.transform.localPosition, alienShipModelTemplate.transform.localRotation, alienShipModel.transform );
 
 				// show the model
-				m_alienShipModelList[ alienShipIndex ].SetActive( true );
+				alienShipModel.SetActive( true );
 
 				// remember the alien ship associated with this model
 				m_alienShipList[ alienShipIndex ] = alienShip;
 
 				// we are done adding an alien ship to this slot
-				alienShip.m_addedToEncounter = true;
 				break;
 			}
 		}
@@ -308,25 +310,111 @@ public class Encounter : MonoBehaviour
 
 	void MechanUpdate( PD_AlienShip alienShip, GameObject alienShipModel )
 	{
+		BuzzPlayer( alienShip, alienShipModel, 1.0f );
+	}
+
+	void DefaultUpdate( PD_AlienShip alienShip, GameObject alienShipModel )
+	{
+		BuzzPlayer( alienShip, alienShipModel, 1.0f );
+	}
+
+	void BuzzPlayer( PD_AlienShip alienShip, GameObject alienShipModel, float alienShipSpeedMultiplier )
+	{
 		// get to the player data
 		var playerData = DataController.m_instance.m_playerData;
 
-		// 1 in 150 chance target coordinates will change
-		var randomNumber = Random.Range( 1, 150 );
+		MoveAlienShip( alienShip, alienShipModel, alienShipSpeedMultiplier, playerData.m_general.m_coordinates );
+	}
 
-		if ( randomNumber == 25 )
+	void MoveAlienShip( PD_AlienShip alienShip, GameObject alienShipModel, float alienShipSpeedMultiplier, Vector3 targetCoordinates )
+	{
+		// update time since we changed target coordinates for this alien ship
+		alienShip.m_timeSinceLastTargetCoordinateChange += Time.deltaTime;
+
+		// change target coordinates every so often
+		if ( alienShip.m_timeSinceLastTargetCoordinateChange >= m_targetCoordinateUpdateFrequency )
 		{
 			var randomCoordinates = Random.insideUnitCircle;
 
-			alienShip.m_targetCoordinates = playerData.m_general.m_coordinates + Vector3.Normalize( new Vector3( randomCoordinates.x, 0.0f, randomCoordinates.y ) ) * 256.0f;
+			alienShip.m_targetCoordinates = targetCoordinates + Vector3.Normalize( new Vector3( randomCoordinates.x, 0.0f, randomCoordinates.y ) ) * 256.0f;
+
+			alienShip.m_timeSinceLastTargetCoordinateChange -= m_targetCoordinateUpdateFrequency;
 		}
 
 		// steer the alien ship towards the target coordinates
 		var desiredDirection = Vector3.Normalize( alienShip.m_targetCoordinates - alienShip.m_coordinates );
 
-		alienShip.m_direction = Vector3.Slerp( alienShip.m_direction, desiredDirection, Time.deltaTime * m_alienShipTurnRate );
+		alienShip.m_currentDirection = Vector3.Slerp( alienShip.m_currentDirection, desiredDirection, Time.deltaTime * m_alienShipTurnRate );
 
 		// move the alien ship forward
-		alienShip.m_coordinates += alienShip.m_direction * Time.deltaTime * m_alienShipSpeed;
+		alienShip.m_coordinates += alienShip.m_currentDirection * Time.deltaTime * m_alienShipSpeed * alienShipSpeedMultiplier;
+	}
+
+	void FinalizeUpdate()
+	{
+		// get to the player data
+		var playerData = DataController.m_instance.m_playerData;
+
+		// remember the extents
+		var xExtent = 0.0f;
+		var zExtent = 0.0f;
+
+		// update the position and rotation of the active alien ship models
+		for ( var alienShipIndex = 0; alienShipIndex < m_alienShipModelList.Length; alienShipIndex++ )
+		{
+			var alienShipModel = m_alienShipModelList[ alienShipIndex ];
+
+			if ( alienShipModel.activeInHierarchy )
+			{
+				// get to the alien ship
+				var alienShip = m_alienShipList[ alienShipIndex ];
+
+				// set the rotation of the ship
+				alienShipModel.transform.rotation = Quaternion.LookRotation( alienShip.m_currentDirection, Vector3.up );
+
+				// get the number of degrees we are turning the ship (compared to the last frame)
+				var bankingAngle = Vector3.SignedAngle( alienShip.m_currentDirection, alienShip.m_lastDirection, Vector3.up );
+
+				// scale the angle enough so we actually see the ship banking (but max it out at 60 degrees in either direction)
+				bankingAngle = Mathf.Max( -60.0f, Mathf.Min( 60.0f, bankingAngle * 48.0f ) );
+
+				// interpolate towards the new banking angle
+				alienShip.m_currentBankingAngle = Mathf.Lerp( alienShip.m_currentBankingAngle, bankingAngle, Time.deltaTime );
+
+				// save the last direction
+				alienShip.m_lastDirection = alienShip.m_currentDirection;
+
+				// bank the ship based on the calculated angle
+				alienShipModel.transform.rotation = Quaternion.AngleAxis( alienShip.m_currentBankingAngle, alienShip.m_currentDirection ) * alienShipModel.transform.rotation;
+
+				// set the position of the ship
+				alienShipModel.transform.position = alienShip.m_coordinates;
+
+				// figure out how far away from the player this alien ship is
+				var playerToShip = alienShip.m_coordinates - playerData.m_general.m_coordinates;
+
+				xExtent = Mathf.Max( xExtent, Mathf.Abs( playerToShip.x ) );
+				zExtent = Mathf.Max( zExtent, Mathf.Abs( playerToShip.z ) );
+			}
+		}
+
+		// add some space around the extents
+		xExtent += 192.0f;
+		zExtent += 192.0f;
+
+		// recalculate what the camera distance from the zero plane should be
+		var verticalFieldOfView = m_spaceflightController.m_map.m_playerCamera.fieldOfView * Mathf.Deg2Rad;
+		var horizontalFieldOfView = 2.0f * Mathf.Atan( Mathf.Tan( verticalFieldOfView * 0.5f ) * m_spaceflightController.m_map.m_playerCamera.aspect );
+		var horizontalAngle = Mathf.Deg2Rad * ( 180.0f - 90.0f - horizontalFieldOfView * Mathf.Rad2Deg * 0.5f );
+		var verticalAngle = Mathf.Deg2Rad * ( 180.0f - 90.0f - verticalFieldOfView * Mathf.Rad2Deg * 0.5f );
+		var tanHorizontalAngle = Mathf.Tan( horizontalAngle );
+		var tanVerticalAngle = Mathf.Tan( verticalAngle );
+
+		var targetDollyDistance = Mathf.Max( xExtent * tanHorizontalAngle, zExtent * tanVerticalAngle, 1024.0f );
+
+		// slowly dolly the camera
+		m_currentDollyDistance = Mathf.Lerp( m_currentDollyDistance, targetDollyDistance, Time.deltaTime * m_cameraDollySpeed );
+
+		m_spaceflightController.m_player.DollyCamera( m_currentDollyDistance );
 	}
 }

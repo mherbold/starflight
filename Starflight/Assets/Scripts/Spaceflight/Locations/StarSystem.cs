@@ -75,16 +75,12 @@ public class StarSystem : MonoBehaviour
 			newPosition *= m_currentStar.GetBreachDistance() + 16.0f;
 			newPosition += m_currentStar.GetWorldCoordinates();
 
+			// update the last hyperspace coordinates
+			playerData.m_general.m_lastHyperspaceCoordinates = newPosition;
+
 			// scale the speed of the player
 			playerData.m_general.m_currentSpeed /= 4.0f;
 			playerData.m_general.m_currentMaximumSpeed /= 4.0f;
-
-			// update the player position
-			m_spaceflightController.m_player.transform.position = newPosition;
-
-			// save the player's position in the player data
-			playerData.m_general.m_coordinates = newPosition;
-			playerData.m_general.m_lastHyperspaceCoordinates = playerData.m_general.m_coordinates;
 
 			// switch modes now
 			m_spaceflightController.SwitchLocation( PD_General.Location.Hyperspace );
@@ -176,9 +172,6 @@ public class StarSystem : MonoBehaviour
 
 		// hide the starsystem
 		gameObject.SetActive( false );
-
-		// hide the radar
-		m_spaceflightController.m_radar.Hide();
 	}
 
 	// call this to show the starsystem objects

@@ -21,6 +21,9 @@ public class PD_General
 	// the player location
 	public Location m_location;
 
+	// the last player location
+	public Location m_lastLocation;
+
 	// the player coordinates
 	public Vector3 m_coordinates;
 

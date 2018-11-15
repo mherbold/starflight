@@ -208,9 +208,6 @@ public class Hyperspace : MonoBehaviour
 
 		// hide the hyperspace objects
 		gameObject.SetActive( false );
-
-		// hide the radar
-		m_spaceflightController.m_radar.Hide();
 	}
 
 	// call this to show the hyperspace stuff

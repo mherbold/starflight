@@ -3687,7 +3687,7 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 1c7ccc5dd5fa96a4eb1c6eb43908736d, type: 2}
+  - {fileID: 2100000, guid: eececc3b7f17722419d1a4e2ac2b663c, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -22927,15 +22927,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400002, guid: 224ccd8849e6c684eac9273a2bfd6a2e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -35.18
+      value: -0.2
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 224ccd8849e6c684eac9273a2bfd6a2e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 224ccd8849e6c684eac9273a2bfd6a2e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 20.86
+      value: -4.9
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 224ccd8849e6c684eac9273a2bfd6a2e, type: 3}
       propertyPath: m_LocalRotation.x

@@ -212,7 +212,7 @@ public class Player : MonoBehaviour
 				// rotate the skybox only if we are not in encounter
 				{
 					// figure out how fast to rotate the skybox
-					var multiplier = ( playerData.m_general.m_location != PD_General.Location.Encounter ) ? 8.0f : 1.0f;
+					var multiplier = ( playerData.m_general.m_location != PD_General.Location.Encounter ) ? 8.0f : 0.5f;
 
 					// rotate the skybox
 					RotateSkybox( playerData.m_general.m_currentDirection, playerData.m_general.m_currentSpeed / playerData.m_general.m_currentMaximumSpeed * Time.deltaTime * multiplier );
@@ -232,7 +232,7 @@ public class Player : MonoBehaviour
 			bankingAngle = Mathf.Max( -60.0f, Mathf.Min( 60.0f, bankingAngle * 12.0f ) );
 
 			// interpolate towards the new banking angle
-			m_currentBankingAngle = Mathf.Lerp( m_currentBankingAngle, bankingAngle, 0.1f );
+			m_currentBankingAngle = Mathf.Lerp( m_currentBankingAngle, bankingAngle, Time.deltaTime * 4.0f );
 
 			// bank the ship based on the calculated angle
 			m_ship.rotation = Quaternion.AngleAxis( m_currentBankingAngle, playerData.m_general.m_currentDirection ) * m_ship.rotation;

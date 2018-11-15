@@ -1,10 +1,12 @@
 ﻿
 using UnityEngine;
+
 using System;
 using System.IO;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Collections.Generic;
 
 class Tools
 {
@@ -114,5 +116,18 @@ class Tools
 		color.a = opacity;
 
 		material.SetColor( "SF_AlbedoColor", color );
+	}
+
+	// destroy all of the children of a game object
+	public static void DestroyChildrenOf( GameObject gameObject )
+	{
+		var children = new List<GameObject>();
+
+		foreach ( Transform child in gameObject.transform )
+		{
+			children.Add( child.gameObject );
+		}
+
+		children.ForEach( child => GameObject.Destroy( child ) );
 	}
 }

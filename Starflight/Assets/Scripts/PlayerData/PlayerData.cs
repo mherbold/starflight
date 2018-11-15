@@ -6,7 +6,7 @@ using System;
 public class PlayerData
 {
 	// the current save game version - increment this to invalidate obsolete save game files
-	const int c_currentVersion = 16;
+	const int c_currentVersion = 17;
 
 	// the current version of this player data file
 	public int m_version;
