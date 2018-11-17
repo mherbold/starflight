@@ -136,7 +136,7 @@ Material:
     - AlbedoColor: {r: 0.1, g: 0.065000005, b: 0.065000005, a: 0.9019608}
     - EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
     - NormalMapScaleOffset: {r: 1, g: 1, b: 0, a: 0}
-    - SF_AlbedoColor: {r: 0.1254902, g: 0.2509804, b: 0.1254902, a: 1}
+    - SF_AlbedoColor: {r: 0, g: 0.05, b: 0, a: 1}
     - SpecularColor: {r: 0, g: 0, b: 0, a: 1}
     - UILightColor: {r: 1, g: 1, b: 1, a: 1}
     - UILightDirection: {r: 0, g: 0, b: 0, a: 0}
