@@ -192,6 +192,7 @@ public class StarSystem : MonoBehaviour
 
 		// make sure the camera is at the right height above the zero plane
 		m_spaceflightController.m_player.DollyCamera( 1024.0f );
+		m_spaceflightController.m_player.SetClipPlanes( 512.0f, 1536.0f );
 
 		// move the player object
 		m_spaceflightController.m_player.transform.position = playerData.m_general.m_coordinates = playerData.m_general.m_lastStarSystemCoordinates;

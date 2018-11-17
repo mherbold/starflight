@@ -71,9 +71,10 @@ public class DockingBay : MonoBehaviour
 		var tanAngle = Mathf.Tan( angle );
 		var halfDoorWidth = 276.5f;
 
-		m_parkedPosition = Mathf.Min( 2048.0f, m_dockingBayDoorTop.transform.position.y + halfDoorWidth * tanAngle );
+		m_parkedPosition = Mathf.Min( 1024.0f, halfDoorWidth * tanAngle );
 
 		m_spaceflightController.m_player.DollyCamera( m_parkedPosition );
+		m_spaceflightController.m_player.SetClipPlanes( 1.0f, 2048.0f );
 
 		// freeze the player
 		m_spaceflightController.m_player.Freeze();

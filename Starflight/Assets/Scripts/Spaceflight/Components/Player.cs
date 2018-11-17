@@ -389,6 +389,13 @@ public class Player : MonoBehaviour
 		m_camera.farClipPlane = Mathf.Max( distance + 512.0f, 1024.0f + 512.0f );
 	}
 
+	// call this to update the clip planes for the camera
+	public void SetClipPlanes( float nearClipPlane, float farClipPlane )
+	{
+		m_camera.nearClipPlane = nearClipPlane;
+		m_camera.farClipPlane = farClipPlane;
+	}
+
 	// call this to get the current position of the player
 	public Vector3 GetPosition()
 	{

@@ -96,6 +96,7 @@ public class InOrbit : MonoBehaviour
 
 		// make sure the camera dolly is the right distance
 		m_spaceflightController.m_player.DollyCamera( 1024.0f );
+		m_spaceflightController.m_player.SetClipPlanes( 512.0f, 1536.0f );
 
 		// freeze the player
 		m_spaceflightController.m_player.Freeze();
