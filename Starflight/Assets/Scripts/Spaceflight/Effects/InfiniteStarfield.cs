@@ -34,7 +34,7 @@ public class InfiniteStarfield : MonoBehaviour
 
 		float speed = playerData.m_general.m_currentSpeed;
 
-		float alpha = Mathf.Lerp( 0.0f, 1.0f, speed / playerData.m_general.m_currentMaximumSpeed );
+		float alpha = Mathf.Clamp( Mathf.Pow( speed / playerData.m_general.m_currentMaximumSpeed, 0.4f ), 0.0f, 1.0f );
 
 		Tools.SetOpacity( m_material, alpha );
 

@@ -23,3 +23,16 @@ Questionable Data
 	
 		Need to check which orbit positions the Veloxi drones are on.
 	
+Communications
+
+	type
+	
+		0 =
+		1 = statement, no relationship formed yet
+		2 = statement, friends
+		10 = response to question about themselves
+		11 = response to question about other races
+		12 = response to question about the old empire
+		13 = response to question about the ancients
+		14 = response to question about general info
+		99 = statement, terminating communications

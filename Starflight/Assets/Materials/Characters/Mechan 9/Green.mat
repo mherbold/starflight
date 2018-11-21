@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Base (No AO)
+  m_Name: Green
   m_Shader: {fileID: 4800000, guid: f67073489be24934c9032d00068b6661, type: 3}
   m_ShaderKeywords: SF_ALBEDOOCCLUSIONON_ON SF_ALBEDOOCCLUSION_ON SF_FORWARDSHADOWSON_ON
     SF_FORWARDSHADOWS_ON SF_SPECULAR_ON SF_ZWRITEON_ON
@@ -102,7 +102,7 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - SF_AlbedoColor: {r: 0.33333334, g: 0.33333334, b: 0.33333334, a: 1}
+    - SF_AlbedoColor: {r: 0, g: 0.6666667, b: 0, a: 1}
     - SF_EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
     - SF_NormalMapScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SF_SpecularColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
