@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Scanner : MonoBehaviour
 {
+	float m_rotation;
+
 	// unity start
 	void Start()
 	{
@@ -11,6 +13,14 @@ public class Scanner : MonoBehaviour
 	// unity update
 	void Update()
 	{
+		m_rotation += Time.deltaTime * 100.0f;
+
+		if ( m_rotation > 360.0f )
+		{
+			m_rotation -= 360.0f;
+		}
+
+		transform.localRotation = Quaternion.Euler( -90.0f, m_rotation, 0.0f );
 	}
 
 	// hide the scanner
@@ -30,6 +40,8 @@ public class Scanner : MonoBehaviour
 	// update the position of the scanner ring
 	public void UpdatePosition( Vector3 newPosition )
 	{
-		gameObject.transform.position = newPosition;
+		newPosition.y = -16;
+
+		transform.position = newPosition;
 	}
 }

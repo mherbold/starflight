@@ -42,6 +42,9 @@ public class SensorsDisplay : ShipDisplay
 	// the bio / min text
 	public TextMeshProUGUI m_bioMinText;
 
+	// the instructions text
+	public TextMeshProUGUI m_instructionsText;
+
 	// the background image
 	public Image m_backgroundImage;
 
@@ -190,6 +193,11 @@ public class SensorsDisplay : ShipDisplay
 				// update the messages text
 				m_spaceflightController.m_messages.ChangeText( "Atmosphere:\n<color=white>" + atmosphere + "</color>\nHydrosphere:\n<color=white>" + hydrosphere + "</color>\nLithosphere:\n<color=white>" + lithosphere + "</color>" );
 			}
+			else
+			{
+				// TODO: show ship information
+				m_spaceflightController.m_messages.ChangeText( "" );
+			}
 		}
 
 		// calculate the scanned amounts
@@ -232,6 +240,17 @@ public class SensorsDisplay : ShipDisplay
 			m_maskMaterial = new Material( m_maskImage.material );
 			m_maskImage.material = m_maskMaterial;
 		}
+
+		// hide the top and bottom text
+		m_massText.gameObject.SetActive( false );
+		m_bioMinText.gameObject.SetActive( false );
+
+		// hide the background and mask
+		m_backgroundImage.gameObject.SetActive( false );
+		m_maskImage.gameObject.SetActive( false );
+
+		// show the instructions text
+		m_instructionsText.gameObject.SetActive( true );
 	}
 
 	// hide
@@ -294,5 +313,16 @@ public class SensorsDisplay : ShipDisplay
 
 		// play the scanning sound
 		SoundController.m_instance.PlaySound( SoundController.Sound.Scanning );
+
+		// show the top and bottom text
+		m_massText.gameObject.SetActive( true );
+		m_bioMinText.gameObject.SetActive( true );
+
+		// show the background and mask
+		m_backgroundImage.gameObject.SetActive( true );
+		m_maskImage.gameObject.SetActive( true );
+
+		// hide the instructions text
+		m_instructionsText.gameObject.SetActive( false );
 	}
 }

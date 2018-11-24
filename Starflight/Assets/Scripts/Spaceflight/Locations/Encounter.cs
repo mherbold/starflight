@@ -502,6 +502,9 @@ public class Encounter : MonoBehaviour
 
 			// deactivate the sensor button
 			m_spaceflightController.m_buttonController.DeactivateButton();
+
+			// show the status display
+			m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_statusDisplay );
 		}
 		else
 		{
@@ -515,6 +518,9 @@ public class Encounter : MonoBehaviour
 
 				// deactivate the sensor button
 				m_spaceflightController.m_buttonController.DeactivateButton();
+
+				// show the status display
+				m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_statusDisplay );
 			}
 			else
 			{
