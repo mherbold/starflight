@@ -9,6 +9,7 @@
 #include "SF - Unity.cginc"
 
 sampler2D SF_AlbedoMap;
+float4 SF_AlbedoMapScaleOffset;
 float4 SF_AlbedoColor;
 
 sampler2D SF_SpecularMap;
@@ -126,7 +127,7 @@ float4 ComputeDiffuseColor( SF_VertexShaderOutput i )
 {
 #if SF_ALBEDOMAP_ON
 
-	float4 albedoMap = tex2D( SF_AlbedoMap, i.texCoord0.xy );
+	float4 albedoMap = tex2D( SF_AlbedoMap, i.texCoord0.xy * SF_AlbedoMapScaleOffset.xy + SF_AlbedoMapScaleOffset.zw );
 
 #else // !SF_ALBEDOMAP_ON
 

@@ -7,7 +7,33 @@ public class SensorsDisplay : ShipDisplay
 {
 	public enum ScanType
 	{
-		Planet
+		Player,
+		SpeminTransport,
+		SpeminScout,
+		SpeminWarship,
+		MechanScout,
+		ElowanTransport,
+		ElowanScout,
+		ElowanWarship,
+		ThrynnTransport,
+		ThrynnScout,
+		ThrynnWarship,
+		VeloxiTransport,
+		VeloxiScout,
+		VeloxiWarship,
+		GazurtoidScout,
+		GazurtoidWarship,
+		UhlekScout,
+		UhlekWarship,
+		VeloxiDrone,
+		NomadProbe,
+		Mysterion,
+		TheEnterprise,
+		Minstrel,
+		NoahTransport,
+		Debris,
+		Planet,
+		Unknown
 	};
 
 	// the mass text
@@ -16,11 +42,17 @@ public class SensorsDisplay : ShipDisplay
 	// the bio / min text
 	public TextMeshProUGUI m_bioMinText;
 
-	// the scan image (this should be using custom mask image shader)
-	public Image m_image;
+	// the background image
+	public Image m_backgroundImage;
 
-	// the mask for the planet scan type
-	public Texture m_planetMaskTexture;
+	// the scan image (this should be using custom mask image shader)
+	public Image m_maskImage;
+
+	// the background textures for the various scan types
+	public Texture[] m_backgroundTextures;
+
+	// the masks for the various scan types
+	public Texture[] m_maskTextures;
 
 	// how fast to cycle the colors
 	public float m_colorCycleSpeed;
@@ -34,14 +66,29 @@ public class SensorsDisplay : ShipDisplay
 	// do we have sensor data to analyze?
 	public bool m_hasSensorData;
 
-	// what are we scanning
-	public ScanType m_scanType;
+	// the background material
+	Material m_backgroundMaterial;
 
-	// the image material
-	Material m_material;
+	// the mask material
+	Material m_maskMaterial;
 
 	// are we running the cinematics?
 	bool m_isDoingCinematics;
+
+	// what are we currently scanning
+	ScanType m_scanType;
+
+	// mass power base (18 for planets, 1 for ships)
+	int m_massPowerBase;
+
+	// mass of object we are scanning
+	int m_mass;
+
+	// bio density of object we are scanning
+	int m_bioDensity;
+
+	// mineral density of object we are scanning
+	int m_mineralDensity;
 
 	// have we stopped the sensor sound yet?
 	bool m_soundStopped;
@@ -58,133 +105,26 @@ public class SensorsDisplay : ShipDisplay
 	public override void Update()
 	{
 		// are we doing the cinematics?
-		if ( m_isDoingCinematics )
+		if ( !m_isDoingCinematics )
 		{
-			// yes -update the timer
-			m_timer += Time.deltaTime;
-
-			// switch to the scan type update subroutine
-			switch ( m_scanType )
-			{
-				case ScanType.Planet:
-
-					UpdatePlanetScan();
-
-					break;
-			}
+			// no - don't do anything here
+			return;
 		}
-	}
 
-	// the display label
-	public override string GetLabel()
-	{
-		return "Sensors";
-	}
+		// yes -update the timer
+		m_timer += Time.deltaTime;
 
-	// show (but set the scan type before calling this)
-	public override void Show()
-	{
-		// call base show
-		base.Show();
-
-		// reset the cinematics timer
-		m_timer = 0.0f;
-
-		// start the cinematics
-		m_isDoingCinematics = true;
-		m_soundStopped = false;
-
-		// make a copy of the material so the file doesn't get updated
-		m_material = new Material( m_image.material );
-
-		m_image.material = m_material;
-
-		// switch to the scan type initialize subroutine
-		switch ( m_scanType )
-		{
-			case ScanType.Planet:
-
-				InitializePlanetScan();
-				break;
-		}
-	}
-
-	// hide
-	public override void Hide()
-	{
-		// call base hide
-		base.Hide();
-
-		// no more sensor data available for analysis
-		m_hasSensorData = false;
-	}
-
-	// planet scan initialize
-	void InitializePlanetScan()
-	{
 		// get to the game data
-		GameData gameData = DataController.m_instance.m_gameData;
+		var gameData = DataController.m_instance.m_gameData;
 
 		// get to the player data
-		PlayerData playerData = DataController.m_instance.m_playerData;
-
-		// get the planet we are currently orbiting about
-		GD_Planet m_planet = gameData.m_planetList[ playerData.m_general.m_currentPlanetId ];
-
-		// swap the mask to the planet mask
-		m_material.SetTexture( "_MaskTex", m_planetMaskTexture );
-
-		// change the size of the image based on the size of the planet
-		m_image.transform.localScale = m_planet.GetScale() / 320.0f * 0.5f + new Vector3( 0.5f, 0.5f, 0.5f );
-	}
-
-	// planet scan update
-	void UpdatePlanetScan()
-	{
-		// get to the game data
-		GameData gameData = DataController.m_instance.m_gameData;
-
-		// get to the player data
-		PlayerData playerData = DataController.m_instance.m_playerData;
-
-		// get the planet we are currently orbiting about
-		GD_Planet m_planet = gameData.m_planetList[ playerData.m_general.m_currentPlanetId ];
+		var playerData = DataController.m_instance.m_playerData;
 
 		// calculate the duration of the scan
-		float scanDuration = Mathf.Lerp( m_minDuration, m_maxDuration, ( m_planet.m_bioDensity + m_planet.m_mineralDensity ) / 200.0f );
+		var scanDuration = Mathf.Lerp( m_minDuration, m_maxDuration, ( m_bioDensity + m_mineralDensity ) / 200.0f );
 
-		// call the generic scan update routine (returns true when it is time to stop the scan)
-		if ( UpdateScan( scanDuration ) )
-		{
-			// get the planet info
-			string atmosphere = m_planet.GetAtmosphereText();
-			string hydrosphere = m_planet.GetHydrosphereText();
-			string lithosphere = m_planet.GetLithosphereText();
-
-			// update the messages text
-			m_spaceflightController.m_messages.ChangeText( "Atmosphere:\n<color=white>" + atmosphere + "</color>\nHydrosphere:\n<color=white>" + hydrosphere + "</color>\nLithosphere:\n<color=white>" + lithosphere + "</color>" );
-		}
-
-		// calculate the scanned amounts
-		float scannedMass = Mathf.Lerp( 1.0f, m_planet.m_mass, Mathf.Pow( m_timer / scanDuration, 4.0f ) );
-		float scannedBio = Mathf.Lerp( 0.0f, m_planet.m_bioDensity, m_timer / scanDuration );
-		float scannedMinerals = Mathf.Lerp( 0.0f, m_planet.m_mineralDensity, m_timer / scanDuration );
-
-		// update the mass text
-		int massLength = Mathf.RoundToInt( scannedMass ).ToString().Length;
-		int massPower = 18 + massLength - 1;
-		int massBase = Mathf.FloorToInt( scannedMass / Mathf.Pow( 10.0f, massLength - 1 ) );
-		m_massText.text = "Mass: <color=\"white\">" + massBase + "x10<sup>" + massPower + "</sup></color> Tons";
-
-		// update the bio text
-		m_bioMinText.text = "Bio: <color=\"white\">" + Mathf.RoundToInt( scannedBio ) + "%</color>   Min: <color=\"white\">" + Mathf.RoundToInt( scannedMinerals ) + "%</color>";
-	}
-
-	// the generic scan update
-	bool UpdateScan( float scanDuration )
-	{
 		// calculate alpha
-		float alpha = Mathf.SmoothStep( 0.0f, 1.0f, m_timer / scanDuration );
+		var alpha = Mathf.SmoothStep( 0.0f, 1.0f, m_timer / scanDuration );
 
 		// have we stopped the scanning sound yet?
 		if ( !m_soundStopped )
@@ -223,17 +163,136 @@ public class SensorsDisplay : ShipDisplay
 		}
 
 		// calculate the new color multiplier for the noise
-		float r = ( alpha + ( 1 - alpha ) * Mathf.Abs( Mathf.Sin( m_timer * m_colorCycleSpeed + ( 2.0f * Mathf.PI / 3.0f ) * 1.0f ) ) ) * alpha;
-		float g = ( alpha + ( 1 - alpha ) * Mathf.Abs( Mathf.Sin( m_timer * m_colorCycleSpeed + ( 2.0f * Mathf.PI / 3.0f ) * 2.0f ) ) ) * alpha;
-		float b = ( alpha + ( 1 - alpha ) * Mathf.Abs( Mathf.Sin( m_timer * m_colorCycleSpeed + ( 2.0f * Mathf.PI / 3.0f ) * 3.0f ) ) ) * alpha;
+		var r = ( alpha + ( 1 - alpha ) * Mathf.Abs( Mathf.Sin( m_timer * m_colorCycleSpeed + ( 2.0f * Mathf.PI / 3.0f ) * 1.0f ) ) ) * alpha;
+		var g = ( alpha + ( 1 - alpha ) * Mathf.Abs( Mathf.Sin( m_timer * m_colorCycleSpeed + ( 2.0f * Mathf.PI / 3.0f ) * 2.0f ) ) ) * alpha;
+		var b = ( alpha + ( 1 - alpha ) * Mathf.Abs( Mathf.Sin( m_timer * m_colorCycleSpeed + ( 2.0f * Mathf.PI / 3.0f ) * 3.0f ) ) ) * alpha;
 
 		// set the new image color
-		m_image.color = new Color( r, g, b );
+		m_maskImage.color = new Color( r, g, b );
 
 		// give the main (noise) texture a random posititon
-		m_material.SetTextureOffset( "_MainTex", new Vector2( Random.Range( 0.0f, 1.0f ), Random.Range( 0.0f, 1.0f ) ) );
+		m_maskMaterial.SetTextureOffset( "_MainTex", new Vector2( Random.Range( 0.0f, 1.0f ), Random.Range( 0.0f, 1.0f ) ) );
 
-		// let the caller know if it is time to stop the scan cinematics
-		return !m_isDoingCinematics;
+		// is the cinematics done?
+		if ( !m_isDoingCinematics )
+		{
+			// yes - were we scanning a planet?
+			if ( m_scanType == ScanType.Planet )
+			{
+				// get the current planet
+				var planet = gameData.m_planetList[ playerData.m_general.m_currentPlanetId ];
+
+				// get the planet info
+				var atmosphere = planet.GetAtmosphereText();
+				var hydrosphere = planet.GetHydrosphereText();
+				var lithosphere = planet.GetLithosphereText();
+
+				// update the messages text
+				m_spaceflightController.m_messages.ChangeText( "Atmosphere:\n<color=white>" + atmosphere + "</color>\nHydrosphere:\n<color=white>" + hydrosphere + "</color>\nLithosphere:\n<color=white>" + lithosphere + "</color>" );
+			}
+		}
+
+		// calculate the scanned amounts
+		var scannedMass = Mathf.Lerp( 1.0f, m_mass, Mathf.Pow( m_timer / scanDuration, 4.0f ) );
+		var scannedBio = Mathf.Lerp( 0.0f, m_bioDensity, m_timer / scanDuration );
+		var scannedMinerals = Mathf.Lerp( 0.0f, m_mineralDensity, m_timer / scanDuration );
+
+		// update the mass text
+		var massLength = Mathf.RoundToInt( scannedMass ).ToString().Length;
+		var massPower = m_massPowerBase + massLength - 1;
+		var massBase = Mathf.FloorToInt( scannedMass / Mathf.Pow( 10.0f, massLength - 1 ) );
+		m_massText.text = "Mass: <color=\"white\">" + massBase + "x10<sup>" + massPower + "</sup></color> Tons";
+
+		// update the bio text
+		m_bioMinText.text = "Bio: <color=\"white\">" + Mathf.RoundToInt( scannedBio ) + "%</color>   Min: <color=\"white\">" + Mathf.RoundToInt( scannedMinerals ) + "%</color>";
+	}
+
+	// the display label
+	public override string GetLabel()
+	{
+		return "Sensors";
+	}
+
+	// show
+	public override void Show()
+	{
+		// call base show
+		base.Show();
+
+		// make a copy of the background material so the file doesn't get updated
+		if ( m_backgroundMaterial == null )
+		{
+			m_backgroundMaterial = new Material( m_backgroundImage.material );
+			m_backgroundImage.material = m_backgroundMaterial;
+		}
+
+		// make a copy of the mask material so the file doesn't get updated
+		if ( m_maskMaterial == null )
+		{
+			m_maskMaterial = new Material( m_maskImage.material );
+			m_maskImage.material = m_maskMaterial;
+		}
+	}
+
+	// hide
+	public override void Hide()
+	{
+		// call base hide
+		base.Hide();
+
+		// no more sensor data available for analysis
+		m_hasSensorData = false;
+	}
+
+	// call this to start the scanning cinematics
+	public void StartScanning( ScanType scanType, int massPowerBase, int mass, int bioDensity, int mineralDensity )
+	{
+		// get to the game data
+		var gameData = DataController.m_instance.m_gameData;
+
+		// get to the player data
+		var playerData = DataController.m_instance.m_playerData;
+
+		// if we don't have a mask for this scan type then change it to the unknown mask
+		if ( m_maskTextures[ (int) scanType ] == null )
+		{
+			scanType = ScanType.Unknown;
+		}
+
+		// remember the scan type, mass, bio density, and mineral density
+		m_scanType = scanType;
+		m_massPowerBase = massPowerBase;
+		m_mass = mass;
+		m_bioDensity = bioDensity;
+		m_mineralDensity = mineralDensity;
+
+		// reset the cinematics timer
+		m_timer = 0.0f;
+
+		// start the cinematics
+		m_isDoingCinematics = true;
+		m_soundStopped = false;
+
+		// set the correct background texture for the scan type
+		m_backgroundMaterial.SetTexture( "SF_AlbedoMap", m_backgroundTextures[ (int) m_scanType ] );
+
+		// set the correct mask texture for the scan type
+		m_maskMaterial.SetTexture( "_MaskTex", m_maskTextures[ (int) m_scanType ] );
+
+		// reset background and mask image scale
+		m_maskImage.transform.localScale = m_backgroundImage.transform.localScale = Vector3.one;
+
+		// if we are scanning a planet scale the mask image
+		if ( m_scanType == ScanType.Planet )
+		{
+			// get the planet we are currently orbiting about
+			var planet = gameData.m_planetList[ playerData.m_general.m_currentPlanetId ];
+
+			// change the size of the background and mask images based on the size of the planet
+			m_backgroundImage.transform.localScale = m_maskImage.transform.localScale = planet.GetScale() / 320.0f * 0.5f + new Vector3( 0.5f, 0.5f, 0.5f );
+		}
+
+		// play the scanning sound
+		SoundController.m_instance.PlaySound( SoundController.Sound.Scanning );
 	}
 }

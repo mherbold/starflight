@@ -213,8 +213,10 @@ public class TradeDepotPanel : Panel
 		}
 
 		// check if we have pressed the cancel button
-		if ( InputController.m_instance.CancelWasPressed() )
+		if ( InputController.m_instance.m_west || InputController.m_instance.m_east || InputController.m_instance.m_cancel )
 		{
+			InputController.m_instance.Debounce();
+
 			SwitchToMenuBarState();
 
 			SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
@@ -228,8 +230,10 @@ public class TradeDepotPanel : Panel
 		UpdateController();
 
 		// check if we have pressed the fire button
-		if ( InputController.m_instance.SubmitWasPressed() )
+		if ( InputController.m_instance.m_submit )
 		{
+			InputController.m_instance.Debounce();
+
 			SoundController.m_instance.PlaySound( SoundController.Sound.Activate );
 
 			BuySelectedItem();
@@ -243,8 +247,10 @@ public class TradeDepotPanel : Panel
 		UpdateController();
 
 		// check if we have pressed the fire button
-		if ( InputController.m_instance.SubmitWasPressed() )
+		if ( InputController.m_instance.m_submit )
 		{
+			InputController.m_instance.Debounce();
+
 			SoundController.m_instance.PlaySound( SoundController.Sound.Activate );
 
 			SellSelectedItem();
@@ -258,8 +264,10 @@ public class TradeDepotPanel : Panel
 		UpdateController();
 
 		// check if we have pressed the fire button
-		if ( InputController.m_instance.SubmitWasPressed() )
+		if ( InputController.m_instance.m_submit )
 		{
+			InputController.m_instance.Debounce();
+
 			SoundController.m_instance.PlaySound( SoundController.Sound.Activate );
 
 			AnalyzeSelectedItem();
@@ -269,8 +277,10 @@ public class TradeDepotPanel : Panel
 	void UpdateControllerForAnalyzeShowState()
 	{
 		// check if we have pressed the fire or cancel button
-		if ( InputController.m_instance.SubmitWasPressed() || InputController.m_instance.CancelWasPressed() )
+		if ( InputController.m_instance.m_submit || InputController.m_instance.m_cancel )
 		{
+			InputController.m_instance.Debounce();
+
 			// switch back to the analyze item state
 			SwitchToAnalyzeItemState( false );
 
@@ -282,8 +292,10 @@ public class TradeDepotPanel : Panel
 	void UpdateControllerForErrorMessageState()
 	{
 		// check if we have pressed the fire or cancel button
-		if ( InputController.m_instance.SubmitWasPressed() || InputController.m_instance.CancelWasPressed() )
+		if ( InputController.m_instance.m_submit || InputController.m_instance.m_cancel )
 		{
+			InputController.m_instance.Debounce();
+
 			// switch back to the previous state
 			switch ( m_stateBeforeError )
 			{
@@ -345,9 +357,6 @@ public class TradeDepotPanel : Panel
 
 		// update the screen
 		UpdateScreen();
-
-		// debounce the input
-		InputController.m_instance.m_debounceNextUpdate = true;
 	}
 
 	// call this to switch to the buy amount state
@@ -384,9 +393,6 @@ public class TradeDepotPanel : Panel
 
 		// update the screen
 		UpdateScreen();
-
-		// debounce the input
-		InputController.m_instance.m_debounceNextUpdate = true;
 	}
 
 	// call this to switch to the sell amount state
@@ -423,9 +429,6 @@ public class TradeDepotPanel : Panel
 
 		// update the screen
 		UpdateScreen();
-
-		// debounce the input
-		InputController.m_instance.m_debounceNextUpdate = true;
 	}
 
 	// call this to switch to the confirm analysis state
@@ -461,9 +464,6 @@ public class TradeDepotPanel : Panel
 
 		// update the screen
 		UpdateScreen();
-
-		// debounce the input
-		InputController.m_instance.m_debounceNextUpdate = true;
 	}
 
 	// call this to switch to the error message state
@@ -486,9 +486,6 @@ public class TradeDepotPanel : Panel
 
 		// play a ui sound
 		SoundController.m_instance.PlaySound( SoundController.Sound.Error );
-
-		// debounce the input
-		InputController.m_instance.m_debounceNextUpdate = true;
 	}
 
 	// call this whenever we change state or do something that would result in something changing on the screen
@@ -825,6 +822,8 @@ public class TradeDepotPanel : Panel
 	// this is called if we clicked on the buy button
 	public void BuyClicked()
 	{
+		InputController.m_instance.Debounce();
+
 		// switch to the buy item state
 		SwitchToBuyItemState();
 
@@ -835,6 +834,8 @@ public class TradeDepotPanel : Panel
 	// this is called if we clicked on the sell button
 	public void SellClicked()
 	{
+		InputController.m_instance.Debounce();
+
 		// get access to the player data
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
@@ -857,6 +858,8 @@ public class TradeDepotPanel : Panel
 	// this is called if we clicked on the analyze button
 	public void AnalyzeClicked()
 	{
+		InputController.m_instance.Debounce();
+
 		// get access to the player data
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
@@ -879,6 +882,8 @@ public class TradeDepotPanel : Panel
 	// this is called if we clicked on the exit button
 	public void ExitClicked()
 	{
+		InputController.m_instance.Debounce();
+
 		// close this panel
 		PanelController.m_instance.Close();
 	}
@@ -886,6 +891,8 @@ public class TradeDepotPanel : Panel
 	// this is called if we clicked on yes to analyze the selected item
 	public void YesClicked()
 	{
+		InputController.m_instance.Debounce();
+
 		// get the currently selected item
 		Item item = m_itemList[ m_currentItemIndex ];
 
@@ -911,6 +918,8 @@ public class TradeDepotPanel : Panel
 	// this is called if we clicked on no to analyze the selected item
 	public void NoClicked()
 	{
+		InputController.m_instance.Debounce();
+
 		// switch back to the analyze item state
 		SwitchToAnalyzeItemState( false );
 
@@ -921,6 +930,8 @@ public class TradeDepotPanel : Panel
 	// this is called when we hit enter in the amount input field
 	public void OnEndEdit()
 	{
+		InputController.m_instance.Debounce();
+
 		// get the amount to transfer
 		int desiredAmount = 0;
 

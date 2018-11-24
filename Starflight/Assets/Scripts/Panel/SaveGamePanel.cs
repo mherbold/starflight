@@ -102,6 +102,8 @@ public class SaveGamePanel : Panel
 	// called when player clicks on switch
 	public void SwitchClicked()
 	{
+		InputController.m_instance.Debounce();
+
 		// deselect all the buttons
 		EventSystem.current.SetSelectedGameObject( null );
 
@@ -124,6 +126,8 @@ public class SaveGamePanel : Panel
 	// called when player clicks on copy
 	public void CopyClicked()
 	{
+		InputController.m_instance.Debounce();
+
 		// deselect all the buttons
 		EventSystem.current.SetSelectedGameObject( null );
 
@@ -146,6 +150,8 @@ public class SaveGamePanel : Panel
 	// called when player clicks on reset
 	public void ResetClicked()
 	{
+		InputController.m_instance.Debounce();
+
 		// deselect all the buttons
 		EventSystem.current.SetSelectedGameObject( null );
 
@@ -168,6 +174,8 @@ public class SaveGamePanel : Panel
 	// called when player clicks on resume
 	public void ResumeClicked()
 	{
+		InputController.m_instance.Debounce();
+
 		// close this panel
 		PanelController.m_instance.Close();
 	}
@@ -175,6 +183,8 @@ public class SaveGamePanel : Panel
 	// called when the player clicks on quit
 	public void QuitClicked()
 	{
+		InputController.m_instance.Debounce();
+
 		// save the game
 		DataController.m_instance.SaveActiveGame();
 
@@ -254,6 +264,8 @@ public class SaveGamePanel : Panel
 	// called when player clicks on cancel (or "no")
 	public void CancelClicked()
 	{
+		InputController.m_instance.Debounce();
+
 		// deselect all the buttons
 		EventSystem.current.SetSelectedGameObject( null );
 

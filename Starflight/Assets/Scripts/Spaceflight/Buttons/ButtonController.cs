@@ -155,8 +155,10 @@ public class ButtonController : MonoBehaviour
 		}
 
 		// check if we have pressed the cancel button
-		if ( InputController.m_instance.CancelWasPressed() )
+		if ( InputController.m_instance.m_cancel )
 		{
+			InputController.m_instance.Debounce();
+
 			if ( m_currentButton == null )
 			{
 				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
@@ -169,8 +171,10 @@ public class ButtonController : MonoBehaviour
 		}
 
 		// check if we have pressed the fire button
-		if ( InputController.m_instance.SubmitWasPressed() )
+		if ( InputController.m_instance.m_submit )
 		{
+			InputController.m_instance.Debounce();
+
 			if ( m_buttonList[ m_currentButtonIndex ] == null )
 			{
 				SoundController.m_instance.PlaySound( SoundController.Sound.Error );

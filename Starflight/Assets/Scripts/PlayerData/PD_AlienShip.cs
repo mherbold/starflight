@@ -7,8 +7,8 @@ using System;
 
 public class PD_AlienShip
 {
-	// the encounter type id
-	public int m_encounterTypeId;
+	// the vessel id
+	public int m_vesselId;
 
 	// the current position of the alien
 	public Vector3 m_coordinates;
@@ -37,46 +37,47 @@ public class PD_AlienShip
 	// this is called when the player data is created
 	public void Initialize( GD_Encounter encounter )
 	{
-		// encounter type is random out of the given choices
-		int numEncounterTypes = 0;
+		// vessel is random out of the given choices
+		int numVessels = 0;
 
-		if ( encounter.m_encounterTypeIdA != 0 )
+		if ( encounter.m_vesselIdA != 0 )
 		{
-			numEncounterTypes++;
+			numVessels++;
 		}
 
-		if ( encounter.m_encounterTypeIdB != 0 )
+		if ( encounter.m_vesselIdB != 0 )
 		{
-			numEncounterTypes++;
+			numVessels++;
 		}
 
-		if ( encounter.m_encounterTypeIdC != 0 )
+		if ( encounter.m_vesselIdC != 0 )
 		{
-			numEncounterTypes++;
+			numVessels++;
 		}
 
-		var possibleEncounterTypes = new int[ numEncounterTypes ];
+		var possibleVessels = new int[ numVessels ];
 
-		var possibleEncounterTypeIndex = 0;
+		var possibleVesselIndex = 0;
 
-		if ( encounter.m_encounterTypeIdA != 0 )
+		if ( encounter.m_vesselIdA != 0 )
 		{
-			possibleEncounterTypes[ possibleEncounterTypeIndex++ ] = encounter.m_encounterTypeIdA;
+			possibleVessels[ possibleVesselIndex++ ] = encounter.m_vesselIdA;
 		}
 
-		if ( encounter.m_encounterTypeIdB != 0 )
+		if ( encounter.m_vesselIdB != 0 )
 		{
-			possibleEncounterTypes[ possibleEncounterTypeIndex++ ] = encounter.m_encounterTypeIdB;
+			possibleVessels[ possibleVesselIndex++ ] = encounter.m_vesselIdB;
 		}
 
-		if ( encounter.m_encounterTypeIdC != 0 )
+		if ( encounter.m_vesselIdC != 0 )
 		{
-			possibleEncounterTypes[ possibleEncounterTypeIndex++ ] = encounter.m_encounterTypeIdC;
+			possibleVessels[ possibleVesselIndex++ ] = encounter.m_vesselIdC;
 		}
 
-		var randomIndex = UnityEngine.Random.Range( 0, possibleEncounterTypes.Length - 1 );
+		// pick a vessel
+		var randomIndex = UnityEngine.Random.Range( 0, possibleVessels.Length - 1 );
 
-		m_encounterTypeId = possibleEncounterTypes[ randomIndex ];
+		m_vesselId = possibleVessels[ randomIndex ];
 
 		// reset some important stuff
 		m_coordinates = Vector3.zero;

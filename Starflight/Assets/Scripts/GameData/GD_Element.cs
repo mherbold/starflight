@@ -5,6 +5,7 @@ using System;
 
 public class GD_Element
 {
+	public int m_id;
 	public string m_name;
 	public int m_starportPrice;
 	public int m_actualValue;

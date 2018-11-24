@@ -86,7 +86,7 @@ public class SceneFadeController : MonoBehaviour
 			else
 			{
 				// no - calculate the new alpha value
-				float alpha = Mathf.Lerp( 0.0f, 1.0f, m_timer / m_fadeDuration );
+				float alpha = Mathf.Pow( Mathf.Lerp( 0.0f, 1.0f, m_timer / m_fadeDuration ), 2.0f );
 
 				// update the fade image color
 				m_fadeImage.color = new Color( 0.0f, 0.0f, 0.0f, alpha );

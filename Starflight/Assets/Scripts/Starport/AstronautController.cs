@@ -133,8 +133,10 @@ public class AstronautController : MonoBehaviour
 			}
 
 			// check if the player has pressed the fire button or the cancel button
-			if ( InputController.m_instance.SubmitWasPressed() )
+			if ( InputController.m_instance.m_submit )
 			{
+				InputController.m_instance.Debounce();
+
 				// check if we are showing a door name
 				if ( m_doorNameController.IsShowingDoorName() )
 				{
@@ -179,8 +181,10 @@ public class AstronautController : MonoBehaviour
 					}
 				}
 			}
-			else if ( InputController.m_instance.CancelWasPressed() )
+			else if ( InputController.m_instance.m_cancel )
 			{
+				InputController.m_instance.Debounce();
+
 				PanelController.m_instance.m_saveGamePanel.SetCallbackObject( this );
 
 				OpenPanel( PanelController.m_instance.m_saveGamePanel );
@@ -231,6 +235,12 @@ public class AstronautController : MonoBehaviour
 	// unity on animator move
 	void OnAnimatorMove()
 	{
+		// ignore this callback if we have a panel open or we are transporting
+		if ( PanelController.m_instance.HasActivePanel() || m_dockingBayPanel.IsTransporting() )
+		{
+			return;
+		}
+
 		// did the height above the floor change?
 		if ( !Tools.IsApproximatelyEqual( m_navMeshAgent.nextPosition.y, m_currentHeightAboveFloor, 0.1f ) )
 		{

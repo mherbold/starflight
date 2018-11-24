@@ -6028,7 +6028,7 @@ MonoBehaviour:
       m_cargoPodMass: 0
       m_cargoPodVolume: 0
     m_noticeList: []
-    m_raceList: []
+    m_crewRaceList: []
     m_enginesList: []
     m_shieldingList: []
     m_armorList: []
@@ -6050,13 +6050,15 @@ MonoBehaviour:
     m_nebulaList: []
     m_spectralClassList: []
     m_encounterList: []
-    m_encounterTypeList: []
+    m_vesselList: []
+    m_commList: []
   m_playerDataList: []
   m_playerData:
     m_version: 0
     m_isCurrentGame: 0
     m_general:
       m_location: 0
+      m_lastLocation: 0
       m_coordinates: {x: 0, y: 0, z: 0}
       m_lastStarportCoordinates: {x: 0, y: 0, z: 0}
       m_lastHyperspaceCoordinates: {x: 0, y: 0, z: 0}
@@ -6072,6 +6074,7 @@ MonoBehaviour:
       m_gameTime: 0
       m_currentStarId: 0
       m_currentPlanetId: 0
+      m_currentEncounterId: 0
       m_currentSpeed: 0
       m_currentMaximumSpeed: 0
       m_currentDirection: {x: 0, y: 0, z: 0}
@@ -6179,7 +6182,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed43ec93ef413cd47a8046d35c5573b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_debounceNextUpdate: 0
 --- !u!114 &919755017
 MonoBehaviour:
   m_ObjectHideFlags: 0

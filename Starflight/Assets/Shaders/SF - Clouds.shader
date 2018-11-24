@@ -4,6 +4,7 @@ Shader "Starflight/Clouds"
 	Properties
 	{
 		SF_AlbedoMap( "Albedo Map", 2D ) = "white" {}
+		SF_AlbedoMapScaleOffset( "Albedo Map Scale Offset", Vector ) = ( 1, 1, 0, 0 )
 		SF_AlbedoColor( "Albedo Color", Color ) = ( 1, 1, 1, 1 )
 
 		SF_SpecularMap("Specular Map", 2D) = "gray" {}

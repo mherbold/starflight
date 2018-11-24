@@ -142,21 +142,21 @@ public class ManeuverButton : ShipButton
 		}
 
 		// check if we want to stop maneuvering
-		if ( InputController.m_instance.SubmitWasPressed() )
+		if ( InputController.m_instance.m_submit )
 		{
+			InputController.m_instance.Debounce();
+
 			// turn off the engines
 			m_spaceflightController.m_player.TurnOffEngines();
+
+			// turn off the maneuver function
+			m_spaceflightController.m_buttonController.DeactivateButton();
 
 			// are we in a star system?
 			if ( playerData.m_general.m_location == PD_General.Location.StarSystem )
 			{
-				// do we have a planet to orbit?
-				if ( m_spaceflightController.m_starSystem.m_planetToOrbitId == -1 )
-				{
-					// nope - just turn off the maneuver function
-					m_spaceflightController.m_buttonController.DeactivateButton();
-				}
-				else
+				// yep - do we have a planet to orbit?
+				if ( m_spaceflightController.m_starSystem.m_planetToOrbitId != -1 )
 				{
 					// yep - remember the planet
 					playerData.m_general.m_currentPlanetId = m_spaceflightController.m_starSystem.m_planetToOrbitId;
@@ -187,9 +187,6 @@ public class ManeuverButton : ShipButton
 						// display message
 						m_spaceflightController.m_messages.ChangeText( "<color=white>Initiating orbital maneuver...</color>" );
 					}
-
-					// stop here
-					return true;
 				}
 			}
 		}

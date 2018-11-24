@@ -9,14 +9,18 @@ public class GD_Star
 	public const int c_maxNumPlanets = 8;
 
 	public int m_id;
+
 	public int m_xCoordinate;
 	public int m_yCoordinate;
+
 	public string m_class;
+
 	public int m_daysToNextFlare;
 	public int m_daysSincePreviousFlare;
 	public int m_yearOfNextFlare;
 	public int m_monthOfNextFlare;
 	public int m_dayOfNextFlare;
+
 	public bool m_insideNebula;
 
 	GD_Planet[] m_planetList;

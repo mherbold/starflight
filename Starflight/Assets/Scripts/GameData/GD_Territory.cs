@@ -6,10 +6,15 @@ using System;
 
 public class GD_Territory : IComparable
 {
+	public int m_id;
+
 	public int m_xCoordinate;
 	public int m_yCoordinate;
 	public int m_radius;
+
 	public string m_name;
+
+	public GameData.Race m_race;
 
 	Vector3 m_center;
 	float m_size;

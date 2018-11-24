@@ -6,8 +6,11 @@ using System;
 
 public class GD_Flux
 {
+	public int m_id;
+
 	public int m_x1;
 	public int m_y1;
+
 	public int m_x2;
 	public int m_y2;
 

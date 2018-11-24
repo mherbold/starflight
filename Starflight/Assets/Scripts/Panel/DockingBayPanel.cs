@@ -217,6 +217,8 @@ public class DockingBayPanel : Panel
 	// this is called if we clicked on the exit button
 	public void ExitClicked()
 	{
+		InputController.m_instance.Debounce();
+
 		// close this panel
 		PanelController.m_instance.Close();
 	}

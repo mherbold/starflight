@@ -176,8 +176,10 @@ public class CrewAssignmentPanel : Panel
 		}
 
 		// check if we have pressed the cancel button
-		if ( InputController.m_instance.CancelWasPressed() )
+		if ( InputController.m_instance.m_cancel )
 		{
+			InputController.m_instance.Debounce();
+
 			SwitchToMenuBarState();
 
 			SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
@@ -424,6 +426,8 @@ public class CrewAssignmentPanel : Panel
 	// this is called if we clicked on the assign button
 	public void AssignClicked()
 	{
+		InputController.m_instance.Debounce();
+
 		// switch to the create select race state
 		SwitchToAssignPersonnelState();
 
@@ -434,6 +438,8 @@ public class CrewAssignmentPanel : Panel
 	// this is called if we clicked on the exit button
 	public void ExitClicked()
 	{
+		InputController.m_instance.Debounce();
+
 		// close this panel
 		PanelController.m_instance.Close();
 	}

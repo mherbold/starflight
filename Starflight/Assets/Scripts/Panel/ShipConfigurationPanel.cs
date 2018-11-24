@@ -197,8 +197,10 @@ public class ShipConfigurationPanel : Panel
 		}
 
 		// check if we have pressed the cancel button
-		if ( InputController.m_instance.CancelWasPressed() )
+		if ( InputController.m_instance.m_west || InputController.m_instance.m_east || InputController.m_instance.m_cancel )
 		{
+			InputController.m_instance.Debounce();
+
 			SwitchToMenuBarState();
 
 			SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
@@ -212,8 +214,10 @@ public class ShipConfigurationPanel : Panel
 		UpdateController();
 
 		// check if we have pressed the fire button
-		if ( InputController.m_instance.SubmitWasPressed() )
+		if ( InputController.m_instance.m_submit )
 		{
+			InputController.m_instance.Debounce();
+
 			BuySelectedPart();
 
 			SoundController.m_instance.PlaySound( SoundController.Sound.Activate );
@@ -227,8 +231,10 @@ public class ShipConfigurationPanel : Panel
 		UpdateController();
 
 		// check if we have pressed the fire button
-		if ( InputController.m_instance.SubmitWasPressed() )
+		if ( InputController.m_instance.m_submit )
 		{
+			InputController.m_instance.Debounce();
+
 			SellSelectedPart();
 		}
 	}
@@ -275,14 +281,18 @@ public class ShipConfigurationPanel : Panel
 		}
 
 		// check if we have pressed the fire button
-		if ( InputController.m_instance.SubmitWasPressed() )
+		if ( InputController.m_instance.m_submit )
 		{
+			InputController.m_instance.Debounce();
+
 			BuySelectedClass();
 		}
 
 		// check if we have pressed the cancel button
-		if ( InputController.m_instance.CancelWasPressed() )
+		if ( InputController.m_instance.m_west || InputController.m_instance.m_east || InputController.m_instance.m_cancel )
 		{
+			InputController.m_instance.Debounce();
+
 			SwitchToBuyPartState( false );
 
 			SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
@@ -292,8 +302,10 @@ public class ShipConfigurationPanel : Panel
 	void UpdateControllerForErrorMessageState()
 	{
 		// check if we have pressed the fire or cancel button
-		if ( InputController.m_instance.SubmitWasPressed() || InputController.m_instance.CancelWasPressed() )
+		if ( InputController.m_instance.m_submit || InputController.m_instance.m_cancel )
 		{
+			InputController.m_instance.Debounce();
+
 			// switch back to the previous state
 			switch ( m_stateBeforeError )
 			{
@@ -341,9 +353,6 @@ public class ShipConfigurationPanel : Panel
 
 		// update the screen
 		UpdateScreen();
-
-		// debounce the input
-		InputController.m_instance.m_debounceNextUpdate = true;
 	}
 
 	// call this to switch to the sell part state
@@ -360,9 +369,6 @@ public class ShipConfigurationPanel : Panel
 
 		// update the screen
 		UpdateScreen();
-
-		// debounce the input
-		InputController.m_instance.m_debounceNextUpdate = true;
 	}
 
 	// call this to switch to the select class state
@@ -379,9 +385,6 @@ public class ShipConfigurationPanel : Panel
 
 		// update the screen
 		UpdateScreen();
-
-		// debounce the input
-		InputController.m_instance.m_debounceNextUpdate = true;
 	}
 
 	// call this to switch to the give name state
@@ -660,6 +663,8 @@ public class ShipConfigurationPanel : Panel
 	// this is called if we clicked on the buy button
 	public void BuyClicked()
 	{
+		InputController.m_instance.Debounce();
+
 		// switch to the buy part state
 		SwitchToBuyPartState();
 
@@ -670,6 +675,8 @@ public class ShipConfigurationPanel : Panel
 	// this is called if we clicked on the sell button
 	public void SellClicked()
 	{
+		InputController.m_instance.Debounce();
+
 		// switch to the buy part state
 		SwitchToSellPartState();
 
@@ -680,6 +687,8 @@ public class ShipConfigurationPanel : Panel
 	// this is called if we clicked on the repair button
 	public void RepairClicked()
 	{
+		InputController.m_instance.Debounce();
+
 		// play a ui sound
 		SoundController.m_instance.PlaySound( SoundController.Sound.Activate );
 	}
@@ -687,6 +696,8 @@ public class ShipConfigurationPanel : Panel
 	// this is called if we clicked on the name button
 	public void NameClicked()
 	{
+		InputController.m_instance.Debounce();
+
 		// switch to the give name state
 		SwitchToGiveNameState();
 
@@ -697,6 +708,8 @@ public class ShipConfigurationPanel : Panel
 	// this is called if we clicked on the exit button
 	public void ExitClicked()
 	{
+		InputController.m_instance.Debounce();
+
 		// close this panel
 		PanelController.m_instance.Close();
 	}
@@ -704,6 +717,8 @@ public class ShipConfigurationPanel : Panel
 	// this is called when we hit enter in the name input field
 	public void OnEndEdit()
 	{
+		InputController.m_instance.Debounce();
+
 		// update the ship name in the player data
 		DataController.m_instance.m_playerData.m_playerShip.m_name = m_nameInputField.text;
 

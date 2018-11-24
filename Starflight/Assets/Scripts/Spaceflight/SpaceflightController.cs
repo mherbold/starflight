@@ -26,6 +26,7 @@ public class SpaceflightController : MonoBehaviour
 	public Map m_map;
 	public Countdown m_countdown;
 	public Radar m_radar;
+	public Scanner m_scanner;
 
 	// some settings
 	public float m_alienHyperspaceRadarDistance;
@@ -49,6 +50,8 @@ public class SpaceflightController : MonoBehaviour
 		m_hyperspace.Hide();
 		m_encounter.Hide();
 		m_countdown.Hide();
+		m_radar.Hide();
+		m_scanner.Hide();
 
 		// check if we loaded the persistent scene
 		if ( DataController.m_instance == null )
@@ -154,8 +157,10 @@ public class SpaceflightController : MonoBehaviour
 		}
 
 		// when player hits cancel (esc) show the save game panel
-		if ( InputController.m_instance.CancelWasPressed() )
+		if ( InputController.m_instance.m_cancel )
 		{
+			InputController.m_instance.Debounce();
+
 			PanelController.m_instance.m_saveGamePanel.SetCallbackObject( this );
 
 			PanelController.m_instance.Open( PanelController.m_instance.m_saveGamePanel );

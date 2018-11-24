@@ -73,8 +73,10 @@ public class IntroController : MonoBehaviour
 		m_timer += Time.deltaTime;
 
 		// if we pressed the fire button then skip ahead
-		if ( InputController.m_instance.SubmitWasPressed() )
+		if ( InputController.m_instance.m_submit )
 		{
+			InputController.m_instance.Debounce();
+
 			if ( m_timer < m_firstPageFadeInEndTime )
 			{
 				m_timer = m_firstPageFadeInEndTime;
@@ -121,9 +123,6 @@ public class IntroController : MonoBehaviour
 		// cross fade between third and fourth pages
 		thirdPageAlpha -= fourthPageAlpha;
 
-		// cross fade between fourth and fifth pages
-		fourthPageAlpha -= fifthPageAlpha;
-
 		// turn on / off each page depending on whether they have an alpha above zero or not
 		m_pages[ 0 ].gameObject.SetActive( firstPageAlpha > 0.0f );
 		m_pages[ 1 ].gameObject.SetActive( secondPageAlpha > 0.0f );
@@ -132,11 +131,11 @@ public class IntroController : MonoBehaviour
 		m_pages[ 4 ].gameObject.SetActive( fifthPageAlpha > 0.0f );
 
 		// update the alpha for each page
-		m_pages[ 0 ].alpha = firstPageAlpha;
-		m_pages[ 1 ].alpha = secondPageAlpha;
-		m_pages[ 2 ].alpha = thirdPageAlpha;
-		m_pages[ 3 ].alpha = fourthPageAlpha;
-		m_pages[ 4 ].alpha = fifthPageAlpha;
+		m_pages[ 0 ].alpha = Mathf.Pow( firstPageAlpha, 5.0f );
+		m_pages[ 1 ].alpha = Mathf.Pow( secondPageAlpha, 5.0f );
+		m_pages[ 2 ].alpha = Mathf.Pow( thirdPageAlpha, 5.0f );
+		m_pages[ 3 ].alpha = Mathf.Pow( fourthPageAlpha, 5.0f );
+		m_pages[ 4 ].alpha = Mathf.Pow( fifthPageAlpha, 5.0f );
 
 		// if the alpha for the last page is not zero then stop playing the music
 		if ( m_introMusicMightBePlaying )

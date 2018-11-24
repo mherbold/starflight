@@ -80,6 +80,12 @@ public class Hyperspace : MonoBehaviour
 	// unity update
 	void Update()
 	{
+		// don't do anything if we have a panel open
+		if ( PanelController.m_instance.HasActivePanel() )
+		{
+			return;
+		}
+
 		// get to the player data
 		var playerData = DataController.m_instance.m_playerData;
 

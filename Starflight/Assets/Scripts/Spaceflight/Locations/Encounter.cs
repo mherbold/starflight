@@ -47,6 +47,12 @@ public class Encounter : MonoBehaviour
 	// unity update
 	void Update()
 	{
+		// don't do anything if we have a panel open
+		if ( PanelController.m_instance.HasActivePanel() )
+		{
+			return;
+		}
+
 		// get to the game data
 		var gameData = DataController.m_instance.m_gameData;
 
@@ -62,11 +68,11 @@ public class Encounter : MonoBehaviour
 			{
 				var alienShip = m_alienShipList[ alienShipIndex ];
 
-				var encounterType = gameData.m_encounterTypeList[ alienShip.m_encounterTypeId ];
+				var vessel = gameData.m_vesselList[ alienShip.m_vesselId ];
 
-				switch ( encounterType.m_scriptId )
+				switch ( vessel.m_race )
 				{
-					case 3:
+					case GameData.Race.Mechan:
 						MechanUpdate( alienShip, alienShipModel );
 						break;
 
@@ -174,6 +180,9 @@ public class Encounter : MonoBehaviour
 
 		// play the alarm sound
 		SoundController.m_instance.PlaySound( SoundController.Sound.Alarm );
+
+		// let the player know we've just entered encounter mode
+		m_spaceflightController.m_messages.ChangeText( "<color=white>Scanners indicate unidentified object!</color>" );
 	}
 
 	void Reset()
@@ -293,7 +302,7 @@ public class Encounter : MonoBehaviour
 				alienShipModel.transform.SetPositionAndRotation( Vector3.zero, Quaternion.identity );
 
 				// clone the model
-				var alienShipModelTemplate = m_alienShipModelTemplate[ alienShip.m_encounterTypeId ];
+				var alienShipModelTemplate = m_alienShipModelTemplate[ alienShip.m_vesselId ];
 
 				Instantiate( alienShipModelTemplate, alienShipModelTemplate.transform.localPosition, alienShipModelTemplate.transform.localRotation, alienShipModel.transform );
 
@@ -417,5 +426,104 @@ public class Encounter : MonoBehaviour
 		m_currentDollyDistance = Mathf.Lerp( m_currentDollyDistance, targetDollyDistance, Time.deltaTime * m_cameraDollySpeed );
 
 		m_spaceflightController.m_player.DollyCamera( m_currentDollyDistance );
+	}
+
+	// update the current scanner selection (0 = player's ship, 1...n = alien ships)
+	public int UpdateScannerSelection( int currentSelection, int selectChangeDirection )
+	{
+		// get to the list of alien ships
+		var alienShipList = m_pdEncounter.GetAlienShipList();
+
+		// do we have the player's ship currently selected?
+		if ( currentSelection == 0 )
+		{
+			// yes - move the current selection to the beginning or the ending of the alien ship list
+			if ( selectChangeDirection > 0 )
+			{
+				currentSelection = -1;
+			}
+			else
+			{
+				currentSelection = alienShipList.Length;
+			}
+		}
+		else
+		{
+			currentSelection--;
+		}
+
+		do
+		{
+			currentSelection += selectChangeDirection;
+
+			if ( ( currentSelection < 0 ) || ( currentSelection == alienShipList.Length ) )
+			{
+				return 0;
+			}
+		}
+		while ( alienShipList[ currentSelection ].m_addedToEncounter == false );
+
+		return currentSelection + 1;
+	}
+
+	// gets the coordinates for the current selection in the encounter
+	public Vector3 GetScannerPosition( int currentSelection )
+	{
+		// get to the player data
+		var playerData = DataController.m_instance.m_playerData;
+
+		// get to the list of alien ships
+		var alienShipList = m_pdEncounter.GetAlienShipList();
+
+		// is the current selection the player's ship?
+		if ( currentSelection == 0 )
+		{
+			// yes - just return the position of the player
+			return playerData.m_general.m_coordinates;
+		}
+
+		// return the position of the alien ship
+		return alienShipList[ currentSelection - 1 ].m_coordinates;
+	}
+
+	// start the scanning cinematic
+	public void StartScanning( int currentSelection )
+	{
+		// get to the list of alien ships
+		var alienShipList = m_pdEncounter.GetAlienShipList();
+
+		// was the player ship selected?
+		if ( currentSelection == 0 )
+		{
+			// yes - let the player know
+			SoundController.m_instance.PlaySound( SoundController.Sound.Error );
+
+			m_spaceflightController.m_messages.ChangeText( "<color=red>That is your ship.</color>" );
+
+			// deactivate the sensor button
+			m_spaceflightController.m_buttonController.DeactivateButton();
+		}
+		else
+		{
+			// is the alien ship dead?
+			if ( alienShipList[ currentSelection - 1 ].m_isDead )
+			{
+				// yes - scanning of debris not implemented yet
+				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
+
+				m_spaceflightController.m_messages.ChangeText( "<color=red>Not yet implemented.</color>" );
+
+				// deactivate the sensor button
+				m_spaceflightController.m_buttonController.DeactivateButton();
+			}
+			else
+			{
+				// no - get the vessel id
+				var scanType = (SensorsDisplay.ScanType) alienShipList[ currentSelection - 1 ].m_vesselId;
+
+				// start the scan
+				m_spaceflightController.m_displayController.m_sensorsDisplay.StartScanning( scanType, 1, 20, 0, 100 );
+			}
+		}
 	}
 }

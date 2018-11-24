@@ -31,6 +31,12 @@ public class InOrbit : MonoBehaviour
 	// unity update
 	void Update()
 	{
+		// don't do anything if we have a panel open
+		if ( PanelController.m_instance.HasActivePanel() )
+		{
+			return;
+		}
+
 		// slowly spin the planet
 		m_spin += Time.deltaTime * 0.1f;
 

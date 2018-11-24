@@ -11,7 +11,7 @@ public class PD_Personnel
 	public class PD_PersonnelFile
 	{
 		public int m_fileId;
-		public int m_raceIndex;
+		public int m_crewRaceId;
 
 		public string m_name;
 

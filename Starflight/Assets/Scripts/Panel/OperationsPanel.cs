@@ -183,6 +183,8 @@ public class OperationsPanel : Panel
 	// this is called if we clicked on the notices button
 	public void NoticesClicked()
 	{
+		InputController.m_instance.Debounce();
+
 		// show the notices
 		ShowNotices();
 
@@ -193,6 +195,8 @@ public class OperationsPanel : Panel
 	// this is called if we clicked on the evaluation button
 	public void EvaluationClicked()
 	{
+		InputController.m_instance.Debounce();
+
 		// show the evaluations screen
 		ShowEvaluations();
 
@@ -203,6 +207,8 @@ public class OperationsPanel : Panel
 	// this is called if we clicked on the exit button
 	public void ExitClicked()
 	{
+		InputController.m_instance.Debounce();
+
 		// close this panel
 		PanelController.m_instance.Close();
 	}
@@ -210,6 +216,8 @@ public class OperationsPanel : Panel
 	// this is called if we clicked on the more button
 	public void MoreClicked()
 	{
+		InputController.m_instance.Debounce();
+
 		// show the next line of the notice
 		ShowNextLine();
 
@@ -220,6 +228,9 @@ public class OperationsPanel : Panel
 	// this is called if we clicked on the prev button
 	public void PreviousClicked()
 	{
+		InputController.m_instance.Debounce();
+
+		// show the previous notice
 		if ( m_currentNoticeId > 0 )
 		{
 			m_currentNoticeId--;
@@ -234,6 +245,9 @@ public class OperationsPanel : Panel
 	// this is called if we clicked on the next button
 	public void NextClicked()
 	{
+		InputController.m_instance.Debounce();
+
+		// show the next notice
 		if ( m_currentNoticeId < m_latestNoticeId )
 		{
 			m_currentNoticeId++;
@@ -248,6 +262,8 @@ public class OperationsPanel : Panel
 	// this is called if we clicked on the quit button
 	public void QuitClicked()
 	{
+		InputController.m_instance.Debounce();
+
 		// show the welcome screen
 		ShowWelcome();
 

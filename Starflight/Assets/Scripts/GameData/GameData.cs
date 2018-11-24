@@ -5,9 +5,31 @@ using System;
 
 public class GameData
 {
+	public enum Race
+	{
+		None = 0,
+		Elowan = 1,
+		Gazurtoid = 2,
+		Mechan = 3,
+		Mysterion = 4,
+		NomadProbe = 5,
+		Spemin = 6,
+		Thrynn = 7,
+		Velox = 8,
+		Uhlek = 9,
+		VeloxiDrone = 10,
+		Minstrel = 11,
+		TheEnterprise = 18,
+		NoahDerelict = 19,
+		Debris = 20,
+		InterstelPolice = 21,
+		Android = 254,
+		Human = 255
+	}
+
 	public GD_Misc m_misc;
 	public GD_Notice[] m_noticeList;
-	public GD_Race[] m_raceList;
+	public GD_CrewRace[] m_crewRaceList;
 	public GD_Engines[] m_enginesList;
 	public GD_Sheilding[] m_shieldingList;
 	public GD_Armor[] m_armorList;
@@ -29,7 +51,8 @@ public class GameData
 	public GD_Nebula[] m_nebulaList;
 	public GD_SpectralClass[] m_spectralClassList;
 	public GD_Encounter[] m_encounterList;
-	public GD_EncounterType[] m_encounterTypeList;
+	public GD_Vessel[] m_vesselList;
+	public GD_Comm[] m_commList;
 
 	public void Initialize()
 	{

@@ -238,14 +238,18 @@ public class PersonnelPanel : Panel
 		}
 
 		// check if we have pressed the fire button
-		if ( InputController.m_instance.SubmitWasPressed() )
+		if ( InputController.m_instance.m_submit )
 		{
+			InputController.m_instance.Debounce();
+
 			TrainSelectedSkill();
 		}
 
 		// check if we have pressed the cancel button
-		if ( InputController.m_instance.CancelWasPressed() )
+		if ( InputController.m_instance.m_cancel )
 		{
+			InputController.m_instance.Debounce();
+
 			SwitchToViewFileState();
 
 			SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
@@ -328,9 +332,6 @@ public class PersonnelPanel : Panel
 
 		// update the screen
 		UpdateScreen();
-
-		// debounce the buttons
-		InputController.m_instance.m_debounceNextUpdate = true;
 	}
 
 	// call this whenever we change state or do something that would result in something changing on the screen
@@ -491,7 +492,7 @@ public class PersonnelPanel : Panel
 			PD_Personnel.PD_PersonnelFile personnelFile = playerData.m_personnel.m_personnelList[ m_currentFileIndex ];
 
 			// update the current race index
-			m_currentRaceIndex = personnelFile.m_raceIndex;
+			m_currentRaceIndex = personnelFile.m_crewRaceId;
 
 			// update the personnel file number
 			m_fileNumberText.text = "File # " + ( m_currentFileIndex + 1 ) + ": " + personnelFile.m_name;
@@ -555,7 +556,7 @@ public class PersonnelPanel : Panel
 		buttonIsInteractable[ (int) Buttons.CancelButton ] = true;
 
 		// get the current race game data
-		GD_Race race = DataController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
+		GD_CrewRace race = DataController.m_instance.m_gameData.m_crewRaceList[ m_currentRaceIndex ];
 
 		// update the skill values text to show the race's initial values
 		m_skillValuesText.text = "";
@@ -671,7 +672,7 @@ public class PersonnelPanel : Panel
 	private void ShowRace( bool[] gameObjectIsVisible )
 	{
 		// get the current race game data
-		GD_Race race = DataController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
+		GD_CrewRace race = DataController.m_instance.m_gameData.m_crewRaceList[ m_currentRaceIndex ];
 
 		// update the race name
 		m_raceNameText.text = race.m_name;
@@ -770,7 +771,7 @@ public class PersonnelPanel : Panel
 			PD_Personnel.PD_PersonnelFile personnelFile = playerData.m_personnel.m_personnelList[ m_currentFileIndex ];
 
 			// get access to the race data for this personnel file
-			GD_Race race = DataController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
+			GD_CrewRace race = DataController.m_instance.m_gameData.m_crewRaceList[ m_currentRaceIndex ];
 
 			// calculate the current skill and maximum skill points for the selected skill
 			int currentSkill = personnelFile.GetSkill( m_currentSkillIndex );
@@ -812,6 +813,8 @@ public class PersonnelPanel : Panel
 	// this is called if we clicked on the create button
 	public void CreateClicked()
 	{
+		InputController.m_instance.Debounce();
+
 		// switch to the create select race state
 		SwitchToSelectRaceState();
 
@@ -822,6 +825,8 @@ public class PersonnelPanel : Panel
 	// this is called if we clicked on the previous button
 	public void PreviousClicked()
 	{
+		InputController.m_instance.Debounce();
+
 		// go back one personnel file
 		m_currentFileIndex--;
 
@@ -835,6 +840,8 @@ public class PersonnelPanel : Panel
 	// this is called if we clicked on the next button
 	public void NextClicked()
 	{
+		InputController.m_instance.Debounce();
+
 		// go to the next personnel file
 		m_currentFileIndex++;
 
@@ -848,6 +855,8 @@ public class PersonnelPanel : Panel
 	// this is called if we clicked on the exit button
 	public void ExitClicked()
 	{
+		InputController.m_instance.Debounce();
+
 		// close this panel
 		PanelController.m_instance.Close();
 	}
@@ -855,6 +864,8 @@ public class PersonnelPanel : Panel
 	// this is called if we clicked on the train button
 	public void TrainClicked()
 	{
+		InputController.m_instance.Debounce();
+
 		// check if the current race is an android
 		if ( m_currentRaceIndex == 4 )
 		{
@@ -871,7 +882,7 @@ public class PersonnelPanel : Panel
 			PD_Personnel.PD_PersonnelFile personnelFile = playerData.m_personnel.m_personnelList[ m_currentFileIndex ];
 
 			// get access to the race data for this personnel file
-			GD_Race race = DataController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
+			GD_CrewRace race = DataController.m_instance.m_gameData.m_crewRaceList[ m_currentRaceIndex ];
 
 			// enable the train button only if the current personnel is not maxxed out
 			int maxTotalPoints = 0;
@@ -904,6 +915,8 @@ public class PersonnelPanel : Panel
 	// this is called if we clicked on the delete button
 	public void DeleteClicked()
 	{
+		InputController.m_instance.Debounce();
+
 		// switch to the delete crewmember state
 		SwitchToDeleteCrewmemberState();
 
@@ -914,6 +927,8 @@ public class PersonnelPanel : Panel
 	// this is called if we clicked on the select button
 	public void SelectClicked()
 	{
+		InputController.m_instance.Debounce();
+
 		// switch to the create name state
 		SwitchToGiveNameState();
 
@@ -924,6 +939,8 @@ public class PersonnelPanel : Panel
 	// this is called if we clicked on the cancel button
 	public void CancelClicked()
 	{
+		InputController.m_instance.Debounce();
+
 		// switch to the doing nothing state
 		SwitchToViewFileState();
 
@@ -934,6 +951,8 @@ public class PersonnelPanel : Panel
 	// this is called when the yes button in the delete panel is clicked
 	public void YesClicked()
 	{
+		InputController.m_instance.Debounce();
+
 		// get to the personnel player data
 		PD_Personnel personnel = DataController.m_instance.m_playerData.m_personnel;
 
@@ -956,6 +975,8 @@ public class PersonnelPanel : Panel
 	// this is called when the no button in the delete panel is clicked
 	public void NoClicked()
 	{
+		InputController.m_instance.Debounce();
+
 		// switch to the doing nothing state
 		SwitchToViewFileState();
 
@@ -966,6 +987,8 @@ public class PersonnelPanel : Panel
 	// this is called when we hit enter in the name input field
 	public void OnEndEdit()
 	{
+		InputController.m_instance.Debounce();
+
 		if ( m_nameInputField.text.Length == 0 )
 		{
 			// cancel because the player did not type in anything
@@ -977,7 +1000,7 @@ public class PersonnelPanel : Panel
 		else
 		{
 			// get the current race game data
-			GD_Race race = DataController.m_instance.m_gameData.m_raceList[ m_currentRaceIndex ];
+			GD_CrewRace race = DataController.m_instance.m_gameData.m_crewRaceList[ m_currentRaceIndex ];
 
 			// create a new personnel file
 			PD_Personnel.PD_PersonnelFile personnelFile = DataController.m_instance.m_playerData.m_personnel.CreateNewPersonnel();
@@ -985,7 +1008,7 @@ public class PersonnelPanel : Panel
 			// set up the personnel file
 			personnelFile.m_name = m_nameInputField.text;
 			personnelFile.m_vitality = 100.0f;
-			personnelFile.m_raceIndex = m_currentRaceIndex;
+			personnelFile.m_crewRaceId = m_currentRaceIndex;
 			personnelFile.m_science = race.m_scienceInitial;
 			personnelFile.m_navigation = race.m_navigationInitial;
 			personnelFile.m_engineering = race.m_engineeringInitial;

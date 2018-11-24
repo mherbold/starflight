@@ -3,9 +3,11 @@ using System;
 
 [Serializable]
 
-public class GD_Race
+public class GD_CrewRace
 {
+	public int m_id;
 	public string m_name;
+	public GameData.Race m_race;
 
 	public int m_scienceInitial;
 	public int m_navigationInitial;

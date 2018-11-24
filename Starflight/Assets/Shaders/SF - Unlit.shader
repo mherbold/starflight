@@ -4,6 +4,7 @@ Shader "Starflight/Unlit"
 	Properties
 	{
 		SF_AlbedoMap( "Albedo Map", 2D ) = "white" {}
+		SF_AlbedoMapScaleOffset( "Albedo Map Scale Offset", Vector ) = ( 1, 1, 0, 0 )
 		SF_AlbedoColor( "Albedo Color", Color ) = ( 1, 1, 1, 1 )
 
 		[Enum(UnityEngine.Rendering.BlendMode)] SF_BlendSrc( "Blend Src", Float ) = 1

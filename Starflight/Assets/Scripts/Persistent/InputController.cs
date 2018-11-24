@@ -10,12 +10,6 @@ public class InputController : MonoBehaviour
 	public bool m_submit { get; private set; }
 	public bool m_cancel { get; private set; }
 
-	private bool m_submitDown;
-	private bool m_cancelDown;
-
-	public bool m_submitUp { get; private set; }
-	public bool m_cancelUp { get; private set; }
-
 	// directional arrow inputs
 	public bool m_northWest { get; private set; }
 	public bool m_north { get; private set; }
@@ -29,8 +23,8 @@ public class InputController : MonoBehaviour
 	public float m_x { get; private set; }
 	public float m_y { get; private set; }
 
-	// true if we want to ignore the submit and cancel inputs on the next frame
-	public bool m_debounceNextUpdate;
+	// true if we want to ignore the inputs until everything is released
+	bool m_debounce;
 
 	// unity awake
 	void Awake()
@@ -52,6 +46,24 @@ public class InputController : MonoBehaviour
 		m_southWest = Input.GetButton( "SW" );
 		m_west = Input.GetButton( "W" );
 
+		// update buttons
+		m_submit = Input.GetButton( "Submit" );
+		m_cancel = Input.GetButton( "Cancel" );
+
+		// check if we want to debounce the buttons
+		if ( m_debounce )
+		{
+			if ( !m_submit && !m_cancel && !m_north && !m_northEast && !m_east && !m_southEast && !m_south && !m_southWest && !m_west && !m_northWest )
+			{
+				m_debounce = false;
+			}
+			else
+			{
+				Debounce();
+			}
+		}
+
+		// set x direction
 		if ( m_northWest || m_west || m_southWest )
 		{
 			m_x = -1.0f;
@@ -65,6 +77,7 @@ public class InputController : MonoBehaviour
 			m_x = 0.0f;
 		}
 
+		// set y direction
 		if ( m_northWest || m_north || m_northEast )
 		{
 			m_y = 1.0f;
@@ -77,55 +90,23 @@ public class InputController : MonoBehaviour
 		{
 			m_y = 0.0f;
 		}
-
-		// update buttons
-		m_submit = Input.GetButton( "Submit" );
-		m_cancel = Input.GetButton( "Cancel" );
-
-		// update button down
-		m_submitDown = Input.GetButtonDown( "Submit" );
-		m_cancelDown = Input.GetButtonDown( "Cancel" );
-
-		// update button up
-		m_submitUp = Input.GetButtonUp( "Submit" );
-		m_cancelUp = Input.GetButtonUp( "Cancel" );
-
-		// check if we want to debounce the buttons
-		if ( m_debounceNextUpdate )
-		{
-			m_debounceNextUpdate = false;
-
-			m_submitDown = false;
-			m_cancelDown = false;
-
-			m_submitUp = false;
-			m_cancelUp = false;
-		}
 	}
 
-	// get the submit down button (with optional debounce)
-	public bool SubmitWasPressed( bool debounce = true )
+	// call this to ignore inputs until everything has been let go
+	public void Debounce()
 	{
-		bool submitDown = m_submitDown;
+		m_debounce = true;
 
-		if ( debounce )
-		{
-			m_submitDown = false;
-		}
+		m_submit = false;
+		m_cancel = false;
 
-		return submitDown;
-	}
-
-	// get the cancel down button (with optional debounce)
-	public bool CancelWasPressed( bool debounce = true )
-	{
-		bool cancelDown = m_cancelDown;
-
-		if ( debounce )
-		{
-			m_cancelDown = false;
-		}
-
-		return cancelDown;
+		m_north = false;
+		m_northEast = false;
+		m_east = false;
+		m_southEast = false;
+		m_south = false;
+		m_southWest = false;
+		m_west = false;
+		m_northWest = false;
 	}
 }

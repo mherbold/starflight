@@ -34,6 +34,12 @@ public class StarSystem : MonoBehaviour
 	// unity update
 	void Update()
 	{
+		// don't do anything if we have a panel open
+		if ( PanelController.m_instance.HasActivePanel() )
+		{
+			return;
+		}
+
 		// get to the player data
 		var playerData = DataController.m_instance.m_playerData;
 
@@ -111,9 +117,9 @@ public class StarSystem : MonoBehaviour
 					m_spaceflightController.m_messages.ChangeText( "<color=white>Ship is within orbital range.</color>" );
 				}
 			}
-			else
+			else if ( m_planetToOrbitId != -1 )
 			{
-				// no - forget this planet
+				// forget this planet
 				m_planetToOrbitId = -1;
 
 				var spectralClass = m_currentStar.GetSpectralClass();
