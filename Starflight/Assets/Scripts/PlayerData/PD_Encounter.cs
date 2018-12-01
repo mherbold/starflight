@@ -15,6 +15,8 @@ public class PD_Encounter : IComparable
 	public Vector3 m_homeCoordinates;
 	public Vector3 m_currentCoordinates;
 
+	public PD_AlienShip[] m_alienShipList;
+
 	GD_Encounter m_encounter;
 
 	PD_General.Location m_location;
@@ -22,8 +24,6 @@ public class PD_Encounter : IComparable
 	int m_starId;
 
 	float m_currentDistance;
-
-	PD_AlienShip[] m_alienShipList;
 
 	public void Reset( int encounterId )
 	{

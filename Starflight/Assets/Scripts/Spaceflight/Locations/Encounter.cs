@@ -28,11 +28,17 @@ public class Encounter : MonoBehaviour
 	public PD_Encounter m_pdEncounter;
 	public GD_Encounter m_gdEncounter;
 
+	// did we just enter an encounter from another location? (this will be false when reloading a game)
+	bool m_justEnteredEncounter;
+
 	// alien ship data
 	PD_AlienShip[] m_alienShipList;
 
 	// current dolly distance
 	float m_currentDollyDistance;
+
+	// time to next action
+	float m_timeToNextAction;
 
 	// unity awake
 	void Awake()
@@ -58,6 +64,9 @@ public class Encounter : MonoBehaviour
 
 		// get to the player data
 		var playerData = DataController.m_instance.m_playerData;
+
+		// update the time to the next action
+		m_timeToNextAction -= Time.deltaTime;
 
 		// update the position and rotation of the active alien ship models
 		for ( var alienShipIndex = 0; alienShipIndex < m_alienShipModelList.Length; alienShipIndex++ )
@@ -107,6 +116,12 @@ public class Encounter : MonoBehaviour
 			// yes - switch back to the last location
 			m_spaceflightController.SwitchLocation( playerData.m_general.m_lastLocation );
 		}
+	}
+
+	// call this to let us know we have just entered an encounter
+	public void JustEnteredEncounter()
+	{
+		m_justEnteredEncounter = true;
 	}
 
 	// call this to hide the encounter stuff
@@ -166,11 +181,8 @@ public class Encounter : MonoBehaviour
 		// show the status display
 		m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_statusDisplay );
 
-		// reset the encounter
-		Reset();
-
-		// add the alien ships to the encounter
-		AddAlienShips( true );
+		// initialize the encounter
+		Initialize();
 
 		// center the encounter coordinates on the player
 		m_pdEncounter.m_currentCoordinates = playerData.m_general.m_coordinates;
@@ -185,7 +197,8 @@ public class Encounter : MonoBehaviour
 		m_spaceflightController.m_messages.ChangeText( "<color=white>Scanners indicate unidentified object!</color>" );
 	}
 
-	void Reset()
+	// places ships etc at the start of the encounter
+	void Initialize()
 	{
 		// get to the game data
 		var gameData = DataController.m_instance.m_gameData;
@@ -209,28 +222,39 @@ public class Encounter : MonoBehaviour
 			}
 		}
 
+		// allocate array for alien ship list
+		m_alienShipList = new PD_AlienShip[ m_alienShipModelList.Length ];
+
 		// get to the list of alien ships
 		var alienShipList = m_pdEncounter.GetAlienShipList();
 
-		// reset all of the alien ships
-		foreach ( var alienShip in alienShipList )
+		// do we want to add the first round of alien ships?
+		if ( m_justEnteredEncounter )
 		{
-			// this alien ship has not been added yet
-			alienShip.m_addedToEncounter = false;
+			// yes - reset all of the alien ships
+			foreach ( var alienShip in alienShipList )
+			{
+				alienShip.m_addedToEncounter = false;
+			}
+
+			// add the first round of alien ships to the encounter
+			AddAlienShips();
+
+			// we've added the first round
+			m_justEnteredEncounter = false;
+		}
+		else
+		{
+			// no - just reset the alien ship models
+			ResetAlienShipModels();
 		}
 
-		// inactivate all of the alien ship models
-		foreach ( var alienShip in m_alienShipModelList )
-		{
-			alienShip.SetActive( false );
-		}
-
-		// allocate array for alien ship list
-		m_alienShipList = new PD_AlienShip[ m_alienShipModelList.Length ];
+		// reset time to next action
+		m_timeToNextAction = 0.0f;
 	}
 
 	// adds a number of alien ships to the encounter - up to the maximum allowed by the encounter
-	void AddAlienShips( bool justEnteredEncounter )
+	void AddAlienShips()
 	{
 		// get to the player data
 		var playerData = DataController.m_instance.m_playerData;
@@ -241,15 +265,6 @@ public class Encounter : MonoBehaviour
 		// go through alien ship slots (up to the maximum allowed at once)
 		for ( var alienShipIndex = 0; alienShipIndex < m_gdEncounter.m_maxNumShipsAtOnce; alienShipIndex++ )
 		{
-			var alienShipModel = m_alienShipModelList[ alienShipIndex ];
-
-			// is this slot active right now?
-			if ( alienShipModel.activeInHierarchy )
-			{
-				// yes - skip it
-				continue;
-			}
-
 			// no - go through all of the alien ships in the encounter and add the next one
 			foreach ( var alienShip in alienShipList )
 			{
@@ -272,7 +287,7 @@ public class Encounter : MonoBehaviour
 
 				Vector3 coordinates;
 
-				if ( justEnteredEncounter )
+				if ( m_justEnteredEncounter )
 				{
 					// put alien ship in area approximately in the correct direction of approach
 					coordinates = new Vector3( randomPosition.x, 0.0f, randomPosition.y ) * 256.0f + Vector3.Normalize( m_pdEncounter.m_currentCoordinates - playerData.m_general.m_lastHyperspaceCoordinates ) * 4096.0f;
@@ -292,8 +307,40 @@ public class Encounter : MonoBehaviour
 				alienShip.m_currentDirection = direction;
 				alienShip.m_lastDirection = direction;
 				alienShip.m_currentBankingAngle = 0.0f;
-				alienShip.m_timeSinceLastTargetCoordinateChange = alienShipIndex / m_gdEncounter.m_maxNumShipsAtOnce * m_targetCoordinateUpdateFrequency;
+				alienShip.m_timeSinceLastTargetCoordinateChange = (float) alienShipIndex / (float) m_gdEncounter.m_maxNumShipsAtOnce * m_targetCoordinateUpdateFrequency;
 				alienShip.m_addedToEncounter = true;
+
+				// we are done adding an alien ship to this slot
+				break;
+			}
+		}
+
+		// reset the alien ship models
+		ResetAlienShipModels();
+	}
+
+	void ResetAlienShipModels()
+	{
+		// get to the list of alien ships
+		var alienShipList = m_pdEncounter.GetAlienShipList();
+
+		// inactivate all of the alien ship models
+		foreach ( var alienShipModel in m_alienShipModelList )
+		{
+			alienShipModel.SetActive( false );
+		}
+
+		// start adding alien ship models
+		var alienShipIndex = 0;
+
+		// go through all of the alien ships in the encounter
+		foreach ( var alienShip in alienShipList )
+		{
+			// is this ship in the encounter and alive?
+			if ( alienShip.m_addedToEncounter && !alienShip.m_isDead )
+			{
+				// get the model we will update
+				var alienShipModel = m_alienShipModelList[ alienShipIndex ];
 
 				// remove old model
 				Tools.DestroyChildrenOf( alienShipModel );
@@ -312,8 +359,8 @@ public class Encounter : MonoBehaviour
 				// remember the alien ship associated with this model
 				m_alienShipList[ alienShipIndex ] = alienShip;
 
-				// we are done adding an alien ship to this slot
-				break;
+				// next!
+				alienShipIndex++;
 			}
 		}
 	}

@@ -351,6 +351,9 @@ public class SpaceflightController : MonoBehaviour
 				// put the player in the middle of the encounter
 				playerData.m_general.m_lastEncounterCoordinates = Vector3.zero;
 
+				// let the encounter system know we are now entering this encounter
+				m_encounter.JustEnteredEncounter();
+
 				// switch to the encounter location
 				SwitchLocation( PD_General.Location.Encounter );
 			}
