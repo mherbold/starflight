@@ -19,12 +19,12 @@ public class GameData
 		Uhlek = 9,
 		VeloxiDrone = 10,
 		Minstrel = 11,
+		Human = 16,
 		TheEnterprise = 18,
 		NoahDerelict = 19,
 		Debris = 20,
 		InterstelPolice = 21,
-		Android = 254,
-		Human = 255
+		Android = 255,
 	}
 
 	public GD_Misc m_misc;

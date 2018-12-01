@@ -15,6 +15,10 @@ public class PD_Encounter : IComparable
 	public Vector3 m_homeCoordinates;
 	public Vector3 m_currentCoordinates;
 
+	public int m_nextAction;
+	public float m_timeToNextAction;
+	public GD_Comm.Stance m_stance;
+
 	public PD_AlienShip[] m_alienShipList;
 
 	GD_Encounter m_encounter;
@@ -89,6 +93,9 @@ public class PD_Encounter : IComparable
 
 			m_alienShipList[ i ] = alienShip;
 		}
+
+		// reset stance
+		m_stance = GD_Comm.Stance.Neutral;
 	}
 
 	public PD_General.Location GetLocation()

@@ -23,10 +23,6 @@ abstract public class ShipButton
 		return false;
 	}
 
-	public virtual void Cancel()
-	{
-	}
-
 	public virtual bool Update()
 	{
 		return false;

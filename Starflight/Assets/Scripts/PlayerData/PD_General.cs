@@ -61,6 +61,12 @@ public class PD_General
 	// keep track of the player's current direction
 	public Vector3 m_currentDirection;
 
+	// various game play variables
+	public bool m_mechan9Unlocked;
+
+	// keep track of responses to questions
+	public int[,] m_lastRaceCommIds;
+
 	// this resets everything to initial game state
 	public void Reset()
 	{
@@ -101,6 +107,9 @@ public class PD_General
 		// not moving
 		m_currentSpeed = 0.0f;
 		m_currentMaximumSpeed = 10.0f;
+
+		// allocate memory for last comms
+		m_lastRaceCommIds = new int[ 20, 16 ];
 	}
 	
 	// this updates the game time

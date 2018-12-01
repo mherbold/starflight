@@ -1,11 +1,11 @@
 ﻿
-public class HailButton : ShipButton
+public class FriendlyButton : ShipButton
 {
-	private readonly ShipButton[] m_buttons = { new FriendlyButton(), new HostileButton(), new ObsequiousButton() };
+	static public bool m_isResponding;
 
 	public override string GetLabel()
 	{
-		return "Hail";
+		return "Friendly";
 	}
 
 	public override bool Execute()
@@ -19,15 +19,13 @@ public class HailButton : ShipButton
 			// yes - are there living alien ships in the encounter?
 			if ( m_spaceflightController.m_encounter.HasLivingAlienShips() )
 			{
-				// yes - change the buttons
-				m_spaceflightController.m_buttonController.UpdateButtons( m_buttons );
+				// yes - try to hail them
+				m_spaceflightController.m_encounter.Hail( GD_Comm.Stance.Friendly, m_isResponding );
 
-				// let the buttons know we are hailing (not responding)
-				FriendlyButton.m_isResponding = false;
-				HostileButton.m_isResponding = false;
-				ObsequiousButton.m_isResponding = false;
+				// deactivate the button
+				m_spaceflightController.m_buttonController.RestoreBridgeButtons();
 
-				return true;
+				return false;
 			}
 		}
 
@@ -38,7 +36,7 @@ public class HailButton : ShipButton
 		m_spaceflightController.m_messages.ChangeText( "<color=white>There's no one to hail.</color>" );
 
 		// deactivate the button
-		m_spaceflightController.m_buttonController.UpdateButtonSprites();
+		m_spaceflightController.m_buttonController.RestoreBridgeButtons();
 
 		return false;
 	}

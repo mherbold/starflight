@@ -78,4 +78,32 @@ public class PD_CrewAssignment
 
 		return playerData.m_personnel.GetPersonnelFile( fileId );
 	}
+
+	// return true if there is at least one (living) human crew member
+	public bool HasAtLeastOneHumanCrew()
+	{
+		// get to the game data
+		var gameData = DataController.m_instance.m_gameData;
+		
+		// go through each role
+		for ( var role = Role.First; role < Role.Length; role++ )
+		{
+			if ( IsAssigned( role ) )
+			{
+				var personnelFile = GetPersonnelFile( role );
+
+				if ( personnelFile.m_vitality > 0 )
+				{
+					if ( gameData.m_crewRaceList[ personnelFile.m_crewRaceId ].m_race == GameData.Race.Human )
+					{
+						// found one!
+						return true;
+					}
+				}
+			}
+		}
+
+		// no human crew member
+		return false;
+	}
 }

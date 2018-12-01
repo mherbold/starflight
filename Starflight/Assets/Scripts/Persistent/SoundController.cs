@@ -22,6 +22,7 @@ public class SoundController : MonoBehaviour
 		Scanning,
 		RadarBlip,
 		Alarm,
+		Beep,
 		Count
 	};
 
@@ -50,6 +51,7 @@ public class SoundController : MonoBehaviour
 	public AudioClip m_scanning;
 	public AudioClip m_radarBlip;
 	public AudioClip m_alarm;
+	public AudioClip m_beep;
 
 	// the sound list (to use with the enum)
 	AudioClip[] m_soundList;
@@ -170,6 +172,7 @@ public class SoundController : MonoBehaviour
 		m_soundList[ (int) Sound.Scanning ] = m_scanning;
 		m_soundList[ (int) Sound.RadarBlip ] = m_radarBlip;
 		m_soundList[ (int) Sound.Alarm ] = m_alarm;
+		m_soundList[ (int) Sound.Beep ] = m_beep;
 	}
 
 	// unity start

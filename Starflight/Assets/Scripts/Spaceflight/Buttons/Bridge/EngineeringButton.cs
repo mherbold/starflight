@@ -24,13 +24,4 @@ public class EngineeringButton : ShipButton
 
 		return true;
 	}
-
-	public override void Cancel()
-	{
-		// play the deactivate sound
-		SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
-
-		// return to the bridge
-		m_spaceflightController.m_buttonController.RestoreBridgeButtons();
-	}
 }

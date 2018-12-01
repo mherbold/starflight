@@ -1,6 +1,8 @@
 ﻿
 using UnityEngine;
 
+using System.Collections.Generic;
+
 public class Encounter : MonoBehaviour
 {
 	// convenient access to the spaceflight controller
@@ -18,6 +20,12 @@ public class Encounter : MonoBehaviour
 	// how often to update the target coordinates
 	public float m_targetCoordinateUpdateFrequency;
 
+	// the main encounter map
+	public GameObject m_main;
+
+	// the race models
+	public GameObject[] m_alienRaceModelList;
+
 	// alien ship models (need 8)
 	public GameObject[] m_alienShipModelList;
 
@@ -34,11 +42,23 @@ public class Encounter : MonoBehaviour
 	// alien ship data
 	PD_AlienShip[] m_alienShipList;
 
+	// do we want to update the alien ships? (false if we are in communications)
+	bool m_updateShips;
+
 	// current dolly distance
 	float m_currentDollyDistance;
 
-	// time to next action
-	float m_timeToNextAction;
+	// the conversation
+	string m_conversation;
+
+	// are the aliens waiting for a response?
+	bool m_waitingForResponse;
+
+	// does the player want to communicate?
+	bool m_playerWantsToCommunicate;
+
+	// the player's chosen stance
+	GD_Comm.Stance m_stance;
 
 	// unity awake
 	void Awake()
@@ -66,55 +86,68 @@ public class Encounter : MonoBehaviour
 		var playerData = DataController.m_instance.m_playerData;
 
 		// update the time to the next action
-		m_timeToNextAction -= Time.deltaTime;
+		m_pdEncounter.m_timeToNextAction -= Time.deltaTime;
 
-		// update the position and rotation of the active alien ship models
-		for ( var alienShipIndex = 0; alienShipIndex < m_alienShipModelList.Length; alienShipIndex++ )
+		// update comm logic
+		switch ( m_gdEncounter.m_race )
 		{
-			var alienShipModel = m_alienShipModelList[ alienShipIndex ];
+			case GameData.Race.Mechan:
 
-			if ( alienShipModel.activeInHierarchy )
-			{
-				var alienShip = m_alienShipList[ alienShipIndex ];
-
-				var vessel = gameData.m_vesselList[ alienShip.m_vesselId ];
-
-				switch ( vessel.m_race )
-				{
-					case GameData.Race.Mechan:
-						MechanUpdate( alienShip, alienShipModel );
-						break;
-
-					default:
-						DefaultUpdate( alienShip, alienShipModel );
-						break;
-				}
-			}
+				UpdateMechanComms();
+				break;
 		}
 
-		// finalize alien ships and camera transform
-		FinalizeUpdate();
-
-		// has the player left the encounter?
-		if ( playerData.m_general.m_coordinates.magnitude >= 4096.0f )
+		// do we want to update the ships (both alien and player)?
+		if ( m_updateShips )
 		{
-			// calculate the normalized exit direction vector
-			var exitDirection = Vector3.Normalize( playerData.m_general.m_coordinates );
-
-			// was the last location in hyperspace?
-			if ( playerData.m_general.m_lastLocation == PD_General.Location.Hyperspace )
+			// update the position and rotation of the active alien ship models
+			for ( var alienShipIndex = 0; alienShipIndex < m_alienShipModelList.Length; alienShipIndex++ )
 			{
-				// yes - update the last hyperspace coordinates
-				playerData.m_general.m_lastHyperspaceCoordinates += exitDirection * m_spaceflightController.m_encounterRange * 1.25f;
-			}
-			else 
-			{
-				// no - update the last star system coordinates
-				playerData.m_general.m_lastStarSystemCoordinates += exitDirection * m_spaceflightController.m_encounterRange * 1.25f;
+				var alienShipModel = m_alienShipModelList[ alienShipIndex ];
+
+				if ( alienShipModel.activeInHierarchy )
+				{
+					var alienShip = m_alienShipList[ alienShipIndex ];
+
+					var vessel = gameData.m_vesselList[ alienShip.m_vesselId ];
+
+					switch ( vessel.m_race )
+					{
+						case GameData.Race.Mechan:
+							UpdateMechanAlienShip( alienShip, alienShipModel );
+							break;
+
+						default:
+							DefaultAlienShipUpdate( alienShip, alienShipModel );
+							break;
+					}
+				}
 			}
 
-			// yes - switch back to the last location
-			m_spaceflightController.SwitchLocation( playerData.m_general.m_lastLocation );
+			// finalize alien ships and camera transform
+			FinalizeAlienShips();
+
+			// has the player left the encounter?
+			if ( playerData.m_general.m_coordinates.magnitude >= 4096.0f )
+			{
+				// calculate the normalized exit direction vector
+				var exitDirection = Vector3.Normalize( playerData.m_general.m_coordinates );
+
+				// was the last location in hyperspace?
+				if ( playerData.m_general.m_lastLocation == PD_General.Location.Hyperspace )
+				{
+					// yes - update the last hyperspace coordinates
+					playerData.m_general.m_lastHyperspaceCoordinates += exitDirection * m_spaceflightController.m_encounterRange * 1.25f;
+				}
+				else 
+				{
+					// no - update the last star system coordinates
+					playerData.m_general.m_lastStarSystemCoordinates += exitDirection * m_spaceflightController.m_encounterRange * 1.25f;
+				}
+
+				// yes - switch back to the last location
+				m_spaceflightController.SwitchLocation( playerData.m_general.m_lastLocation );
+			}
 		}
 	}
 
@@ -134,8 +167,17 @@ public class Encounter : MonoBehaviour
 
 		Debug.Log( "Hiding the encounter location." );
 
-		// hide the hyperspace objects
+		// hide the encounter objects
 		gameObject.SetActive( false );
+
+		// hide the race objects (in case it was shown)
+		if ( m_alienRaceModelList[ (int) m_gdEncounter.m_race ] != null )
+		{
+			m_alienRaceModelList[ (int) m_gdEncounter.m_race ].SetActive( false );
+		}
+
+		// slide the message box back in
+		m_spaceflightController.m_messages.SlideIn();
 	}
 
 	// call this to show the encounter stuff
@@ -150,6 +192,9 @@ public class Encounter : MonoBehaviour
 
 		// show the hyperspace objects
 		gameObject.SetActive( true );
+
+		// show the main encounter location stuff
+		m_main.SetActive( true );
 
 		// show the player (ship)
 		m_spaceflightController.m_player.Show();
@@ -242,6 +287,10 @@ public class Encounter : MonoBehaviour
 
 			// we've added the first round
 			m_justEnteredEncounter = false;
+
+			// reset the encounter action
+			m_pdEncounter.m_nextAction = 0;
+			m_pdEncounter.m_timeToNextAction = 0.0f;
 		}
 		else
 		{
@@ -249,8 +298,17 @@ public class Encounter : MonoBehaviour
 			ResetAlienShipModels();
 		}
 
-		// reset time to next action
-		m_timeToNextAction = 0.0f;
+		// reset the comm game data
+		foreach ( var comm in gameData.m_commList )
+		{
+			comm.m_shown = false;
+		}
+
+		// reset other stuff
+		m_conversation = "";
+		m_updateShips = true;
+		m_waitingForResponse = false;
+		m_playerWantsToCommunicate = false;
 	}
 
 	// adds a number of alien ships to the encounter - up to the maximum allowed by the encounter
@@ -365,12 +423,360 @@ public class Encounter : MonoBehaviour
 		}
 	}
 
-	void MechanUpdate( PD_AlienShip alienShip, GameObject alienShipModel )
+	void UpdateMechanComms()
+	{
+		// get to the player data
+		var playerData = DataController.m_instance.m_playerData;
+
+		// used in a few places
+		GD_Comm comm;
+
+		// is it time to take the next action?
+		if ( m_pdEncounter.m_timeToNextAction <= 0 )
+		{
+			// yes - what is the next action?
+			switch ( m_pdEncounter.m_nextAction )
+			{
+				case 0:
+
+					// determine stance of aliens
+					if ( playerData.m_general.m_mechan9Unlocked )
+					{
+						m_pdEncounter.m_stance = GD_Comm.Stance.Friendly;
+						m_pdEncounter.m_nextAction = 3;
+					}
+					else
+					{
+						m_pdEncounter.m_stance = GD_Comm.Stance.Neutral;
+						m_pdEncounter.m_nextAction = 1;
+					}
+
+					m_pdEncounter.m_timeToNextAction = Random.Range( 3.0f, 15.0f );
+
+					break;
+
+				case 1:
+
+					// "scan" the player
+					if ( ClosestDistanceToAlienShip() < 512.0f )
+					{
+						SoundController.m_instance.PlaySound( SoundController.Sound.RadarBlip );
+
+						m_spaceflightController.m_messages.ChangeText( "Captain, we're being scanned." );
+
+						m_pdEncounter.m_nextAction = 2;
+						m_pdEncounter.m_timeToNextAction = Random.Range( 3.0f, 10.0f );
+					}
+
+					break;
+
+				case 2:
+
+					// check if there is at least one human crew member
+					if ( playerData.m_crewAssignment.HasAtLeastOneHumanCrew() )
+					{
+						// yes - hail the player
+						m_pdEncounter.m_nextAction = 3;
+					}
+					else
+					{
+						// mechans no likey
+						m_pdEncounter.m_stance = GD_Comm.Stance.Hostile;
+
+						comm = FindComm( GD_Comm.Subject.Custom );
+
+						ReceiveComm( comm );
+
+						// terminate communications
+						m_pdEncounter.m_nextAction = 100;
+					}
+
+					break;
+
+				case 3:
+
+					// does the player want to communicate?
+					if ( m_playerWantsToCommunicate )
+					{
+						// connect!
+						ShowRace();
+					}
+					else
+					{
+						// send greeting message
+						comm = FindComm( GD_Comm.Subject.GreetingHail );
+
+						ReceiveComm( comm );
+
+						m_pdEncounter.m_timeToNextAction = Random.Range( 15.0f, 30.0f );
+					}
+
+					break;
+
+				case 100:
+
+					// send communications terminated message
+					comm = FindComm( GD_Comm.Subject.Terminate );
+
+					ReceiveComm( comm );
+
+					m_pdEncounter.m_nextAction = 101;
+					m_pdEncounter.m_timeToNextAction = 3.0f;
+
+					break;
+
+				case 101:
+
+					// close messages
+					m_spaceflightController.m_messages.SlideIn();
+
+					m_pdEncounter.m_nextAction = 999;
+
+					break;
+
+				case 999:
+
+					// ships fly out of encounter zone
+					m_pdEncounter.m_timeToNextAction = 60.0f;
+
+					break;
+			}
+		}
+	}
+
+	// find and return a comm
+	GD_Comm FindComm( GD_Comm.Subject subject, bool playerComm = false )
+	{
+		// get to the game data
+		var gameData = DataController.m_instance.m_gameData;
+
+		// get to the player data
+		var playerData = DataController.m_instance.m_playerData;
+
+		// which race and stance to use?
+		var race = playerComm ? GameData.Race.Human : m_gdEncounter.m_race;
+		var stance = playerComm ? m_stance : m_pdEncounter.m_stance;
+
+		// go through each comm in the comm list and build a list of possible comms to choose from
+		var possibleComms = new List<GD_Comm>();
+
+		foreach ( var comm in gameData.m_commList )
+		{
+			if ( comm.m_race == race )
+			{
+				if ( comm.m_subject == subject )
+				{
+					if ( ( comm.m_stance == 0 ) || ( comm.m_stance == stance ) )
+					{
+						possibleComms.Add( comm );
+					}
+				}
+			}
+		}
+
+		// make sure we have something to pick from!
+		if ( possibleComms.Count == 0 )
+		{
+			Debug.Log( "Whoops - no suitable comm found! (" + m_gdEncounter.m_race + ", " + subject + ", " + m_pdEncounter.m_stance + ")" );
+
+			return new GD_Comm( "ERROR" );
+		}
+
+		// if the subject is between 7 and 11 the comm is a response to a question, so show them in order
+		if ( ( subject >= GD_Comm.Subject.Themselves ) && ( subject <= GD_Comm.Subject.GeneralInfo ) )
+		{
+			for ( int i = 0; i < 2; i++ )
+			{
+				int lastRaceCommId = playerData.m_general.m_lastRaceCommIds[ (int) m_gdEncounter.m_race, (int) subject ];
+
+				foreach ( var comm in possibleComms )
+				{
+					if ( comm.m_raceCommId > lastRaceCommId )
+					{
+						playerData.m_general.m_lastRaceCommIds[ (int) m_gdEncounter.m_race, (int) subject ] = comm.m_raceCommId;
+
+						return comm;
+					}
+				}
+
+				// if we get here we have run out of responses, so start over (the next loop is guaranteed to succeed)
+				// TODO: make use of subject 5 (no more info)
+				playerData.m_general.m_lastRaceCommIds[ (int) m_gdEncounter.m_race, (int) subject ] = 0;
+			}
+		}
+
+		// have we shown all possible comms for this subject?
+		var alreadyShownThemAll = true;
+
+		foreach ( var comm in possibleComms )
+		{
+			if ( !comm.m_shown )
+			{
+				alreadyShownThemAll = false;
+				break;
+			}
+		}
+
+		// if we have shown them all then reset them all
+		if ( alreadyShownThemAll )
+		{
+			foreach ( var comm in possibleComms )
+			{
+				comm.m_shown = false;
+			}
+		}
+
+		// remove all of the ones we've shown before from the list
+		for ( var i = 0; i < possibleComms.Count; i++ )
+		{
+			if ( possibleComms[ i ].m_shown )
+			{
+				possibleComms.RemoveAt( i );
+
+				i--;
+			}
+		}
+
+		// now pick and return a random one
+		var randomNumber = Random.Range( 0, possibleComms.Count - 1 );
+
+		var selectedComm = possibleComms[ randomNumber ];
+
+		selectedComm.m_shown = true;
+
+		return selectedComm;
+	}
+
+	// adds some text to the conversation
+	void ReceiveComm( GD_Comm comm )
+	{
+		// add a newline if there's stuff already in the comm log
+		if ( m_conversation.Length > 0 )
+		{
+			m_conversation += "\n";
+		}
+
+		// add the text
+		m_conversation += "<color=white>Receiving:</color>\n<color=#0a0>" + comm.m_text + "</color>";
+
+		// update the message
+		m_spaceflightController.m_messages.ChangeText( m_conversation );
+
+		// slide the message box out
+		m_spaceflightController.m_messages.SlideOut();
+
+		// play the beep sound
+		SoundController.m_instance.PlaySound( SoundController.Sound.Beep );
+
+		// if this wasn't a terminate message then aliens are waiting for a response
+		m_waitingForResponse = ( comm.m_subject != GD_Comm.Subject.Terminate );
+	}
+
+	// adds some text to the conversation
+	void SendComm( GD_Comm comm )
+	{
+		// get to the player data
+		var playerData = DataController.m_instance.m_playerData;
+
+		// add a newline if there's stuff already in the comm log
+		if ( m_conversation.Length > 0 )
+		{
+			m_conversation += "\n";
+		}
+
+		// get to the captains's personnel file
+		var personnelFile = playerData.m_crewAssignment.GetPersonnelFile( PD_CrewAssignment.Role.Captain );
+
+		// parse the text (replace tokens with values)
+		var text = comm.m_text;
+
+		text = text.Replace( "&", "ISS " + playerData.m_playerShip.m_name );
+		text = text.Replace( "*", personnelFile.m_name );
+
+		// add the text
+		m_conversation += "<color=white>Transmitting:</color>\n<color=#0aa>" + text + "</color>";
+
+		// update the message
+		m_spaceflightController.m_messages.ChangeText( m_conversation );
+
+		// slide the message box out
+		m_spaceflightController.m_messages.SlideOut();
+
+		// play the beep sound
+		SoundController.m_instance.PlaySound( SoundController.Sound.Beep );
+	}
+
+	public void ShowRace()
+	{
+		// stop updating the ships (both aliens and player)
+		m_updateShips = false;
+
+		// hide the player's ship
+		m_spaceflightController.m_player.Hide();
+
+		// hide the encounter location
+		m_main.SetActive( false );
+
+		// show the race of the aliens in this encounter
+		if ( m_alienRaceModelList[ (int) m_gdEncounter.m_race ] != null )
+		{
+			m_alienRaceModelList[ (int) m_gdEncounter.m_race ].SetActive( true );
+		}
+		else
+		{
+			Debug.Log( "Sorry, alien race " + m_gdEncounter.m_race + " is not available to display yet!" );
+		}
+	}
+
+	// call this to find out if there are living alien ships in the encounter
+	public bool HasLivingAlienShips()
+	{
+		// go through each alien ship
+		foreach ( var alienShip in m_pdEncounter.m_alienShipList )
+		{
+			// has this alien ship been added to the encounter?
+			if ( alienShip.m_addedToEncounter )
+			{
+				// is this alien ship still living?
+				if ( !alienShip.m_isDead )
+				{
+					// yep!
+					return true;
+				}
+			}
+		}
+
+		// nope!
+		return false;
+	}
+
+	// check if the aliens are waiting for a response
+	public bool IsWaitingForResponse()
+	{
+		return m_waitingForResponse;
+	}
+
+	// hail (or respond to) the alien ships
+	public void Hail( GD_Comm.Stance stance, bool responding )
+	{
+		// set the stance to what the player selected
+		m_stance = stance;
+
+		// pick the hail message subject based on whether we are responding or hailing
+		var comm = FindComm( responding ? GD_Comm.Subject.GreetingResponse : GD_Comm.Subject.GreetingHail, true );
+
+		SendComm( comm );
+
+		// the player wants to communicate
+		m_playerWantsToCommunicate = true;
+	}
+
+	void UpdateMechanAlienShip( PD_AlienShip alienShip, GameObject alienShipModel )
 	{
 		BuzzPlayer( alienShip, alienShipModel, 1.0f );
 	}
 
-	void DefaultUpdate( PD_AlienShip alienShip, GameObject alienShipModel )
+	void DefaultAlienShipUpdate( PD_AlienShip alienShip, GameObject alienShipModel )
 	{
 		BuzzPlayer( alienShip, alienShipModel, 1.0f );
 	}
@@ -407,7 +813,7 @@ public class Encounter : MonoBehaviour
 		alienShip.m_coordinates += alienShip.m_currentDirection * Time.deltaTime * m_alienShipSpeed * alienShipSpeedMultiplier;
 	}
 
-	void FinalizeUpdate()
+	void FinalizeAlienShips()
 	{
 		// get to the player data
 		var playerData = DataController.m_instance.m_playerData;
@@ -473,6 +879,34 @@ public class Encounter : MonoBehaviour
 		m_currentDollyDistance = Mathf.Lerp( m_currentDollyDistance, targetDollyDistance, Time.deltaTime * m_cameraDollySpeed );
 
 		m_spaceflightController.m_player.DollyCamera( m_currentDollyDistance );
+	}
+
+	// return the distance to the nearest alien ship
+	float ClosestDistanceToAlienShip()
+	{
+		// get to the player data
+		var playerData = DataController.m_instance.m_playerData;
+
+		// closest distance is "infinity"
+		var closestDistance = float.MaxValue;
+
+		// get to the list of alien ships
+		var alienShipList = m_pdEncounter.GetAlienShipList();
+
+		foreach ( var alienShip in alienShipList )
+		{
+			if ( alienShip.m_addedToEncounter && !alienShip.m_isDead )
+			{
+				var distance = Vector3.Distance( alienShip.m_coordinates, playerData.m_general.m_coordinates );
+
+				if ( distance < closestDistance )
+				{
+					closestDistance = distance;
+				}
+			}
+		}
+
+		return closestDistance;
 	}
 
 	// update the current scanner selection (0 = player's ship, 1...n = alien ships)

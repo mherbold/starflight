@@ -154,22 +154,6 @@ public class ButtonController : MonoBehaviour
 			m_ignoreControllerTimer = 0.0f;
 		}
 
-		// check if we have pressed the cancel button
-		if ( InputController.m_instance.m_cancel )
-		{
-			InputController.m_instance.Debounce();
-
-			if ( m_currentButton == null )
-			{
-				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
-			}
-			else
-			{
-				// cancel the current button
-				m_currentButton.Cancel();
-			}
-		}
-
 		// check if we have pressed the fire button
 		if ( InputController.m_instance.m_submit )
 		{

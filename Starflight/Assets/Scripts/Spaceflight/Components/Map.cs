@@ -10,6 +10,9 @@ public class Map : MonoBehaviour
 	// the player camera
 	public Camera m_playerCamera;
 
+	// the cameras that need to use the render texture
+	public Camera[] m_cameras;
+
 	// the map object
 	Material m_material;
 
@@ -75,8 +78,11 @@ public class Map : MonoBehaviour
 		// update the material to use the new render texture as the albedo map
 		m_material.SetTexture( "SF_AlbedoMap", renderTexture );
 
-		// update the camera to use the new render texture
-		m_playerCamera.targetTexture = renderTexture;
+		// update the various cameras to use the new render texture
+		foreach ( var camera in m_cameras )
+		{
+			camera.targetTexture = renderTexture;
+		}
 	}
 
 	// unity update
