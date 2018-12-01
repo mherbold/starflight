@@ -69,6 +69,9 @@ public class SensorsDisplay : ShipDisplay
 	// do we have sensor data to analyze?
 	public bool m_hasSensorData;
 
+	// what are we currently scanning
+	public ScanType m_scanType;
+
 	// the background material
 	Material m_backgroundMaterial;
 
@@ -77,9 +80,6 @@ public class SensorsDisplay : ShipDisplay
 
 	// are we running the cinematics?
 	bool m_isDoingCinematics;
-
-	// what are we currently scanning
-	ScanType m_scanType;
 
 	// mass power base (18 for planets, 1 for ships)
 	int m_massPowerBase;

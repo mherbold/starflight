@@ -7,6 +7,7 @@ public class GD_Vessel
 	public int m_id;
 
 	public string m_name;
+	public string m_type;
 	public GameData.Race m_race;
 
 	public int m_mineralDensity;
