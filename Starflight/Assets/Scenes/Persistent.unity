@@ -6173,6 +6173,10 @@ MonoBehaviour:
   m_radarBlip: {fileID: 8300000, guid: 89e535ed0dc701d47a3eb2f7d2466d10, type: 3}
   m_alarm: {fileID: 8300000, guid: cf846c87ef0617d49903d1ab2a709508, type: 3}
   m_beep: {fileID: 8300000, guid: 42a1825da02de8f4e9890533f18efd7a, type: 3}
+  m_warbleLong: {fileID: 8300000, guid: 3e5592b3ba557024f882daf4dc8f1304, type: 3}
+  m_warbleShort: {fileID: 8300000, guid: 7b1a9fefa380b844e8a6523d1cbe8a48, type: 3}
+  m_staticLong: {fileID: 8300000, guid: 381e69fc4aea78c4e9ced00382edcf5f, type: 3}
+  m_staticShort: {fileID: 8300000, guid: a54e7fb7df5e47f4396054cd6c8bd8dd, type: 3}
 --- !u!114 &919755016
 MonoBehaviour:
   m_ObjectHideFlags: 0

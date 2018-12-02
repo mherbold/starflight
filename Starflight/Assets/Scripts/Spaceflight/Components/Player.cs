@@ -336,29 +336,55 @@ public class Player : MonoBehaviour
 		// TODO: affect shields
 	}
 
-	// call this to show the player (ship)
+	// call this to show the player (camera and all)
 	public void Show()
+	{
+		if ( gameObject.activeInHierarchy )
+		{
+			return;
+		}
+
+		gameObject.SetActive( true );
+
+		Debug.Log( "Showing the player (parent)." );
+	}
+
+	// call this to hide the player (camera and all)
+	public void Hide()
+	{
+		if ( !gameObject.activeInHierarchy )
+		{
+			return;
+		}
+
+		gameObject.SetActive( false );
+
+		Debug.Log( "Hiding the player (parent)." );
+	}
+
+	// call this to show the ship
+	public void ShowShip()
 	{
 		if ( m_ship.gameObject.activeInHierarchy )
 		{
 			return;
 		}
 
-		// Debug.Log( "Showing the player (ship)." );
+		Debug.Log( "Showing the player ship." );
 
 		// show the ship
 		m_ship.gameObject.SetActive( true );
 	}
 
-	// call this to hide the player (ship)
-	public void Hide()
+	// call this to hide the ship
+	public void HideShip()
 	{
 		if ( !m_ship.gameObject.activeInHierarchy )
 		{
 			return;
 		}
 
-		// Debug.Log( "Hiding the player (ship)." );
+		Debug.Log( "Hiding the player ship." );
 
 		// hide the ship
 		m_ship.gameObject.SetActive( false );

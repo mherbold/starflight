@@ -43,7 +43,7 @@ public class SpaceflightController : MonoBehaviour
 	void Awake()
 	{
 		// immediately hide any game objects that we might have left visible in the editor
-		m_player.Hide();
+		m_player.HideShip();
 		m_dockingBay.Hide();
 		m_starSystem.Hide();
 		m_inOrbit.Hide();
@@ -75,6 +75,9 @@ public class SpaceflightController : MonoBehaviour
 
 		// get to the player data
 		var playerData = DataController.m_instance.m_playerData;
+
+		// show the player in case we had it hidden in the editor
+		m_player.Show();
 
 		// switch to the current location
 		SwitchLocation( playerData.m_general.m_location );
@@ -186,8 +189,9 @@ public class SpaceflightController : MonoBehaviour
 		// update the player data
 		playerData.m_general.m_location = newLocation;
 
-		// hide the radar
+		// hide the radar and scanner
 		m_radar.Hide();
+		m_scanner.Hide();
 
 		// switching to starport is a special case
 		if ( playerData.m_general.m_location == PD_General.Location.Starport )
@@ -204,7 +208,7 @@ public class SpaceflightController : MonoBehaviour
 			switch ( playerData.m_general.m_location )
 			{
 				case PD_General.Location.DockingBay:
-					m_player.Hide();
+					m_player.HideShip();
 					m_starSystem.Hide();
 					m_inOrbit.Hide();
 					m_hyperspace.Hide();
@@ -213,7 +217,7 @@ public class SpaceflightController : MonoBehaviour
 					break;
 
 				case PD_General.Location.JustLaunched:
-					m_player.Hide();
+					m_player.HideShip();
 					m_dockingBay.Hide();
 					m_starSystem.Hide();
 					m_inOrbit.Hide();
@@ -229,13 +233,13 @@ public class SpaceflightController : MonoBehaviour
 					m_inOrbit.Hide();
 					m_hyperspace.Hide();
 					m_encounter.Hide();
-					m_player.Show();
 					m_starSystem.Show();
+					m_player.ShowShip();
 					break;
 
 				case PD_General.Location.InOrbit:
 					m_starSystem.Initialize();
-					m_player.Hide();
+					m_player.HideShip();
 					m_dockingBay.Hide();
 					m_starSystem.Hide();
 					m_hyperspace.Hide();
@@ -248,8 +252,8 @@ public class SpaceflightController : MonoBehaviour
 					m_starSystem.Hide();
 					m_inOrbit.Hide();
 					m_encounter.Hide();
-					m_player.Show();
 					m_hyperspace.Show();
+					m_player.ShowShip();
 					break;
 
 				case PD_General.Location.Encounter:
@@ -257,8 +261,8 @@ public class SpaceflightController : MonoBehaviour
 					m_starSystem.Hide();
 					m_inOrbit.Hide();
 					m_hyperspace.Hide();
-					m_player.Show();
 					m_encounter.Show();
+					m_player.ShowShip();
 					break;
 			}
 		}

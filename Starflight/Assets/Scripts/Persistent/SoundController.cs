@@ -23,6 +23,10 @@ public class SoundController : MonoBehaviour
 		RadarBlip,
 		Alarm,
 		Beep,
+		WarbleLong,
+		WarbleShort,
+		StaticLong,
+		StaticShort,
 		Count
 	};
 
@@ -52,6 +56,10 @@ public class SoundController : MonoBehaviour
 	public AudioClip m_radarBlip;
 	public AudioClip m_alarm;
 	public AudioClip m_beep;
+	public AudioClip m_warbleLong;
+	public AudioClip m_warbleShort;
+	public AudioClip m_staticLong;
+	public AudioClip m_staticShort;
 
 	// the sound list (to use with the enum)
 	AudioClip[] m_soundList;
@@ -173,6 +181,10 @@ public class SoundController : MonoBehaviour
 		m_soundList[ (int) Sound.RadarBlip ] = m_radarBlip;
 		m_soundList[ (int) Sound.Alarm ] = m_alarm;
 		m_soundList[ (int) Sound.Beep ] = m_beep;
+		m_soundList[ (int) Sound.WarbleLong ] = m_warbleLong;
+		m_soundList[ (int) Sound.WarbleShort ] = m_warbleShort;
+		m_soundList[ (int) Sound.StaticLong ] = m_staticLong;
+		m_soundList[ (int) Sound.StaticShort ] = m_staticShort;
 	}
 
 	// unity start

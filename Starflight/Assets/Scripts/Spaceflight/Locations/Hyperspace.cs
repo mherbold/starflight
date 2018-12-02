@@ -229,9 +229,6 @@ public class Hyperspace : MonoBehaviour
 		// show the hyperspace objects
 		gameObject.SetActive( true );
 
-		// show the player (ship)
-		m_spaceflightController.m_player.Show();
-
 		// make sure the camera is at the right height above the zero plane
 		m_spaceflightController.m_player.DollyCamera( 1024.0f );
 		m_spaceflightController.m_player.SetClipPlanes( 512.0f, 1536.0f );

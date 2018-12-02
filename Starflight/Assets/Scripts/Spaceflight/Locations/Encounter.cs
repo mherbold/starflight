@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 public class Encounter : MonoBehaviour
 {
+	// the comm buttons
+	private ShipButton[] m_commButtons;
+
 	// convenient access to the spaceflight controller
 	public SpaceflightController m_spaceflightController;
 
@@ -63,6 +66,8 @@ public class Encounter : MonoBehaviour
 	// unity awake
 	void Awake()
 	{
+		// comm buttons
+		m_commButtons = new ShipButton[] { new StatementButton(), new QuestionButton(), new PostureButton(), new TerminateButton() };
 	}
 
 	// unity start
@@ -170,12 +175,6 @@ public class Encounter : MonoBehaviour
 		// hide the encounter objects
 		gameObject.SetActive( false );
 
-		// hide the race objects (in case it was shown)
-		if ( m_alienRaceModelList[ (int) m_gdEncounter.m_race ] != null )
-		{
-			m_alienRaceModelList[ (int) m_gdEncounter.m_race ].SetActive( false );
-		}
-
 		// slide the message box back in
 		m_spaceflightController.m_messages.SlideIn();
 	}
@@ -195,9 +194,6 @@ public class Encounter : MonoBehaviour
 
 		// show the main encounter location stuff
 		m_main.SetActive( true );
-
-		// show the player (ship)
-		m_spaceflightController.m_player.Show();
 
 		// make sure the camera is at the right height above the zero plane
 		m_currentDollyDistance = 1024.0f;
@@ -309,6 +305,15 @@ public class Encounter : MonoBehaviour
 		m_updateShips = true;
 		m_waitingForResponse = false;
 		m_playerWantsToCommunicate = false;
+
+		// TEMP
+		m_pdEncounter.m_nextAction = 0;
+
+		// if the next action is above 100 then we are in comms with the alien ships
+		if ( m_pdEncounter.m_nextAction >= 100 )
+		{
+			ConnectToAliens();
+		}
 	}
 
 	// adds a number of alien ships to the encounter - up to the maximum allowed by the encounter
@@ -488,7 +493,7 @@ public class Encounter : MonoBehaviour
 						ReceiveComm( comm );
 
 						// terminate communications
-						m_pdEncounter.m_nextAction = 100;
+						m_pdEncounter.m_nextAction = 900;
 					}
 
 					break;
@@ -499,7 +504,9 @@ public class Encounter : MonoBehaviour
 					if ( m_playerWantsToCommunicate )
 					{
 						// connect!
-						ShowRace();
+						ConnectToAliens();
+
+						m_pdEncounter.m_nextAction = 100;
 					}
 					else
 					{
@@ -508,12 +515,17 @@ public class Encounter : MonoBehaviour
 
 						ReceiveComm( comm );
 
-						m_pdEncounter.m_timeToNextAction = Random.Range( 15.0f, 30.0f );
+						m_pdEncounter.m_timeToNextAction = Random.Range( 10.0f, 20.0f );
 					}
 
 					break;
 
 				case 100:
+
+					// just connected
+					break;
+
+				case 900:
 
 					// send communications terminated message
 					comm = FindComm( GD_Comm.Subject.Terminate );
@@ -525,7 +537,7 @@ public class Encounter : MonoBehaviour
 
 					break;
 
-				case 101:
+				case 901:
 
 					// close messages
 					m_spaceflightController.m_messages.SlideIn();
@@ -706,16 +718,19 @@ public class Encounter : MonoBehaviour
 		SoundController.m_instance.PlaySound( SoundController.Sound.Beep );
 	}
 
-	public void ShowRace()
+	public void ConnectToAliens()
 	{
 		// stop updating the ships (both aliens and player)
 		m_updateShips = false;
 
-		// hide the player's ship
+		// hide the player (camera and all)
 		m_spaceflightController.m_player.Hide();
 
 		// hide the encounter location
 		m_main.SetActive( false );
+
+		// instantly black out the viewer
+		m_spaceflightController.m_map.StartFade( 0.0f, 0.0f );
 
 		// show the race of the aliens in this encounter
 		if ( m_alienRaceModelList[ (int) m_gdEncounter.m_race ] != null )
@@ -726,6 +741,27 @@ public class Encounter : MonoBehaviour
 		{
 			Debug.Log( "Sorry, alien race " + m_gdEncounter.m_race + " is not available to display yet!" );
 		}
+
+		// change the buttons
+		m_spaceflightController.m_buttonController.UpdateButtons( m_commButtons );
+	}
+
+	public void DisconnectFromAliens()
+	{
+		// hide the race of the aliens in this encounter
+		if ( m_alienRaceModelList[ (int) m_gdEncounter.m_race ] != null )
+		{
+			m_alienRaceModelList[ (int) m_gdEncounter.m_race ].SetActive( false );
+		}
+
+		// show the encounter location
+		m_main.SetActive( true );
+
+		// show the player (camera and all)
+		m_spaceflightController.m_player.Show();
+
+		// start updating the ships again
+		m_updateShips = true;
 	}
 
 	// call this to find out if there are living alien ships in the encounter
