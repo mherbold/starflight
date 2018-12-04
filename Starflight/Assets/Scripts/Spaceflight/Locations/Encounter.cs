@@ -2,12 +2,10 @@
 using UnityEngine;
 
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 public class Encounter : MonoBehaviour
 {
-	// the comm buttons
-	private ShipButton[] m_commButtons;
-
 	// convenient access to the spaceflight controller
 	public SpaceflightController m_spaceflightController;
 
@@ -60,14 +58,18 @@ public class Encounter : MonoBehaviour
 	// does the player want to communicate?
 	bool m_playerWantsToCommunicate;
 
+	// are we already in video chat?
+	bool m_inVideoChat;
+
 	// the player's chosen stance
 	GD_Comm.Stance m_stance;
+
+	// what the player wants to know about
+	GD_Comm.Subject m_subject;
 
 	// unity awake
 	void Awake()
 	{
-		// comm buttons
-		m_commButtons = new ShipButton[] { new StatementButton(), new QuestionButton(), new PostureButton(), new TerminateButton() };
 	}
 
 	// unity start
@@ -98,7 +100,7 @@ public class Encounter : MonoBehaviour
 		{
 			case GameData.Race.Mechan:
 
-				UpdateMechanComms();
+				UpdateMechans();
 				break;
 		}
 
@@ -428,7 +430,7 @@ public class Encounter : MonoBehaviour
 		}
 	}
 
-	void UpdateMechanComms()
+	void UpdateMechans()
 	{
 		// get to the player data
 		var playerData = DataController.m_instance.m_playerData;
@@ -444,7 +446,7 @@ public class Encounter : MonoBehaviour
 			{
 				case 0:
 
-					// determine stance of aliens
+					// determine opening stance
 					if ( playerData.m_general.m_mechan9Unlocked )
 					{
 						m_pdEncounter.m_stance = GD_Comm.Stance.Friendly;
@@ -522,7 +524,18 @@ public class Encounter : MonoBehaviour
 
 				case 100:
 
-					// just connected
+					// answer any question from the player
+					if ( ( m_subject >= GD_Comm.Subject.Themselves ) && ( m_subject <= GD_Comm.Subject.GeneralInfo ) )
+					{
+						comm = FindComm( m_subject );
+
+						ReceiveComm( comm );
+
+						m_subject = GD_Comm.Subject.Statement;
+
+						m_pdEncounter.m_timeToNextAction = Random.Range( 10.0f, 20.0f );
+					}
+
 					break;
 
 				case 900:
@@ -557,7 +570,7 @@ public class Encounter : MonoBehaviour
 	}
 
 	// find and return a comm
-	GD_Comm FindComm( GD_Comm.Subject subject, bool playerComm = false )
+	public GD_Comm FindComm( GD_Comm.Subject subject, bool playerComm = false )
 	{
 		// get to the game data
 		var gameData = DataController.m_instance.m_gameData;
@@ -566,8 +579,27 @@ public class Encounter : MonoBehaviour
 		var playerData = DataController.m_instance.m_playerData;
 
 		// which race and stance to use?
-		var race = playerComm ? GameData.Race.Human : m_gdEncounter.m_race;
-		var stance = playerComm ? m_stance : m_pdEncounter.m_stance;
+		GameData.Race race;
+		GD_Comm.Stance stance;
+
+		if ( playerComm )
+		{
+			// remember what the player just said
+			m_subject = subject;
+
+			race = GameData.Race.Human;
+			stance = m_stance;
+
+			if ( ( subject >= GD_Comm.Subject.Themselves ) && ( subject <= GD_Comm.Subject.GeneralInfo ) )
+			{
+				subject = GD_Comm.Subject.Question;
+			}
+		}
+		else
+		{
+			race = m_gdEncounter.m_race;
+			stance = m_pdEncounter.m_stance;
+		}
 
 		// go through each comm in the comm list and build a list of possible comms to choose from
 		var possibleComms = new List<GD_Comm>();
@@ -685,39 +717,89 @@ public class Encounter : MonoBehaviour
 	}
 
 	// adds some text to the conversation
-	void SendComm( GD_Comm comm )
+	public void SendComm( GD_Comm comm )
 	{
-		// get to the player data
-		var playerData = DataController.m_instance.m_playerData;
-
-		// add a newline if there's stuff already in the comm log
-		if ( m_conversation.Length > 0 )
+		if ( ( comm.m_subject != GD_Comm.Subject.Terminate ) || ( comm.m_race != GameData.Race.Human ) )
 		{
-			m_conversation += "\n";
+			// get to the player data
+			var playerData = DataController.m_instance.m_playerData;
+
+			// add a newline if there's stuff already in the comm log
+			if ( m_conversation.Length > 0 )
+			{
+				m_conversation += "\n";
+			}
+
+			// get to the captains's personnel file
+			var personnelFile = playerData.m_crewAssignment.GetPersonnelFile( PD_CrewAssignment.Role.Captain );
+
+			// parse the text (replace tokens with values)
+			var text = comm.m_text;
+
+			text = text.Replace( "&", "ISS " + playerData.m_playerShip.m_name );
+			text = text.Replace( "*", personnelFile.m_name );
+
+			if ( text.Contains( "/" ) )
+			{
+				if ( ( m_subject >= GD_Comm.Subject.Themselves ) && ( m_subject < GD_Comm.Subject.GeneralInfo ) )
+				{
+					string askingAbout = null;
+
+					switch ( m_subject )
+					{
+						case GD_Comm.Subject.Themselves:
+							askingAbout = "your race";
+							break;
+
+						case GD_Comm.Subject.OtherRaces:
+							askingAbout = "other races";
+							break;
+
+						case GD_Comm.Subject.OldEmpire:
+							askingAbout = "the old empire";
+							break;
+
+						case GD_Comm.Subject.TheAncients:
+							askingAbout = "the Ancients";
+							break;
+					}
+
+					text = text.Replace( "(", "" );
+					text = text.Replace( ")", "" );
+					text = text.Replace( "/", askingAbout );
+				}
+				else
+				{
+					var regex = new Regex( @"\(([^\}]+)\)" );
+
+					text = regex.Replace( text, "" );
+				}
+
+				m_pdEncounter.m_timeToNextAction = Random.Range( 2.0f, 5.0f );
+			}
+
+			// add the text
+			m_conversation += "<color=white>Transmitting:</color>\n<color=#0aa>" + text + "</color>";
+
+			// update the message
+			m_spaceflightController.m_messages.ChangeText( m_conversation );
+
+			// slide the message box out
+			m_spaceflightController.m_messages.SlideOut();
+
+			// play the beep sound
+			SoundController.m_instance.PlaySound( SoundController.Sound.Beep );
 		}
 
-		// get to the captains's personnel file
-		var personnelFile = playerData.m_crewAssignment.GetPersonnelFile( PD_CrewAssignment.Role.Captain );
-
-		// parse the text (replace tokens with values)
-		var text = comm.m_text;
-
-		text = text.Replace( "&", "ISS " + playerData.m_playerShip.m_name );
-		text = text.Replace( "*", personnelFile.m_name );
-
-		// add the text
-		m_conversation += "<color=white>Transmitting:</color>\n<color=#0aa>" + text + "</color>";
-
-		// update the message
-		m_spaceflightController.m_messages.ChangeText( m_conversation );
-
-		// slide the message box out
-		m_spaceflightController.m_messages.SlideOut();
-
-		// play the beep sound
-		SoundController.m_instance.PlaySound( SoundController.Sound.Beep );
+		// did communications terminate?
+		if ( comm.m_subject == GD_Comm.Subject.Terminate )
+		{
+			// yes - get out of video chat
+			DisconnectFromAliens();
+		}
 	}
 
+	// enter video chat
 	public void ConnectToAliens()
 	{
 		// stop updating the ships (both aliens and player)
@@ -743,9 +825,13 @@ public class Encounter : MonoBehaviour
 		}
 
 		// change the buttons
-		m_spaceflightController.m_buttonController.UpdateButtons( m_commButtons );
+		m_spaceflightController.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.Comm );
+
+		// we are in video chat now
+		m_inVideoChat = true;
 	}
 
+	// exit video chat
 	public void DisconnectFromAliens()
 	{
 		// hide the race of the aliens in this encounter
@@ -762,6 +848,12 @@ public class Encounter : MonoBehaviour
 
 		// start updating the ships again
 		m_updateShips = true;
+
+		// change the buttons
+		m_spaceflightController.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.Bridge );
+
+		// we are not in video chat any more
+		m_inVideoChat = false;
 	}
 
 	// call this to find out if there are living alien ships in the encounter
@@ -792,19 +884,29 @@ public class Encounter : MonoBehaviour
 		return m_waitingForResponse;
 	}
 
+	// return true if we are in video chat already
+	public bool InVideoChat()
+	{
+		return m_inVideoChat;
+	}
+
 	// hail (or respond to) the alien ships
 	public void Hail( GD_Comm.Stance stance, bool responding )
 	{
 		// set the stance to what the player selected
 		m_stance = stance;
 
-		// pick the hail message subject based on whether we are responding or hailing
-		var comm = FindComm( responding ? GD_Comm.Subject.GreetingResponse : GD_Comm.Subject.GreetingHail, true );
+		// are we not in video chat?
+		if ( !m_inVideoChat )
+		{
+			// no - pick the hail message subject based on whether we are responding or hailing
+			var comm = FindComm( responding ? GD_Comm.Subject.GreetingResponse : GD_Comm.Subject.GreetingHail, true );
 
-		SendComm( comm );
+			SendComm( comm );
 
-		// the player wants to communicate
-		m_playerWantsToCommunicate = true;
+			// the player wants to communicate
+			m_playerWantsToCommunicate = true;
+		}
 	}
 
 	void UpdateMechanAlienShip( PD_AlienShip alienShip, GameObject alienShipModel )

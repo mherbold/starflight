@@ -1,9 +1,6 @@
 ﻿
 public class CommunicationsButton : ShipButton
 {
-	private readonly ShipButton[] m_buttonSet1 = { new HailButton(), new DistressButton(), new BridgeButton() };
-	private readonly ShipButton[] m_buttonSet2 = { new RespondButton(), new DistressButton(), new BridgeButton() };
-
 	bool m_showingRespondButton;
 
 	public override string GetLabel()
@@ -17,10 +14,10 @@ public class CommunicationsButton : ShipButton
 		m_showingRespondButton = m_spaceflightController.m_encounter.IsWaitingForResponse();
 
 		// decide which button set to use
-		var buttonSet = ( m_showingRespondButton ) ? m_buttonSet2 : m_buttonSet1;
+		var buttonSet = ( m_showingRespondButton ) ? ButtonController.ButtonSet.CommunicationsB : ButtonController.ButtonSet.CommunicationsA;
 
 		// change the buttons
-		m_spaceflightController.m_buttonController.UpdateButtons( buttonSet );
+		m_spaceflightController.m_buttonController.ChangeButtonSet( buttonSet );
 
 		// get to the player data
 		PlayerData playerData = DataController.m_instance.m_playerData;
@@ -43,10 +40,10 @@ public class CommunicationsButton : ShipButton
 			m_showingRespondButton = m_spaceflightController.m_encounter.IsWaitingForResponse();
 
 			// decide which button set to use
-			var buttonSet = ( m_showingRespondButton ) ? m_buttonSet2 : m_buttonSet1;
+			var buttonSet = ( m_showingRespondButton ) ? ButtonController.ButtonSet.CommunicationsB : ButtonController.ButtonSet.CommunicationsA;
 
 			// change the buttons
-			m_spaceflightController.m_buttonController.UpdateButtons( buttonSet );
+			m_spaceflightController.m_buttonController.ChangeButtonSet( buttonSet );
 		}
 
 		return false;

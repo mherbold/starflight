@@ -14,7 +14,7 @@ public class GD_Comm
 		Themselves = 7,
 		OtherRaces = 8,
 		OldEmpire = 9,
-		Ancients = 10,
+		TheAncients = 10,
 		GeneralInfo = 11,
 		Statement = 13,
 		Question = 14,

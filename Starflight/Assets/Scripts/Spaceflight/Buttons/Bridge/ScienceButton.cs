@@ -1,8 +1,6 @@
 ﻿
 public class ScienceButton : ShipButton
 {
-	private readonly ShipButton[] m_buttons = { new SensorsButton(), new AnalysisButton(), new StatusButton(), new BridgeButton() };
-
 	public override string GetLabel()
 	{
 		return "Science";
@@ -11,7 +9,7 @@ public class ScienceButton : ShipButton
 	public override bool Execute()
 	{
 		// change the buttons
-		m_spaceflightController.m_buttonController.UpdateButtons( m_buttons );
+		m_spaceflightController.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.Science );
 
 		// get to the player data
 		PlayerData playerData = DataController.m_instance.m_playerData;

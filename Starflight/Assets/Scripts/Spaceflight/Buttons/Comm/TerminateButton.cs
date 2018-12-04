@@ -8,9 +8,9 @@ public class TerminateButton : ShipButton
 
 	public override bool Execute()
 	{
-		SoundController.m_instance.PlaySound( SoundController.Sound.Error );
+		var comm = m_spaceflightController.m_encounter.FindComm( GD_Comm.Subject.Terminate, true );
 
-		m_spaceflightController.m_messages.ChangeText( "<color=red>Not yet implemented.</color>" );
+		m_spaceflightController.m_encounter.SendComm( comm );
 
 		m_spaceflightController.m_buttonController.UpdateButtonSprites();
 

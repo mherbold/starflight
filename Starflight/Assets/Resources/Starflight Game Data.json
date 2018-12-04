@@ -30479,9 +30479,9 @@
       "m_id": "89",
       "m_race": "16",
       "m_raceCommId": "1",
-      "m_subject": "14",
-      "m_stance": "4",
-      "m_text": "We beg you to honor our poor selves and bestow upon us a pearl of wisdom concerning /."
+      "m_subject": "15",
+      "m_stance": "0",
+      "m_text": "[Communications Terminated]"
     },
     {
       "m_id": "90",
@@ -30489,15 +30489,15 @@
       "m_raceCommId": "2",
       "m_subject": "14",
       "m_stance": "4",
-      "m_text": "We humbly suggest that we would be interested in any little thing you might wish to tell us about /."
+      "m_text": "We beg you to honor our poor selves and bestow upon us a pearl of wisdom( concerning /)."
     },
     {
       "m_id": "91",
       "m_race": "16",
       "m_raceCommId": "3",
       "m_subject": "14",
-      "m_stance": "2",
-      "m_text": "Do you have any information you can share with us about /?"
+      "m_stance": "4",
+      "m_text": "We humbly suggest that we would be interested in any little thing you might wish to tell us( about /)."
     },
     {
       "m_id": "92",
@@ -30505,7 +30505,7 @@
       "m_raceCommId": "4",
       "m_subject": "14",
       "m_stance": "2",
-      "m_text": "We would greatly appreciate some information. Is there anything you can tell us about /?"
+      "m_text": "Do you have any information you can share with us( about /)?"
     },
     {
       "m_id": "93",
@@ -30513,23 +30513,23 @@
       "m_raceCommId": "5",
       "m_subject": "14",
       "m_stance": "2",
-      "m_text": "We are interested in information concerning /. Can you help us?"
+      "m_text": "We would greatly appreciate some information. Is there anything you can tell us( about /)?"
     },
     {
       "m_id": "94",
       "m_race": "16",
       "m_raceCommId": "6",
       "m_subject": "14",
-      "m_stance": "3",
-      "m_text": "We require information. You will tell us about /."
+      "m_stance": "2",
+      "m_text": "We are interested in information( concerning /). Can you help us?"
     },
     {
       "m_id": "95",
       "m_race": "16",
       "m_raceCommId": "7",
-      "m_subject": "13",
-      "m_stance": "4",
-      "m_text": "Please do not blast us into atomic particles. Take pity on us who are not fit to grovel in your waste products."
+      "m_subject": "14",
+      "m_stance": "3",
+      "m_text": "We require information.( You will tell us about /.)"
     },
     {
       "m_id": "96",
@@ -30537,7 +30537,7 @@
       "m_raceCommId": "8",
       "m_subject": "13",
       "m_stance": "4",
-      "m_text": "We can see that you are indeed the true race. Pray enlighten us with your gems of infinite wisdom."
+      "m_text": "Please do not blast us into atomic particles. Take pity on us who are not fit to grovel in your waste products."
     },
     {
       "m_id": "97",
@@ -30545,7 +30545,7 @@
       "m_raceCommId": "9",
       "m_subject": "13",
       "m_stance": "4",
-      "m_text": "We truly are not worth your trouble to destroy. We want only to bathe in your ever spewing fountain of knowledge."
+      "m_text": "We can see that you are indeed the true race. Pray enlighten us with your gems of infinite wisdom."
     },
     {
       "m_id": "98",
@@ -30553,15 +30553,15 @@
       "m_raceCommId": "10",
       "m_subject": "13",
       "m_stance": "4",
-      "m_text": "We understand that you could destroy us if you chose. I, captain *, beg you in the name of peace and mercy and all that is good and nice and true not to do this."
+      "m_text": "We truly are not worth your trouble to destroy. We want only to bathe in your ever spewing fountain of knowledge."
     },
     {
       "m_id": "99",
       "m_race": "16",
       "m_raceCommId": "11",
       "m_subject": "13",
-      "m_stance": "2",
-      "m_text": "As representatives of the peoples of Arth we extend our best wishes and our hope for equitable relations in the future."
+      "m_stance": "4",
+      "m_text": "We understand that you could destroy us if you chose. I, captain *, beg you in the name of peace and mercy and all that is good and nice and true not to do this."
     },
     {
       "m_id": "100",
@@ -30569,7 +30569,7 @@
       "m_raceCommId": "12",
       "m_subject": "13",
       "m_stance": "2",
-      "m_text": "It is our hope that our respective peoples will enjoy a long and mutually beneficial relationship."
+      "m_text": "As representatives of the peoples of Arth we extend our best wishes and our hope for equitable relations in the future."
     },
     {
       "m_id": "101",
@@ -30577,7 +30577,7 @@
       "m_raceCommId": "13",
       "m_subject": "13",
       "m_stance": "2",
-      "m_text": "There is a lot we can learn from each other. Please convey to your leaders our sincere wishes for peace and friendship."
+      "m_text": "It is our hope that our respective peoples will enjoy a long and mutually beneficial relationship."
     },
     {
       "m_id": "102",
@@ -30585,7 +30585,7 @@
       "m_raceCommId": "14",
       "m_subject": "13",
       "m_stance": "2",
-      "m_text": "Perhaps some day our young shall play and romp together in the blissfull light of harmony and friendship."
+      "m_text": "There is a lot we can learn from each other. Please convey to your leaders our sincere wishes for peace and friendship."
     },
     {
       "m_id": "103",
@@ -30593,7 +30593,7 @@
       "m_raceCommId": "15",
       "m_subject": "13",
       "m_stance": "2",
-      "m_text": "Do not be afraid of us, we are on a peaceful mission. There is no limit to what both our races can gain from mutual exchange."
+      "m_text": "Perhaps some day our young shall play and romp together in the blissfull light of harmony and friendship."
     },
     {
       "m_id": "104",
@@ -30601,15 +30601,15 @@
       "m_raceCommId": "16",
       "m_subject": "13",
       "m_stance": "2",
-      "m_text": "Let us embrace one another and sing the songs of friendship and some day perhaps we shall look upon one another and say ...'Brother'."
+      "m_text": "Do not be afraid of us, we are on a peaceful mission. There is no limit to what both our races can gain from mutual exchange."
     },
     {
       "m_id": "105",
       "m_race": "16",
       "m_raceCommId": "17",
       "m_subject": "13",
-      "m_stance": "3",
-      "m_text": "You fools. You risk the wrath of the people of Arth."
+      "m_stance": "2",
+      "m_text": "Let us embrace one another and sing the songs of friendship and some day perhaps we shall look upon one another and say ...'Brother'."
     },
     {
       "m_id": "106",
@@ -30617,7 +30617,7 @@
       "m_raceCommId": "18",
       "m_subject": "13",
       "m_stance": "3",
-      "m_text": "Prepare to die alien scum."
+      "m_text": "You fools. You risk the wrath of the people of Arth."
     },
     {
       "m_id": "107",
@@ -30625,7 +30625,7 @@
       "m_raceCommId": "19",
       "m_subject": "13",
       "m_stance": "3",
-      "m_text": "Our patience wears thin. We shall give you 3 minutes in which to cooperate. If you do not ... Ha ha ha!"
+      "m_text": "Prepare to die alien scum."
     },
     {
       "m_id": "108",
@@ -30633,15 +30633,15 @@
       "m_raceCommId": "20",
       "m_subject": "13",
       "m_stance": "3",
-      "m_text": "We have heard enough of your inane ranting. You will tell us what we wish to know or we will destroy you. You have little time left."
+      "m_text": "Our patience wears thin. We shall give you 3 minutes in which to cooperate. If you do not ... Ha ha ha!"
     },
     {
       "m_id": "109",
       "m_race": "16",
       "m_raceCommId": "21",
-      "m_subject": "2",
-      "m_stance": "4",
-      "m_text": "We are a peaceful exploration vessel from Arth. Please do not harm us oh most high and mighty."
+      "m_subject": "13",
+      "m_stance": "3",
+      "m_text": "We have heard enough of your inane ranting. You will tell us what we wish to know or we will destroy you. You have little time left."
     },
     {
       "m_id": "110",
@@ -30649,15 +30649,15 @@
       "m_raceCommId": "22",
       "m_subject": "2",
       "m_stance": "4",
-      "m_text": "I am Captain * of the vessel &. Greetings and felicitations oh kind and merciful aliens."
+      "m_text": "We are a peaceful exploration vessel from Arth. Please do not harm us oh most high and mighty."
     },
     {
       "m_id": "111",
       "m_race": "16",
       "m_raceCommId": "23",
       "m_subject": "2",
-      "m_stance": "2",
-      "m_text": "This is Captain * of the starship &. We are on a peaceful exploration mission."
+      "m_stance": "4",
+      "m_text": "I am Captain * of the vessel &. Greetings and felicitations oh kind and merciful aliens."
     },
     {
       "m_id": "112",
@@ -30665,15 +30665,15 @@
       "m_raceCommId": "24",
       "m_subject": "2",
       "m_stance": "2",
-      "m_text": "Hello. We come in peace from the planet Arth."
+      "m_text": "This is Captain * of the starship &. We are on a peaceful exploration mission."
     },
     {
       "m_id": "113",
       "m_race": "16",
       "m_raceCommId": "25",
       "m_subject": "2",
-      "m_stance": "3",
-      "m_text": "This is a Captain * of the warship &. We are prepared to spare you if you comply with our demands."
+      "m_stance": "2",
+      "m_text": "Hello. We come in peace from the planet Arth."
     },
     {
       "m_id": "114",
@@ -30681,15 +30681,15 @@
       "m_raceCommId": "26",
       "m_subject": "2",
       "m_stance": "3",
-      "m_text": "We have no patience for your foolishness. You will cooperate with us or you will be destroyed."
+      "m_text": "This is a Captain * of the warship &. We are prepared to spare you if you comply with our demands."
     },
     {
       "m_id": "115",
       "m_race": "16",
       "m_raceCommId": "27",
-      "m_subject": "1",
-      "m_stance": "4",
-      "m_text": "Hail oh mighty ones, masters of the universe. We bow to your wonderful magnificence and ask that you do not harm our insignificant selves."
+      "m_subject": "2",
+      "m_stance": "3",
+      "m_text": "We have no patience for your foolishness. You will cooperate with us or you will be destroyed."
     },
     {
       "m_id": "116",
@@ -30697,7 +30697,7 @@
       "m_raceCommId": "28",
       "m_subject": "1",
       "m_stance": "4",
-      "m_text": "Greetings oh highest of the high, most great alien beings. We come in peace from the planet Arth, and respectfully request that you identify your vastly superior selves."
+      "m_text": "Hail oh mighty ones, masters of the universe. We bow to your wonderful magnificence and ask that you do not harm our insignificant selves."
     },
     {
       "m_id": "117",
@@ -30705,15 +30705,15 @@
       "m_raceCommId": "29",
       "m_subject": "1",
       "m_stance": "4",
-      "m_text": "This is Captain * of the starship &. We humbly suggest that you may wish to identify yourselves as well. If not, that is perfectly o.k."
+      "m_text": "Greetings oh highest of the high, most great alien beings. We come in peace from the planet Arth, and respectfully request that you identify your vastly superior selves."
     },
     {
       "m_id": "118",
       "m_race": "16",
       "m_raceCommId": "30",
       "m_subject": "1",
-      "m_stance": "2",
-      "m_text": "Greetings. We come in peace and wish to communicate, please identify yourselves."
+      "m_stance": "4",
+      "m_text": "This is Captain * of the starship &. We humbly suggest that you may wish to identify yourselves as well. If not, that is perfectly o.k."
     },
     {
       "m_id": "119",
@@ -30721,7 +30721,7 @@
       "m_raceCommId": "31",
       "m_subject": "1",
       "m_stance": "2",
-      "m_text": "This is Captain * of the &. We are on a peaceful mission and request communications. Please identify yourselves and your intentions."
+      "m_text": "Greetings. We come in peace and wish to communicate, please identify yourselves."
     },
     {
       "m_id": "120",
@@ -30729,15 +30729,15 @@
       "m_raceCommId": "32",
       "m_subject": "1",
       "m_stance": "2",
-      "m_text": "We come in peace and bring greetings from the planet Arth. Please respond."
+      "m_text": "This is Captain * of the &. We are on a peaceful mission and request communications. Please identify yourselves and your intentions."
     },
     {
       "m_id": "121",
       "m_race": "16",
       "m_raceCommId": "33",
       "m_subject": "1",
-      "m_stance": "3",
-      "m_text": "This is Captain * of the starship &. Identify yourselves immediately or be destroyed."
+      "m_stance": "2",
+      "m_text": "We come in peace and bring greetings from the planet Arth. Please respond."
     },
     {
       "m_id": "122",
@@ -30745,12 +30745,20 @@
       "m_raceCommId": "34",
       "m_subject": "1",
       "m_stance": "3",
-      "m_text": "This is Captain * of the powerful starship &. You will cooperate and identify yourselves immediately or be annihilated."
+      "m_text": "This is Captain * of the starship &. Identify yourselves immediately or be destroyed."
     },
     {
       "m_id": "123",
       "m_race": "16",
       "m_raceCommId": "35",
+      "m_subject": "1",
+      "m_stance": "3",
+      "m_text": "This is Captain * of the powerful starship &. You will cooperate and identify yourselves immediately or be annihilated."
+    },
+    {
+      "m_id": "124",
+      "m_race": "16",
+      "m_raceCommId": "36",
       "m_subject": "1",
       "m_stance": "3",
       "m_text": "This is the starship &. We are heavily armed. We require information. Comply or be destroyed."

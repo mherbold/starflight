@@ -1,9 +1,6 @@
 ﻿
 public class CommandButton : ShipButton
 {
-	private readonly ShipButton[] m_buttonSetA = { new LaunchButton(), new DisembarkButton(), new CargoButton(), new LogPlanetButton(), new ShipsLogButton(), new BridgeButton() };
-	private readonly ShipButton[] m_buttonSetB = { new LandButton(), new DisembarkButton(), new CargoButton(), new LogPlanetButton(), new ShipsLogButton(), new BridgeButton() };
-
 	public override string GetLabel()
 	{
 		return "Command";
@@ -18,11 +15,11 @@ public class CommandButton : ShipButton
 		switch ( playerData.m_general.m_location )
 		{
 			case PD_General.Location.DockingBay:
-				m_spaceflightController.m_buttonController.UpdateButtons( m_buttonSetA );
+				m_spaceflightController.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.CommandA );
 				break;
 
 			default:
-				m_spaceflightController.m_buttonController.UpdateButtons( m_buttonSetB );
+				m_spaceflightController.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.CommandB );
 				break;
 		}
 

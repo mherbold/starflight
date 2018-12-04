@@ -1,8 +1,6 @@
 ﻿
 public class LaunchButton : ShipButton
 {
-	private readonly ShipButton[] m_buttons = { new LaunchYesButton(), new LaunchNoButton() };
-
 	public override string GetLabel()
 	{
 		return "Launch";
@@ -17,7 +15,7 @@ public class LaunchButton : ShipButton
 		{
 			m_spaceflightController.m_messages.ChangeText( "<color=yellow>Confirm launch?</color>" );
 
-			m_spaceflightController.m_buttonController.UpdateButtons( m_buttons );
+			m_spaceflightController.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.Launch );
 
 			return true;
 		}

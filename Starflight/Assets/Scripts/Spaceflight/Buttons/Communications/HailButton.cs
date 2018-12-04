@@ -1,8 +1,6 @@
 ﻿
 public class HailButton : ShipButton
 {
-	private readonly ShipButton[] m_buttons = { new FriendlyButton(), new HostileButton(), new ObsequiousButton() };
-
 	public override string GetLabel()
 	{
 		return "Hail";
@@ -20,12 +18,7 @@ public class HailButton : ShipButton
 			if ( m_spaceflightController.m_encounter.HasLivingAlienShips() )
 			{
 				// yes - change the buttons
-				m_spaceflightController.m_buttonController.UpdateButtons( m_buttons );
-
-				// let the buttons know we are hailing (not responding)
-				FriendlyButton.m_isResponding = false;
-				HostileButton.m_isResponding = false;
-				ObsequiousButton.m_isResponding = false;
+				m_spaceflightController.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.Hail );
 
 				return true;
 			}

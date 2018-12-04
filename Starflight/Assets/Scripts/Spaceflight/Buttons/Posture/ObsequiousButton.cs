@@ -1,8 +1,6 @@
 ﻿
 public class ObsequiousButton : ShipButton
 {
-	static public bool m_isResponding;
-
 	public override string GetLabel()
 	{
 		return "Obsequious";
@@ -19,11 +17,23 @@ public class ObsequiousButton : ShipButton
 			// yes - are there living alien ships in the encounter?
 			if ( m_spaceflightController.m_encounter.HasLivingAlienShips() )
 			{
-				// yes - try to hail them
-				m_spaceflightController.m_encounter.Hail( GD_Comm.Stance.Obsequious, m_isResponding );
+				// yes - are we responding?
+				var isResponding = ( m_spaceflightController.m_buttonController.GetCurrentButtonSet() == ButtonController.ButtonSet.Respond );
 
-				// deactivate the button
-				m_spaceflightController.m_buttonController.RestoreBridgeButtons();
+				// try to hail them
+				m_spaceflightController.m_encounter.Hail( GD_Comm.Stance.Obsequious, isResponding );
+
+				// are we in video chat?
+				if ( m_spaceflightController.m_encounter.InVideoChat() )
+				{
+					// yes - restore comm buttons
+					m_spaceflightController.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.Comm );
+				}
+				else
+				{
+					// no - restore the bridge buttons
+					m_spaceflightController.m_buttonController.RestoreBridgeButtons();
+				}
 
 				return false;
 			}

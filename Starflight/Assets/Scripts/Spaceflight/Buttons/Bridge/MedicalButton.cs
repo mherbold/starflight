@@ -1,8 +1,6 @@
 ﻿
 public class MedicalButton : ShipButton
 {
-	private readonly ShipButton[] m_buttons = { new ExamineButton(), new TreatButton(), new BridgeButton() };
-
 	public override string GetLabel()
 	{
 		return "Medical";
@@ -11,7 +9,7 @@ public class MedicalButton : ShipButton
 	public override bool Execute()
 	{
 		// change the buttons
-		m_spaceflightController.m_buttonController.UpdateButtons( m_buttons );
+		m_spaceflightController.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.Medical );
 
 		// get to the player data
 		PlayerData playerData = DataController.m_instance.m_playerData;

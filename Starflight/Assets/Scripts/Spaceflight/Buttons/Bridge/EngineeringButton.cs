@@ -1,8 +1,6 @@
 ﻿
 public class EngineeringButton : ShipButton
 {
-	private readonly ShipButton[] m_buttons = { new DamageButton(), new RepairButton(), new BridgeButton() };
-
 	public override string GetLabel()
 	{
 		return "Engineering";
@@ -11,7 +9,7 @@ public class EngineeringButton : ShipButton
 	public override bool Execute()
 	{
 		// change the buttons
-		m_spaceflightController.m_buttonController.UpdateButtons( m_buttons );
+		m_spaceflightController.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.Engineering );
 
 		// get to the player data
 		PlayerData playerData = DataController.m_instance.m_playerData;

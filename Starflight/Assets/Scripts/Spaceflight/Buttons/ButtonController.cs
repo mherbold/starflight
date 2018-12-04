@@ -5,6 +5,27 @@ using TMPro;
 
 public class ButtonController : MonoBehaviour
 {
+	public enum ButtonSet
+	{
+		Bridge,
+		CommandA,
+		CommandB,
+		CommunicationsA,
+		CommunicationsB,
+		Engineering,
+		Medical,
+		Navigation,
+		Science,
+		Land,
+		Launch,
+		Hail,
+		Respond,
+		Comm,
+		Question,
+		Posture,
+		Count
+	};
+
 	// constants
 	const int c_numButtons = 6;
 
@@ -26,8 +47,11 @@ public class ButtonController : MonoBehaviour
 	float m_activatingButtonTimer;
 	float m_ignoreControllerTimer;
 
-	// bridge buttons
-	ShipButton[] m_bridgeButtons;
+	// button sets
+	ShipButton[][] m_buttonSets;
+
+	// the current button set
+	ButtonSet m_currentButtonSet;
 
 	// convenient access to the spaceflight controller
 	SpaceflightController m_spaceflightController;
@@ -45,8 +69,25 @@ public class ButtonController : MonoBehaviour
 		// reset the ignore controller timer
 		m_ignoreControllerTimer = 0.0f;
 
-		// bridge buttons
-		m_bridgeButtons = new ShipButton[] { new CommandButton(), new ScienceButton(), new NavigationButton(), new EngineeringButton(), new CommunicationsButton(), new MedicalButton() };
+		// allocate memory for button sets
+		m_buttonSets = new ShipButton[ (int) ButtonSet.Count ][];
+
+		m_buttonSets[ (int) ButtonSet.Bridge ] = new ShipButton[] { new CommandButton(), new ScienceButton(), new NavigationButton(), new EngineeringButton(), new CommunicationsButton(), new MedicalButton() };
+		m_buttonSets[ (int) ButtonSet.CommandA ] = new ShipButton[] { new LaunchButton(), new DisembarkButton(), new CargoButton(), new LogPlanetButton(), new ShipsLogButton(), new BridgeButton() };
+		m_buttonSets[ (int) ButtonSet.CommandB ] = new ShipButton[] { new LandButton(), new DisembarkButton(), new CargoButton(), new LogPlanetButton(), new ShipsLogButton(), new BridgeButton() };
+		m_buttonSets[ (int) ButtonSet.CommunicationsA ] = new ShipButton[] { new HailButton(), new DistressButton(), new BridgeButton() };
+		m_buttonSets[ (int) ButtonSet.CommunicationsB ] = new ShipButton[] { new RespondButton(), new DistressButton(), new BridgeButton() };
+		m_buttonSets[ (int) ButtonSet.Engineering ] = new ShipButton[] { new DamageButton(), new RepairButton(), new BridgeButton() };
+		m_buttonSets[ (int) ButtonSet.Medical ] = new ShipButton[] { new ExamineButton(), new TreatButton(), new BridgeButton() };
+		m_buttonSets[ (int) ButtonSet.Navigation ] = new ShipButton[] { new ManeuverButton(), new StarmapButton(), new RaiseShieldsButton(), new ArmWeaponButton(), new CombatButton(), new BridgeButton() };
+		m_buttonSets[ (int) ButtonSet.Science ] = new ShipButton[] { new SensorsButton(), new AnalysisButton(), new StatusButton(), new BridgeButton() };
+		m_buttonSets[ (int) ButtonSet.Land ] = new ShipButton[] { new SelectSiteButton(), new DescendButton(), new AbortButton() };
+		m_buttonSets[ (int) ButtonSet.Launch ] = new ShipButton[] { new LaunchYesButton(), new LaunchNoButton() };
+		m_buttonSets[ (int) ButtonSet.Hail ] = new ShipButton[] { new FriendlyButton(), new HostileButton(), new ObsequiousButton() };
+		m_buttonSets[ (int) ButtonSet.Respond ] = new ShipButton[] { new FriendlyButton(), new HostileButton(), new ObsequiousButton() };
+		m_buttonSets[ (int) ButtonSet.Comm ] = new ShipButton[] { new StatementButton(), new QuestionButton(), new PostureButton(), new TerminateButton() };
+		m_buttonSets[ (int) ButtonSet.Question ] = new ShipButton[] { new ThemselvesButton(), new OtherRacesButton(), new OldEmpireButton(), new TheAncientsButton(), new GeneralInfoButton() };
+		m_buttonSets[ (int) ButtonSet.Posture ] = new ShipButton[] { new FriendlyButton(), new HostileButton(), new ObsequiousButton() };
 	}
 
 	// unity start
@@ -191,7 +232,7 @@ public class ButtonController : MonoBehaviour
 		m_currentButton = null;
 
 		// restore the bridge buttons
-		UpdateButtons( m_bridgeButtons );
+		ChangeButtonSet( ButtonSet.Bridge );
 
 		// get to the player data
 		PlayerData playerData = DataController.m_instance.m_playerData;
@@ -213,8 +254,11 @@ public class ButtonController : MonoBehaviour
 	}
 
 	// update the buttons and change the current button index
-	public void UpdateButtons( ShipButton[] buttonList )
+	public void ChangeButtonSet( ButtonSet buttonSet )
 	{
+		// get the desired button set list
+		var buttonList = m_buttonSets[ (int) buttonSet ];
+
 		// go through all 6 buttons
 		for ( int i = 0; i < c_numButtons; i++ )
 		{
@@ -231,6 +275,9 @@ public class ButtonController : MonoBehaviour
 				m_buttonLabelList[ i ].text = "";
 			}
 		}
+
+		// update the current button set
+		m_currentButtonSet = buttonSet;
 
 		// reset the current button index
 		m_currentButtonIndex = 0;
@@ -259,5 +306,11 @@ public class ButtonController : MonoBehaviour
 
 		// play the deactivate sound
 		SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
+	}
+
+	// gets the current button set
+	public ButtonSet GetCurrentButtonSet()
+	{
+		return m_currentButtonSet;
 	}
 }

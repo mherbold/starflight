@@ -1,8 +1,6 @@
 ﻿
 public class NavigationButton : ShipButton
 {
-	private readonly ShipButton[] m_buttons = { new ManeuverButton(), new StarmapButton(), new RaiseShieldsButton(), new ArmWeaponButton(), new CombatButton(), new BridgeButton() };
-
 	public override string GetLabel()
 	{
 		return "Navigation";
@@ -11,7 +9,7 @@ public class NavigationButton : ShipButton
 	public override bool Execute()
 	{
 		// change the buttons
-		m_spaceflightController.m_buttonController.UpdateButtons( m_buttons );
+		m_spaceflightController.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.Navigation );
 
 		// get to the player data
 		PlayerData playerData = DataController.m_instance.m_playerData;
