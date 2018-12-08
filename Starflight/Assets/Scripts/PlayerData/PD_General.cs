@@ -64,7 +64,7 @@ public class PD_General
 	// various game play variables
 	public bool m_mechan9Unlocked;
 
-	// keep track of responses to questions
+	// keep track of responses to questions on a per race basis
 	public int[,] m_lastRaceCommIds;
 
 	// this resets everything to initial game state

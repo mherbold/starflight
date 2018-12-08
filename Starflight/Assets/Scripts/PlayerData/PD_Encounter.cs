@@ -2,6 +2,7 @@
 using UnityEngine;
 
 using System;
+using System.Collections.Generic;
 
 [Serializable]
 
@@ -10,24 +11,34 @@ public class PD_Encounter : IComparable
 	const float c_alienHyperspaceMoveSpeed = 32.0f;
 	const float c_alienStarSystemMoveSpeed = 128.0f;
 
-	public int m_encounterId;
-
-	public Vector3 m_homeCoordinates;
-	public Vector3 m_currentCoordinates;
-
-	public int m_nextAction;
-	public float m_timeToNextAction;
-	public GD_Comm.Stance m_stance;
-
-	public PD_AlienShip[] m_alienShipList;
-
+	public int m_encounterId { get; private set; }
 	GD_Encounter m_encounter;
-
 	PD_General.Location m_location;
-
 	int m_starId;
+	Vector3 m_homeCoordinates;
+	public Vector3 m_currentCoordinates { get; private set; }
+	PD_AlienShip[] m_alienShipList;
 
 	float m_currentDistance;
+
+	public string m_conversation { get; private set; }
+	public List<int> m_shownCommList;
+	public bool m_connected;
+	public bool m_disconnected;
+	public float m_connectionTimer;
+	public bool m_aliensWantToConnect;
+	public bool m_playerWantsToConnect;
+	public GD_Comm.Subject m_lastSubjectFromPlayer;
+	public int m_lastQuestionFromAliens;
+	public bool m_alreadyScanned;
+	public float m_scanTimer;
+	public float m_conversationTimer;
+	public GD_Comm.Stance m_alienStance;
+	public GD_Comm.Stance m_playerStance;
+
+	public int m_questionLikelihood;
+	public int m_numCorrectAnswers;
+	public bool m_mechan9NoHumansWarningDone;
 
 	public void Reset( int encounterId )
 	{
@@ -94,8 +105,8 @@ public class PD_Encounter : IComparable
 			m_alienShipList[ i ] = alienShip;
 		}
 
-		// reset stance
-		m_stance = GD_Comm.Stance.Neutral;
+		// allocate the shown comm list
+		m_shownCommList = new List<int>();
 	}
 
 	public PD_General.Location GetLocation()
@@ -144,6 +155,11 @@ public class PD_Encounter : IComparable
 		return m_currentDistance;
 	}
 
+	public void SetCoordinates( Vector3 coordinates )
+	{
+		m_currentCoordinates = coordinates;
+	}
+
 	public void MoveTowards( Vector3 coordinates )
 	{
 		// get the move speed
@@ -161,5 +177,20 @@ public class PD_Encounter : IComparable
 	public PD_AlienShip[] GetAlienShipList()
 	{
 		return m_alienShipList;
+	}
+
+	public void ResetConversation()
+	{
+		m_conversation = "<color=white>Scanners indicate unidentified object!</color>";
+	}
+
+	public void AddToConversation( string text )
+	{
+		if ( m_conversation.Length != 0 )
+		{
+			m_conversation += "\n<line-height=25%>\n</line-height>";
+		}
+
+		m_conversation += text;
 	}
 }

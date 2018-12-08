@@ -11,7 +11,7 @@ public class CommunicationsButton : ShipButton
 	public override bool Execute()
 	{
 		// do we want to show the respond button?
-		m_showingRespondButton = m_spaceflightController.m_encounter.IsWaitingForResponse();
+		m_showingRespondButton = m_spaceflightController.m_encounter.AliensWantToConnect();
 
 		// decide which button set to use
 		var buttonSet = ( m_showingRespondButton ) ? ButtonController.ButtonSet.CommunicationsB : ButtonController.ButtonSet.CommunicationsA;
@@ -34,10 +34,10 @@ public class CommunicationsButton : ShipButton
 	public override bool Update()
 	{
 		// did the encounter change to waiting for response?
-		if ( m_showingRespondButton != m_spaceflightController.m_encounter.IsWaitingForResponse() )
+		if ( m_showingRespondButton != m_spaceflightController.m_encounter.AliensWantToConnect() )
 		{
 			// do we want to show the respond button?
-			m_showingRespondButton = m_spaceflightController.m_encounter.IsWaitingForResponse();
+			m_showingRespondButton = m_spaceflightController.m_encounter.AliensWantToConnect();
 
 			// decide which button set to use
 			var buttonSet = ( m_showingRespondButton ) ? ButtonController.ButtonSet.CommunicationsB : ButtonController.ButtonSet.CommunicationsA;

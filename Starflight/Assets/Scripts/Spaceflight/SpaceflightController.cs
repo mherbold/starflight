@@ -79,6 +79,9 @@ public class SpaceflightController : MonoBehaviour
 		// show the player in case we had it hidden in the editor
 		m_player.Show();
 
+		// reset the buttons to default
+		m_buttonController.RestoreBridgeButtons();
+
 		// switch to the current location
 		SwitchLocation( playerData.m_general.m_location );
 
@@ -356,7 +359,7 @@ public class SpaceflightController : MonoBehaviour
 				playerData.m_general.m_lastEncounterCoordinates = Vector3.zero;
 
 				// let the encounter system know we are now entering this encounter
-				m_encounter.JustEnteredEncounter();
+				m_encounter.JustEntered();
 
 				// switch to the encounter location
 				SwitchLocation( PD_General.Location.Encounter );

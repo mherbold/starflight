@@ -21,7 +21,8 @@ public class ButtonController : MonoBehaviour
 		Hail,
 		Respond,
 		Comm,
-		Question,
+		AskQuestion,
+		AnswerQuestion,
 		Posture,
 		Count
 	};
@@ -86,7 +87,8 @@ public class ButtonController : MonoBehaviour
 		m_buttonSets[ (int) ButtonSet.Hail ] = new ShipButton[] { new FriendlyButton(), new HostileButton(), new ObsequiousButton() };
 		m_buttonSets[ (int) ButtonSet.Respond ] = new ShipButton[] { new FriendlyButton(), new HostileButton(), new ObsequiousButton() };
 		m_buttonSets[ (int) ButtonSet.Comm ] = new ShipButton[] { new StatementButton(), new QuestionButton(), new PostureButton(), new TerminateButton() };
-		m_buttonSets[ (int) ButtonSet.Question ] = new ShipButton[] { new ThemselvesButton(), new OtherRacesButton(), new OldEmpireButton(), new TheAncientsButton(), new GeneralInfoButton() };
+		m_buttonSets[ (int) ButtonSet.AskQuestion ] = new ShipButton[] { new ThemselvesButton(), new OtherRacesButton(), new OldEmpireButton(), new TheAncientsButton(), new GeneralInfoButton() };
+		m_buttonSets[ (int) ButtonSet.AnswerQuestion ] = new ShipButton[] { new AnswerYesButton(), new AnswerNoButton(), new TerminateButton() };
 		m_buttonSets[ (int) ButtonSet.Posture ] = new ShipButton[] { new FriendlyButton(), new HostileButton(), new ObsequiousButton() };
 	}
 
@@ -96,9 +98,6 @@ public class ButtonController : MonoBehaviour
 		// reset everything
 		m_activatingButton = false;
 		m_activatingButtonTimer = 0.0f;
-
-		// reset the buttons to default
-		RestoreBridgeButtons();
 	}
 
 	// unity update

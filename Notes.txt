@@ -25,14 +25,18 @@ Questionable Data
 	
 Communications
 
-	type
+	subject
 	
 		0 =
-		1 = statement, no relationship formed yet
-		2 = statement, friends
-		10 = response to question about themselves
-		11 = response to question about other races
-		12 = response to question about the old empire
-		13 = response to question about the ancients
-		14 = response to question about general info
-		99 = statement, terminating communications
+		1 = hail
+		2 = response
+		5 = ?? - when run out of information to share ??
+		6 = ?? - waiting for a response ??
+		7 = response to question about themselves
+		8 = response to question about other races
+		9 = response to question about the old empire
+		10 = response to question about the ancients
+		11 = response to question about general info
+		13 = statement
+		14 = question
+		15 = terminating communications

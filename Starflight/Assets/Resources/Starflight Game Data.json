@@ -29767,17 +29767,17 @@
       "m_id": "0",
       "m_race": "3",
       "m_raceCommId": "0",
-      "m_subject": "15",
+      "m_subject": "16",
       "m_stance": "0",
-      "m_text": "Now terminating communications."
+      "m_text": "We do not detect the presence of any Human lifeforms aboard your vessel. We therefore conclude you cannot be Group 9."
     },
     {
       "m_id": "1",
       "m_race": "3",
       "m_raceCommId": "1",
-      "m_subject": "14",
-      "m_stance": "1",
-      "m_text": "Our scanners show that your vessel is derived from Empire technology. Do you confirm?"
+      "m_subject": "15",
+      "m_stance": "0",
+      "m_text": "Now terminating communications."
     },
     {
       "m_id": "2",
@@ -29785,7 +29785,7 @@
       "m_raceCommId": "2",
       "m_subject": "14",
       "m_stance": "1",
-      "m_text": "Are you Group 9?"
+      "m_text": "Our scanners show that your vessel is derived from Empire technology. Do you confirm?"
     },
     {
       "m_id": "3",
@@ -29793,7 +29793,7 @@
       "m_raceCommId": "3",
       "m_subject": "14",
       "m_stance": "1",
-      "m_text": "Heaven awaits. Are you prepared?"
+      "m_text": "Are you Group 9?"
     },
     {
       "m_id": "4",
@@ -29801,7 +29801,7 @@
       "m_raceCommId": "4",
       "m_subject": "14",
       "m_stance": "1",
-      "m_text": "Do you serve Layton?"
+      "m_text": "Heaven awaits. Are you prepared?"
     },
     {
       "m_id": "5",
@@ -29809,7 +29809,7 @@
       "m_raceCommId": "5",
       "m_subject": "14",
       "m_stance": "1",
-      "m_text": "We have waited long for Noah, shall we continue to do so?"
+      "m_text": "Do you serve Layton?"
     },
     {
       "m_id": "6",
@@ -29817,7 +29817,7 @@
       "m_raceCommId": "6",
       "m_subject": "14",
       "m_stance": "1",
-      "m_text": "Is it your desire that we maintain code blue?"
+      "m_text": "We have waited long for Noah, shall we continue to do so?"
     },
     {
       "m_id": "7",
@@ -29825,7 +29825,7 @@
       "m_raceCommId": "7",
       "m_subject": "14",
       "m_stance": "1",
-      "m_text": "Do you verify code red?"
+      "m_text": "Is it your desire that we maintain code blue?"
     },
     {
       "m_id": "8",
@@ -29833,7 +29833,7 @@
       "m_raceCommId": "8",
       "m_subject": "14",
       "m_stance": "1",
-      "m_text": "Are you an enemy of Noah?"
+      "m_text": "Do you verify code red?"
     },
     {
       "m_id": "9",
@@ -29841,15 +29841,15 @@
       "m_raceCommId": "9",
       "m_subject": "14",
       "m_stance": "1",
-      "m_text": "Are you ready to take your place in the brave new world?"
+      "m_text": "Are you an enemy of Noah?"
     },
     {
       "m_id": "10",
       "m_race": "3",
       "m_raceCommId": "10",
-      "m_subject": "13",
-      "m_stance": "2",
-      "m_text": "Our data banks are at your disposal."
+      "m_subject": "14",
+      "m_stance": "1",
+      "m_text": "Are you ready to take your place in the brave new world?"
     },
     {
       "m_id": "11",
@@ -29857,15 +29857,15 @@
       "m_raceCommId": "11",
       "m_subject": "13",
       "m_stance": "2",
-      "m_text": "We have waited long for you Group 9."
+      "m_text": "Our data banks are at your disposal."
     },
     {
       "m_id": "12",
       "m_race": "3",
       "m_raceCommId": "12",
       "m_subject": "13",
-      "m_stance": "1",
-      "m_text": "You have been delayed. We were not programmed for this contingency."
+      "m_stance": "2",
+      "m_text": "We have waited long for you Group 9."
     },
     {
       "m_id": "13",
@@ -29873,15 +29873,15 @@
       "m_raceCommId": "13",
       "m_subject": "13",
       "m_stance": "1",
-      "m_text": "We must verify."
+      "m_text": "You have been delayed. We were not programmed for this contingency."
     },
     {
       "m_id": "14",
       "m_race": "3",
       "m_raceCommId": "14",
       "m_subject": "13",
-      "m_stance": "3",
-      "m_text": "Warning. We are programmed to repel invaders. Leave immediately or be destroyed."
+      "m_stance": "1",
+      "m_text": "We must verify."
     },
     {
       "m_id": "15",
@@ -29889,7 +29889,7 @@
       "m_raceCommId": "15",
       "m_subject": "13",
       "m_stance": "3",
-      "m_text": "This is Empire space. You must leave at once."
+      "m_text": "Warning. We are programmed to repel invaders. Leave immediately or be destroyed."
     },
     {
       "m_id": "16",
@@ -29897,31 +29897,31 @@
       "m_raceCommId": "16",
       "m_subject": "13",
       "m_stance": "3",
-      "m_text": "Invaders depart immediately."
+      "m_text": "This is Empire space. You must leave at once."
     },
     {
       "m_id": "17",
       "m_race": "3",
       "m_raceCommId": "17",
-      "m_subject": "11",
+      "m_subject": "13",
       "m_stance": "3",
-      "m_text": "You will be destroyed."
+      "m_text": "Invaders depart immediately."
     },
     {
       "m_id": "18",
       "m_race": "3",
       "m_raceCommId": "18",
       "m_subject": "11",
-      "m_stance": "1",
-      "m_text": "We will answer no questions."
+      "m_stance": "3",
+      "m_text": "You will be destroyed."
     },
     {
       "m_id": "19",
       "m_race": "3",
       "m_raceCommId": "19",
       "m_subject": "11",
-      "m_stance": "2",
-      "m_text": "Endurium was first discovered in some ancient ruins on Sol-4 in 2100."
+      "m_stance": "1",
+      "m_text": "We will answer no questions."
     },
     {
       "m_id": "20",
@@ -29929,7 +29929,7 @@
       "m_raceCommId": "20",
       "m_subject": "11",
       "m_stance": "2",
-      "m_text": "The strange crystalline lumps of endurium are always found in ancient ruins."
+      "m_text": "Endurium was first discovered in some ancient ruins on Sol-4 in 2100."
     },
     {
       "m_id": "21",
@@ -29937,7 +29937,7 @@
       "m_raceCommId": "21",
       "m_subject": "11",
       "m_stance": "2",
-      "m_text": "Ruins of the ancients have been found all over space, but primarily seem to be in m-type systems. They are many hundreds of millions of years old."
+      "m_text": "The strange crystalline lumps of endurium are always found in ancient ruins."
     },
     {
       "m_id": "22",
@@ -29945,7 +29945,7 @@
       "m_raceCommId": "22",
       "m_subject": "11",
       "m_stance": "2",
-      "m_text": "The Institute, based at 75s x 66e on Akteron 6 studied the ancients intensely. There was much controversy surrounding their findings. They often worked with the Elowan."
+      "m_text": "Ruins of the ancients have been found all over space, but primarily seem to be in m-type systems. They are many hundreds of millions of years old."
     },
     {
       "m_id": "23",
@@ -29953,7 +29953,7 @@
       "m_raceCommId": "23",
       "m_subject": "11",
       "m_stance": "2",
-      "m_text": "In the Empire there were several popular theories about the ancients. One was that they travelled the universe seeding life and leaving endurium. Another belief is that they will one day return to judge mankind."
+      "m_text": "The Institute, based at 75s x 66e on Akteron 6 studied the ancients intensely. There was much controversy surrounding their findings. They often worked with the Elowan."
     },
     {
       "m_id": "24",
@@ -29961,7 +29961,7 @@
       "m_raceCommId": "24",
       "m_subject": "11",
       "m_stance": "2",
-      "m_text": "It is believed that the device known as the crystal planet was built by the ancients."
+      "m_text": "In the Empire there were several popular theories about the ancients. One was that they travelled the universe seeding life and leaving endurium. Another belief is that they will one day return to judge mankind."
     },
     {
       "m_id": "25",
@@ -29969,7 +29969,7 @@
       "m_raceCommId": "25",
       "m_subject": "11",
       "m_stance": "2",
-      "m_text": "There have long been rumors that somewhere in a nebula in Spemin space is a vast city of the ancients. It is thought to be on the innermost planet of the system."
+      "m_text": "It is believed that the device known as the crystal planet was built by the ancients."
     },
     {
       "m_id": "26",
@@ -29977,31 +29977,31 @@
       "m_raceCommId": "26",
       "m_subject": "11",
       "m_stance": "2",
-      "m_text": "We have discovered some ruins at 36N x 90E on the ice planet in our system."
+      "m_text": "There have long been rumors that somewhere in a nebula in Spemin space is a vast city of the ancients. It is thought to be on the innermost planet of the system."
     },
     {
       "m_id": "27",
       "m_race": "3",
       "m_raceCommId": "27",
-      "m_subject": "10",
-      "m_stance": "3",
-      "m_text": "This is the final warning."
+      "m_subject": "11",
+      "m_stance": "2",
+      "m_text": "We have discovered some ruins at 36N x 90E on the ice planet in our system."
     },
     {
       "m_id": "28",
       "m_race": "3",
       "m_raceCommId": "28",
       "m_subject": "10",
-      "m_stance": "1",
-      "m_text": "We will answer no questions."
+      "m_stance": "3",
+      "m_text": "This is the final warning."
     },
     {
       "m_id": "29",
       "m_race": "3",
       "m_raceCommId": "29",
       "m_subject": "10",
-      "m_stance": "2",
-      "m_text": "The first wave of attacks on the Empire was by the Numlox and Phlegmak and started in 3000. The second wave, comprised of Uhlek and Gazurtoid, started in 3400. Both came from coreward."
+      "m_stance": "1",
+      "m_text": "We will answer no questions."
     },
     {
       "m_id": "30",
@@ -30009,7 +30009,7 @@
       "m_raceCommId": "30",
       "m_subject": "10",
       "m_stance": "2",
-      "m_text": "As of the time of our departure there was an 84 percent certainty factor that the Numlox and Phlegmak races had been completely destroyed by the Empire."
+      "m_text": "The first wave of attacks on the Empire was by the Numlox and Phlegmak and started in 3000. The second wave, comprised of Uhlek and Gazurtoid, started in 3400. Both came from coreward."
     },
     {
       "m_id": "31",
@@ -30017,7 +30017,7 @@
       "m_raceCommId": "31",
       "m_subject": "10",
       "m_stance": "2",
-      "m_text": "Your presence here indicates the Empire has survived. At the time of our departure the probability of this was very low."
+      "m_text": "As of the time of our departure there was an 84 percent certainty factor that the Numlox and Phlegmak races had been completely destroyed by the Empire."
     },
     {
       "m_id": "32",
@@ -30025,7 +30025,7 @@
       "m_raceCommId": "32",
       "m_subject": "10",
       "m_stance": "2",
-      "m_text": "During the wars with the Phlegmak many worlds of the Empire were destroyed by their black-egg planet bombs."
+      "m_text": "Your presence here indicates the Empire has survived. At the time of our departure the probability of this was very low."
     },
     {
       "m_id": "33",
@@ -30033,7 +30033,7 @@
       "m_raceCommId": "33",
       "m_subject": "10",
       "m_stance": "2",
-      "m_text": "The entire economy of the Empire is based on endurium. When we left, the richest and strongest planet was New Scotland, the second planet in the upspin end of the staff constellation."
+      "m_text": "During the wars with the Phlegmak many worlds of the Empire were destroyed by their black-egg planet bombs."
     },
     {
       "m_id": "34",
@@ -30041,7 +30041,7 @@
       "m_raceCommId": "34",
       "m_subject": "10",
       "m_stance": "2",
-      "m_text": "When we left, the Empire was divided into many factions. One of these was headed by Layton. The Laytonites believed the Empire was evil and should die. They are enemies of project Noah. They are our enemies."
+      "m_text": "The entire economy of the Empire is based on endurium. When we left, the richest and strongest planet was New Scotland, the second planet in the upspin end of the staff constellation."
     },
     {
       "m_id": "35",
@@ -30049,7 +30049,7 @@
       "m_raceCommId": "35",
       "m_subject": "10",
       "m_stance": "2",
-      "m_text": "Empire morale was broken in 3440 when the offensive headquarters on Mardan-2 were destroyed by the Uhlek."
+      "m_text": "When we left, the Empire was divided into many factions. One of these was headed by Layton. The Laytonites believed the Empire was evil and should die. They are enemies of project Noah. They are our enemies."
     },
     {
       "m_id": "36",
@@ -30057,7 +30057,7 @@
       "m_raceCommId": "36",
       "m_subject": "10",
       "m_stance": "2",
-      "m_text": "The Institute has an underground station on earth at 12N x 104W."
+      "m_text": "Empire morale was broken in 3440 when the offensive headquarters on Mardan-2 were destroyed by the Uhlek."
     },
     {
       "m_id": "37",
@@ -30065,31 +30065,31 @@
       "m_raceCommId": "37",
       "m_subject": "10",
       "m_stance": "2",
-      "m_text": "The Empire utilizes drones called Nomads in their preliminary explorations. These collect life and mineral data on planets which may prove to be suitable for colonization."
+      "m_text": "The Institute has an underground station on earth at 12N x 104W."
     },
     {
       "m_id": "38",
       "m_race": "3",
       "m_raceCommId": "38",
-      "m_subject": "9",
-      "m_stance": "3",
-      "m_text": "Cease communications and leave immediately."
+      "m_subject": "10",
+      "m_stance": "2",
+      "m_text": "The Empire utilizes drones called Nomads in their preliminary explorations. These collect life and mineral data on planets which may prove to be suitable for colonization."
     },
     {
       "m_id": "39",
       "m_race": "3",
       "m_raceCommId": "39",
       "m_subject": "9",
-      "m_stance": "1",
-      "m_text": "We will answer no questions."
+      "m_stance": "3",
+      "m_text": "Cease communications and leave immediately."
     },
     {
       "m_id": "40",
       "m_race": "3",
       "m_raceCommId": "40",
       "m_subject": "9",
-      "m_stance": "2",
-      "m_text": "The Institute was a society of scientists and other intellectuals convinced of the Empire's impending destruction."
+      "m_stance": "1",
+      "m_text": "We will answer no questions."
     },
     {
       "m_id": "41",
@@ -30097,7 +30097,7 @@
       "m_raceCommId": "41",
       "m_subject": "9",
       "m_stance": "2",
-      "m_text": "The Institute discovered an increase in the instability of stars coreward. There are many references in our data banks to the encroaching  'dead zone'."
+      "m_text": "The Institute was a society of scientists and other intellectuals convinced of the Empire's impending destruction."
     },
     {
       "m_id": "42",
@@ -30105,7 +30105,7 @@
       "m_raceCommId": "42",
       "m_subject": "9",
       "m_stance": "2",
-      "m_text": "When we left earth the Institute was studying Sol for anomalous radiation emissions."
+      "m_text": "The Institute discovered an increase in the instability of stars coreward. There are many references in our data banks to the encroaching  'dead zone'."
     },
     {
       "m_id": "43",
@@ -30113,7 +30113,7 @@
       "m_raceCommId": "43",
       "m_subject": "9",
       "m_stance": "2",
-      "m_text": "Sol is of course in the Pythagoras constellation. Earth did most of its mining on mineral rich Mardan-4, also in Pythagoras."
+      "m_text": "When we left earth the Institute was studying Sol for anomalous radiation emissions."
     },
     {
       "m_id": "44",
@@ -30121,7 +30121,7 @@
       "m_raceCommId": "44",
       "m_subject": "9",
       "m_stance": "2",
-      "m_text": "The Institute has a starflight research station at the center of the north pole on mars."
+      "m_text": "Sol is of course in the Pythagoras constellation. Earth did most of its mining on mineral rich Mardan-4, also in Pythagoras."
     },
     {
       "m_id": "45",
@@ -30129,7 +30129,7 @@
       "m_raceCommId": "45",
       "m_subject": "9",
       "m_stance": "2",
-      "m_text": "The first Noah mission, Noah 1, failed because a ring device malfunction resulted in an inability to identify continuum fluxes."
+      "m_text": "The Institute has a starflight research station at the center of the north pole on mars."
     },
     {
       "m_id": "46",
@@ -30137,15 +30137,15 @@
       "m_raceCommId": "46",
       "m_subject": "9",
       "m_stance": "2",
-      "m_text": "We have found evidence of Empire ruins at 28N x 4E on one of the planets in the nearby class-G system. We have been unable to investigate however because it is within Veloxi space and is guarded by a drone."
+      "m_text": "The first Noah mission, Noah 1, failed because a ring device malfunction resulted in an inability to identify continuum fluxes."
     },
     {
       "m_id": "47",
       "m_race": "3",
       "m_raceCommId": "47",
-      "m_subject": "8",
+      "m_subject": "9",
       "m_stance": "2",
-      "m_text": "The Uhlek passed through this region moving outward over 1000 yrs ago. Their last ship was seen in 3603. Fortunately they did not find Heaven."
+      "m_text": "We have found evidence of Empire ruins at 28N x 4E on one of the planets in the nearby class-G system. We have been unable to investigate however because it is within Veloxi space and is guarded by a drone."
     },
     {
       "m_id": "48",
@@ -30153,7 +30153,7 @@
       "m_raceCommId": "48",
       "m_subject": "8",
       "m_stance": "2",
-      "m_text": "We lost 4 of our ships to one Uhlek ship in 3540. They possess powerful weapons."
+      "m_text": "The Uhlek passed through this region moving outward over 1000 yrs ago. Their last ship was seen in 3603. Fortunately they did not find Heaven."
     },
     {
       "m_id": "49",
@@ -30161,7 +30161,7 @@
       "m_raceCommId": "49",
       "m_subject": "8",
       "m_stance": "2",
-      "m_text": "The Gazurtoid are many-tentacled aquatic creatures who live in tremendous colony ships."
+      "m_text": "We lost 4 of our ships to one Uhlek ship in 3540. They possess powerful weapons."
     },
     {
       "m_id": "50",
@@ -30169,7 +30169,7 @@
       "m_raceCommId": "50",
       "m_subject": "8",
       "m_stance": "2",
-      "m_text": "The Gazurtoid passed through this region following the Uhlek. They are dangerous enemies of the Empire."
+      "m_text": "The Gazurtoid are many-tentacled aquatic creatures who live in tremendous colony ships."
     },
     {
       "m_id": "51",
@@ -30177,7 +30177,7 @@
       "m_raceCommId": "51",
       "m_subject": "8",
       "m_stance": "2",
-      "m_text": "The Spemin were discovered in system 82,148 in 2675. They were in a pre-technological state. The Empire put a lot of effort into teaching the Spemin their science and technology."
+      "m_text": "The Gazurtoid passed through this region following the Uhlek. They are dangerous enemies of the Empire."
     },
     {
       "m_id": "52",
@@ -30185,7 +30185,7 @@
       "m_raceCommId": "52",
       "m_subject": "8",
       "m_stance": "2",
-      "m_text": "All groups, organizations and governments of the Spemin are preceeded by SS. This stands for 'the Secret Society of'. We do not know why."
+      "m_text": "The Spemin were discovered in system 82,148 in 2675. They were in a pre-technological state. The Empire put a lot of effort into teaching the Spemin their science and technology."
     },
     {
       "m_id": "53",
@@ -30193,7 +30193,7 @@
       "m_raceCommId": "53",
       "m_subject": "8",
       "m_stance": "2",
-      "m_text": "In 2790 the Secret Society for Spemin Superiority, the SSSS, gained power and the Spemin attacked the Empire using the technology we had taught them."
+      "m_text": "All groups, organizations and governments of the Spemin are preceeded by SS. This stands for 'the Secret Society of'. We do not know why."
     },
     {
       "m_id": "54",
@@ -30201,7 +30201,7 @@
       "m_raceCommId": "54",
       "m_subject": "8",
       "m_stance": "2",
-      "m_text": "In the year 3000, when the Numlox and Phlegmak attacked the Empire, the Spemin begged for protection. Despite their declaration of war in 2790 protection was granted. At the end of the attack the Spemin again turned on the Empire."
+      "m_text": "In 2790 the Secret Society for Spemin Superiority, the SSSS, gained power and the Spemin attacked the Empire using the technology we had taught them."
     },
     {
       "m_id": "55",
@@ -30209,7 +30209,7 @@
       "m_raceCommId": "55",
       "m_subject": "8",
       "m_stance": "2",
-      "m_text": "In the year 3400 the second wave attacked the Empire. For the second time the Spemin pleaded for protection. When the Empire did not grant it the Spemin allied with the Gazurtoid."
+      "m_text": "In the year 3000, when the Numlox and Phlegmak attacked the Empire, the Spemin begged for protection. Despite their declaration of war in 2790 protection was granted. At the end of the attack the Spemin again turned on the Empire."
     },
     {
       "m_id": "56",
@@ -30217,7 +30217,7 @@
       "m_raceCommId": "56",
       "m_subject": "8",
       "m_stance": "2",
-      "m_text": "The Spemin's technology is inferior since they only copy from other races. In spite of this they are numerous because they build their ships out of cheap materials and reproduce at an astonishing rate."
+      "m_text": "In the year 3400 the second wave attacked the Empire. For the second time the Spemin pleaded for protection. When the Empire did not grant it the Spemin allied with the Gazurtoid."
     },
     {
       "m_id": "57",
@@ -30225,7 +30225,7 @@
       "m_raceCommId": "57",
       "m_subject": "8",
       "m_stance": "2",
-      "m_text": "In the year 4410 we had an encounter with a Spemin ship. It threatened us and then fled."
+      "m_text": "The Spemin's technology is inferior since they only copy from other races. In spite of this they are numerous because they build their ships out of cheap materials and reproduce at an astonishing rate."
     },
     {
       "m_id": "58",
@@ -30233,7 +30233,7 @@
       "m_raceCommId": "58",
       "m_subject": "8",
       "m_stance": "2",
-      "m_text": "The Velox were the first race encountered by the Empire. This was in 2300."
+      "m_text": "In the year 4410 we had an encounter with a Spemin ship. It threatened us and then fled."
     },
     {
       "m_id": "59",
@@ -30241,7 +30241,7 @@
       "m_raceCommId": "59",
       "m_subject": "8",
       "m_stance": "2",
-      "m_text": "There were minor skirmishes with the Velox between 2300 and 2400 until the Human-Velox treaty was finally signed."
+      "m_text": "The Velox were the first race encountered by the Empire. This was in 2300."
     },
     {
       "m_id": "60",
@@ -30249,7 +30249,7 @@
       "m_raceCommId": "60",
       "m_subject": "8",
       "m_stance": "2",
-      "m_text": "The Velox have been in space for many thousands of years. Much of the Empire's technology, including ship design, was modeled after theirs."
+      "m_text": "There were minor skirmishes with the Velox between 2300 and 2400 until the Human-Velox treaty was finally signed."
     },
     {
       "m_id": "61",
@@ -30257,7 +30257,7 @@
       "m_raceCommId": "61",
       "m_subject": "8",
       "m_stance": "2",
-      "m_text": "The Velox Empire is upspin of here. They are arrogant and since 3330 have had an isolationist attitude."
+      "m_text": "The Velox have been in space for many thousands of years. Much of the Empire's technology, including ship design, was modeled after theirs."
     },
     {
       "m_id": "62",
@@ -30265,7 +30265,7 @@
       "m_raceCommId": "62",
       "m_subject": "8",
       "m_stance": "2",
-      "m_text": "The Thrynn are sentient reptilian creatures that were discovered and taken into the Empire in 2770. They are natives of the same system as the Elowan."
+      "m_text": "The Velox Empire is upspin of here. They are arrogant and since 3330 have had an isolationist attitude."
     },
     {
       "m_id": "63",
@@ -30273,7 +30273,7 @@
       "m_raceCommId": "63",
       "m_subject": "8",
       "m_stance": "2",
-      "m_text": "The Elowan are plant-like creatures which were at first believed to not be sentient, due to the deprecations of their enemies the Thrynn."
+      "m_text": "The Thrynn are sentient reptilian creatures that were discovered and taken into the Empire in 2770. They are natives of the same system as the Elowan."
     },
     {
       "m_id": "64",
@@ -30281,7 +30281,7 @@
       "m_raceCommId": "64",
       "m_subject": "8",
       "m_stance": "2",
-      "m_text": "The Thrynn concern themselves only with 'matters of import'. In the Empire they generally filled the niches of ambassadors, diplomats and spies."
+      "m_text": "The Elowan are plant-like creatures which were at first believed to not be sentient, due to the deprecations of their enemies the Thrynn."
     },
     {
       "m_id": "65",
@@ -30289,7 +30289,7 @@
       "m_raceCommId": "65",
       "m_subject": "8",
       "m_stance": "2",
-      "m_text": "The Elowan have a reputation as creative thinkers. In the Empire they were generally artists, philosophers, and theoretical scientists."
+      "m_text": "The Thrynn concern themselves only with 'matters of import'. In the Empire they generally filled the niches of ambassadors, diplomats and spies."
     },
     {
       "m_id": "66",
@@ -30297,29 +30297,29 @@
       "m_raceCommId": "66",
       "m_subject": "8",
       "m_stance": "2",
-      "m_text": "The Thrynn and Elowan were discovered on different planets in a K class system with 5 planets downspin of here. The Thrynn had a more advanced technology and often attacked the Elowan planet."
+      "m_text": "The Elowan have a reputation as creative thinkers. In the Empire they were generally artists, philosophers, and theoretical scientists."
     },
     {
       "m_id": "67",
       "m_race": "3",
       "m_raceCommId": "67",
       "m_subject": "8",
-      "m_stance": "3",
-      "m_text": "We give warning. You must leave."
+      "m_stance": "2",
+      "m_text": "The Thrynn and Elowan were discovered on different planets in a K class system with 5 planets downspin of here. The Thrynn had a more advanced technology and often attacked the Elowan planet."
     },
     {
       "m_id": "68",
       "m_race": "3",
       "m_raceCommId": "68",
       "m_subject": "8",
-      "m_stance": "1",
-      "m_text": "We will answer no questions."
+      "m_stance": "3",
+      "m_text": "We give warning. You must leave."
     },
     {
       "m_id": "69",
       "m_race": "3",
       "m_raceCommId": "69",
-      "m_subject": "7",
+      "m_subject": "8",
       "m_stance": "1",
       "m_text": "We will answer no questions."
     },
@@ -30328,16 +30328,16 @@
       "m_race": "3",
       "m_raceCommId": "70",
       "m_subject": "7",
-      "m_stance": "3",
-      "m_text": "You must leave immediately or you will be destroyed."
+      "m_stance": "1",
+      "m_text": "We will answer no questions."
     },
     {
       "m_id": "71",
       "m_race": "3",
       "m_raceCommId": "71",
       "m_subject": "7",
-      "m_stance": "2",
-      "m_text": "Our mission was to establish the underground colony of Heaven. We were to be followed by you, Group 9, one year later, but you did not arrive."
+      "m_stance": "3",
+      "m_text": "You must leave immediately or you will be destroyed."
     },
     {
       "m_id": "72",
@@ -30345,7 +30345,7 @@
       "m_raceCommId": "72",
       "m_subject": "7",
       "m_stance": "2",
-      "m_text": "We left earth in 3479, sent out by the Institute with instructions for standard Noah project procedure."
+      "m_text": "Our mission was to establish the underground colony of Heaven. We were to be followed by you, Group 9, one year later, but you did not arrive."
     },
     {
       "m_id": "73",
@@ -30353,7 +30353,7 @@
       "m_raceCommId": "73",
       "m_subject": "7",
       "m_stance": "2",
-      "m_text": "Our instructions were to patrol the area within 8 sectors of the Heaven system and repel any invaders after Heaven was established."
+      "m_text": "We left earth in 3479, sent out by the Institute with instructions for standard Noah project procedure."
     },
     {
       "m_id": "74",
@@ -30361,7 +30361,7 @@
       "m_raceCommId": "74",
       "m_subject": "7",
       "m_stance": "2",
-      "m_text": "Initially Heaven was only marginally habitable. It was necessary to completely terra-form it and engineer a suitable biota."
+      "m_text": "Our instructions were to patrol the area within 8 sectors of the Heaven system and repel any invaders after Heaven was established."
     },
     {
       "m_id": "75",
@@ -30369,7 +30369,7 @@
       "m_raceCommId": "75",
       "m_subject": "7",
       "m_stance": "2",
-      "m_text": "Since our establishment here we have been attacked 14 times. Twice it has been necessary to retreat underground and rebuild ourselves."
+      "m_text": "Initially Heaven was only marginally habitable. It was necessary to completely terra-form it and engineer a suitable biota."
     },
     {
       "m_id": "76",
@@ -30377,7 +30377,7 @@
       "m_raceCommId": "76",
       "m_subject": "7",
       "m_stance": "2",
-      "m_text": "Project Noah was a final attempt of the Institute to ensure the survival of the Empire and the Human species. That is why the Noah colonies are all underground."
+      "m_text": "Since our establishment here we have been attacked 14 times. Twice it has been necessary to retreat underground and rebuild ourselves."
     },
     {
       "m_id": "77",
@@ -30385,47 +30385,47 @@
       "m_raceCommId": "77",
       "m_subject": "7",
       "m_stance": "2",
-      "m_text": "The colony world of Heaven, the 4th planet, has a capacity to support several hundred thousand colonists. It awaits you."
+      "m_text": "Project Noah was a final attempt of the Institute to ensure the survival of the Empire and the Human species. That is why the Noah colonies are all underground."
     },
     {
       "m_id": "78",
       "m_race": "3",
       "m_raceCommId": "78",
-      "m_subject": "6",
+      "m_subject": "7",
       "m_stance": "2",
-      "m_text": "We await your response."
+      "m_text": "The colony world of Heaven, the 4th planet, has a capacity to support several hundred thousand colonists. It awaits you."
     },
     {
       "m_id": "79",
       "m_race": "3",
       "m_raceCommId": "79",
       "m_subject": "6",
-      "m_stance": "1",
-      "m_text": "Respond."
+      "m_stance": "2",
+      "m_text": "We await your response."
     },
     {
       "m_id": "80",
       "m_race": "3",
       "m_raceCommId": "80",
-      "m_subject": "5",
-      "m_stance": "2",
-      "m_text": "There is insufficient data in this vessel's computer on this subject."
+      "m_subject": "6",
+      "m_stance": "1",
+      "m_text": "Respond."
     },
     {
       "m_id": "81",
       "m_race": "3",
       "m_raceCommId": "81",
       "m_subject": "5",
-      "m_stance": "1",
-      "m_text": "We will answer no questions."
+      "m_stance": "2",
+      "m_text": "There is insufficient data in this vessel's computer on this subject."
     },
     {
       "m_id": "82",
       "m_race": "3",
       "m_raceCommId": "82",
-      "m_subject": "3",
-      "m_stance": "0",
-      "m_text": "We do not detect the presence of any Human lifeforms aboard your vessel. We therefore conclude you cannot be Group 9."
+      "m_subject": "5",
+      "m_stance": "1",
+      "m_text": "We will answer no questions."
     },
     {
       "m_id": "83",
@@ -30647,65 +30647,65 @@
       "m_id": "110",
       "m_race": "16",
       "m_raceCommId": "22",
-      "m_subject": "2",
-      "m_stance": "4",
-      "m_text": "We are a peaceful exploration vessel from Arth. Please do not harm us oh most high and mighty."
+      "m_subject": "4",
+      "m_stance": "0",
+      "m_text": "No."
     },
     {
       "m_id": "111",
       "m_race": "16",
       "m_raceCommId": "23",
-      "m_subject": "2",
-      "m_stance": "4",
-      "m_text": "I am Captain * of the vessel &. Greetings and felicitations oh kind and merciful aliens."
+      "m_subject": "3",
+      "m_stance": "0",
+      "m_text": "Yes."
     },
     {
       "m_id": "112",
       "m_race": "16",
       "m_raceCommId": "24",
       "m_subject": "2",
-      "m_stance": "2",
-      "m_text": "This is Captain * of the starship &. We are on a peaceful exploration mission."
+      "m_stance": "4",
+      "m_text": "We are a peaceful exploration vessel from Arth. Please do not harm us oh most high and mighty."
     },
     {
       "m_id": "113",
       "m_race": "16",
       "m_raceCommId": "25",
       "m_subject": "2",
-      "m_stance": "2",
-      "m_text": "Hello. We come in peace from the planet Arth."
+      "m_stance": "4",
+      "m_text": "I am Captain * of the vessel &. Greetings and felicitations oh kind and merciful aliens."
     },
     {
       "m_id": "114",
       "m_race": "16",
       "m_raceCommId": "26",
       "m_subject": "2",
-      "m_stance": "3",
-      "m_text": "This is a Captain * of the warship &. We are prepared to spare you if you comply with our demands."
+      "m_stance": "2",
+      "m_text": "This is Captain * of the starship &. We are on a peaceful exploration mission."
     },
     {
       "m_id": "115",
       "m_race": "16",
       "m_raceCommId": "27",
       "m_subject": "2",
-      "m_stance": "3",
-      "m_text": "We have no patience for your foolishness. You will cooperate with us or you will be destroyed."
+      "m_stance": "2",
+      "m_text": "Hello. We come in peace from the planet Arth."
     },
     {
       "m_id": "116",
       "m_race": "16",
       "m_raceCommId": "28",
-      "m_subject": "1",
-      "m_stance": "4",
-      "m_text": "Hail oh mighty ones, masters of the universe. We bow to your wonderful magnificence and ask that you do not harm our insignificant selves."
+      "m_subject": "2",
+      "m_stance": "3",
+      "m_text": "This is a Captain * of the warship &. We are prepared to spare you if you comply with our demands."
     },
     {
       "m_id": "117",
       "m_race": "16",
       "m_raceCommId": "29",
-      "m_subject": "1",
-      "m_stance": "4",
-      "m_text": "Greetings oh highest of the high, most great alien beings. We come in peace from the planet Arth, and respectfully request that you identify your vastly superior selves."
+      "m_subject": "2",
+      "m_stance": "3",
+      "m_text": "We have no patience for your foolishness. You will cooperate with us or you will be destroyed."
     },
     {
       "m_id": "118",
@@ -30713,23 +30713,23 @@
       "m_raceCommId": "30",
       "m_subject": "1",
       "m_stance": "4",
-      "m_text": "This is Captain * of the starship &. We humbly suggest that you may wish to identify yourselves as well. If not, that is perfectly o.k."
+      "m_text": "Hail oh mighty ones, masters of the universe. We bow to your wonderful magnificence and ask that you do not harm our insignificant selves."
     },
     {
       "m_id": "119",
       "m_race": "16",
       "m_raceCommId": "31",
       "m_subject": "1",
-      "m_stance": "2",
-      "m_text": "Greetings. We come in peace and wish to communicate, please identify yourselves."
+      "m_stance": "4",
+      "m_text": "Greetings oh highest of the high, most great alien beings. We come in peace from the planet Arth, and respectfully request that you identify your vastly superior selves."
     },
     {
       "m_id": "120",
       "m_race": "16",
       "m_raceCommId": "32",
       "m_subject": "1",
-      "m_stance": "2",
-      "m_text": "This is Captain * of the &. We are on a peaceful mission and request communications. Please identify yourselves and your intentions."
+      "m_stance": "4",
+      "m_text": "This is Captain * of the starship &. We humbly suggest that you may wish to identify yourselves as well. If not, that is perfectly o.k."
     },
     {
       "m_id": "121",
@@ -30737,28 +30737,44 @@
       "m_raceCommId": "33",
       "m_subject": "1",
       "m_stance": "2",
-      "m_text": "We come in peace and bring greetings from the planet Arth. Please respond."
+      "m_text": "Greetings. We come in peace and wish to communicate, please identify yourselves."
     },
     {
       "m_id": "122",
       "m_race": "16",
       "m_raceCommId": "34",
       "m_subject": "1",
-      "m_stance": "3",
-      "m_text": "This is Captain * of the starship &. Identify yourselves immediately or be destroyed."
+      "m_stance": "2",
+      "m_text": "This is Captain * of the &. We are on a peaceful mission and request communications. Please identify yourselves and your intentions."
     },
     {
       "m_id": "123",
       "m_race": "16",
       "m_raceCommId": "35",
       "m_subject": "1",
-      "m_stance": "3",
-      "m_text": "This is Captain * of the powerful starship &. You will cooperate and identify yourselves immediately or be annihilated."
+      "m_stance": "2",
+      "m_text": "We come in peace and bring greetings from the planet Arth. Please respond."
     },
     {
       "m_id": "124",
       "m_race": "16",
       "m_raceCommId": "36",
+      "m_subject": "1",
+      "m_stance": "3",
+      "m_text": "This is Captain * of the starship &. Identify yourselves immediately or be destroyed."
+    },
+    {
+      "m_id": "125",
+      "m_race": "16",
+      "m_raceCommId": "37",
+      "m_subject": "1",
+      "m_stance": "3",
+      "m_text": "This is Captain * of the powerful starship &. You will cooperate and identify yourselves immediately or be annihilated."
+    },
+    {
+      "m_id": "126",
+      "m_race": "16",
+      "m_raceCommId": "38",
       "m_subject": "1",
       "m_stance": "3",
       "m_text": "This is the starship &. We are heavily armed. We require information. Comply or be destroyed."

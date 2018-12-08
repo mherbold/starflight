@@ -6,9 +6,11 @@ public class GD_Comm
 {
 	public enum Subject
 	{
+		None = 0,
 		GreetingHail = 1,
 		GreetingResponse = 2,
-		Custom = 3,
+		Yes = 3,
+		No = 4,
 		NoMoreInformation = 5,
 		WaitingForResponse = 6,
 		Themselves = 7,
@@ -18,7 +20,8 @@ public class GD_Comm
 		GeneralInfo = 11,
 		Statement = 13,
 		Question = 14,
-		Terminate = 15
+		Terminate = 15,
+		Custom = 16
 	}
 
 	public enum Stance
@@ -36,7 +39,6 @@ public class GD_Comm
 	public Subject m_subject;
 	public Stance m_stance;
 	public string m_text;
-	public bool m_shown;
 
 	public GD_Comm( string text )
 	{

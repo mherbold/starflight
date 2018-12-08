@@ -24,7 +24,7 @@ public class HostileButton : ShipButton
 				m_spaceflightController.m_encounter.Hail( GD_Comm.Stance.Hostile, isResponding );
 
 				// are we in video chat?
-				if ( m_spaceflightController.m_encounter.InVideoChat() )
+				if ( m_spaceflightController.m_encounter.IsConnected() )
 				{
 					// yes - restore comm buttons
 					m_spaceflightController.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.Comm );
