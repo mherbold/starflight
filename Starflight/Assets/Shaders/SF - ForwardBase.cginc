@@ -19,9 +19,15 @@ float4 fragForwardBase_SF( SF_VertexShaderOutput i ) : SV_Target
 	float3 normal = ComputeNormal( i );
 	float3 emissive = ComputeEmissive( i );
 
+#if SF_ALPHATEST_ON
+
+	clip( diffuseColor.a - SF_AlphaTestValue );
+
+#endif // SF_ALPHATTEST_ON
+
 #if SF_ALBEDOOCCLUSION_ON
 
-	diffuseColor *= occlusion;
+	diffuseColor.rgb *= occlusion;
 
 #endif
 

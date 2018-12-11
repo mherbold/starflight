@@ -21,9 +21,16 @@ float SF_OcclusionPower;
 
 sampler2D SF_NormalMap;
 float4 SF_NormalMapScaleOffset;
+float SF_NormalMapStrength;
+
+sampler2D SF_DetailNormalMap;
+float4 SF_DetailNormalMapScaleOffset;
+float SF_DetailNormalMapStrength;
 
 sampler2D SF_EmissiveMap;
 float3 SF_EmissiveColor;
+
+float SF_AlphaTestValue;
 
 sampler2D SF_WaterMap;
 float4 SF_WaterScale;
@@ -72,12 +79,12 @@ struct SF_VertexShaderOutput
 
 	float3 normalWorld		: TEXCOORD4;
 
-#if SF_NORMALMAP_ON || SF_WATERMAP_ON
+#if SF_NORMALMAP_ON || SF_DETAILNORMALMAP_ON || SF_WATERMAP_ON
 
 	float3 tangentWorld		: TEXCOORD5;
 	float3 binormalWorld	: TEXCOORD6;
 
-#endif // SF_NORMALMAP_ON || SF_WATERMAP_ON
+#endif // SF_NORMALMAP_ON || SF_DETAILNORMALMAP_ON || SF_WATERMAP_ON
 };
 
 SF_VertexShaderOutput ComputeVertexShaderOutput( SF_VertexShaderInput v )
@@ -110,7 +117,7 @@ SF_VertexShaderOutput ComputeVertexShaderOutput( SF_VertexShaderInput v )
 
 	o.normalWorld = normalWorld;
 
-#if SF_NORMALMAP_ON || SF_WATERMAP_ON
+#if SF_NORMALMAP_ON || SF_DETAILNORMALMAP_ON || SF_WATERMAP_ON
 
 	float3 tangentWorld = normalize( mul( v.tangent.xyz, (float3x3) unity_WorldToObject ) );
 	float3 binormalWorld = cross( normalWorld, tangentWorld ) * v.tangent.w * unity_WorldTransformParams.w;
@@ -118,7 +125,7 @@ SF_VertexShaderOutput ComputeVertexShaderOutput( SF_VertexShaderInput v )
 	o.tangentWorld = tangentWorld;
 	o.binormalWorld = binormalWorld;
 
-#endif // SF_NORMALMAP_ON || SF_WATERMAP_ON
+#endif // SF_NORMALMAP_ON || SF_DETAILNORMALMAP_ON || SF_WATERMAP_ON
 
 	return o;
 }
@@ -167,12 +174,12 @@ float4 ComputeSpecular( SF_VertexShaderOutput i )
 
 #endif // SF_SPECULARMAP_ON
 
-	return float4( SF_SpecularColor * specularMap.r, SF_Smoothness * specularMap.g );
+	return float4( SF_SpecularColor * specularMap, SF_Smoothness );
 }
 
 float3 ComputeNormal( SF_VertexShaderOutput i )
 {
-#if SF_NORMALMAP_ON || SF_WATERMAP_ON
+#if SF_NORMALMAP_ON || SF_DETAILNORMALMAP_ON || SF_WATERMAP_ON
 
 #if SF_NORMALMAP_ON
 
@@ -189,13 +196,36 @@ float3 ComputeNormal( SF_VertexShaderOutput i )
 
 #endif // SF_NORMALMAP_ISCOMPRESSED
 
-	normalMap.xyz = normalize( normalMap.xyz );
+	normalMap.xyz = normalize( normalMap.xyz * float3( SF_NormalMapStrength.xx, 1 ) );
 
 #else // !SF_NORMALMAP_ON
 
 	float4 normalMap = 0;
 
 #endif // SF_NORMALMAP_ON
+
+#if SF_DETAILNORMALMAP_ON
+
+	float4 detailNormalMap = tex2D( SF_DetailNormalMap, i.texCoord1.xy * SF_DetailNormalMapScaleOffset.xy + SF_DetailNormalMapScaleOffset.zw );
+
+#if SF_DETAILNORMALMAP_ISCOMPRESSED
+
+	detailNormalMap.xy = ( detailNormalMap.wy * 2 - 1 );
+	detailNormalMap.z = sqrt( 1 - saturate( dot( detailNormalMap.xy, detailNormalMap.xy ) ) );
+
+#else // !SF_DETAILNORMALMAP_ISCOMPRESSED
+
+	detailNormalMap = detailNormalMap * 2 - 1;
+
+#endif // SF_DETAILNORMALMAP_ISCOMPRESSED
+
+	detailNormalMap.xyz = normalize( detailNormalMap.xyz * float3( SF_DetailNormalMapStrength.xx, 1 ) );
+
+#else // !SF_DETAILNORMALMAP_ON
+
+	float4 detailNormalMap = 0;
+
+#endif // SF_DETAILNORMALMAP_ON
 
 #if SF_WATERMAP_ON
 
@@ -241,11 +271,21 @@ float3 ComputeNormal( SF_VertexShaderOutput i )
 
 	float waterMaskMap = tex2D( SF_WaterMaskMap, i.texCoord0.xy );
 
-	waterMap = lerp( normalMap.xyz, waterMap, waterMaskMap );
+#if SF_NORMALMAP_ON || SF_DETAILNORMALMAP_ON
+
+	waterMap = lerp( 0, waterMap, waterMaskMap );
+
+#else
+
+	waterMap = lerp( float3( 0, 0, 1 ), waterMap, waterMaskMap );
+
+#endif // SF_NORMALMAP_ON || SF_DETAILNORMALMAP_ON
 
 #endif // SF_WATERMASKMAP_ON
 
-	normalMap.xyz = normalize( normalMap.xyz + waterMap );
+#else // !SF_WATERMAP_ON
+
+	float3 waterMap = 0;
 
 #endif // SF_WATERMAP_ON
 
@@ -262,9 +302,11 @@ float3 ComputeNormal( SF_VertexShaderOutput i )
 
 #endif // SF_ORTHONORMALIZE_ON
 
-normalWorld = normalize( tangentWorld * normalMap.x + binormalWorld * normalMap.y + normalWorld * normalMap.z );
+float3 normalLocal = normalize( normalMap.xyz + detailNormalMap.xyz + waterMap );
 
-#else // !SF_NORMALMAP_ON && !SF_WATERMAP_ON
+normalWorld = normalize( tangentWorld * normalLocal.x + binormalWorld * normalLocal.y + normalWorld * normalLocal.z );
+
+#else // !SF_NORMALMAP_ON && !SF_DETAILNORMAPMAP_ON && !SF_WATERMAP_ON
 
 #if SF_ORTHONORMALIZE_ON
 

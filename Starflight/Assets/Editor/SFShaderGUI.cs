@@ -9,7 +9,9 @@ class SFShaderGUI : ShaderGUI
 		public static readonly GUIContent albedoText = EditorGUIUtility.TrTextContent( "Albedo", "UV1; RGB=Color, Alpha (Transparency)" );
 		public static readonly GUIContent specularText = EditorGUIUtility.TrTextContent( "Specular", "UV1; R=Intensity, G=Smoothness" );
 		public static readonly GUIContent occlusionText = EditorGUIUtility.TrTextContent( "Occlusion", "UV2; R=Intensity; Albedo Occlusion Switch" );
-		public static readonly GUIContent normalText = EditorGUIUtility.TrTextContent( "Normal", "UV1; RGB=Uncompressed Normal, GA=DXT5 Compressed Normal; XY=Scale, ZW=Offset; Orthonormalize Switch" );
+		public static readonly GUIContent normalText = EditorGUIUtility.TrTextContent( "Normal", "UV1; RGB=Uncompressed Normal, GA=DXT5 Compressed Normal; XY=Scale, ZW=Offset; Strength" );
+		public static readonly GUIContent detailNormalText = EditorGUIUtility.TrTextContent( "Detail Normal", "UV2; RGB=Uncompressed Normal, GA=DXT5 Compressed Normal; XY=Scale, ZW=Offset; Strength" );
+		public static readonly GUIContent orthonormalizeText = EditorGUIUtility.TrTextContent( "Orthonormalize", "" );
 		public static readonly GUIContent emissiveText = EditorGUIUtility.TrTextContent( "Emissive", "UV1; RGB=Color" );
 		public static readonly GUIContent waterText = EditorGUIUtility.TrTextContent( "Water", "UV1; RGB=Uncompressed Normal, GA=DXT5 Compressed Normal; XY=Scale, Z=Bumpiness, W=Speed" );
 		public static readonly GUIContent waterMaskText = EditorGUIUtility.TrTextContent( "Water Mask", "UV1; R=Opacity" );
@@ -19,6 +21,7 @@ class SFShaderGUI : ShaderGUI
 		public static readonly GUIContent speedText = EditorGUIUtility.TrTextContent( "Speed", "" );
 		public static readonly GUIContent blendSrcText = EditorGUIUtility.TrTextContent( "Source Blend", "" );
 		public static readonly GUIContent blendDstText = EditorGUIUtility.TrTextContent( "Destination Blend", "" );
+		public static readonly GUIContent alphaTestValueText = EditorGUIUtility.TrTextContent( "Alpha Test Value", "" );
 		public static readonly GUIContent zWriteText = EditorGUIUtility.TrTextContent( "Z Write", "" );
 		public static readonly GUIContent forwardShadowsText = EditorGUIUtility.TrTextContent( "Forward Shadows", "" );
 		public static readonly GUIContent renderQueueOffsetText = EditorGUIUtility.TrTextContent( "Render Queue Offset", "" );
@@ -39,6 +42,12 @@ class SFShaderGUI : ShaderGUI
 
 	MaterialProperty m_normalMap = null;
 	MaterialProperty m_normalMapScaleOffset = null;
+	MaterialProperty m_normalMapStrength = null;
+
+	MaterialProperty m_detailNormalMap = null;
+	MaterialProperty m_detailNormalMapScaleOffset = null;
+	MaterialProperty m_detailNormalMapStrength = null;
+
 	MaterialProperty m_orthonormalizeOn = null;
 
 	MaterialProperty m_emissiveMap = null;
@@ -58,6 +67,8 @@ class SFShaderGUI : ShaderGUI
 
 	MaterialProperty m_blendSrc = null;
 	MaterialProperty m_blendDst = null;
+
+	MaterialProperty m_alphaTestValue = null;
 
 	MaterialProperty m_zWriteOn = null;
 
@@ -124,9 +135,19 @@ class SFShaderGUI : ShaderGUI
 			m_materialEditor.TexturePropertySingleLine( Styles.occlusionText, m_occlusionMap, m_occlusionPower, m_albedoOcclusionOn );
 		}
 
-		if ( m_normalMap != null && m_normalMapScaleOffset != null && m_orthonormalizeOn != null )
+		if ( m_normalMap != null && m_normalMapScaleOffset != null && m_normalMapStrength != null )
 		{
-			m_materialEditor.TexturePropertySingleLine( Styles.normalText, m_normalMap, m_normalMapScaleOffset, m_orthonormalizeOn );
+			m_materialEditor.TexturePropertySingleLine( Styles.normalText, m_normalMap, m_normalMapScaleOffset, m_normalMapStrength );
+		}
+
+		if ( m_detailNormalMap != null && m_detailNormalMapScaleOffset != null && m_detailNormalMapStrength != null )
+		{
+			m_materialEditor.TexturePropertySingleLine( Styles.detailNormalText, m_detailNormalMap, m_detailNormalMapScaleOffset, m_detailNormalMapStrength );
+		}
+
+		if ( m_orthonormalizeOn != null )
+		{
+			m_materialEditor.ShaderProperty( m_orthonormalizeOn, Styles.orthonormalizeText );
 		}
 
 		if ( m_emissiveMap != null && m_emissiveColor != null )
@@ -178,6 +199,11 @@ class SFShaderGUI : ShaderGUI
 			m_materialEditor.ShaderProperty( m_blendDst, Styles.blendDstText );
 		}
 
+		if ( m_alphaTestValue != null )
+		{
+			m_materialEditor.ShaderProperty( m_alphaTestValue, Styles.alphaTestValueText );
+		}
+
 		if ( m_zWriteOn != null )
 		{
 			m_materialEditor.ShaderProperty( m_zWriteOn, Styles.zWriteText );
@@ -211,6 +237,12 @@ class SFShaderGUI : ShaderGUI
 
 		m_normalMap = FindProperty( "SF_NormalMap", materialPropertyList, false );
 		m_normalMapScaleOffset = FindProperty( "SF_NormalMapScaleOffset", materialPropertyList, false );
+		m_normalMapStrength = FindProperty( "SF_NormalMapStrength", materialPropertyList, false );
+
+		m_detailNormalMap = FindProperty( "SF_DetailNormalMap", materialPropertyList, false );
+		m_detailNormalMapScaleOffset = FindProperty( "SF_DetailNormalMapScaleOffset", materialPropertyList, false );
+		m_detailNormalMapStrength = FindProperty( "SF_DetailNormalMapStrength", materialPropertyList, false );
+
 		m_orthonormalizeOn = FindProperty( "SF_OrthonormalizeOn", materialPropertyList, false );
 
 		m_emissiveMap = FindProperty( "SF_EmissiveMap", materialPropertyList, false );
@@ -231,6 +263,8 @@ class SFShaderGUI : ShaderGUI
 		m_blendSrc = FindProperty( "SF_BlendSrc", materialPropertyList, false );
 		m_blendDst = FindProperty( "SF_BlendDst", materialPropertyList, false );
 
+		m_alphaTestValue = FindProperty( "SF_AlphaTestValue", materialPropertyList, false );
+
 		m_zWriteOn = FindProperty( "SF_ZWriteOn", materialPropertyList, false );
 
 		m_forwardShadowsOn = FindProperty( "SF_ForwardShadowsOn", materialPropertyList, false );
@@ -245,12 +279,14 @@ class SFShaderGUI : ShaderGUI
 		bool specularMapOn = HasTextureMap( material, "SF_SpecularMap" );
 		bool occlusionMapOn = HasTextureMap( material, "SF_OcclusionMap" );
 		bool normalMapOn = HasTextureMap( material, "SF_NormalMap" );
+		bool detailNormalMapOn = HasTextureMap( material, "SF_DetailNormalMap" );
 		bool emissiveMapOn = HasTextureMap( material, "SF_EmissiveMap" );
 		bool waterMapOn = HasTextureMap( material, "SF_WaterMap" );
 		bool waterMaskMapOn = HasTextureMap( material, "SF_WaterMaskMap" );
 
 		// texture compression
 		bool normalMapIsCompressed = TextureIsCompressed( material, "SF_NormalMap" );
+		bool detailNormalMapIsCompressed = TextureIsCompressed( material, "SF_DetailNormalMap" );
 		bool waterMapIsCompressed = TextureIsCompressed( material, "SF_WaterMap" );
 
 		// toggle switches on/off
@@ -258,7 +294,15 @@ class SFShaderGUI : ShaderGUI
 		bool orthonormalizeOn = IsSwitchedOn( material, "SF_OrthonormalizeOn" );
 		bool forwardShadowsOn = IsSwitchedOn( material, "SF_ForwardShadowsOn" );
 
-		// enable blending if blendsrc != one or blenddst != zero
+		// enable alpha testing if alpha test value > 0
+		bool alphaTestOn = false;
+
+		if ( material.HasProperty( "SF_AlphaTestValue" ) )
+		{
+			alphaTestOn = ( material.GetFloat( "SF_AlphaTestValue" ) > 0.0f );
+		}
+
+		// enable blending if blend src != one or blend dst != zero
 		bool blendOn = false;
 
 		if ( material.HasProperty( "SF_BlendSrc" ) && material.HasProperty( "SF_BlendDst" ) )
@@ -291,13 +335,16 @@ class SFShaderGUI : ShaderGUI
 
 		// set all the material keywords
 		SetKeyword( material, "SF_ALBEDOMAP_ON", albedoMapOn );
-		SetKeyword( material, "SF_ALPHA_ON", blendOn );
+		SetKeyword( material, "SF_ALPHA_ON", blendOn || alphaTestOn );
+		SetKeyword( material, "SF_ALPHATEST_ON", alphaTestOn );
 		SetKeyword( material, "SF_SPECULARMAP_ON", specularMapOn );
 		SetKeyword( material, "SF_SPECULAR_ON", specularOn );
 		SetKeyword( material, "SF_OCCLUSIONMAP_ON", occlusionMapOn );
 		SetKeyword( material, "SF_ALBEDOOCCLUSION_ON", albedoOcclusionOn );
 		SetKeyword( material, "SF_NORMALMAP_ON", normalMapOn );
 		SetKeyword( material, "SF_NORMALMAP_ISCOMPRESSED", normalMapIsCompressed );
+		SetKeyword( material, "SF_DETAILNORMALMAP_ON", detailNormalMapOn );
+		SetKeyword( material, "SF_DETAILNORMALMAP_ISCOMPRESSED", detailNormalMapIsCompressed );
 		SetKeyword( material, "SF_ORTHONORMALIZE_ON", orthonormalizeOn );
 		SetKeyword( material, "SF_EMISSIVEMAP_ON", emissiveMapOn );
 		SetKeyword( material, "SF_WATERMAP_ON", waterMapOn );
@@ -306,7 +353,14 @@ class SFShaderGUI : ShaderGUI
 		SetKeyword( material, "SF_FORWARDSHADOWS_ON", forwardShadowsOn );
 
 		// if blending is on then force material to be transparent (this also disables the deferred pass automatically)
-		if ( blendOn )
+		if ( alphaTestOn )
+		{
+			material.SetOverrideTag( "RenderType", "TransparentCutout" );
+			material.renderQueue = (int) UnityEngine.Rendering.RenderQueue.AlphaTest + Mathf.RoundToInt( m_renderQueueOffset.floatValue );
+
+			m_debugLogMessage[ 1 ] += " TYPE:TRANSPARENTCUTOUT QUEUE:" + material.renderQueue;
+		}
+		else if ( blendOn )
 		{
 			material.SetOverrideTag( "RenderType", "Transparent" );
 			material.renderQueue = (int) UnityEngine.Rendering.RenderQueue.Transparent + Mathf.RoundToInt( m_renderQueueOffset.floatValue );

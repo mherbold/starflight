@@ -17,6 +17,12 @@ Shader "Starflight/Standard"
 
 		SF_NormalMap( "Normal Map", 2D ) = "bump" {}
 		SF_NormalMapScaleOffset( "Normal Map Scale Offset", Vector ) = ( 1, 1, 0, 0 )
+		SF_NormalMapStrength( "Normal Map Strength", Range( 0, 10 ) ) = 1
+
+		SF_DetailNormalMap( "Detail Normal Map", 2D ) = "bump" {}
+		SF_DetailNormalMapScaleOffset( "Detail Normal Map Scale Offset", Vector ) = ( 1, 1, 0, 0 )
+		SF_DetailNormalMapStrength( "Detail Normal Map Strength", Range( 0, 10 ) ) = 1
+
 		[MaterialToggle] SF_OrthonormalizeOn( "Orthonormalize", Float ) = 0
 
 		SF_EmissiveMap( "Emissive Map", 2D ) = "black" {}
@@ -24,6 +30,9 @@ Shader "Starflight/Standard"
 
 		[Enum(UnityEngine.Rendering.BlendMode)] SF_BlendSrc( "Blend Src", Float ) = 1
 		[Enum(UnityEngine.Rendering.BlendMode)] SF_BlendDst( "Blend Dst", Float ) = 0
+
+		SF_AlphaTestValue( "Alpha Test Value", Range( 0, 1 ) ) = 0
+		[MaterialToggle] SF_AlphaTestOn( "Alpha Test", Float ) = 0
 
 		[MaterialToggle] SF_ZWriteOn( "Z Write", Float ) = 1
 
@@ -52,6 +61,7 @@ Shader "Starflight/Standard"
 
 				#pragma shader_feature SF_ALBEDOMAP_ON
 				#pragma shader_feature SF_ALPHA_ON
+				#pragma shader_feature SF_ALPHATEST_ON
 
 				#pragma vertex vertShadowCaster_SF
 				#pragma fragment fragShadowCaster_SF
@@ -77,11 +87,15 @@ Shader "Starflight/Standard"
 				#pragma target 3.0
 
 				#pragma shader_feature SF_ALBEDOMAP_ON
+				#pragma shader_feature SF_ALPHA_ON
+				#pragma shader_feature SF_ALPHATEST_ON
 				#pragma shader_feature SF_SPECULARMAP_ON
 				#pragma shader_feature SF_OCCLUSIONMAP_ON
 				#pragma shader_feature SF_ALBEDOOCCLUSION_ON
 				#pragma shader_feature SF_NORMALMAP_ON
 				#pragma shader_feature SF_NORMALMAP_ISCOMPRESSED
+				#pragma shader_feature SF_DETAILNORMALMAP_ON
+				#pragma shader_feature SF_DETAILNORMALMAP_ISCOMPRESSED
 				#pragma shader_feature SF_ORTHONORMALIZE_ON
 				#pragma shader_feature SF_EMISSIVEMAP_ON
 
@@ -109,15 +123,19 @@ Shader "Starflight/Standard"
 			CGPROGRAM
 
 				#pragma target 3.0
+				#pragma multi_compile_fwdbase
 
 				#pragma shader_feature SF_ALBEDOMAP_ON
 				#pragma shader_feature SF_ALPHA_ON
+				#pragma shader_feature SF_ALPHATEST_ON
 				#pragma shader_feature SF_SPECULARMAP_ON
 				#pragma shader_feature SF_SPECULAR_ON
 				#pragma shader_feature SF_OCCLUSIONMAP_ON
 				#pragma shader_feature SF_ALBEDOOCCLUSION_ON
 				#pragma shader_feature SF_NORMALMAP_ON
 				#pragma shader_feature SF_NORMALMAP_ISCOMPRESSED
+				#pragma shader_feature SF_DETAILNORMALMAP_ON
+				#pragma shader_feature SF_DETAILNORMALMAP_ISCOMPRESSED
 				#pragma shader_feature SF_ORTHONORMALIZE_ON
 				#pragma shader_feature SF_EMISSIVEMAP_ON
 				#pragma shader_feature SF_FORWARDSHADOWS_ON

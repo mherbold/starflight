@@ -12,18 +12,14 @@ SF_VertexShaderOutput vertUnlit_SF( SF_VertexShaderInput v )
 float4 fragUnlit_SF( SF_VertexShaderOutput i ) : SV_Target
 {
 	float4 diffuseColor = ComputeDiffuseColor( i );
-					
-#if SF_ALPHA_ON
 
-	float alpha = SF_AlbedoColor.a * diffuseColor.a;
+#if SF_ALPHATEST_ON
 
-	return float4( diffuseColor.rgb * alpha, alpha );
+	clip( diffuseColor.a - SF_AlphaTestValue );
 
-#else // !SF_ALPHA_ON
+#endif // SF_ALPHATTEST_ON
 
-	return float4( diffuseColor.rgb, 1 );
-
-#endif // SF_ALPHA_ON
+	return float4( diffuseColor.rgb * diffuseColor.a, diffuseColor.a );
 }
 
 #endif

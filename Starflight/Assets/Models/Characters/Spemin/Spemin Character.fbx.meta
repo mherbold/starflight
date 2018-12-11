@@ -1,0 +1,251 @@
+fileFormatVersion: 2
+guid: e5b49797278804244b86ec15984ffaba
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Camera
+    100002: Camera.Target
+    100004: Disc 1
+    100006: Disc 2
+    100008: Disc 3
+    100010: Disc 4
+    100012: Disc 5
+    100014: Disc 7
+    100016: Disc 8
+    100018: Disc6
+    100020: Eyeball 2
+    100022: Eyeball 3
+    100024: Eyeball 4
+    100026: Eyeball 5
+    100028: Eyeball 6
+    100030: Floor
+    100032: Skylight
+    100034: Spemin
+    100036: //RootNode
+    100038: Stalk 1
+    100040: Stalk 2
+    100042: Stalk 3
+    100044: Sunlight
+    100046: Disc 6
+    100048: Spemin Backup
+    100050: Goo
+    100052: Ship Hull
+    100054: Hull
+    100056: Window
+    100058: Stalk 1 Pivot
+    100060: Stalk 2 Pivot
+    100062: Stalk 3 Pivot
+    400000: Camera
+    400002: Camera.Target
+    400004: Disc 1
+    400006: Disc 2
+    400008: Disc 3
+    400010: Disc 4
+    400012: Disc 5
+    400014: Disc 7
+    400016: Disc 8
+    400018: Disc6
+    400020: Eyeball 2
+    400022: Eyeball 3
+    400024: Eyeball 4
+    400026: Eyeball 5
+    400028: Eyeball 6
+    400030: Floor
+    400032: Skylight
+    400034: Spemin
+    400036: //RootNode
+    400038: Stalk 1
+    400040: Stalk 2
+    400042: Stalk 3
+    400044: Sunlight
+    400046: Disc 6
+    400048: Spemin Backup
+    400050: Goo
+    400052: Ship Hull
+    400054: Hull
+    400056: Window
+    400058: Stalk 1 Pivot
+    400060: Stalk 2 Pivot
+    400062: Stalk 3 Pivot
+    2100000: Skin
+    2100002: Floor
+    2100004: Eye Iris
+    2100006: Eye White
+    2100008: Antenna Stalk
+    2100010: 'Material #145'
+    2300000: Disc 1
+    2300002: Disc 2
+    2300004: Disc 3
+    2300006: Disc 4
+    2300008: Disc 5
+    2300010: Disc 7
+    2300012: Disc 8
+    2300014: Disc6
+    2300016: Eyeball 2
+    2300018: Eyeball 3
+    2300020: Eyeball 4
+    2300022: Eyeball 5
+    2300024: Eyeball 6
+    2300026: Floor
+    2300028: Spemin
+    2300030: Stalk 1
+    2300032: Stalk 2
+    2300034: Stalk 3
+    2300036: Disc 6
+    2300038: Spemin Backup
+    2300040: Goo
+    2300042: Ship Hull
+    2300044: Hull
+    2300046: Window
+    3300000: Disc 1
+    3300002: Disc 2
+    3300004: Disc 3
+    3300006: Disc 4
+    3300008: Disc 5
+    3300010: Disc 7
+    3300012: Disc 8
+    3300014: Disc6
+    3300016: Eyeball 2
+    3300018: Eyeball 3
+    3300020: Eyeball 4
+    3300022: Eyeball 5
+    3300024: Eyeball 6
+    3300026: Floor
+    3300028: Spemin
+    3300030: Stalk 1
+    3300032: Stalk 2
+    3300034: Stalk 3
+    3300036: Disc 6
+    3300038: Spemin Backup
+    3300040: Goo
+    3300042: Ship Hull
+    3300044: Hull
+    3300046: Window
+    4300000: Spemin
+    4300002: Floor
+    4300004: Eyeball 2
+    4300006: Eyeball 6
+    4300008: Eyeball 3
+    4300010: Eyeball 4
+    4300012: Eyeball 5
+    4300014: Stalk 1
+    4300016: Disc 1
+    4300018: Disc 2
+    4300020: Disc 3
+    4300022: Stalk 2
+    4300024: Disc 7
+    4300026: Disc 8
+    4300028: Stalk 3
+    4300030: Disc 4
+    4300032: Disc 5
+    4300034: Disc6
+    4300036: Disc 6
+    4300038: Spemin Backup
+    4300040: Goo
+    4300042: Ship Hull
+    4300044: Hull
+    4300046: Window
+    6400000: Disc 1
+    6400002: Disc 2
+    6400004: Disc 3
+    6400006: Disc 4
+    6400008: Disc 5
+    6400010: Disc 6
+    6400012: Disc 7
+    6400014: Disc 8
+    6400016: Eyeball 2
+    6400018: Eyeball 3
+    6400020: Eyeball 4
+    6400022: Eyeball 5
+    6400024: Eyeball 6
+    6400026: Goo
+    6400028: Ship Hull
+    6400030: Spemin
+    6400032: Stalk 1
+    6400034: Stalk 2
+    6400036: Stalk 3
+    6400038: Hull
+    6400040: Window
+    2186277476908879412: ImportLogs
+  externalObjects: {}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

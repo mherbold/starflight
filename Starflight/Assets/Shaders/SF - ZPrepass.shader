@@ -25,6 +25,9 @@ Shader "Starflight/Z Prepass"
 		[Enum(UnityEngine.Rendering.BlendMode)] SF_BlendSrc( "Blend Src", Float ) = 1
 		[Enum(UnityEngine.Rendering.BlendMode)] SF_BlendDst( "Blend Dst", Float ) = 0
 			
+		SF_AlphaTestValue( "Alpha Test Value", Range( 0, 1 ) ) = 0
+		[MaterialToggle] SF_AlphaTestOn( "Alpha Test", Float ) = 0
+
 		[MaterialToggle] SF_ZWriteOn( "Z Write", Float ) = 1
 
 		[MaterialToggle] SF_ForwardShadowsOn( "Forward Shadows", Float ) = 1

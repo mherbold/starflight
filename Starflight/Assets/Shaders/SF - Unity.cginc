@@ -23,12 +23,15 @@ float4 UnityApplyLinearShadowBias( float4 clipPos ) { return 1; }
 
 #define SF_ALBEDOMAP_ON					1
 #define SF_ALPHA_ON						1
+#define SF_ALPHATEST_ON					1
 #define SF_SPECULARMAP_ON				1
 #define SF_SPECULAR_ON					1
 #define SF_OCCLUSIONMAP_ON				1
 #define SF_ALBEDOOCCLUSION_ON			1
 #define SF_NORMALMAP_ON					1
 #define SF_NORMALMAP_ISCOMPRESSED		1
+#define SF_DETAILNORMALMAP_ON			1
+#define SF_DETAILNORMALMAP_ISCOMPRESSED	1
 #define SF_ORTHONORMALIZE_ON			1
 #define SF_EMISSIVEMAP_ON				1
 #define SF_WATERMAP_ON					1

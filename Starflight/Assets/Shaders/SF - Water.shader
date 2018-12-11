@@ -30,6 +30,9 @@ Shader "Starflight/Water"
 		[Enum(UnityEngine.Rendering.BlendMode)] SF_BlendSrc( "Blend Src", Float ) = 1
 		[Enum(UnityEngine.Rendering.BlendMode)] SF_BlendDst( "Blend Dst", Float ) = 0
 
+		SF_AlphaTestValue( "Alpha Test Value", Range( 0, 1 ) ) = 0
+		[MaterialToggle] SF_AlphaTestOn( "Alpha Test", Float ) = 0
+
 		[MaterialToggle] SF_ZWriteOn( "Z Write", Float ) = 1
 
 		[MaterialToggle] SF_ForwardShadowsOn( "Forward Shadows", Float ) = 1
@@ -57,6 +60,7 @@ Shader "Starflight/Water"
 
 				#pragma shader_feature SF_ALBEDOMAP_ON
 				#pragma shader_feature SF_ALPHA_ON
+				#pragma shader_feature SF_ALPHATEST_ON
 
 				#pragma vertex vertShadowCaster_SF
 				#pragma fragment fragShadowCaster_SF
@@ -82,6 +86,8 @@ Shader "Starflight/Water"
 				#pragma target 3.0
 
 				#pragma shader_feature SF_ALBEDOMAP_ON
+				#pragma shader_feature SF_ALPHA_ON
+				#pragma shader_feature SF_ALPHATEST_ON
 				#pragma shader_feature SF_SPECULARMAP_ON
 				#pragma shader_feature SF_OCCLUSIONMAP_ON
 				#pragma shader_feature SF_ALBEDOOCCLUSION_ON
@@ -119,6 +125,7 @@ Shader "Starflight/Water"
 
 				#pragma shader_feature SF_ALBEDOMAP_ON
 				#pragma shader_feature SF_ALPHA_ON
+				#pragma shader_feature SF_ALPHATEST_ON
 				#pragma shader_feature SF_SPECULARMAP_ON
 				#pragma shader_feature SF_SPECULAR_ON
 				#pragma shader_feature SF_OCCLUSIONMAP_ON
