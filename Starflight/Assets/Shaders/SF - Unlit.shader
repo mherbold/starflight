@@ -3,18 +3,31 @@ Shader "Starflight/Unlit"
 {
 	Properties
 	{
+		/* UV1 Maps */
+
 		SF_AlbedoMap( "Albedo Map", 2D ) = "white" {}
-		SF_AlbedoMapScaleOffset( "Albedo Map Scale Offset", Vector ) = ( 1, 1, 0, 0 )
 		SF_AlbedoColor( "Albedo Color", Color ) = ( 1, 1, 1, 1 )
+
+		SF_BaseScaleOffset( "Base Scale Offset", Vector ) = ( 1, 1, 0, 0 )
+
+		/* UV2 Maps */
+
+		/* Blending Options */
 
 		[Enum(UnityEngine.Rendering.BlendMode)] SF_BlendSrc( "Blend Src", Float ) = 1
 		[Enum(UnityEngine.Rendering.BlendMode)] SF_BlendDst( "Blend Dst", Float ) = 0
 
+		/* Alpha Testing Options */
+
 		SF_AlphaTestValue( "Alpha Test Value", Range( 0, 1 ) ) = 0
-		[MaterialToggle] SF_AlphaTestOn( "Alpha Test", Float ) = 0
+
+		/* Depth Buffer Options */
 
 		[MaterialToggle] SF_ZWriteOn( "Z Write", Float ) = 1
 
+		/* Misc Rendering Options */
+
+		[MaterialToggle] SF_ForwardShadowsOn( "Forward Shadows", Float ) = 1
 		SF_RenderQueueOffset( "Render Queue Offset", Int ) = 0
 	}
 

@@ -91,7 +91,7 @@ Material:
     - SF_OcclusionPower: 1
     - SF_OrthonormalizeOn: 0
     - SF_RenderQueueOffset: 0
-    - SF_Smoothness: 0.8
+    - SF_Smoothness: 0.84
     - SF_ZWriteOn: 1
     - _BumpScale: 1
     - _Cutoff: 0.5
@@ -112,9 +112,13 @@ Material:
     m_Colors:
     - SF_AlbedoColor: {r: 0.375, g: 0.3944954, b: 0.5, a: 1}
     - SF_AlbedoMapScaleOffset: {r: 1, g: 1, b: 0, a: 0}
+    - SF_BaseScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SF_DetailNormalMapScaleOffset: {r: 1, g: 1, b: 0, a: 0}
+    - SF_DetailScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SF_EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
     - SF_NormalMapScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SF_SpecularColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - SF_UV1BaseScaleOffset: {r: 1, g: 1, b: 0, a: 0}
+    - SF_UV1DetailScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

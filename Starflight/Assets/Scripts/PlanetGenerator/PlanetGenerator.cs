@@ -355,7 +355,7 @@ public class PlanetGenerator
 				var intensity = smoothness * 0.5f;
 
 				// put it all together
-				m_specularBuffer[ y, x ] = new Color( intensity, smoothness, 1.0f );
+				m_specularBuffer[ y, x ] = new Color( intensity, intensity, intensity, smoothness );
 			}
 		}
 
@@ -376,7 +376,7 @@ public class PlanetGenerator
 			}
 		}
 
-		m_specularTexture = new Texture2D( m_textureWidth / 4, m_textureHeight / 4, TextureFormat.RGB24, true, true );
+		m_specularTexture = new Texture2D( m_textureWidth / 4, m_textureHeight / 4, TextureFormat.RGBA32, true, true );
 
 		m_specularTexture.SetPixels( pixels );
 

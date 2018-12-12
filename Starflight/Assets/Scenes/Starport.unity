@@ -33,7 +33,7 @@ RenderSettings:
   m_HaloTexture: {fileID: 0}
   m_SpotCookie: {fileID: 10001, guid: 0000000000000000e000000000000000, type: 0}
   m_DefaultReflectionMode: 0
-  m_DefaultReflectionResolution: 128
+  m_DefaultReflectionResolution: 512
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
@@ -11672,7 +11672,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.5
+    m_Bias: 0.35
     m_NormalBias: 0
     m_NearPlane: 3
   m_Cookie: {fileID: 0}
@@ -14681,8 +14681,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1491.9452, y: -80}
-  m_SizeDelta: {x: 388.9863, y: 80}
+  m_AnchoredPosition: {x: 1497.6, y: -80}
+  m_SizeDelta: {x: 390.4, y: 80}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &652368469
 MonoBehaviour:
@@ -32207,8 +32207,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 940.46576, y: -80}
-  m_SizeDelta: {x: 388.9863, y: 80}
+  m_AnchoredPosition: {x: 944, y: -80}
+  m_SizeDelta: {x: 390.4, y: 80}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1799174678
 MonoBehaviour:
@@ -34418,8 +34418,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 567.47943, y: -80}
-  m_SizeDelta: {x: 388.9863, y: 80}
+  m_AnchoredPosition: {x: 569.6, y: -80}
+  m_SizeDelta: {x: 390.4, y: 80}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1883843684
 MonoBehaviour:
@@ -34853,8 +34853,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1313.452, y: -80}
-  m_SizeDelta: {x: 388.9863, y: 80}
+  m_AnchoredPosition: {x: 1318.3999, y: -80}
+  m_SizeDelta: {x: 390.4, y: 80}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1904682751
 MonoBehaviour:
@@ -36395,7 +36395,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: -80}
-  m_SizeDelta: {x: 388.9863, y: 80}
+  m_SizeDelta: {x: 390.4, y: 80}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &2008949310
 MonoBehaviour:
