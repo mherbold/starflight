@@ -1,0 +1,162 @@
+fileFormatVersion: 2
+guid: eeb3d091fec22bc40aac0833c772813b
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Dish
+    100002: //RootNode
+    100004: Solar Fin 1
+    100006: Solar Fin 2
+    100008: Solar Fin 3
+    100010: Solar Fin 4
+    100012: Solar Fin 5
+    100014: Solar Fin 6
+    100016: Light 1
+    100018: Light 10
+    100020: Light 11
+    100022: Light 12
+    100024: Light 2
+    100026: Light 3
+    100028: Light 4
+    100030: Light 5
+    100032: Light 6
+    100034: Light 7
+    100036: Light 8
+    100038: Light 9
+    400000: Dish
+    400002: //RootNode
+    400004: Solar Fin 1
+    400006: Solar Fin 2
+    400008: Solar Fin 3
+    400010: Solar Fin 4
+    400012: Solar Fin 5
+    400014: Solar Fin 6
+    400016: Light 1
+    400018: Light 10
+    400020: Light 11
+    400022: Light 12
+    400024: Light 2
+    400026: Light 3
+    400028: Light 4
+    400030: Light 5
+    400032: Light 6
+    400034: Light 7
+    400036: Light 8
+    400038: Light 9
+    2100000: 'Material #182'
+    2100002: 'Material #165'
+    2100004: 'Material #184'
+    2100006: 'Material #163'
+    2100008: 'Material #180'
+    2100010: 'Material #179'
+    2100012: 'Material #164'
+    2100014: 'Material #181'
+    2100016: 'Material #158'
+    2100018: 'Material #159'
+    2100020: 'Material #178'
+    2300000: Dish
+    2300002: //RootNode
+    2300004: Solar Fin 1
+    2300006: Solar Fin 2
+    2300008: Solar Fin 3
+    2300010: Solar Fin 4
+    2300012: Solar Fin 5
+    2300014: Solar Fin 6
+    3300000: Dish
+    3300002: //RootNode
+    3300004: Solar Fin 1
+    3300006: Solar Fin 2
+    3300008: Solar Fin 3
+    3300010: Solar Fin 4
+    3300012: Solar Fin 5
+    3300014: Solar Fin 6
+    4300000: Body
+    4300002: Dish
+    4300004: Solar Fin 1
+    4300006: Solar Fin 2
+    4300008: Solar Fin 3
+    4300010: Solar Fin 4
+    4300012: Solar Fin 5
+    4300014: Solar Fin 6
+  externalObjects: {}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
