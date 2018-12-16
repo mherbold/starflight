@@ -40,6 +40,7 @@ float4 UnityApplyLinearShadowBias( float4 clipPos ) { return 1; }
 
 #define SF_IS_FORWARD					1
 #define SF_WATER_ON						1
+#define SF_EMISSIVEPROJECTION_ON		1
 #define SF_FORWARDSHADOWS_ON			1
 
 #endif // UNITY_SHADER_VARIABLES_INCLUDED

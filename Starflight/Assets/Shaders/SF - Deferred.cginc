@@ -17,17 +17,23 @@ void fragDeferred_SF( SF_VertexShaderOutput i, out half4 outGBuffer0 : SV_Target
 	float3 normal = ComputeNormal( i );
 	float3 emissive = ComputeEmissive( i );
 
-#if SF_ALPHATEST_ON
+	#if SF_EMISSIVEPROJECTION_ON
 
-	clip( diffuseColor.a - SF_AlphaTestValue );
+		emissive *= pow( saturate( dot( normal, float3( 0, 0, -1 ) ) ), 10 ) * 0.25;
 
-#endif // SF_ALPHATTEST_ON
+	#endif // SF_EMISSIVEPROJECTION_ON
 
-#if SF_ALBEDOOCCLUSION_ON
+	#if SF_ALPHATEST_ON
 
-	diffuseColor.rgb *= occlusion;
+		clip( diffuseColor.a - SF_AlphaTestValue );
 
-#endif
+	#endif // SF_ALPHATTEST_ON
+
+	#if SF_ALBEDOOCCLUSION_ON
+
+		diffuseColor.rgb *= occlusion;
+
+	#endif
 
 	outGBuffer0 = float4( diffuseColor.rgb, occlusion );
 	outGBuffer1 = specular;

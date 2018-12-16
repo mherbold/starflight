@@ -8,6 +8,8 @@
 
 #include "SF - Unity.cginc"
 
+float4x4 SF_ProjectionMatrix;
+
 sampler2D SF_ScatterMapA;
 sampler2D SF_ScatterMapB;
 sampler2D SF_DensityMap;
@@ -57,23 +59,14 @@ struct SF_VertexShaderOutput
 	float4 color			: COLOR;
 	float4 texCoord0		: TEXCOORD0;
 	float4 texCoord1		: TEXCOORD1;
-	float4 texCoord2		: TEXCOORD2;
-
-#if SF_IS_FORWARD
-
-#if SF_SPECULAR_ON
-
+	float4 positionWorld	: TEXCOORD2;
 	float3 eyeDir			: TEXCOORD3;
 
-#endif // SF_SPECULAR_ON
-
-#if SF_FORWARDSHADOWS_ON
+#if SF_IS_FORWARD && SF_FORWARDSHADOWS_ON
 
 	float4 shadowCoord		: TEXCOORD4;
 
-#endif // SF_FORWARDSHADOWS_ON
-
-#endif // SF_IS_FORWARD
+#endif // SF_IS_FORWARD && SF_FORWARDSHADOWS_ON
 
 	float3 normalWorld		: TEXCOORD5;
 
@@ -96,23 +89,14 @@ SF_VertexShaderOutput ComputeVertexShaderOutput( SF_VertexShaderInput v )
 	o.color = v.color;
 	o.texCoord0 = float4( v.texCoord0 * SF_BaseScaleOffset.xy + SF_BaseScaleOffset.zw, 0, 1 );
 	o.texCoord1 = float4( v.texCoord1, 0, 1 );
-	o.texCoord2 = float4( v.texCoord0 * SF_DetailScaleOffset.xy + SF_DetailScaleOffset.zw, 0, 1 );
+	o.positionWorld = positionWorld;
+	o.eyeDir = normalize( positionWorld.xyz - _WorldSpaceCameraPos );
 
-	#if SF_IS_FORWARD
+	#if SF_IS_FORWARD && SF_FORWARDSHADOWS_ON
 
-		#if SF_SPECULAR_ON
+		o.shadowCoord = mul( unity_WorldToShadow[ 0 ], mul( unity_ObjectToWorld, v.position ) );
 
-			o.eyeDir = normalize( positionWorld.xyz - _WorldSpaceCameraPos );
-
-		#endif // SF_SPECULAR_ON
-	
-		#if SF_FORWARDSHADOWS_ON
-
-			o.shadowCoord = mul( unity_WorldToShadow[ 0 ], mul( unity_ObjectToWorld, v.position ) );
-
-		#endif // SF_FORWARDSHADOWS_ON
-
-	#endif // SF_IS_FORWARD
+	#endif // SF_IS_FORWARD && SF_FORWARDSHADOWS_ON
 
 	o.normalWorld = normalWorld;
 
@@ -207,7 +191,7 @@ float3 ComputeNormal( SF_VertexShaderOutput i )
 
 			#if !SF_WATER_ON
 
-				float4 detailNormalMap = tex2D( SF_DetailNormalMap, i.texCoord2.xy );
+				float4 detailNormalMap = tex2D( SF_DetailNormalMap, i.texCoord0.xy * SF_DetailScaleOffset.xy + SF_DetailScaleOffset.zw );
 
 				#if SF_DETAILNORMALMAP_ISCOMPRESSED
 
@@ -229,13 +213,15 @@ float3 ComputeNormal( SF_VertexShaderOutput i )
 
 				float2 waterOffset = float2( 0, _Time.x * SF_Speed ) * SF_DetailScaleOffset.xy;
 
-				float2 texCoord = i.texCoord2.xy + waterOffset;
+				float2 baseTexCoord = i.texCoord0.xy * SF_DetailScaleOffset.xy + SF_DetailScaleOffset.zw;
+
+				float2 texCoord = baseTexCoord + waterOffset;
 				float4 waterMapA = tex2D( SF_DetailNormalMap, texCoord );
 
-				texCoord = mul( i.texCoord2.xy, plus120 ) + waterOffset;
+				texCoord = mul( baseTexCoord, plus120 ) + waterOffset;
 				float4 waterMapB = tex2D( SF_DetailNormalMap, texCoord );
 
-				texCoord = mul( i.texCoord2.xy, minus120 ) + waterOffset;
+				texCoord = mul( baseTexCoord, minus120 ) + waterOffset;
 				float4 waterMapC = tex2D( SF_DetailNormalMap, texCoord );
 
 				#if SF_DETAILNORMALMAP_ISCOMPRESSED
@@ -313,7 +299,17 @@ float3 ComputeEmissive( SF_VertexShaderOutput i )
 {
 	#if SF_EMISSIVEMAP_ON
 
-		float3 emissiveMap = tex2D( SF_EmissiveMap, i.texCoord0.xy );
+		#if SF_EMISSIVEPROJECTION_ON
+
+			float2 texCoord = mul( i.positionWorld, SF_ProjectionMatrix ).xy;
+
+			float3 emissiveMap = tex2D( SF_EmissiveMap, texCoord );
+
+		#else // !SF_EMISSIVEPROJECTION_ON
+
+			float3 emissiveMap = tex2D( SF_EmissiveMap, i.texCoord0.xy );
+
+		#endif // SF_EMISSIVEPROJECTION_ON
 
 	#else // !SF_EMISSIVEMAP_ON
 

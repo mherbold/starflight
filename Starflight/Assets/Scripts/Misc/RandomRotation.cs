@@ -13,10 +13,12 @@ public class RandomRotation : MonoBehaviour
 	// allowed range for the new orientation
 	public float m_rangeYaw = 30.0f;
 	public float m_rangePitch = 30.0f;
+	public float m_rangeRoll = 0.0f;
 
 	// the target yaw and pitch
 	float m_targetYaw;
 	float m_targetPitch;
+	float m_targetRoll;
 
 	// rotations
 	Quaternion m_originalRotation;
@@ -32,6 +34,7 @@ public class RandomRotation : MonoBehaviour
 	{
 		m_targetYaw = 0.0f;
 		m_targetPitch = 0.0f;
+		m_targetRoll = 0.0f;
 
 		m_originalRotation = transform.localRotation;
 		m_initialRotation = Quaternion.identity;
@@ -57,7 +60,7 @@ public class RandomRotation : MonoBehaviour
 		m_rotationTimer += Time.deltaTime;
 
 		// calculate the target rotation
-		var targetRotation = Quaternion.Euler( m_targetPitch, m_targetYaw, 0.0f );
+		var targetRotation = Quaternion.Euler( m_targetPitch, m_targetYaw, m_targetRoll );
 
 		// smoothstep the rotation timer
 		var smoothedRotationTimer = Mathf.SmoothStep( 0.0f, 1.0f, m_rotationTimer / m_rotationTime );
@@ -77,6 +80,7 @@ public class RandomRotation : MonoBehaviour
 		// pick new yaw and pitch
 		m_targetYaw = Random.Range( -1.0f, 1.0f ) * m_rangeYaw;
 		m_targetPitch = Random.Range( -1.0f, 1.0f ) * m_rangePitch;
+		m_targetRoll = Random.Range( -1.0f, 1.0f ) * m_rangeRoll;
 
 		// set the next time we will pick a new orientation
 		m_nextInterval = Random.Range( m_minimumInterval, m_maximumInterval );

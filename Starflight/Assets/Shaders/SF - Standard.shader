@@ -46,6 +46,7 @@ Shader "Starflight/Standard"
 		/* Misc Rendering Options */
 
 		[MaterialToggle] SF_OrthonormalizeOn( "Orthonormalize", Float ) = 0
+		[MaterialToggle] SF_EmissiveProjectionOn( "Emissive Projection", Float ) = 0
 		[MaterialToggle] SF_ForwardShadowsOn( "Forward Shadows", Float ) = 1
 		SF_RenderQueueOffset( "Render Queue Offset", Int ) = 0
 	}
@@ -107,6 +108,7 @@ Shader "Starflight/Standard"
 				#pragma shader_feature SF_DETAILNORMALMAP_ISCOMPRESSED
 				#pragma shader_feature SF_ORTHONORMALIZE_ON
 				#pragma shader_feature SF_EMISSIVEMAP_ON
+				#pragma shader_feature SF_EMISSIVEPROJECTION_ON
 
 				#pragma vertex vertDeferred_SF
 				#pragma fragment fragDeferred_SF
@@ -147,6 +149,7 @@ Shader "Starflight/Standard"
 				#pragma shader_feature SF_DETAILNORMALMAP_ISCOMPRESSED
 				#pragma shader_feature SF_ORTHONORMALIZE_ON
 				#pragma shader_feature SF_EMISSIVEMAP_ON
+				#pragma shader_feature SF_EMISSIVEPROJECTION_ON
 				#pragma shader_feature SF_FORWARDSHADOWS_ON
 
 				#pragma vertex vertForwardBase_SF

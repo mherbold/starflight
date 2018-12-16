@@ -49,6 +49,7 @@ class SFShaderGUI : ShaderGUI
 		public static readonly string miscRenderingOptionsText = "\nMisc Rendering Options";
 
 		public static readonly GUIContent orthonormalizeText = EditorGUIUtility.TrTextContent( "Orthonormalize", "" );
+		public static readonly GUIContent emissiveProjectionText = EditorGUIUtility.TrTextContent( "Emissive Projection", "When turned on, UV coordinates for the emissive map are generated from a projection matrix." );
 		public static readonly GUIContent forwardShadowsText = EditorGUIUtility.TrTextContent( "Forward Shadows", "Receive shadows when forward rendering (only works for opaque materials)." );
 		public static readonly GUIContent renderQueueOffsetText = EditorGUIUtility.TrTextContent( "Render Queue Offset", "" );
 	}
@@ -92,6 +93,7 @@ class SFShaderGUI : ShaderGUI
 	MaterialProperty m_zWriteOn = null;
 
 	MaterialProperty m_orthonormalizeOn = null;
+	MaterialProperty m_emissiveProjectionOn = null;
 	MaterialProperty m_forwardShadowsOn = null;
 	MaterialProperty m_renderQueueOffset = null;
 
@@ -241,6 +243,11 @@ class SFShaderGUI : ShaderGUI
 			m_materialEditor.ShaderProperty( m_orthonormalizeOn, Styles.orthonormalizeText );
 		}
 
+		if ( m_emissiveProjectionOn != null )
+		{
+			m_materialEditor.ShaderProperty( m_emissiveProjectionOn, Styles.emissiveProjectionText );
+		}
+
 		if ( m_forwardShadowsOn != null )
 		{
 			m_materialEditor.ShaderProperty( m_forwardShadowsOn, Styles.forwardShadowsText );
@@ -296,6 +303,7 @@ class SFShaderGUI : ShaderGUI
 		m_zWriteOn = FindProperty( "SF_ZWriteOn", materialPropertyList, false );
 
 		m_orthonormalizeOn = FindProperty( "SF_OrthonormalizeOn", materialPropertyList, false );
+		m_emissiveProjectionOn = FindProperty( "SF_EmissiveProjectionOn", materialPropertyList, false );
 		m_forwardShadowsOn = FindProperty( "SF_ForwardShadowsOn", materialPropertyList, false );
 		m_renderQueueOffset = FindProperty( "SF_RenderQueueOffset", materialPropertyList );
 	}
@@ -318,6 +326,7 @@ class SFShaderGUI : ShaderGUI
 		// toggle switches on/off
 		bool albedoOcclusionOn = IsSwitchedOn( material, "SF_AlbedoOcclusionOn" );
 		bool orthonormalizeOn = IsSwitchedOn( material, "SF_OrthonormalizeOn" );
+		bool emissiveProjectionOn = IsSwitchedOn( material, "SF_EmissiveProjectionOn" );
 		bool forwardShadowsOn = IsSwitchedOn( material, "SF_ForwardShadowsOn" );
 
 		// enable alpha testing if alpha test value > 0
@@ -374,6 +383,7 @@ class SFShaderGUI : ShaderGUI
 		SetKeyword( material, "SF_ALPHA_ON", blendOn || alphaTestOn );
 		SetKeyword( material, "SF_ALPHATEST_ON", alphaTestOn );
 		SetKeyword( material, "SF_ORTHONORMALIZE_ON", orthonormalizeOn );
+		SetKeyword( material, "SF_EMISSIVEPROJECTION_ON", emissiveProjectionOn );
 		SetKeyword( material, "SF_FORWARDSHADOWS_ON", forwardShadowsOn );
 
 		// if blending is on then force material to be transparent (this also disables the deferred pass automatically)
