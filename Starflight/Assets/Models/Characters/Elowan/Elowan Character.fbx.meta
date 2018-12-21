@@ -1,0 +1,331 @@
+fileFormatVersion: 2
+guid: 1a9d8f7e8dc9b0a4984379a5d5336eb7
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Body
+    100002: Bone001
+    100004: Bone002
+    100006: Bone003
+    100008: Bone004
+    100010: Bone005
+    100012: Bone006
+    100014: Bone007
+    100016: Bone008
+    100018: Bone009
+    100020: Bone010
+    100022: Bone011
+    100024: Bone012
+    100026: Bone013
+    100028: Bone014
+    100030: Bone015
+    100032: Bone016
+    100034: Bone017
+    100036: Bone018
+    100038: Bone019
+    100040: Bone020
+    100042: Bone021
+    100044: Bone022
+    100046: Bone023
+    100048: Bone024
+    100050: Bone025
+    100052: Bone026
+    100054: Bone027
+    100056: Bone028
+    100058: Bone029
+    100060: Bone030
+    100062: Bone031
+    100064: Bone032
+    100066: Bone033
+    100068: Bone034
+    100070: Bone035
+    100072: Bone036
+    100074: Bone037
+    100076: Bone038
+    100078: Bone039
+    100080: Bone040
+    100082: Bone041
+    100084: Bone042
+    100086: Bone043
+    100088: Bone044
+    100090: Bone045
+    100092: //RootNode
+    100094: IK Chain001
+    100096: IK Chain002
+    100098: IK Chain003
+    100100: IK Chain004
+    100102: IK Chain005
+    100104: Left Eye
+    100106: Right Eye
+    100108: Leaf
+    100110: Leaf001
+    100112: Leaf002
+    100114: Leaf003
+    100116: Leaf004
+    100118: Leaf005
+    100120: Leaf006
+    100122: Leaf007
+    100124: Leaf008
+    100126: Leaf009
+    100128: Leaf010
+    100130: Leaf011
+    100132: Leaf012
+    100134: Leaf013
+    100136: Leaf014
+    100138: Leaf015
+    100140: Leaf016
+    100142: Leaf017
+    100144: Wall A
+    100146: Wall B
+    100148: Wall C
+    100150: Wall D
+    100152: Floor
+    100154: Floor Corner
+    100156: Wall
+    100158: Environment
+    400000: Body
+    400002: Bone001
+    400004: Bone002
+    400006: Bone003
+    400008: Bone004
+    400010: Bone005
+    400012: Bone006
+    400014: Bone007
+    400016: Bone008
+    400018: Bone009
+    400020: Bone010
+    400022: Bone011
+    400024: Bone012
+    400026: Bone013
+    400028: Bone014
+    400030: Bone015
+    400032: Bone016
+    400034: Bone017
+    400036: Bone018
+    400038: Bone019
+    400040: Bone020
+    400042: Bone021
+    400044: Bone022
+    400046: Bone023
+    400048: Bone024
+    400050: Bone025
+    400052: Bone026
+    400054: Bone027
+    400056: Bone028
+    400058: Bone029
+    400060: Bone030
+    400062: Bone031
+    400064: Bone032
+    400066: Bone033
+    400068: Bone034
+    400070: Bone035
+    400072: Bone036
+    400074: Bone037
+    400076: Bone038
+    400078: Bone039
+    400080: Bone040
+    400082: Bone041
+    400084: Bone042
+    400086: Bone043
+    400088: Bone044
+    400090: Bone045
+    400092: //RootNode
+    400094: IK Chain001
+    400096: IK Chain002
+    400098: IK Chain003
+    400100: IK Chain004
+    400102: IK Chain005
+    400104: Left Eye
+    400106: Right Eye
+    400108: Leaf
+    400110: Leaf001
+    400112: Leaf002
+    400114: Leaf003
+    400116: Leaf004
+    400118: Leaf005
+    400120: Leaf006
+    400122: Leaf007
+    400124: Leaf008
+    400126: Leaf009
+    400128: Leaf010
+    400130: Leaf011
+    400132: Leaf012
+    400134: Leaf013
+    400136: Leaf014
+    400138: Leaf015
+    400140: Leaf016
+    400142: Leaf017
+    400144: Wall A
+    400146: Wall B
+    400148: Wall C
+    400150: Wall D
+    400152: Floor
+    400154: Floor Corner
+    400156: Wall
+    400158: Environment
+    2100000: No Name
+    2300000: Left Eye
+    2300002: Right Eye
+    2300004: Body
+    2300006: Leaf
+    2300008: Leaf001
+    2300010: Leaf002
+    2300012: Leaf003
+    2300014: Leaf004
+    2300016: Leaf005
+    2300018: Leaf006
+    2300020: Leaf007
+    2300022: Leaf008
+    2300024: Leaf009
+    2300026: Leaf010
+    2300028: Leaf011
+    2300030: Leaf012
+    2300032: Leaf013
+    2300034: Leaf014
+    2300036: Leaf015
+    2300038: Leaf016
+    2300040: Leaf017
+    2300042: Wall A
+    2300044: Wall B
+    2300046: Wall C
+    2300048: Wall D
+    2300050: Floor
+    2300052: Floor Corner
+    3300000: Left Eye
+    3300002: Right Eye
+    3300004: Body
+    3300006: Leaf
+    3300008: Leaf001
+    3300010: Leaf002
+    3300012: Leaf003
+    3300014: Leaf004
+    3300016: Leaf005
+    3300018: Leaf006
+    3300020: Leaf007
+    3300022: Leaf008
+    3300024: Leaf009
+    3300026: Leaf010
+    3300028: Leaf011
+    3300030: Leaf012
+    3300032: Leaf013
+    3300034: Leaf014
+    3300036: Leaf015
+    3300038: Leaf016
+    3300040: Leaf017
+    3300042: Wall A
+    3300044: Wall B
+    3300046: Wall C
+    3300048: Wall D
+    3300050: Floor
+    3300052: Floor Corner
+    4300000: Body
+    4300002: Left Eye
+    4300004: Right Eye
+    4300006: Leaf004
+    4300008: Leaf001
+    4300010: Leaf002
+    4300012: Leaf008
+    4300014: Leaf007
+    4300016: Leaf006
+    4300018: Leaf005
+    4300020: Leaf003
+    4300022: Leaf
+    4300024: Leaf010
+    4300026: Leaf015
+    4300028: Leaf017
+    4300030: Leaf016
+    4300032: Leaf011
+    4300034: Leaf013
+    4300036: Leaf012
+    4300038: Leaf014
+    4300040: Leaf009
+    4300042: Wall A
+    4300044: Wall B
+    4300046: Wall C
+    4300048: Wall D
+    4300050: Floor Corner
+    4300052: Floor
+    9500000: //RootNode
+    13700000: Body
+  externalObjects: {}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

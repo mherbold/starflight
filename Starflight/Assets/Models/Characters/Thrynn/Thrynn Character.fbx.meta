@@ -1,0 +1,176 @@
+fileFormatVersion: 2
+guid: 2ac4722c5862a8b499b6d9309469795b
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Left Eyeball
+    100002: Right Eyeball
+    100004: Skin
+    100006: //RootNode
+    100008: Body
+    100010: Body Bone
+    100012: Mouth Bone
+    100014: Neck Bone
+    100016: Bone001
+    100018: Bone002
+    100020: Bone003
+    100022: Bone004
+    100024: Bone005
+    100026: Bone006
+    100028: Bone007
+    100030: Bone008
+    100032: Bone009
+    100034: Bone010
+    100036: Bone011
+    100038: Hip Bone
+    100040: Right Arm Bone
+    100042: Right Arm Bone End
+    100044: Tail Bone
+    100046: Back Bone
+    100048: Left Arm Bone
+    100050: Left Arm Bone End
+    100052: Mouth Bone End
+    100054: Neck Bone End
+    100056: Wall 1
+    100058: Wall 2
+    100060: Wall 3
+    100062: Wall
+    400000: Left Eyeball
+    400002: Right Eyeball
+    400004: Skin
+    400006: //RootNode
+    400008: Body
+    400010: Body Bone
+    400012: Mouth Bone
+    400014: Neck Bone
+    400016: Bone001
+    400018: Bone002
+    400020: Bone003
+    400022: Bone004
+    400024: Bone005
+    400026: Bone006
+    400028: Bone007
+    400030: Bone008
+    400032: Bone009
+    400034: Bone010
+    400036: Bone011
+    400038: Hip Bone
+    400040: Right Arm Bone
+    400042: Right Arm Bone End
+    400044: Tail Bone
+    400046: Back Bone
+    400048: Left Arm Bone
+    400050: Left Arm Bone End
+    400052: Mouth Bone End
+    400054: Neck Bone End
+    400056: Wall 1
+    400058: Wall 2
+    400060: Wall 3
+    400062: Wall
+    2100000: Lizard Skin
+    2100002: Eyeball
+    2300000: Left Eyeball
+    2300002: Right Eyeball
+    2300004: Skin
+    2300006: Body
+    2300008: Wall 1
+    2300010: Wall 2
+    2300012: Wall 3
+    3300000: Left Eyeball
+    3300002: Right Eyeball
+    3300004: Skin
+    3300006: Body
+    3300008: Wall 1
+    3300010: Wall 2
+    3300012: Wall 3
+    4300000: Skin
+    4300002: Left Eyeball
+    4300004: Right Eyeball
+    4300006: Body
+    4300008: Wall 1
+    4300010: Wall 2
+    4300012: Wall 3
+    9500000: //RootNode
+    13700000: Body
+  externalObjects: {}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

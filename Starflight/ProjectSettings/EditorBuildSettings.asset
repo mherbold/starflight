@@ -8,16 +8,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Test.unity
     guid: 9830f8d507db53941b9490496b806f81
-  - enabled: 1
-    path: Assets/Scenes/Persistent.unity
-    guid: dff3a08acb5c4aa41adeb2f72cb8a1db
-  - enabled: 1
-    path: Assets/Scenes/Intro.unity
-    guid: 0c837280001dc044da0923ce150b249c
-  - enabled: 1
-    path: Assets/Scenes/Starport.unity
-    guid: 9be9bcf4c6f7c024099239261a1ea1c5
-  - enabled: 1
-    path: Assets/Scenes/Spaceflight.unity
-    guid: 5b287ec3f91a6354aad132c27c3c6bb2
   m_configObjects: {}
