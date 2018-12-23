@@ -137,7 +137,7 @@ public class HydraulicErosion
 
 		for ( var i = 0; i < randomXYSizeSquared; i++ )
 		{
-			int x = Random.Range( i, randomXYSizeSquared - 1 );
+			int x = Random.Range( i, randomXYSizeSquared );
 
 			var tmp = randomXY[ i ];
 

@@ -74,9 +74,54 @@ public class Encounter : MonoBehaviour
 		// update race encounter
 		switch ( m_gdEncounter.m_race )
 		{
+			case GameData.Race.Elowan:
+
+				UpdateElowanEncounter();
+				break;
+
+			case GameData.Race.Gazurtoid:
+
+				UpdateGazurtoidEncounter();
+				break;
+
 			case GameData.Race.Mechan:
 
 				UpdateMechanEncounter();
+				break;
+
+			case GameData.Race.Mysterion:
+
+				UpdateMysterionEncounter();
+				break;
+
+			case GameData.Race.NomadProbe:
+
+				UpdateNomadProbeEncounter();
+				break;
+
+			case GameData.Race.Spemin:
+
+				UpdateSpeminEncounter();
+				break;
+
+			case GameData.Race.Thrynn:
+
+				UpdateThrynnEncounter();
+				break;
+
+			case GameData.Race.Velox:
+
+				UpdateVeloxEncounter();
+				break;
+
+			case GameData.Race.VeloxProbe:
+
+				UpdateVeloxProbeEncounter();
+				break;
+
+			case GameData.Race.Minstrel:
+
+				UpdateMinstrelEncounter();
 				break;
 		}
 
@@ -267,9 +312,54 @@ public class Encounter : MonoBehaviour
 			// initialize race encounter
 			switch ( m_gdEncounter.m_race )
 			{
+				case GameData.Race.Elowan:
+
+					InitializeElowanEncounter();
+					break;
+
+				case GameData.Race.Gazurtoid:
+
+					InitializeGazurtoidEncounter();
+					break;
+
 				case GameData.Race.Mechan:
 
 					InitializeMechanEncounter();
+					break;
+
+				case GameData.Race.Mysterion:
+
+					InitializeMysterionEncounter();
+					break;
+
+				case GameData.Race.NomadProbe:
+
+					InitializeNomadProbeEncounter();
+					break;
+
+				case GameData.Race.Spemin:
+
+					InitializeSpeminEncounter();
+					break;
+
+				case GameData.Race.Thrynn:
+
+					InitializeThrynnEncounter();
+					break;
+
+				case GameData.Race.Velox:
+
+					InitializeVeloxEncounter();
+					break;
+
+				case GameData.Race.VeloxProbe:
+
+					InitializeVeloxProbeEncounter();
+					break;
+
+				case GameData.Race.Minstrel:
+
+					InitializeMinstrelEncounter();
 					break;
 			}
 
@@ -412,6 +502,18 @@ public class Encounter : MonoBehaviour
 		}
 	}
 
+	// initialize encounter with elowan
+	void InitializeElowanEncounter()
+	{
+		DefaultEncounterInitialize();
+	}
+
+	// initialize encounter with gazurtoid
+	void InitializeGazurtoidEncounter()
+	{
+		DefaultEncounterInitialize();
+	}
+
 	// initialize encounter with mechans
 	void InitializeMechanEncounter()
 	{
@@ -458,6 +560,76 @@ public class Encounter : MonoBehaviour
 
 		// mechans have not warned the player yet
 		m_pdEncounter.m_mechan9NoHumansWarningDone = false;
+	}
+
+	// initialize encounter with mysterion
+	void InitializeMysterionEncounter()
+	{
+		DefaultEncounterInitialize();
+	}
+
+	// initialize encounter with nomad probe
+	void InitializeNomadProbeEncounter()
+	{
+		DefaultEncounterInitialize();
+	}
+
+	// initialize encounter with spemin
+	void InitializeSpeminEncounter()
+	{
+		DefaultEncounterInitialize();
+	}
+
+	// initialize encounter with thrynn
+	void InitializeThrynnEncounter()
+	{
+		DefaultEncounterInitialize();
+	}
+
+	// initialize encounter with velox
+	void InitializeVeloxEncounter()
+	{
+		DefaultEncounterInitialize();
+	}
+
+	// initialize encounter with velox probe
+	void InitializeVeloxProbeEncounter()
+	{
+		DefaultEncounterInitialize();
+	}
+
+	// initialize encounter with minstrel
+	void InitializeMinstrelEncounter()
+	{
+		DefaultEncounterInitialize();
+	}
+
+	// the default encounter initialization
+	void DefaultEncounterInitialize()
+	{
+		// set statement timer
+		m_pdEncounter.m_conversationTimer = Random.Range( 5.0f, 30.0f );
+
+		// set connection timer
+		m_pdEncounter.m_connectionTimer = Random.Range( 120.0f, 300.0f );
+
+		// start at 50% question likelihood
+		m_pdEncounter.m_questionLikelihood = 50;
+
+		// pretend we are already friendly with the race
+		m_pdEncounter.m_alienStance = GD_Comm.Stance.Friendly;
+	}
+
+	// update encounter with elowan
+	void UpdateElowanEncounter()
+	{
+		DefaultEncounterUpdate();
+	}
+
+	// update encounter with gazurtoid
+	void UpdateGazurtoidEncounter()
+	{
+		DefaultEncounterUpdate();
 	}
 
 	// update encounter with mechans
@@ -555,6 +727,48 @@ public class Encounter : MonoBehaviour
 		}
 	}
 
+	// update encounter with mysterion
+	void UpdateMysterionEncounter()
+	{
+		DefaultEncounterUpdate();
+	}
+
+	// update encounter with nomad probe
+	void UpdateNomadProbeEncounter()
+	{
+		DefaultEncounterUpdate();
+	}
+
+	// update encounter with spemin
+	void UpdateSpeminEncounter()
+	{
+		DefaultEncounterUpdate();
+	}
+
+	// update encounter with thrynn
+	void UpdateThrynnEncounter()
+	{
+		DefaultEncounterUpdate();
+	}
+
+	// update encounter with velox
+	void UpdateVeloxEncounter()
+	{
+		DefaultEncounterUpdate();
+	}
+
+	// update encounter with velox probe
+	void UpdateVeloxProbeEncounter()
+	{
+		DefaultEncounterUpdate();
+	}
+
+	// update encounter with minstrel
+	void UpdateMinstrelEncounter()
+	{
+		DefaultEncounterUpdate();
+	}
+
 	// default encounter update
 	bool DefaultEncounterUpdate()
 	{
@@ -622,7 +836,7 @@ public class Encounter : MonoBehaviour
 						else
 						{
 							// no - do we want to do a question?
-							if ( Random.Range( 1, 100 ) > m_pdEncounter.m_questionLikelihood )
+							if ( Random.Range( 1, 101 ) > m_pdEncounter.m_questionLikelihood )
 							{
 								// no - do a normal statement
 								AddComm( GD_Comm.Subject.Statement, false );
@@ -636,16 +850,25 @@ public class Encounter : MonoBehaviour
 					}
 					else
 					{
-						// did the player hail?
-						if ( m_pdEncounter.m_playerWantsToConnect )
+						// are we already connected?
+						if ( m_pdEncounter.m_connected )
 						{
 							// do a normal statement
 							AddComm( GD_Comm.Subject.Statement, false );
 						}
 						else
 						{
-							// no - do a hail
-							AddComm( GD_Comm.Subject.GreetingHail, false );
+							// did the player hail?
+							if ( m_pdEncounter.m_playerWantsToConnect )
+							{
+								// yes - do a response
+								AddComm( GD_Comm.Subject.GreetingResponse, false );
+							}
+							else
+							{
+								// no - do a hail
+								AddComm( GD_Comm.Subject.GreetingHail, false );
+							}
 						}
 					}
 				}
@@ -898,7 +1121,7 @@ public class Encounter : MonoBehaviour
 		}
 
 		// now pick and return a random one
-		var randomNumber = Random.Range( 0, possibleComms.Count - 1 );
+		var randomNumber = Random.Range( 0, possibleComms.Count );
 
 		var selectedComm = possibleComms[ randomNumber ];
 

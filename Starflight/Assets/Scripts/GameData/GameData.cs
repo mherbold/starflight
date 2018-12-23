@@ -17,7 +17,7 @@ public class GameData
 		Thrynn = 7,
 		Velox = 8,
 		Uhlek = 9,
-		VeloxiDrone = 10,
+		VeloxProbe = 10,
 		Minstrel = 11,
 		Human = 16,
 		TheEnterprise = 18,

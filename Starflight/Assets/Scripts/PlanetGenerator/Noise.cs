@@ -32,7 +32,7 @@ public class Noise
 
 			for ( var i = 0; i < c_permSize; i++ )
 			{
-				int x = Random.Range( i, c_permSize - 1 );
+				int x = Random.Range( i, c_permSize );
 
 				var tmp = m_perm[ octave, i ];
 

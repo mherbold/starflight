@@ -1,0 +1,235 @@
+fileFormatVersion: 2
+guid: 368f941246150404ab92c85da9436139
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Body
+    100002: //RootNode
+    100004: Left Eyeball
+    100006: Right Eyeball
+    100008: Left Ear
+    100010: Left Eye Stalk
+    100012: Right Ear
+    100014: Right Eye Stalk
+    100016: Arm 1 Bone 1
+    100018: Arm 1 Bone 2
+    100020: Arm 1 Bone 3
+    100022: Arm 1 Bone 4
+    100024: Arm 1 Bone 5
+    100026: Arm 1 End
+    100028: Arm 2 Bone 1
+    100030: Arm 2 Bone 2
+    100032: Arm 2 Bone 3
+    100034: Arm 2 Bone 4
+    100036: Arm 2 Bone 5
+    100038: Arm 2 End
+    100040: Arm 3 Bone 1
+    100042: Arm 3 Bone 2
+    100044: Arm 3 Bone 3
+    100046: Arm 3 Bone 4
+    100048: Arm 3 Bone 5
+    100050: Arm 3 End
+    100052: Arm 4 Bone 1
+    100054: Arm 4 Bone 2
+    100056: Arm 4 Bone 3
+    100058: Arm 4 Bone 4
+    100060: Arm 4 Bone 5
+    100062: Arm 4 End
+    100064: Arm 5 Bone 1
+    100066: Arm 5 Bone 2
+    100068: Arm 5 Bone 3
+    100070: Arm 5 Bone 4
+    100072: Arm 5 Bone 5
+    100074: Arm 5 End
+    100076: Arm 6 Bone 1
+    100078: Arm 6 Bone 2
+    100080: Arm 6 Bone 3
+    100082: Arm 6 Bone 4
+    100084: Arm 6 Bone 5
+    100086: Arm 6 End
+    100088: Gazurtoid
+    100090: Head Bone
+    100092: Head End
+    100094: Mouth Bone
+    100096: Mouth End
+    100098: Wall
+    100100: Left Brow
+    100102: Right Brow
+    400000: Body
+    400002: //RootNode
+    400004: Left Eyeball
+    400006: Right Eyeball
+    400008: Left Ear
+    400010: Left Eye Stalk
+    400012: Right Ear
+    400014: Right Eye Stalk
+    400016: Arm 1 Bone 1
+    400018: Arm 1 Bone 2
+    400020: Arm 1 Bone 3
+    400022: Arm 1 Bone 4
+    400024: Arm 1 Bone 5
+    400026: Arm 1 End
+    400028: Arm 2 Bone 1
+    400030: Arm 2 Bone 2
+    400032: Arm 2 Bone 3
+    400034: Arm 2 Bone 4
+    400036: Arm 2 Bone 5
+    400038: Arm 2 End
+    400040: Arm 3 Bone 1
+    400042: Arm 3 Bone 2
+    400044: Arm 3 Bone 3
+    400046: Arm 3 Bone 4
+    400048: Arm 3 Bone 5
+    400050: Arm 3 End
+    400052: Arm 4 Bone 1
+    400054: Arm 4 Bone 2
+    400056: Arm 4 Bone 3
+    400058: Arm 4 Bone 4
+    400060: Arm 4 Bone 5
+    400062: Arm 4 End
+    400064: Arm 5 Bone 1
+    400066: Arm 5 Bone 2
+    400068: Arm 5 Bone 3
+    400070: Arm 5 Bone 4
+    400072: Arm 5 Bone 5
+    400074: Arm 5 End
+    400076: Arm 6 Bone 1
+    400078: Arm 6 Bone 2
+    400080: Arm 6 Bone 3
+    400082: Arm 6 Bone 4
+    400084: Arm 6 Bone 5
+    400086: Arm 6 End
+    400088: Gazurtoid
+    400090: Head Bone
+    400092: Head End
+    400094: Mouth Bone
+    400096: Mouth End
+    400098: Wall
+    400100: Left Brow
+    400102: Right Brow
+    2100000: Eyeball
+    2100002: Outside Skin
+    2300000: Body
+    2300002: Left Eyeball
+    2300004: Right Eyeball
+    2300006: Left Ear
+    2300008: Left Eye Stalk
+    2300010: Right Ear
+    2300012: Right Eye Stalk
+    2300014: Wall
+    2300016: Left Brow
+    2300018: Right Brow
+    3300000: Body
+    3300002: Left Eyeball
+    3300004: Right Eyeball
+    3300006: Left Ear
+    3300008: Left Eye Stalk
+    3300010: Right Ear
+    3300012: Right Eye Stalk
+    3300014: Wall
+    3300016: Left Brow
+    3300018: Right Brow
+    4300000: Left Eyeball
+    4300002: Right Eyeball
+    4300004: Body
+    4300006: Left Ear
+    4300008: Right Ear
+    4300010: Left Eye Stalk
+    4300012: Right Eye Stalk
+    4300014: Wall
+    4300016: Left Brow
+    4300018: Right Brow
+    6400000: Left Ear
+    6400002: Left Eye Stalk
+    6400004: Left Eyeball
+    6400006: Right Ear
+    6400008: Right Eye Stalk
+    6400010: Right Eyeball
+    6400012: Wall
+    6400014: Body
+    6400016: Left Brow
+    6400018: Right Brow
+    9500000: //RootNode
+    13700000: Body
+  externalObjects: {}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.30479997
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: Head Bone
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

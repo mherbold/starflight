@@ -75,7 +75,7 @@ public class PD_AlienShip
 		}
 
 		// pick a vessel
-		var randomIndex = UnityEngine.Random.Range( 0, possibleVessels.Length - 1 );
+		var randomIndex = UnityEngine.Random.Range( 0, possibleVessels.Length );
 
 		m_vesselId = possibleVessels[ randomIndex ];
 

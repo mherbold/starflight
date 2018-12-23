@@ -37,8 +37,11 @@ public class CommScreen : MonoBehaviour
 	// unity awake
 	void Awake()
 	{
+		// grab all the wave components (there could be more than one, we just want the last one)
+		var waveComponents = GetComponents<MorePPEffects.Waves>();
+
 		// grab the camera fx components
-		m_waves = GetComponent<MorePPEffects.Waves>();
+		m_waves = waveComponents[ waveComponents.Length - 1 ];
 		m_headache = GetComponent<MorePPEffects.Headache>();
 	}
 

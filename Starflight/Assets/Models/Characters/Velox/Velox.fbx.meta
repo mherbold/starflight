@@ -1,0 +1,464 @@
+fileFormatVersion: 2
+guid: 65692e68134fa164bbe76fbf43a0a26d
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Back
+    100002: Back.2
+    100004: Back.3
+    100006: Body
+    100008: front
+    100010: Head
+    100012: Head.2
+    100014: Head.3
+    100016: 'housing '
+    100018: Joint
+    100020: Joint.2
+    100022: Joint.3
+    100024: Joint.4
+    100026: Joint.5
+    100028: Joint.6
+    100030: Joint1
+    100032: Joint1.2
+    100034: Joint1.3
+    100036: Joint1.4
+    100038: Joint1.5
+    100040: Joint1.6
+    100042: Joint2
+    100044: Joint2.2
+    100046: Joint2.3
+    100048: Joint2.4
+    100050: Joint2.5
+    100052: Joint2.6
+    100054: Joint3
+    100056: Joint3.2
+    100058: Joint3.3
+    100060: Joint3.4
+    100062: Joint3.5
+    100064: Joint3.6
+    100066: Left Eye
+    100068: left middle foot.3
+    100070: left rear foot.3
+    100072: Left_Front_Foot
+    100074: Middle
+    100076: 'middle '
+    100078: middle .2
+    100080: Plane001
+    100082: Plane002
+    100084: Plane003
+    100086: Plane004
+    100088: Plane005
+    100090: Plane006
+    100092: Plane007
+    100094: Plane008
+    100096: Plane009
+    100098: Righr rear foot.3
+    100100: Right Eye
+    100102: right middle foot.3
+    100104: Right_Front_foot.3
+    100106: Robe
+    100108: 'Skeleton '
+    100110: //RootNode
+    100112: Left Antennae
+    100114: Left Mandible
+    100116: Leg 1 Bottom
+    100118: Leg 1 Stub
+    100120: Leg 1 Top
+    100122: Leg 2 Bottom
+    100124: Leg 2 Stub
+    100126: Leg 2 Top
+    100128: Leg 3 Bottom
+    100130: Leg 3 Stub
+    100132: Leg 3 Top
+    100134: Leg 4 Bottom
+    100136: Leg 4 Stub
+    100138: Leg 4 Top
+    100140: Leg 5 Bottom
+    100142: Leg 5 Stub
+    100144: Leg 5 Top
+    100146: Leg 6 Bottom
+    100148: Leg 6 Stub
+    100150: Leg 6 Top
+    100152: Right Antennae
+    100154: Right Mandible
+    100156: Thorax
+    100158: Bone End
+    100160: Bone001
+    100162: Bone002
+    100164: Bone003
+    100166: Bone004
+    100168: Bone005
+    100170: Bone006
+    100172: Bone007
+    100174: Bone008
+    100176: Bone009
+    100178: Bone010
+    100180: Bone011
+    100182: Bone012
+    100184: Bone013
+    100186: Bone014
+    100188: Bone015
+    100190: Bone016
+    100192: Head Bone
+    100194: Left Antennae Bone
+    100196: Right Antennae Bone
+    100198: Environment
+    100200: Wall A
+    100202: Wall B
+    100204: Wall C
+    100206: Back Facing
+    100208: Front Facing
+    100210: Plane010
+    100212: Plane011
+    100214: Plane012
+    100216: Plane013
+    100218: Plane014
+    100220: Plane015
+    100222: Plane016
+    100224: Plane017
+    100226: Plane018
+    400000: Back
+    400002: Back.2
+    400004: Back.3
+    400006: Body
+    400008: front
+    400010: Head
+    400012: Head.2
+    400014: Head.3
+    400016: 'housing '
+    400018: Joint
+    400020: Joint.2
+    400022: Joint.3
+    400024: Joint.4
+    400026: Joint.5
+    400028: Joint.6
+    400030: Joint1
+    400032: Joint1.2
+    400034: Joint1.3
+    400036: Joint1.4
+    400038: Joint1.5
+    400040: Joint1.6
+    400042: Joint2
+    400044: Joint2.2
+    400046: Joint2.3
+    400048: Joint2.4
+    400050: Joint2.5
+    400052: Joint2.6
+    400054: Joint3
+    400056: Joint3.2
+    400058: Joint3.3
+    400060: Joint3.4
+    400062: Joint3.5
+    400064: Joint3.6
+    400066: Left Eye
+    400068: left middle foot.3
+    400070: left rear foot.3
+    400072: Left_Front_Foot
+    400074: Middle
+    400076: 'middle '
+    400078: middle .2
+    400080: Plane001
+    400082: Plane002
+    400084: Plane003
+    400086: Plane004
+    400088: Plane005
+    400090: Plane006
+    400092: Plane007
+    400094: Plane008
+    400096: Plane009
+    400098: Righr rear foot.3
+    400100: Right Eye
+    400102: right middle foot.3
+    400104: Right_Front_foot.3
+    400106: Robe
+    400108: 'Skeleton '
+    400110: //RootNode
+    400112: Left Antennae
+    400114: Left Mandible
+    400116: Leg 1 Bottom
+    400118: Leg 1 Stub
+    400120: Leg 1 Top
+    400122: Leg 2 Bottom
+    400124: Leg 2 Stub
+    400126: Leg 2 Top
+    400128: Leg 3 Bottom
+    400130: Leg 3 Stub
+    400132: Leg 3 Top
+    400134: Leg 4 Bottom
+    400136: Leg 4 Stub
+    400138: Leg 4 Top
+    400140: Leg 5 Bottom
+    400142: Leg 5 Stub
+    400144: Leg 5 Top
+    400146: Leg 6 Bottom
+    400148: Leg 6 Stub
+    400150: Leg 6 Top
+    400152: Right Antennae
+    400154: Right Mandible
+    400156: Thorax
+    400158: Bone End
+    400160: Bone001
+    400162: Bone002
+    400164: Bone003
+    400166: Bone004
+    400168: Bone005
+    400170: Bone006
+    400172: Bone007
+    400174: Bone008
+    400176: Bone009
+    400178: Bone010
+    400180: Bone011
+    400182: Bone012
+    400184: Bone013
+    400186: Bone014
+    400188: Bone015
+    400190: Bone016
+    400192: Head Bone
+    400194: Left Antennae Bone
+    400196: Right Antennae Bone
+    400198: Environment
+    400200: Wall A
+    400202: Wall B
+    400204: Wall C
+    400206: Back Facing
+    400208: Front Facing
+    400210: Plane010
+    400212: Plane011
+    400214: Plane012
+    400216: Plane013
+    400218: Plane014
+    400220: Plane015
+    400222: Plane016
+    400224: Plane017
+    400226: Plane018
+    2100000: No Name
+    2100002: Ant
+    2300000: Left Eye
+    2300002: Plane001
+    2300004: Plane002
+    2300006: Plane003
+    2300008: Plane004
+    2300010: Plane005
+    2300012: Plane006
+    2300014: Plane007
+    2300016: Plane008
+    2300018: Plane009
+    2300020: Right Eye
+    2300022: Head
+    2300024: Left Antennae
+    2300026: Left Mandible
+    2300028: Leg 1 Bottom
+    2300030: Leg 1 Stub
+    2300032: Leg 1 Top
+    2300034: Leg 2 Bottom
+    2300036: Leg 2 Stub
+    2300038: Leg 2 Top
+    2300040: Leg 3 Bottom
+    2300042: Leg 3 Stub
+    2300044: Leg 3 Top
+    2300046: Leg 4 Bottom
+    2300048: Leg 4 Stub
+    2300050: Leg 4 Top
+    2300052: Leg 5 Bottom
+    2300054: Leg 5 Stub
+    2300056: Leg 5 Top
+    2300058: Leg 6 Bottom
+    2300060: Leg 6 Stub
+    2300062: Leg 6 Top
+    2300064: Right Antennae
+    2300066: Right Mandible
+    2300068: Thorax
+    2300070: Wall A
+    2300072: Wall B
+    2300074: Wall C
+    2300076: Plane010
+    2300078: Plane011
+    2300080: Plane012
+    2300082: Plane013
+    2300084: Plane014
+    2300086: Plane015
+    2300088: Plane016
+    2300090: Plane017
+    2300092: Plane018
+    3300000: Left Eye
+    3300002: Plane001
+    3300004: Plane002
+    3300006: Plane003
+    3300008: Plane004
+    3300010: Plane005
+    3300012: Plane006
+    3300014: Plane007
+    3300016: Plane008
+    3300018: Plane009
+    3300020: Right Eye
+    3300022: Head
+    3300024: Left Antennae
+    3300026: Left Mandible
+    3300028: Leg 1 Bottom
+    3300030: Leg 1 Stub
+    3300032: Leg 1 Top
+    3300034: Leg 2 Bottom
+    3300036: Leg 2 Stub
+    3300038: Leg 2 Top
+    3300040: Leg 3 Bottom
+    3300042: Leg 3 Stub
+    3300044: Leg 3 Top
+    3300046: Leg 4 Bottom
+    3300048: Leg 4 Stub
+    3300050: Leg 4 Top
+    3300052: Leg 5 Bottom
+    3300054: Leg 5 Stub
+    3300056: Leg 5 Top
+    3300058: Leg 6 Bottom
+    3300060: Leg 6 Stub
+    3300062: Leg 6 Top
+    3300064: Right Antennae
+    3300066: Right Mandible
+    3300068: Thorax
+    3300070: Wall A
+    3300072: Wall B
+    3300074: Wall C
+    3300076: Plane010
+    3300078: Plane011
+    3300080: Plane012
+    3300082: Plane013
+    3300084: Plane014
+    3300086: Plane015
+    3300088: Plane016
+    3300090: Plane017
+    3300092: Plane018
+    4300000: Left Eye
+    4300002: Right Eye
+    4300004: Body
+    4300006: Plane009
+    4300008: Plane008
+    4300010: Plane007
+    4300012: Plane006
+    4300014: Plane005
+    4300016: Plane004
+    4300018: Plane003
+    4300020: Plane002
+    4300022: Plane001
+    4300024: Head
+    4300026: Right Antennae
+    4300028: Left Antennae
+    4300030: Right Mandible
+    4300032: Left Mandible
+    4300034: Thorax
+    4300036: Leg 6 Stub
+    4300038: Leg 6 Top
+    4300040: Leg 6 Bottom
+    4300042: Leg 5 Stub
+    4300044: Leg 5 Top
+    4300046: Leg 5 Bottom
+    4300048: Leg 4 Stub
+    4300050: Leg 4 Top
+    4300052: Leg 4 Bottom
+    4300054: Leg 3 Stub
+    4300056: Leg 3 Top
+    4300058: Leg 3 Bottom
+    4300060: Leg 2 Stub
+    4300062: Leg 2 Top
+    4300064: Leg 2 Bottom
+    4300066: Leg 1 Stub
+    4300068: Leg 1 Top
+    4300070: Leg 1 Bottom
+    4300072: Wall C
+    4300074: Wall B
+    4300076: Wall A
+    4300078: Plane010
+    4300080: Plane011
+    4300082: Plane012
+    4300084: Plane013
+    4300086: Plane014
+    4300088: Plane015
+    4300090: Plane016
+    4300092: Plane017
+    4300094: Plane018
+    9500000: //RootNode
+    13700000: Body
+    13700002: Left Antennae
+    13700004: Right Antennae
+    2186277476908879412: ImportLogs
+  externalObjects: {}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

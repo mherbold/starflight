@@ -30778,6 +30778,822 @@
       "m_subject": "1",
       "m_stance": "3",
       "m_text": "This is the starship &. We are heavily armed. We require information. Comply or be destroyed."
+    },
+    {
+      "m_id": "127",
+      "m_race": "8",
+      "m_raceCommId": "1",
+      "m_subject": "15",
+      "m_stance": "0",
+      "m_text": "Enough the talking."
+    },
+    {
+      "m_id": "128",
+      "m_race": "8",
+      "m_raceCommId": "2",
+      "m_subject": "15",
+      "m_stance": "2",
+      "m_text": "Now must going greatest buddy captain *."
+    },
+    {
+      "m_id": "129",
+      "m_race": "8",
+      "m_raceCommId": "3",
+      "m_subject": "15",
+      "m_stance": "2",
+      "m_text": "Seeing you the later crocodile."
+    },
+    {
+      "m_id": "130",
+      "m_race": "8",
+      "m_raceCommId": "4",
+      "m_subject": "15",
+      "m_stance": "2",
+      "m_text": "Seeing you in a while alligator."
+    },
+    {
+      "m_id": "131",
+      "m_race": "8",
+      "m_raceCommId": "5",
+      "m_subject": "14",
+      "m_stance": "1",
+      "m_text": "Is the you alien part of Old Empire?"
+    },
+    {
+      "m_id": "132",
+      "m_race": "8",
+      "m_raceCommId": "6",
+      "m_subject": "14",
+      "m_stance": "1",
+      "m_text": "You are coming to worship of illustrious queen of Veloxi grand lovely?"
+    },
+    {
+      "m_id": "133",
+      "m_race": "8",
+      "m_raceCommId": "7",
+      "m_subject": "14",
+      "m_stance": "1",
+      "m_text": "Is you killing the Spemins?"
+    },
+    {
+      "m_id": "134",
+      "m_race": "8",
+      "m_raceCommId": "8",
+      "m_subject": "14",
+      "m_stance": "1",
+      "m_text": "Of course Veloxi are superior all the time. Agreeing?"
+    },
+    {
+      "m_id": "135",
+      "m_race": "8",
+      "m_raceCommId": "9",
+      "m_subject": "14",
+      "m_stance": "1",
+      "m_text": "Is the you aliens in ours the Veloxi space search for most precious energy crystals of Ancients?"
+    },
+    {
+      "m_id": "136",
+      "m_race": "8",
+      "m_raceCommId": "10",
+      "m_subject": "13",
+      "m_stance": "2",
+      "m_text": "I guess us is best friend. Perhaps we will eat together the slimy nodules a many the most delicious."
+    },
+    {
+      "m_id": "137",
+      "m_race": "8",
+      "m_raceCommId": "11",
+      "m_subject": "13",
+      "m_stance": "2",
+      "m_text": "We is making you honorary Veloxi. Of course still the inferior alien but much the better I think so."
+    },
+    {
+      "m_id": "138",
+      "m_race": "8",
+      "m_raceCommId": "12",
+      "m_subject": "13",
+      "m_stance": "2",
+      "m_text": "Best idea I have. We is exchange the many dirty joke and then too much the laughing activity."
+    },
+    {
+      "m_id": "139",
+      "m_race": "8",
+      "m_raceCommId": "13",
+      "m_subject": "13",
+      "m_stance": "3",
+      "m_text": "Not trying the funny stuff alien tresspassers, superior Veloxi the most powerful."
+    },
+    {
+      "m_id": "140",
+      "m_race": "8",
+      "m_raceCommId": "14",
+      "m_subject": "13",
+      "m_stance": "1",
+      "m_text": "If you is showing proper respect for distinguished Veloxi charming then everyone is happy as bivalve mollusk."
+    },
+    {
+      "m_id": "141",
+      "m_race": "8",
+      "m_raceCommId": "15",
+      "m_subject": "13",
+      "m_stance": "1",
+      "m_text": "Superior Veloxi majestic are oldest empire. 100,000 Years the long time. Assuredly you is barbarian upstart infidel."
+    },
+    {
+      "m_id": "142",
+      "m_race": "8",
+      "m_raceCommId": "16",
+      "m_subject": "13",
+      "m_stance": "1",
+      "m_text": "You is cooperating with Veloxi jim dandy and maybe we is nice guy the not killing you."
+    },
+    {
+      "m_id": "143",
+      "m_race": "8",
+      "m_raceCommId": "17",
+      "m_subject": "13",
+      "m_stance": "1",
+      "m_text": "You are probably think Veloxi is too smart. No wonder. All Veloxi are exceptional cunning the brain."
+    },
+    {
+      "m_id": "144",
+      "m_race": "8",
+      "m_raceCommId": "18",
+      "m_subject": "13",
+      "m_stance": "3",
+      "m_text": "Zounds! I flabbergast! I dumbfound! I not believing my sensory apparatus! Barbarian aliens is not recognize Veloxi are too much the superior."
+    },
+    {
+      "m_id": "145",
+      "m_race": "8",
+      "m_raceCommId": "19",
+      "m_subject": "13",
+      "m_stance": "3",
+      "m_text": "Okey the dokey terrible aliens a ugly. Now Veloxi us is most angry."
+    },
+    {
+      "m_id": "146",
+      "m_race": "8",
+      "m_raceCommId": "20",
+      "m_subject": "13",
+      "m_stance": "3",
+      "m_text": "Perhaps having made most reasonable unclear. Veloxi having terrible weapons fiercely. Shooting weapons. Weapons blowing up. Big explosion making nasty aliens dying no doubt."
+    },
+    {
+      "m_id": "147",
+      "m_race": "8",
+      "m_raceCommId": "21",
+      "m_subject": "13",
+      "m_stance": "3",
+      "m_text": "You is try Veloxi patience. So much so the secreting the many fluids and gnashing the mandibles. Last chance a warning."
+    },
+    {
+      "m_id": "148",
+      "m_race": "8",
+      "m_raceCommId": "22",
+      "m_subject": "13",
+      "m_stance": "4",
+      "m_text": "Veloxi are actually most reasonable and not wanting trouble furthermore. Us is both civilized adult. Let us talking peaceful and none the useless fighting."
+    },
+    {
+      "m_id": "149",
+      "m_race": "8",
+      "m_raceCommId": "23",
+      "m_subject": "13",
+      "m_stance": "4",
+      "m_text": "Greatest idea I have! I am make suggestion. The you aliens are not destroy ours the pretty spaceship. Yes, I think this is best idea certainly."
+    },
+    {
+      "m_id": "150",
+      "m_race": "8",
+      "m_raceCommId": "24",
+      "m_subject": "11",
+      "m_stance": "1",
+      "m_text": "The Ancients is ancestors of Veloxi, Veloxi legend is saying. Veloxi is powerful race. Ancients was powerful race. Obviously us are relative."
+    },
+    {
+      "m_id": "151",
+      "m_race": "8",
+      "m_raceCommId": "25",
+      "m_subject": "11",
+      "m_stance": "1",
+      "m_text": "The Great Egg at 192,152 is made by Ancients. It is of course looking like big Veloxi egg exactly."
+    },
+    {
+      "m_id": "152",
+      "m_race": "8",
+      "m_raceCommId": "26",
+      "m_subject": "11",
+      "m_stance": "1",
+      "m_text": "The Most Magnificent Hexagon on sacred planet Sphexi is a sign from Ancients to wonderful Veloxi descendants. The small egg is there. Most sacred of Veloxi possessions absolutely."
+    },
+    {
+      "m_id": "153",
+      "m_race": "8",
+      "m_raceCommId": "27",
+      "m_subject": "11",
+      "m_stance": "1",
+      "m_text": "The Most Magnificent Hexagon is of course sign to Veloxi from Ancients of holy number 6. Most perfect of all numbers. Of course Veloxi are 6 legs, the only race."
+    },
+    {
+      "m_id": "154",
+      "m_race": "8",
+      "m_raceCommId": "28",
+      "m_subject": "11",
+      "m_stance": "1",
+      "m_text": "Ancients left Veloxi us prophecy of Great Egg. Very importance, but certainly only telling to best friends."
+    },
+    {
+      "m_id": "155",
+      "m_race": "8",
+      "m_raceCommId": "29",
+      "m_subject": "11",
+      "m_stance": "1",
+      "m_text": "Sphexi is first planet at 132,165 star."
+    },
+    {
+      "m_id": "156",
+      "m_race": "8",
+      "m_raceCommId": "30",
+      "m_subject": "11",
+      "m_stance": "1",
+      "m_text": "Prophecy of egg says Great Egg is travel through galaxy from core to outward."
+    },
+    {
+      "m_id": "157",
+      "m_race": "8",
+      "m_raceCommId": "31",
+      "m_subject": "11",
+      "m_stance": "1",
+      "m_text": "Prophecy of egg says Great Egg the causing sun of any system where is life to flare. The life is killed no doubt."
+    },
+    {
+      "m_id": "158",
+      "m_race": "8",
+      "m_raceCommId": "32",
+      "m_subject": "11",
+      "m_stance": "1",
+      "m_text": "Prophecy of the egg say the Great Egg is slowly move and driving in front races that trying to escape destruction of Great Egg."
+    },
+    {
+      "m_id": "159",
+      "m_race": "8",
+      "m_raceCommId": "33",
+      "m_subject": "11",
+      "m_stance": "1",
+      "m_text": "Prophecy of the egg say that Great Egg will destroying all life in galaxy excepting of course gracious queen."
+    },
+    {
+      "m_id": "160",
+      "m_race": "8",
+      "m_raceCommId": "34",
+      "m_subject": "11",
+      "m_stance": "1",
+      "m_text": "Prophecy is saying after the Great Egg is destroy all life it will hatch and out is coming Xpu, the old one. Xpu is then mating with queen and making new Veloxi race for galaxy."
+    },
+    {
+      "m_id": "161",
+      "m_race": "8",
+      "m_raceCommId": "35",
+      "m_subject": "11",
+      "m_stance": "1",
+      "m_text": "According to prophecy of egg the Great Egg is not harming queen of Veloxi as long as Veloxi is have the small egg."
+    },
+    {
+      "m_id": "162",
+      "m_race": "8",
+      "m_raceCommId": "36",
+      "m_subject": "10",
+      "m_stance": "1",
+      "m_text": "Veloxi is extreme delightful the Old Empire was wiped up. The empire was many scoundrel activity too naughty."
+    },
+    {
+      "m_id": "163",
+      "m_race": "8",
+      "m_raceCommId": "37",
+      "m_subject": "10",
+      "m_stance": "1",
+      "m_text": "Old Empire was try colonize the many planets. Always the expanding. They was using drones called Nomad to collecting datas. Many drones is still coming around Veloxi space. Is annoy Veloxi too much."
+    },
+    {
+      "m_id": "164",
+      "m_race": "8",
+      "m_raceCommId": "38",
+      "m_subject": "10",
+      "m_stance": "1",
+      "m_text": "In year 3120 Veloxi and empire was made pact to fight first wave. Wave was attack empire first and Veloxi help, then when attack is on Veloxi grand lovely, empire not helping. Veloxi is fuming."
+    },
+    {
+      "m_id": "165",
+      "m_race": "8",
+      "m_raceCommId": "39",
+      "m_subject": "10",
+      "m_stance": "1",
+      "m_text": "The empire were betraying Veloxi wonderful in first wave attack of Phlegmak and Numlox so when second wave is attack, Veloxi is not helping and empire is too weak. Empire is destroyed. Too bad."
+    },
+    {
+      "m_id": "166",
+      "m_race": "8",
+      "m_raceCommId": "40",
+      "m_subject": "10",
+      "m_stance": "1",
+      "m_text": "In empire year 3330 Veloxi and empire not buddies. Evil nasty empire pirate naming harrison is attack Veloxi ship and steal focusing stone. Veloxi is so angry. Even now Veloxi a not forget."
+    },
+    {
+      "m_id": "167",
+      "m_race": "8",
+      "m_raceCommId": "41",
+      "m_subject": "10",
+      "m_stance": "1",
+      "m_text": "Old Empire pirate was stole precious Veloxi stone. If ever returning Veloxi too grateful I think so."
+    },
+    {
+      "m_id": "168",
+      "m_race": "8",
+      "m_raceCommId": "42",
+      "m_subject": "10",
+      "m_stance": "1",
+      "m_text": "We is remember ruins of Old Empire being at 34N x 28E on ice planet of downspin system in staff constellation. Veloxi exploration is find the long times ago."
+    },
+    {
+      "m_id": "169",
+      "m_race": "8",
+      "m_raceCommId": "43",
+      "m_subject": "10",
+      "m_stance": "1",
+      "m_text": "In old time empire was having base in Veloxi territory at 28N x 4E first planet of yellow system at 143,115. This planet are forbidden however."
+    },
+    {
+      "m_id": "170",
+      "m_race": "8",
+      "m_raceCommId": "44",
+      "m_subject": "9",
+      "m_stance": "1",
+      "m_text": "We are longtime receiving Old Empire distress call from system 175,94. Of course Veloxi could caring less."
+    },
+    {
+      "m_id": "171",
+      "m_race": "8",
+      "m_raceCommId": "45",
+      "m_subject": "9",
+      "m_stance": "1",
+      "m_text": "Most extreme importance system of Veloxi grand lovely is guarded by Veloxi drones the most destructive. All must answering questions correctly."
+    },
+    {
+      "m_id": "172",
+      "m_race": "8",
+      "m_raceCommId": "46",
+      "m_subject": "9",
+      "m_stance": "1",
+      "m_text": "Explorers is finding the many interesting lifes on planets in 149,133 system. Veloxi is study. Too interesting I think so."
+    },
+    {
+      "m_id": "173",
+      "m_race": "8",
+      "m_raceCommId": "47",
+      "m_subject": "9",
+      "m_stance": "1",
+      "m_text": "Certainly a most perfect number is precisely six. Veloxi are know this absolutely. Is sacred number of Ancients and of course the six legs."
+    },
+    {
+      "m_id": "174",
+      "m_race": "8",
+      "m_raceCommId": "48",
+      "m_subject": "9",
+      "m_stance": "1",
+      "m_text": "So many minerals is finding on molten planet of 149,133. Especially the many at biggest mountains. Minerals is always more the mountains. Of course you know."
+    },
+    {
+      "m_id": "175",
+      "m_race": "8",
+      "m_raceCommId": "49",
+      "m_subject": "9",
+      "m_stance": "1",
+      "m_text": "Of course answering Veloxi probe is by 6 multiples the yes answer."
+    },
+    {
+      "m_id": "176",
+      "m_race": "8",
+      "m_raceCommId": "50",
+      "m_subject": "8",
+      "m_stance": "1",
+      "m_text": "Other races small important. Veloxi are number one importance. Other races not even knowing prophecy of egg. Barbarians certainly."
+    },
+    {
+      "m_id": "177",
+      "m_race": "8",
+      "m_raceCommId": "51",
+      "m_subject": "8",
+      "m_stance": "1",
+      "m_text": "Veloxi laughing at other races. Not even knowing how to meeting end of life in galaxy like most civilized Veloxi."
+    },
+    {
+      "m_id": "178",
+      "m_race": "8",
+      "m_raceCommId": "52",
+      "m_subject": "8",
+      "m_stance": "1",
+      "m_text": "Spemin race is too much extremely the cowardly stupid. Not even tasting good the icky blob."
+    },
+    {
+      "m_id": "179",
+      "m_race": "8",
+      "m_raceCommId": "53",
+      "m_subject": "8",
+      "m_stance": "1",
+      "m_text": "Elowan plant and Thrynn scaly beast is always fight. Thrynn scaly beast is attacking many time."
+    },
+    {
+      "m_id": "180",
+      "m_race": "8",
+      "m_raceCommId": "54",
+      "m_subject": "8",
+      "m_stance": "1",
+      "m_text": "Veloxi had thinking all human were destroy in second wave. Second wave is uhlek and gazurtoid attacking."
+    },
+    {
+      "m_id": "181",
+      "m_race": "8",
+      "m_raceCommId": "55",
+      "m_subject": "8",
+      "m_stance": "1",
+      "m_text": "Uhlek is powerful the most. Gazurtoid squid meanies is follow behind Uhlek as Uhlek moving outward from coreward in second wave."
+    },
+    {
+      "m_id": "182",
+      "m_race": "8",
+      "m_raceCommId": "56",
+      "m_subject": "8",
+      "m_stance": "1",
+      "m_text": "First wave attacking was Phlegmak and Numlox races. Waves of attacking is coming from coreward. First wave are attack in year 3000."
+    },
+    {
+      "m_id": "183",
+      "m_race": "8",
+      "m_raceCommId": "57",
+      "m_subject": "8",
+      "m_stance": "1",
+      "m_text": "No Veloxi is know what Uhlek are look like. Uhlek is far away outward. Much happiness for cause Veloxi."
+    },
+    {
+      "m_id": "184",
+      "m_race": "8",
+      "m_raceCommId": "58",
+      "m_subject": "8",
+      "m_stance": "1",
+      "m_text": "Phlegmak and Numlox is dead the races. Supreme Veloxi is kill. Last battle being 3250 at Phlegmak base at 35S x 99E on second planet in handle of axe most assuredly."
+    },
+    {
+      "m_id": "185",
+      "m_race": "8",
+      "m_raceCommId": "59",
+      "m_subject": "8",
+      "m_stance": "1",
+      "m_text": "Waves of attacking races is coming from galaxy center. First wave is year 3000, second wave was starting year 3400, Uhlek and Gazurtoid."
+    },
+    {
+      "m_id": "186",
+      "m_race": "8",
+      "m_raceCommId": "60",
+      "m_subject": "8",
+      "m_stance": "1",
+      "m_text": "Gazurtoid squids is a fanatical stupid. Is think to rid galaxy of air-breathers. Veloxi can't believe."
+    },
+    {
+      "m_id": "187",
+      "m_race": "8",
+      "m_raceCommId": "61",
+      "m_subject": "8",
+      "m_stance": "1",
+      "m_text": "Minstrel creature is old almost as Veloxi. They wandering in space and singing the ballads. Veloxi are thinking very strange but harmless most definitely."
+    },
+    {
+      "m_id": "188",
+      "m_race": "8",
+      "m_raceCommId": "62",
+      "m_subject": "8",
+      "m_stance": "1",
+      "m_text": "Sometimes Veloxi is see very strange alien ship. This ship are only communicating occasionally and then not understanding the funny balls. Veloxi is think too strange."
+    },
+    {
+      "m_id": "189",
+      "m_race": "8",
+      "m_raceCommId": "63",
+      "m_subject": "7",
+      "m_stance": "1",
+      "m_text": "The best of questions and happily answering.  We Veloxi is ancient and prestige. Illustrious Veloxi empire too old the imagine. Us is civilized the most."
+    },
+    {
+      "m_id": "190",
+      "m_race": "8",
+      "m_raceCommId": "64",
+      "m_subject": "7",
+      "m_stance": "1",
+      "m_text": "A glorious Veloxi worship exceptionally grossness of gracious queen. Center of all Veloxi life the worship."
+    },
+    {
+      "m_id": "191",
+      "m_race": "8",
+      "m_raceCommId": "65",
+      "m_subject": "7",
+      "m_stance": "1",
+      "m_text": "All Veloxi is male drone, of course but queen. Other Veloxi female is kill when hatch. Only gracious queen is laying all eggs most prodigious."
+    },
+    {
+      "m_id": "192",
+      "m_race": "8",
+      "m_raceCommId": "66",
+      "m_subject": "7",
+      "m_stance": "1",
+      "m_text": "All Veloxi dream is to fertilize queen. Too great the honor. Of course afterwards drone is lose head, however none the matter."
+    },
+    {
+      "m_id": "193",
+      "m_race": "8",
+      "m_raceCommId": "67",
+      "m_subject": "7",
+      "m_stance": "1",
+      "m_text": "Veloxi is feeding queen special best jelly. She is growing so big and live longest time. Maybe 2 kilometers the measure, and living 500 years."
+    },
+    {
+      "m_id": "194",
+      "m_race": "8",
+      "m_raceCommId": "68",
+      "m_subject": "7",
+      "m_stance": "1",
+      "m_text": "Most graciousness queen living on Votiputox, hive world of Veloxi."
+    },
+    {
+      "m_id": "195",
+      "m_race": "8",
+      "m_raceCommId": "69",
+      "m_subject": "7",
+      "m_stance": "1",
+      "m_text": "Veloxi is worship queen and also Ancients, great ancestors of Veloxi grand lovely. Sacred planet of Ancients is Sphexi."
+    },
+    {
+      "m_id": "196",
+      "m_race": "8",
+      "m_raceCommId": "70",
+      "m_subject": "7",
+      "m_stance": "1",
+      "m_text": "Queen is communicating to all Veloxi drones through hive-mind. In ancient day was using focusing stone. Today is lost, much the sorry."
+    },
+    {
+      "m_id": "197",
+      "m_race": "8",
+      "m_raceCommId": "71",
+      "m_subject": "6",
+      "m_stance": "1",
+      "m_text": "Awaiting your answer I think."
+    },
+    {
+      "m_id": "198",
+      "m_race": "8",
+      "m_raceCommId": "72",
+      "m_subject": "6",
+      "m_stance": "3",
+      "m_text": "Now answering or severe consequences indeed."
+    },
+    {
+      "m_id": "199",
+      "m_race": "8",
+      "m_raceCommId": "73",
+      "m_subject": "6",
+      "m_stance": "2",
+      "m_text": "You are answer now you're welcome."
+    },
+    {
+      "m_id": "200",
+      "m_race": "8",
+      "m_raceCommId": "74",
+      "m_subject": "5",
+      "m_stance": "3",
+      "m_text": "Us are not answer the questions. You are leaving or us is getting more the upset and soon firing deadly weapons."
+    },
+    {
+      "m_id": "201",
+      "m_race": "8",
+      "m_raceCommId": "75",
+      "m_subject": "5",
+      "m_stance": "3",
+      "m_text": "You are better go, us is getting tired the warning."
+    },
+    {
+      "m_id": "202",
+      "m_race": "8",
+      "m_raceCommId": "76",
+      "m_subject": "5",
+      "m_stance": "3",
+      "m_text": "You is maybe think we are play game? No. We are serious too much. You are go now last chance."
+    },
+    {
+      "m_id": "203",
+      "m_race": "8",
+      "m_raceCommId": "77",
+      "m_subject": "5",
+      "m_stance": "3",
+      "m_text": "Us is getting tired of say. Alien not welcome at Votiputox. You are make Veloxi upset. Soon we are attack."
+    },
+    {
+      "m_id": "204",
+      "m_race": "8",
+      "m_raceCommId": "78",
+      "m_subject": "5",
+      "m_stance": "2",
+      "m_text": "None the information. Veloxi a not know."
+    },
+    {
+      "m_id": "205",
+      "m_race": "8",
+      "m_raceCommId": "79",
+      "m_subject": "5",
+      "m_stance": "1",
+      "m_text": "Your question are presumptuous too much. Of course I is not answer."
+    },
+    {
+      "m_id": "206",
+      "m_race": "8",
+      "m_raceCommId": "80",
+      "m_subject": "2",
+      "m_stance": "2",
+      "m_text": "Too much the enjoyment of meeting again the best alien buddies. Such a happiness I gush."
+    },
+    {
+      "m_id": "207",
+      "m_race": "8",
+      "m_raceCommId": "81",
+      "m_subject": "2",
+      "m_stance": "2",
+      "m_text": "Indeedy us is talking a many thing with alien best friend."
+    },
+    {
+      "m_id": "208",
+      "m_race": "8",
+      "m_raceCommId": "82",
+      "m_subject": "2",
+      "m_stance": "1",
+      "m_text": "We is Veloxi the everyday. I being captain % of exceptionally pleasant vessel +. Now perhaps the information exchanging."
+    },
+    {
+      "m_id": "209",
+      "m_race": "8",
+      "m_raceCommId": "83",
+      "m_subject": "2",
+      "m_stance": "1",
+      "m_text": "Us are most valiant and wonderful drones of Veloxi empire grand lovely. Now we are doing the communicating activity with inferior aliens a trespass."
+    },
+    {
+      "m_id": "210",
+      "m_race": "8",
+      "m_raceCommId": "84",
+      "m_subject": "2",
+      "m_stance": "3",
+      "m_text": "Of course us is Veloxi. Now preparing to dying you the evil trespassers of Veloxi grand lovely."
+    },
+    {
+      "m_id": "211",
+      "m_race": "8",
+      "m_raceCommId": "85",
+      "m_subject": "2",
+      "m_stance": "3",
+      "m_text": "Us is of course  illustrious Veloxi. Now you is surrendering your space boat and creating the best situation no doubt."
+    },
+    {
+      "m_id": "212",
+      "m_race": "8",
+      "m_raceCommId": "86",
+      "m_subject": "2",
+      "m_stance": "4",
+      "m_text": "We is Veloxi your best friend. Please not to destroying us, best good aliens a ugly. Us is surrender."
+    },
+    {
+      "m_id": "213",
+      "m_race": "8",
+      "m_raceCommId": "87",
+      "m_subject": "2",
+      "m_stance": "4",
+      "m_text": "Us is surrender. I captain %. You is too much the sorry if killing us I'm a think so."
+    },
+    {
+      "m_id": "214",
+      "m_race": "8",
+      "m_raceCommId": "88",
+      "m_subject": "1",
+      "m_stance": "0",
+      "m_text": "Veloxi is issue warning. Votiputox, Veloxi homeworld is off the limit to alien. I are sorry but you is leaving I think so."
+    },
+    {
+      "m_id": "215",
+      "m_race": "8",
+      "m_raceCommId": "89",
+      "m_subject": "1",
+      "m_stance": "0",
+      "m_text": "No aliens are welcome Veloxi homeworld. The you aliens are must leave now extremely. I is no joke."
+    },
+    {
+      "m_id": "216",
+      "m_race": "8",
+      "m_raceCommId": "90",
+      "m_subject": "1",
+      "m_stance": "0",
+      "m_text": "Halt aliens! I is captain % and I am order you pretty quickly leaving Veloxi homeworld Votiputox. No alien are allowed. You are leave otherwise us are attack."
+    },
+    {
+      "m_id": "217",
+      "m_race": "8",
+      "m_raceCommId": "91",
+      "m_subject": "1",
+      "m_stance": "0",
+      "m_text": "Alien enemy are come to Veloxi homeworld for invading. Us is protect supreme Veloxi empire. Banzaii!"
+    },
+    {
+      "m_id": "218",
+      "m_race": "8",
+      "m_raceCommId": "92",
+      "m_subject": "1",
+      "m_stance": "2",
+      "m_text": "The happiness of seeing again the slightly disgusting alien friends. Extreme delightful."
+    },
+    {
+      "m_id": "219",
+      "m_race": "8",
+      "m_raceCommId": "93",
+      "m_subject": "1",
+      "m_stance": "2",
+      "m_text": "Ahoy icky beings. Us is Veloxi the most happy to seeing you. Now we is making the friendly and most outgoing gestures. Happily are the you responding?"
+    },
+    {
+      "m_id": "220",
+      "m_race": "8",
+      "m_raceCommId": "94",
+      "m_subject": "1",
+      "m_stance": "2",
+      "m_text": "Most harmonious greetings friends and worshippers of Veloxi grand lovely. Let us communicating the everytime."
+    },
+    {
+      "m_id": "221",
+      "m_race": "8",
+      "m_raceCommId": "95",
+      "m_subject": "1",
+      "m_stance": "1",
+      "m_text": "Most harmonious greetings. Us is illustrious Veloxi. Please now the identifying I think so."
+    },
+    {
+      "m_id": "222",
+      "m_race": "8",
+      "m_raceCommId": "96",
+      "m_subject": "1",
+      "m_stance": "1",
+      "m_text": "I is called % and are supreme commanding captain of greatest ship +. Perhaps we are a communicating happiness peaceful and not completely obliterating inferior aliens the trespassing. Immediately a responding you're welcome."
+    },
+    {
+      "m_id": "223",
+      "m_race": "8",
+      "m_raceCommId": "97",
+      "m_subject": "1",
+      "m_stance": "1",
+      "m_text": "Me is naming captain % of most elegant and dangerous Veloxi ship naming +. The you aliens please to identifying and telling us Veloxi the most significant and highly secret information."
+    },
+    {
+      "m_id": "224",
+      "m_race": "8",
+      "m_raceCommId": "98",
+      "m_subject": "1",
+      "m_stance": "3",
+      "m_text": "Halt alien invaders. Identify now or the fiery death."
+    },
+    {
+      "m_id": "225",
+      "m_race": "8",
+      "m_raceCommId": "99",
+      "m_subject": "1",
+      "m_stance": "3",
+      "m_text": "So alien invaders. You is showing proper respect a quickly or extremely the dying. Us is not waiting long time. Identify now."
+    },
+    {
+      "m_id": "226",
+      "m_race": "8",
+      "m_raceCommId": "100",
+      "m_subject": "1",
+      "m_stance": "3",
+      "m_text": "Halt barbarians and making show of defenselessness. Us is Veloxi, champion best a-number-1 race of galactic beautiful. You are obeying no doubt."
+    },
+    {
+      "m_id": "227",
+      "m_race": "8",
+      "m_raceCommId": "101",
+      "m_subject": "1",
+      "m_stance": "4",
+      "m_text": "We is surrender. Please not vaporizing nice Veloxi ship. Let us the communicating friendship."
+    },
+    {
+      "m_id": "228",
+      "m_race": "8",
+      "m_raceCommId": "102",
+      "m_subject": "1",
+      "m_stance": "4",
+      "m_text": "Certainly us is surrender most peaceful."
     }
   ]
 }

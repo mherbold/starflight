@@ -150,7 +150,7 @@ Material:
     - SF_AlphaTestValue: 0
     - SF_BlendDst: 10
     - SF_BlendSrc: 1
-    - SF_Density: 1
+    - SF_Density: 1.118
     - SF_DetailNormalMapStrength: 1
     - SF_ForwardShadowsOn: 1
     - SF_NormalMapStrength: 3
