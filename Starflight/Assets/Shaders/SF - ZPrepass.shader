@@ -30,6 +30,10 @@ Shader "Starflight/Z Prepass"
 		SF_OcclusionPower( "Occlusion Power", Range( 0, 10 ) ) = 1
 		[MaterialToggle] SF_AlbedoOcclusionOn( "Albedo Occlusion", Float ) = 0
 
+		/* Culling Options */
+
+		[Enum(UnityEngine.Rendering.CullMode)] SF_CullMode( "Cull Mode", Float ) = 2
+
 		/* Blending Options */
 
 		[Enum(UnityEngine.Rendering.BlendMode)] SF_BlendSrc( "Blend Src", Float ) = 1
@@ -69,6 +73,7 @@ Shader "Starflight/Z Prepass"
 				"LightMode" = "ForwardBase"
 			}
 
+			Cull [SF_CullMode]
 			ZWrite On
 			ColorMask 0
 

@@ -26,7 +26,7 @@ public class GD_Comm
 
 	public enum Stance
 	{
-		Any = 0,
+		None = 0,
 		Neutral = 1,
 		Friendly = 2,
 		Hostile = 3,

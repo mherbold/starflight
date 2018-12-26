@@ -366,4 +366,87 @@ public class SpaceflightController : MonoBehaviour
 			}
 		}
 	}
+
+	// draw gizmos to help debug the game
+	void OnDrawGizmos()
+	{
+		if ( DataController.m_instance == null )
+		{
+			return;
+		}
+
+		// get to the player data
+		var playerData = DataController.m_instance.m_playerData;
+
+		// get the current player location
+		var location = playerData.m_general.m_location;
+
+		if ( ( location == PD_General.Location.StarSystem ) || ( location == PD_General.Location.Hyperspace ) )
+		{
+			// draw the encounter radius
+			UnityEditor.Handles.color = Color.red;
+			UnityEditor.Handles.DrawWireDisc( playerData.m_general.m_coordinates, Vector3.up, m_encounterRange );
+
+			// draw the radar range
+			UnityEditor.Handles.color = Color.magenta;
+
+			if ( location == PD_General.Location.Hyperspace )
+			{
+				UnityEditor.Handles.DrawWireDisc( playerData.m_general.m_coordinates, Vector3.up, m_radar.m_maxHyperspaceDetectionDistance );
+			}
+			else
+			{
+				UnityEditor.Handles.DrawWireDisc( playerData.m_general.m_coordinates, Vector3.up, m_radar.m_maxStarSystemDetectionDistance );
+			}
+
+			// draw the positions on each encounter
+			UnityEditor.Handles.color = Color.red;
+
+			foreach ( var encounter in playerData.m_encounterList )
+			{
+				var encounterLocation = encounter.GetLocation();
+
+				if ( ( encounterLocation == location ) && ( location == PD_General.Location.Hyperspace ) || ( encounter.GetStarId() == playerData.m_general.m_currentStarId ) )
+				{
+					// draw alien position
+					UnityEditor.Handles.color = Color.red;
+					UnityEditor.Handles.DrawWireDisc( encounter.m_currentCoordinates, Vector3.up, 16.0f );
+
+					// draw the alien radar range
+					UnityEditor.Handles.color = Color.yellow;
+
+					if ( location == PD_General.Location.Hyperspace )
+					{
+						UnityEditor.Handles.DrawWireDisc( encounter.m_currentCoordinates, Vector3.up, m_alienHyperspaceRadarDistance );
+					}
+					else
+					{
+						UnityEditor.Handles.DrawWireDisc( encounter.m_currentCoordinates, Vector3.up, m_alienStarSystemRadarDistance );
+					}
+				}
+			}
+		}
+
+		// if we are in hyperspace draw the map grid
+		if ( location == PD_General.Location.Hyperspace )
+		{
+			Gizmos.color = Color.green;
+
+			for ( var x = 0; x < 250; x += 10 )
+			{
+				var start = Tools.GameToWorldCoordinates( new Vector3( x, 0.0f, 0.0f ) );
+				var end = Tools.GameToWorldCoordinates( new Vector3( x, 0.0f, 250.0f ) );
+
+				Gizmos.DrawLine( start, end );
+			}
+
+			for ( var z = 0; z < 250; z += 10 )
+			{
+				var start = Tools.GameToWorldCoordinates( new Vector3( 0.0f, 0.0f, z ) );
+				var end = Tools.GameToWorldCoordinates( new Vector3( 250.0f, 0.0f, z ) );
+
+				Gizmos.DrawLine( start, end );
+			}
+		}
+	}
 }

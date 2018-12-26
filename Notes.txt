@@ -27,11 +27,10 @@ Communications
 
 	subject
 	
-		0 =
 		1 = hail
 		2 = response
-		5 = ?? - when run out of information to share ??
-		6 = ?? - waiting for a response ??
+		5 = ?? - when run out of information (7 thru 11) to share ??
+		6 = waiting for a response to a question
 		7 = response to question about themselves
 		8 = response to question about other races
 		9 = response to question about the old empire
@@ -40,3 +39,17 @@ Communications
 		13 = statement
 		14 = question
 		15 = terminating communications
+		
+	stance
+	
+		0 = any
+		1 = neutral
+		2 = friendly
+		3 = hostile
+		4 = obsequious
+		
+		0 = neutral
+		1 = friendly
+		2 = hostile
+		3 = obsequious
+		

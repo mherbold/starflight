@@ -104,7 +104,7 @@ public class Map : MonoBehaviour
 					m_isFading = false;
 				}
 
-				var alpha = Mathf.SmoothStep( m_originalFadeAmount, m_targetFadeAmount, m_fadeTimer / m_fadeDuration );
+				var alpha = m_isFading ? Mathf.SmoothStep( m_originalFadeAmount, m_targetFadeAmount, m_fadeTimer / m_fadeDuration ) : m_targetFadeAmount;
 
 				m_material.SetColor( "SF_AlbedoColor", new Color( alpha, alpha, alpha ) );
 			}
@@ -137,6 +137,12 @@ public class Map : MonoBehaviour
 				m_targetFadeAmount = targetFadeAmount;
 			}
 		}
+	}
+
+	// check whether or not the map is still fading (in or out)
+	public bool IsFading()
+	{
+		return m_isFading;
 	}
 
 	// call this to get the current map fade amount

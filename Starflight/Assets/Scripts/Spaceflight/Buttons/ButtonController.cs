@@ -43,7 +43,7 @@ public class ButtonController : MonoBehaviour
 	private ShipButton m_currentButton;
 
 	// private stuff we don't want the editor to see
-	int m_currentButtonIndex;
+	int m_selectedButtonIndex;
 	bool m_activatingButton;
 	float m_activatingButtonTimer;
 	float m_ignoreControllerTimer;
@@ -129,7 +129,7 @@ public class ButtonController : MonoBehaviour
 				m_activatingButtonTimer = 0.0f;
 
 				// get the activated button (execute might change this so grab it now)
-				ShipButton activatedButton = m_buttonList[ m_currentButtonIndex ];
+				ShipButton activatedButton = m_buttonList[ m_selectedButtonIndex ];
 
 				// execute the current button and check if it returned true
 				if ( activatedButton.Execute() )
@@ -163,9 +163,9 @@ public class ButtonController : MonoBehaviour
 			{
 				m_ignoreControllerTimer = 0.3f;
 
-				if ( m_currentButtonIndex < ( m_buttonList.Length - 1 ) )
+				if ( m_selectedButtonIndex < ( m_buttonList.Length - 1 ) )
 				{
-					m_currentButtonIndex++;
+					m_selectedButtonIndex++;
 
 					UpdateButtonSprites();
 
@@ -179,9 +179,9 @@ public class ButtonController : MonoBehaviour
 			{
 				m_ignoreControllerTimer = 0.3f;
 
-				if ( m_currentButtonIndex > 0 )
+				if ( m_selectedButtonIndex > 0 )
 				{
-					m_currentButtonIndex--;
+					m_selectedButtonIndex--;
 
 					UpdateButtonSprites();
 
@@ -199,7 +199,7 @@ public class ButtonController : MonoBehaviour
 		{
 			InputController.m_instance.Debounce();
 
-			if ( m_buttonList[ m_currentButtonIndex ] == null )
+			if ( m_buttonList[ m_selectedButtonIndex ] == null )
 			{
 				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 			}
@@ -210,7 +210,7 @@ public class ButtonController : MonoBehaviour
 				m_activatingButtonTimer = 0.0f;
 
 				// update the button sprite for the currently selected button
-				m_buttonImageList[ m_currentButtonIndex ].sprite = m_buttonActiveSprite;
+				m_buttonImageList[ m_selectedButtonIndex ].sprite = m_buttonActiveSprite;
 
 				// play the activate sound
 				SoundController.m_instance.PlaySound( SoundController.Sound.Activate );
@@ -228,7 +228,7 @@ public class ButtonController : MonoBehaviour
 	public void RestoreBridgeButtons()
 	{
 		// there is no current funciton
-		m_currentButton = null;
+		ClearCurrentButton();
 
 		// restore the bridge buttons
 		ChangeButtonSet( ButtonSet.Bridge );
@@ -279,7 +279,7 @@ public class ButtonController : MonoBehaviour
 		m_currentButtonSet = buttonSet;
 
 		// reset the current button index
-		m_currentButtonIndex = 0;
+		m_selectedButtonIndex = 0;
 
 		// update the button sprites
 		UpdateButtonSprites();
@@ -290,15 +290,21 @@ public class ButtonController : MonoBehaviour
 	{
 		for ( int i = 0; i < c_numButtons; i++ )
 		{
-			m_buttonImageList[ i ].sprite = ( m_currentButtonIndex == i ) ? m_buttonOnSprite : m_buttonOffSprite;
+			m_buttonImageList[ i ].sprite = ( m_selectedButtonIndex == i ) ? m_buttonOnSprite : m_buttonOffSprite;
 		}
+	}
+
+	// call this to stop calling update on the current button
+	public void ClearCurrentButton()
+	{
+		m_currentButton = null;
 	}
 
 	// call this to deactivate the current button
 	public void DeactivateButton()
 	{
 		// we no longer have a current button
-		m_currentButton = null;
+		ClearCurrentButton();
 
 		// remove the "active" dot from the current button
 		UpdateButtonSprites();

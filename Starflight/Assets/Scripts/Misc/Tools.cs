@@ -113,7 +113,7 @@ class Tools
 	{
 		var color = material.GetColor( "SF_AlbedoColor" );
 
-		color.a = opacity;
+		color.a = opacity * opacity; // square it since we are using linear color space
 
 		material.SetColor( "SF_AlbedoColor", color );
 	}

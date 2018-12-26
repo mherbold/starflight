@@ -12,6 +12,9 @@ public class InOrbit : MonoBehaviour
 	// the planet cloud
 	public MeshRenderer m_planetClouds;
 
+	// the planet atmosphere
+	public MeshRenderer m_planetAtmosphere;
+
 	// convenient access to the spaceflight controller
 	public SpaceflightController m_spaceflightController;
 
@@ -92,7 +95,7 @@ public class InOrbit : MonoBehaviour
 		// get the planet controller
 		var planetController = m_spaceflightController.m_starSystem.GetPlanetController( playerData.m_general.m_currentPlanetId );
 
-		// set the scale of the planet model and clouds
+		// set the scale of the planet model (and clouds)
 		var scale = planetController.m_planet.GetScale();
 		m_planetModel.transform.localScale = scale * 1.75f;
 		m_planetClouds.transform.localScale = m_planetModel.transform.localScale * 1.01f;
@@ -122,14 +125,8 @@ public class InOrbit : MonoBehaviour
 		// let the player know we've established orbit
 		m_spaceflightController.m_messages.ChangeText( "<color=white>Orbit established.</color>" );
 
-		// set the position of the sun
-		Vector4 sunPosition = new Vector4( -10000.0f, 5000.0f, 0.0f, 0.0f );
-
-		m_planetModel.material.SetVector( "_SunPosition", sunPosition );
-		m_planetClouds.material.SetVector( "_SunPosition", sunPosition );
-
-		// set up the clouds
-		planetController.SetupClouds( m_planetClouds );
+		// set up the clouds and atmosphere
+		planetController.SetupClouds( m_planetClouds, m_planetAtmosphere );
 
 		// apply the material to the planet model
 		MaterialUpdated();

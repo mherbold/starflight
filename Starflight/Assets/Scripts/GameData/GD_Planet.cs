@@ -124,6 +124,14 @@ public class GD_Planet
 		return ( m_atmosphereDensityId - 1.0f ) / 4.0f;
 	}
 
+	// return the primary atmosphere of the planet
+	public GD_Atmosphere GetPrimaryAtmosphere()
+	{
+		var gameData = DataController.m_instance.m_gameData;
+
+		return gameData.m_atmosphereList[ m_atmosphereIdA ];
+	}
+
 	// get the atmosphere text
 	public string GetAtmosphereText()
 	{

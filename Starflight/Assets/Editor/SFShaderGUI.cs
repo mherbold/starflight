@@ -33,6 +33,10 @@ class SFShaderGUI : ShaderGUI
 
 		public static readonly GUIContent occlusionText = EditorGUIUtility.TrTextContent( "Occlusion", "R=Intensity; Albedo Occlusion Switch" );
 
+		public static readonly string cullingOptionsText = "\nCulling Options";
+
+		public static readonly GUIContent cullModeText = EditorGUIUtility.TrTextContent( "Cull Mode", "" );
+
 		public static readonly string blendingOptionsText = "\nBlending Options";
 
 		public static readonly GUIContent blendSrcText = EditorGUIUtility.TrTextContent( "Source Blend", "" );
@@ -84,6 +88,8 @@ class SFShaderGUI : ShaderGUI
 	MaterialProperty m_occlusionMap = null;
 	MaterialProperty m_occlusionPower = null;
 	MaterialProperty m_albedoOcclusionOn = null;
+
+	MaterialProperty m_cullMode = null;
 
 	MaterialProperty m_blendSrc = null;
 	MaterialProperty m_blendDst = null;
@@ -210,6 +216,14 @@ class SFShaderGUI : ShaderGUI
 			m_materialEditor.TexturePropertySingleLine( Styles.occlusionText, m_occlusionMap, m_occlusionPower, m_albedoOcclusionOn );
 		}
 
+		// culling options
+		if ( m_cullMode != null )
+		{
+			GUILayout.Label( Styles.cullingOptionsText, EditorStyles.boldLabel );
+
+			m_materialEditor.ShaderProperty( m_cullMode, Styles.cullModeText );
+		}
+
 		// blending options
 		if ( m_blendSrc != null && m_blendDst != null )
 		{
@@ -294,6 +308,8 @@ class SFShaderGUI : ShaderGUI
 		m_occlusionMap = FindProperty( "SF_OcclusionMap", materialPropertyList, false );
 		m_occlusionPower = FindProperty( "SF_OcclusionPower", materialPropertyList, false );
 		m_albedoOcclusionOn = FindProperty( "SF_AlbedoOcclusionOn", materialPropertyList, false );
+
+		m_cullMode = FindProperty( "SF_CullMode", materialPropertyList, false );
 
 		m_blendSrc = FindProperty( "SF_BlendSrc", materialPropertyList, false );
 		m_blendDst = FindProperty( "SF_BlendDst", materialPropertyList, false );

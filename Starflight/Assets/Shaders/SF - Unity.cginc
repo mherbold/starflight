@@ -45,11 +45,11 @@ float4 UnityApplyLinearShadowBias( float4 clipPos ) { return 1; }
 
 #endif // UNITY_SHADER_VARIABLES_INCLUDED
 
-#if SF_IS_FORWARD && SF_FORWARDSHADOWS_ON
+#ifndef _ShadowMapTexture
 
 UNITY_DECLARE_SHADOWMAP( _ShadowMapTexture );
 
-#endif // SF_IS_FORWARD && SF_FORWARDSHADOWS_ON
+#endif // _ShadowMapTexture
 
 sampler3D _DitherMaskLOD;
 

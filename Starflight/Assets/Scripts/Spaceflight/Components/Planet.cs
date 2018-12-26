@@ -12,6 +12,9 @@ public class Planet : MonoBehaviour
 	// access to the planet clouds
 	public MeshRenderer m_planetClouds;
 
+	// access to the planet atmosphere
+	public MeshRenderer m_planetAtmosphere;
+
 	// access to the starport model
 	public GameObject m_starportModel;
 
@@ -123,14 +126,12 @@ public class Planet : MonoBehaviour
 
 		// scale the planet based on its mass
 		m_planetModel.transform.localScale = m_planet.GetScale();
-		m_planetClouds.transform.localScale = m_planetModel.transform.localScale * 1.01f;
 
-		// move the planet to be just below the zero plane
-		m_planetModel.transform.localPosition = new Vector3( 0.0f, -16.0f - m_planetModel.transform.localScale.y, 0.0f );
-		m_planetClouds.transform.localPosition = m_planetModel.transform.localPosition;
+		// move the planet to be just below the zero plane (and do the same to the clouds)
+		m_planetClouds.transform.localPosition = m_planetModel.transform.localPosition = new Vector3( 0.0f, -16.0f - m_planetModel.transform.localScale.y, 0.0f );
 
-		// set up the clouds
-		SetupClouds( m_planetClouds );
+		// set up the clouds and atmosphere
+		SetupClouds( m_planetClouds, m_planetAtmosphere );
 	}
 
 	// call this to get the distance to the player
@@ -189,13 +190,16 @@ public class Planet : MonoBehaviour
 	}
 
 	// sets up the clouds based on planet properties
-	public void SetupClouds( MeshRenderer planetClouds )
+	public void SetupClouds( MeshRenderer planetClouds, MeshRenderer planetAtmosphere )
 	{
 		// does the planet have an atmosphere?
 		if ( m_planet.HasAtmosphere() )
 		{
 			// yes - show the clouds
 			planetClouds.gameObject.SetActive( true );
+
+			// show the atmosphere
+			planetAtmosphere.gameObject.SetActive( true );
 
 			// get the atmosphere density
 			var atmosphereDensity = m_planet.GetAtmosphereDensity();
@@ -217,11 +221,23 @@ public class Planet : MonoBehaviour
 
 			// apply the color to the clouds
 			planetClouds.material.SetColor( "SF_AlbedoColor", color );
+
+			// get the primary atmosphere of the planet
+			var atmosphere = m_planet.GetPrimaryAtmosphere();
+
+			// pick the color for the atmosphere
+			color = new Color( atmosphere.m_colorR / 255.0f, atmosphere.m_colorG / 255.0f, atmosphere.m_colorB / 255.0f );
+
+			// apply the color to the atmosphere
+			planetAtmosphere.material.SetColor( "SF_AlbedoColor", color );
 		}
 		else
 		{
 			// no - hide the clouds
 			planetClouds.gameObject.SetActive( false );
+
+			// hide the atmosphere
+			planetAtmosphere.gameObject.SetActive( false );
 		}
 	}
 }

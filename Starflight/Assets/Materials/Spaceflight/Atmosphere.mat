@@ -6,16 +6,15 @@ Material:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Clouds
-  m_Shader: {fileID: 4800000, guid: adcfa929f3b97d549ad0a8faba72a091, type: 3}
+  m_Name: Atmosphere
+  m_Shader: {fileID: 4800000, guid: f67073489be24934c9032d00068b6661, type: 3}
   m_ShaderKeywords: ALBEDOMAP_ON ALPHA_ON FORWARDSHADOWSON_ON FORWARDSHADOWS_ON NORMALMAP_ISCOMPRESSED
-    NORMALMAP_ON ORTHONORMALIZEON_ON ORTHONORMALIZE_ON SF_ALBEDOMAP_ON SF_ALPHA_ON
-    SF_FORWARDSHADOWS_ON SF_NORMALMAP_ISCOMPRESSED SF_NORMALMAP_ON SF_ORTHONORMALIZEON_ON
-    SF_ORTHONORMALIZE_ON SF_SPECULARMAP_ON SF_SPECULAR_ON SF_ZWRITEON_ON SPECULAR_ON
+    NORMALMAP_ON ORTHONORMALIZEON_ON ORTHONORMALIZE_ON SF_ALPHA_ON SF_ORTHONORMALIZEON_ON
+    SF_ORTHONORMALIZE_ON SF_SPECULAR_ON SPECULAR_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: 2999
   stringTagMap:
     RenderType: Transparent
   disabledShaderPasses:
@@ -36,7 +35,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - SF_AlbedoMap:
-        m_Texture: {fileID: 2800000, guid: 9b33bcedc0d330344b920874d80e05b1, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - SF_DensityMap:
@@ -52,7 +51,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - SF_NormalMap:
-        m_Texture: {fileID: 2800000, guid: 76ebdfff9bc22b54081eebc36b4300a4, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - SF_OcclusionMap:
@@ -68,7 +67,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - SF_SpecularMap:
-        m_Texture: {fileID: 2800000, guid: 9b33bcedc0d330344b920874d80e05b1, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - ScatterMapA:
@@ -148,19 +147,20 @@ Material:
     - OrthonormalizeOn: 1
     - SF_AlbedoOcclusionOn: 0
     - SF_AlphaTestValue: 0
-    - SF_BlendDst: 10
+    - SF_BlendDst: 1
     - SF_BlendSrc: 1
-    - SF_CullMode: 2
+    - SF_CullMode: 1
     - SF_Density: 1.104
     - SF_DetailNormalMapStrength: 1
-    - SF_ForwardShadowsOn: 1
-    - SF_NormalMapStrength: 3
+    - SF_EmissiveProjectionOn: 0
+    - SF_ForwardShadowsOn: 0
+    - SF_NormalMapStrength: 1
     - SF_OcclusionPower: 1
     - SF_OrthonormalizeOn: 1
-    - SF_RenderQueueOffset: 0
-    - SF_Smoothness: 0.275
-    - SF_Speed: 0.1
-    - SF_ZWriteOn: 1
+    - SF_RenderQueueOffset: -1
+    - SF_Smoothness: 0.3
+    - SF_Speed: 0.025
+    - SF_ZWriteOn: 0
     - Smoothness: 0.4
     - Speed: 0.005
     - _Amplitude: 1
@@ -194,12 +194,12 @@ Material:
     m_Colors:
     - AlbedoColor: {r: 1, g: 1, b: 1, a: 0.9490196}
     - NormalMapScaleOffset: {r: 1, g: 1, b: 0, a: 0}
-    - SF_AlbedoColor: {r: 1, g: 1, b: 1, a: 0.9019608}
+    - SF_AlbedoColor: {r: 1, g: 1, b: 1, a: 1}
     - SF_BaseScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SF_DetailScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SF_EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
     - SF_NormalMapScaleOffset: {r: 1, g: 1, b: 0, a: 0}
-    - SF_SpecularColor: {r: 0.8679245, g: 0.8679245, b: 0.8679245, a: 1}
+    - SF_SpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - SpecularColor: {r: 0.75, g: 0.75, b: 0.75, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

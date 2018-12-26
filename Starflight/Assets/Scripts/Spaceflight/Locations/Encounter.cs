@@ -286,7 +286,16 @@ public class Encounter : MonoBehaviour
 			AddAlienShips();
 
 			// center the encounter coordinates on the player
-			m_pdEncounter.SetCoordinates( playerData.m_general.m_coordinates );
+			var encounterLocation = m_pdEncounter.GetLocation();
+
+			if ( encounterLocation == PD_General.Location.Hyperspace )
+			{
+				m_pdEncounter.SetCoordinates( playerData.m_general.m_lastHyperspaceCoordinates );
+			}
+			else if ( encounterLocation == PD_General.Location.StarSystem )
+			{
+				m_pdEncounter.SetCoordinates( playerData.m_general.m_lastStarSystemCoordinates );
+			}
 
 			// reset the conversation
 			m_pdEncounter.ResetConversation();
@@ -615,9 +624,6 @@ public class Encounter : MonoBehaviour
 
 		// start at 50% question likelihood
 		m_pdEncounter.m_questionLikelihood = 50;
-
-		// pretend we are already friendly with the race
-		m_pdEncounter.m_alienStance = GD_Comm.Stance.Friendly;
 	}
 
 	// update encounter with elowan
@@ -1049,9 +1055,27 @@ public class Encounter : MonoBehaviour
 			{
 				if ( comm.m_subject == subject )
 				{
-					if ( ( comm.m_stance == 0 ) || ( comm.m_stance == stance ) )
+					if ( comm.m_stance == stance )
 					{
 						possibleComms.Add( comm );
+					}
+				}
+			}
+		}
+
+		// if we didn't find anything then try the neutral stance
+		if ( possibleComms.Count == 0 )
+		{
+			foreach ( var comm in gameData.m_commList )
+			{
+				if ( comm.m_race == race )
+				{
+					if ( comm.m_subject == subject )
+					{
+						if ( comm.m_stance == GD_Comm.Stance.Neutral )
+						{
+							possibleComms.Add( comm );
+						}
 					}
 				}
 			}

@@ -12,6 +12,10 @@ Shader "Starflight/Unlit"
 
 		/* UV2 Maps */
 
+		/* Culling Options */
+
+		[Enum(UnityEngine.Rendering.CullMode)] SF_CullMode( "Cull Mode", Float ) = 2
+
 		/* Blending Options */
 
 		[Enum(UnityEngine.Rendering.BlendMode)] SF_BlendSrc( "Blend Src", Float ) = 1
@@ -49,6 +53,7 @@ Shader "Starflight/Unlit"
 				"LightMode" = "ShadowCaster"
 			}
 
+			Cull [SF_CullMode]
 			ZWrite On
 			ZTest LEqual
 
@@ -73,9 +78,10 @@ Shader "Starflight/Unlit"
 			Name "DEFAULT"
 
 			Lighting Off
+			Cull [SF_CullMode]
+			Blend [SF_BlendSrc] [SF_BlendDst]
 			ZWrite [SF_ZWriteOn]
 			ZTest [unity_GUIZTestMode]
-			Blend [SF_BlendSrc] [SF_BlendDst]
 
 			CGPROGRAM
 

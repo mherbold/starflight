@@ -179,7 +179,7 @@ public class Radar : MonoBehaviour
 				if ( detectionToUse != null )
 				{
 					// calculate the blip opacity
-					opacity = Mathf.Lerp( 0.3f, 1.0f, 1.0f - ( encounter.GetDistance() / maxDetectionDistance ) );
+					opacity = Mathf.Lerp( 0.1f, 1.0f, 1.0f - ( encounter.GetDistance() / maxDetectionDistance ) );
 
 					// set the rotation (position really) of the blip
 					detectionToUse.m_blip.transform.localRotation = Quaternion.Euler( 0.0f, 0.0f, angle );

@@ -30,6 +30,10 @@ Shader "Starflight/Standard"
 		SF_OcclusionPower( "Occlusion Power", Range( 0, 10 ) ) = 1
 		[MaterialToggle] SF_AlbedoOcclusionOn( "Albedo Occlusion", Float ) = 0
 
+		/* Culling Options */
+
+		[Enum(UnityEngine.Rendering.CullMode)] SF_CullMode( "Cull Mode", Float ) = 2
+
 		/* Blending Options */
 
 		[Enum(UnityEngine.Rendering.BlendMode)] SF_BlendSrc( "Blend Src", Float ) = 1
@@ -62,6 +66,7 @@ Shader "Starflight/Standard"
 				"LightMode" = "ShadowCaster"
 			}
 
+			Cull [SF_CullMode]
 			ZWrite On
 			ZTest LEqual
 
@@ -90,6 +95,7 @@ Shader "Starflight/Standard"
 				"LightMode" = "Deferred"
 			}
 
+			Cull [SF_CullMode]
 			ZWrite [SF_ZWriteOn]
 
 			CGPROGRAM
@@ -128,6 +134,7 @@ Shader "Starflight/Standard"
 				"PassFlags" = "OnlyDirectional"
 			}
 
+			Cull [SF_CullMode]
 			Blend [SF_BlendSrc] [SF_BlendDst]
 			ZWrite [SF_ZWriteOn]
 

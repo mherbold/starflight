@@ -88,11 +88,8 @@ public class ManeuverButton : ShipButton
 		// are we currently transitioning?
 		if ( m_isTransitioning )
 		{
-			// yes - get the current map fade amount
-			float mapFadeAmount = m_spaceflightController.m_map.GetCurrentFadeAmount();
-
-			// is it completely black yet?
-			if ( mapFadeAmount == 0.0f )
+			// has the map stopped fading yet?
+			if ( !m_spaceflightController.m_map.IsFading() )
 			{
 				// we are not transitioning any more
 				m_isTransitioning = false;
@@ -111,7 +108,7 @@ public class ManeuverButton : ShipButton
 						m_spaceflightController.m_dockingBay.CloseDockingBayDoors();
 
 						// turn off the maneuver function
-						m_spaceflightController.m_buttonController.DeactivateButton();
+						m_spaceflightController.m_buttonController.ClearCurrentButton();
 
 						break;
 
@@ -123,7 +120,7 @@ public class ManeuverButton : ShipButton
 						m_spaceflightController.SwitchLocation( PD_General.Location.InOrbit );
 
 						// turn off the maneuver function
-						m_spaceflightController.m_buttonController.DeactivateButton();
+						m_spaceflightController.m_buttonController.ClearCurrentButton();
 
 						break;
 
@@ -149,8 +146,11 @@ public class ManeuverButton : ShipButton
 			// turn off the engines
 			m_spaceflightController.m_player.TurnOffEngines();
 
-			// turn off the maneuver function
-			m_spaceflightController.m_buttonController.DeactivateButton();
+			// remove the "active" dot from the current button
+			m_spaceflightController.m_buttonController.UpdateButtonSprites();
+
+			// play the deactivate sound
+			SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
 
 			// are we in a star system?
 			if ( playerData.m_general.m_location == PD_General.Location.StarSystem )
