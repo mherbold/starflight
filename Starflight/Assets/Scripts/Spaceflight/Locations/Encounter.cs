@@ -831,7 +831,7 @@ public class Encounter : MonoBehaviour
 						aliensSaidSomething = true;
 
 						// was there a pending question from the player?
-						if ( ( m_pdEncounter.m_lastSubjectFromPlayer >= GD_Comm.Subject.Themselves ) && ( m_pdEncounter.m_lastSubjectFromPlayer <= GD_Comm.Subject.GeneralInfo ) )
+						if ( ( m_pdEncounter.m_lastSubjectFromPlayer >= GD_Comm.Subject.Themselves ) && ( m_pdEncounter.m_lastSubjectFromPlayer <= GD_Comm.Subject.TheAncients ) )
 						{
 							// yes - answer the question
 							AddComm( m_pdEncounter.m_lastSubjectFromPlayer, false );
@@ -1035,7 +1035,7 @@ public class Encounter : MonoBehaviour
 			race = GameData.Race.Human;
 			stance = m_pdEncounter.m_playerStance;
 
-			if ( ( subject >= GD_Comm.Subject.Themselves ) && ( subject <= GD_Comm.Subject.GeneralInfo ) )
+			if ( ( subject >= GD_Comm.Subject.Themselves ) && ( subject <= GD_Comm.Subject.TheAncients ) )
 			{
 				subject = GD_Comm.Subject.Question;
 			}
@@ -1051,15 +1051,14 @@ public class Encounter : MonoBehaviour
 
 		foreach ( var comm in gameData.m_commList )
 		{
-			if ( comm.m_race == race )
+			if ( comm.m_homeworld || comm.m_surrender )
 			{
-				if ( comm.m_subject == subject )
-				{
-					if ( comm.m_stance == stance )
-					{
-						possibleComms.Add( comm );
-					}
-				}
+				continue;
+			}
+
+			if ( ( comm.m_race == race ) && ( comm.m_subject == subject ) && ( comm.m_stance == stance ) )
+			{
+				possibleComms.Add( comm );
 			}
 		}
 
@@ -1068,17 +1067,38 @@ public class Encounter : MonoBehaviour
 		{
 			foreach ( var comm in gameData.m_commList )
 			{
-				if ( comm.m_race == race )
+				if ( comm.m_homeworld || comm.m_surrender )
 				{
-					if ( comm.m_subject == subject )
-					{
-						if ( comm.m_stance == GD_Comm.Stance.Neutral )
-						{
-							possibleComms.Add( comm );
-						}
-					}
+					continue;
+				}
+
+				if ( ( comm.m_race == race ) && ( comm.m_subject == subject ) && ( comm.m_stance == GD_Comm.Stance.Neutral ) )
+				{
+					possibleComms.Add( comm );
 				}
 			}
+		}
+
+		// if the subject is between 7 and 11 the comm is a response to a question, so show them in order
+		if ( ( subject >= GD_Comm.Subject.Themselves ) && ( subject <= GD_Comm.Subject.TheAncients ) )
+		{
+			int lastCommId = playerData.m_general.m_lastCommIds[ (int) race, (int) subject ];
+
+			foreach ( var comm in possibleComms )
+			{
+				if ( comm.m_id > lastCommId )
+				{
+					playerData.m_general.m_lastCommIds[ (int) m_gdEncounter.m_race, (int) subject ] = comm.m_id;
+
+					return comm;
+				}
+			}
+
+			// they have run out of answers to this question so reset the list
+			playerData.m_general.m_lastCommIds[ (int) m_gdEncounter.m_race, (int) subject ] = 0;
+
+			// return an "i dont know" response
+			return FindComm( GD_Comm.Subject.NoMoreInformation, false );
 		}
 
 		// make sure we have something to pick from!
@@ -1087,29 +1107,6 @@ public class Encounter : MonoBehaviour
 			Debug.Log( "Whoops - no suitable comm found! (" + race + ", " + subject + ", " + stance + ")" );
 
 			return new GD_Comm( "ERROR" );
-		}
-
-		// if the subject is between 7 and 11 the comm is a response to a question, so show them in order
-		if ( ( subject >= GD_Comm.Subject.Themselves ) && ( subject <= GD_Comm.Subject.GeneralInfo ) )
-		{
-			for ( int i = 0; i < 2; i++ )
-			{
-				int lastRaceCommId = playerData.m_general.m_lastRaceCommIds[ (int) race, (int) subject ];
-
-				foreach ( var comm in possibleComms )
-				{
-					if ( comm.m_raceCommId > lastRaceCommId )
-					{
-						playerData.m_general.m_lastRaceCommIds[ (int) m_gdEncounter.m_race, (int) subject ] = comm.m_raceCommId;
-
-						return comm;
-					}
-				}
-
-				// if we get here we have run out of responses, so start over (the next loop is guaranteed to succeed)
-				// TODO: make use of subject 5 (no more info)
-				playerData.m_general.m_lastRaceCommIds[ (int) m_gdEncounter.m_race, (int) subject ] = 0;
-			}
 		}
 
 		// have we shown all possible comms for this subject?
@@ -1169,56 +1166,56 @@ public class Encounter : MonoBehaviour
 		// copy the comm text (because we will replace tokens)
 		var text = comm.m_text;
 
+		// replace tokens with values
+		text = text.Replace( "&", "ISS " + playerData.m_playerShip.m_name );
+		text = text.Replace( "*", personnelFile.m_name );
+
+		// check for the slash token (replace with subject)
+		if ( text.Contains( "/" ) )
+		{
+			// process tokens
+			if ( m_pdEncounter.m_lastSubjectFromPlayer != GD_Comm.Subject.GeneralInfo )
+			{
+				string askingAbout = null;
+
+				switch ( m_pdEncounter.m_lastSubjectFromPlayer )
+				{
+					case GD_Comm.Subject.Themselves:
+						askingAbout = "your race";
+						break;
+
+					case GD_Comm.Subject.OtherRaces:
+						askingAbout = "other races";
+						break;
+
+					case GD_Comm.Subject.OldEmpire:
+						askingAbout = "the Old Empire";
+						break;
+
+					case GD_Comm.Subject.TheAncients:
+						askingAbout = "the Ancients";
+						break;
+				}
+
+				text = text.Replace( "(", "" );
+				text = text.Replace( ")", "" );
+				text = text.Replace( "/", askingAbout );
+			}
+			else
+			{
+				var regex = new Regex( @"\(([^\}]+)\)" );
+
+				text = regex.Replace( text, "" );
+			}
+		}
+
 		// is this an outgoing message (from player)?
 		if ( outgoing )
 		{
 			// yes - update timer so alien response doesn't take too long
-			if ( m_pdEncounter.m_conversationTimer > 8.0f )
+			if ( m_pdEncounter.m_conversationTimer > 10.0f )
 			{
-				m_pdEncounter.m_conversationTimer = Random.Range( 4.0f, 8.0f );
-			}
-
-			// replace tokens with values
-			text = text.Replace( "&", "ISS " + playerData.m_playerShip.m_name );
-			text = text.Replace( "*", personnelFile.m_name );
-
-			// was this a question from the player?
-			if ( text.Contains( "/" ) )
-			{
-				// process tokens
-				if ( ( m_pdEncounter.m_lastSubjectFromPlayer >= GD_Comm.Subject.Themselves ) && ( m_pdEncounter.m_lastSubjectFromPlayer < GD_Comm.Subject.GeneralInfo ) )
-				{
-					string askingAbout = null;
-
-					switch ( m_pdEncounter.m_lastSubjectFromPlayer )
-					{
-						case GD_Comm.Subject.Themselves:
-							askingAbout = "your race";
-							break;
-
-						case GD_Comm.Subject.OtherRaces:
-							askingAbout = "other races";
-							break;
-
-						case GD_Comm.Subject.OldEmpire:
-							askingAbout = "the old empire";
-							break;
-
-						case GD_Comm.Subject.TheAncients:
-							askingAbout = "the Ancients";
-							break;
-					}
-
-					text = text.Replace( "(", "" );
-					text = text.Replace( ")", "" );
-					text = text.Replace( "/", askingAbout );
-				}
-				else
-				{
-					var regex = new Regex( @"\(([^\}]+)\)" );
-
-					text = regex.Replace( text, "" );
-				}
+				m_pdEncounter.m_conversationTimer = Random.Range( 5.0f, 10.0f );
 			}
 
 			// finalize text
@@ -1241,7 +1238,7 @@ public class Encounter : MonoBehaviour
 				m_pdEncounter.m_lastSubjectFromPlayer = GD_Comm.Subject.None;
 
 				// remember the question from the aliens
-				m_pdEncounter.m_lastQuestionFromAliens = comm.m_raceCommId;
+				m_pdEncounter.m_lastQuestionFromAliens = comm.m_id;
 			}
 		}
 

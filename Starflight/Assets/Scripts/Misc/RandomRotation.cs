@@ -88,7 +88,7 @@ public class RandomRotation : MonoBehaviour
 		}
 
 		// update the local rotation
-		transform.localRotation = m_currentRotation * m_originalRotation;
+		transform.localRotation = m_originalRotation * m_currentRotation;
 	}
 
 	// pick a random pitch and yaw

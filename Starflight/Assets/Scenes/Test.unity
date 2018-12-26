@@ -225,7 +225,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &24565735
 Transform:
   m_ObjectHideFlags: 0
@@ -367,7 +367,7 @@ MonoBehaviour:
   m_rotationTime: 1
   m_rangeYaw: 10
   m_rangePitch: 10
-  m_rangeRoll: 10
+  m_rangeRoll: 20
   m_jitterScale: 0.1
   m_jitterSpeed: 1
 --- !u!1 &76177178 stripped
@@ -928,6 +928,11 @@ MonoBehaviour:
   m_rangeRoll: 5
   m_jitterScale: 0.1
   m_jitterSpeed: 1
+--- !u!4 &147324517 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400062, guid: e5b49797278804244b86ec15984ffaba,
+    type: 3}
+  m_PrefabInternal: {fileID: 504595410}
 --- !u!1 &150448621 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100078, guid: 1a9d8f7e8dc9b0a4984379a5d5336eb7,
@@ -949,7 +954,7 @@ MonoBehaviour:
   m_rotationTime: 1
   m_rangeYaw: 10
   m_rangePitch: 10
-  m_rangeRoll: 10
+  m_rangeRoll: 20
   m_jitterScale: 0.1
   m_jitterSpeed: 1
 --- !u!1 &161540581 stripped
@@ -973,7 +978,7 @@ MonoBehaviour:
   m_rotationTime: 1
   m_rangeYaw: 10
   m_rangePitch: 10
-  m_rangeRoll: 10
+  m_rangeRoll: 20
   m_jitterScale: 0.1
   m_jitterSpeed: 1
 --- !u!1 &162827804
@@ -1397,7 +1402,7 @@ MonoBehaviour:
   m_rotationTime: 1
   m_rangeYaw: 5
   m_rangePitch: 5
-  m_rangeRoll: 5
+  m_rangeRoll: 10
   m_jitterScale: 0.1
   m_jitterSpeed: 1
 --- !u!1 &223644006
@@ -2203,6 +2208,48 @@ MonoBehaviour:
   - {fileID: 2800000, guid: cc6a8b43db3513f449b130239e4eb160, type: 3}
   - {fileID: 2800000, guid: 903e5e386f923924b883ff55ef6843cd, type: 3}
   - {fileID: 2800000, guid: 87b52fdf8a241ce41982a033fd4153bf, type: 3}
+--- !u!1 &399214110 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100038, guid: e5b49797278804244b86ec15984ffaba,
+    type: 3}
+  m_PrefabInternal: {fileID: 504595410}
+--- !u!1818360608 &399214114
+PositionConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 399214110}
+  m_Enabled: 1
+  m_Weight: 1
+  m_TranslationAtRest: {x: -2.8336544, y: 7.535106, z: 6.800108}
+  m_TranslationOffset: {x: 0, y: 0.000002861023, z: 0.0000014305115}
+  m_AffectTranslationX: 1
+  m_AffectTranslationY: 1
+  m_AffectTranslationZ: 1
+  m_IsContraintActive: 1
+  m_IsLocked: 1
+  m_Sources:
+  - sourceTransform: {fileID: 650849319}
+    weight: 1
+--- !u!114 &399214115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 399214110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1ba4972882b0448a7ec05f36bd3526, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_minimumInterval: 3.3
+  m_maximumInterval: 4.4
+  m_rotationTime: 3.3
+  m_rangeYaw: 5
+  m_rangePitch: 5
+  m_rangeRoll: 0
+  m_jitterScale: 0.1
+  m_jitterSpeed: 1
 --- !u!1 &412803624 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100064, guid: 1a9d8f7e8dc9b0a4984379a5d5336eb7,
@@ -2224,7 +2271,7 @@ MonoBehaviour:
   m_rotationTime: 1
   m_rangeYaw: 10
   m_rangePitch: 10
-  m_rangeRoll: 10
+  m_rangeRoll: 20
   m_jitterScale: 0.1
   m_jitterSpeed: 1
 --- !u!1 &417815414
@@ -2760,6 +2807,26 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 324972c4ee932fd41a7a27338401a9d8, type: 2}
+    - target: {fileID: 400042, guid: e5b49797278804244b86ec15984ffaba, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.12642783
+      objectReference: {fileID: 0}
+    - target: {fileID: 400042, guid: e5b49797278804244b86ec15984ffaba, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.6589807
+      objectReference: {fileID: 0}
+    - target: {fileID: 400042, guid: e5b49797278804244b86ec15984ffaba, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.0398101
+      objectReference: {fileID: 0}
+    - target: {fileID: 400040, guid: e5b49797278804244b86ec15984ffaba, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.4598012
+      objectReference: {fileID: 0}
+    - target: {fileID: 400038, guid: e5b49797278804244b86ec15984ffaba, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.8336554
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e5b49797278804244b86ec15984ffaba, type: 3}
   m_IsPrefabAsset: 0
@@ -2846,7 +2913,7 @@ MonoBehaviour:
   m_maximumInterval: 4
   m_rotationTime: 0.1
   m_rangeYaw: 15
-  m_rangePitch: 3
+  m_rangePitch: 5
   m_rangeRoll: 0
   m_jitterScale: 0.1
   m_jitterSpeed: 1
@@ -2867,6 +2934,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_rotationSpeed: {x: 0, y: 35, z: 0}
+--- !u!1 &572913156 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100024, guid: e5b49797278804244b86ec15984ffaba,
+    type: 3}
+  m_PrefabInternal: {fileID: 504595410}
+--- !u!114 &572913160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 572913156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1ba4972882b0448a7ec05f36bd3526, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_minimumInterval: 2
+  m_maximumInterval: 4
+  m_rotationTime: 0.25
+  m_rangeYaw: 30
+  m_rangePitch: 30
+  m_rangeRoll: 0
+  m_jitterScale: 0.1
+  m_jitterSpeed: 2
 --- !u!1 &580843358 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100102, guid: 368f941246150404ab92c85da9436139,
@@ -3132,6 +3223,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 0b7c772b5e064d746a02130191893d4b,
     type: 3}
   m_PrefabInternal: {fileID: 645769350}
+--- !u!4 &650849319 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400058, guid: e5b49797278804244b86ec15984ffaba,
+    type: 3}
+  m_PrefabInternal: {fileID: 504595410}
 --- !u!1 &666583429
 GameObject:
   m_ObjectHideFlags: 0
@@ -3163,6 +3259,48 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &674377021 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100042, guid: e5b49797278804244b86ec15984ffaba,
+    type: 3}
+  m_PrefabInternal: {fileID: 504595410}
+--- !u!1818360608 &674377025
+PositionConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 674377021}
+  m_Enabled: 1
+  m_Weight: 1
+  m_TranslationAtRest: {x: -1.0398091, y: 7.108715, z: 8.072846}
+  m_TranslationOffset: {x: 0, y: 0.0000023841858, z: 0.000002861023}
+  m_AffectTranslationX: 1
+  m_AffectTranslationY: 1
+  m_AffectTranslationZ: 1
+  m_IsContraintActive: 1
+  m_IsLocked: 1
+  m_Sources:
+  - sourceTransform: {fileID: 147324517}
+    weight: 1
+--- !u!114 &674377026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 674377021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1ba4972882b0448a7ec05f36bd3526, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_minimumInterval: 3.3
+  m_maximumInterval: 4.4
+  m_rotationTime: 3.3
+  m_rangeYaw: 5
+  m_rangePitch: 5
+  m_rangeRoll: 0
+  m_jitterScale: 0.1
+  m_jitterSpeed: 1
 --- !u!1001 &690694872
 Prefab:
   m_ObjectHideFlags: 0
@@ -3660,7 +3798,7 @@ MonoBehaviour:
   m_rotationTime: 1
   m_rangeYaw: 10
   m_rangePitch: 10
-  m_rangeRoll: 10
+  m_rangeRoll: 20
   m_jitterScale: 0.1
   m_jitterSpeed: 1
 --- !u!1 &746413366 stripped
@@ -4484,7 +4622,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &987804156
 Transform:
   m_ObjectHideFlags: 0
@@ -4653,7 +4791,7 @@ MonoBehaviour:
   m_rotationTime: 1
   m_rangeYaw: 5
   m_rangePitch: 5
-  m_rangeRoll: 5
+  m_rangeRoll: 10
   m_jitterScale: 0.1
   m_jitterSpeed: 1
 --- !u!1 &1037667153 stripped
@@ -4933,7 +5071,7 @@ MonoBehaviour:
   m_rotationTime: 1
   m_rangeYaw: 10
   m_rangePitch: 10
-  m_rangeRoll: 10
+  m_rangeRoll: 20
   m_jitterScale: 0.1
   m_jitterSpeed: 1
 --- !u!1 &1091943573 stripped
@@ -5131,11 +5269,16 @@ MonoBehaviour:
   m_minimumInterval: 2
   m_maximumInterval: 4
   m_rotationTime: 1
-  m_rangeYaw: 0
-  m_rangePitch: 15
+  m_rangeYaw: 15
+  m_rangePitch: 0
   m_rangeRoll: 0
   m_jitterScale: 0.1
   m_jitterSpeed: 1
+--- !u!4 &1152881220 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400060, guid: e5b49797278804244b86ec15984ffaba,
+    type: 3}
+  m_PrefabInternal: {fileID: 504595410}
 --- !u!4 &1158663074 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400060, guid: 9e4b30a3885be3d49a42ed4fead14105,
@@ -5285,7 +5428,7 @@ MonoBehaviour:
   m_rotationTime: 1
   m_rangeYaw: 10
   m_rangePitch: 10
-  m_rangeRoll: 10
+  m_rangeRoll: 20
   m_jitterScale: 0.1
   m_jitterSpeed: 1
 --- !u!1 &1190311223 stripped
@@ -6582,8 +6725,8 @@ MonoBehaviour:
   m_minimumInterval: 2
   m_maximumInterval: 4
   m_rotationTime: 1
-  m_rangeYaw: 0
-  m_rangePitch: 15
+  m_rangeYaw: 15
+  m_rangePitch: 0
   m_rangeRoll: 0
   m_jitterScale: 0.1
   m_jitterSpeed: 1
@@ -11306,11 +11449,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_minimumInterval: 10
   m_maximumInterval: 15
-  m_rotationTime: 3
-  m_rangeYaw: 10
-  m_rangePitch: 2
-  m_rangeRoll: 2
-  m_jitterScale: 0.03
+  m_rotationTime: 0.75
+  m_rangeYaw: 5
+  m_rangePitch: 15
+  m_rangeRoll: 1
+  m_jitterScale: 0.02
   m_jitterSpeed: 1
 --- !u!1 &1259844528 stripped
 GameObject:
@@ -13336,6 +13479,30 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 455598, guid: b8b71e54f00e14b12b18968074fb0b80,
     type: 2}
   m_PrefabInternal: {fileID: 1510476978}
+--- !u!1 &1526223506 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100026, guid: e5b49797278804244b86ec15984ffaba,
+    type: 3}
+  m_PrefabInternal: {fileID: 504595410}
+--- !u!114 &1526223510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1526223506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1ba4972882b0448a7ec05f36bd3526, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_minimumInterval: 2
+  m_maximumInterval: 4
+  m_rotationTime: 0.25
+  m_rangeYaw: 30
+  m_rangePitch: 30
+  m_rangeRoll: 0
+  m_jitterScale: 0.1
+  m_jitterSpeed: 2
 --- !u!1 &1529366768
 GameObject:
   m_ObjectHideFlags: 0
@@ -13391,6 +13558,30 @@ MonoBehaviour:
   m_rangeRoll: 1
   m_jitterScale: 0.1
   m_jitterSpeed: 1
+--- !u!1 &1567642746 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100022, guid: e5b49797278804244b86ec15984ffaba,
+    type: 3}
+  m_PrefabInternal: {fileID: 504595410}
+--- !u!114 &1567642750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1567642746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1ba4972882b0448a7ec05f36bd3526, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_minimumInterval: 2
+  m_maximumInterval: 4
+  m_rotationTime: 0.25
+  m_rangeYaw: 30
+  m_rangePitch: 30
+  m_rangeRoll: 0
+  m_jitterScale: 0.1
+  m_jitterSpeed: 2
 --- !u!1 &1611973999
 GameObject:
   m_ObjectHideFlags: 0
@@ -14050,6 +14241,48 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &1740290933 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100040, guid: e5b49797278804244b86ec15984ffaba,
+    type: 3}
+  m_PrefabInternal: {fileID: 504595410}
+--- !u!1818360608 &1740290937
+PositionConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1740290933}
+  m_Enabled: 1
+  m_Weight: 1
+  m_TranslationAtRest: {x: 0.83496463, y: 7.535106, z: 3.4598017}
+  m_TranslationOffset: {x: 0.000002026558, y: 0.000002861023, z: 0}
+  m_AffectTranslationX: 1
+  m_AffectTranslationY: 1
+  m_AffectTranslationZ: 1
+  m_IsContraintActive: 1
+  m_IsLocked: 1
+  m_Sources:
+  - sourceTransform: {fileID: 1152881220}
+    weight: 1
+--- !u!114 &1740290938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1740290933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1ba4972882b0448a7ec05f36bd3526, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_minimumInterval: 3.3
+  m_maximumInterval: 4.4
+  m_rotationTime: 3.3
+  m_rangeYaw: 5
+  m_rangePitch: 5
+  m_rangeRoll: 0
+  m_jitterScale: 0.1
+  m_jitterSpeed: 1
 --- !u!1 &1764654866
 GameObject:
   m_ObjectHideFlags: 0
@@ -14355,6 +14588,54 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1821189212}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1838613838 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100020, guid: e5b49797278804244b86ec15984ffaba,
+    type: 3}
+  m_PrefabInternal: {fileID: 504595410}
+--- !u!114 &1838613842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1838613838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1ba4972882b0448a7ec05f36bd3526, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_minimumInterval: 2
+  m_maximumInterval: 4
+  m_rotationTime: 0.25
+  m_rangeYaw: 30
+  m_rangePitch: 30
+  m_rangeRoll: 0
+  m_jitterScale: 0.1
+  m_jitterSpeed: 2
+--- !u!1 &1845212567 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100028, guid: e5b49797278804244b86ec15984ffaba,
+    type: 3}
+  m_PrefabInternal: {fileID: 504595410}
+--- !u!114 &1845212571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1845212567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1ba4972882b0448a7ec05f36bd3526, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_minimumInterval: 2
+  m_maximumInterval: 4
+  m_rotationTime: 0.25
+  m_rangeYaw: 30
+  m_rangePitch: 30
+  m_rangeRoll: 0
+  m_jitterScale: 0.1
+  m_jitterSpeed: 2
 --- !u!1 &1847992191 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100464, guid: 01d9ca7aaf12e3c46aa3ccc51344f6a5,
@@ -15063,7 +15344,7 @@ MonoBehaviour:
   m_rotationTime: 1
   m_rangeYaw: 10
   m_rangePitch: 10
-  m_rangeRoll: 10
+  m_rangeRoll: 20
   m_jitterScale: 0.1
   m_jitterSpeed: 1
 --- !u!1001 &1948933856
@@ -16409,6 +16690,25 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1957167961}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1969469100 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100034, guid: e5b49797278804244b86ec15984ffaba,
+    type: 3}
+  m_PrefabInternal: {fileID: 504595410}
+--- !u!114 &1969469104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1969469100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07df901e92e3d1241b0a768aa3f324ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_speed: 1
+  m_minScale: -0.03
+  m_maxScale: 0.03
 --- !u!1 &1996430902
 GameObject:
   m_ObjectHideFlags: 0

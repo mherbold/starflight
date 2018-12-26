@@ -65,7 +65,7 @@ public class PD_General
 	public bool m_mechan9Unlocked;
 
 	// keep track of responses to questions on a per race basis
-	public int[,] m_lastRaceCommIds;
+	public int[,] m_lastCommIds;
 
 	// this resets everything to initial game state
 	public void Reset()
@@ -109,7 +109,7 @@ public class PD_General
 		m_currentMaximumSpeed = 10.0f;
 
 		// allocate memory for last comms
-		m_lastRaceCommIds = new int[ 20, 16 ];
+		m_lastCommIds = new int[ 20, 16 ];
 	}
 	
 	// this updates the game time

@@ -146,12 +146,6 @@ public class ManeuverButton : ShipButton
 			// turn off the engines
 			m_spaceflightController.m_player.TurnOffEngines();
 
-			// remove the "active" dot from the current button
-			m_spaceflightController.m_buttonController.UpdateButtonSprites();
-
-			// play the deactivate sound
-			SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
-
 			// are we in a star system?
 			if ( playerData.m_general.m_location == PD_General.Location.StarSystem )
 			{
@@ -188,6 +182,20 @@ public class ManeuverButton : ShipButton
 						m_spaceflightController.m_messages.ChangeText( "<color=white>Initiating orbital maneuver...</color>" );
 					}
 				}
+			}
+
+			if ( m_isTransitioning )
+			{
+				// remove the "active" dot from the current button
+				m_spaceflightController.m_buttonController.UpdateButtonSprites();
+
+				// play the deactivate sound
+				SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
+			}
+			else
+			{
+				// deactivate the current button
+				m_spaceflightController.m_buttonController.DeactivateButton();
 			}
 		}
 		else

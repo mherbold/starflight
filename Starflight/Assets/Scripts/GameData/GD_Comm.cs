@@ -15,9 +15,9 @@ public class GD_Comm
 		WaitingForResponse = 6,
 		Themselves = 7,
 		OtherRaces = 8,
-		OldEmpire = 9,
-		TheAncients = 10,
-		GeneralInfo = 11,
+		GeneralInfo = 9,
+		OldEmpire = 10,
+		TheAncients = 11,
 		Statement = 13,
 		Question = 14,
 		Terminate = 15,
@@ -35,9 +35,10 @@ public class GD_Comm
 
 	public int m_id;
 	public GameData.Race m_race;
-	public int m_raceCommId;
 	public Subject m_subject;
 	public Stance m_stance;
+	public bool m_homeworld;
+	public bool m_surrender;
 	public string m_text;
 
 	public GD_Comm( string text )

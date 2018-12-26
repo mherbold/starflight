@@ -33,9 +33,9 @@ Communications
 		6 = waiting for a response to a question
 		7 = response to question about themselves
 		8 = response to question about other races
-		9 = response to question about the old empire
-		10 = response to question about the ancients
-		11 = response to question about general info
+		9 = response to question about general info
+		10 = response to question about the old empire
+		11 = response to question about the ancients
 		13 = statement
 		14 = question
 		15 = terminating communications
