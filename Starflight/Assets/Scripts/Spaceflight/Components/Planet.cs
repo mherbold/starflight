@@ -126,9 +126,11 @@ public class Planet : MonoBehaviour
 
 		// scale the planet based on its mass
 		m_planetModel.transform.localScale = m_planet.GetScale();
+		m_planetClouds.transform.localScale = m_planetModel.transform.localScale * 1.01f;
 
 		// move the planet to be just below the zero plane (and do the same to the clouds)
-		m_planetClouds.transform.localPosition = m_planetModel.transform.localPosition = new Vector3( 0.0f, -16.0f - m_planetModel.transform.localScale.y, 0.0f );
+		m_planetModel.transform.localPosition = new Vector3( 0.0f, -16.0f - m_planetModel.transform.localScale.y, 0.0f );
+		m_planetClouds.transform.localPosition = m_planetModel.transform.localPosition;
 
 		// set up the clouds and atmosphere
 		SetupClouds( m_planetClouds, m_planetAtmosphere );

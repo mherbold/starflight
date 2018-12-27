@@ -644,16 +644,6 @@ public class Encounter : MonoBehaviour
 		// get to the player data
 		var playerData = DataController.m_instance.m_playerData;
 
-		// do the default encounter stuff
-		if ( DefaultEncounterUpdate() )
-		{
-			// mechans more likely to ask questions as time goes by to try and figure out who the player is
-			if ( m_pdEncounter.m_alienStance == GD_Comm.Stance.Neutral )
-			{
-				m_pdEncounter.m_questionLikelihood += 25;
-			}
-		}
-
 		// did we warn the player yet?
 		if ( !m_pdEncounter.m_mechan9NoHumansWarningDone )
 		{
@@ -726,9 +716,16 @@ public class Encounter : MonoBehaviour
 					// no more questions from the mechans
 					m_pdEncounter.m_questionLikelihood = 0;
 				}
+			}
+		}
 
-				// forget the question
-				m_pdEncounter.m_lastQuestionFromAliens = 0;
+		// do the default encounter stuff
+		if ( DefaultEncounterUpdate() )
+		{
+			// mechans more likely to ask questions as time goes by to try and figure out who the player is
+			if ( m_pdEncounter.m_alienStance == GD_Comm.Stance.Neutral )
+			{
+				m_pdEncounter.m_questionLikelihood += 25;
 			}
 		}
 	}
@@ -892,6 +889,17 @@ public class Encounter : MonoBehaviour
 						AddComm( GD_Comm.Subject.Terminate, false );
 					}
 				}
+			}
+		}
+
+		// did the aliens ask a question?
+		if ( m_pdEncounter.m_lastQuestionFromAliens != 0 )
+		{
+			// yes - did the player answer?
+			if ( m_pdEncounter.m_lastSubjectFromPlayer != GD_Comm.Subject.None )
+			{
+				// yes - forget the question (it should already have been handled before calling this default encounter update function)
+				m_pdEncounter.m_lastQuestionFromAliens = 0;
 			}
 		}
 
@@ -1154,6 +1162,9 @@ public class Encounter : MonoBehaviour
 	// adds some text to the conversation
 	public void AddComm( GD_Comm.Subject subject, bool outgoing )
 	{
+		// get to the game data
+		var gameData = DataController.m_instance.m_gameData;
+
 		// get to the player data
 		var playerData = DataController.m_instance.m_playerData;
 
@@ -1213,6 +1224,8 @@ public class Encounter : MonoBehaviour
 		if ( outgoing )
 		{
 			// yes - update timer so alien response doesn't take too long
+			m_pdEncounter.m_conversationTimer += 5.0f;
+
 			if ( m_pdEncounter.m_conversationTimer > 10.0f )
 			{
 				m_pdEncounter.m_conversationTimer = Random.Range( 5.0f, 10.0f );
@@ -1223,15 +1236,155 @@ public class Encounter : MonoBehaviour
 		}
 		else
 		{
-			// TODO: garble comm based on comm officer skill
+			// get the comm text
+			var commText = comm.m_text;
+
+			// get possible garble words for this race
+			var possibleGarbles = new List<GD_Garble>();
+
+			foreach ( var garble in gameData.m_garbleList )
+			{
+				if ( garble.m_race == m_gdEncounter.m_race )
+				{
+					possibleGarbles.Add( garble );
+				}
+			}
+
+			// did we find any?
+			if ( possibleGarbles.Count > 0 )
+			{
+				// yes - get the personnel file of the comm officer
+				personnelFile = playerData.m_crewAssignment.GetPersonnelFile( PD_CrewAssignment.Role.CommunicationsOfficer );
+
+				// compute the training level (in 0 to 1 range)
+				var trainingLevel = personnelFile.m_communications / 250.0f;
+
+				// create and seed the noise generator
+				var fastNoise = new FastNoise( comm.m_id );
+
+				fastNoise.SetNoiseType( FastNoise.NoiseType.Value );
+				fastNoise.SetFrequency( 1.0f );
+
+				// split the text into words
+				var splitCommText = commText.Split();
+
+				// start building the new comm text
+				var garbledCommText = new List<string>();
+
+				// go through each word
+				var commWordIndex = 0;
+				var lastWordHadSpecialCharacter = false;
+				var lastWordWasGarbled = false;
+
+				foreach ( var commWord in splitCommText )
+				{
+					commWordIndex++;
+
+					// get the difficulty level of this word
+					var difficulty = fastNoise.GetNoise( commWordIndex, 0 ) * 0.45f + 0.5f;
+
+					// is this word too hard for our poor comm officer?
+					if ( difficulty > trainingLevel )
+					{
+						// yes - pick number of syllables (based on race)
+						int minSyllables = 1;
+						int maxSyllables = 1;
+
+						switch ( m_gdEncounter.m_race )
+						{
+							case GameData.Race.Gazurtoid:
+								minSyllables = 5;
+								maxSyllables = 10;
+								break;
+
+							case GameData.Race.Mysterion:
+								minSyllables = 5;
+								maxSyllables = 5;
+								break;
+
+							case GameData.Race.Spemin:
+								minSyllables = 1;
+								maxSyllables = 3;
+								break;
+
+							case GameData.Race.Velox:
+								minSyllables = 1;
+								maxSyllables = 5;
+								break;
+
+							case GameData.Race.Elowan:
+								minSyllables = 1;
+								maxSyllables = 4;
+								break;
+
+							case GameData.Race.Thrynn:
+								minSyllables = 1;
+								maxSyllables = 5;
+								break;
+						}
+
+						var syllables = minSyllables + Mathf.FloorToInt( 0.25f + ( ( maxSyllables + 0.5f ) * ( fastNoise.GetNoise( 0, commWordIndex ) * 0.5f + 0.5f ) ) );
+
+						// start building the garble word
+						var garbledWord = "";
+
+						for ( var syllableIndex = 0; syllableIndex < syllables; syllableIndex++ )
+						{
+							var garbleIndex = Mathf.FloorToInt( Mathf.Lerp( 0, possibleGarbles.Count, fastNoise.GetNoise( commWordIndex, syllableIndex ) * 0.5f + 0.5f ) );
+
+							garbledWord += possibleGarbles[ garbleIndex ].m_text;
+						}
+
+						// fix case of word
+						garbledWord = garbledWord.ToLower();
+
+						if ( ( garbledCommText.Count == 0 ) || lastWordHadSpecialCharacter )
+						{
+							garbledWord = garbledWord[ 0 ].ToString().ToUpper() + garbledWord.Substring( 1 );
+						}
+
+						// add on the garbled word
+						garbledCommText.Add( garbledWord );
+
+						// this word does not have a special character
+						lastWordHadSpecialCharacter = false;
+
+						// this is a garbled word
+						lastWordWasGarbled = true;
+					}
+					else
+					{
+						// no - just add on the word
+						garbledCommText.Add( commWord );
+
+						// check if this word has a special character at the end
+						if ( !System.Char.IsLetter( commWord[ commWord.Length - 1 ] ) )
+						{
+							lastWordHadSpecialCharacter = true;
+						}
+
+						// this isn't a garbled word
+						lastWordWasGarbled = false;
+					}
+				}
+
+				// put everything back together
+				commText = System.String.Join( " ", garbledCommText );
+
+				// add a period (or a question mark) if the last word was garbled
+				if ( lastWordWasGarbled )
+				{
+					commText += ( subject == GD_Comm.Subject.Question ) ? "?" : ".";
+				}
+			}
 
 			// finalize text
-			text = "<color=white>Receiving:</color>\n<color=#0a0>" + comm.m_text + "</color>";
+			text = "<color=white>Receiving:</color>\n<color=#0a0>" + commText + "</color>";
 
 			// was this a question?
 			if ( subject == GD_Comm.Subject.Question )
 			{
-				// change the button set
+				// yes - change the button set
 				m_spaceflightController.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.AnswerQuestion );
 
 				// forget the last subject from the player

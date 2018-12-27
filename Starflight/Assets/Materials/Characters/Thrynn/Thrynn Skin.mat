@@ -84,6 +84,7 @@ Material:
     - SF_AlphaTestValue: 0
     - SF_BlendDst: 0
     - SF_BlendSrc: 1
+    - SF_CullMode: 2
     - SF_DetailNormalMapStrength: 1
     - SF_EmissiveProjectionOn: 0
     - SF_ForwardShadowsOn: 1
@@ -91,7 +92,7 @@ Material:
     - SF_OcclusionPower: 1
     - SF_OrthonormalizeOn: 0
     - SF_RenderQueueOffset: 0
-    - SF_Smoothness: 0.35
+    - SF_Smoothness: 0
     - SF_ZWriteOn: 1
     - _BumpScale: 1
     - _Cutoff: 0.5

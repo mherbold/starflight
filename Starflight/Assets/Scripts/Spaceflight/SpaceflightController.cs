@@ -367,6 +367,8 @@ public class SpaceflightController : MonoBehaviour
 		}
 	}
 
+#if UNITY_EDITOR
+
 	// draw gizmos to help debug the game
 	void OnDrawGizmos()
 	{
@@ -449,4 +451,6 @@ public class SpaceflightController : MonoBehaviour
 			}
 		}
 	}
+
+#endif // UNITY_EDITOR
 }

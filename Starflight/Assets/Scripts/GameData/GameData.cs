@@ -53,6 +53,7 @@ public class GameData
 	public GD_Encounter[] m_encounterList;
 	public GD_Vessel[] m_vesselList;
 	public GD_Comm[] m_commList;
+	public GD_Garble[] m_garbleList;
 
 	public void Initialize()
 	{

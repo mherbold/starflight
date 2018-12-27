@@ -1,5 +1,6 @@
 ﻿
 using UnityEngine;
+using MorePPEffects;
 
 public class CommScreen : MonoBehaviour
 {
@@ -17,14 +18,19 @@ public class CommScreen : MonoBehaviour
 	public float m_randomHeadacheDuration = 0.5f;
 
 	// camera fx components we will be controlling
-	MorePPEffects.Waves m_waves;
-	MorePPEffects.Headache m_headache;
+	ColoredRays m_coloredRays;
+	Waves m_waves;
+	Headache m_headache;
+	LowResolution m_lowResolution;
 
 	// our fade in timer
 	float m_timer;
 
 	// are we fading in?
 	bool m_fadingIn;
+
+	// the current training level of the comms officer
+	float m_trainingLevel;
 
 	// our random waves and headache timers
 	float m_waveTimer;
@@ -37,12 +43,11 @@ public class CommScreen : MonoBehaviour
 	// unity awake
 	void Awake()
 	{
-		// grab all the wave components (there could be more than one, we just want the last one)
-		var waveComponents = GetComponents<MorePPEffects.Waves>();
-
-		// grab the camera fx components
-		m_waves = waveComponents[ waveComponents.Length - 1 ];
-		m_headache = GetComponent<MorePPEffects.Headache>();
+		// create the components
+		m_waves = gameObject.AddComponent<Waves>();
+		m_headache = gameObject.AddComponent<Headache>();
+		m_coloredRays = gameObject.AddComponent<ColoredRays>();
+		m_lowResolution = gameObject.AddComponent<LowResolution>();
 	}
 
 	// unity update
@@ -58,8 +63,8 @@ public class CommScreen : MonoBehaviour
 			var strength = Mathf.Clamp( m_timer / m_duration, 0.0f, 1.0f );
 
 			// update strength of effects
-			m_waves.strengthX = Mathf.Lerp( 3.0f, 0.0f, strength );
-			m_headache.strength = Mathf.Lerp( 10.0f, 0.0f, strength );
+			m_waves.strengthX = Mathf.SmoothStep( 3.0f, 0.0f, strength );
+			m_headache.strength = Mathf.SmoothStep( 10.0f, 0.0f, strength );
 
 			// are we done?
 			if ( m_timer >= m_duration )
@@ -68,8 +73,8 @@ public class CommScreen : MonoBehaviour
 				m_fadingIn = false;
 
 				// initialize random wave and headache timers
-				m_waveTimer = Random.Range( 3.0f, 30.0f );
-				m_headacheTimer = Random.Range( 3.0f, 30.0f );
+				m_waveTimer = m_trainingLevel * Random.Range( 3.0f, 30.0f );
+				m_headacheTimer = m_trainingLevel * Random.Range( 3.0f, 30.0f );
 			}
 		}
 		else
@@ -80,13 +85,13 @@ public class CommScreen : MonoBehaviour
 
 				var strength = 1.0f - Mathf.Abs( 1.0f - Mathf.Clamp( m_waveTimer * 2.0f / m_randomWaveDuration, 0.0f, 2.0f ) );
 
-				m_waves.strengthX = Mathf.Lerp( 0.0f, 3.0f, strength );
+				m_waves.strengthX = Mathf.SmoothStep( 0.0f, 3.0f, strength );
 
 				if ( m_waveTimer >= m_randomWaveDuration )
 				{
 					m_doingWaves = false;
 
-					m_waveTimer = Random.Range( 3.0f, 30.0f );
+					m_waveTimer = m_trainingLevel * Random.Range( 3.0f, 30.0f );
 				}
 			}
 			else
@@ -98,7 +103,7 @@ public class CommScreen : MonoBehaviour
 					m_doingWaves = true;
 					m_waveTimer = 0.0f;
 
-					SoundController.m_instance.PlaySound( SoundController.Sound.WarbleShort );
+					PlaySound( SoundController.Sound.WarbleShort );
 				}
 			}
 
@@ -108,13 +113,13 @@ public class CommScreen : MonoBehaviour
 
 				var strength = 1.0f - Mathf.Abs( 1.0f - Mathf.Clamp( m_headacheTimer * 2.0f / m_randomHeadacheDuration, 0.0f, 2.0f ) );
 
-				m_headache.strength = Mathf.Lerp( 0.0f, 3.0f, strength );
+				m_headache.strength = Mathf.SmoothStep( 0.0f, 10.0f, strength );
 
 				if ( m_headacheTimer >= m_randomHeadacheDuration )
 				{
 					m_doingHeadache = false;
 
-					m_headacheTimer = Random.Range( 3.0f, 30.0f );
+					m_headacheTimer = m_trainingLevel * Random.Range( 3.0f, 30.0f );
 				}
 			}
 			else
@@ -126,7 +131,7 @@ public class CommScreen : MonoBehaviour
 					m_doingHeadache = true;
 					m_headacheTimer = 0.0f;
 
-					SoundController.m_instance.PlaySound( SoundController.Sound.StaticShort );
+					PlaySound( SoundController.Sound.StaticShort );
 				}
 			}
 		}
@@ -141,11 +146,63 @@ public class CommScreen : MonoBehaviour
 		// we are fading in
 		m_fadingIn = true;
 
-		// fade in the viewer
-		m_spaceflightController.m_map.StartFade( 1.0f, m_fadeInDuration );
+		// do we have a spaceflight controller (we could be in the test level where there isn't one)
+		if ( m_spaceflightController != null )
+		{
+			// yes - fade in the viewer
+			m_spaceflightController.m_map.StartFade( 1.0f, m_fadeInDuration );
+		}
 
 		// play some sounds
-		SoundController.m_instance.PlaySound( SoundController.Sound.WarbleLong );
-		SoundController.m_instance.PlaySound( SoundController.Sound.StaticLong );
+		PlaySound( SoundController.Sound.WarbleLong );
+		PlaySound( SoundController.Sound.StaticLong );
+
+		// the training level for the test scene
+		m_trainingLevel = 0.5f;
+
+		// do we have a player (are we not in test scene?)
+		if ( DataController.m_instance != null )
+		{
+			// get to the player data
+			var playerData = DataController.m_instance.m_playerData;
+
+			// configure the video effects based on the training level of the comm officer
+			var personnelFile = playerData.m_crewAssignment.GetPersonnelFile( PD_CrewAssignment.Role.CommunicationsOfficer );
+
+			// convert the communications training level to a 1 to 0 range
+			m_trainingLevel = personnelFile.m_communications / 250.0f;
+		}
+
+		// re-range tranining level
+		m_trainingLevel = Mathf.Lerp( 0.1f, 1.0f, m_trainingLevel );
+
+		// colored rays
+		m_coloredRays.strength = 0.5f + 4.5f * ( 1.0f - m_trainingLevel );
+
+		// waves
+		m_waves.strengthY = 0.0f;
+		m_waves.frequencyX = 100.0f;
+
+		// low resolution
+		if ( m_trainingLevel < 0.75f )
+		{
+			m_lowResolution.enabled = true;
+
+			m_lowResolution.resolutionX = Mathf.FloorToInt( 512.0f * m_trainingLevel );
+			m_lowResolution.resolutionY = m_lowResolution.resolutionX;
+		}
+		else
+		{
+			m_lowResolution.enabled = false;
+		}
+	}
+
+	// play a sound if we have a sound controller
+	void PlaySound( SoundController.Sound sound )
+	{
+		if ( SoundController.m_instance != null )
+		{
+			SoundController.m_instance.PlaySound( sound );
+		}
 	}
 }
