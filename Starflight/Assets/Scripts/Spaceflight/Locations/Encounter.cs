@@ -681,10 +681,10 @@ public class Encounter : MonoBehaviour
 
 				switch ( m_pdEncounter.m_lastQuestionFromAliens )
 				{
-					case 5:
-					case 6:
-					case 7:
-					case 9:
+					case 101:
+					case 102:
+					case 103:
+					case 105:
 						correctAnswer = GD_Comm.Subject.No;
 						break;
 				}
