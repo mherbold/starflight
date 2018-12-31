@@ -54,6 +54,11 @@ public class Encounter : MonoBehaviour
 	// unity start
 	void Start()
 	{
+		// turn off all of the alien ship model templates
+		foreach ( var alienShipModelTemplate in m_alienShipModelTemplate )
+		{
+			alienShipModelTemplate.SetActive( false );
+		}
 	}
 
 	// unity update
@@ -497,7 +502,9 @@ public class Encounter : MonoBehaviour
 				// clone the model
 				var alienShipModelTemplate = m_alienShipModelTemplate[ alienShip.m_vesselId ];
 
-				Instantiate( alienShipModelTemplate, alienShipModelTemplate.transform.localPosition, alienShipModelTemplate.transform.localRotation, alienShipModel.transform );
+				var clonedAlienShipModel = Instantiate( alienShipModelTemplate, alienShipModelTemplate.transform.localPosition, alienShipModelTemplate.transform.localRotation, alienShipModel.transform );
+
+				clonedAlienShipModel.SetActive( true );
 
 				// show the model
 				alienShipModel.SetActive( true );
@@ -1426,8 +1433,8 @@ public class Encounter : MonoBehaviour
 			}
 		}
 
-		// did communications terminate?
-		if ( comm.m_subject == GD_Comm.Subject.Terminate )
+		// did we want the communications to terminate?
+		if ( subject == GD_Comm.Subject.Terminate )
 		{
 			// yes - get out of video chat
 			Disconnect();

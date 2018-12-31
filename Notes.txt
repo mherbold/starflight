@@ -42,12 +42,6 @@ Communications
 		
 	stance
 	
-		0 = any
-		1 = neutral
-		2 = friendly
-		3 = hostile
-		4 = obsequious
-		
 		0 = neutral
 		1 = friendly
 		2 = hostile

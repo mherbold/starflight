@@ -377,12 +377,70 @@ public class SpaceflightController : MonoBehaviour
 			return;
 		}
 
+		// get to the game data
+		var gameData = DataController.m_instance.m_gameData;
+
 		// get to the player data
 		var playerData = DataController.m_instance.m_playerData;
 
 		// get the current player location
 		var location = playerData.m_general.m_location;
 
+		// if we are in hyperspace draw the map grid
+		if ( location == PD_General.Location.Hyperspace )
+		{
+			Gizmos.color = Color.green;
+
+			for ( var x = 0; x < 250; x += 10 )
+			{
+				var start = Tools.GameToWorldCoordinates( new Vector3( x, 0.0f, 0.0f ) );
+				var end = Tools.GameToWorldCoordinates( new Vector3( x, 0.0f, 250.0f ) );
+
+				Gizmos.DrawLine( start, end );
+			}
+
+			for ( var z = 0; z < 250; z += 10 )
+			{
+				var start = Tools.GameToWorldCoordinates( new Vector3( 0.0f, 0.0f, z ) );
+				var end = Tools.GameToWorldCoordinates( new Vector3( 250.0f, 0.0f, z ) );
+
+				Gizmos.DrawLine( start, end );
+			}
+		}
+
+		// if we are in hyperspace draw the flux paths
+		if ( location == PD_General.Location.Hyperspace )
+		{
+			Gizmos.color = Color.cyan;
+
+			foreach ( var flux in gameData.m_fluxList )
+			{
+				Gizmos.DrawLine( flux.GetFrom(), flux.GetTo() );
+			}
+		}
+
+		// if we are in hyperspace draw the coordinates around the cursor point
+		if ( location == PD_General.Location.Hyperspace )
+		{
+			var ray = UnityEditor.HandleUtility.GUIPointToWorldRay( Event.current.mousePosition );
+
+			var plane = new Plane( Vector3.up, 0.0f );
+
+			float enter;
+
+			if ( plane.Raycast( ray, out enter ) )
+			{
+				var worldCoordinates = ray.origin + ray.direction * enter;
+
+				var gameCoordinates = Tools.WorldToGameCoordinates( worldCoordinates );
+
+				UnityEditor.Handles.color = Color.blue;
+
+				UnityEditor.Handles.Label( worldCoordinates + Vector3.forward * 64.0f + Vector3.right * 64.0f, Mathf.RoundToInt( gameCoordinates.x ) + "," + Mathf.RoundToInt( gameCoordinates.z ) );
+			}
+		}
+
+		// if we are in either hyperspace or a star system then draw the alien encounters
 		if ( ( location == PD_General.Location.StarSystem ) || ( location == PD_General.Location.Hyperspace ) )
 		{
 			// draw the encounter radius
@@ -404,50 +462,34 @@ public class SpaceflightController : MonoBehaviour
 			// draw the positions on each encounter
 			UnityEditor.Handles.color = Color.red;
 
-			foreach ( var encounter in playerData.m_encounterList )
+			foreach ( var pdEncounter in playerData.m_encounterList )
 			{
-				var encounterLocation = encounter.GetLocation();
+				var encounterLocation = pdEncounter.GetLocation();
 
-				if ( ( encounterLocation == location ) && ( location == PD_General.Location.Hyperspace ) || ( encounter.GetStarId() == playerData.m_general.m_currentStarId ) )
+				if ( ( encounterLocation == location ) && ( location == PD_General.Location.Hyperspace ) || ( pdEncounter.GetStarId() == playerData.m_general.m_currentStarId ) )
 				{
+					// get access to the encounter
+					var gdEncounter = gameData.m_encounterList[ pdEncounter.m_encounterId ];
+
 					// draw alien position
 					UnityEditor.Handles.color = Color.red;
-					UnityEditor.Handles.DrawWireDisc( encounter.m_currentCoordinates, Vector3.up, 16.0f );
+					UnityEditor.Handles.DrawWireDisc( pdEncounter.m_currentCoordinates, Vector3.up, 16.0f );
+
+					// print alien race
+					UnityEditor.Handles.Label( pdEncounter.m_currentCoordinates + Vector3.up * 16.0f, gdEncounter.m_race.ToString() );
 
 					// draw the alien radar range
 					UnityEditor.Handles.color = Color.yellow;
 
 					if ( location == PD_General.Location.Hyperspace )
 					{
-						UnityEditor.Handles.DrawWireDisc( encounter.m_currentCoordinates, Vector3.up, m_alienHyperspaceRadarDistance );
+						UnityEditor.Handles.DrawWireDisc( pdEncounter.m_currentCoordinates, Vector3.up, m_alienHyperspaceRadarDistance );
 					}
 					else
 					{
-						UnityEditor.Handles.DrawWireDisc( encounter.m_currentCoordinates, Vector3.up, m_alienStarSystemRadarDistance );
+						UnityEditor.Handles.DrawWireDisc( pdEncounter.m_currentCoordinates, Vector3.up, m_alienStarSystemRadarDistance );
 					}
 				}
-			}
-		}
-
-		// if we are in hyperspace draw the map grid
-		if ( location == PD_General.Location.Hyperspace )
-		{
-			Gizmos.color = Color.green;
-
-			for ( var x = 0; x < 250; x += 10 )
-			{
-				var start = Tools.GameToWorldCoordinates( new Vector3( x, 0.0f, 0.0f ) );
-				var end = Tools.GameToWorldCoordinates( new Vector3( x, 0.0f, 250.0f ) );
-
-				Gizmos.DrawLine( start, end );
-			}
-
-			for ( var z = 0; z < 250; z += 10 )
-			{
-				var start = Tools.GameToWorldCoordinates( new Vector3( 0.0f, 0.0f, z ) );
-				var end = Tools.GameToWorldCoordinates( new Vector3( 250.0f, 0.0f, z ) );
-
-				Gizmos.DrawLine( start, end );
 			}
 		}
 	}
