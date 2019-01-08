@@ -1,15 +1,15 @@
 ﻿
-// From https://github.com/keijiro/PerlinNoise/blob/master/Assets/Perlin.cs
+// Modified from https://github.com/keijiro/PerlinNoise/blob/master/Assets/Perlin.cs
 
 using UnityEngine;
 
-public class Noise
+public class SeamlessNoise
 {
-	const int c_permSize = 32768;
+	const int c_permSize = 1 << 15;
 
 	readonly int[,] m_perm;
 	
-	public Noise( int seed, int basePowerOfTwo, int octaves )
+	public SeamlessNoise( int seed, int basePowerOfTwo, int octaves )
 	{
 		m_perm = new int[ octaves, c_permSize + 1 ];
 
@@ -53,21 +53,32 @@ public class Noise
 			powerOfTwo = c_permSize;
 		}
 
-		int mask = powerOfTwo - 1;
+		var iX = Mathf.FloorToInt( x );
+		var iY = Mathf.FloorToInt( y );
 
-		var X = Mathf.FloorToInt( x ) & mask;
-		var Y = Mathf.FloorToInt( y ) & mask;
+		var fX = x - iX;
+		var fY = y - iY;
 
-		x -= Mathf.Floor( x );
-		y -= Mathf.Floor( y );
+		var u = Fade( fX );
+		var v = Fade( fY );
 
-		var u = Fade( x );
-		var v = Fade( y );
+		var mask = powerOfTwo - 1;
 
-		var A = ( m_perm[ octave, X + 0 ] + Y ) & mask;
-		var B = ( m_perm[ octave, X + 1 ] + Y ) & mask;
+		iX &= mask;
+		iY &= mask;
 
-		return Lerp( v, Lerp( u, Grad( m_perm[ octave, A ], x, y ), Grad( m_perm[ octave, B ], x - 1, y ) ), Lerp( u, Grad( m_perm[ octave, A + 1 ], x, y - 1 ), Grad( m_perm[ octave, B + 1 ], x - 1, y - 1 ) ) );
+		var A = ( m_perm[ octave, iX + 0 ] + iY ) & mask;
+		var B = ( m_perm[ octave, iX + 1 ] + iY ) & mask;
+
+		var g0 = Grad( fX,     fY,     m_perm[ octave, A ] );
+		var g1 = Grad( fX - 1, fY,     m_perm[ octave, B ] );
+		var g2 = Grad( fX,     fY - 1, m_perm[ octave, A + 1 ] );
+		var g3 = Grad( fX - 1, fY - 1, m_perm[ octave, B + 1 ] );
+
+		var u01 = Lerp( g0, g1, u );
+		var u23 = Lerp( g2, g3, u );
+
+		return Lerp( u01, u23, v );
 	}
 
 	float Fade( float t )
@@ -75,12 +86,12 @@ public class Noise
 		return t * t * t * ( t * ( t * 6 - 15 ) + 10 );
 	}
 
-	float Lerp( float t, float a, float b )
+	float Lerp( float a, float b, float t )
 	{
 		return a + t * ( b - a );
 	}
 
-	float Grad( int hash, float x, float y )
+	float Grad( float x, float y, int hash )
 	{
 		return ( ( hash & 1 ) == 0 ? x : -x ) + ( ( hash & 2 ) == 0 ? y : -y );
 	}

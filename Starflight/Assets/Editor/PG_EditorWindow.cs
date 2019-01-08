@@ -4,37 +4,33 @@ using UnityEditor;
 
 using System.IO;
 using System.IO.Compression;
-using System.Diagnostics;
+using System.Collections.Generic;
 
 public class PG_EditorWindow : EditorWindow
 {
 	// version number
-	const int c_versionNumber = 1;
+	const int c_versionNumber = 3;
+
+	// number of planets
+	const int c_numPlanets = 811;
 
 	// other settings
-	string m_planetDataFileName;
+	string m_gameDataFileName;
+	string m_planetImagesPath;
 	string m_resourcesPath;
 	bool m_debugMode;
+	int m_debugPlanetID;
 
 	// non-gas giant planet settings
 	int m_textureMapWidth;
 	int m_textureMapHeight;
 	int m_numPolePaddingRows;
-	int m_highBlurRadius;
-	int m_lowBlurRadius;
-
-	// base mountain and hill settings
-	int m_octaves;
 
 	// mountain settings
+	int m_octaves;
 	int m_mountainScale;
 	float m_mountainPersistence;
 	float m_mountainGain;
-
-	// hill settings
-	int m_hillScale;
-	float m_hillPersistence;
-	float m_hillGain;
 
 	// hydraulic erosion settings
 	bool m_doHydraulicErosionPass;
@@ -51,13 +47,13 @@ public class PG_EditorWindow : EditorWindow
 	int m_finalBlurRadius;
 
 	// generated parameters
-	PG_PlanetData m_pgPlanetData;
 	GameObject m_gameObject;
 	MeshRenderer m_meshRenderer;
 	int m_textureMapScaleX;
 	int m_textureMapScaleY;
 	int m_mountainScalePowerOfTwo;
-	int m_hillScalePowerOfTwo;
+	Color m_topPaddingColor;
+	Color m_bottomPaddingColor;
 
 #if DEBUG
 	[MenuItem( "Starflight Remake/Planet Generator (Debug Build)" )]
@@ -73,32 +69,25 @@ public class PG_EditorWindow : EditorWindow
 	void OnEnable()
 	{
 		// other settings
-		m_planetDataFileName = EditorPrefs.GetString( "PlanetGenerator_PlanetDataFileName" );
+		m_gameDataFileName = EditorPrefs.GetString( "PlanetGenerator_GameDataFileName" );
+		m_planetImagesPath = EditorPrefs.GetString( "PlanetGenerator_PlanetImagesPath" );
 		m_resourcesPath = EditorPrefs.GetString( "PlanetGenerator_ResourcesPath" );
 		m_debugMode = EditorPrefs.GetBool( "PlanetGenerator_DebugMode" );
+		m_debugPlanetID = EditorPrefs.GetInt( "PlanetGenerator_DebugPlanetID" );
 
 		// non-gas giant planet settings
 		m_numPolePaddingRows = EditorPrefs.GetInt( "PlanetGenerator_NumPolePaddingRows", 3 );
-		m_highBlurRadius = EditorPrefs.GetInt( "PlanetGenerator_HighBlurRadius", 45 );
-		m_lowBlurRadius = EditorPrefs.GetInt( "PlanetGenerator_LowBlurRadius", 11 );
 
 		int textureMapHeight = EditorPrefs.GetInt( "PlanetGenerator_TextureMapHeight", 1024 );
 
 		m_textureMapWidth = textureMapHeight * 2;
 		m_textureMapHeight = textureMapHeight;
 
-		// base mountain and hill settings
-		m_octaves = EditorPrefs.GetInt( "PlanetGenerator_Octaves", 10 );
-
 		// mountain settings
+		m_octaves = EditorPrefs.GetInt( "PlanetGenerator_Octaves", 10 );
 		m_mountainScale = EditorPrefs.GetInt( "PlanetGenerator_MountainScale", 4 );
 		m_mountainPersistence = EditorPrefs.GetFloat( "PlanetGenerator_MountainPersistence", 0.5f );
 		m_mountainGain = EditorPrefs.GetFloat( "PlanetGenerator_MountainGain", 0.075f );
-
-		// hill settings
-		m_hillScale = EditorPrefs.GetInt( "PlanetGenerator_HillScale", 4 );
-		m_hillPersistence = EditorPrefs.GetFloat( "PlanetGenerator_HillPersistence", 0.9f );
-		m_hillGain = EditorPrefs.GetFloat( "PlanetGenerator_HillGain", 0.05f );
 
 		// hydraulic erosion settings
 		m_doHydraulicErosionPass = EditorPrefs.GetBool( "PlanetGenerator_DoHydraulicErosionPass", true );
@@ -118,28 +107,21 @@ public class PG_EditorWindow : EditorWindow
 	void OnDisable()
 	{
 		// other settings
-		EditorPrefs.SetString( "PlanetGenerator_PlanetDataFileName", m_planetDataFileName );
+		EditorPrefs.SetString( "PlanetGenerator_GameDataFileName", m_gameDataFileName );
+		EditorPrefs.SetString( "PlanetGenerator_PlanetImagesPath", m_planetImagesPath );
 		EditorPrefs.SetString( "PlanetGenerator_ResourcesPath", m_resourcesPath );
 		EditorPrefs.SetBool( "PlanetGenerator_DebugMode", m_debugMode );
+		EditorPrefs.SetInt( "PlanetGenerator_DebugPlanetID", m_debugPlanetID );
 
 		// non-gas giant planet settings
 		EditorPrefs.SetInt( "PlanetGenerator_TextureMapHeight", m_textureMapHeight );
 		EditorPrefs.SetInt( "PlanetGenerator_NumPolePaddingRows", m_numPolePaddingRows );
-		EditorPrefs.SetInt( "PlanetGenerator_HighBlurRadius", m_highBlurRadius );
-		EditorPrefs.SetInt( "PlanetGenerator_LowBlurRadius", m_lowBlurRadius );
-
-		// base mountain and hill settings
-		EditorPrefs.SetInt( "PlanetGenerator_Octaves", m_octaves );
 
 		// mountain settings
+		EditorPrefs.SetInt( "PlanetGenerator_Octaves", m_octaves );
 		EditorPrefs.SetInt( "PlanetGenerator_MountainScale", m_mountainScale );
 		EditorPrefs.SetFloat( "PlanetGenerator_MountainPersistence", m_mountainPersistence );
 		EditorPrefs.SetFloat( "PlanetGenerator_MountainGain", m_mountainGain );
-
-		// hill settings
-		EditorPrefs.SetInt( "PlanetGenerator_HillScale", m_hillScale );
-		EditorPrefs.SetFloat( "PlanetGenerator_HillPersistence", m_hillPersistence );
-		EditorPrefs.SetFloat( "PlanetGenerator_HillGain", m_hillGain );
 
 		// hydraulic erosion settings
 		EditorPrefs.SetBool( "PlanetGenerator_DoHydraulicErosionPass", m_doHydraulicErosionPass );
@@ -160,34 +142,25 @@ public class PG_EditorWindow : EditorWindow
 	{
 		GUILayout.Label( "Other Settings", EditorStyles.boldLabel );
 
-		m_planetDataFileName = EditorGUILayout.TextField( "Planet Data File Name", m_planetDataFileName );
+		m_gameDataFileName = EditorGUILayout.TextField( "Game Data File Name", m_gameDataFileName );
+		m_planetImagesPath = EditorGUILayout.TextField( "Planet Images Path", m_planetImagesPath );
 		m_resourcesPath = EditorGUILayout.TextField( "Planet Resources Path", m_resourcesPath );
 		m_debugMode = EditorGUILayout.Toggle( "Debug Mode", m_debugMode );
+		m_debugPlanetID = EditorGUILayout.IntField( "Debug Planet ID", m_debugPlanetID );
 
 		GUILayout.Label( "Non-Gas Giant Planet Settings", EditorStyles.boldLabel );
 
 		m_textureMapHeight = EditorGUILayout.IntField( "Texture Map Height", m_textureMapHeight );
 		m_numPolePaddingRows = EditorGUILayout.IntSlider( "Num Pole Padding Rows", m_numPolePaddingRows, 0, 8 );
-		m_highBlurRadius = EditorGUILayout.IntSlider( "High Blur Radius", m_highBlurRadius, 0, 256 );
-		m_lowBlurRadius = EditorGUILayout.IntSlider( "Low Blur Radius", m_lowBlurRadius, 0, 256 );
 
 		m_textureMapWidth = m_textureMapHeight * 2;
 
-		GUILayout.Label( "Base Mountain and Hill Settings", EditorStyles.boldLabel );
-
-		m_octaves = EditorGUILayout.IntSlider( "Octaves", m_octaves, 1, 12 );
-
 		GUILayout.Label( "Mountain Settings", EditorStyles.boldLabel );
 
-		m_mountainScale = EditorGUILayout.IntSlider( "Scale", m_mountainScale, 1, 12 );
+		m_octaves = EditorGUILayout.IntSlider( "Octaves", m_octaves, 1, 12 );
+		m_mountainScale = EditorGUILayout.IntSlider( "Frequency", m_mountainScale, 1, 12 );
 		m_mountainPersistence = EditorGUILayout.Slider( "Persistence", m_mountainPersistence, 0.0f, 1.0f );
-		m_mountainGain = EditorGUILayout.Slider( "Output Gain", m_mountainGain, 0.0f, 1.0f );
-
-		GUILayout.Label( "Hill Settings", EditorStyles.boldLabel );
-
-		m_hillScale = EditorGUILayout.IntSlider( "Scale", m_hillScale, 1, 12 );
-		m_hillPersistence = EditorGUILayout.Slider( "Persistence", m_hillPersistence, 0.0f, 1.0f );
-		m_hillGain = EditorGUILayout.Slider( "Output Gain", m_hillGain, 0.0f, 1.0f );
+		m_mountainGain = EditorGUILayout.Slider( "Output Gain", m_mountainGain, 0.0f, 10.0f );
 
 		GUILayout.Label( "Hydraulic Erosion Settings", EditorStyles.boldLabel );
 
@@ -218,15 +191,18 @@ public class PG_EditorWindow : EditorWindow
 		// show progress bar
 		EditorUtility.DisplayProgressBar( "Planet Generator", "Initializing...", 0.0f );
 
-		// load the planet data
-		if ( !LoadPlanetData() )
-		{
-			return;
-		}
+		// load the game data
+		var textAsset = Resources.Load( m_gameDataFileName ) as TextAsset;
+
+		// convert it from the json string to our game data class
+		var gameData = JsonUtility.FromJson<GameData>( textAsset.text );
+
+		// initialize the game data
+		gameData.Initialize();
 
 		// calculate the texture map scale (and it must be an even number)
-		m_textureMapScaleX = Mathf.FloorToInt( (float) m_textureMapWidth / (float) PG_Planet.c_mapWidth );
-		m_textureMapScaleY = Mathf.FloorToInt( (float) m_textureMapHeight / (float) ( PG_Planet.c_mapHeight + m_numPolePaddingRows * 2 ) );
+		m_textureMapScaleX = Mathf.FloorToInt( (float) m_textureMapWidth / (float) PG_Planet.c_width );
+		m_textureMapScaleY = Mathf.FloorToInt( (float) m_textureMapHeight / (float) ( PG_Planet.c_height + m_numPolePaddingRows * 2 ) );
 
 		if ( m_textureMapScaleX < 2 )
 		{
@@ -246,25 +222,37 @@ public class PG_EditorWindow : EditorWindow
 			m_textureMapScaleY--;
 		}
 
-		// calculate the mountian and hill scale power of two
+		// calculate the mountian scale power of two
 		m_mountainScalePowerOfTwo = Mathf.RoundToInt( Mathf.Pow( 2, m_mountainScale - 1 ) );
-		m_hillScalePowerOfTwo = Mathf.RoundToInt( Mathf.Pow( 2, m_hillScale - 1 ) );
 
 		// do some magic
 		PG_Planet pgPlanet;
 
-		for ( var i = 0; i < m_pgPlanetData.m_planetList.Length; i++ )
+		for ( var id = 0; id < c_numPlanets; id++ )
 		{
-			pgPlanet = m_pgPlanetData.m_planetList[ i ];
+			if ( m_debugMode )
+			{
+				id = m_debugPlanetID;
+			}
+
+			pgPlanet = new PG_Planet( gameData, m_planetImagesPath, id );
 
 			if ( pgPlanet.m_mapIsValid )
 			{
 				var filename = Application.dataPath + "/" + m_resourcesPath + "/Planets/" + pgPlanet.m_id + ".bytes";
 
-				if ( !File.Exists( filename ) )
+				if ( m_debugMode || !File.Exists( filename ) )
 				{
-					GeneratePlanetTextureMaps( pgPlanet, filename );
+					if ( !GeneratePlanetTextureMaps( pgPlanet, filename ) )
+					{
+						break;
+					}
 				}
+			}
+
+			if ( m_debugMode )
+			{
+				break;
 			}
 		}
 
@@ -272,160 +260,82 @@ public class PG_EditorWindow : EditorWindow
 		EditorUtility.ClearProgressBar();
 	}
 
-	// load the planet data file
-	bool LoadPlanetData()
-	{
-		var stopwatch = new Stopwatch();
-
-		stopwatch.Start();
-
-		// clear out the old data
-		m_pgPlanetData = null;
-
-		// load it as text
-		var text =  File.ReadAllText( Application.dataPath + "/Editor/" + m_planetDataFileName + ".json" );
-
-		// convert it from the json string to our planet data class
-		m_pgPlanetData = JsonUtility.FromJson<PG_PlanetData>( text );
-
-		// prep each planet map for generation (speed optimization)
-		foreach ( var pgPlanet in m_pgPlanetData.m_planetList )
-		{
-			EditorUtility.DisplayProgressBar( "Initializing Planets", "Planet " + ( pgPlanet.m_id + 1 ) + " of " + m_pgPlanetData.m_planetList.Length, (float) pgPlanet.m_id / m_pgPlanetData.m_planetList.Length );
-
-			pgPlanet.Initialize();
-		}
-
-		UnityEngine.Debug.Log( "Load Planet Data - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
-
-		return true;
-	}
-
 	// call this to generate the planet texture maps
-	void GeneratePlanetTextureMaps( PG_Planet pgPlanet, string filename )
+	bool GeneratePlanetTextureMaps( PG_Planet pgPlanet, string filename )
 	{
 		// vars for the progress bar
 		var currentStep = 1;
-		var totalSteps = 9;
+		var totalSteps = 7;
 
-		// get prepared source (and save a copy of it for writing out to the header)
-		EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Preparing original map...", (float) currentStep++ / totalSteps );
+		// update the progress bar
+		EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Preparing color map...", (float) currentStep++ / totalSteps );
 
-		var preparedMap = PrepareMap( pgPlanet );
+		// prepare the color map
+		var preparedColorMap = PrepareColorMap( pgPlanet );
 
-		float minimumDifference;
-		float maximumDifference;
-		byte[] differenceBuffer;
-
-		// gas giant or not?
-		if ( pgPlanet.m_surfaceId == 1 )
+		if ( m_debugMode )
 		{
-			// yes - no difference buffer
-			minimumDifference = 0.0f;
-			maximumDifference = 0.0f;
-			differenceBuffer = null;
+			EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Saving prepared color map...", 0.0f );
+
+			PG_Tools.SaveAsPNG( preparedColorMap, Application.dataPath + "/Editor/Debug - Prepared Color Map.png" );
 		}
-		else
+
+		// update the progress bar
+		EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Preparing height map...", (float) currentStep++ / totalSteps );
+
+		// prepare the height map
+		var preparedHeightMap = PrepareHeightMap( pgPlanet );
+
+		if ( m_debugMode )
 		{
-			// contours pass
-			EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Doing contours pass...", (float) currentStep++ / totalSteps );
+			EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Saving prepared height map...", 0.0f );
 
-			var contours = new Contours( preparedMap );
+			PG_Tools.SaveAsPNG( preparedHeightMap, Application.dataPath + "/Editor/Debug - Prepared Height Map.png" );
+		}
 
-			var elevationBuffer = contours.Process( m_textureMapScaleX, m_textureMapScaleY, pgPlanet.m_mapLegend );
+		float minimumDifference = 0.0f;
+		float maximumDifference = 0.0f;
+		byte[] differenceBuffer = null;
 
+		if ( pgPlanet.m_surfaceId != 1 )
+		{
 			// scale to power of two
 			EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Scaling to power of two...", (float) currentStep++ / totalSteps );
 
-			var scaleToPowerOfTwo = new ScaleToPowerOfTwo( elevationBuffer );
+			var bicubicScale = new PG_BicubicScaleElevation();
 
-			elevationBuffer = scaleToPowerOfTwo.Process( m_textureMapScaleX, m_textureMapScaleY );
+			var elevation = bicubicScale.Process( preparedHeightMap, m_textureMapWidth, m_textureMapHeight );
 
 			if ( m_debugMode )
 			{
-				var albedo = new Albedo( elevationBuffer );
+				EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Saving bicubic scale map...", 0.0f );
 
-				var albedoBuffer = albedo.Process( pgPlanet.m_mapLegend );
+				var contourMap = new PG_ContourMap();
 
-				PG_Tools.SaveAsEXR( albedoBuffer, Application.dataPath + "/Editor/" + "Scale to Power of Two.exr" );
+				var tempBuffer = contourMap.Process( elevation, pgPlanet.m_waterHeight );
+
+				PG_Tools.SaveAsEXR( tempBuffer, Application.dataPath + "/Editor/Debug - Bicubic Scale.exr" );
 			}
 
 			// at this point we want to save the current elevation buffer to use when calculating the difference map later
-			var baseElevationBuffer = elevationBuffer;
-
-			// now we know what the final width and height of our map is
-			var width = elevationBuffer.GetLength( 1 );
-			var height = elevationBuffer.GetLength( 0 );
-
-			// gaussian blur pass (low)
-			EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Gaussian blur pass (low)...", (float) currentStep++ / totalSteps );
-
-			var gaussianBlur = new GaussianBlur( elevationBuffer );
-
-			var lowBlurredElevationBuffer = gaussianBlur.Process( m_lowBlurRadius, m_lowBlurRadius );
-
-			if ( m_debugMode )
-			{
-				var albedo = new Albedo( lowBlurredElevationBuffer );
-
-				var albedoBuffer = albedo.Process( pgPlanet.m_mapLegend );
-
-				PG_Tools.SaveAsEXR( albedoBuffer, Application.dataPath + "/Editor/" + "Gaussian Blur (Low).exr" );
-			}
-
-			// gaussian blur pass (high)
-			EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Gaussian blur pass (high)...", (float) currentStep++ / totalSteps );
-
-			var highBlurredElevationBuffer = gaussianBlur.Process( m_highBlurRadius, m_highBlurRadius );
-
-			if ( m_debugMode )
-			{
-				var albedo = new Albedo( highBlurredElevationBuffer );
-
-				var albedoBuffer = albedo.Process( pgPlanet.m_mapLegend );
-
-				PG_Tools.SaveAsEXR( albedoBuffer, Application.dataPath + "/Editor/" + "Gaussian Blur (High).exr" );
-			}
-
-			// blend the high and low blur buffers
-			elevationBuffer = new float[ height, width ];
-
-			for ( var y = 0; y < height; y++ )
-			{
-				for ( var x = 0; x < width; x++ )
-				{
-					var lowBlurredElevation = lowBlurredElevationBuffer[ y, x ];
-					var highBlurredElevation = highBlurredElevationBuffer[ y, x ];
-
-					var t = highBlurredElevation;
-
-					elevationBuffer[ y, x ] = Mathf.Lerp( lowBlurredElevation, highBlurredElevation, t );
-				}
-			}
-
-			if ( m_debugMode )
-			{
-				var albedo = new Albedo( elevationBuffer );
-
-				var albedoBuffer = albedo.Process( pgPlanet.m_mapLegend );
-
-				PG_Tools.SaveAsEXR( albedoBuffer, Application.dataPath + "/Editor/" + "Gaussian Blur (Blended).exr" );
-			}
+			var baseElevationBuffer = elevation;
 
 			// mountains pass
-			EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Creating mountains and hills...", (float) currentStep++ / totalSteps );
+			EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Creating mountains...", (float) currentStep++ / totalSteps );
 
-			var mountainsAndHills = new MountainsAndHills( elevationBuffer );
+			var mountains = new PG_Mountains();
 
-			elevationBuffer = mountainsAndHills.Process( pgPlanet.m_id, m_octaves, m_mountainScalePowerOfTwo, m_hillScalePowerOfTwo, m_mountainPersistence, m_hillPersistence, m_mountainGain, m_hillGain );
+			elevation = mountains.Process( elevation, pgPlanet.m_id, m_octaves, m_mountainScalePowerOfTwo, m_mountainPersistence, m_mountainGain, pgPlanet.m_waterHeight );
 
 			if ( m_debugMode )
 			{
-				var albedo = new Albedo( elevationBuffer );
+				EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Saving mountains map...", 0.0f );
 
-				var albedoBuffer = albedo.Process( pgPlanet.m_mapLegend );
+				var contourMap = new PG_ContourMap();
 
-				PG_Tools.SaveAsEXR( albedoBuffer, Application.dataPath + "/Editor/" + "Mountains and Hills.exr" );
+				var tempBuffer = contourMap.Process( elevation, pgPlanet.m_waterHeight );
+
+				PG_Tools.SaveAsEXR( tempBuffer, Application.dataPath + "/Editor/Debug - Mountains.exr" );
 			}
 
 			// hydraulic erosion pass
@@ -433,17 +343,26 @@ public class PG_EditorWindow : EditorWindow
 			{
 				EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Hydraulic erosion pass...", (float) currentStep++ / totalSteps );
 
-				var hydraulicErosion = new HydraulicErosion( elevationBuffer );
+				var minimumElevation = pgPlanet.m_waterHeight - ( 1.0f / 16.0f );
 
-				elevationBuffer = hydraulicErosion.Process( m_xyScaleToMeters, m_zScaleToMeters, m_rainWaterAmount, m_sedimentCapacity, m_gravityConstant, m_frictionConstant, m_evaporationConstant, m_depositionConstant, m_dissolvingConstant, m_stepDeltaTime, m_finalBlurRadius );
+				var hydraulicErosion = new PG_HydraulicErosion();
+
+				elevation = hydraulicErosion.Process( elevation, minimumElevation, m_xyScaleToMeters, m_zScaleToMeters, m_rainWaterAmount, m_sedimentCapacity, m_gravityConstant, m_frictionConstant, m_evaporationConstant, m_depositionConstant, m_dissolvingConstant, m_stepDeltaTime, m_finalBlurRadius );
+
+				if ( elevation == null )
+				{
+					return false;
+				}
 
 				if ( m_debugMode )
 				{
-					var albedo = new Albedo( elevationBuffer );
+					EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Saving hydraulic erosion map...", 0.0f );
 
-					var albedoBuffer = albedo.Process( pgPlanet.m_mapLegend );
+					var contourMap = new PG_ContourMap();
 
-					PG_Tools.SaveAsEXR( albedoBuffer, Application.dataPath + "/Editor/" + "Hydraulic Erosion.exr" );
+					var tempBuffer = contourMap.Process( elevation, pgPlanet.m_waterHeight );
+
+					PG_Tools.SaveAsEXR( tempBuffer, Application.dataPath + "/Editor/Debug - Hydraulic Erosion.exr" );
 				}
 			}
 			else
@@ -451,17 +370,56 @@ public class PG_EditorWindow : EditorWindow
 				currentStep++;
 			}
 
+			if ( m_debugMode )
+			{
+				// generate and save the albedo map
+				EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Saving albedo map...", 0.0f );
+
+				var albedoMap = new PG_AlbedoMap();
+
+				var albedoBuffer = albedoMap.Process( elevation, preparedColorMap, pgPlanet.m_waterHeight, pgPlanet.m_waterColor, pgPlanet.m_groundColor );
+
+				PG_Tools.SaveAsPNG( albedoBuffer, Application.dataPath + "/Editor/Debug - Albedo Map.png" );
+
+				// generate and save the normal map
+				EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Saving normal map...", 0.0f );
+
+				var normalMap = new PG_NormalMap();
+
+				var normalsBuffer = normalMap.Process( elevation, 256.0f, pgPlanet.m_waterHeight, 1 );
+
+				PG_Tools.SaveAsPNG( normalsBuffer, Application.dataPath + "/Editor/Debug - Normal Map.png" );
+
+				// generate and save the specular map
+				EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Saving specular map...", 0.0f );
+
+				var specularMap = new PG_SpecularMap();
+
+				var specularBuffer = specularMap.Process( elevation, albedoBuffer, pgPlanet.m_waterHeight, 1 );
+
+				PG_Tools.SaveAsPNG( specularBuffer, Application.dataPath + "/Editor/Debug - Specular Map.png", true );
+
+				// generate and save the water mask map
+				EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Saving water mask map...", 0.0f );
+
+				var waterMaskMap = new PG_WaterMaskMap();
+
+				var waterMaskBuffer = waterMaskMap.Process( elevation, pgPlanet.m_waterHeight, 1 );
+
+				PG_Tools.SaveAsPNG( waterMaskBuffer, Application.dataPath + "/Editor/Debug - Water Mask Map.png", true );
+			}
+
 			// figure out what our minimum and maximum deltas are
 			EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Computing deltas...", (float) currentStep++ / totalSteps );
 
-			minimumDifference = elevationBuffer[ 0, 0 ] - baseElevationBuffer[ 0, 0 ];
-			maximumDifference = elevationBuffer[ 0, 0 ] - baseElevationBuffer[ 0, 0 ];
+			minimumDifference = elevation[ 0, 0 ] - baseElevationBuffer[ 0, 0 ];
+			maximumDifference = elevation[ 0, 0 ] - baseElevationBuffer[ 0, 0 ];
 
-			for ( var y = 0; y < height; y++ )
+			for ( var y = 0; y < m_textureMapHeight; y++ )
 			{
-				for ( var x = 0; x < width; x++ )
+				for ( var x = 0; x < m_textureMapWidth; x++ )
 				{
-					var difference = elevationBuffer[ y, x ] - baseElevationBuffer[ y, x ];
+					var difference = elevation[ y, x ] - baseElevationBuffer[ y, x ];
 
 					if ( difference < minimumDifference )
 					{
@@ -478,37 +436,37 @@ public class PG_EditorWindow : EditorWindow
 			// rescale float deltas to 0 to 255
 			var elevationScale = 255.0f / ( maximumDifference - minimumDifference );
 
-			differenceBuffer = new byte[ width * height ];
+			differenceBuffer = new byte[ m_textureMapWidth * m_textureMapHeight ];
 
-			for ( var y = 0; y < height; y++ )
+			for ( var y = 0; y < m_textureMapHeight; y++ )
 			{
-				for ( var x = 0; x < width; x++ )
+				for ( var x = 0; x < m_textureMapWidth; x++ )
 				{
-					var difference = (byte) Mathf.RoundToInt( ( elevationBuffer[ y, x ] - baseElevationBuffer[ y, x ] - minimumDifference ) * elevationScale );
+					var difference = (byte) Mathf.RoundToInt( ( elevation[ y, x ] - baseElevationBuffer[ y, x ] - minimumDifference ) * elevationScale );
 
-					differenceBuffer[ y * width + x ] = difference;
+					differenceBuffer[ y * m_textureMapWidth + x ] = difference;
 
-					elevationBuffer[ y, x ] = difference / 255.0f;
+					elevation[ y, x ] = difference / 255.0f;
 				}
 			}
 
 			if ( m_debugMode )
 			{
-				var albedo = new Albedo( elevationBuffer );
+				EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Saving difference buffer...", 0.0f );
 
-				var albedoBuffer = albedo.Process( pgPlanet.m_mapLegend );
-
-				PG_Tools.SaveAsEXR( albedoBuffer, Application.dataPath + "/Editor/" + "Difference Buffer.exr" );
+				PG_Tools.SaveAsPNG( elevation, Application.dataPath + "/Editor/" + "Debug - Difference Buffer.png" );
 			}
 		}
 
 		// save the map!
-		EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Compressing and saving the map...", (float) currentStep++ / totalSteps );
+		EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Compressing and saving the planet data...", (float) currentStep++ / totalSteps );
 
-		SavePlanetMap( filename, pgPlanet, preparedMap, minimumDifference, maximumDifference, differenceBuffer );
+		SavePlanetMap( filename, pgPlanet, preparedHeightMap, preparedColorMap, minimumDifference, maximumDifference, differenceBuffer );
+
+		return true;
 	}
 
-	void SavePlanetMap( string filename, PG_Planet pgPlanet, float[,] preparedMap, float minimumDifference, float maximumDifference, byte[] differenceBuffer )
+	void SavePlanetMap( string filename, PG_Planet pgPlanet, float[,] preparedHeightMap, Color[,] preparedColorMap, float minimumDifference, float maximumDifference, byte[] differenceBuffer )
 	{
 		// save map to compressed bytes file with a header
 		using ( var fileStream = new FileStream( filename, FileMode.Create ) )
@@ -520,37 +478,51 @@ public class PG_EditorWindow : EditorWindow
 				// version number
 				binaryWriter.Write( c_versionNumber );
 
-				// legend length
-				var legendLength = pgPlanet.m_mapLegend.Length;
+				// misc data
+				binaryWriter.Write( pgPlanet.m_minimumHeight );
+				binaryWriter.Write( pgPlanet.m_waterHeight );
+				binaryWriter.Write( pgPlanet.m_snowHeight );
 
-				binaryWriter.Write( legendLength );
+				binaryWriter.Write( pgPlanet.m_waterColor.r );
+				binaryWriter.Write( pgPlanet.m_waterColor.g );
+				binaryWriter.Write( pgPlanet.m_waterColor.b );
 
-				// legend
-				for ( var i = 0; i < legendLength; i++ )
-				{
-					binaryWriter.Write( pgPlanet.m_mapLegend[ i ].r );
-					binaryWriter.Write( pgPlanet.m_mapLegend[ i ].g );
-					binaryWriter.Write( pgPlanet.m_mapLegend[ i ].b );
-					binaryWriter.Write( pgPlanet.m_mapLegend[ i ].a );
-				}
+				binaryWriter.Write( pgPlanet.m_groundColor.r );
+				binaryWriter.Write( pgPlanet.m_groundColor.g );
+				binaryWriter.Write( pgPlanet.m_groundColor.b );
+
+				binaryWriter.Write( pgPlanet.m_snowColor.r );
+				binaryWriter.Write( pgPlanet.m_snowColor.g );
+				binaryWriter.Write( pgPlanet.m_snowColor.b );
 
 				// prepared map width and height
-				var preparedMapWidth = preparedMap.GetLength( 1 );
-				var preparedMapHeight = preparedMap.GetLength( 0 );
+				var preparedMapWidth = preparedHeightMap.GetLength( 1 );
+				var preparedMapHeight = preparedHeightMap.GetLength( 0 );
 
 				binaryWriter.Write( preparedMapWidth );
 				binaryWriter.Write( preparedMapHeight );
 
-				// prepared map
+				// prepared height map
 				for ( var y = 0; y < preparedMapHeight; y++ )
 				{
 					for ( var x = 0; x < preparedMapWidth; x++ )
 					{
-						binaryWriter.Write( preparedMap[ y, x ] );
+						binaryWriter.Write( preparedHeightMap[ y, x ] );
 					}
 				}
 
-				// gas giants have no difference buffer
+				// prepared color map
+				for ( var y = 0; y < preparedMapHeight; y++ )
+				{
+					for ( var x = 0; x < preparedMapWidth; x++ )
+					{
+						binaryWriter.Write( preparedColorMap[ y, x ].r );
+						binaryWriter.Write( preparedColorMap[ y, x ].g );
+						binaryWriter.Write( preparedColorMap[ y, x ].b );
+					}
+				}
+
+				// difference buffer
 				if ( differenceBuffer != null )
 				{
 					// minimum and maximum difference
@@ -565,44 +537,195 @@ public class PG_EditorWindow : EditorWindow
 	}
 
 	// this function generates a copy of the original planet map and adds a number of rows to the top and bottom of the map (to prevent pole pinching)
-	float[,] PrepareMap( PG_Planet pgPlanet )
+	Color[,] PrepareColorMap( PG_Planet pgPlanet )
 	{
 		// compute height of the new map
-		var height = PG_Planet.c_mapHeight + m_numPolePaddingRows * 2;
+		var height = PG_Planet.c_height + m_numPolePaddingRows * 2;
 
 		// allocate the new map
-		var buffer = new float[ height, PG_Planet.c_mapWidth ];
+		var buffer = new Color[ height, PG_Planet.c_width ];
 
-		// get the most used color of the top row
-		var color = pgPlanet.GetMostUsedColor( 0 );
+		// find the most used color on the top row
+		var tally = new Dictionary<Color, int>();
 
-		// pad the top rows with this color
-		for ( var y = 0; y < m_numPolePaddingRows; y++ )
+		for ( var x = 0; x < PG_Planet.c_width; x++ )
 		{
-			for ( var x = 0; x < PG_Planet.c_mapWidth; x++ )
+			var color = pgPlanet.m_color[ 0, x ];
+
+			if ( !tally.ContainsKey( color ) )
 			{
-				buffer[ y, x ] = color.a;
+				tally.Add( color, 0 );
+			}
+
+			tally[ color ]++;
+		}
+
+		var mostUsedColor = Color.black;
+		var mostUsedCount = 0;
+
+		foreach ( var key in tally.Keys )
+		{
+			if ( tally[ key ] > mostUsedCount )
+			{
+				mostUsedCount = tally[ key ];
+				mostUsedColor = key;
 			}
 		}
 
-		// get the most used color of the bottom row
-		color = pgPlanet.GetMostUsedColor( PG_Planet.c_mapHeight - 1 );
+		m_topPaddingColor = mostUsedColor;
 
-		// pad the bottom rows with this color
-		for ( var y = 0; y < m_numPolePaddingRows; y++ )
+		// add north pole color
+		for ( var i = 0; i < m_numPolePaddingRows; i++ )
 		{
-			for ( var x = 0; x < PG_Planet.c_mapWidth; x++ )
+			var y = m_numPolePaddingRows - i - 1;
+
+			for ( var x = 0; x < PG_Planet.c_width; x++ )
 			{
-				buffer[ y + height - m_numPolePaddingRows, x ] = color.a;
+				buffer[ y, x ] = m_topPaddingColor;
+			}
+		}
+
+
+		// find the most used color on the bottom row
+		tally = new Dictionary<Color, int>();
+
+		for ( var x = 0; x < PG_Planet.c_width; x++ )
+		{
+			var color = pgPlanet.m_color[ PG_Planet.c_height - 1, x ];
+
+			if ( !tally.ContainsKey( color ) )
+			{
+				tally.Add( color, 0 );
+			}
+
+			tally[ color ]++;
+		}
+
+		mostUsedColor = Color.black;
+		mostUsedCount = 0;
+
+		foreach ( var key in tally.Keys )
+		{
+			if ( tally[ key ] > mostUsedCount )
+			{
+				mostUsedCount = tally[ key ];
+				mostUsedColor = key;
+			}
+		}
+
+		m_bottomPaddingColor = mostUsedColor;
+
+		// add south pole color
+		for ( var i = 0; i < m_numPolePaddingRows; i++ )
+		{
+			var y = m_numPolePaddingRows + i + PG_Planet.c_height;
+
+			for ( var x = 0; x < PG_Planet.c_width; x++ )
+			{
+				buffer[ y, x ] = m_bottomPaddingColor;
 			}
 		}
 
 		// copy the original map into the are in between the padded rows
-		for ( var y = 0; y < PG_Planet.c_mapHeight; y++ )
+		for ( var y = 0; y < PG_Planet.c_height; y++ )
 		{
-			for ( var x = 0; x < PG_Planet.c_mapWidth; x++ )
+			for ( var x = 0; x < PG_Planet.c_width; x++ )
 			{
-				buffer[ y + m_numPolePaddingRows, x ] = pgPlanet.m_mapColor[ y, x ].a;
+				buffer[ y + m_numPolePaddingRows, x ] = pgPlanet.m_color[ y, x ];
+			}
+		}
+
+		// all done
+		return buffer;
+	}
+
+	// this function generates a copy of the original planet map and adds a number of rows to the top and bottom of the map (to prevent pole pinching)
+	float[,] PrepareHeightMap( PG_Planet pgPlanet )
+	{
+		// compute height of the new map
+		var height = PG_Planet.c_height + m_numPolePaddingRows * 2;
+
+		// allocate the new map
+		var buffer = new float[ height, PG_Planet.c_width ];
+
+		// get the maximum height for the top row
+		var maximumHeight = 0.0f;
+
+		for ( var x = 0; x < PG_Planet.c_width; x++ )
+		{
+			if ( pgPlanet.m_color[ 0, x ] == m_topPaddingColor )
+			{
+				if ( pgPlanet.m_height[ 0, x ] > maximumHeight )
+				{
+					maximumHeight = pgPlanet.m_height[ 0, x ];
+				}
+			}
+		}
+
+		if ( m_topPaddingColor == pgPlanet.m_waterColor )
+		{
+			maximumHeight = 0.0f;
+		}
+
+		// set the height of the padded rows
+		for ( var i = 0; i < m_numPolePaddingRows; i++ )
+		{
+			var y = m_numPolePaddingRows - i - 1;
+
+			var t = (float) ( i + 1 ) / (float) m_numPolePaddingRows;
+
+			t *= 2.0f;
+
+			for ( var x = 0; x < PG_Planet.c_width; x++ )
+			{
+				var originalHeight = pgPlanet.m_height[ 0, x ];
+
+				buffer[ y, x ] = Mathf.Lerp( originalHeight, maximumHeight, t );
+			}
+		}
+
+		// get the maximum height for the bottom row
+		maximumHeight = 0.0f;
+
+		for ( var x = 0; x < PG_Planet.c_width; x++ )
+		{
+			if ( pgPlanet.m_color[ PG_Planet.c_height - 1, x ] == m_bottomPaddingColor )
+			{
+				if ( pgPlanet.m_height[ 0, x ] > maximumHeight )
+				{
+					maximumHeight = pgPlanet.m_height[ 0, x ];
+				}
+			}
+		}
+
+		if ( m_bottomPaddingColor == pgPlanet.m_waterColor )
+		{
+			maximumHeight = 0.0f;
+		}
+
+		// set the height of the padded rows
+		for ( var i = 0; i < m_numPolePaddingRows; i++ )
+		{
+			var y = m_numPolePaddingRows + i + PG_Planet.c_height;
+
+			var t = (float) ( i + 1 ) / (float) m_numPolePaddingRows;
+
+			t *= 2.0f;
+
+			for ( var x = 0; x < PG_Planet.c_width; x++ )
+			{
+				var originalHeight = pgPlanet.m_height[ PG_Planet.c_height - 1, x ];
+
+				buffer[ y, x ] = Mathf.Lerp( originalHeight, maximumHeight, t );
+			}
+		}
+
+		// copy the original map into the are in between the padded rows
+		for ( var y = 0; y < PG_Planet.c_height; y++ )
+		{
+			for ( var x = 0; x < PG_Planet.c_width; x++ )
+			{
+				buffer[ y + m_numPolePaddingRows, x ] = pgPlanet.m_height[ y, x ];
 			}
 		}
 

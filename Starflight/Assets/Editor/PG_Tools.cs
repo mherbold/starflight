@@ -73,18 +73,18 @@ class PG_Tools
 	}
 
 	// saves a color array to file as a png image
-	public static void SaveAsPNG( Color[,] colors, string filename )
+	public static void SaveAsPNG( Color[,] colors, string filename, bool withAlpha = false )
 	{
 		var width = colors.GetLength( 1 );
 		var height = colors.GetLength( 0 );
 
-		var textureMap = new Texture2D( width, height, TextureFormat.RGB24, false );
+		var textureMap = new Texture2D( width, height, withAlpha ? TextureFormat.RGBA32 : TextureFormat.RGB24, false );
 
 		for ( var y = 0; y < height; y++ )
 		{
 			for ( var x = 0; x < width; x++ )
 			{
-				textureMap.SetPixel( x, y, new Color( colors[ y, x ].r, colors[ y, x ].g, colors[ y, x ].b, 1.0f ) );
+				textureMap.SetPixel( x, y, new Color( colors[ y, x ].r, colors[ y, x ].g, colors[ y, x ].b, colors[ y, x ].a ) );
 			}
 		}
 

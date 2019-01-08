@@ -1,4 +1,5 @@
 ﻿
+using UnityEditor;
 using UnityEngine;
 using System;
 
@@ -6,145 +7,137 @@ using System;
 
 public class PG_Planet
 {
-	public const int c_mapWidth = 48;
-	public const int c_mapHeight = 24;
+	public const int c_width = 48;
+	public const int c_height = 24;
 
 	public int m_id;
 	public int m_surfaceId;
 
-	public int[] m_key;
-	public int[] m_map;
+	public float m_minimumHeight;
+	public float m_waterHeight;
+	public float m_snowHeight;
 
-	public Color[] m_mapLegend { get; private set; }
-	public Color[,] m_mapColor { get; private set; }
+	public Color m_waterColor = Color.black;
+	public Color m_groundColor = Color.black;
+	public Color m_snowColor = Color.black;
+
+	public float[,] m_height { get; private set; }
+	public Color[,] m_color { get; private set; }
 
 	public bool m_mapIsValid { get; private set; }
 
-	public void Initialize()
+	public PG_Planet( GameData gameData, string planetImagesPath, int id )
 	{
-		m_mapIsValid = true;
+		// get to the planet data
+		var gdPlanet = gameData.m_planetList[ id ];
 
-		if ( m_map.Length != c_mapWidth * c_mapHeight )
+		// get to the star data
+		var gdStar = gameData.m_starList[ gdPlanet.m_starId ];
+
+		// figure out the filename to use to load the original planet maps
+		var planetFileName = planetImagesPath + "/planet_" + gdStar.m_xCoordinate + "_" + gdStar.m_yCoordinate + "_" + gdPlanet.m_orbitPosition + "_" + gdPlanet.m_planetTypeId + "_" + gdPlanet.m_surfaceId + ".png";
+
+		// load the original planet maps
+		var texture = AssetDatabase.LoadAssetAtPath( planetFileName, typeof( Texture2D ) ) as Texture2D;
+
+		if ( texture == null )
 		{
-			m_mapIsValid = false;
-
-			Debug.Log( "Planet " + m_id + " - Map size is wrong." );
+			Debug.Log( "Could not load planet image: " + planetFileName );
 
 			return;
 		}
 
-		var trueKeyLength = 1;
+		m_id = gdPlanet.m_id;
+		m_surfaceId = gdPlanet.m_surfaceId;
 
-		for ( var i = 1; i < m_key.Length; i++ )
+		m_minimumHeight = 1.0f;
+		m_waterHeight = 1.0f;
+		m_snowHeight = 0.0f;
+
+		m_height = new float[ c_height, c_width ];
+		m_color = new Color[ c_height, c_width ];
+
+		for ( var y = 0; y < c_height; y++ )
 		{
-			if ( m_key[ i ] != m_key[ i - 1 ] )
+			var y1 = y + c_height;
+			var y2 = y;
+
+			for ( var x = 0; x < c_width; x++ )
 			{
-				trueKeyLength++;
-			}
-		}
+				var height = texture.GetPixel( x, y1 ).g;
+				var color = texture.GetPixel( x, y2 );
 
-		m_mapLegend = new Color[ trueKeyLength ];
+				m_height[ y, x ] = height;
+				m_color[ y, x ] = color;
 
-		var keyIndex = 0;
-		var lastColor = 0;
-
-		for ( var i = 0; i < m_key.Length; i++ )
-		{
-			var originalColor = m_key[ m_key.Length - i - 1 ];
-
-			if ( originalColor == lastColor )
-			{
-				continue;
-			}
-
-			var r = ( ( originalColor >> 16 ) & 0xFF ) / 255.0f;
-			var g = ( ( originalColor >> 8 ) & 0xFF ) / 255.0f;
-			var b = ( ( originalColor >> 0 ) & 0xFF ) / 255.0f;
-
-			m_mapLegend[ keyIndex ] = new Color( r, g, b, keyIndex );
-
-			lastColor = originalColor;
-
-			keyIndex++;
-		}
-
-		m_mapColor = new Color[ c_mapHeight, c_mapWidth ];
-
-		for ( var y = 0; y < c_mapHeight; y++ )
-		{
-			var flippedY = c_mapHeight - y - 1;
-
-			for ( var x = 0; x < c_mapWidth; x++ )
-			{
-				var offset = y * c_mapWidth + x;
-
-				var originalColor = m_map[ offset ];
-
-				var r = ( ( originalColor >> 16 ) & 0xFF ) / 255.0f;
-				var g = ( ( originalColor >> 8 ) & 0xFF ) / 255.0f;
-				var b = ( ( originalColor >> 0 ) & 0xFF ) / 255.0f;
-
-				var colorFound = false;
-
-				for ( var i = 0; i < trueKeyLength; i++ )
+				if ( m_waterColor == color )
 				{
-					if ( ( r == m_mapLegend[ i ].r ) && ( g == m_mapLegend[ i ].g ) && ( b == m_mapLegend[ i ].b ) )
+					if ( height > m_waterHeight )
 					{
-						m_mapColor[ flippedY, x ] = m_mapLegend[ i ];
-
-						colorFound = true;
-
-						break;
+						m_waterHeight = height;
+					}
+				}
+				else
+				{
+					if ( height < m_waterHeight )
+					{
+						m_waterHeight = height;
+						m_waterColor = color;
 					}
 				}
 
-				if ( !colorFound )
+				if ( height > m_snowHeight )
 				{
-					m_mapIsValid = false;
+					m_snowHeight = height;
+					m_snowColor = color;
+				}
 
-					Debug.Log( "Planet " + m_id + " - Could not find color " + r + ", " + g + ", " + b );
-
-					return;
+				if ( height < m_minimumHeight )
+				{
+					m_minimumHeight = height;
 				}
 			}
 		}
-	}
 
-	public Color GetMostUsedColor( int y )
-	{
-		Color mostUsedColor = Color.black;
+		// figure out ground height and color
+		var groundHeight = 1.0f;
 
-		int highestCount = 0;
-
-		var count = new int[ m_mapLegend.Length ];
-
-		for ( var i = 0; i < count.Length; i++ )
+		for ( var y = 0; y < c_height; y++ )
 		{
-			count[ i ] = 0;
-		}
-
-		for ( var x = 0; x < c_mapWidth; x++ )
-		{
-			var color = m_mapColor[ y, x ];
-
-			for ( var i = 0; i < m_mapLegend.Length; i++ )
+			for ( var x = 0; x < c_width; x++ )
 			{
-				if ( color == m_mapLegend[ i ] )
+				if ( m_height[ y, x ] < groundHeight )
 				{
-					count[ i ]++;
-
-					if ( count[ i ] > highestCount )
+					if ( m_height[ y, x ] > m_waterHeight )
 					{
-						mostUsedColor = color;
-
-						highestCount = count[ i ];
+						groundHeight = m_height[ y, x ];
+						m_groundColor = m_color[ y, x ];
 					}
-
-					break;
 				}
 			}
 		}
 
-		return mostUsedColor;
+		// special case maps that need adjustments
+		switch ( m_id )
+		{
+			case 5: // earth
+				m_waterHeight += 0.005f;
+
+				for ( var y = 0; y < c_height; y++ )
+				{
+					for ( var x = 0; x < c_width; x++ )
+					{
+						if ( m_height[ y, x ] < m_waterHeight )
+						{
+							m_height[ y, x ] = 0;
+						}
+					}
+				}
+
+				break;
+		}
+
+		// all good
+		m_mapIsValid = true;
 	}
 }

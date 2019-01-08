@@ -1,16 +1,13 @@
 ﻿
 using UnityEngine;
 using UnityEditor;
+
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-public class HydraulicErosion
+public class PG_HydraulicErosion
 {
-	static float[,] m_buffer;
-
-	static int m_width;
-	static int m_height;
-
+	static float m_minimumElevation;
 	static float m_xyScaleToMeters;
 	static float m_zScaleToMeters;
 	static float m_rainWaterAmount;
@@ -24,32 +21,34 @@ public class HydraulicErosion
 
 	static float m_stepDeltaTime;
 
-	static float[,] m_terrainElevation;
+	static int m_outputElevationWidth;
+	static int m_outputElevationHeight;
+	static int m_outputElevationWidthMask;
+
+	static float[,] m_outputElevation;
+
 	static int[,] m_twistBuffer;
 	static Vector3[] m_directionVector;
 
 	static readonly int[] m_dx = { 0, +1, +1, +1, 0, -1, -1, -1 };
 	static readonly int[] m_dy = { +1, +1, 0, -1, -1, -1, 0, +1 };
 
-	public HydraulicErosion( float[,] buffer )
-	{
-		m_buffer = buffer;
-
-		m_width = buffer.GetLength( 1 );
-		m_height = buffer.GetLength( 0 );
-	}
-
-	public float[,] Process( float xyScaleToMeters, float zScaleToMeters, float rainWaterAmount, float sedimentCapacity, float gravityConstant, float frictionConstant, float evaporationConstant, float depositionConstant, float dissolvingConstant, float stepDeltaTime, int finalBlurRadius )
+	public float[,] Process( float[,] sourceElevation, float minimumElevation, float xyScaleToMeters, float zScaleToMeters, float rainWaterAmount, float sedimentCapacity, float gravityConstant, float frictionConstant, float evaporationConstant, float depositionConstant, float dissolvingConstant, float stepDeltaTime, int finalBlurRadius )
 	{
 		UnityEngine.Debug.Log( "*** Hydraulic Erosion Process ***" );
 
 		var stopwatch = new Stopwatch();
 
-		var parallelOptions = new ParallelOptions() { MaxDegreeOfParallelism = -1 };
-
 		stopwatch.Start();
 
+		var parallelOptions = new ParallelOptions() { MaxDegreeOfParallelism = -1 };
+
+		m_outputElevationWidth = sourceElevation.GetLength( 1 );
+		m_outputElevationHeight = sourceElevation.GetLength( 0 );
+		m_outputElevationWidthMask = m_outputElevationWidth - 1;
+
 		// remember constants
+		m_minimumElevation = minimumElevation;
 		m_xyScaleToMeters = xyScaleToMeters;
 		m_zScaleToMeters = zScaleToMeters;
 		m_rainWaterAmount = rainWaterAmount;
@@ -64,14 +63,14 @@ public class HydraulicErosion
 		m_stepDeltaTime = stepDeltaTime;
 
 		// allocate terrain level buffer
-		m_terrainElevation = new float[ m_height, m_width ];
+		m_outputElevation = new float[ m_outputElevationHeight, m_outputElevationWidth ];
 
 		// initialize terrain level buffer
-		for ( var y = 0; y < m_height; y++ )
+		for ( var y = 0; y < m_outputElevationHeight; y++ )
 		{
-			for ( var x = 0; x < m_width; x++ )
+			for ( var x = 0; x < m_outputElevationWidth; x++ )
 			{
-				m_terrainElevation[ y, x ] = m_buffer[ y, x ] * zScaleToMeters;
+				m_outputElevation[ y, x ] = sourceElevation[ y, x ] * zScaleToMeters;
 			}
 		}
 
@@ -80,17 +79,17 @@ public class HydraulicErosion
 		stopwatch.Restart();
 
 		// perlin noise for generating the twist buffer
-		var noise = new Noise( 50, 256, 1 );
+		var noise = new SeamlessNoise( 50, 256, 1 );
 
 		// allocate twist buffer
-		m_twistBuffer = new int[ m_height, m_width ];
+		m_twistBuffer = new int[ m_outputElevationHeight, m_outputElevationWidth ];
 
 		// initialize twist buffer
-		Parallel.For( 0, m_height, parallelOptions, y =>
+		Parallel.For( 0, m_outputElevationHeight, parallelOptions, y =>
 		{
-			for ( var x = 0; x < m_width; x++ )
+			for ( var x = 0; x < m_outputElevationWidth; x++ )
 			{
-				var sample = noise.Perlin( 0, 256, x * 128.0f / m_width, y * 64.0f / m_height );
+				var sample = noise.Perlin( 0, 256, x * 128.0f / m_outputElevationWidth, y * 64.0f / m_outputElevationHeight );
 
 				m_twistBuffer[ y, x ] = Mathf.RoundToInt( sample * 31.0f );
 			}
@@ -119,7 +118,7 @@ public class HydraulicErosion
 		stopwatch.Restart();
 
 		// allocate, initialize, and shuffle random xy field
-		var randomXYSize = m_height / 2;
+		var randomXYSize = m_outputElevationHeight / 2;
 
 		var randomXYSizeSquared = randomXYSize * randomXYSize;
 
@@ -156,7 +155,10 @@ public class HydraulicErosion
 		for ( var step = 0; step < snapshotSteps; step++ )
 		{
 			// show progress bar
-			// EditorUtility.DisplayProgressBar( "Planet Generator", "Making it rain...", (float) step / ( snapshotSteps - 1 ) );
+			if ( EditorUtility.DisplayCancelableProgressBar( "Planet Generator", "Making it rain...", (float) step / ( snapshotSteps - 1 ) ) )
+			{
+				return null;
+			}
 
 			var offset = step * snapshotInterval;
 
@@ -184,36 +186,60 @@ public class HydraulicErosion
 		// remove original elevation and remove scale (prep for blur)
 		var inverseScaleToMeters = 1.0f / m_zScaleToMeters;
 
-		for ( var y = 0; y < m_height; y++ )
+		for ( var y = 0; y < m_outputElevationHeight; y++ )
 		{
-			for ( var x = 0; x < m_width; x++ )
+			for ( var x = 0; x < m_outputElevationWidth; x++ )
 			{
-				var newElevation = Mathf.Max( 0.0f, m_terrainElevation[ y, x ] * inverseScaleToMeters );
+				var newElevation = Mathf.Max( 0.0f, m_outputElevation[ y, x ] * inverseScaleToMeters );
 
-				var delta = newElevation - m_buffer[ y, x ];
+				var delta = newElevation - sourceElevation[ y, x ];
 
-				m_terrainElevation[ y, x ] = Mathf.Min( 0.0f, delta );
+				m_outputElevation[ y, x ] = Mathf.Min( 0.0f, delta );
 			}
 		}
 
 		UnityEngine.Debug.Log( "Convert to Height Deltas - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
 
-		// final blur to get rid of the jaggies in the delta heights
-		var gaussianBlur = new GaussianBlur( m_terrainElevation );
+		stopwatch.Restart();
 
-		m_terrainElevation = gaussianBlur.Process( finalBlurRadius, finalBlurRadius );
-
-		// put original elevation back in
-		for ( var y = 0; y < m_height; y++ )
+		// pole smoothing
+		for ( var y = 0; y < m_outputElevationHeight; y++ )
 		{
-			for ( var x = 0; x < m_width; x++ )
+			var p1 = m_outputElevationHeight * 0.1f;
+			var p2 = m_outputElevationHeight * 0.2f;
+			var p3 = m_outputElevationHeight * 0.8f;
+			var p4 = m_outputElevationHeight * 0.9f;
+
+			var poleMultiplier = Mathf.SmoothStep( 0.0f, 1.0f, ( y - p1 ) / ( p2 - p1 ) ) * Mathf.SmoothStep( 1.0f, 0.0f, ( y - p3 ) / ( p4 - p3 ) );
+
+			for ( var x = 0; x < m_outputElevationWidth; x++ )
 			{
-				m_terrainElevation[ y, x ] += m_buffer[ y, x ];
+				m_outputElevation[ y, x ] *= poleMultiplier;
 			}
 		}
 
+		UnityEngine.Debug.Log( "Pole Smoothing - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
+
+		stopwatch.Restart();
+
+		// final blur to get rid of the jaggies in the delta heights
+		var gaussianBlur = new PG_GaussianBlurElevation();
+
+		m_outputElevation = gaussianBlur.Process( m_outputElevation, finalBlurRadius, finalBlurRadius );
+
+		// put original elevation back in
+		for ( var y = 0; y < m_outputElevationHeight; y++ )
+		{
+			for ( var x = 0; x < m_outputElevationWidth; x++ )
+			{
+				m_outputElevation[ y, x ] += sourceElevation[ y, x ];
+			}
+		}
+
+		UnityEngine.Debug.Log( "Final Blur - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
+
 		// return the processed buffer
-		return m_terrainElevation;
+		return m_outputElevation;
 	}
 
 	class Drop
@@ -244,25 +270,17 @@ public class HydraulicErosion
 			var y = Mathf.FloorToInt( m_y );
 
 			// this drop is done if we go off the map vertically
-			if ( ( y < 0 ) || ( y >= m_height ) )
+			if ( ( y < 0 ) || ( y >= m_outputElevationHeight ) )
 			{
 				return false;
 			}
 
 			// wrap position of drop around horizontally
-			if ( x < 0 )
-			{
-				x += m_width;
-			}
-			else if ( x >= m_width )
-			{
-				x -= m_width;
-			}
+			x = ( x + m_outputElevationWidthMask ) & m_outputElevationWidthMask;
 
-			// did we hit sea level?
-			if ( m_terrainElevation[ y, x ] <= -1.0f )
+			// if this drop goes below the minimum elevation then this drop is done
+			if ( m_outputElevation[ y, x ] < m_minimumElevation )
 			{
-				// yep - bail out now - sediment is lost forever (we don't want to build up the sea level)
 				return false;
 			}
 
@@ -282,7 +300,7 @@ public class HydraulicErosion
 				float depositAmount = ( m_sedimentAmount - sedimentCapacity ) * m_depositionConstant;
 
 				// return it to the terrain
-				m_terrainElevation[ y, x ] += depositAmount;
+				m_outputElevation[ y, x ] += depositAmount;
 
 				// remove it from the drop
 				m_sedimentAmount -= depositAmount;
@@ -293,7 +311,7 @@ public class HydraulicErosion
 				float dissolveAmount = ( sedimentCapacity - m_sedimentAmount ) * m_dissolvingConstant;
 
 				// take it from the terrain
-				m_terrainElevation[ y, x ] -= dissolveAmount;
+				m_outputElevation[ y, x ] -= dissolveAmount;
 
 				// add it to the drop
 				m_sedimentAmount += dissolveAmount;
@@ -306,7 +324,7 @@ public class HydraulicErosion
 			}
 
 			// get the height of the terrain that this drop is on
-			var thisHeight = m_terrainElevation[ y, x ];
+			var thisHeight = m_outputElevation[ y, x ];
 
 			// choose the direction we want to accelerate towards (pick the direction with the steepest decline)
 			var chosenDeltaHeight = 0.0f;
@@ -319,23 +337,16 @@ public class HydraulicErosion
 				var neighborY = y + m_dy[ direction ];
 
 				// there are no neighbors off the map to the north or south
-				if ( ( neighborY < 0 ) || ( neighborY >= m_height ) )
+				if ( ( neighborY < 0 ) || ( neighborY >= m_outputElevationHeight ) )
 				{
 					continue;
 				}
 
 				// wrap if the neighbor is off the map to the east or west
-				if ( neighborX < 0 )
-				{
-					neighborX += m_width;
-				}
-				else if ( neighborX >= m_width )
-				{
-					neighborX -= m_width;
-				}
+				neighborX = ( neighborX + m_outputElevationWidthMask ) & m_outputElevationWidthMask;
 
 				// get the terrain height of neighboring cell
-				var neighborHeight = m_terrainElevation[ neighborY, neighborX ];
+				var neighborHeight = m_outputElevation[ neighborY, neighborX ];
 
 				// calculate the height difference
 				var deltaHeight = neighborHeight - thisHeight;
