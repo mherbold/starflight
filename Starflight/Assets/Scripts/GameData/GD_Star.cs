@@ -44,7 +44,7 @@ public class GD_Star
 		{
 			if ( planet.m_starId == m_id )
 			{
-				m_planetList[ planet.m_orbitPosition ] = planet;
+				m_planetList[ planet.m_orbitPosition - 1 ] = planet;
 			}
 		}
 
@@ -84,8 +84,8 @@ public class GD_Star
 		return m_planetList;
 	}
 
-	public GD_Planet GetPlanet( int orbitPosition )
+	public GD_Planet GetPlanet( int orbitPositionMinusOne )
 	{
-		return m_planetList[ orbitPosition ];
+		return m_planetList[ orbitPositionMinusOne ];
 	}
 }

@@ -257,7 +257,7 @@ public class StarSystem : MonoBehaviour
 		{
 			if ( ( planet != null ) && ( planet.m_id != -1 ) )
 			{
-				m_planetController[ planet.m_orbitPosition ].EnablePlanet();
+				m_planetController[ planet.m_orbitPosition - 1 ].EnablePlanet();
 			}
 		}
 	}
@@ -334,7 +334,7 @@ public class StarSystem : MonoBehaviour
 			{
 				var progress = planetController.GenerateMaps();
 
-				totalProgress += progress / 1.4f / 8.0f;
+				totalProgress += progress / 1.3f / 8.0f;
 				break;
 			}
 

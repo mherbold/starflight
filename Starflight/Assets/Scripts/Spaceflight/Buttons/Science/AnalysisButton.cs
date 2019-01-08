@@ -50,7 +50,7 @@ public class AnalysisButton : ShipButton
 				GD_Planet planet = gameData.m_planetList[ playerData.m_general.m_currentPlanetId ];
 
 				// object and orbit number
-				text += "Object: <color=white>Planet</color>   Orbit Number: <color=white>" + ( planet.m_orbitPosition + 1 ) + "</color>\n";
+				text += "Object: <color=white>Planet</color>   Orbit Number: <color=white>" + planet.m_orbitPosition + "</color>\n";
 
 				// surface
 				text += "Predominant Surface: <color=white>" + planet.GetSurfaceText() + "</color>\n";

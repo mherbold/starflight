@@ -53,7 +53,7 @@ public class SystemDisplay : ShipDisplay
 				Quaternion rotation = Quaternion.Euler( 0.0f, 0.0f, orbitAngle );
 
 				// set the new rotation on the orbit game object
-				m_orbitList[ planet.m_orbitPosition ].transform.rotation = rotation;
+				m_orbitList[ planet.m_orbitPosition - 1 ].transform.rotation = rotation;
 			}
 		}
 
@@ -125,7 +125,7 @@ public class SystemDisplay : ShipDisplay
 				color = new Color( surface.m_colorR / 255.0f, surface.m_colorG / 255.0f, surface.m_colorB / 255.0f );
 
 				// update the material with the new color
-				m_planetList[ planet.m_orbitPosition ].material.SetColor( "SF_AlbedoColor", color );
+				m_planetList[ planet.m_orbitPosition - 1 ].material.SetColor( "SF_AlbedoColor", color );
 			}
 		}
 	}

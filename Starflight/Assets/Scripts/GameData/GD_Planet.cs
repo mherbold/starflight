@@ -71,7 +71,7 @@ public class GD_Planet
 		var playerData = DataController.m_instance.m_playerData;
 
 		// calculate number of days per year for each planet based on orbit number - orbit 3 should = 366 days like earth
-		var daysPerYear = 122 * ( m_orbitPosition + 1 );
+		var daysPerYear = 122 * m_orbitPosition;
 
 		// update the orbit angle
 		return ( ( playerData.m_general.m_gameTime + 1000.0f + ( m_starId * 4 ) ) / daysPerYear ) * 360.0f;
@@ -84,7 +84,7 @@ public class GD_Planet
 		var orbitAngle = GetOrbitAngle() * ( Mathf.PI / 180.0f );
 
 		// calculate the distance of the planet from the sun
-		var distance = Mathf.Lerp( 50.0f, 225.0f, m_orbitPosition / 7.0f ) * ( 8192.0f / 256.0f );
+		var distance = Mathf.Lerp( 50.0f, 225.0f, ( m_orbitPosition - 1 ) / 7.0f ) * ( 8192.0f / 256.0f );
 
 		// calculate the position of the planet
 		return new Vector3( -Mathf.Sin( orbitAngle ) * distance, 0.0f, Mathf.Cos( orbitAngle ) * distance );

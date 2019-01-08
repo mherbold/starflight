@@ -152,10 +152,10 @@ public class Planet : MonoBehaviour
 		return m_material;
 	}
 
-	// get the legend texture for this planet
-	public Texture2D GetLegendTexture()
+	// get the surface id of this planet
+	public int GetSurfaceId()
 	{
-		return m_planetGenerator.m_legendTexture;
+		return m_planet.m_surfaceId;
 	}
 
 	// return true if all maps have been generated or false if not
@@ -174,7 +174,11 @@ public class Planet : MonoBehaviour
 	{
 		float progress = m_planetGenerator.Process();
 
-		if ( m_planetGenerator.m_mapsGenerated )
+		if ( m_planetGenerator.m_abort )
+		{
+			m_mapsGenerated = true;
+		}
+		else if ( m_planetGenerator.m_mapsGenerated )
 		{
 			m_mapsGenerated = true;
 

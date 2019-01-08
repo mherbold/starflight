@@ -7,8 +7,8 @@ public class TerrainMapDisplay : ShipDisplay
 	// the map
 	public MeshRenderer m_map;
 
-	// the legend
-	public Image m_legendImage;
+	// the legends
+	public Image[] m_legendImages;
 
 	// unity start
 	public override void Start()
@@ -41,12 +41,17 @@ public class TerrainMapDisplay : ShipDisplay
 		// switch to the planet controller's material
 		m_map.material = planetController.GetMaterial();
 
-		// create a new material for the legend
-		var legendTexture = planetController.GetLegendTexture();
+		// hide all the legends
+		foreach ( var legendImage in m_legendImages )
+		{
+			legendImage.enabled = false;
+		}
+		
+		// get the surface id from the planet controller
+		var surfaceId = planetController.GetSurfaceId();
 
-		var sprite = Sprite.Create( legendTexture, new Rect( 0.0f, 0.0f, legendTexture.width, legendTexture.height ), new Vector2( 0.5f, 0.5f ) );
-
-		m_legendImage.sprite = sprite;
+		// enable the correct legend
+		m_legendImages[ surfaceId ].enabled = true;
 	}
 
 	// hide
