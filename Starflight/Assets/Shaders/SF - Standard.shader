@@ -141,7 +141,6 @@ Shader "Starflight/Standard"
 			CGPROGRAM
 
 				#pragma target 3.0
-				#pragma multi_compile_fwdbase
 
 				#pragma shader_feature SF_ALBEDOMAP_ON
 				#pragma shader_feature SF_ALPHA_ON

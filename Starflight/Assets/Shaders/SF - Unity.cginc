@@ -45,7 +45,11 @@ float4 UnityApplyLinearShadowBias( float4 clipPos ) { return 1; }
 
 #endif // UNITY_SHADER_VARIABLES_INCLUDED
 
+#ifndef SHADOWMAPSAMPLER_DEFINED
+
 UNITY_DECLARE_SHADOWMAP( _ShadowMapTexture );
+
+#endif // !SHADOWMAPSAMPLER_DEFINED
 
 sampler3D _DitherMaskLOD;
 
