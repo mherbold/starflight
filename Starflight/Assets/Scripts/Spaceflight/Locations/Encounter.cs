@@ -722,6 +722,9 @@ public class Encounter : MonoBehaviour
 
 					// no more questions from the mechans
 					m_pdEncounter.m_questionLikelihood = 0;
+
+					// mechans want to terminate comms shortly
+					m_pdEncounter.m_connectionTimer = 15.0f;
 				}
 			}
 		}
