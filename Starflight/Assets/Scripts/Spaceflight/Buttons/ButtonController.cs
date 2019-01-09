@@ -165,11 +165,14 @@ public class ButtonController : MonoBehaviour
 
 				if ( m_selectedButtonIndex < ( m_buttonList.Length - 1 ) )
 				{
-					m_selectedButtonIndex++;
+					if ( m_buttonList[ m_selectedButtonIndex + 1 ] != null )
+					{
+						m_selectedButtonIndex++;
 
-					UpdateButtonSprites();
+						UpdateButtonSprites();
 
-					SoundController.m_instance.PlaySound( SoundController.Sound.Click );
+						SoundController.m_instance.PlaySound( SoundController.Sound.Click );
+					}
 				}
 			}
 		}
