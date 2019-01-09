@@ -7,22 +7,32 @@ ModelImporter:
     100002: One Side
     100004: The Other Side
     100006: //RootNode
+    100008: Probe Hull
+    100010: Drone Hull
     400000: Center
     400002: One Side
     400004: The Other Side
     400006: //RootNode
+    400008: Probe Hull
+    400010: Drone Hull
     2100000: 'Material #163'
     2100002: 'Material #158'
     2100004: 'Material #159'
     2300000: Center
     2300002: One Side
     2300004: The Other Side
+    2300006: Probe Hull
+    2300008: Drone Hull
     3300000: Center
     3300002: One Side
     3300004: The Other Side
+    3300006: Probe Hull
+    3300008: Drone Hull
     4300000: Center
     4300002: One Side
     4300004: The Other Side
+    4300006: Probe Hull
+    4300008: Drone Hull
   externalObjects: {}
   materials:
     importMaterials: 0
@@ -57,6 +67,7 @@ ModelImporter:
     globalScale: 1
     meshCompression: 0
     addColliders: 0
+    useSRGBMaterialColor: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
@@ -81,6 +92,9 @@ ModelImporter:
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
   importAnimation: 0
   copyAvatar: 0
   humanDescription:

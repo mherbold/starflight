@@ -5192,10 +5192,10 @@ RectTransform:
   m_Father: {fileID: 588838510}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -40.833336}
-  m_SizeDelta: {x: 464, y: 40.833336}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &21829709
 MonoBehaviour:
@@ -7374,10 +7374,10 @@ RectTransform:
   m_Father: {fileID: 851218158}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 512, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 256, y: -240}
+  m_SizeDelta: {x: 512, y: 224}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &157592523
 MonoBehaviour:
@@ -8956,10 +8956,10 @@ RectTransform:
   m_Father: {fileID: 588838510}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -163.33334}
-  m_SizeDelta: {x: 464, y: 40.833336}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &253126115
 MonoBehaviour:
@@ -11404,7 +11404,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100006, guid: 69190006130800048b2e5f9f38b1b243, type: 3}
       propertyPath: m_Name
-      value: Velox Probe
+      value: Velox Drone
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 69190006130800048b2e5f9f38b1b243, type: 3}
       propertyPath: m_Layer
@@ -11488,6 +11488,22 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: fa132983c11cbc94093b0beaeb224724, type: 2}
     - target: {fileID: 2300004, guid: 69190006130800048b2e5f9f38b1b243, type: 3}
       propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: d8f6e51132de16741b70a27fc981675e, type: 2}
+    - target: {fileID: 2300008, guid: 69190006130800048b2e5f9f38b1b243, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d70335021cfdf4b41aa48fb1d635a111, type: 2}
+    - target: {fileID: 2300008, guid: 69190006130800048b2e5f9f38b1b243, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: d2ba79091e8180342871472d9ad5a99c, type: 2}
+    - target: {fileID: 2300008, guid: 69190006130800048b2e5f9f38b1b243, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: fa132983c11cbc94093b0beaeb224724, type: 2}
+    - target: {fileID: 2300008, guid: 69190006130800048b2e5f9f38b1b243, type: 3}
+      propertyPath: m_Materials.Array.data[3]
       value: 
       objectReference: {fileID: 2100000, guid: d8f6e51132de16741b70a27fc981675e, type: 2}
     m_RemovedComponents: []
@@ -15625,7 +15641,7 @@ GameObject:
   m_Component:
   - component: {fileID: 686292990}
   m_Layer: 0
-  m_Name: Velox Probe
+  m_Name: Velox Drone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16016,10 +16032,10 @@ RectTransform:
   m_Father: {fileID: 101842344}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 224, y: -112}
+  m_SizeDelta: {x: 448, y: 224}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &730412501
 MonoBehaviour:
@@ -17277,7 +17293,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &851218158
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17727,10 +17743,10 @@ RectTransform:
   m_Father: {fileID: 588838510}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -204.16669}
-  m_SizeDelta: {x: 464, y: 40.833336}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &898260643
 MonoBehaviour:
@@ -19400,10 +19416,10 @@ RectTransform:
   m_Father: {fileID: 588838510}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -122.50001}
-  m_SizeDelta: {x: 464, y: 40.833336}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &991214427
 MonoBehaviour:
@@ -20026,10 +20042,10 @@ RectTransform:
   m_Father: {fileID: 588838510}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 232, y: -20.416672}
-  m_SizeDelta: {x: 464, y: 40.833336}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1028148464
 MonoBehaviour:
@@ -35148,7 +35164,7 @@ GameObject:
   - component: {fileID: 1368741119}
   - component: {fileID: 1368741122}
   m_Layer: 0
-  m_Name: Velox Probe Camera
+  m_Name: Velox Drone Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35991,7 +36007,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 2800000, guid: d01d1102e335ca64cb76963674ede0a0, type: 3}
   - {fileID: 2800000, guid: f8978b0ee9ae07c41a73089cfcbd386a, type: 3}
   - {fileID: 2800000, guid: f9cdf762c3e399e498e7c295adbe29dc, type: 3}
   - {fileID: 0}
@@ -36019,7 +36035,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 2800000, guid: 96ef4f8de64009543911ab69c2f5b19b, type: 3}
   - {fileID: 2800000, guid: 4fb97764f1efd374d9f97af100758c77, type: 3}
   - {fileID: 2800000, guid: c2861518a3715684b94e892e446fa26f, type: 3}
   - {fileID: 0}
@@ -42564,7 +42580,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1646402544
 RectTransform:
   m_ObjectHideFlags: 0
@@ -45320,10 +45336,10 @@ RectTransform:
   m_Father: {fileID: 588838510}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -81.66667}
-  m_SizeDelta: {x: 464, y: 40.833336}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1725246824
 MonoBehaviour:
@@ -45833,10 +45849,10 @@ RectTransform:
   m_Father: {fileID: 1646402544}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 256, y: -362.5}
-  m_SizeDelta: {x: 512, y: 203}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1745289313
 MonoBehaviour:
@@ -48310,7 +48326,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 212, y: -15.166667}
+  m_AnchoredPosition: {x: 212, y: -15.166668}
   m_SizeDelta: {x: 424, y: 30.333334}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1960921345
@@ -48464,7 +48480,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1965980150
 Transform:
   m_ObjectHideFlags: 0
@@ -48857,7 +48873,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: e26148b8b7a13b64d93bc449d062d5a3, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: e26148b8b7a13b64d93bc449d062d5a3, type: 3}
       propertyPath: m_Layer
@@ -50091,10 +50107,10 @@ RectTransform:
   m_Father: {fileID: 1646402544}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 512, y: 245}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2053083282
 MonoBehaviour:
@@ -50672,10 +50688,10 @@ RectTransform:
   m_Father: {fileID: 101842344}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 472, y: -112}
+  m_SizeDelta: {x: 16, y: 224}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2096002999
 MonoBehaviour:

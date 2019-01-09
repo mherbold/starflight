@@ -25,7 +25,7 @@ public class SensorsDisplay : ShipDisplay
 		GazurtoidWarship,
 		UhlekScout,
 		UhlekWarship,
-		VeloxiDrone,
+		VeloxDrone,
 		NomadProbe,
 		Mysterion,
 		TheEnterprise,
