@@ -35993,7 +35993,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 2800000, guid: f9cdf762c3e399e498e7c295adbe29dc, type: 3}
   - {fileID: 0}
   - {fileID: 2800000, guid: 4df34ffeb3721df43989d450f463ebd0, type: 3}
   - {fileID: 0}
@@ -36021,7 +36021,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 2800000, guid: c2861518a3715684b94e892e446fa26f, type: 3}
   - {fileID: 0}
   - {fileID: 2800000, guid: d8870cc568d5f2e49843235c4933342b, type: 3}
   - {fileID: 0}
