@@ -401,6 +401,9 @@ public class Encounter : MonoBehaviour
 
 		// slide the message box out
 		m_spaceflightController.m_messages.SlideOut();
+
+		// force an update now
+		Update();
 	}
 
 	// adds a number of alien ships to the encounter - up to the maximum allowed by the encounter
