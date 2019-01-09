@@ -34,16 +34,6 @@ public class PD_ElementStorage
 		return null;
 	}
 
-	// search for an element in storage by name
-	public PD_ElementReference Find( string name )
-	{
-		var gameData = DataController.m_instance.m_gameData;
-
-		var elementId = gameData.FindElementId( name );
-
-		return Find( elementId );
-	}
-
 	// add the specified amount of the element to storage
 	public void Add( int elementId, int volume )
 	{

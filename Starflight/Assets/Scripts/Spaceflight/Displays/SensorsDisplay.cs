@@ -179,24 +179,66 @@ public class SensorsDisplay : ShipDisplay
 		// is the cinematics done?
 		if ( !m_isDoingCinematics )
 		{
-			// yes - were we scanning a planet?
-			if ( m_scanType == ScanType.Planet )
-			{
-				// get the current planet
-				var planet = gameData.m_planetList[ playerData.m_general.m_currentPlanetId ];
+			// what were we scanning?
 
-				// get the planet info
-				var atmosphere = planet.GetAtmosphereText();
-				var hydrosphere = planet.GetHydrosphereText();
-				var lithosphere = planet.GetLithosphereText();
-
-				// update the messages text
-				m_spaceflightController.m_messages.ChangeText( "Atmosphere:\n<color=white>" + atmosphere + "</color>\nHydrosphere:\n<color=white>" + hydrosphere + "</color>\nLithosphere:\n<color=white>" + lithosphere + "</color>" );
-			}
-			else
+			switch ( m_scanType )
 			{
-				// TODO: show ship information
-				m_spaceflightController.m_messages.ChangeText( "" );
+				case ScanType.Planet:
+				{
+					// get the current planet
+					var planet = gameData.m_planetList[ playerData.m_general.m_currentPlanetId ];
+
+					// get the planet info
+					var atmosphere = planet.GetAtmosphereText();
+					var hydrosphere = planet.GetHydrosphereText();
+					var lithosphere = planet.GetLithosphereText();
+
+					// update the messages text
+					m_spaceflightController.m_messages.ChangeText( "Atmosphere:\n<color=white>" + atmosphere + "</color>\nHydrosphere:\n<color=white>" + hydrosphere + "</color>\nLithosphere:\n<color=white>" + lithosphere + "</color>" );
+
+					break;
+				}
+
+				default:
+				{
+					// display the ship information
+					var vessel = gameData.m_vesselList[ (int) m_scanType ];
+
+					string text = "Object Constituents:";
+
+					if ( vessel.m_enduriumVolume > 0 )
+					{
+						var elementName = gameData.m_elementList[ gameData.m_misc.m_enduriumElementId ].m_name;
+
+						text += "\n<color=white>" + elementName + "</color>";
+					}
+
+					if ( vessel.m_elementVolumeA > 0 )
+					{
+						var elementName = gameData.m_elementList[ vessel.m_elementIdA ].m_name;
+
+						text += "\n<color=white>" + elementName + "</color>";
+					}
+
+					if ( vessel.m_elementVolumeB > 0 )
+					{
+						var elementName = gameData.m_elementList[ vessel.m_elementIdB ].m_name;
+
+						text += "\n<color=white>" + elementName + "</color>";
+					}
+
+					if ( vessel.m_elementVolumeC > 0 )
+					{
+						var elementName = gameData.m_elementList[ vessel.m_elementIdC ].m_name;
+
+						text += "\n<color=white>" + elementName + "</color>";
+					}
+
+					// update the messages text
+					m_spaceflightController.m_messages.ChangeText( text );
+
+					break;
+				}
 			}
 		}
 

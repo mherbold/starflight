@@ -15,8 +15,6 @@ public class GD_Vessel
 	public int m_bioDensity;
 	public int m_mass;
 
-	public float m_relativeSize;
-
 	public int m_moveDelay;
 	public int m_fireDelay;
 

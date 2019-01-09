@@ -67,7 +67,7 @@ public class ShipConfigurationPanel : Panel
 		m_ignoreControllerTimer = 0.0f;
 
 		// remember the base selection offset
-		RectTransform rectTransform = m_selectionXform.GetComponent<RectTransform>();
+		var rectTransform = m_selectionXform.GetComponent<RectTransform>();
 		m_baseSelectionOffsetMin = rectTransform.offsetMin;
 		m_baseSelectionOffsetMax = rectTransform.offsetMax;
 	}
@@ -95,13 +95,13 @@ public class ShipConfigurationPanel : Panel
 	public override void Close()
 	{
 		// if the bank balance has changed then record it in the bank transaction log
-		int deltaBalance = m_startingBankBalance - DataController.m_instance.m_playerData.m_bank.m_currentBalance;
+		var deltaBalance = m_startingBankBalance - DataController.m_instance.m_playerData.m_bank.m_currentBalance;
 
 		if ( deltaBalance != 0 )
 		{
-			string sign = ( deltaBalance > 0 ) ? "-" : "+";
+			var sign = ( deltaBalance > 0 ) ? "-" : "+";
 
-			PD_Bank.Transaction transaction = new PD_Bank.Transaction( DataController.m_instance.m_playerData.m_general.m_currentStardateYMD, "Ship Configuration", deltaBalance.ToString() + sign );
+			var transaction = new PD_Bank.Transaction( DataController.m_instance.m_playerData.m_general.m_currentStardateYMD, "Ship Configuration", deltaBalance.ToString() + sign );
 
 			DataController.m_instance.m_playerData.m_bank.m_transactionList.Add( transaction );
 		}
@@ -431,11 +431,20 @@ public class ShipConfigurationPanel : Panel
 	// call this whenever we change state or do something that would result in something changing on the screen
 	void UpdateScreen()
 	{
+		// get the game data
+		var gameData = DataController.m_instance.m_gameData;
+
+		// get the player data
+		var playerData = DataController.m_instance.m_playerData;
+
+		// get the ship player data
+		var ship = playerData.m_playerShip;
+
 		// clear out the component values text
 		m_componentValuesText.text = "";
 
 		// reset game objects and buttons
-		bool[] gameObjectIsVisible = new bool[ (int) GameObjects.GameObjectCount ];
+		var gameObjectIsVisible = new bool[ (int) GameObjects.GameObjectCount ];
 
 		switch ( m_currentState )
 		{
@@ -476,7 +485,7 @@ public class ShipConfigurationPanel : Panel
 		}
 
 		// enable or disable buttons now
-		bool enableButtons = ( m_currentState == State.MenuBar );
+		var enableButtons = ( m_currentState == State.MenuBar );
 
 		m_buyButton.interactable = enableButtons;
 		m_sellButton.interactable = enableButtons;
@@ -493,12 +502,6 @@ public class ShipConfigurationPanel : Panel
 		m_upArrowImage.gameObject.SetActive( gameObjectIsVisible[ (int) GameObjects.UpArrowImage ] );
 		m_downArrowImage.gameObject.SetActive( gameObjectIsVisible[ (int) GameObjects.DownArrowImage ] );
 
-		// get the player data
-		PlayerData playerData = DataController.m_instance.m_playerData;
-
-		// get the ship player data
-		PD_PlayerShip ship = playerData.m_playerShip;
-
 		// update configuration values
 		m_configurationValuesText.text = ship.m_numCargoPods.ToString() + Environment.NewLine;
 		m_configurationValuesText.text += Environment.NewLine;
@@ -509,7 +512,7 @@ public class ShipConfigurationPanel : Panel
 		m_configurationValuesText.text += ship.GetLaserCannon().m_name + Environment.NewLine;
 
 		// show only as many cargo pods as we have purchased
-		for ( int cargoPodId = 0; cargoPodId < m_cargoPods.Length; cargoPodId++ )
+		for ( var cargoPodId = 0; cargoPodId < m_cargoPods.Length; cargoPodId++ )
 		{
 			m_cargoPods[ cargoPodId ].SetActive( cargoPodId < ship.m_numCargoPods );
 		}
@@ -528,7 +531,7 @@ public class ShipConfigurationPanel : Panel
 		m_statusValuesText.text += ship.m_acceleration + " G" + Environment.NewLine;
 
 		// report the amount of endurium on the ship
-		PD_ElementReference elementReference = playerData.m_playerShip.m_elementStorage.Find( "Endurium" );
+		var elementReference = playerData.m_playerShip.m_elementStorage.Find( gameData.m_misc.m_enduriumElementId );
 
 		if ( elementReference == null )
 		{
@@ -565,9 +568,9 @@ public class ShipConfigurationPanel : Panel
 		}
 
 		// put the part selection box in the right place
-		float offset = ( ( m_currentPartIndex == 0 ) ? 0 : ( m_currentPartIndex + 1 ) ) * m_componentNamesText.renderedHeight / c_numComponentValuesLines;
+		var offset = ( ( m_currentPartIndex == 0 ) ? 0 : ( m_currentPartIndex + 1 ) ) * m_componentNamesText.renderedHeight / c_numComponentValuesLines;
 
-		RectTransform rectTransform = m_selectionXform.GetComponent<RectTransform>();
+		var rectTransform = m_selectionXform.GetComponent<RectTransform>();
 		rectTransform.offsetMin = m_baseSelectionOffsetMin + new Vector3( 0.0f, -offset, 0.0f );
 		rectTransform.offsetMax = m_baseSelectionOffsetMax + new Vector3( 0.0f, -offset, 0.0f );
 	}
@@ -594,9 +597,9 @@ public class ShipConfigurationPanel : Panel
 		}
 
 		// put the part selection box in the right place
-		float offset = ( ( m_currentPartIndex == 0 ) ? 0 : ( m_currentPartIndex + 1 ) ) * m_componentNamesText.renderedHeight / c_numComponentValuesLines;
+		var offset = ( ( m_currentPartIndex == 0 ) ? 0 : ( m_currentPartIndex + 1 ) ) * m_componentNamesText.renderedHeight / c_numComponentValuesLines;
 
-		RectTransform rectTransform = m_selectionXform.GetComponent<RectTransform>();
+		var rectTransform = m_selectionXform.GetComponent<RectTransform>();
 		rectTransform.offsetMin = m_baseSelectionOffsetMin + new Vector3( 0.0f, -offset, 0.0f );
 		rectTransform.offsetMax = m_baseSelectionOffsetMax + new Vector3( 0.0f, -offset, 0.0f );
 	}
@@ -613,7 +616,7 @@ public class ShipConfigurationPanel : Panel
 		// put the selected part box in the right place
 		float offset = ( m_currentPartIndex + 1 ) * m_componentNamesText.renderedHeight / c_numComponentValuesLines;
 
-		RectTransform rectTransform = m_selectedPartPanel.GetComponent<RectTransform>();
+		var rectTransform = m_selectedPartPanel.GetComponent<RectTransform>();
 		rectTransform.offsetMin = m_baseSelectionOffsetMin + new Vector3( 0.0f, -offset, 0.0f );
 		rectTransform.offsetMax = m_baseSelectionOffsetMax + new Vector3( 0.0f, -offset, 0.0f );
 
@@ -740,10 +743,10 @@ public class ShipConfigurationPanel : Panel
 		else // we are buying a part
 		{
 			// get to the player data
-			PlayerData playerData = DataController.m_instance.m_playerData;
+			var playerData = DataController.m_instance.m_playerData;
 
 			// get what is currently installed on the ship
-			int currentClass = 0;
+			var currentClass = 0;
 
 			switch ( m_currentPartIndex )
 			{
@@ -779,10 +782,10 @@ public class ShipConfigurationPanel : Panel
 		else // we are selling a part
 		{
 			// get to the player data
-			PlayerData playerData = DataController.m_instance.m_playerData;
+			var playerData = DataController.m_instance.m_playerData;
 
 			// get what is currently installed on the ship
-			int currentClass = 0;
+			var currentClass = 0;
 
 			switch ( m_currentPartIndex )
 			{
@@ -797,7 +800,7 @@ public class ShipConfigurationPanel : Panel
 			if ( currentClass != 0 )
 			{
 				// get to the game data
-				GameData gameData = DataController.m_instance.m_gameData;
+				var gameData = DataController.m_instance.m_gameData;
 
 				// get the part list
 				GD_ShipPart[] shipPartList = null;
@@ -840,7 +843,7 @@ public class ShipConfigurationPanel : Panel
 	void BuySelectedClass()
 	{
 		// get to the game data
-		GameData gameData = DataController.m_instance.m_gameData;
+		var gameData = DataController.m_instance.m_gameData;
 
 		// get the ship part list
 		GD_ShipPart[] shipPartList = null;
@@ -855,10 +858,10 @@ public class ShipConfigurationPanel : Panel
 		}
 
 		// get to the player data
-		PlayerData playerData = DataController.m_instance.m_playerData;
+		var playerData = DataController.m_instance.m_playerData;
 
 		// get the class to buy
-		int classIndex = m_currentClassIndex + 1;
+		var classIndex = m_currentClassIndex + 1;
 
 		// check if the player can afford it
 		if ( playerData.m_bank.m_currentBalance < shipPartList[ classIndex ].m_buyPrice )
@@ -896,10 +899,10 @@ public class ShipConfigurationPanel : Panel
 	void UpdatePartPrices( bool includeCargoPods = true )
 	{
 		// get to the game data
-		GameData gameData = DataController.m_instance.m_gameData;
+		var gameData = DataController.m_instance.m_gameData;
 
 		// get to the player data
-		PlayerData playerData = DataController.m_instance.m_playerData;
+		var playerData = DataController.m_instance.m_playerData;
 
 		// check if we are selling
 		if ( m_currentState == State.SellPart )
@@ -928,7 +931,7 @@ public class ShipConfigurationPanel : Panel
 		}
 
 		// get what is currently installed on the ship
-		int currentClass = 0;
+		var currentClass = 0;
 
 		switch ( m_currentPartIndex )
 		{
@@ -953,7 +956,7 @@ public class ShipConfigurationPanel : Panel
 				case 5: shipPartList = gameData.m_laserCannonList; break;
 			}
 
-			for ( int classIndex = 1; classIndex < shipPartList.Length; classIndex++ )
+			for ( var classIndex = 1; classIndex < shipPartList.Length; classIndex++ )
 			{
 				// check if we are selling
 				if ( m_currentState == State.SellPart )
@@ -981,10 +984,10 @@ public class ShipConfigurationPanel : Panel
 	void BuyCargoPod()
 	{
 		// get to the game data
-		GameData gameData = DataController.m_instance.m_gameData;
+		var gameData = DataController.m_instance.m_gameData;
 
 		// get to the player data
-		PlayerData playerData = DataController.m_instance.m_playerData;
+		var playerData = DataController.m_instance.m_playerData;
 
 		// check if we have room for another cargo pod
 		if ( playerData.m_playerShip.m_numCargoPods == 16 )
@@ -1021,10 +1024,10 @@ public class ShipConfigurationPanel : Panel
 	void SellCargoPod()
 	{
 		// get to the game data
-		GameData gameData = DataController.m_instance.m_gameData;
+		var gameData = DataController.m_instance.m_gameData;
 
 		// get to the player data
-		PlayerData playerData = DataController.m_instance.m_playerData;
+		var playerData = DataController.m_instance.m_playerData;
 
 		// check if we have room for another cargo pod
 		if ( playerData.m_playerShip.m_numCargoPods > 0 )

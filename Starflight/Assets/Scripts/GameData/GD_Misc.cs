@@ -8,6 +8,8 @@ public class GD_Misc
 	public int m_arthStarId;
 	public int m_arthPlanetId;
 
+	public int m_enduriumElementId;
+
 	public int m_artifactAnalysisPrice;
 
 	public int m_baseShipMass;

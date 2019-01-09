@@ -61,7 +61,7 @@ public class AnalysisButton : ShipButton
 					text += "Object: <color=white>" + vessel.m_object + "</color>\n";
 
 					// size
-					text += "Size: <color=white>" + vessel.m_relativeSize + " times the size of our ship</color>\n";
+					text += "Size: <color=white>" + ( vessel.m_mass / playerData.m_playerShip.m_mass ) + " times the size of our ship</color>\n";
 
 					break;
 				}
@@ -78,7 +78,7 @@ public class AnalysisButton : ShipButton
 					text += "Type: <color=white>" + vessel.m_type + "</color>\n";
 
 					// size
-					text += "Size: <color=white>" + vessel.m_relativeSize + " times the size of our ship</color>\n";
+					text += "Size: <color=white>" + ( vessel.m_mass / playerData.m_playerShip.m_mass ) + " times the size of our ship</color>\n";
 
 					// shields
 					text += "Shields: <color=yellow>Not certain</color>\n";
