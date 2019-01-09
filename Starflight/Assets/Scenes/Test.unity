@@ -3902,7 +3902,7 @@ GameObject:
   - component: {fileID: 742975647}
   - component: {fileID: 742975648}
   m_Layer: 0
-  m_Name: White Light
+  m_Name: Green Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14114,7 +14114,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1529366769
 Transform:
   m_ObjectHideFlags: 0
@@ -15378,7 +15378,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1851621104
 Transform:
   m_ObjectHideFlags: 0
