@@ -14,8 +14,11 @@ public class ScaleMeshToRectBounds : MonoBehaviour
 		// grab the rect transform
 		var rectTransform = GetComponent<RectTransform>();
 
+		// get the mesh
+		var mesh = meshFilter.sharedMesh;
+
 		// get the mesh bounds
-		var bounds = meshFilter.mesh.bounds;
+		var bounds = mesh.bounds;
 
 		// calculate the mesh size in X and Y
 		var xMeshSize = bounds.extents.x * 2;
