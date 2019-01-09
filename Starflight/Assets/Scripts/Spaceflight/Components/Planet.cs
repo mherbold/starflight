@@ -13,7 +13,7 @@ public class Planet : MonoBehaviour
 	public MeshRenderer m_planetClouds;
 
 	// access to the planet atmosphere
-	public MeshRenderer m_planetAtmosphere;
+	public GameObject[] m_planetAtmospheres;
 
 	// access to the starport model
 	public GameObject m_starportModel;
@@ -133,7 +133,7 @@ public class Planet : MonoBehaviour
 		m_planetClouds.transform.localPosition = m_planetModel.transform.localPosition;
 
 		// set up the clouds and atmosphere
-		SetupClouds( m_planetClouds, m_planetAtmosphere );
+		SetupClouds( m_planetClouds, m_planetAtmospheres );
 	}
 
 	// call this to get the distance to the player
@@ -196,7 +196,7 @@ public class Planet : MonoBehaviour
 	}
 
 	// sets up the clouds based on planet properties
-	public void SetupClouds( MeshRenderer planetClouds, MeshRenderer planetAtmosphere )
+	public void SetupClouds( MeshRenderer planetClouds, GameObject [] planetAtmospheres )
 	{
 		// does the planet have an atmosphere?
 		if ( m_planet.HasAtmosphere() )
@@ -205,7 +205,8 @@ public class Planet : MonoBehaviour
 			planetClouds.gameObject.SetActive( true );
 
 			// show the atmosphere
-			planetAtmosphere.gameObject.SetActive( true );
+			planetAtmospheres[ 0 ].SetActive( true );
+			planetAtmospheres[ 1 ].SetActive( true );
 
 			// get the atmosphere density
 			var atmosphereDensity = m_planet.GetAtmosphereDensity();
@@ -235,7 +236,8 @@ public class Planet : MonoBehaviour
 			color = new Color( atmosphere.m_colorR / 255.0f, atmosphere.m_colorG / 255.0f, atmosphere.m_colorB / 255.0f );
 
 			// apply the color to the atmosphere
-			planetAtmosphere.material.SetColor( "SF_AlbedoColor", color );
+			planetAtmospheres[ 0 ].GetComponent<MeshRenderer>().material.SetColor( "SF_AlbedoColor", color );
+			planetAtmospheres[ 1 ].GetComponent<MeshRenderer>().material.SetColor( "SF_AlbedoColor", color );
 		}
 		else
 		{
@@ -243,7 +245,8 @@ public class Planet : MonoBehaviour
 			planetClouds.gameObject.SetActive( false );
 
 			// hide the atmosphere
-			planetAtmosphere.gameObject.SetActive( false );
+			planetAtmospheres[ 0 ].SetActive( false );
+			planetAtmospheres[ 1 ].SetActive( false );
 		}
 	}
 }
