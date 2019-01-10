@@ -8,6 +8,9 @@ public class ScaleMeshToRectBounds : MonoBehaviour
 	// unity start
 	void Start()
 	{
+		// force the canvas to update
+		Canvas.ForceUpdateCanvases();
+
 		// grab the mesh
 		var meshFilter = GetComponent<MeshFilter>();
 

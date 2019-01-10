@@ -7,14 +7,20 @@ public class Map : MonoBehaviour
 	// text elements
 	public TextMeshProUGUI m_coordinates;
 
+	// the fade mesh renderer
+	public MeshRenderer m_fadeMeshRenderer;
+
+	// the ui canvas
+	public Canvas m_canvas;
+
 	// the player camera
 	public Camera m_playerCamera;
 
 	// the cameras that need to use the render texture
 	public Camera[] m_cameras;
 
-	// the map object
-	Material m_material;
+	// the fade material
+	Material m_fadeMaterial;
 
 	// set to true to run the fade sequence
 	bool m_isFading;
@@ -37,57 +43,33 @@ public class Map : MonoBehaviour
 	// unity start
 	void Start()
 	{
-		// force the canvas to update (so rectTransform is updated and correct)
-		Canvas.ForceUpdateCanvases();
-
-		// get the mesh renderer component
-		var meshRenderer = GetComponent<MeshRenderer>();
-
-		// make a copy of the material so it doesnt' get permanently modified
-		m_material = new Material( meshRenderer.material );
-
-		// set the material on the mesh renderer
-		meshRenderer.material = m_material;
-
-		// get the rect transform component
-		var rectTransform = GetComponent<RectTransform>();
-
-		// find the main ui gameobject with the canvas
-		var uiGameObject = GameObject.Find( "UI" );
-
-		// get the canvas component
-		var canvas = uiGameObject.GetComponent<Canvas>();
-
-		// get the current map size (in pixels)
-		var scaleFactor = canvas.scaleFactor;
-
-		var mapSize = new Vector2( rectTransform.rect.width, rectTransform.rect.height ) * canvas.scaleFactor;
-
-		// create a new render texture
-		var renderTexture = new RenderTexture( Mathf.CeilToInt( mapSize.x ), Mathf.CeilToInt( mapSize.y ), 24, RenderTextureFormat.ARGB32 )
-		{
-			antiAliasing = 1,
-			useMipMap = false,
-			autoGenerateMips = false,
-			useDynamicScale = false,
-			wrapMode = TextureWrapMode.Clamp,
-			filterMode = FilterMode.Point,
-			anisoLevel = 0
-		};
-
-		// update the material to use the new render texture as the albedo map
-		m_material.SetTexture( "SF_AlbedoMap", renderTexture );
-
-		// update the various cameras to use the new render texture
-		foreach ( var camera in m_cameras )
-		{
-			camera.targetTexture = renderTexture;
-		}
+		// get the material from the fade mesh renderer
+		m_fadeMaterial = m_fadeMeshRenderer.material;
 	}
 
 	// unity update
 	void Update()
 	{
+		// get the canvas width in pixels
+		var canvasWidth = m_canvas.pixelRect.width;
+
+		// calculate the new rect for a map viewport that fits exactly in the hole
+		var x = 12.0f / canvasWidth * m_canvas.scaleFactor;
+		var y = 12.0f / 1080.0f;
+		var w = 1.0f - ( ( 12.0f + 512.0f ) / canvasWidth * m_canvas.scaleFactor );
+		var h = 1.0f - ( ( 12.0f + 32.0f + 12.0f + 12.0f ) / 1080.0f );
+
+		var newCameraRect = new Rect( x, y, w, h );
+
+		// update the rect on the player camera
+		m_playerCamera.rect = newCameraRect;
+
+		// update all of the encounter cameras
+		foreach ( var camera in m_cameras )
+		{
+			camera.rect = newCameraRect;
+		}
+
 		// are we fading the map?
 		if ( m_isFading )
 		{
@@ -102,11 +84,17 @@ public class Map : MonoBehaviour
 				{
 					// yes - stop fading
 					m_isFading = false;
+
+					// turn off the fade object if necessary
+					if ( m_targetFadeAmount == 1.0f )
+					{
+						m_fadeMeshRenderer.gameObject.SetActive( false );
+					}
 				}
 
 				var alpha = m_isFading ? Mathf.SmoothStep( m_originalFadeAmount, m_targetFadeAmount, m_fadeTimer / m_fadeDuration ) : m_targetFadeAmount;
 
-				m_material.SetColor( "SF_AlbedoColor", new Color( alpha, alpha, alpha ) );
+				m_fadeMaterial.SetColor( "SF_AlbedoColor", new Color( alpha, alpha, alpha ) );
 			}
 		}
 	}
@@ -118,7 +106,10 @@ public class Map : MonoBehaviour
 		if ( fadeDuration == 0.0f )
 		{
 			// yes - make it so
-			m_material.SetColor( "SF_AlbedoColor", new Color( targetFadeAmount, targetFadeAmount, targetFadeAmount ) );
+			m_fadeMaterial.SetColor( "SF_AlbedoColor", new Color( targetFadeAmount, targetFadeAmount, targetFadeAmount ) );
+
+			// make the fade object active if necessary
+			m_fadeMeshRenderer.gameObject.SetActive( targetFadeAmount < 1.0f );
 
 			// if we were previously fading - stop it
 			m_isFading = false;
@@ -135,6 +126,9 @@ public class Map : MonoBehaviour
 				m_fadeDuration = fadeDuration;
 				m_originalFadeAmount = currentFadeAmount;
 				m_targetFadeAmount = targetFadeAmount;
+
+				// make the fade object active
+				m_fadeMeshRenderer.gameObject.SetActive( true );
 			}
 		}
 	}
@@ -149,7 +143,7 @@ public class Map : MonoBehaviour
 	public float GetCurrentFadeAmount()
 	{
 		// get the current color
-		var color = m_material.GetColor( "SF_AlbedoColor" );
+		var color = m_fadeMaterial.GetColor( "SF_AlbedoColor" );
 		
 		// return the current fade amount
 		return color.r;
