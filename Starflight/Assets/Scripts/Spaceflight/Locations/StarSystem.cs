@@ -9,9 +9,6 @@ public class StarSystem : MonoBehaviour
 	// the nebula overlay
 	public GameObject m_nebula;
 
-	// convenient access to the spaceflight controller
-	public SpaceflightController m_spaceflightController;
-
 	// the shine script (so we can change the color)
 	public Shine m_shine;
 
@@ -20,6 +17,9 @@ public class StarSystem : MonoBehaviour
 
 	// remember the current star
 	GD_Star m_currentStar;
+
+	// true if we are generating planets
+	bool m_generatingPlanets;
 
 	// unity awake
 	void Awake()
@@ -34,8 +34,8 @@ public class StarSystem : MonoBehaviour
 	// unity update
 	void Update()
 	{
-		// don't do anything if we have a panel open
-		if ( PanelController.m_instance.HasActivePanel() )
+		// don't do anything if the game is paused
+		if ( SpaceflightController.m_instance.m_gameIsPaused )
 		{
 			return;
 		}
@@ -89,7 +89,7 @@ public class StarSystem : MonoBehaviour
 			playerData.m_general.m_currentMaximumSpeed /= 4.0f;
 
 			// switch modes now
-			m_spaceflightController.SwitchLocation( PD_General.Location.Hyperspace );
+			SpaceflightController.m_instance.SwitchLocation( PD_General.Location.Hyperspace );
 
 			// don't do anything more here now
 			return;
@@ -114,7 +114,7 @@ public class StarSystem : MonoBehaviour
 					m_planetToOrbitId = orbitPlanetController.m_planet.m_id;
 
 					// let the player know
-					m_spaceflightController.m_messages.ChangeText( "<color=white>Ship is within orbital range.</color>" );
+					SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Ship is within orbital range.</color>" );
 				}
 			}
 			else if ( m_planetToOrbitId != -1 )
@@ -125,12 +125,12 @@ public class StarSystem : MonoBehaviour
 				var spectralClass = m_currentStar.GetSpectralClass();
 
 				// display the spectral class and ecosphere
-				m_spaceflightController.m_messages.ChangeText( "<color=white>Stellar Parameters</color>\nSpectral Class: <color=white>" + m_currentStar.m_class + "</color>\nEcosphere: <color=white>" + spectralClass.m_ecosphereMin + " - " + spectralClass.m_ecosphereMax + "</color>" );
+				SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Stellar Parameters</color>\nSpectral Class: <color=white>" + m_currentStar.m_class + "</color>\nEcosphere: <color=white>" + spectralClass.m_ecosphereMin + " - " + spectralClass.m_ecosphereMax + "</color>" );
 			}
 		}
 
 		// update encounters
-		m_spaceflightController.UpdateEncounters();
+		SpaceflightController.m_instance.UpdateEncounters();
 	}
 
 	// call this to initialize the star system before you show it
@@ -163,7 +163,7 @@ public class StarSystem : MonoBehaviour
 		}
 
 		// update the system display
-		m_spaceflightController.m_displayController.m_systemDisplay.ChangeSystem();
+		SpaceflightController.m_instance.m_displayController.m_systemDisplay.ChangeSystem();
 	}
 
 	// call this to hide the starsystem objects
@@ -197,32 +197,32 @@ public class StarSystem : MonoBehaviour
 		gameObject.SetActive( true );
 
 		// make sure the camera is at the right height above the zero plane
-		m_spaceflightController.m_player.DollyCamera( 1024.0f );
-		m_spaceflightController.m_player.SetClipPlanes( 512.0f, 1536.0f );
+		SpaceflightController.m_instance.m_player.DollyCamera( 1024.0f );
+		SpaceflightController.m_instance.m_player.SetClipPlanes( 512.0f, 1536.0f );
 
 		// move the player object
-		m_spaceflightController.m_player.transform.position = playerData.m_general.m_coordinates = playerData.m_general.m_lastStarSystemCoordinates;
+		SpaceflightController.m_instance.m_player.transform.position = playerData.m_general.m_coordinates = playerData.m_general.m_lastStarSystemCoordinates;
 
 		// calculate the new rotation of the player
 		var newRotation = Quaternion.LookRotation( playerData.m_general.m_currentDirection, Vector3.up );
 
 		// update the player rotation
-		m_spaceflightController.m_player.m_ship.rotation = newRotation;
+		SpaceflightController.m_instance.m_player.m_ship.rotation = newRotation;
 
 		// unfreeze the player
-		m_spaceflightController.m_player.Unfreeze();
+		SpaceflightController.m_instance.m_player.Unfreeze();
 
 		// fade in the map
-		m_spaceflightController.m_map.StartFade( 1.0f, 2.0f );
+		SpaceflightController.m_instance.m_viewport.StartFade( 1.0f, 2.0f );
 
 		// show / hide the nebula depending on if we are in one
 		m_nebula.SetActive( m_currentStar.m_insideNebula );
 
 		// show the system display
-		m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_systemDisplay );
+		SpaceflightController.m_instance.m_displayController.ChangeDisplay( SpaceflightController.m_instance.m_displayController.m_systemDisplay );
 
 		// show the radar
-		m_spaceflightController.m_radar.Show();
+		SpaceflightController.m_instance.m_radar.Show();
 
 		// play the star system music track
 		MusicController.m_instance.ChangeToTrack( MusicController.Track.StarSystem );
@@ -260,6 +260,12 @@ public class StarSystem : MonoBehaviour
 				m_planetController[ planet.m_orbitPosition - 1 ].EnablePlanet();
 			}
 		}
+
+		// pause the game
+		SpaceflightController.m_instance.m_gameIsPaused = true;
+
+		// we are generating planets now
+		m_generatingPlanets = true;
 	}
 
 	// find and return the planet controller that has the planet we are looking for
@@ -313,34 +319,51 @@ public class StarSystem : MonoBehaviour
 
 	public bool GeneratingPlanets()
 	{
-		foreach ( var planetController in m_planetController )
-		{
-			if ( !planetController.MapsGenerated() )
-			{
-				return true;
-			}
-		}
-
-		return false;
+		// are we generating planets?
+		return m_generatingPlanets;
 	}
 
 	public float GeneratePlanets()
 	{
+		// this stays true if we are done
+		var allDone = true;
+
+		// keep track of the total progress
 		var totalProgress = 0.0f;
 
+		// go through each planet in the system
 		foreach ( var planetController in m_planetController )
 		{
+			// are we done generating maps for this planet?
 			if ( !planetController.MapsGenerated() )
 			{
+				// no - keep generating the maps for the planet
 				var progress = planetController.GenerateMaps();
 
+				// update the total progress
 				totalProgress += progress / 1.3f / 8.0f;
+
+				// still not done
+				allDone = false;
+
 				break;
 			}
 
+			// update the total progress
 			totalProgress += 1.0f / 8.0f;
 		}
 
+		// are we done generating all of the planets?
+		if ( allDone )
+		{
+			// yes - update the bool
+			m_generatingPlanets = false;
+
+			// unpause the game
+			SpaceflightController.m_instance.m_gameIsPaused = false;
+		}
+
+		// return the total progress
 		return totalProgress;
 	}
 }

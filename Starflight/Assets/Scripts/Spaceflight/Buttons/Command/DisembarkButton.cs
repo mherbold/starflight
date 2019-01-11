@@ -26,7 +26,7 @@ public class DisembarkButton : ShipButton
 				playerData.m_general.m_lastStarportCoordinates = new Vector3( 0.0f, 0.5f, 0.0f );
 
 				// switch to the starport location
-				m_spaceflightController.SwitchLocation( PD_General.Location.Starport );
+				SpaceflightController.m_instance.SwitchLocation( PD_General.Location.Starport );
 
 				return true;
 
@@ -38,9 +38,9 @@ public class DisembarkButton : ShipButton
 
 				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
-				m_spaceflightController.m_messages.ChangeText( "<color=white>We can't disembark in space!</color>" );
+				SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>We can't disembark in space!</color>" );
 
-				m_spaceflightController.m_buttonController.UpdateButtonSprites();
+				SpaceflightController.m_instance.m_buttonController.UpdateButtonSprites();
 
 				break;
 		}

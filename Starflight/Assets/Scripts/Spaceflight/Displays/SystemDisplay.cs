@@ -58,7 +58,7 @@ public class SystemDisplay : ShipDisplay
 		}
 
 		// get the position of the ship and convert it to map coordinates
-		var position = m_spaceflightController.m_player.GetPosition() * 256.0f / 8192.0f;
+		var position = SpaceflightController.m_instance.m_player.GetPosition() * 256.0f / 8192.0f;
 
 		// set the new position of the ship game object
 		m_player.transform.localPosition = new Vector3( position.x, position.z, -30.0f );
@@ -105,7 +105,7 @@ public class SystemDisplay : ShipDisplay
 		// update each planet in the system
 		for ( var i = 0; i < GD_Star.c_maxNumPlanets; i++ )
 		{
-			var planet = m_spaceflightController.m_starSystem.m_planetController[ i ].m_planet;
+			var planet = SpaceflightController.m_instance.m_starSystem.m_planetController[ i ].m_planet;
 
 			// is there a planet?
 			if ( ( planet == null ) || ( planet.m_id == -1 ) )

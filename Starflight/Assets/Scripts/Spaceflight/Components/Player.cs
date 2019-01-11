@@ -34,9 +34,6 @@ public class Player : MonoBehaviour
 	// the space warp effect
 	public SpaceWarp m_spaceWarp;
 
-	// convenient access to the spaceflight controller
-	public SpaceflightController m_spaceflightController;
-
 	// the maximum speed of the player
 	public float m_maximumSpeed;
 
@@ -106,14 +103,8 @@ public class Player : MonoBehaviour
 	// unity update
 	void Update()
 	{
-		// don't do anything if we have a panel open
-		if ( PanelController.m_instance.HasActivePanel() )
-		{
-			return;
-		}
-
-		// don't do anything if we have a pop up dialog open
-		if ( PopupController.m_instance.IsActive() )
+		// don't do anything if the game is paused
+		if ( SpaceflightController.m_instance.m_gameIsPaused )
 		{
 			return;
 		}
@@ -219,7 +210,7 @@ public class Player : MonoBehaviour
 				}
 
 				// update the map coordinates
-				m_spaceflightController.m_map.UpdateCoordinates();
+				SpaceflightController.m_instance.m_viewport.UpdateCoordinates();
 			}
 
 			// set the rotation of the ship

@@ -9,7 +9,7 @@ public class EngineeringButton : ShipButton
 	public override bool Execute()
 	{
 		// change the buttons
-		m_spaceflightController.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.Engineering );
+		SpaceflightController.m_instance.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.Engineering );
 
 		// get to the player data
 		PlayerData playerData = DataController.m_instance.m_playerData;
@@ -18,7 +18,7 @@ public class EngineeringButton : ShipButton
 		PD_Personnel.PD_PersonnelFile personnelFile = playerData.m_crewAssignment.GetPersonnelFile( PD_CrewAssignment.Role.Engineer );
 
 		// set the name of the officer
-		m_spaceflightController.m_buttonController.ChangeOfficerText( "Officer " + personnelFile.m_name );
+		SpaceflightController.m_instance.m_buttonController.ChangeOfficerText( "Officer " + personnelFile.m_name );
 
 		return true;
 	}

@@ -14,9 +14,9 @@ public class ArmWeaponButton : ShipButton
 		{
 			SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
-			m_spaceflightController.m_messages.ChangeText( "<color=white>Ship is not equipped with weapons.</color>" );
+			SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Ship is not equipped with weapons.</color>" );
 
-			m_spaceflightController.m_buttonController.UpdateButtonSprites();
+			SpaceflightController.m_instance.m_buttonController.UpdateButtonSprites();
 		}
 
 		return false;

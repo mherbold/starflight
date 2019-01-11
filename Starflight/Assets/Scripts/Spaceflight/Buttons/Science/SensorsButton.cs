@@ -38,13 +38,13 @@ public class SensorsButton : ShipButton
 			case PD_General.Location.InOrbit:
 
 				// show the sensor display
-				m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_sensorsDisplay );
+				SpaceflightController.m_instance.m_displayController.ChangeDisplay( SpaceflightController.m_instance.m_displayController.m_sensorsDisplay );
 
 				// get the planet we are currently orbiting about
 				var planet = gameData.m_planetList[ playerData.m_general.m_currentPlanetId ];
 
 				// start the scan
-				m_spaceflightController.m_displayController.m_sensorsDisplay.StartScanning( SensorsDisplay.ScanType.Planet, 18, planet.m_mass, planet.m_bioDensity, planet.m_mineralDensity );
+				SpaceflightController.m_instance.m_displayController.m_sensorsDisplay.StartScanning( SensorsDisplay.ScanType.Planet, 18, planet.m_mass, planet.m_bioDensity, planet.m_mineralDensity );
 
 				return true;
 
@@ -53,7 +53,7 @@ public class SensorsButton : ShipButton
 
 				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
-				m_spaceflightController.m_buttonController.UpdateButtonSprites();
+				SpaceflightController.m_instance.m_buttonController.UpdateButtonSprites();
 
 				break;
 
@@ -63,10 +63,10 @@ public class SensorsButton : ShipButton
 				m_selectingSomething = true;
 
 				// show the sensor display
-				m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_sensorsDisplay );
+				SpaceflightController.m_instance.m_displayController.ChangeDisplay( SpaceflightController.m_instance.m_displayController.m_sensorsDisplay );
 
 				// show the scanner selection ring
-				m_spaceflightController.m_scanner.Show();
+				SpaceflightController.m_instance.m_scanner.Show();
 
 				return true;
 
@@ -74,9 +74,9 @@ public class SensorsButton : ShipButton
 
 				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
-				m_spaceflightController.m_messages.ChangeText( "<color=red>Not yet implemented.</color>" );
+				SpaceflightController.m_instance.m_messages.ChangeText( "<color=red>Not yet implemented.</color>" );
 
-				m_spaceflightController.m_buttonController.UpdateButtonSprites();
+				SpaceflightController.m_instance.m_buttonController.UpdateButtonSprites();
 
 				break;
 		}
@@ -133,7 +133,7 @@ public class SensorsButton : ShipButton
 				m_selectingSomething = false;
 
 				// hide the scanner selection ring
-				m_spaceflightController.m_scanner.Hide();
+				SpaceflightController.m_instance.m_scanner.Hide();
 			}
 
 			// where is the player?
@@ -144,20 +144,20 @@ public class SensorsButton : ShipButton
 					// update the current selection (if it needs to be updated)
 					if ( selectChangeDirection != 0 )
 					{
-						m_currentSelection = m_spaceflightController.m_encounter.UpdateScannerSelection( m_currentSelection, selectChangeDirection );
+						m_currentSelection = SpaceflightController.m_instance.m_encounter.UpdateScannerSelection( m_currentSelection, selectChangeDirection );
 					}
 
 					// make the scanner selection ring follow the current selection
-					var scannerPosition = m_spaceflightController.m_encounter.GetScannerPosition( m_currentSelection );
+					var scannerPosition = SpaceflightController.m_instance.m_encounter.GetScannerPosition( m_currentSelection );
 
 					// update the position of the scanner selection ring
-					m_spaceflightController.m_scanner.UpdatePosition( scannerPosition );
+					SpaceflightController.m_instance.m_scanner.UpdatePosition( scannerPosition );
 
 					// did player make a selection?
 					if ( !m_selectingSomething )
 					{
 						// yes - start the scanning cinematic
-						m_spaceflightController.m_encounter.StartScanning( m_currentSelection );
+						SpaceflightController.m_instance.m_encounter.StartScanning( m_currentSelection );
 					}
 
 					break;

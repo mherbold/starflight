@@ -18,9 +18,6 @@ public class Planet : MonoBehaviour
 	// access to the starport model
 	public GameObject m_starportModel;
 
-	// convenient access to the spaceflight controller
-	public SpaceflightController m_spaceflightController;
-
 	// access to the mesh renderer (to get to the material)
 	MeshRenderer m_meshRenderer;
 
@@ -189,7 +186,7 @@ public class Planet : MonoBehaviour
 
 			m_meshRenderer.material = m_material;
 
-			m_spaceflightController.m_inOrbit.MaterialUpdated();
+			SpaceflightController.m_instance.m_inOrbit.MaterialUpdated();
 		}
 
 		return progress;

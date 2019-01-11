@@ -17,19 +17,19 @@ public class LandButton : ShipButton
 
 				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
-				m_spaceflightController.m_messages.ChangeText( "<color=white>We can't land on Arth.</color>" );
+				SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>We can't land on Arth.</color>" );
 
-				m_spaceflightController.m_buttonController.UpdateButtonSprites();
+				SpaceflightController.m_instance.m_buttonController.UpdateButtonSprites();
 
 				break;
 
 			case PD_General.Location.InOrbit:
 
 				// show the terrian map display
-				m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_terrainMapDisplay );
+				SpaceflightController.m_instance.m_displayController.ChangeDisplay( SpaceflightController.m_instance.m_displayController.m_terrainMapDisplay );
 
 				// change the buttons
-				m_spaceflightController.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.Land );
+				SpaceflightController.m_instance.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.Land );
 
 				return true;
 
@@ -37,9 +37,9 @@ public class LandButton : ShipButton
 
 				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
-				m_spaceflightController.m_messages.ChangeText( "<color=white>We're not in orbit.</color>" );
+				SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>We're not in orbit.</color>" );
 
-				m_spaceflightController.m_buttonController.UpdateButtonSprites();
+				SpaceflightController.m_instance.m_buttonController.UpdateButtonSprites();
 
 				break;
 		}

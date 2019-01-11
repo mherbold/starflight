@@ -4,9 +4,6 @@ using MorePPEffects;
 
 public class CommScreen : MonoBehaviour
 {
-	// convenient access to the spaceflight controller
-	public SpaceflightController m_spaceflightController;
-
 	// how long the effect lasts
 	public float m_duration = 5.0f;
 
@@ -147,10 +144,10 @@ public class CommScreen : MonoBehaviour
 		m_fadingIn = true;
 
 		// do we have a spaceflight controller (we could be in the test level where there isn't one)
-		if ( m_spaceflightController != null )
+		if ( SpaceflightController.m_instance != null )
 		{
 			// yes - fade in the viewer
-			m_spaceflightController.m_map.StartFade( 1.0f, m_fadeInDuration );
+			SpaceflightController.m_instance.m_viewport.StartFade( 1.0f, m_fadeInDuration );
 		}
 
 		// play some sounds

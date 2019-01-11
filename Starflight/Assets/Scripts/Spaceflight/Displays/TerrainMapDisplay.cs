@@ -36,7 +36,7 @@ public class TerrainMapDisplay : ShipDisplay
 		var playerData = DataController.m_instance.m_playerData;
 
 		// get the planet controller
-		var planetController = m_spaceflightController.m_starSystem.GetPlanetController( playerData.m_general.m_currentPlanetId );
+		var planetController = SpaceflightController.m_instance.m_starSystem.GetPlanetController( playerData.m_general.m_currentPlanetId );
 
 		// switch to the planet controller's material
 		m_map.material = planetController.GetMaterial();

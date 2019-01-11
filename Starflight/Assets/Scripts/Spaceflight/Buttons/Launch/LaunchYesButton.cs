@@ -25,15 +25,15 @@ public class LaunchYesButton : ShipButton
 		if ( playerData.m_general.m_location == PD_General.Location.DockingBay )
 		{
 			// update the messages log
-			m_spaceflightController.m_messages.ChangeText( "<color=white>Opening docking bay doors...</color>" );
+			SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Opening docking bay doors...</color>" );
 
 			// reset the last countdown number shown
 			m_lastCountdownNumberShown = 0;
 
-			if ( !m_spaceflightController.m_skipCinematics )
+			if ( !SpaceflightController.m_instance.m_skipCinematics )
 			{
 				// open the docking bay doors
-				m_spaceflightController.m_dockingBay.OpenDockingBayDoors();
+				SpaceflightController.m_instance.m_dockingBay.OpenDockingBayDoors();
 
 				// play the launch sound
 				SoundController.m_instance.PlaySound( SoundController.Sound.Launch );
@@ -65,7 +65,7 @@ public class LaunchYesButton : ShipButton
 		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// keep track of the cutscene time
-		m_timer += Time.deltaTime * ( m_spaceflightController.m_skipCinematics ? 20.0f : 1.0f );
+		m_timer += Time.deltaTime * ( SpaceflightController.m_instance.m_skipCinematics ? 20.0f : 1.0f );
 
 		// at 15 seconds begin the countdown...
 		if ( m_timer >= 15.0f )
@@ -73,7 +73,7 @@ public class LaunchYesButton : ShipButton
 			// check if we have have not played the countdown sound yet
 			if ( !m_countdownStarted )
 			{
-				if ( !m_spaceflightController.m_skipCinematics )
+				if ( !SpaceflightController.m_instance.m_skipCinematics )
 				{
 					// play the countdown sound
 					SoundController.m_instance.PlaySound( SoundController.Sound.Countdown );
@@ -95,7 +95,7 @@ public class LaunchYesButton : ShipButton
 					m_lastCountdownNumberShown = currentNumber;
 
 					// animate it
-					m_spaceflightController.m_countdown.SetCountdownText( currentNumber.ToString() );
+					SpaceflightController.m_instance.m_countdown.SetCountdownText( currentNumber.ToString() );
 				}
 			}
 			else
@@ -107,10 +107,10 @@ public class LaunchYesButton : ShipButton
 					if ( playerData.m_general.m_location == PD_General.Location.DockingBay )
 					{
 						// yes - fade the map out
-						m_spaceflightController.m_map.StartFade( 0.0f, 7.0f );
+						SpaceflightController.m_instance.m_viewport.StartFade( 0.0f, 7.0f );
 
 						// yes - update the messages text
-						m_spaceflightController.m_messages.ChangeText( "<color=white>Leaving starport...</color>" );
+						SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Leaving starport...</color>" );
 
 						// figure out how much to move the ship forward by (with an exponential acceleration curve)
 						float y = Mathf.Pow( ( m_timer - 20.5f ) * 5.0f, 2.0f );
@@ -120,7 +120,7 @@ public class LaunchYesButton : ShipButton
 						playerData.m_general.m_currentSpeed = Mathf.Lerp( 0.0f, playerData.m_general.m_currentMaximumSpeed, ( m_timer - 20.5f ) / 2.0f );
 
 						// update the position of the camera
-						m_spaceflightController.m_player.DollyCamera( m_spaceflightController.m_dockingBay.GetParkedPosition() - y );
+						SpaceflightController.m_instance.m_player.DollyCamera( SpaceflightController.m_instance.m_dockingBay.GetParkedPosition() - y );
 
 						// have we reached the end of the launch trip?
 						if ( y >= 1024.0f )
@@ -136,10 +136,10 @@ public class LaunchYesButton : ShipButton
 							playerData.m_general.m_lastStarSystemCoordinates = playerPosition;
 
 							// update the player location
-							m_spaceflightController.SwitchLocation( PD_General.Location.JustLaunched );
+							SpaceflightController.m_instance.SwitchLocation( PD_General.Location.JustLaunched );
 
 							// restore the bridge buttons (this also ends the launch function)
-							m_spaceflightController.m_buttonController.RestoreBridgeButtons();
+							SpaceflightController.m_instance.m_buttonController.RestoreBridgeButtons();
 						}
 					}
 					else

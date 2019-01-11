@@ -54,16 +54,9 @@ public class ButtonController : MonoBehaviour
 	// the current button set
 	ButtonSet m_currentButtonSet;
 
-	// convenient access to the spaceflight controller
-	SpaceflightController m_spaceflightController;
-
 	// unity awake
 	void Awake()
 	{
-		// get the spaceflight controller
-		GameObject controllersGameObject = GameObject.FindWithTag( "Spaceflight Controllers" );
-		m_spaceflightController = controllersGameObject.GetComponent<SpaceflightController>();
-
 		// create the six ship buttons
 		m_buttonList = new ShipButton[ c_numButtons ];
 
@@ -103,14 +96,8 @@ public class ButtonController : MonoBehaviour
 	// unity update
 	void Update()
 	{
-		// don't do anything if we have a panel open
-		if ( PanelController.m_instance.HasActivePanel() )
-		{
-			return;
-		}
-
-		// don't do anything if we have a pop up dialog open
-		if ( PopupController.m_instance.IsActive() )
+		// don't do anything if the game is paused
+		if ( SpaceflightController.m_instance.m_gameIsPaused )
 		{
 			return;
 		}
@@ -246,11 +233,11 @@ public class ButtonController : MonoBehaviour
 		switch ( playerData.m_general.m_location )
 		{
 			case PD_General.Location.DockingBay:
-				m_spaceflightController.m_messages.ChangeText( "<color=white>Ship computer activated.\nPre-launch procedures complete.\nStanding by to initiate launch.</color>" );
+				SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Ship computer activated.\nPre-launch procedures complete.\nStanding by to initiate launch.</color>" );
 				break;
 
 			case PD_General.Location.JustLaunched:
-				m_spaceflightController.m_messages.ChangeText( "<color=white>Starport clear.\nStanding by to maneuver.</color>" );
+				SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Starport clear.\nStanding by to maneuver.</color>" );
 				break;
 		}
 	}

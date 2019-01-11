@@ -1,0 +1,2059 @@
+fileFormatVersion: 2
+guid: 6e6b143cdd9beec44b78a2be979d99fc
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Class A Star
+    100002: Class A Star 1
+    100004: Class A Star 10
+    100006: Class A Star 11
+    100008: Class A Star 12
+    100010: Class A Star 13
+    100012: Class A Star 14
+    100014: Class A Star 15
+    100016: Class A Star 16
+    100018: Class A Star 17
+    100020: Class A Star 18
+    100022: Class A Star 2
+    100024: Class A Star 3
+    100026: Class A Star 4
+    100028: Class A Star 5
+    100030: Class A Star 6
+    100032: Class A Star 7
+    100034: Class A Star 8
+    100036: Class A Star 9
+    100038: Class A Stars
+    100040: Class B Star
+    100042: Class B Star 1
+    100044: Class B Star 10
+    100046: Class B Star 11
+    100048: Class B Star 12
+    100050: Class B Star 13
+    100052: Class B Star 14
+    100054: Class B Star 15
+    100056: Class B Star 16
+    100058: Class B Star 17
+    100060: Class B Star 18
+    100062: Class B Star 19
+    100064: Class B Star 2
+    100066: Class B Star 20
+    100068: Class B Star 21
+    100070: Class B Star 3
+    100072: Class B Star 4
+    100074: Class B Star 5
+    100076: Class B Star 6
+    100078: Class B Star 7
+    100080: Class B Star 8
+    100082: Class B Star 9
+    100084: Class B Stars
+    100086: Class F Star
+    100088: Class F Star 1
+    100090: Class F Star 10
+    100092: Class F Star 11
+    100094: Class F Star 12
+    100096: Class F Star 13
+    100098: Class F Star 14
+    100100: Class F Star 15
+    100102: Class F Star 16
+    100104: Class F Star 17
+    100106: Class F Star 18
+    100108: Class F Star 19
+    100110: Class F Star 2
+    100112: Class F Star 20
+    100114: Class F Star 21
+    100116: Class F Star 22
+    100118: Class F Star 23
+    100120: Class F Star 24
+    100122: Class F Star 25
+    100124: Class F Star 26
+    100126: Class F Star 27
+    100128: Class F Star 28
+    100130: Class F Star 29
+    100132: Class F Star 3
+    100134: Class F Star 30
+    100136: Class F Star 31
+    100138: Class F Star 32
+    100140: Class F Star 33
+    100142: Class F Star 34
+    100144: Class F Star 35
+    100146: Class F Star 36
+    100148: Class F Star 37
+    100150: Class F Star 38
+    100152: Class F Star 39
+    100154: Class F Star 4
+    100156: Class F Star 40
+    100158: Class F Star 41
+    100160: Class F Star 42
+    100162: Class F Star 43
+    100164: Class F Star 44
+    100166: Class F Star 45
+    100168: Class F Star 46
+    100170: Class F Star 47
+    100172: Class F Star 48
+    100174: Class F Star 49
+    100176: Class F Star 5
+    100178: Class F Star 50
+    100180: Class F Star 51
+    100182: Class F Star 52
+    100184: Class F Star 53
+    100186: Class F Star 54
+    100188: Class F Star 55
+    100190: Class F Star 56
+    100192: Class F Star 57
+    100194: Class F Star 58
+    100196: Class F Star 59
+    100198: Class F Star 6
+    100200: Class F Star 60
+    100202: Class F Star 61
+    100204: Class F Star 62
+    100206: Class F Star 63
+    100208: Class F Star 64
+    100210: Class F Star 65
+    100212: Class F Star 66
+    100214: Class F Star 67
+    100216: Class F Star 68
+    100218: Class F Star 69
+    100220: Class F Star 7
+    100222: Class F Star 70
+    100224: Class F Star 71
+    100226: Class F Star 72
+    100228: Class F Star 73
+    100230: Class F Star 74
+    100232: Class F Star 75
+    100234: Class F Star 76
+    100236: Class F Star 77
+    100238: Class F Star 78
+    100240: Class F Star 8
+    100242: Class F Star 9
+    100244: Class F Stars
+    100246: Class G Star
+    100248: Class G Star 1
+    100250: Class G Star 10
+    100252: Class G Star 11
+    100254: Class G Star 12
+    100256: Class G Star 13
+    100258: Class G Star 14
+    100260: Class G Star 15
+    100262: Class G Star 16
+    100264: Class G Star 17
+    100266: Class G Star 18
+    100268: Class G Star 19
+    100270: Class G Star 2
+    100272: Class G Star 20
+    100274: Class G Star 21
+    100276: Class G Star 22
+    100278: Class G Star 23
+    100280: Class G Star 24
+    100282: Class G Star 25
+    100284: Class G Star 26
+    100286: Class G Star 27
+    100288: Class G Star 28
+    100290: Class G Star 29
+    100292: Class G Star 3
+    100294: Class G Star 30
+    100296: Class G Star 31
+    100298: Class G Star 32
+    100300: Class G Star 33
+    100302: Class G Star 34
+    100304: Class G Star 35
+    100306: Class G Star 36
+    100308: Class G Star 37
+    100310: Class G Star 38
+    100312: Class G Star 39
+    100314: Class G Star 4
+    100316: Class G Star 40
+    100318: Class G Star 41
+    100320: Class G Star 42
+    100322: Class G Star 43
+    100324: Class G Star 44
+    100326: Class G Star 45
+    100328: Class G Star 46
+    100330: Class G Star 47
+    100332: Class G Star 48
+    100334: Class G Star 49
+    100336: Class G Star 5
+    100338: Class G Star 50
+    100340: Class G Star 51
+    100342: Class G Star 52
+    100344: Class G Star 6
+    100346: Class G Star 7
+    100348: Class G Star 8
+    100350: Class G Star 9
+    100352: Class G Stars
+    100354: Class K Star
+    100356: Class K Star 1
+    100358: Class K Star 10
+    100360: Class K Star 11
+    100362: Class K Star 12
+    100364: Class K Star 13
+    100366: Class K Star 14
+    100368: Class K Star 15
+    100370: Class K Star 16
+    100372: Class K Star 17
+    100374: Class K Star 18
+    100376: Class K Star 19
+    100378: Class K Star 2
+    100380: Class K Star 20
+    100382: Class K Star 21
+    100384: Class K Star 22
+    100386: Class K Star 23
+    100388: Class K Star 24
+    100390: Class K Star 25
+    100392: Class K Star 26
+    100394: Class K Star 27
+    100396: Class K Star 28
+    100398: Class K Star 29
+    100400: Class K Star 3
+    100402: Class K Star 30
+    100404: Class K Star 31
+    100406: Class K Star 32
+    100408: Class K Star 4
+    100410: Class K Star 5
+    100412: Class K Star 6
+    100414: Class K Star 7
+    100416: Class K Star 8
+    100418: Class K Star 9
+    100420: Class K Stars
+    100422: Class M Star
+    100424: Class M Star 1
+    100426: Class M Star 10
+    100428: Class M Star 11
+    100430: Class M Star 12
+    100432: Class M Star 13
+    100434: Class M Star 14
+    100436: Class M Star 15
+    100438: Class M Star 16
+    100440: Class M Star 17
+    100442: Class M Star 18
+    100444: Class M Star 19
+    100446: Class M Star 2
+    100448: Class M Star 20
+    100450: Class M Star 21
+    100452: Class M Star 22
+    100454: Class M Star 23
+    100456: Class M Star 24
+    100458: Class M Star 25
+    100460: Class M Star 26
+    100462: Class M Star 27
+    100464: Class M Star 28
+    100466: Class M Star 29
+    100468: Class M Star 3
+    100470: Class M Star 30
+    100472: Class M Star 31
+    100474: Class M Star 32
+    100476: Class M Star 33
+    100478: Class M Star 34
+    100480: Class M Star 35
+    100482: Class M Star 36
+    100484: Class M Star 37
+    100486: Class M Star 38
+    100488: Class M Star 39
+    100490: Class M Star 4
+    100492: Class M Star 40
+    100494: Class M Star 41
+    100496: Class M Star 42
+    100498: Class M Star 43
+    100500: Class M Star 44
+    100502: Class M Star 45
+    100504: Class M Star 46
+    100506: Class M Star 47
+    100508: Class M Star 48
+    100510: Class M Star 49
+    100512: Class M Star 5
+    100514: Class M Star 50
+    100516: Class M Star 51
+    100518: Class M Star 52
+    100520: Class M Star 53
+    100522: Class M Star 54
+    100524: Class M Star 6
+    100526: Class M Star 7
+    100528: Class M Star 8
+    100530: Class M Star 9
+    100532: Class M Stars
+    100534: Class O Star
+    100536: Class O Star 1
+    100538: Class O Star 2
+    100540: Class O Star 3
+    100542: Class O Star 4
+    100544: Class O Star 5
+    100546: Class O Star 6
+    100548: Class O Star 7
+    100550: Class O Star 8
+    100552: Class O Stars
+    100554: Flux Path
+    100556: Flux Path 1
+    100558: Flux Path 10
+    100560: Flux Path 11
+    100562: Flux Path 12
+    100564: Flux Path 13
+    100566: Flux Path 14
+    100568: Flux Path 15
+    100570: Flux Path 16
+    100572: Flux Path 17
+    100574: Flux Path 18
+    100576: Flux Path 19
+    100578: Flux Path 2
+    100580: Flux Path 20
+    100582: Flux Path 21
+    100584: Flux Path 22
+    100586: Flux Path 23
+    100588: Flux Path 24
+    100590: Flux Path 25
+    100592: Flux Path 26
+    100594: Flux Path 27
+    100596: Flux Path 28
+    100598: Flux Path 29
+    100600: Flux Path 3
+    100602: Flux Path 30
+    100604: Flux Path 31
+    100606: Flux Path 4
+    100608: Flux Path 5
+    100610: Flux Path 6
+    100612: Flux Path 7
+    100614: Flux Path 8
+    100616: Flux Path 9
+    100618: Fluxes
+    100620: Grid
+    100622: Grid Line
+    100624: Grid Line 1
+    100626: Grid Line 10
+    100628: Grid Line 11
+    100630: Grid Line 12
+    100632: Grid Line 13
+    100634: Grid Line 14
+    100636: Grid Line 15
+    100638: Grid Line 16
+    100640: Grid Line 17
+    100642: Grid Line 18
+    100644: Grid Line 19
+    100646: Grid Line 2
+    100648: Grid Line 20
+    100650: Grid Line 21
+    100652: Grid Line 22
+    100654: Grid Line 23
+    100656: Grid Line 24
+    100658: Grid Line 25
+    100660: Grid Line 26
+    100662: Grid Line 27
+    100664: Grid Line 28
+    100666: Grid Line 29
+    100668: Grid Line 3
+    100670: Grid Line 30
+    100672: Grid Line 31
+    100674: Grid Line 32
+    100676: Grid Line 33
+    100678: Grid Line 34
+    100680: Grid Line 35
+    100682: Grid Line 36
+    100684: Grid Line 37
+    100686: Grid Line 38
+    100688: Grid Line 39
+    100690: Grid Line 4
+    100692: Grid Line 40
+    100694: Grid Line 41
+    100696: Grid Line 42
+    100698: Grid Line 43
+    100700: Grid Line 44
+    100702: Grid Line 45
+    100704: Grid Line 5
+    100706: Grid Line 6
+    100708: Grid Line 7
+    100710: Grid Line 8
+    100712: Grid Line 9
+    100714: Nebula Circle
+    100716: Nebula Circle 1
+    100718: Nebula Circle 10
+    100720: Nebula Circle 11
+    100722: Nebula Circle 12
+    100724: Nebula Circle 13
+    100726: Nebula Circle 14
+    100728: Nebula Circle 15
+    100730: Nebula Circle 16
+    100732: Nebula Circle 17
+    100734: Nebula Circle 18
+    100736: Nebula Circle 19
+    100738: Nebula Circle 2
+    100740: Nebula Circle 20
+    100742: Nebula Circle 21
+    100744: Nebula Circle 22
+    100746: Nebula Circle 23
+    100748: Nebula Circle 24
+    100750: Nebula Circle 25
+    100752: Nebula Circle 26
+    100754: Nebula Circle 27
+    100756: Nebula Circle 28
+    100758: Nebula Circle 29
+    100760: Nebula Circle 3
+    100762: Nebula Circle 30
+    100764: Nebula Circle 31
+    100766: Nebula Circle 32
+    100768: Nebula Circle 33
+    100770: Nebula Circle 34
+    100772: Nebula Circle 35
+    100774: Nebula Circle 36
+    100776: Nebula Circle 37
+    100778: Nebula Circle 38
+    100780: Nebula Circle 39
+    100782: Nebula Circle 4
+    100784: Nebula Circle 40
+    100786: Nebula Circle 5
+    100788: Nebula Circle 6
+    100790: Nebula Circle 7
+    100792: Nebula Circle 8
+    100794: Nebula Circle 9
+    100796: Nebulae
+    100798: //RootNode
+    400000: Class A Star
+    400002: Class A Star 1
+    400004: Class A Star 10
+    400006: Class A Star 11
+    400008: Class A Star 12
+    400010: Class A Star 13
+    400012: Class A Star 14
+    400014: Class A Star 15
+    400016: Class A Star 16
+    400018: Class A Star 17
+    400020: Class A Star 18
+    400022: Class A Star 2
+    400024: Class A Star 3
+    400026: Class A Star 4
+    400028: Class A Star 5
+    400030: Class A Star 6
+    400032: Class A Star 7
+    400034: Class A Star 8
+    400036: Class A Star 9
+    400038: Class A Stars
+    400040: Class B Star
+    400042: Class B Star 1
+    400044: Class B Star 10
+    400046: Class B Star 11
+    400048: Class B Star 12
+    400050: Class B Star 13
+    400052: Class B Star 14
+    400054: Class B Star 15
+    400056: Class B Star 16
+    400058: Class B Star 17
+    400060: Class B Star 18
+    400062: Class B Star 19
+    400064: Class B Star 2
+    400066: Class B Star 20
+    400068: Class B Star 21
+    400070: Class B Star 3
+    400072: Class B Star 4
+    400074: Class B Star 5
+    400076: Class B Star 6
+    400078: Class B Star 7
+    400080: Class B Star 8
+    400082: Class B Star 9
+    400084: Class B Stars
+    400086: Class F Star
+    400088: Class F Star 1
+    400090: Class F Star 10
+    400092: Class F Star 11
+    400094: Class F Star 12
+    400096: Class F Star 13
+    400098: Class F Star 14
+    400100: Class F Star 15
+    400102: Class F Star 16
+    400104: Class F Star 17
+    400106: Class F Star 18
+    400108: Class F Star 19
+    400110: Class F Star 2
+    400112: Class F Star 20
+    400114: Class F Star 21
+    400116: Class F Star 22
+    400118: Class F Star 23
+    400120: Class F Star 24
+    400122: Class F Star 25
+    400124: Class F Star 26
+    400126: Class F Star 27
+    400128: Class F Star 28
+    400130: Class F Star 29
+    400132: Class F Star 3
+    400134: Class F Star 30
+    400136: Class F Star 31
+    400138: Class F Star 32
+    400140: Class F Star 33
+    400142: Class F Star 34
+    400144: Class F Star 35
+    400146: Class F Star 36
+    400148: Class F Star 37
+    400150: Class F Star 38
+    400152: Class F Star 39
+    400154: Class F Star 4
+    400156: Class F Star 40
+    400158: Class F Star 41
+    400160: Class F Star 42
+    400162: Class F Star 43
+    400164: Class F Star 44
+    400166: Class F Star 45
+    400168: Class F Star 46
+    400170: Class F Star 47
+    400172: Class F Star 48
+    400174: Class F Star 49
+    400176: Class F Star 5
+    400178: Class F Star 50
+    400180: Class F Star 51
+    400182: Class F Star 52
+    400184: Class F Star 53
+    400186: Class F Star 54
+    400188: Class F Star 55
+    400190: Class F Star 56
+    400192: Class F Star 57
+    400194: Class F Star 58
+    400196: Class F Star 59
+    400198: Class F Star 6
+    400200: Class F Star 60
+    400202: Class F Star 61
+    400204: Class F Star 62
+    400206: Class F Star 63
+    400208: Class F Star 64
+    400210: Class F Star 65
+    400212: Class F Star 66
+    400214: Class F Star 67
+    400216: Class F Star 68
+    400218: Class F Star 69
+    400220: Class F Star 7
+    400222: Class F Star 70
+    400224: Class F Star 71
+    400226: Class F Star 72
+    400228: Class F Star 73
+    400230: Class F Star 74
+    400232: Class F Star 75
+    400234: Class F Star 76
+    400236: Class F Star 77
+    400238: Class F Star 78
+    400240: Class F Star 8
+    400242: Class F Star 9
+    400244: Class F Stars
+    400246: Class G Star
+    400248: Class G Star 1
+    400250: Class G Star 10
+    400252: Class G Star 11
+    400254: Class G Star 12
+    400256: Class G Star 13
+    400258: Class G Star 14
+    400260: Class G Star 15
+    400262: Class G Star 16
+    400264: Class G Star 17
+    400266: Class G Star 18
+    400268: Class G Star 19
+    400270: Class G Star 2
+    400272: Class G Star 20
+    400274: Class G Star 21
+    400276: Class G Star 22
+    400278: Class G Star 23
+    400280: Class G Star 24
+    400282: Class G Star 25
+    400284: Class G Star 26
+    400286: Class G Star 27
+    400288: Class G Star 28
+    400290: Class G Star 29
+    400292: Class G Star 3
+    400294: Class G Star 30
+    400296: Class G Star 31
+    400298: Class G Star 32
+    400300: Class G Star 33
+    400302: Class G Star 34
+    400304: Class G Star 35
+    400306: Class G Star 36
+    400308: Class G Star 37
+    400310: Class G Star 38
+    400312: Class G Star 39
+    400314: Class G Star 4
+    400316: Class G Star 40
+    400318: Class G Star 41
+    400320: Class G Star 42
+    400322: Class G Star 43
+    400324: Class G Star 44
+    400326: Class G Star 45
+    400328: Class G Star 46
+    400330: Class G Star 47
+    400332: Class G Star 48
+    400334: Class G Star 49
+    400336: Class G Star 5
+    400338: Class G Star 50
+    400340: Class G Star 51
+    400342: Class G Star 52
+    400344: Class G Star 6
+    400346: Class G Star 7
+    400348: Class G Star 8
+    400350: Class G Star 9
+    400352: Class G Stars
+    400354: Class K Star
+    400356: Class K Star 1
+    400358: Class K Star 10
+    400360: Class K Star 11
+    400362: Class K Star 12
+    400364: Class K Star 13
+    400366: Class K Star 14
+    400368: Class K Star 15
+    400370: Class K Star 16
+    400372: Class K Star 17
+    400374: Class K Star 18
+    400376: Class K Star 19
+    400378: Class K Star 2
+    400380: Class K Star 20
+    400382: Class K Star 21
+    400384: Class K Star 22
+    400386: Class K Star 23
+    400388: Class K Star 24
+    400390: Class K Star 25
+    400392: Class K Star 26
+    400394: Class K Star 27
+    400396: Class K Star 28
+    400398: Class K Star 29
+    400400: Class K Star 3
+    400402: Class K Star 30
+    400404: Class K Star 31
+    400406: Class K Star 32
+    400408: Class K Star 4
+    400410: Class K Star 5
+    400412: Class K Star 6
+    400414: Class K Star 7
+    400416: Class K Star 8
+    400418: Class K Star 9
+    400420: Class K Stars
+    400422: Class M Star
+    400424: Class M Star 1
+    400426: Class M Star 10
+    400428: Class M Star 11
+    400430: Class M Star 12
+    400432: Class M Star 13
+    400434: Class M Star 14
+    400436: Class M Star 15
+    400438: Class M Star 16
+    400440: Class M Star 17
+    400442: Class M Star 18
+    400444: Class M Star 19
+    400446: Class M Star 2
+    400448: Class M Star 20
+    400450: Class M Star 21
+    400452: Class M Star 22
+    400454: Class M Star 23
+    400456: Class M Star 24
+    400458: Class M Star 25
+    400460: Class M Star 26
+    400462: Class M Star 27
+    400464: Class M Star 28
+    400466: Class M Star 29
+    400468: Class M Star 3
+    400470: Class M Star 30
+    400472: Class M Star 31
+    400474: Class M Star 32
+    400476: Class M Star 33
+    400478: Class M Star 34
+    400480: Class M Star 35
+    400482: Class M Star 36
+    400484: Class M Star 37
+    400486: Class M Star 38
+    400488: Class M Star 39
+    400490: Class M Star 4
+    400492: Class M Star 40
+    400494: Class M Star 41
+    400496: Class M Star 42
+    400498: Class M Star 43
+    400500: Class M Star 44
+    400502: Class M Star 45
+    400504: Class M Star 46
+    400506: Class M Star 47
+    400508: Class M Star 48
+    400510: Class M Star 49
+    400512: Class M Star 5
+    400514: Class M Star 50
+    400516: Class M Star 51
+    400518: Class M Star 52
+    400520: Class M Star 53
+    400522: Class M Star 54
+    400524: Class M Star 6
+    400526: Class M Star 7
+    400528: Class M Star 8
+    400530: Class M Star 9
+    400532: Class M Stars
+    400534: Class O Star
+    400536: Class O Star 1
+    400538: Class O Star 2
+    400540: Class O Star 3
+    400542: Class O Star 4
+    400544: Class O Star 5
+    400546: Class O Star 6
+    400548: Class O Star 7
+    400550: Class O Star 8
+    400552: Class O Stars
+    400554: Flux Path
+    400556: Flux Path 1
+    400558: Flux Path 10
+    400560: Flux Path 11
+    400562: Flux Path 12
+    400564: Flux Path 13
+    400566: Flux Path 14
+    400568: Flux Path 15
+    400570: Flux Path 16
+    400572: Flux Path 17
+    400574: Flux Path 18
+    400576: Flux Path 19
+    400578: Flux Path 2
+    400580: Flux Path 20
+    400582: Flux Path 21
+    400584: Flux Path 22
+    400586: Flux Path 23
+    400588: Flux Path 24
+    400590: Flux Path 25
+    400592: Flux Path 26
+    400594: Flux Path 27
+    400596: Flux Path 28
+    400598: Flux Path 29
+    400600: Flux Path 3
+    400602: Flux Path 30
+    400604: Flux Path 31
+    400606: Flux Path 4
+    400608: Flux Path 5
+    400610: Flux Path 6
+    400612: Flux Path 7
+    400614: Flux Path 8
+    400616: Flux Path 9
+    400618: Fluxes
+    400620: Grid
+    400622: Grid Line
+    400624: Grid Line 1
+    400626: Grid Line 10
+    400628: Grid Line 11
+    400630: Grid Line 12
+    400632: Grid Line 13
+    400634: Grid Line 14
+    400636: Grid Line 15
+    400638: Grid Line 16
+    400640: Grid Line 17
+    400642: Grid Line 18
+    400644: Grid Line 19
+    400646: Grid Line 2
+    400648: Grid Line 20
+    400650: Grid Line 21
+    400652: Grid Line 22
+    400654: Grid Line 23
+    400656: Grid Line 24
+    400658: Grid Line 25
+    400660: Grid Line 26
+    400662: Grid Line 27
+    400664: Grid Line 28
+    400666: Grid Line 29
+    400668: Grid Line 3
+    400670: Grid Line 30
+    400672: Grid Line 31
+    400674: Grid Line 32
+    400676: Grid Line 33
+    400678: Grid Line 34
+    400680: Grid Line 35
+    400682: Grid Line 36
+    400684: Grid Line 37
+    400686: Grid Line 38
+    400688: Grid Line 39
+    400690: Grid Line 4
+    400692: Grid Line 40
+    400694: Grid Line 41
+    400696: Grid Line 42
+    400698: Grid Line 43
+    400700: Grid Line 44
+    400702: Grid Line 45
+    400704: Grid Line 5
+    400706: Grid Line 6
+    400708: Grid Line 7
+    400710: Grid Line 8
+    400712: Grid Line 9
+    400714: Nebula Circle
+    400716: Nebula Circle 1
+    400718: Nebula Circle 10
+    400720: Nebula Circle 11
+    400722: Nebula Circle 12
+    400724: Nebula Circle 13
+    400726: Nebula Circle 14
+    400728: Nebula Circle 15
+    400730: Nebula Circle 16
+    400732: Nebula Circle 17
+    400734: Nebula Circle 18
+    400736: Nebula Circle 19
+    400738: Nebula Circle 2
+    400740: Nebula Circle 20
+    400742: Nebula Circle 21
+    400744: Nebula Circle 22
+    400746: Nebula Circle 23
+    400748: Nebula Circle 24
+    400750: Nebula Circle 25
+    400752: Nebula Circle 26
+    400754: Nebula Circle 27
+    400756: Nebula Circle 28
+    400758: Nebula Circle 29
+    400760: Nebula Circle 3
+    400762: Nebula Circle 30
+    400764: Nebula Circle 31
+    400766: Nebula Circle 32
+    400768: Nebula Circle 33
+    400770: Nebula Circle 34
+    400772: Nebula Circle 35
+    400774: Nebula Circle 36
+    400776: Nebula Circle 37
+    400778: Nebula Circle 38
+    400780: Nebula Circle 39
+    400782: Nebula Circle 4
+    400784: Nebula Circle 40
+    400786: Nebula Circle 5
+    400788: Nebula Circle 6
+    400790: Nebula Circle 7
+    400792: Nebula Circle 8
+    400794: Nebula Circle 9
+    400796: Nebulae
+    400798: //RootNode
+    2100000: No Name
+    2300000: Class A Star
+    2300002: Class A Star 1
+    2300004: Class A Star 10
+    2300006: Class A Star 11
+    2300008: Class A Star 12
+    2300010: Class A Star 13
+    2300012: Class A Star 14
+    2300014: Class A Star 15
+    2300016: Class A Star 16
+    2300018: Class A Star 17
+    2300020: Class A Star 18
+    2300022: Class A Star 2
+    2300024: Class A Star 3
+    2300026: Class A Star 4
+    2300028: Class A Star 5
+    2300030: Class A Star 6
+    2300032: Class A Star 7
+    2300034: Class A Star 8
+    2300036: Class A Star 9
+    2300038: Class B Star
+    2300040: Class B Star 1
+    2300042: Class B Star 10
+    2300044: Class B Star 11
+    2300046: Class B Star 12
+    2300048: Class B Star 13
+    2300050: Class B Star 14
+    2300052: Class B Star 15
+    2300054: Class B Star 16
+    2300056: Class B Star 17
+    2300058: Class B Star 18
+    2300060: Class B Star 19
+    2300062: Class B Star 2
+    2300064: Class B Star 20
+    2300066: Class B Star 21
+    2300068: Class B Star 3
+    2300070: Class B Star 4
+    2300072: Class B Star 5
+    2300074: Class B Star 6
+    2300076: Class B Star 7
+    2300078: Class B Star 8
+    2300080: Class B Star 9
+    2300082: Class F Star
+    2300084: Class F Star 1
+    2300086: Class F Star 10
+    2300088: Class F Star 11
+    2300090: Class F Star 12
+    2300092: Class F Star 13
+    2300094: Class F Star 14
+    2300096: Class F Star 15
+    2300098: Class F Star 16
+    2300100: Class F Star 17
+    2300102: Class F Star 18
+    2300104: Class F Star 19
+    2300106: Class F Star 2
+    2300108: Class F Star 20
+    2300110: Class F Star 21
+    2300112: Class F Star 22
+    2300114: Class F Star 23
+    2300116: Class F Star 24
+    2300118: Class F Star 25
+    2300120: Class F Star 26
+    2300122: Class F Star 27
+    2300124: Class F Star 28
+    2300126: Class F Star 29
+    2300128: Class F Star 3
+    2300130: Class F Star 30
+    2300132: Class F Star 31
+    2300134: Class F Star 32
+    2300136: Class F Star 33
+    2300138: Class F Star 34
+    2300140: Class F Star 35
+    2300142: Class F Star 36
+    2300144: Class F Star 37
+    2300146: Class F Star 38
+    2300148: Class F Star 39
+    2300150: Class F Star 4
+    2300152: Class F Star 40
+    2300154: Class F Star 41
+    2300156: Class F Star 42
+    2300158: Class F Star 43
+    2300160: Class F Star 44
+    2300162: Class F Star 45
+    2300164: Class F Star 46
+    2300166: Class F Star 47
+    2300168: Class F Star 48
+    2300170: Class F Star 49
+    2300172: Class F Star 5
+    2300174: Class F Star 50
+    2300176: Class F Star 51
+    2300178: Class F Star 52
+    2300180: Class F Star 53
+    2300182: Class F Star 54
+    2300184: Class F Star 55
+    2300186: Class F Star 56
+    2300188: Class F Star 57
+    2300190: Class F Star 58
+    2300192: Class F Star 59
+    2300194: Class F Star 6
+    2300196: Class F Star 60
+    2300198: Class F Star 61
+    2300200: Class F Star 62
+    2300202: Class F Star 63
+    2300204: Class F Star 64
+    2300206: Class F Star 65
+    2300208: Class F Star 66
+    2300210: Class F Star 67
+    2300212: Class F Star 68
+    2300214: Class F Star 69
+    2300216: Class F Star 7
+    2300218: Class F Star 70
+    2300220: Class F Star 71
+    2300222: Class F Star 72
+    2300224: Class F Star 73
+    2300226: Class F Star 74
+    2300228: Class F Star 75
+    2300230: Class F Star 76
+    2300232: Class F Star 77
+    2300234: Class F Star 78
+    2300236: Class F Star 8
+    2300238: Class F Star 9
+    2300240: Class G Star
+    2300242: Class G Star 1
+    2300244: Class G Star 10
+    2300246: Class G Star 11
+    2300248: Class G Star 12
+    2300250: Class G Star 13
+    2300252: Class G Star 14
+    2300254: Class G Star 15
+    2300256: Class G Star 16
+    2300258: Class G Star 17
+    2300260: Class G Star 18
+    2300262: Class G Star 19
+    2300264: Class G Star 2
+    2300266: Class G Star 20
+    2300268: Class G Star 21
+    2300270: Class G Star 22
+    2300272: Class G Star 23
+    2300274: Class G Star 24
+    2300276: Class G Star 25
+    2300278: Class G Star 26
+    2300280: Class G Star 27
+    2300282: Class G Star 28
+    2300284: Class G Star 29
+    2300286: Class G Star 3
+    2300288: Class G Star 30
+    2300290: Class G Star 31
+    2300292: Class G Star 32
+    2300294: Class G Star 33
+    2300296: Class G Star 34
+    2300298: Class G Star 35
+    2300300: Class G Star 36
+    2300302: Class G Star 37
+    2300304: Class G Star 38
+    2300306: Class G Star 39
+    2300308: Class G Star 4
+    2300310: Class G Star 40
+    2300312: Class G Star 41
+    2300314: Class G Star 42
+    2300316: Class G Star 43
+    2300318: Class G Star 44
+    2300320: Class G Star 45
+    2300322: Class G Star 46
+    2300324: Class G Star 47
+    2300326: Class G Star 48
+    2300328: Class G Star 49
+    2300330: Class G Star 5
+    2300332: Class G Star 50
+    2300334: Class G Star 51
+    2300336: Class G Star 52
+    2300338: Class G Star 6
+    2300340: Class G Star 7
+    2300342: Class G Star 8
+    2300344: Class G Star 9
+    2300346: Class K Star
+    2300348: Class K Star 1
+    2300350: Class K Star 10
+    2300352: Class K Star 11
+    2300354: Class K Star 12
+    2300356: Class K Star 13
+    2300358: Class K Star 14
+    2300360: Class K Star 15
+    2300362: Class K Star 16
+    2300364: Class K Star 17
+    2300366: Class K Star 18
+    2300368: Class K Star 19
+    2300370: Class K Star 2
+    2300372: Class K Star 20
+    2300374: Class K Star 21
+    2300376: Class K Star 22
+    2300378: Class K Star 23
+    2300380: Class K Star 24
+    2300382: Class K Star 25
+    2300384: Class K Star 26
+    2300386: Class K Star 27
+    2300388: Class K Star 28
+    2300390: Class K Star 29
+    2300392: Class K Star 3
+    2300394: Class K Star 30
+    2300396: Class K Star 31
+    2300398: Class K Star 32
+    2300400: Class K Star 4
+    2300402: Class K Star 5
+    2300404: Class K Star 6
+    2300406: Class K Star 7
+    2300408: Class K Star 8
+    2300410: Class K Star 9
+    2300412: Class M Star
+    2300414: Class M Star 1
+    2300416: Class M Star 10
+    2300418: Class M Star 11
+    2300420: Class M Star 12
+    2300422: Class M Star 13
+    2300424: Class M Star 14
+    2300426: Class M Star 15
+    2300428: Class M Star 16
+    2300430: Class M Star 17
+    2300432: Class M Star 18
+    2300434: Class M Star 19
+    2300436: Class M Star 2
+    2300438: Class M Star 20
+    2300440: Class M Star 21
+    2300442: Class M Star 22
+    2300444: Class M Star 23
+    2300446: Class M Star 24
+    2300448: Class M Star 25
+    2300450: Class M Star 26
+    2300452: Class M Star 27
+    2300454: Class M Star 28
+    2300456: Class M Star 29
+    2300458: Class M Star 3
+    2300460: Class M Star 30
+    2300462: Class M Star 31
+    2300464: Class M Star 32
+    2300466: Class M Star 33
+    2300468: Class M Star 34
+    2300470: Class M Star 35
+    2300472: Class M Star 36
+    2300474: Class M Star 37
+    2300476: Class M Star 38
+    2300478: Class M Star 39
+    2300480: Class M Star 4
+    2300482: Class M Star 40
+    2300484: Class M Star 41
+    2300486: Class M Star 42
+    2300488: Class M Star 43
+    2300490: Class M Star 44
+    2300492: Class M Star 45
+    2300494: Class M Star 46
+    2300496: Class M Star 47
+    2300498: Class M Star 48
+    2300500: Class M Star 49
+    2300502: Class M Star 5
+    2300504: Class M Star 50
+    2300506: Class M Star 51
+    2300508: Class M Star 52
+    2300510: Class M Star 53
+    2300512: Class M Star 54
+    2300514: Class M Star 6
+    2300516: Class M Star 7
+    2300518: Class M Star 8
+    2300520: Class M Star 9
+    2300522: Class O Star
+    2300524: Class O Star 1
+    2300526: Class O Star 2
+    2300528: Class O Star 3
+    2300530: Class O Star 4
+    2300532: Class O Star 5
+    2300534: Class O Star 6
+    2300536: Class O Star 7
+    2300538: Class O Star 8
+    2300540: Flux Path
+    2300542: Flux Path 1
+    2300544: Flux Path 10
+    2300546: Flux Path 11
+    2300548: Flux Path 12
+    2300550: Flux Path 13
+    2300552: Flux Path 14
+    2300554: Flux Path 15
+    2300556: Flux Path 16
+    2300558: Flux Path 17
+    2300560: Flux Path 18
+    2300562: Flux Path 19
+    2300564: Flux Path 2
+    2300566: Flux Path 20
+    2300568: Flux Path 21
+    2300570: Flux Path 22
+    2300572: Flux Path 23
+    2300574: Flux Path 24
+    2300576: Flux Path 25
+    2300578: Flux Path 26
+    2300580: Flux Path 27
+    2300582: Flux Path 28
+    2300584: Flux Path 29
+    2300586: Flux Path 3
+    2300588: Flux Path 30
+    2300590: Flux Path 31
+    2300592: Flux Path 4
+    2300594: Flux Path 5
+    2300596: Flux Path 6
+    2300598: Flux Path 7
+    2300600: Flux Path 8
+    2300602: Flux Path 9
+    2300604: Grid Line
+    2300606: Grid Line 1
+    2300608: Grid Line 10
+    2300610: Grid Line 11
+    2300612: Grid Line 12
+    2300614: Grid Line 13
+    2300616: Grid Line 14
+    2300618: Grid Line 15
+    2300620: Grid Line 16
+    2300622: Grid Line 17
+    2300624: Grid Line 18
+    2300626: Grid Line 19
+    2300628: Grid Line 2
+    2300630: Grid Line 20
+    2300632: Grid Line 21
+    2300634: Grid Line 22
+    2300636: Grid Line 23
+    2300638: Grid Line 24
+    2300640: Grid Line 25
+    2300642: Grid Line 26
+    2300644: Grid Line 27
+    2300646: Grid Line 28
+    2300648: Grid Line 29
+    2300650: Grid Line 3
+    2300652: Grid Line 30
+    2300654: Grid Line 31
+    2300656: Grid Line 32
+    2300658: Grid Line 33
+    2300660: Grid Line 34
+    2300662: Grid Line 35
+    2300664: Grid Line 36
+    2300666: Grid Line 37
+    2300668: Grid Line 38
+    2300670: Grid Line 39
+    2300672: Grid Line 4
+    2300674: Grid Line 40
+    2300676: Grid Line 41
+    2300678: Grid Line 42
+    2300680: Grid Line 43
+    2300682: Grid Line 44
+    2300684: Grid Line 45
+    2300686: Grid Line 5
+    2300688: Grid Line 6
+    2300690: Grid Line 7
+    2300692: Grid Line 8
+    2300694: Grid Line 9
+    2300696: Nebula Circle
+    2300698: Nebula Circle 1
+    2300700: Nebula Circle 10
+    2300702: Nebula Circle 11
+    2300704: Nebula Circle 12
+    2300706: Nebula Circle 13
+    2300708: Nebula Circle 14
+    2300710: Nebula Circle 15
+    2300712: Nebula Circle 16
+    2300714: Nebula Circle 17
+    2300716: Nebula Circle 18
+    2300718: Nebula Circle 19
+    2300720: Nebula Circle 2
+    2300722: Nebula Circle 20
+    2300724: Nebula Circle 21
+    2300726: Nebula Circle 22
+    2300728: Nebula Circle 23
+    2300730: Nebula Circle 24
+    2300732: Nebula Circle 25
+    2300734: Nebula Circle 26
+    2300736: Nebula Circle 27
+    2300738: Nebula Circle 28
+    2300740: Nebula Circle 29
+    2300742: Nebula Circle 3
+    2300744: Nebula Circle 30
+    2300746: Nebula Circle 31
+    2300748: Nebula Circle 32
+    2300750: Nebula Circle 33
+    2300752: Nebula Circle 34
+    2300754: Nebula Circle 35
+    2300756: Nebula Circle 36
+    2300758: Nebula Circle 37
+    2300760: Nebula Circle 38
+    2300762: Nebula Circle 39
+    2300764: Nebula Circle 4
+    2300766: Nebula Circle 40
+    2300768: Nebula Circle 5
+    2300770: Nebula Circle 6
+    2300772: Nebula Circle 7
+    2300774: Nebula Circle 8
+    2300776: Nebula Circle 9
+    3300000: Class A Star
+    3300002: Class A Star 1
+    3300004: Class A Star 10
+    3300006: Class A Star 11
+    3300008: Class A Star 12
+    3300010: Class A Star 13
+    3300012: Class A Star 14
+    3300014: Class A Star 15
+    3300016: Class A Star 16
+    3300018: Class A Star 17
+    3300020: Class A Star 18
+    3300022: Class A Star 2
+    3300024: Class A Star 3
+    3300026: Class A Star 4
+    3300028: Class A Star 5
+    3300030: Class A Star 6
+    3300032: Class A Star 7
+    3300034: Class A Star 8
+    3300036: Class A Star 9
+    3300038: Class B Star
+    3300040: Class B Star 1
+    3300042: Class B Star 10
+    3300044: Class B Star 11
+    3300046: Class B Star 12
+    3300048: Class B Star 13
+    3300050: Class B Star 14
+    3300052: Class B Star 15
+    3300054: Class B Star 16
+    3300056: Class B Star 17
+    3300058: Class B Star 18
+    3300060: Class B Star 19
+    3300062: Class B Star 2
+    3300064: Class B Star 20
+    3300066: Class B Star 21
+    3300068: Class B Star 3
+    3300070: Class B Star 4
+    3300072: Class B Star 5
+    3300074: Class B Star 6
+    3300076: Class B Star 7
+    3300078: Class B Star 8
+    3300080: Class B Star 9
+    3300082: Class F Star
+    3300084: Class F Star 1
+    3300086: Class F Star 10
+    3300088: Class F Star 11
+    3300090: Class F Star 12
+    3300092: Class F Star 13
+    3300094: Class F Star 14
+    3300096: Class F Star 15
+    3300098: Class F Star 16
+    3300100: Class F Star 17
+    3300102: Class F Star 18
+    3300104: Class F Star 19
+    3300106: Class F Star 2
+    3300108: Class F Star 20
+    3300110: Class F Star 21
+    3300112: Class F Star 22
+    3300114: Class F Star 23
+    3300116: Class F Star 24
+    3300118: Class F Star 25
+    3300120: Class F Star 26
+    3300122: Class F Star 27
+    3300124: Class F Star 28
+    3300126: Class F Star 29
+    3300128: Class F Star 3
+    3300130: Class F Star 30
+    3300132: Class F Star 31
+    3300134: Class F Star 32
+    3300136: Class F Star 33
+    3300138: Class F Star 34
+    3300140: Class F Star 35
+    3300142: Class F Star 36
+    3300144: Class F Star 37
+    3300146: Class F Star 38
+    3300148: Class F Star 39
+    3300150: Class F Star 4
+    3300152: Class F Star 40
+    3300154: Class F Star 41
+    3300156: Class F Star 42
+    3300158: Class F Star 43
+    3300160: Class F Star 44
+    3300162: Class F Star 45
+    3300164: Class F Star 46
+    3300166: Class F Star 47
+    3300168: Class F Star 48
+    3300170: Class F Star 49
+    3300172: Class F Star 5
+    3300174: Class F Star 50
+    3300176: Class F Star 51
+    3300178: Class F Star 52
+    3300180: Class F Star 53
+    3300182: Class F Star 54
+    3300184: Class F Star 55
+    3300186: Class F Star 56
+    3300188: Class F Star 57
+    3300190: Class F Star 58
+    3300192: Class F Star 59
+    3300194: Class F Star 6
+    3300196: Class F Star 60
+    3300198: Class F Star 61
+    3300200: Class F Star 62
+    3300202: Class F Star 63
+    3300204: Class F Star 64
+    3300206: Class F Star 65
+    3300208: Class F Star 66
+    3300210: Class F Star 67
+    3300212: Class F Star 68
+    3300214: Class F Star 69
+    3300216: Class F Star 7
+    3300218: Class F Star 70
+    3300220: Class F Star 71
+    3300222: Class F Star 72
+    3300224: Class F Star 73
+    3300226: Class F Star 74
+    3300228: Class F Star 75
+    3300230: Class F Star 76
+    3300232: Class F Star 77
+    3300234: Class F Star 78
+    3300236: Class F Star 8
+    3300238: Class F Star 9
+    3300240: Class G Star
+    3300242: Class G Star 1
+    3300244: Class G Star 10
+    3300246: Class G Star 11
+    3300248: Class G Star 12
+    3300250: Class G Star 13
+    3300252: Class G Star 14
+    3300254: Class G Star 15
+    3300256: Class G Star 16
+    3300258: Class G Star 17
+    3300260: Class G Star 18
+    3300262: Class G Star 19
+    3300264: Class G Star 2
+    3300266: Class G Star 20
+    3300268: Class G Star 21
+    3300270: Class G Star 22
+    3300272: Class G Star 23
+    3300274: Class G Star 24
+    3300276: Class G Star 25
+    3300278: Class G Star 26
+    3300280: Class G Star 27
+    3300282: Class G Star 28
+    3300284: Class G Star 29
+    3300286: Class G Star 3
+    3300288: Class G Star 30
+    3300290: Class G Star 31
+    3300292: Class G Star 32
+    3300294: Class G Star 33
+    3300296: Class G Star 34
+    3300298: Class G Star 35
+    3300300: Class G Star 36
+    3300302: Class G Star 37
+    3300304: Class G Star 38
+    3300306: Class G Star 39
+    3300308: Class G Star 4
+    3300310: Class G Star 40
+    3300312: Class G Star 41
+    3300314: Class G Star 42
+    3300316: Class G Star 43
+    3300318: Class G Star 44
+    3300320: Class G Star 45
+    3300322: Class G Star 46
+    3300324: Class G Star 47
+    3300326: Class G Star 48
+    3300328: Class G Star 49
+    3300330: Class G Star 5
+    3300332: Class G Star 50
+    3300334: Class G Star 51
+    3300336: Class G Star 52
+    3300338: Class G Star 6
+    3300340: Class G Star 7
+    3300342: Class G Star 8
+    3300344: Class G Star 9
+    3300346: Class K Star
+    3300348: Class K Star 1
+    3300350: Class K Star 10
+    3300352: Class K Star 11
+    3300354: Class K Star 12
+    3300356: Class K Star 13
+    3300358: Class K Star 14
+    3300360: Class K Star 15
+    3300362: Class K Star 16
+    3300364: Class K Star 17
+    3300366: Class K Star 18
+    3300368: Class K Star 19
+    3300370: Class K Star 2
+    3300372: Class K Star 20
+    3300374: Class K Star 21
+    3300376: Class K Star 22
+    3300378: Class K Star 23
+    3300380: Class K Star 24
+    3300382: Class K Star 25
+    3300384: Class K Star 26
+    3300386: Class K Star 27
+    3300388: Class K Star 28
+    3300390: Class K Star 29
+    3300392: Class K Star 3
+    3300394: Class K Star 30
+    3300396: Class K Star 31
+    3300398: Class K Star 32
+    3300400: Class K Star 4
+    3300402: Class K Star 5
+    3300404: Class K Star 6
+    3300406: Class K Star 7
+    3300408: Class K Star 8
+    3300410: Class K Star 9
+    3300412: Class M Star
+    3300414: Class M Star 1
+    3300416: Class M Star 10
+    3300418: Class M Star 11
+    3300420: Class M Star 12
+    3300422: Class M Star 13
+    3300424: Class M Star 14
+    3300426: Class M Star 15
+    3300428: Class M Star 16
+    3300430: Class M Star 17
+    3300432: Class M Star 18
+    3300434: Class M Star 19
+    3300436: Class M Star 2
+    3300438: Class M Star 20
+    3300440: Class M Star 21
+    3300442: Class M Star 22
+    3300444: Class M Star 23
+    3300446: Class M Star 24
+    3300448: Class M Star 25
+    3300450: Class M Star 26
+    3300452: Class M Star 27
+    3300454: Class M Star 28
+    3300456: Class M Star 29
+    3300458: Class M Star 3
+    3300460: Class M Star 30
+    3300462: Class M Star 31
+    3300464: Class M Star 32
+    3300466: Class M Star 33
+    3300468: Class M Star 34
+    3300470: Class M Star 35
+    3300472: Class M Star 36
+    3300474: Class M Star 37
+    3300476: Class M Star 38
+    3300478: Class M Star 39
+    3300480: Class M Star 4
+    3300482: Class M Star 40
+    3300484: Class M Star 41
+    3300486: Class M Star 42
+    3300488: Class M Star 43
+    3300490: Class M Star 44
+    3300492: Class M Star 45
+    3300494: Class M Star 46
+    3300496: Class M Star 47
+    3300498: Class M Star 48
+    3300500: Class M Star 49
+    3300502: Class M Star 5
+    3300504: Class M Star 50
+    3300506: Class M Star 51
+    3300508: Class M Star 52
+    3300510: Class M Star 53
+    3300512: Class M Star 54
+    3300514: Class M Star 6
+    3300516: Class M Star 7
+    3300518: Class M Star 8
+    3300520: Class M Star 9
+    3300522: Class O Star
+    3300524: Class O Star 1
+    3300526: Class O Star 2
+    3300528: Class O Star 3
+    3300530: Class O Star 4
+    3300532: Class O Star 5
+    3300534: Class O Star 6
+    3300536: Class O Star 7
+    3300538: Class O Star 8
+    3300540: Flux Path
+    3300542: Flux Path 1
+    3300544: Flux Path 10
+    3300546: Flux Path 11
+    3300548: Flux Path 12
+    3300550: Flux Path 13
+    3300552: Flux Path 14
+    3300554: Flux Path 15
+    3300556: Flux Path 16
+    3300558: Flux Path 17
+    3300560: Flux Path 18
+    3300562: Flux Path 19
+    3300564: Flux Path 2
+    3300566: Flux Path 20
+    3300568: Flux Path 21
+    3300570: Flux Path 22
+    3300572: Flux Path 23
+    3300574: Flux Path 24
+    3300576: Flux Path 25
+    3300578: Flux Path 26
+    3300580: Flux Path 27
+    3300582: Flux Path 28
+    3300584: Flux Path 29
+    3300586: Flux Path 3
+    3300588: Flux Path 30
+    3300590: Flux Path 31
+    3300592: Flux Path 4
+    3300594: Flux Path 5
+    3300596: Flux Path 6
+    3300598: Flux Path 7
+    3300600: Flux Path 8
+    3300602: Flux Path 9
+    3300604: Grid Line
+    3300606: Grid Line 1
+    3300608: Grid Line 10
+    3300610: Grid Line 11
+    3300612: Grid Line 12
+    3300614: Grid Line 13
+    3300616: Grid Line 14
+    3300618: Grid Line 15
+    3300620: Grid Line 16
+    3300622: Grid Line 17
+    3300624: Grid Line 18
+    3300626: Grid Line 19
+    3300628: Grid Line 2
+    3300630: Grid Line 20
+    3300632: Grid Line 21
+    3300634: Grid Line 22
+    3300636: Grid Line 23
+    3300638: Grid Line 24
+    3300640: Grid Line 25
+    3300642: Grid Line 26
+    3300644: Grid Line 27
+    3300646: Grid Line 28
+    3300648: Grid Line 29
+    3300650: Grid Line 3
+    3300652: Grid Line 30
+    3300654: Grid Line 31
+    3300656: Grid Line 32
+    3300658: Grid Line 33
+    3300660: Grid Line 34
+    3300662: Grid Line 35
+    3300664: Grid Line 36
+    3300666: Grid Line 37
+    3300668: Grid Line 38
+    3300670: Grid Line 39
+    3300672: Grid Line 4
+    3300674: Grid Line 40
+    3300676: Grid Line 41
+    3300678: Grid Line 42
+    3300680: Grid Line 43
+    3300682: Grid Line 44
+    3300684: Grid Line 45
+    3300686: Grid Line 5
+    3300688: Grid Line 6
+    3300690: Grid Line 7
+    3300692: Grid Line 8
+    3300694: Grid Line 9
+    3300696: Nebula Circle
+    3300698: Nebula Circle 1
+    3300700: Nebula Circle 10
+    3300702: Nebula Circle 11
+    3300704: Nebula Circle 12
+    3300706: Nebula Circle 13
+    3300708: Nebula Circle 14
+    3300710: Nebula Circle 15
+    3300712: Nebula Circle 16
+    3300714: Nebula Circle 17
+    3300716: Nebula Circle 18
+    3300718: Nebula Circle 19
+    3300720: Nebula Circle 2
+    3300722: Nebula Circle 20
+    3300724: Nebula Circle 21
+    3300726: Nebula Circle 22
+    3300728: Nebula Circle 23
+    3300730: Nebula Circle 24
+    3300732: Nebula Circle 25
+    3300734: Nebula Circle 26
+    3300736: Nebula Circle 27
+    3300738: Nebula Circle 28
+    3300740: Nebula Circle 29
+    3300742: Nebula Circle 3
+    3300744: Nebula Circle 30
+    3300746: Nebula Circle 31
+    3300748: Nebula Circle 32
+    3300750: Nebula Circle 33
+    3300752: Nebula Circle 34
+    3300754: Nebula Circle 35
+    3300756: Nebula Circle 36
+    3300758: Nebula Circle 37
+    3300760: Nebula Circle 38
+    3300762: Nebula Circle 39
+    3300764: Nebula Circle 4
+    3300766: Nebula Circle 40
+    3300768: Nebula Circle 5
+    3300770: Nebula Circle 6
+    3300772: Nebula Circle 7
+    3300774: Nebula Circle 8
+    3300776: Nebula Circle 9
+    4300000: Class A Star
+    4300002: Class A Star
+    4300004: Class A Star
+    4300006: Class A Star
+    4300008: Class A Star
+    4300010: Class A Star
+    4300012: Class A Star
+    4300014: Class A Star
+    4300016: Class A Star
+    4300018: Class A Star
+    4300020: Class A Star
+    4300022: Class A Star
+    4300024: Class A Star
+    4300026: Class A Star
+    4300028: Class A Star
+    4300030: Class A Star
+    4300032: Class A Star
+    4300034: Class A Star
+    4300036: Class A Star
+    4300038: Class B Star
+    4300040: Class B Star
+    4300042: Class B Star
+    4300044: Class B Star
+    4300046: Class B Star
+    4300048: Class B Star
+    4300050: Class B Star
+    4300052: Class B Star
+    4300054: Class B Star
+    4300056: Class B Star
+    4300058: Class B Star
+    4300060: Class B Star
+    4300062: Class B Star
+    4300064: Class B Star
+    4300066: Class B Star
+    4300068: Class B Star
+    4300070: Class B Star
+    4300072: Class B Star
+    4300074: Class B Star
+    4300076: Class B Star
+    4300078: Class B Star
+    4300080: Class B Star
+    4300082: Class F Star
+    4300084: Class F Star
+    4300086: Class F Star
+    4300088: Class F Star
+    4300090: Class F Star
+    4300092: Class F Star
+    4300094: Class F Star
+    4300096: Class F Star
+    4300098: Class F Star
+    4300100: Class F Star
+    4300102: Class F Star
+    4300104: Class F Star
+    4300106: Class F Star
+    4300108: Class F Star
+    4300110: Class F Star
+    4300112: Class F Star
+    4300114: Class F Star
+    4300116: Class F Star
+    4300118: Class F Star
+    4300120: Class F Star
+    4300122: Class F Star
+    4300124: Class F Star
+    4300126: Class F Star
+    4300128: Class F Star
+    4300130: Class F Star
+    4300132: Class F Star
+    4300134: Class F Star
+    4300136: Class F Star
+    4300138: Class F Star
+    4300140: Class F Star
+    4300142: Class F Star
+    4300144: Class F Star
+    4300146: Class F Star
+    4300148: Class F Star
+    4300150: Class F Star
+    4300152: Class F Star
+    4300154: Class F Star
+    4300156: Class F Star
+    4300158: Class F Star
+    4300160: Class F Star
+    4300162: Class F Star
+    4300164: Class F Star
+    4300166: Class F Star
+    4300168: Class F Star
+    4300170: Class F Star
+    4300172: Class F Star
+    4300174: Class F Star
+    4300176: Class F Star
+    4300178: Class F Star
+    4300180: Class F Star
+    4300182: Class F Star
+    4300184: Class F Star
+    4300186: Class F Star
+    4300188: Class F Star
+    4300190: Class F Star
+    4300192: Class F Star
+    4300194: Class F Star
+    4300196: Class F Star
+    4300198: Class F Star
+    4300200: Class F Star
+    4300202: Class F Star
+    4300204: Class F Star
+    4300206: Class F Star
+    4300208: Class F Star
+    4300210: Class F Star
+    4300212: Class F Star
+    4300214: Class F Star
+    4300216: Class F Star
+    4300218: Class F Star
+    4300220: Class F Star
+    4300222: Class F Star
+    4300224: Class F Star
+    4300226: Class F Star
+    4300228: Class F Star
+    4300230: Class F Star
+    4300232: Class F Star
+    4300234: Class F Star
+    4300236: Class F Star
+    4300238: Class F Star
+    4300240: Class G Star
+    4300242: Class G Star
+    4300244: Class G Star
+    4300246: Class G Star
+    4300248: Class G Star
+    4300250: Class G Star
+    4300252: Class G Star
+    4300254: Class G Star
+    4300256: Class G Star
+    4300258: Class G Star
+    4300260: Class G Star
+    4300262: Class G Star
+    4300264: Class G Star
+    4300266: Class G Star
+    4300268: Class G Star
+    4300270: Class G Star
+    4300272: Class G Star
+    4300274: Class G Star
+    4300276: Class G Star
+    4300278: Class G Star
+    4300280: Class G Star
+    4300282: Class G Star
+    4300284: Class G Star
+    4300286: Class G Star
+    4300288: Class G Star
+    4300290: Class G Star
+    4300292: Class G Star
+    4300294: Class G Star
+    4300296: Class G Star
+    4300298: Class G Star
+    4300300: Class G Star
+    4300302: Class G Star
+    4300304: Class G Star
+    4300306: Class G Star
+    4300308: Class G Star
+    4300310: Class G Star
+    4300312: Class G Star
+    4300314: Class G Star
+    4300316: Class G Star
+    4300318: Class G Star
+    4300320: Class G Star
+    4300322: Class G Star
+    4300324: Class G Star
+    4300326: Class G Star
+    4300328: Class G Star
+    4300330: Class G Star
+    4300332: Class G Star
+    4300334: Class G Star
+    4300336: Class G Star
+    4300338: Class G Star
+    4300340: Class G Star
+    4300342: Class G Star
+    4300344: Class G Star
+    4300346: Class K Star
+    4300348: Class K Star
+    4300350: Class K Star
+    4300352: Class K Star
+    4300354: Class K Star
+    4300356: Class K Star
+    4300358: Class K Star
+    4300360: Class K Star
+    4300362: Class K Star
+    4300364: Class K Star
+    4300366: Class K Star
+    4300368: Class K Star
+    4300370: Class K Star
+    4300372: Class K Star
+    4300374: Class K Star
+    4300376: Class K Star
+    4300378: Class K Star
+    4300380: Class K Star
+    4300382: Class K Star
+    4300384: Class K Star
+    4300386: Class K Star
+    4300388: Class K Star
+    4300390: Class K Star
+    4300392: Class K Star
+    4300394: Class K Star
+    4300396: Class K Star
+    4300398: Class K Star
+    4300400: Class K Star
+    4300402: Class K Star
+    4300404: Class K Star
+    4300406: Class K Star
+    4300408: Class K Star
+    4300410: Class K Star
+    4300412: Class M Star
+    4300414: Class M Star
+    4300416: Class M Star
+    4300418: Class M Star
+    4300420: Class M Star
+    4300422: Class M Star
+    4300424: Class M Star
+    4300426: Class M Star
+    4300428: Class M Star
+    4300430: Class M Star
+    4300432: Class M Star
+    4300434: Class M Star
+    4300436: Class M Star
+    4300438: Class M Star
+    4300440: Class M Star
+    4300442: Class M Star
+    4300444: Class M Star
+    4300446: Class M Star
+    4300448: Class M Star
+    4300450: Class M Star
+    4300452: Class M Star
+    4300454: Class M Star
+    4300456: Class M Star
+    4300458: Class M Star
+    4300460: Class M Star
+    4300462: Class M Star
+    4300464: Class M Star
+    4300466: Class M Star
+    4300468: Class M Star
+    4300470: Class M Star
+    4300472: Class M Star
+    4300474: Class M Star
+    4300476: Class M Star
+    4300478: Class M Star
+    4300480: Class M Star
+    4300482: Class M Star
+    4300484: Class M Star
+    4300486: Class M Star
+    4300488: Class M Star
+    4300490: Class M Star
+    4300492: Class M Star
+    4300494: Class M Star
+    4300496: Class M Star
+    4300498: Class M Star
+    4300500: Class M Star
+    4300502: Class M Star
+    4300504: Class M Star
+    4300506: Class M Star
+    4300508: Class M Star
+    4300510: Class M Star
+    4300512: Class M Star
+    4300514: Class M Star
+    4300516: Class M Star
+    4300518: Class M Star
+    4300520: Class M Star
+    4300522: Class O Star
+    4300524: Class O Star
+    4300526: Class O Star
+    4300528: Class O Star
+    4300530: Class O Star
+    4300532: Class O Star
+    4300534: Class O Star
+    4300536: Class O Star
+    4300538: Class O Star
+    4300540: Flux Path
+    4300542: Flux Path
+    4300544: Flux Path
+    4300546: Flux Path
+    4300548: Flux Path
+    4300550: Flux Path
+    4300552: Flux Path
+    4300554: Flux Path
+    4300556: Flux Path
+    4300558: Flux Path
+    4300560: Flux Path
+    4300562: Flux Path
+    4300564: Flux Path
+    4300566: Flux Path
+    4300568: Flux Path
+    4300570: Flux Path
+    4300572: Flux Path
+    4300574: Flux Path
+    4300576: Flux Path
+    4300578: Flux Path
+    4300580: Flux Path
+    4300582: Flux Path
+    4300584: Flux Path
+    4300586: Flux Path
+    4300588: Flux Path
+    4300590: Flux Path
+    4300592: Flux Path
+    4300594: Flux Path
+    4300596: Flux Path
+    4300598: Flux Path
+    4300600: Flux Path
+    4300602: Flux Path
+    4300604: Grid Line
+    4300606: Grid Line
+    4300608: Grid Line
+    4300610: Grid Line
+    4300612: Grid Line
+    4300614: Grid Line
+    4300616: Grid Line
+    4300618: Grid Line
+    4300620: Grid Line
+    4300622: Grid Line
+    4300624: Grid Line
+    4300626: Grid Line
+    4300628: Grid Line
+    4300630: Grid Line
+    4300632: Grid Line
+    4300634: Grid Line
+    4300636: Grid Line
+    4300638: Grid Line
+    4300640: Grid Line
+    4300642: Grid Line
+    4300644: Grid Line
+    4300646: Grid Line
+    4300648: Grid Line
+    4300650: Grid Line
+    4300652: Grid Line
+    4300654: Grid Line
+    4300656: Grid Line
+    4300658: Grid Line
+    4300660: Grid Line
+    4300662: Grid Line
+    4300664: Grid Line
+    4300666: Grid Line
+    4300668: Grid Line
+    4300670: Grid Line
+    4300672: Grid Line
+    4300674: Grid Line
+    4300676: Grid Line
+    4300678: Grid Line
+    4300680: Grid Line
+    4300682: Grid Line
+    4300684: Grid Line
+    4300686: Grid Line
+    4300688: Grid Line
+    4300690: Grid Line
+    4300692: Grid Line
+    4300694: Grid Line
+    4300696: Nebula Circle
+    4300698: Nebula Circle
+    4300700: Nebula Circle
+    4300702: Nebula Circle
+    4300704: Nebula Circle
+    4300706: Nebula Circle
+    4300708: Nebula Circle
+    4300710: Nebula Circle
+    4300712: Nebula Circle
+    4300714: Nebula Circle
+    4300716: Nebula Circle
+    4300718: Nebula Circle
+    4300720: Nebula Circle
+    4300722: Nebula Circle
+    4300724: Nebula Circle
+    4300726: Nebula Circle
+    4300728: Nebula Circle
+    4300730: Nebula Circle
+    4300732: Nebula Circle
+    4300734: Nebula Circle
+    4300736: Nebula Circle
+    4300738: Nebula Circle
+    4300740: Nebula Circle
+    4300742: Nebula Circle
+    4300744: Nebula Circle
+    4300746: Nebula Circle
+    4300748: Nebula Circle
+    4300750: Nebula Circle
+    4300752: Nebula Circle
+    4300754: Nebula Circle
+    4300756: Nebula Circle
+    4300758: Nebula Circle
+    4300760: Nebula Circle
+    4300762: Nebula Circle
+    4300764: Nebula Circle
+    4300766: Nebula Circle
+    4300768: Nebula Circle
+    4300770: Nebula Circle
+    4300772: Nebula Circle
+    4300774: Nebula Circle
+    4300776: Nebula Circle
+  externalObjects: {}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 0
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -18,13 +18,13 @@ public class AnalysisButton : ShipButton
 		string text;
 
 		// do we have sensor data to analyze?
-		if ( m_spaceflightController.m_displayController.m_sensorsDisplay.m_hasSensorData )
+		if ( SpaceflightController.m_instance.m_displayController.m_sensorsDisplay.m_hasSensorData )
 		{
 			// yes - start building the new messages text
 			text = "<color=white>Analysis of Last Sensor Reading</color>\n";
 
 			// what did we just scan
-			switch ( m_spaceflightController.m_displayController.m_sensorsDisplay.m_scanType )
+			switch ( SpaceflightController.m_instance.m_displayController.m_sensorsDisplay.m_scanType )
 			{
 				case SensorsDisplay.ScanType.Planet:
 				{
@@ -55,7 +55,7 @@ public class AnalysisButton : ShipButton
 				case SensorsDisplay.ScanType.Minstrel:
 				{
 					// display the ship information
-					var vessel = gameData.m_vesselList[ (int) m_spaceflightController.m_displayController.m_sensorsDisplay.m_scanType ];
+					var vessel = gameData.m_vesselList[ (int) SpaceflightController.m_instance.m_displayController.m_sensorsDisplay.m_scanType ];
 
 					// object
 					text += "Object: <color=white>" + vessel.m_object + "</color>\n";
@@ -69,7 +69,7 @@ public class AnalysisButton : ShipButton
 				default:
 				{
 					// display the ship information
-					var vessel = gameData.m_vesselList[ (int) m_spaceflightController.m_displayController.m_sensorsDisplay.m_scanType ];
+					var vessel = gameData.m_vesselList[ (int) SpaceflightController.m_instance.m_displayController.m_sensorsDisplay.m_scanType ];
 
 					// object
 					text += "Object: <color=white>" + vessel.m_object + "</color>\n";
@@ -100,10 +100,10 @@ public class AnalysisButton : ShipButton
 		}
 
 		// update the messages text
-		m_spaceflightController.m_messages.ChangeText( text );
+		SpaceflightController.m_instance.m_messages.ChangeText( text );
 
 		// turn off the active button dot
-		m_spaceflightController.m_buttonController.UpdateButtonSprites();
+		SpaceflightController.m_instance.m_buttonController.UpdateButtonSprites();
 
 		return false;
 	}

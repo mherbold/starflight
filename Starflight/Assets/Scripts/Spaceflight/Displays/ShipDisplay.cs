@@ -3,9 +3,6 @@ using UnityEngine;
 
 abstract public class ShipDisplay : MonoBehaviour
 {
-	// convenient access to the spaceflight controller
-	public SpaceflightController m_spaceflightController;
-
 	// unity start
 	public virtual void Start()
 	{

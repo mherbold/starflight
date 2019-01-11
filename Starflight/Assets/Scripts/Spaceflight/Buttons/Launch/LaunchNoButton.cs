@@ -9,7 +9,7 @@ public class LaunchNoButton : ShipButton
 	public override bool Execute()
 	{
 		// restore the bridge buttons
-		m_spaceflightController.m_buttonController.RestoreBridgeButtons();
+		SpaceflightController.m_instance.m_buttonController.RestoreBridgeButtons();
 
 		return false;
 	}

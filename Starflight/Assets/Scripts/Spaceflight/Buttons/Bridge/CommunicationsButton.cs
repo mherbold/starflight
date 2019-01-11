@@ -11,13 +11,13 @@ public class CommunicationsButton : ShipButton
 	public override bool Execute()
 	{
 		// do we want to show the respond button?
-		m_showingRespondButton = m_spaceflightController.m_encounter.AliensWantToConnect();
+		m_showingRespondButton = SpaceflightController.m_instance.m_encounter.AliensWantToConnect();
 
 		// decide which button set to use
 		var buttonSet = ( m_showingRespondButton ) ? ButtonController.ButtonSet.CommunicationsB : ButtonController.ButtonSet.CommunicationsA;
 
 		// change the buttons
-		m_spaceflightController.m_buttonController.ChangeButtonSet( buttonSet );
+		SpaceflightController.m_instance.m_buttonController.ChangeButtonSet( buttonSet );
 
 		// get to the player data
 		PlayerData playerData = DataController.m_instance.m_playerData;
@@ -26,7 +26,7 @@ public class CommunicationsButton : ShipButton
 		PD_Personnel.PD_PersonnelFile personnelFile = playerData.m_crewAssignment.GetPersonnelFile( PD_CrewAssignment.Role.CommunicationsOfficer );
 
 		// set the name of the officer
-		m_spaceflightController.m_buttonController.ChangeOfficerText( "Officer " + personnelFile.m_name );
+		SpaceflightController.m_instance.m_buttonController.ChangeOfficerText( "Officer " + personnelFile.m_name );
 
 		return true;
 	}
@@ -34,16 +34,16 @@ public class CommunicationsButton : ShipButton
 	public override bool Update()
 	{
 		// did the encounter change to waiting for response?
-		if ( m_showingRespondButton != m_spaceflightController.m_encounter.AliensWantToConnect() )
+		if ( m_showingRespondButton != SpaceflightController.m_instance.m_encounter.AliensWantToConnect() )
 		{
 			// do we want to show the respond button?
-			m_showingRespondButton = m_spaceflightController.m_encounter.AliensWantToConnect();
+			m_showingRespondButton = SpaceflightController.m_instance.m_encounter.AliensWantToConnect();
 
 			// decide which button set to use
 			var buttonSet = ( m_showingRespondButton ) ? ButtonController.ButtonSet.CommunicationsB : ButtonController.ButtonSet.CommunicationsA;
 
 			// change the buttons
-			m_spaceflightController.m_buttonController.ChangeButtonSet( buttonSet );
+			SpaceflightController.m_instance.m_buttonController.ChangeButtonSet( buttonSet );
 		}
 
 		return false;

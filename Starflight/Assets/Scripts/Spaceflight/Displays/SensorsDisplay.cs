@@ -156,7 +156,7 @@ public class SensorsDisplay : ShipDisplay
 			m_isDoingCinematics = false;
 
 			// deactivate the sensor button
-			m_spaceflightController.m_buttonController.DeactivateButton();
+			SpaceflightController.m_instance.m_buttonController.DeactivateButton();
 
 			// play the activate sound
 			SoundController.m_instance.PlaySound( SoundController.Sound.Activate );
@@ -194,7 +194,7 @@ public class SensorsDisplay : ShipDisplay
 					var lithosphere = planet.GetLithosphereText();
 
 					// update the messages text
-					m_spaceflightController.m_messages.ChangeText( "Atmosphere:\n<color=white>" + atmosphere + "</color>\nHydrosphere:\n<color=white>" + hydrosphere + "</color>\nLithosphere:\n<color=white>" + lithosphere + "</color>" );
+					SpaceflightController.m_instance.m_messages.ChangeText( "Atmosphere:\n<color=white>" + atmosphere + "</color>\nHydrosphere:\n<color=white>" + hydrosphere + "</color>\nLithosphere:\n<color=white>" + lithosphere + "</color>" );
 
 					break;
 				}
@@ -235,7 +235,7 @@ public class SensorsDisplay : ShipDisplay
 					}
 
 					// update the messages text
-					m_spaceflightController.m_messages.ChangeText( text );
+					SpaceflightController.m_instance.m_messages.ChangeText( text );
 
 					break;
 				}

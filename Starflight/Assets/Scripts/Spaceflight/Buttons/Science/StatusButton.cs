@@ -9,10 +9,10 @@ public class StatusButton : ShipButton
 	public override bool Execute()
 	{
 		// show the system display
-		m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_statusDisplay );
+		SpaceflightController.m_instance.m_displayController.ChangeDisplay( SpaceflightController.m_instance.m_displayController.m_statusDisplay );
 
 		// remove the "active" dot from the current button
-		m_spaceflightController.m_buttonController.UpdateButtonSprites();
+		SpaceflightController.m_instance.m_buttonController.UpdateButtonSprites();
 
 		// play the update sound
 		SoundController.m_instance.PlaySound( SoundController.Sound.Update );

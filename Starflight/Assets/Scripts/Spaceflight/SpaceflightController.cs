@@ -23,21 +23,35 @@ public class SpaceflightController : MonoBehaviour
 	public DisplayController m_displayController;
 
 	// components
-	public Map m_map;
+	public Viewport m_viewport;
 	public Countdown m_countdown;
 	public Radar m_radar;
 	public Scanner m_scanner;
+	public Starmap m_starmap;
 
 	// some settings
 	public float m_alienHyperspaceRadarDistance;
 	public float m_alienStarSystemRadarDistance;
 	public float m_encounterRange;
 
+	// true if the game is paused
+	public bool m_gameIsPaused;
+
 	// save game timer
 	float m_timer;
 
 	// remember whether or not we have faded in the scene already
 	bool m_alreadyFadedIn;
+
+	// static instance to this spaceflight controller
+	static public SpaceflightController m_instance;
+
+	// constructor
+	SpaceflightController()
+	{
+		// make me accessible to everyone
+		m_instance = this;
+	}
 
 	// unity awake
 	void Awake()
@@ -52,6 +66,7 @@ public class SpaceflightController : MonoBehaviour
 		m_countdown.Hide();
 		m_radar.Hide();
 		m_scanner.Hide();
+		m_starmap.Hide();
 
 		// check if we loaded the persistent scene
 		if ( DataController.m_instance == null )
@@ -130,14 +145,8 @@ public class SpaceflightController : MonoBehaviour
 			}
 		}
 
-		// don't do anything if we have a panel open
-		if ( PanelController.m_instance.HasActivePanel() )
-		{
-			return;
-		}
-
-		// don't do anything if we have a pop up dialog open
-		if ( PopupController.m_instance.IsActive() )
+		// don't do anything if the game is paused
+		if ( m_gameIsPaused )
 		{
 			return;
 		}
@@ -162,14 +171,19 @@ public class SpaceflightController : MonoBehaviour
 			DataController.m_instance.SaveActiveGame();
 		}
 
-		// when player hits cancel (esc) show the save game panel
-		if ( InputController.m_instance.m_cancel )
+		// when player hits cancel (esc) show the save game panel (except when using the starmap)
+		if ( !m_starmap.IsOpen() )
 		{
-			InputController.m_instance.Debounce();
+			if ( InputController.m_instance.m_cancel )
+			{
+				InputController.m_instance.Debounce();
 
-			PanelController.m_instance.m_saveGamePanel.SetCallbackObject( this );
+				PanelController.m_instance.m_saveGamePanel.SetCallbackObject( this );
 
-			PanelController.m_instance.Open( PanelController.m_instance.m_saveGamePanel );
+				PanelController.m_instance.Open( PanelController.m_instance.m_saveGamePanel );
+
+				m_gameIsPaused = true;
+			}
 		}
 	}
 
@@ -192,9 +206,10 @@ public class SpaceflightController : MonoBehaviour
 		// update the player data
 		playerData.m_general.m_location = newLocation;
 
-		// hide the radar and scanner
+		// hide some of the components
 		m_radar.Hide();
 		m_scanner.Hide();
+		m_starmap.Hide();
 
 		// switching to starport is a special case
 		if ( playerData.m_general.m_location == PD_General.Location.Starport )
@@ -205,7 +220,7 @@ public class SpaceflightController : MonoBehaviour
 		else
 		{
 			// make sure the map is visible
-			m_map.StartFade( 1.0f, 2.0f );
+			m_viewport.StartFade( 1.0f, 2.0f );
 
 			// switch the location
 			switch ( playerData.m_general.m_location )
@@ -226,7 +241,7 @@ public class SpaceflightController : MonoBehaviour
 					m_inOrbit.Hide();
 					m_hyperspace.Hide();
 					m_encounter.Hide();
-					m_map.StartFade( 0.0f, 0.0f );
+					m_viewport.StartFade( 0.0f, 0.0f );
 					m_messages.ChangeText( "<color=white>Starport clear.\nStanding by to maneuver.</color>" );
 					break;
 
@@ -279,6 +294,9 @@ public class SpaceflightController : MonoBehaviour
 	{
 		// save the player data in case something has been updated
 		DataController.m_instance.SaveActiveGame();
+
+		// unpause the game
+		m_gameIsPaused = false;
 	}
 
 	// updates the encounters (call only from hyperspace or starsystem locations)

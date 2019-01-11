@@ -15,11 +15,11 @@ public class CommandButton : ShipButton
 		switch ( playerData.m_general.m_location )
 		{
 			case PD_General.Location.DockingBay:
-				m_spaceflightController.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.CommandA );
+				SpaceflightController.m_instance.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.CommandA );
 				break;
 
 			default:
-				m_spaceflightController.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.CommandB );
+				SpaceflightController.m_instance.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.CommandB );
 				break;
 		}
 
@@ -27,7 +27,7 @@ public class CommandButton : ShipButton
 		PD_Personnel.PD_PersonnelFile personnelFile = playerData.m_crewAssignment.GetPersonnelFile( PD_CrewAssignment.Role.Captain );
 
 		// set the name of the captain
-		m_spaceflightController.m_buttonController.ChangeOfficerText( "Captain " + personnelFile.m_name );
+		SpaceflightController.m_instance.m_buttonController.ChangeOfficerText( "Captain " + personnelFile.m_name );
 
 		return true;
 	}

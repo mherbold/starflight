@@ -15,9 +15,6 @@ public class InOrbit : MonoBehaviour
 	// the planet atmosphere (front and back)
 	public GameObject[] m_planetAtmospheres;
 
-	// convenient access to the spaceflight controller
-	public SpaceflightController m_spaceflightController;
-
 	// current planet spin
 	float m_spin;
 
@@ -34,8 +31,8 @@ public class InOrbit : MonoBehaviour
 	// unity update
 	void Update()
 	{
-		// don't do anything if we have a panel open
-		if ( PanelController.m_instance.HasActivePanel() )
+		// don't do anything if the game is paused
+		if ( SpaceflightController.m_instance.m_gameIsPaused )
 		{
 			return;
 		}
@@ -93,7 +90,7 @@ public class InOrbit : MonoBehaviour
 		gameObject.SetActive( true );
 
 		// get the planet controller
-		var planetController = m_spaceflightController.m_starSystem.GetPlanetController( playerData.m_general.m_currentPlanetId );
+		var planetController = SpaceflightController.m_instance.m_starSystem.GetPlanetController( playerData.m_general.m_currentPlanetId );
 
 		// set the scale of the planet model (and clouds)
 		var scale = planetController.m_planet.GetScale();
@@ -101,20 +98,20 @@ public class InOrbit : MonoBehaviour
 		m_planetClouds.transform.localScale = m_planetModel.transform.localScale * 1.01f;
 
 		// move the player object
-		m_spaceflightController.m_player.transform.position = playerData.m_general.m_coordinates = new Vector3( 0.0f, 0.0f, 0.0f );
+		SpaceflightController.m_instance.m_player.transform.position = playerData.m_general.m_coordinates = new Vector3( 0.0f, 0.0f, 0.0f );
 
 		// make sure the camera dolly is the right distance
-		m_spaceflightController.m_player.DollyCamera( 1024.0f );
-		m_spaceflightController.m_player.SetClipPlanes( 512.0f, 1536.0f );
+		SpaceflightController.m_instance.m_player.DollyCamera( 1024.0f );
+		SpaceflightController.m_instance.m_player.SetClipPlanes( 512.0f, 1536.0f );
 
 		// freeze the player
-		m_spaceflightController.m_player.Freeze();
+		SpaceflightController.m_instance.m_player.Freeze();
 
 		// reset the buttons
-		m_spaceflightController.m_buttonController.RestoreBridgeButtons();
+		SpaceflightController.m_instance.m_buttonController.RestoreBridgeButtons();
 
 		// fade in the map
-		m_spaceflightController.m_map.StartFade( 1.0f, 2.0f );
+		SpaceflightController.m_instance.m_viewport.StartFade( 1.0f, 2.0f );
 
 		// show / hide the nebula depending on if we are in one
 		m_nebula.SetActive( star.m_insideNebula );
@@ -123,7 +120,7 @@ public class InOrbit : MonoBehaviour
 		MusicController.m_instance.ChangeToTrack( MusicController.Track.InOrbit );
 
 		// let the player know we've established orbit
-		m_spaceflightController.m_messages.ChangeText( "<color=white>Orbit established.</color>" );
+		SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Orbit established.</color>" );
 
 		// set up the clouds and atmosphere
 		planetController.SetupClouds( m_planetClouds, m_planetAtmospheres );
@@ -140,7 +137,7 @@ public class InOrbit : MonoBehaviour
 			var playerData = DataController.m_instance.m_playerData;
 
 			// get the planet controller
-			var planetController = m_spaceflightController.m_starSystem.GetPlanetController( playerData.m_general.m_currentPlanetId );
+			var planetController = SpaceflightController.m_instance.m_starSystem.GetPlanetController( playerData.m_general.m_currentPlanetId );
 
 			// apply the material to the planet model
 			m_planetModel.material = planetController.GetMaterial();

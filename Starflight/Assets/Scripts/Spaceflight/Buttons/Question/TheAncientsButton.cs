@@ -8,9 +8,9 @@ public class TheAncientsButton : ShipButton
 
 	public override bool Execute()
 	{
-		m_spaceflightController.m_encounter.AddComm( GD_Comm.Subject.TheAncients, true );
+		SpaceflightController.m_instance.m_encounter.AddComm( GD_Comm.Subject.TheAncients, true );
 
-		m_spaceflightController.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.Comm );
+		SpaceflightController.m_instance.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.Comm );
 
 		return false;
 	}

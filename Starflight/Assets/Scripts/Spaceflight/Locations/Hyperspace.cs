@@ -9,9 +9,6 @@ public class Hyperspace : MonoBehaviour
 	// our flux template (that we will duplicate all over the place)
 	public GameObject m_fluxTemplate;
 
-	// convenient access to the spaceflight controller
-	public SpaceflightController m_spaceflightController;
-
 	// true if we are currently traveling through a flux
 	bool m_travelingThroughFlux;
 
@@ -80,8 +77,8 @@ public class Hyperspace : MonoBehaviour
 	// unity update
 	void Update()
 	{
-		// don't do anything if we have a panel open
-		if ( PanelController.m_instance.HasActivePanel() )
+		// don't do anything if the game is paused
+		if ( SpaceflightController.m_instance.m_gameIsPaused )
 		{
 			return;
 		}
@@ -105,23 +102,23 @@ public class Hyperspace : MonoBehaviour
 			var newPosition = Vector3.Lerp( m_fluxTravelStartPosition, m_fluxTravelEndPosition, t );
 
 			// update the ship position
-			playerData.m_general.m_coordinates = m_spaceflightController.m_player.transform.position = newPosition;
+			playerData.m_general.m_coordinates = SpaceflightController.m_instance.m_player.transform.position = newPosition;
 
 			// rotate the skybox in the direction of the flux travel
 			var direction = Vector3.Normalize( m_fluxTravelStartPosition - m_fluxTravelEndPosition );
-			m_spaceflightController.m_player.RotateSkybox( -direction, Time.deltaTime * 5.0f );
+			SpaceflightController.m_instance.m_player.RotateSkybox( -direction, Time.deltaTime * 5.0f );
 
 			// have we arrived?
 			if ( m_timer >= m_fluxTravelDuration )
 			{
 				// end the space warp effect
-				m_spaceflightController.m_player.StopSpaceWarp();
+				SpaceflightController.m_instance.m_player.StopSpaceWarp();
 
 				// let the ship move again
-				m_spaceflightController.m_player.Unfreeze();
+				SpaceflightController.m_instance.m_player.Unfreeze();
 
 				// update the map coordinates
-				m_spaceflightController.m_map.UpdateCoordinates();
+				SpaceflightController.m_instance.m_viewport.UpdateCoordinates();
 
 				// update the last hyperspace location
 				playerData.m_general.m_lastHyperspaceCoordinates = newPosition;
@@ -159,7 +156,7 @@ public class Hyperspace : MonoBehaviour
 					playerData.m_general.m_currentMaximumSpeed *= 4.0f;
 
 					// switch to the star system location
-					m_spaceflightController.SwitchLocation( PD_General.Location.StarSystem );
+					SpaceflightController.m_instance.SwitchLocation( PD_General.Location.StarSystem );
 				}
 			}
 
@@ -174,7 +171,7 @@ public class Hyperspace : MonoBehaviour
 					Debug.Log( "Entering flux at " + flux.m_x1 + " x " + flux.m_y1 + ", distance = " + distance );
 
 					// prevent the player from maneuvering
-					m_spaceflightController.m_player.Freeze();
+					SpaceflightController.m_instance.m_player.Freeze();
 
 					// reset the timer
 					m_timer = 0.0f;
@@ -190,7 +187,7 @@ public class Hyperspace : MonoBehaviour
 					m_travelingThroughFlux = true;
 
 					// start the warp effect
-					m_spaceflightController.m_player.StartSpaceWarp();
+					SpaceflightController.m_instance.m_player.StartSpaceWarp();
 
 					// play the enter warp sound
 					SoundController.m_instance.PlaySound( SoundController.Sound.EnterWarp );
@@ -198,7 +195,7 @@ public class Hyperspace : MonoBehaviour
 			}
 
 			// update encounters
-			m_spaceflightController.UpdateEncounters();
+			SpaceflightController.m_instance.UpdateEncounters();
 		}
 	}
 
@@ -230,32 +227,32 @@ public class Hyperspace : MonoBehaviour
 		gameObject.SetActive( true );
 
 		// make sure the camera is at the right height above the zero plane
-		m_spaceflightController.m_player.DollyCamera( 1024.0f );
-		m_spaceflightController.m_player.SetClipPlanes( 512.0f, 1536.0f );
+		SpaceflightController.m_instance.m_player.DollyCamera( 1024.0f );
+		SpaceflightController.m_instance.m_player.SetClipPlanes( 512.0f, 1536.0f );
 
 		// get to the player data
 		var playerData = DataController.m_instance.m_playerData;
 
 		// move the ship to where we are in hyperspace
-		m_spaceflightController.m_player.transform.position = playerData.m_general.m_coordinates = playerData.m_general.m_lastHyperspaceCoordinates;
+		SpaceflightController.m_instance.m_player.transform.position = playerData.m_general.m_coordinates = playerData.m_general.m_lastHyperspaceCoordinates;
 
 		// calculate the new rotation of the player
 		var newRotation = Quaternion.LookRotation( playerData.m_general.m_currentDirection, Vector3.up );
 
 		// update the player rotation
-		m_spaceflightController.m_player.m_ship.rotation = newRotation;
+		SpaceflightController.m_instance.m_player.m_ship.rotation = newRotation;
 
 		// unfreeze the player
-		m_spaceflightController.m_player.Unfreeze();
+		SpaceflightController.m_instance.m_player.Unfreeze();
 
 		// fade in the map
-		m_spaceflightController.m_map.StartFade( 1.0f, 2.0f );
+		SpaceflightController.m_instance.m_viewport.StartFade( 1.0f, 2.0f );
 
 		// show the status display
-		m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_statusDisplay );
+		SpaceflightController.m_instance.m_displayController.ChangeDisplay( SpaceflightController.m_instance.m_displayController.m_statusDisplay );
 
 		// show the radar
-		m_spaceflightController.m_radar.Show();
+		SpaceflightController.m_instance.m_radar.Show();
 
 		// play the star system music track
 		MusicController.m_instance.ChangeToTrack( MusicController.Track.Hyperspace );

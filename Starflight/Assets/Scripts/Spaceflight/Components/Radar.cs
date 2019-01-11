@@ -38,16 +38,9 @@ public class Radar : MonoBehaviour
 
 	Detection[] m_detectionList;
 
-	SpaceflightController m_spaceflightController;
-
 	// unity start
 	void Start()
 	{
-		// get access to the spaceflight controller
-		var controllersGameObject = GameObject.FindWithTag( "Spaceflight Controllers" );
-
-		m_spaceflightController = controllersGameObject.GetComponent<SpaceflightController>();
-
 		// clone materials
 		m_ring.material = new Material( m_ring.material );
 		m_sweep.material = new Material( m_sweep.material );
@@ -200,13 +193,13 @@ public class Radar : MonoBehaviour
 					SoundController.m_instance.PlaySound( SoundController.Sound.RadarBlip, Mathf.Pow( opacity, 2.0f ) );
 
 					// let the player know we've detected motion
-					m_spaceflightController.m_messages.ChangeText( "<color=white>Motion detected.</color>" );
+					SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Motion detected.</color>" );
 				}
 			}
 		}
 
 		// get the current map fade amount
-		var currentMapFadeAmount = m_spaceflightController.m_map.GetCurrentFadeAmount();
+		var currentMapFadeAmount = SpaceflightController.m_instance.m_viewport.GetCurrentFadeAmount();
 
 		// go through each detection in the detection list
 		foreach ( var detection in m_detectionList )

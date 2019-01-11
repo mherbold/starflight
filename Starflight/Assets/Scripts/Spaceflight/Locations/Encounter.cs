@@ -6,9 +6,6 @@ using System.Text.RegularExpressions;
 
 public class Encounter : MonoBehaviour
 {
-	// convenient access to the spaceflight controller
-	public SpaceflightController m_spaceflightController;
-
 	// the speed the alien ships move at
 	public float m_alienShipSpeed;
 
@@ -64,8 +61,8 @@ public class Encounter : MonoBehaviour
 	// unity update
 	void Update()
 	{
-		// don't do anything if we have a panel open
-		if ( PanelController.m_instance.HasActivePanel() )
+		// don't do anything if the game is paused
+		if ( SpaceflightController.m_instance.m_gameIsPaused )
 		{
 			return;
 		}
@@ -170,16 +167,16 @@ public class Encounter : MonoBehaviour
 				if ( playerData.m_general.m_lastLocation == PD_General.Location.Hyperspace )
 				{
 					// yes - update the last hyperspace coordinates
-					playerData.m_general.m_lastHyperspaceCoordinates += exitDirection * m_spaceflightController.m_encounterRange * 1.25f;
+					playerData.m_general.m_lastHyperspaceCoordinates += exitDirection * SpaceflightController.m_instance.m_encounterRange * 1.25f;
 				}
 				else
 				{
 					// no - update the last star system coordinates
-					playerData.m_general.m_lastStarSystemCoordinates += exitDirection * m_spaceflightController.m_encounterRange * 1.25f;
+					playerData.m_general.m_lastStarSystemCoordinates += exitDirection * SpaceflightController.m_instance.m_encounterRange * 1.25f;
 				}
 
 				// yes - switch back to the last location
-				m_spaceflightController.SwitchLocation( playerData.m_general.m_lastLocation );
+				SpaceflightController.m_instance.SwitchLocation( playerData.m_general.m_lastLocation );
 			}
 		}
 	}
@@ -204,7 +201,7 @@ public class Encounter : MonoBehaviour
 		gameObject.SetActive( false );
 
 		// slide the message box back in
-		m_spaceflightController.m_messages.SlideIn();
+		SpaceflightController.m_instance.m_messages.SlideIn();
 	}
 
 	// call this to show the encounter stuff
@@ -232,26 +229,26 @@ public class Encounter : MonoBehaviour
 		// make sure the camera is at the right height above the zero plane
 		m_currentDollyDistance = 1024.0f;
 
-		m_spaceflightController.m_player.DollyCamera( m_currentDollyDistance );
-		m_spaceflightController.m_player.SetClipPlanes( 512.0f, 1536.0f );
+		SpaceflightController.m_instance.m_player.DollyCamera( m_currentDollyDistance );
+		SpaceflightController.m_instance.m_player.SetClipPlanes( 512.0f, 1536.0f );
 
 		// move the ship to where we are in the encounter
-		m_spaceflightController.m_player.transform.position = playerData.m_general.m_coordinates = playerData.m_general.m_lastEncounterCoordinates;
+		SpaceflightController.m_instance.m_player.transform.position = playerData.m_general.m_coordinates = playerData.m_general.m_lastEncounterCoordinates;
 
 		// calculate the new rotation of the player
 		var newRotation = Quaternion.LookRotation( playerData.m_general.m_currentDirection, Vector3.up );
 
 		// update the player rotation
-		m_spaceflightController.m_player.m_ship.rotation = newRotation;
+		SpaceflightController.m_instance.m_player.m_ship.rotation = newRotation;
 
 		// unfreeze the player
-		m_spaceflightController.m_player.Unfreeze();
+		SpaceflightController.m_instance.m_player.Unfreeze();
 
 		// fade in the map
-		m_spaceflightController.m_map.StartFade( 1.0f, 2.0f );
+		SpaceflightController.m_instance.m_viewport.StartFade( 1.0f, 2.0f );
 
 		// show the status display
-		m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_statusDisplay );
+		SpaceflightController.m_instance.m_displayController.ChangeDisplay( SpaceflightController.m_instance.m_displayController.m_statusDisplay );
 
 		// play the star system music track
 		MusicController.m_instance.ChangeToTrack( MusicController.Track.Encounter );
@@ -397,10 +394,10 @@ public class Encounter : MonoBehaviour
 		}
 
 		// show the conversation string
-		m_spaceflightController.m_messages.ChangeText( m_pdEncounter.m_conversation );
+		SpaceflightController.m_instance.m_messages.ChangeText( m_pdEncounter.m_conversation );
 
 		// slide the message box out
-		m_spaceflightController.m_messages.SlideOut();
+		SpaceflightController.m_instance.m_messages.SlideOut();
 
 		// force an update now
 		Update();
@@ -810,7 +807,7 @@ public class Encounter : MonoBehaviour
 					m_pdEncounter.AddToConversation( "Captain, we're being scanned." );
 
 					// update the message
-					m_spaceflightController.m_messages.ChangeText( m_pdEncounter.m_conversation );
+					SpaceflightController.m_instance.m_messages.ChangeText( m_pdEncounter.m_conversation );
 
 					// update the flag
 					m_pdEncounter.m_scanTimer = 0.0f;
@@ -1020,8 +1017,8 @@ public class Encounter : MonoBehaviour
 		zExtent += 192.0f;
 
 		// recalculate what the camera distance from the zero plane should be
-		var verticalFieldOfView = m_spaceflightController.m_map.m_playerCamera.fieldOfView * Mathf.Deg2Rad;
-		var horizontalFieldOfView = 2.0f * Mathf.Atan( Mathf.Tan( verticalFieldOfView * 0.5f ) * m_spaceflightController.m_map.m_playerCamera.aspect );
+		var verticalFieldOfView = SpaceflightController.m_instance.m_viewport.m_playerCamera.fieldOfView * Mathf.Deg2Rad;
+		var horizontalFieldOfView = 2.0f * Mathf.Atan( Mathf.Tan( verticalFieldOfView * 0.5f ) * SpaceflightController.m_instance.m_viewport.m_playerCamera.aspect );
 		var horizontalAngle = Mathf.Deg2Rad * ( 180.0f - 90.0f - horizontalFieldOfView * Mathf.Rad2Deg * 0.5f );
 		var verticalAngle = Mathf.Deg2Rad * ( 180.0f - 90.0f - verticalFieldOfView * Mathf.Rad2Deg * 0.5f );
 		var tanHorizontalAngle = Mathf.Tan( horizontalAngle );
@@ -1032,7 +1029,7 @@ public class Encounter : MonoBehaviour
 		// slowly dolly the camera
 		m_currentDollyDistance = Mathf.Lerp( m_currentDollyDistance, targetDollyDistance, Time.deltaTime * m_cameraDollySpeed );
 
-		m_spaceflightController.m_player.DollyCamera( m_currentDollyDistance );
+		SpaceflightController.m_instance.m_player.DollyCamera( m_currentDollyDistance );
 	}
 
 	// find a comm based on the subject
@@ -1398,7 +1395,7 @@ public class Encounter : MonoBehaviour
 			if ( subject == GD_Comm.Subject.Question )
 			{
 				// yes - change the button set
-				m_spaceflightController.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.AnswerQuestion );
+				SpaceflightController.m_instance.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.AnswerQuestion );
 
 				// forget the last subject from the player
 				m_pdEncounter.m_lastSubjectFromPlayer = GD_Comm.Subject.None;
@@ -1412,7 +1409,7 @@ public class Encounter : MonoBehaviour
 		m_pdEncounter.AddToConversation( text );
 
 		// update the message
-		m_spaceflightController.m_messages.ChangeText( m_pdEncounter.m_conversation );
+		SpaceflightController.m_instance.m_messages.ChangeText( m_pdEncounter.m_conversation );
 
 		// play the beep sound
 		SoundController.m_instance.PlaySound( SoundController.Sound.Beep );
@@ -1451,13 +1448,13 @@ public class Encounter : MonoBehaviour
 	public void Connect()
 	{
 		// hide the player (camera and all)
-		m_spaceflightController.m_player.Hide();
+		SpaceflightController.m_instance.m_player.Hide();
 
 		// hide the encounter location
 		m_main.SetActive( false );
 
 		// instantly black out the viewer
-		m_spaceflightController.m_map.StartFade( 0.0f, 0.0f );
+		SpaceflightController.m_instance.m_viewport.StartFade( 0.0f, 0.0f );
 
 		// show the race of the aliens in this encounter
 		if ( m_alienRaceModelList[ (int) m_gdEncounter.m_race ] != null )
@@ -1473,12 +1470,12 @@ public class Encounter : MonoBehaviour
 		if ( ( m_pdEncounter.m_lastQuestionFromAliens != 0 ) && ( m_pdEncounter.m_lastSubjectFromPlayer == GD_Comm.Subject.None ) )
 		{
 			// yes - change to the answer question button set
-			m_spaceflightController.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.AnswerQuestion );
+			SpaceflightController.m_instance.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.AnswerQuestion );
 		}
 		else
 		{
 			// no - change to the normal comm buttons
-			m_spaceflightController.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.Comm );
+			SpaceflightController.m_instance.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.Comm );
 		}
 
 		// we are connected now
@@ -1498,10 +1495,10 @@ public class Encounter : MonoBehaviour
 		m_main.SetActive( true );
 
 		// show the player (camera and all)
-		m_spaceflightController.m_player.Show();
+		SpaceflightController.m_instance.m_player.Show();
 
 		// change the buttons
-		m_spaceflightController.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.Bridge );
+		SpaceflightController.m_instance.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.Bridge );
 
 		// we are not connected any more
 		m_pdEncounter.m_connected = false;
@@ -1661,13 +1658,13 @@ public class Encounter : MonoBehaviour
 			// yes - let the player know
 			SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
-			m_spaceflightController.m_messages.ChangeText( "<color=red>That is your ship.</color>" );
+			SpaceflightController.m_instance.m_messages.ChangeText( "<color=red>That is your ship.</color>" );
 
 			// deactivate the sensor button
-			m_spaceflightController.m_buttonController.DeactivateButton();
+			SpaceflightController.m_instance.m_buttonController.DeactivateButton();
 
 			// show the status display
-			m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_statusDisplay );
+			SpaceflightController.m_instance.m_displayController.ChangeDisplay( SpaceflightController.m_instance.m_displayController.m_statusDisplay );
 		}
 		else
 		{
@@ -1677,13 +1674,13 @@ public class Encounter : MonoBehaviour
 				// yes - scanning of debris not implemented yet
 				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
-				m_spaceflightController.m_messages.ChangeText( "<color=red>Not yet implemented.</color>" );
+				SpaceflightController.m_instance.m_messages.ChangeText( "<color=red>Not yet implemented.</color>" );
 
 				// deactivate the sensor button
-				m_spaceflightController.m_buttonController.DeactivateButton();
+				SpaceflightController.m_instance.m_buttonController.DeactivateButton();
 
 				// show the status display
-				m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_statusDisplay );
+				SpaceflightController.m_instance.m_displayController.ChangeDisplay( SpaceflightController.m_instance.m_displayController.m_statusDisplay );
 			}
 			else
 			{
@@ -1691,7 +1688,7 @@ public class Encounter : MonoBehaviour
 				var scanType = (SensorsDisplay.ScanType) alienShipList[ currentSelection - 1 ].m_vesselId;
 
 				// start the scan
-				m_spaceflightController.m_displayController.m_sensorsDisplay.StartScanning( scanType, 1, 20, 0, 100 );
+				SpaceflightController.m_instance.m_displayController.m_sensorsDisplay.StartScanning( scanType, 1, 20, 0, 100 );
 			}
 		}
 	}

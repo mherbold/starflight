@@ -8,9 +8,9 @@ public class AnswerNoButton : ShipButton
 
 	public override bool Execute()
 	{
-		m_spaceflightController.m_encounter.AddComm( GD_Comm.Subject.No, true );
+		SpaceflightController.m_instance.m_encounter.AddComm( GD_Comm.Subject.No, true );
 
-		m_spaceflightController.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.Comm );
+		SpaceflightController.m_instance.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.Comm );
 
 		return false;
 	}

@@ -10,9 +10,6 @@ public class DockingBay : MonoBehaviour
 	// particle systems
 	public ParticleSystem m_decompressionParticleSystem;
 
-	// convenient access to the spaceflight controller
-	public SpaceflightController m_spaceflightController;
-
 	// the distance from the doors we want to park the ship
 	float m_parkedPosition;
 
@@ -62,31 +59,31 @@ public class DockingBay : MonoBehaviour
 		var playerData = DataController.m_instance.m_playerData;
 
 		// put us in the right spot for the docking bay launch sequence
-		m_spaceflightController.m_player.transform.position = playerData.m_general.m_coordinates = new Vector3( 0.0f, 0.0f, 0.0f );
+		SpaceflightController.m_instance.m_player.transform.position = playerData.m_general.m_coordinates = new Vector3( 0.0f, 0.0f, 0.0f );
 
 		// recalculate what the starting camera distance from the doors should be
-		var verticalFieldOfView = m_spaceflightController.m_map.m_playerCamera.fieldOfView;
-		var horizontalFieldOfView = 2.0f * Mathf.Atan( Mathf.Tan( verticalFieldOfView * Mathf.Deg2Rad * 0.5f ) * m_spaceflightController.m_map.m_playerCamera.aspect );
+		var verticalFieldOfView = SpaceflightController.m_instance.m_viewport.m_playerCamera.fieldOfView;
+		var horizontalFieldOfView = 2.0f * Mathf.Atan( Mathf.Tan( verticalFieldOfView * Mathf.Deg2Rad * 0.5f ) * SpaceflightController.m_instance.m_viewport.m_playerCamera.aspect );
 		var angle = Mathf.Deg2Rad * ( 180.0f - 90.0f - horizontalFieldOfView * Mathf.Rad2Deg * 0.5f );
 		var tanAngle = Mathf.Tan( angle );
 		var halfDoorWidth = 276.5f;
 
 		m_parkedPosition = Mathf.Min( 1024.0f, halfDoorWidth * tanAngle );
 
-		m_spaceflightController.m_player.DollyCamera( m_parkedPosition );
-		m_spaceflightController.m_player.SetClipPlanes( 1.0f, 2048.0f );
+		SpaceflightController.m_instance.m_player.DollyCamera( m_parkedPosition );
+		SpaceflightController.m_instance.m_player.SetClipPlanes( 1.0f, 2048.0f );
 
 		// freeze the player
-		m_spaceflightController.m_player.Freeze();
+		SpaceflightController.m_instance.m_player.Freeze();
 
 		// reset the buttons
-		m_spaceflightController.m_buttonController.RestoreBridgeButtons();
+		SpaceflightController.m_instance.m_buttonController.RestoreBridgeButtons();
 
 		// fade in the map
-		m_spaceflightController.m_map.StartFade( 1.0f, 2.0f );
+		SpaceflightController.m_instance.m_viewport.StartFade( 1.0f, 2.0f );
 
 		// make sure we have the status display up
-		m_spaceflightController.m_displayController.ChangeDisplay( m_spaceflightController.m_displayController.m_statusDisplay );
+		SpaceflightController.m_instance.m_displayController.ChangeDisplay( SpaceflightController.m_instance.m_displayController.m_statusDisplay );
 
 		// play the docking bay music track
 		MusicController.m_instance.ChangeToTrack( MusicController.Track.DockingBay );

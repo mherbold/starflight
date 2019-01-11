@@ -8,9 +8,9 @@ public class TerminateButton : ShipButton
 
 	public override bool Execute()
 	{
-		m_spaceflightController.m_encounter.AddComm( GD_Comm.Subject.Terminate, true );
+		SpaceflightController.m_instance.m_encounter.AddComm( GD_Comm.Subject.Terminate, true );
 
-		m_spaceflightController.m_buttonController.UpdateButtonSprites();
+		SpaceflightController.m_instance.m_buttonController.UpdateButtonSprites();
 
 		return false;
 	}
