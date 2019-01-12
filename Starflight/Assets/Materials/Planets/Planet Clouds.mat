@@ -152,7 +152,7 @@ Material:
     - SF_BlendDst: 10
     - SF_BlendSrc: 1
     - SF_CullMode: 2
-    - SF_Density: 1.759
+    - SF_Density: 1.5
     - SF_DetailNormalMapStrength: 1
     - SF_ForwardShadowsOn: 1
     - SF_NormalMapStrength: 3
@@ -161,6 +161,7 @@ Material:
     - SF_RenderQueueOffset: 0
     - SF_Smoothness: 0.275
     - SF_Speed: 0.1
+    - SF_ZTest: 4
     - SF_ZWriteOn: 0
     - Smoothness: 0.4
     - Speed: 0.005
