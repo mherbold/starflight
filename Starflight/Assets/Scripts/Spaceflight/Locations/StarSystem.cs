@@ -164,6 +164,12 @@ public class StarSystem : MonoBehaviour
 
 		// update the system display
 		SpaceflightController.m_instance.m_displayController.m_systemDisplay.ChangeSystem();
+
+		// we are generating planets now
+		m_generatingPlanets = true;
+
+		// pause the game
+		SpaceflightController.m_instance.m_gameIsPaused = true;
 	}
 
 	// call this to hide the starsystem objects
@@ -260,12 +266,6 @@ public class StarSystem : MonoBehaviour
 				m_planetController[ planet.m_orbitPosition - 1 ].EnablePlanet();
 			}
 		}
-
-		// pause the game
-		SpaceflightController.m_instance.m_gameIsPaused = true;
-
-		// we are generating planets now
-		m_generatingPlanets = true;
 	}
 
 	// find and return the planet controller that has the planet we are looking for
