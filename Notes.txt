@@ -1,4 +1,26 @@
 
+Landing on planets
+
+	Max X is 179E
+	Min X is 180W
+	Max Y (south) is 90S
+	Min Y (north) is 90N
+	
+	Click on Descend - no confirmation
+	"Computing descent profile..."
+	(1 second later)
+	Planet orientation snaps to target rotation
+	"Autopilot engaged. Descending..."
+	Descend straight in for 5 seconds
+	Planet shape changes from sphere to flat
+	4 seconds later (maybe close to 5)
+	"Topography net locked on"
+	Roll right a little bit - maybe 10 degrees clockwise from due north
+	Roll left until about 50 or 60 degrees counterclockwise from due north
+	(5 or 6 seconds later)
+	"Safe landing, captain."
+	Menu updates - goes back to captain menu, land becomes launch.
+
 Questionable Data
 		
 	m_encounterList
