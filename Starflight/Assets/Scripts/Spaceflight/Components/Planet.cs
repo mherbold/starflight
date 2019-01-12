@@ -209,7 +209,7 @@ public class Planet : MonoBehaviour
 			var atmosphereDensity = m_planet.GetAtmosphereDensity();
 
 			// set the density of the clouds
-			planetClouds.material.SetFloat( "SF_Density", 2.0f - atmosphereDensity );
+			planetClouds.material.SetFloat( "SF_Density", 1.9f - atmosphereDensity * 0.9f );
 
 			// pick the color for the clouds
 			Color color;

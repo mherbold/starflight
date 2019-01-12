@@ -1,5 +1,6 @@
 ﻿
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SystemDisplay : ShipDisplay
 {
@@ -7,13 +8,13 @@ public class SystemDisplay : ShipDisplay
 	public GameObject[] m_orbitList;
 
 	// the planets
-	public MeshRenderer[] m_planetList;
+	public Image[] m_planetList;
 
 	// the star
-	public MeshRenderer m_star;
+	public Image m_star;
 
 	// the ship
-	public MeshRenderer m_player;
+	public Image m_player;
 
 	// unity start
 	public override void Start()
@@ -64,7 +65,7 @@ public class SystemDisplay : ShipDisplay
 		m_player.transform.localPosition = new Vector3( position.x, position.z, -30.0f );
 
 		// hide the player dot if we are in orbit
-		m_player.gameObject.SetActive( playerData.m_general.m_location != PD_General.Location.InOrbit );
+		m_player.enabled = playerData.m_general.m_location != PD_General.Location.InOrbit;
 	}
 
 	// the system map display label

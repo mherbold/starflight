@@ -5,8 +5,9 @@ Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: Surface B
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Intro Surface B
   m_Shader: {fileID: 4800000, guid: f67073489be24934c9032d00068b6661, type: 3}
   m_ShaderKeywords: ALBEDOMAP_ON FORWARDSHADOWS_ON NORMALMAP_ISCOMPRESSED NORMALMAP_ON
     SF_ALBEDOMAP_ON SF_FORWARDSHADOWS_ON SF_NORMALMAP_ISCOMPRESSED SF_NORMALMAP_ON
@@ -40,6 +41,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - SF_AlbedoMap:
         m_Texture: {fileID: 2800000, guid: cc55a3493c11ba643a7bdfb3016bf97d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - SF_DetailNormalMap:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - SF_EmissiveMap:
@@ -119,13 +124,19 @@ Material:
     - OcclusionPower: 1
     - OrthonormalizeOn: 0
     - SF_AlbedoOcclusionOn: 0
+    - SF_AlphaTestValue: 0
     - SF_BlendDst: 0
     - SF_BlendSrc: 1
+    - SF_CullMode: 2
+    - SF_DetailNormalMapStrength: 1
+    - SF_EmissiveProjectionOn: 0
     - SF_ForwardShadowsOn: 1
+    - SF_NormalMapStrength: 1
     - SF_OcclusionPower: 1
     - SF_OrthonormalizeOn: 0
     - SF_RenderQueueOffset: 0
     - SF_Smoothness: 0.5
+    - SF_ZWriteOn: 1
     - ShadowCasterOn: 1
     - Smoothness: 0.85
     - _BumpScale: 0.3
@@ -151,6 +162,8 @@ Material:
     - LightOverrideDirection: {r: 0, g: 0, b: 1, a: 0}
     - NormalMapScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SF_AlbedoColor: {r: 1, g: 0.7424297, b: 0.517, a: 1}
+    - SF_BaseScaleOffset: {r: 1, g: 1, b: 0, a: 0}
+    - SF_DetailScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SF_EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
     - SF_NormalMapScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SF_SpecularColor: {r: 1, g: 1, b: 1, a: 1}

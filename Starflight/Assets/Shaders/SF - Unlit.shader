@@ -28,6 +28,7 @@ Shader "Starflight/Unlit"
 		/* Depth Buffer Options */
 
 		[MaterialToggle] SF_ZWriteOn( "Z Write", Float ) = 1
+		[Enum(UnityEngine.Rendering.CompareFunction)] SF_ZTest( "Z Test", Float ) = 4
 
 		/* Misc Rendering Options */
 
@@ -55,7 +56,6 @@ Shader "Starflight/Unlit"
 
 			Cull [SF_CullMode]
 			ZWrite On
-			ZTest LEqual
 
 			CGPROGRAM
 
@@ -81,7 +81,7 @@ Shader "Starflight/Unlit"
 			Cull [SF_CullMode]
 			Blend [SF_BlendSrc] [SF_BlendDst]
 			ZWrite [SF_ZWriteOn]
-			ZTest [unity_GUIZTestMode]
+			ZTest [SF_ZTest]
 
 			CGPROGRAM
 

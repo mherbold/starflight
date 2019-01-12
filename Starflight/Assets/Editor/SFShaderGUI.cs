@@ -49,6 +49,7 @@ class SFShaderGUI : ShaderGUI
 		public static readonly string depthBufferOptionsText = "\nDepth Buffer Options";
 
 		public static readonly GUIContent zWriteText = EditorGUIUtility.TrTextContent( "Z Write", "" );
+		public static readonly GUIContent zTestText = EditorGUIUtility.TrTextContent( "Z Test", "" );
 
 		public static readonly string miscRenderingOptionsText = "\nMisc Rendering Options";
 
@@ -97,6 +98,7 @@ class SFShaderGUI : ShaderGUI
 	MaterialProperty m_alphaTestValue = null;
 
 	MaterialProperty m_zWriteOn = null;
+	MaterialProperty m_zTest = null;
 
 	MaterialProperty m_orthonormalizeOn = null;
 	MaterialProperty m_emissiveProjectionOn = null;
@@ -242,11 +244,13 @@ class SFShaderGUI : ShaderGUI
 		}
 
 		// depth buffer options
-		if ( m_zWriteOn != null )
+		if ( m_zWriteOn != null && m_zTest != null )
 		{
 			GUILayout.Label( Styles.depthBufferOptionsText, EditorStyles.boldLabel );
 
 			m_materialEditor.ShaderProperty( m_zWriteOn, Styles.zWriteText );
+
+			m_materialEditor.ShaderProperty( m_zTest, Styles.zTestText );
 		}
 
 		// misc rendering options
@@ -317,6 +321,7 @@ class SFShaderGUI : ShaderGUI
 		m_alphaTestValue = FindProperty( "SF_AlphaTestValue", materialPropertyList, false );
 
 		m_zWriteOn = FindProperty( "SF_ZWriteOn", materialPropertyList, false );
+		m_zTest = FindProperty( "SF_ZTest", materialPropertyList, false );
 
 		m_orthonormalizeOn = FindProperty( "SF_OrthonormalizeOn", materialPropertyList, false );
 		m_emissiveProjectionOn = FindProperty( "SF_EmissiveProjectionOn", materialPropertyList, false );

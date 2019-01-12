@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Clouds
+  m_Name: Planet Clouds
   m_Shader: {fileID: 4800000, guid: adcfa929f3b97d549ad0a8faba72a091, type: 3}
   m_ShaderKeywords: ALBEDOMAP_ON ALPHA_ON FORWARDSHADOWSON_ON FORWARDSHADOWS_ON NORMALMAP_ISCOMPRESSED
     NORMALMAP_ON ORTHONORMALIZEON_ON ORTHONORMALIZE_ON SF_ALBEDOMAP_ON SF_ALPHA_ON

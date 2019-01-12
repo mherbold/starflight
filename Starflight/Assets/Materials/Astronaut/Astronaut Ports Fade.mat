@@ -5,8 +5,9 @@ Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: Ports Fade
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Astronaut Ports Fade
   m_Shader: {fileID: 4800000, guid: f694b88833815c84cabbf5b042632277, type: 3}
   m_ShaderKeywords: FORWARDSHADOWS_ON ORTHONORMALIZEON_ON ORTHONORMALIZETEXTURESPACE_ON
     ORTHONORMALIZE_ON SF_ALPHA_ON SF_FORWARDSHADOWSON_ON SF_FORWARDSHADOWS_ON SF_SPECULAR_ON
@@ -39,6 +40,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - SF_AlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - SF_DetailNormalMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -155,9 +160,13 @@ Material:
     - OrthonormalizeTextureSpace: 1
     - RenderQueueOffset: 0
     - SF_AlbedoOcclusionOn: 0
+    - SF_AlphaTestValue: 0
     - SF_BlendDst: 10
     - SF_BlendSrc: 1
+    - SF_CullMode: 2
+    - SF_DetailNormalMapStrength: 1
     - SF_ForwardShadowsOn: 1
+    - SF_NormalMapStrength: 1
     - SF_OcclusionPower: 1
     - SF_OrthonormalizeOn: 0
     - SF_RenderQueueOffset: -1
@@ -193,6 +202,8 @@ Material:
     - LightOverrideDirection: {r: 0, g: 0, b: 1, a: 0}
     - NormalMapScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SF_AlbedoColor: {r: 0.6886792, g: 0.035733357, b: 0.035733357, a: 1}
+    - SF_BaseScaleOffset: {r: 1, g: 1, b: 0, a: 0}
+    - SF_DetailScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SF_EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
     - SF_NormalMapScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SF_SpecularColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}

@@ -1,5 +1,6 @@
 ﻿
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class Viewport : MonoBehaviour
@@ -7,8 +8,8 @@ public class Viewport : MonoBehaviour
 	// text elements
 	public TextMeshProUGUI m_label;
 
-	// the fade mesh renderer
-	public MeshRenderer m_fadeMeshRenderer;
+	// the fade image
+	public Image m_fadeImage;
 
 	// the ui canvas
 	public Canvas m_canvas;
@@ -33,6 +34,7 @@ public class Viewport : MonoBehaviour
 
 	// the original and target fade
 	float m_originalFadeAmount;
+	float m_currentFadeAmount;
 	float m_targetFadeAmount;
 
 	// unity awake
@@ -44,10 +46,10 @@ public class Viewport : MonoBehaviour
 	void Start()
 	{
 		// get the material from the fade mesh renderer
-		m_fadeMaterial = m_fadeMeshRenderer.material;
+		m_fadeMaterial = m_fadeImage.material;
 
 		// turn off the fade
-		m_fadeMeshRenderer.gameObject.SetActive( false );
+		m_fadeImage.enabled = false;
 	}
 
 	// unity update
@@ -91,13 +93,15 @@ public class Viewport : MonoBehaviour
 					// turn off the fade object if necessary
 					if ( m_targetFadeAmount == 1.0f )
 					{
-						m_fadeMeshRenderer.gameObject.SetActive( false );
+						m_fadeImage.enabled = false;
 					}
 				}
 
-				var alpha = m_isFading ? Mathf.SmoothStep( m_originalFadeAmount, m_targetFadeAmount, m_fadeTimer / m_fadeDuration ) : m_targetFadeAmount;
+				// update the current fade amount
+				m_currentFadeAmount = m_isFading ? Mathf.SmoothStep( m_originalFadeAmount, m_targetFadeAmount, m_fadeTimer / m_fadeDuration ) : m_targetFadeAmount;
 
-				m_fadeMaterial.SetColor( "SF_AlbedoColor", new Color( alpha, alpha, alpha ) );
+				// update the opacity of the material
+				Tools.SetOpacity( m_fadeMaterial, 1.0f - m_currentFadeAmount );
 			}
 		}
 	}
@@ -109,29 +113,30 @@ public class Viewport : MonoBehaviour
 		if ( fadeDuration == 0.0f )
 		{
 			// yes - make it so
-			m_fadeMaterial.SetColor( "SF_AlbedoColor", new Color( targetFadeAmount, targetFadeAmount, targetFadeAmount ) );
+			m_currentFadeAmount = targetFadeAmount;
+
+			// update the opacity of the material
+			Tools.SetOpacity( m_fadeMaterial, 1.0f - m_currentFadeAmount );
 
 			// make the fade object active if necessary
-			m_fadeMeshRenderer.gameObject.SetActive( targetFadeAmount < 1.0f );
+			m_fadeImage.enabled = targetFadeAmount < 1.0f;
 
 			// if we were previously fading - stop it
 			m_isFading = false;
 		}
 		else
 		{
-			var currentFadeAmount = GetCurrentFadeAmount();
-
-			if ( ( ( m_isFading == false ) && ( targetFadeAmount != currentFadeAmount ) ) || ( targetFadeAmount != m_targetFadeAmount ) )
+			if ( ( ( m_isFading == false ) && ( targetFadeAmount != m_currentFadeAmount ) ) || ( targetFadeAmount != m_targetFadeAmount ) )
 			{
 				// no - set up a smooth fade transition
 				m_isFading = true;
 				m_fadeTimer = 0.0f;
 				m_fadeDuration = fadeDuration;
-				m_originalFadeAmount = currentFadeAmount;
+				m_originalFadeAmount = m_currentFadeAmount;
 				m_targetFadeAmount = targetFadeAmount;
 
 				// make the fade object active
-				m_fadeMeshRenderer.gameObject.SetActive( true );
+				m_fadeImage.enabled = true;
 			}
 		}
 	}
@@ -145,11 +150,8 @@ public class Viewport : MonoBehaviour
 	// call this to get the current viewport fade amount
 	public float GetCurrentFadeAmount()
 	{
-		// get the current color
-		var color = m_fadeMaterial.GetColor( "SF_AlbedoColor" );
-		
 		// return the current fade amount
-		return color.r;
+		return m_currentFadeAmount;
 	}
 
 	// call this to update the label

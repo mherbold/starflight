@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Stripe B
+  m_Name: Velox Drone Side B
   m_Shader: {fileID: 4800000, guid: f67073489be24934c9032d00068b6661, type: 3}
   m_ShaderKeywords: SF_FORWARDSHADOWSON_ON SF_FORWARDSHADOWS_ON SF_SPECULAR_ON SF_ZWRITEON_ON
   m_LightmapFlags: 4

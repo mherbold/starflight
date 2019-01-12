@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Atmosphere - Facing Camera
+  m_Name: Planet Atmosphere - Facing Camera
   m_Shader: {fileID: 4800000, guid: f67073489be24934c9032d00068b6661, type: 3}
   m_ShaderKeywords: ALBEDOMAP_ON ALPHA_ON FORWARDSHADOWSON_ON FORWARDSHADOWS_ON NORMALMAP_ISCOMPRESSED
     NORMALMAP_ON ORTHONORMALIZEON_ON ORTHONORMALIZE_ON SF_ALBEDOMAP_ON SF_ALPHA_ON

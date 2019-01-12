@@ -13,7 +13,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: 3010
   stringTagMap:
     RenderType: Transparent
   disabledShaderPasses: []
@@ -83,8 +83,8 @@ Material:
     m_Floats:
     - SF_AlbedoOcclusionOn: 0
     - SF_AlphaTestValue: 0
-    - SF_BlendDst: 3
-    - SF_BlendSrc: 0
+    - SF_BlendDst: 10
+    - SF_BlendSrc: 1
     - SF_CullMode: 2
     - SF_DetailNormalMapStrength: 1
     - SF_EmissiveProjectionOn: 0
@@ -92,8 +92,9 @@ Material:
     - SF_NormalMapStrength: 1
     - SF_OcclusionPower: 1
     - SF_OrthonormalizeOn: 0
-    - SF_RenderQueueOffset: 0
+    - SF_RenderQueueOffset: 10
     - SF_Smoothness: 0.5
+    - SF_ZTest: 4
     - SF_ZWriteOn: 1
     - _BumpScale: 1
     - _Cutoff: 0.5
@@ -112,7 +113,7 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - SF_AlbedoColor: {r: 0, g: 0, b: 0, a: 1}
+    - SF_AlbedoColor: {r: 0, g: 0, b: 0, a: 0}
     - SF_BaseScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SF_DetailScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SF_EmissiveColor: {r: 0, g: 0, b: 0, a: 1}

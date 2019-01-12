@@ -5,8 +5,9 @@ Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: Body Blue
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Nomad Probe Body Blue
   m_Shader: {fileID: 4800000, guid: f67073489be24934c9032d00068b6661, type: 3}
   m_ShaderKeywords: SF_FORWARDSHADOWSON_ON SF_FORWARDSHADOWS_ON SF_NORMALMAP_ISCOMPRESSED
     SF_NORMALMAP_ON SF_SPECULAR_ON SF_ZWRITEON_ON
@@ -85,7 +86,9 @@ Material:
     - SF_AlphaTestValue: 0
     - SF_BlendDst: 0
     - SF_BlendSrc: 1
+    - SF_CullMode: 2
     - SF_DetailNormalMapStrength: 1
+    - SF_EmissiveProjectionOn: 0
     - SF_ForwardShadowsOn: 1
     - SF_NormalMapStrength: 0.25
     - SF_OcclusionPower: 1

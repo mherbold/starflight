@@ -37,8 +37,8 @@ public class ScaleMeshToRectBounds : MonoBehaviour
 		var yRectSize = fourCornersArray[ 1 ].y - fourCornersArray[ 0 ].y;
 
 		// calculate the scale
-		var xScale = xRectSize / xMeshSize * 108.0f; // TODO: figure out why 108 - where does that come from?  it's exactly right... but why?
-		var yScale = yRectSize / yMeshSize * 108.0f; // TODO: figure out why 108 - where does that come from?  it's exactly right... but why?
+		var xScale = xRectSize / xMeshSize * 108.0f / rectTransform.localScale.x; // TODO: figure out why 108 - where does that come from?  it's exactly right... but why?
+		var yScale = yRectSize / yMeshSize * 108.0f / rectTransform.localScale.y; // TODO: figure out why 108 - where does that come from?  it's exactly right... but why?
 
 		if ( m_keepAspectRato )
 		{

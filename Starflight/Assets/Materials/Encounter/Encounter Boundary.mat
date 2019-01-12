@@ -5,10 +5,11 @@ Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: Encounter Boundary
   m_Shader: {fileID: 4800000, guid: 0cfd5caef9a7f0a4b9cbc1d319476789, type: 3}
-  m_ShaderKeywords: ALPHA_ON SF_ALBEDOMAP_ON SF_ALPHA_ON UITOGGLE_ON
+  m_ShaderKeywords: ALPHA_ON SF_ALBEDOMAP_ON SF_ALPHA_ON SF_FORWARDSHADOWS_ON UITOGGLE_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -102,8 +103,11 @@ Material:
     - CastShadows: 0
     - OcclusionPower: 1
     - OrthonormalizeTextureSpace: 0
+    - SF_AlphaTestValue: 0
     - SF_BlendDst: 1
     - SF_BlendSrc: 1
+    - SF_CullMode: 2
+    - SF_ForwardShadowsOn: 1
     - SF_RenderQueueOffset: 0
     - SF_ZWriteOn: 0
     - Smoothness: 0.5
@@ -138,6 +142,7 @@ Material:
     - NormalMapScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SF_AlbedoColor: {r: 0.15, g: 0.15, b: 0, a: 1}
     - SF_AlbedoMapScaleOffset: {r: 1, g: 1, b: 0, a: 0}
+    - SF_BaseScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SpecularColor: {r: 0, g: 0, b: 0, a: 1}
     - UILightColor: {r: 1, g: 1, b: 1, a: 1}
     - UILightDirection: {r: 0, g: 0, b: 0, a: 0}

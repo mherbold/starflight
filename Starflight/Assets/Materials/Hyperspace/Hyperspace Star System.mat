@@ -5,8 +5,9 @@ Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: Star System
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Hyperspace Star System
   m_Shader: {fileID: 4800000, guid: 0cfd5caef9a7f0a4b9cbc1d319476789, type: 3}
   m_ShaderKeywords: ALBEDOMAP_ON ALPHA_ON SF_ALBEDOMAP_ON SF_ALPHA_ON _ALPHABLEND_ON
     _EMISSION
@@ -87,8 +88,10 @@ Material:
     - BlendDst: 1
     - BlendSrc: 5
     - SF_AlbedoOcclusionOn: 0
+    - SF_AlphaTestValue: 0
     - SF_BlendDst: 1
     - SF_BlendSrc: 5
+    - SF_CullMode: 2
     - SF_ForwardShadowsOn: 0
     - SF_OcclusionPower: 1
     - SF_OrthonormalizeOn: 0
@@ -114,6 +117,7 @@ Material:
     m_Colors:
     - AlbedoColor: {r: 1, g: 1, b: 1, a: 1}
     - SF_AlbedoColor: {r: 1, g: 1, b: 1, a: 1}
+    - SF_BaseScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SF_EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
     - SF_NormalMapScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SF_SpecularColor: {r: 0, g: 0, b: 0, a: 1}

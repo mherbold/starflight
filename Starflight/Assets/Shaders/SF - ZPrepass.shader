@@ -46,6 +46,7 @@ Shader "Starflight/Z Prepass"
 		/* Depth Buffer Options */
 
 		[MaterialToggle] SF_ZWriteOn( "Z Write", Float ) = 1
+		[Enum(UnityEngine.Rendering.CompareFunction)] SF_ZTest( "Z Test", Float ) = 4
 
 		/* Misc Rendering Options */
 

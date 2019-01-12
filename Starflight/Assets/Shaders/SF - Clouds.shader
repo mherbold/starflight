@@ -54,6 +54,7 @@ Shader "Starflight/Clouds"
 		/* Depth Buffer Options */
 
 		[MaterialToggle] SF_ZWriteOn( "Z Write", Float ) = 1
+		[Enum(UnityEngine.Rendering.CompareFunction)] SF_ZTest( "Z Test", Float ) = 4
 
 		/* Misc Rendering Options */
 
@@ -75,8 +76,9 @@ Shader "Starflight/Clouds"
 			}
 
 			Cull [SF_CullMode]
-			ZWrite [SF_ZWriteOn]
 			Blend [SF_BlendSrc] [SF_BlendDst]
+			ZWrite [SF_ZWriteOn]
+			ZTest [SF_ZTest]
 
 			CGPROGRAM
 

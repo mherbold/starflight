@@ -5,8 +5,9 @@ Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: Tubes
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Mechan Tubes
   m_Shader: {fileID: 4800000, guid: f67073489be24934c9032d00068b6661, type: 3}
   m_ShaderKeywords: SF_ALBEDOOCCLUSIONON_ON SF_ALBEDOOCCLUSION_ON SF_FORWARDSHADOWSON_ON
     SF_FORWARDSHADOWS_ON SF_SPECULAR_ON SF_ZWRITEON_ON
@@ -20,6 +21,10 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - SF_AlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - SF_DetailNormalMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -77,9 +82,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - SF_AlbedoOcclusionOn: 1
+    - SF_AlphaTestValue: 0
     - SF_BlendDst: 0
     - SF_BlendSrc: 1
+    - SF_CullMode: 2
+    - SF_DetailNormalMapStrength: 1
+    - SF_EmissiveProjectionOn: 0
     - SF_ForwardShadowsOn: 1
+    - SF_NormalMapStrength: 1
     - SF_OcclusionPower: 1
     - SF_OrthonormalizeOn: 0
     - SF_RenderQueueOffset: 0
@@ -103,6 +113,8 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - SF_AlbedoColor: {r: 0, g: 0.5, b: 0.5, a: 1}
+    - SF_BaseScaleOffset: {r: 1, g: 1, b: 0, a: 0}
+    - SF_DetailScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SF_EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
     - SF_NormalMapScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SF_SpecularColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
