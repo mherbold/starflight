@@ -22,6 +22,7 @@ float4 UnityClipSpaceShadowCasterPos( float4 vertex, float3 normal ) { return 1;
 float4 UnityApplyLinearShadowBias( float4 clipPos ) { return 1; }
 
 #define SF_ALBEDOMAP_ON					1
+#define SF_DETAILALBEDOMAP_ON			1
 #define SF_ALPHA_ON						1
 #define SF_ALPHATEST_ON					1
 #define SF_SPECULARMAP_ON				1
@@ -42,6 +43,7 @@ float4 UnityApplyLinearShadowBias( float4 clipPos ) { return 1; }
 #define SF_WATER_ON						1
 #define SF_EMISSIVEPROJECTION_ON		1
 #define SF_FORWARDSHADOWS_ON			1
+#define SF_FRACTALDETAILS_ON			1
 
 #endif // UNITY_SHADER_VARIABLES_INCLUDED
 

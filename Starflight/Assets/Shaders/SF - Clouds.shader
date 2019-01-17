@@ -14,6 +14,7 @@ Shader "Starflight/Clouds"
 		/* UV1 Maps */
 
 		SF_AlbedoMap( "Albedo Map", 2D ) = "white" {}
+		SF_DetailAlbedoMap( "Detail Albedo Map", 2D ) = "white" {}
 		SF_AlbedoColor( "Albedo Color", Color ) = ( 1, 1, 1, 1 )
 
 		SF_SpecularMap( "Specular Map", 2D ) = "gray" {}
@@ -60,11 +61,44 @@ Shader "Starflight/Clouds"
 
 		[MaterialToggle] SF_OrthonormalizeOn( "Orthonormalize", Float ) = 0
 		[MaterialToggle] SF_ForwardShadowsOn( "Forward Shadows", Float ) = 1
+
+		/* Render Queue Offset */
+
 		SF_RenderQueueOffset( "Render Queue Offset", Int ) = 0
 	}
 
 	SubShader
 	{
+		Pass
+		{
+			Name "SHADOWCASTER"
+
+			Tags
+			{
+				"LightMode" = "ShadowCaster"
+			}
+
+			Cull [SF_CullMode]
+			ZWrite On
+			ZTest LEqual
+
+			CGPROGRAM
+
+				#pragma target 3.0
+
+				#pragma shader_feature SF_ALBEDOMAP_ON
+				#pragma shader_feature SF_DETAILALBEDOMAP_ON
+				#pragma shader_feature SF_ALPHA_ON
+				#pragma shader_feature SF_ALPHATEST_ON
+
+				#pragma vertex vertCloudsShadowCaster_SF
+				#pragma fragment fragCloudsShadowCaster_SF
+
+				#include "SF - CloudsShadowCaster.cginc"
+
+			ENDCG
+		}
+
 		Pass
 		{
 			Name "FORWARDBASE"
@@ -85,6 +119,7 @@ Shader "Starflight/Clouds"
 				#pragma target 3.0
 
 				#pragma shader_feature SF_ALBEDOMAP_ON
+				#pragma shader_feature SF_DETAILALBEDOMAP_ON
 				#pragma shader_feature SF_ALPHA_ON
 				#pragma shader_feature SF_ALPHATEST_ON
 				#pragma shader_feature SF_SPECULAR_ON

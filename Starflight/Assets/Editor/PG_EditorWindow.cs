@@ -393,9 +393,11 @@ public class PG_EditorWindow : EditorWindow
 				// generate and save the specular map
 				EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Saving specular map...", 0.0f );
 
+				var waterSpecularColor = new Color( 1.0f, 1.0f, 1.0f );
+
 				var specularMap = new PG_SpecularMap();
 
-				var specularBuffer = specularMap.Process( elevation, albedoBuffer, pgPlanet.m_waterHeight, 1 );
+				var specularBuffer = specularMap.Process( elevation, albedoBuffer, pgPlanet.m_waterHeight, waterSpecularColor, 0.75f, 1 );
 
 				PG_Tools.SaveAsPNG( specularBuffer, Application.dataPath + "/Editor/Debug - Specular Map.png", true );
 

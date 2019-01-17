@@ -109,7 +109,7 @@ public class GD_Planet
 	// whether or not this planet is molten
 	public bool IsMolten()
 	{
-		return ( m_surfaceId == 3 );
+		return ( m_surfaceId == 4 );
 	}
 
 	// whether or not this planet has an atmosphere

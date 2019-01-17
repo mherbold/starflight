@@ -8,18 +8,10 @@ public class LaunchButton : ShipButton
 
 	public override bool Execute()
 	{
-		// get to the player data
-		PlayerData playerData = DataController.m_instance.m_playerData;
+		SpaceflightController.m_instance.m_messages.ChangeText( "<color=yellow>Confirm launch?</color>" );
 
-		if ( playerData.m_general.m_location == PD_General.Location.DockingBay )
-		{
-			SpaceflightController.m_instance.m_messages.ChangeText( "<color=yellow>Confirm launch?</color>" );
+		SpaceflightController.m_instance.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.Launch );
 
-			SpaceflightController.m_instance.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.Launch );
-
-			return true;
-		}
-
-		return false;
+		return true;
 	}
 }

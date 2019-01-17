@@ -341,8 +341,8 @@ public class SaveGamePanel : Panel
 				case PD_General.Location.InOrbit:
 					description += "In Orbit</color>\n";
 					break;
-				case PD_General.Location.OnPlanet:
-					description += "On Planet</color>\n";
+				case PD_General.Location.Planetside:
+					description += "Planetside</color>\n";
 					break;
 				case PD_General.Location.Encounter:
 					description += "In Encounter</color>\n";

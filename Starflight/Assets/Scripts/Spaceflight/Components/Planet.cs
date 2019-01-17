@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Planet : MonoBehaviour
 {
-	// the current planet this controller is controlling
+	// the current planet this controller owns
 	public GD_Planet m_planet;
 
 	// access to the planet model
@@ -30,6 +30,9 @@ public class Planet : MonoBehaviour
 	// the planet generator
 	PlanetGenerator m_planetGenerator;
 
+	// the current rotation
+	float m_currentRotationAngle;
+
 	// unity awake
 	void Awake()
 	{
@@ -43,32 +46,30 @@ public class Planet : MonoBehaviour
 	// unity update
 	void Update()
 	{
-		// if this planet is off then don't do anything
-		if ( m_planet != null )
+		// update the rotation angle
+		m_currentRotationAngle += Time.deltaTime * SpaceflightController.m_instance.m_planetRotationSpeed;
+
+		if ( m_currentRotationAngle >= 360.0f )
 		{
-			// get to the player data
-			var playerData = DataController.m_instance.m_playerData;
+			m_currentRotationAngle -= 360.0f;
+		}
 
-			// set the current position of the planet
-			transform.localPosition = m_planet.GetPosition();
+		// update the rotation of the planet
+		m_planetModel.transform.localRotation = Quaternion.AngleAxis( -30.0f, Vector3.right ) * Quaternion.AngleAxis( m_currentRotationAngle, Vector3.forward );
 
-			// update the rotation angle
-			float rotationAngle = ( playerData.m_general.m_gameTime + m_planet.m_orbitPosition );
-
-			// update the rotation of the planet
-			m_planetModel.transform.localRotation = Quaternion.AngleAxis( -30.0f, Vector3.right ) * Quaternion.AngleAxis( rotationAngle * 360.0f, Vector3.forward );
-
-			// update the rotation of the starport
-			if ( m_starportModel != null )
-			{
-				m_starportModel.transform.localRotation = Quaternion.Euler( -90.0f, 0.0f, rotationAngle * 360.0f * 20.0f );
-			}
+		// update the rotation of the starport
+		if ( m_starportModel != null )
+		{
+			m_starportModel.transform.localRotation = Quaternion.Euler( -90.0f, 0.0f, m_currentRotationAngle * 20.0f );
 		}
 	}
 
 	// call this before you enable the planet
 	public void InitializePlanet( GD_Planet planet )
 	{
+		// get to the player data
+		var playerData = DataController.m_instance.m_playerData;
+
 		// check if we have a planet
 		if ( ( planet == null ) || ( planet.m_id == -1 ) )
 		{
@@ -97,6 +98,12 @@ public class Planet : MonoBehaviour
 		m_planetGenerator.Start( m_planet );
 
 		m_mapsGenerated = false;
+
+		// set the current position of the planet
+		transform.localPosition = m_planet.GetPosition();
+
+		// set the initial rotation angle of the planet
+		m_currentRotationAngle = m_planet.m_orbitPosition;
 	}
 
 	// disable a planet
@@ -192,6 +199,12 @@ public class Planet : MonoBehaviour
 		return progress;
 	}
 
+	// get the current planet generator
+	public PlanetGenerator GetPlanetGenerator()
+	{
+		return m_planetGenerator;
+	}
+
 	// sets up the clouds based on planet properties
 	public void SetupClouds( MeshRenderer planetClouds, GameObject [] planetAtmospheres )
 	{
@@ -212,29 +225,26 @@ public class Planet : MonoBehaviour
 			planetClouds.material.SetFloat( "SF_Density", 1.9f - atmosphereDensity * 0.9f );
 
 			// pick the color for the clouds
-			Color color;
-
 			if ( m_planet.IsMolten() )
 			{
-				color = new Color( 0.25f, 0.25f, 0.25f );
+				planetClouds.material.SetColor( "SF_AlbedoColor", new Color( 0.01f, 0.01f, 0.01f ) );
+				planetClouds.material.SetColor( "SF_SpecularColor", new Color( 0.5f, 0.25f, 0.25f ) );
 			}
 			else
 			{
-				color = new Color( 0.95f, 0.95f, 0.95f );
+				planetClouds.material.SetColor( "SF_AlbedoColor", new Color( 0.95f, 0.95f, 0.95f ) );
+				planetClouds.material.SetColor( "SF_SpecularColor", new Color( 1.0f, 1.0f, 1.0f ) );
 			}
-
-			// apply the color to the clouds
-			planetClouds.material.SetColor( "SF_AlbedoColor", color );
 
 			// get the primary atmosphere of the planet
 			var atmosphere = m_planet.GetPrimaryAtmosphere();
 
 			// pick the color for the atmosphere
-			color = new Color( atmosphere.m_colorR / 255.0f, atmosphere.m_colorG / 255.0f, atmosphere.m_colorB / 255.0f );
+			var color = new Color( atmosphere.m_colorR / 255.0f, atmosphere.m_colorG / 255.0f, atmosphere.m_colorB / 255.0f );
 
-			// apply the color to the atmosphere
-			planetAtmospheres[ 0 ].GetComponent<MeshRenderer>().material.SetColor( "SF_AlbedoColor", color );
-			planetAtmospheres[ 1 ].GetComponent<MeshRenderer>().material.SetColor( "SF_AlbedoColor", color );
+			// apply the color to the atmosphere (make the camera facing one a little darker)
+			planetAtmospheres[ 0 ].GetComponent<MeshRenderer>().material.SetColor( "SF_AlbedoColor", color * 0.80f );
+			planetAtmospheres[ 1 ].GetComponent<MeshRenderer>().material.SetColor( "SF_AlbedoColor", color * 1.00f );
 		}
 		else
 		{

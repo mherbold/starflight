@@ -17,6 +17,12 @@ void fragDeferred_SF( SF_VertexShaderOutput i, out half4 outGBuffer0 : SV_Target
 	float3 normal = ComputeNormal( i );
 	float3 emissive = ComputeEmissive( i );
 
+	#ifdef SF_FRACTALDETAILS_ON
+
+		DoFractalDetails( i, diffuseColor.rgb, specular.rgb, normal );
+
+	#endif // SF_FRACTALDETAILS_ON
+
 	#if SF_EMISSIVEPROJECTION_ON
 
 		emissive *= pow( saturate( dot( normal, float3( 0, 0, -1 ) ) ), 10 ) * 0.25;

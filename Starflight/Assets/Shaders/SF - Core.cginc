@@ -7,6 +7,7 @@
 #include "AutoLight.cginc"
 
 #include "SF - Unity.cginc"
+#include "SF - SimplexNoise.cginc"
 
 float4x4 SF_ProjectionMatrix;
 
@@ -20,6 +21,7 @@ float SF_Speed;
 sampler2D SF_WaterMaskMap;
 
 sampler2D SF_AlbedoMap;
+sampler2D SF_DetailAlbedoMap;
 float4 SF_AlbedoColor;
 
 sampler2D SF_SpecularMap;
@@ -125,7 +127,17 @@ float4 ComputeDiffuseColor( SF_VertexShaderOutput i )
 
 	#endif // SF_ALBEDOMAP_ON
 
-	return i.color * SF_AlbedoColor * albedoMap;
+	#if SF_DETAILALBEDOMAP_ON
+
+		float4 detailAlbedoMap = tex2D( SF_DetailAlbedoMap, i.texCoord0.xy * SF_DetailScaleOffset.xy + SF_DetailScaleOffset.zw );
+
+	#else // !SF_DETAILALBEDOMAP_ON
+
+		float4 detailAlbedoMap = 1;
+
+	#endif // SF_DETAILALBEDOMAP_ON
+
+	return i.color * SF_AlbedoColor * albedoMap * detailAlbedoMap;
 }
 
 float ComputeOcclusion( SF_VertexShaderOutput i )
@@ -189,24 +201,22 @@ float3 ComputeNormal( SF_VertexShaderOutput i )
 
 		#if SF_DETAILNORMALMAP_ON
 
-			#if !SF_WATER_ON
+			float4 detailNormalMap = tex2D( SF_DetailNormalMap, i.texCoord0.xy * SF_DetailScaleOffset.xy + SF_DetailScaleOffset.zw );
 
-				float4 detailNormalMap = tex2D( SF_DetailNormalMap, i.texCoord0.xy * SF_DetailScaleOffset.xy + SF_DetailScaleOffset.zw );
+			#if SF_DETAILNORMALMAP_ISCOMPRESSED
 
-				#if SF_DETAILNORMALMAP_ISCOMPRESSED
+				detailNormalMap.xy = ( detailNormalMap.wy * 2 - 1 );
+				detailNormalMap.z = sqrt( 1 - saturate( dot( detailNormalMap.xy, detailNormalMap.xy ) ) );
 
-					detailNormalMap.xy = ( detailNormalMap.wy * 2 - 1 );
-					detailNormalMap.z = sqrt( 1 - saturate( dot( detailNormalMap.xy, detailNormalMap.xy ) ) );
+			#else // !SF_DETAILNORMALMAP_ISCOMPRESSED
 
-				#else // !SF_DETAILNORMALMAP_ISCOMPRESSED
+				detailNormalMap = detailNormalMap * 2 - 1;
 
-					detailNormalMap = detailNormalMap * 2 - 1;
+			#endif // SF_DETAILNORMALMAP_ISCOMPRESSED
 
-				#endif // SF_DETAILNORMALMAP_ISCOMPRESSED
+			detailNormalMap.xyz = normalize( detailNormalMap.xyz * float3( SF_DetailNormalMapStrength.xx, 1 ) );
 
-				detailNormalMap.xyz = normalize( detailNormalMap.xyz * float3( SF_DetailNormalMapStrength.xx, 1 ) );
-
-			#else // SF_WATER_ON
+			#if SF_WATER_ON
 
 				const float2x2 plus120 = float2x2( -0.5, -0.866, 0.866, -0.5 );
 				const float2x2 minus120 = float2x2( -0.5, 0.866, -0.866, -0.5 );
@@ -216,40 +226,44 @@ float3 ComputeNormal( SF_VertexShaderOutput i )
 				float2 baseTexCoord = i.texCoord0.xy * SF_DetailScaleOffset.xy + SF_DetailScaleOffset.zw;
 
 				float2 texCoord = baseTexCoord + waterOffset;
-				float4 waterMapA = tex2D( SF_DetailNormalMap, texCoord );
+				float4 waterNormalMapA = tex2D( SF_DetailNormalMap, texCoord );
 
 				texCoord = mul( baseTexCoord, plus120 ) + waterOffset;
-				float4 waterMapB = tex2D( SF_DetailNormalMap, texCoord );
+				float4 waterNormalMapB = tex2D( SF_DetailNormalMap, texCoord );
 
 				texCoord = mul( baseTexCoord, minus120 ) + waterOffset;
-				float4 waterMapC = tex2D( SF_DetailNormalMap, texCoord );
+				float4 waterNormalMapC = tex2D( SF_DetailNormalMap, texCoord );
 
 				#if SF_DETAILNORMALMAP_ISCOMPRESSED
 
-					waterMapA.xy = ( waterMapA.wy * 2 - 1 );
-					waterMapA.z = sqrt( 1 - saturate( dot( waterMapA.xy, waterMapA.xy ) ) );
+					waterNormalMapA.xy = ( waterNormalMapA.wy * 2 - 1 );
+					waterNormalMapA.z = sqrt( 1 - saturate( dot( waterNormalMapA.xy, waterNormalMapA.xy ) ) );
 
-					waterMapB.xy = ( waterMapB.wy * 2 - 1 );
-					waterMapB.z = sqrt( 1 - saturate( dot( waterMapB.xy, waterMapB.xy ) ) );
+					waterNormalMapB.xy = ( waterNormalMapB.wy * 2 - 1 );
+					waterNormalMapB.z = sqrt( 1 - saturate( dot( waterNormalMapB.xy, waterNormalMapB.xy ) ) );
 
-					waterMapC.xy = ( waterMapC.wy * 2 - 1 );
-					waterMapC.z = sqrt( 1 - saturate( dot( waterMapC.xy, waterMapC.xy ) ) );
+					waterNormalMapC.xy = ( waterNormalMapC.wy * 2 - 1 );
+					waterNormalMapC.z = sqrt( 1 - saturate( dot( waterNormalMapC.xy, waterNormalMapC.xy ) ) );
 
 				#else // !SF_DETAILNORMALMAP_ISCOMPRESSED
 
-					waterMapA = waterMapA * 2 - 1;
-					waterMapB = waterMapB * 2 - 1;
-					waterMapC = waterMapC * 2 - 1;
+					waterNormalMapA = waterMapA * 2 - 1;
+					waterNormalMapB = waterMapB * 2 - 1;
+					waterNormalMapC = waterMapC * 2 - 1;
 
 				#endif // SF_DETAILNORMALMAP_ISCOMPRESSED
 
-				float4 detailNormalMap = float4( normalize( ( waterMapA.xyz + waterMapB.xyz + waterMapC.xyz ) * float3( SF_DetailNormalMapStrength.xx, 1 ) ), 1 );
+				float4 waterNormalMap = float4( normalize( ( waterNormalMapA.xyz + waterNormalMapB.xyz + waterNormalMapC.xyz ) * float3( SF_DetailNormalMapStrength.xx, 1 ) ), 1 );
 
 				#if SF_WATERMASKMAP_ON
 
 					float waterMaskMap = tex2D( SF_WaterMaskMap, i.texCoord0.xy );
 
-					detailNormalMap.xyz = lerp( float3( 0, 0, 1 ), detailNormalMap.xyz, waterMaskMap );
+					detailNormalMap.xyz = lerp( detailNormalMap.xyz, waterNormalMap.xyz, waterMaskMap );
+
+				#else // !SF_WATERMASKMAP_ON
+
+					detailNormalMap = waterNormalMap;
 
 				#endif // SF_WATERMASKMAP_ON
 
@@ -367,5 +381,27 @@ float4 ComputeLighting( SF_VertexShaderOutput i, float4 diffuseColor, float4 spe
 }
 
 #endif // SF_IS_FORWARD
+
+#ifdef SF_FRACTALDETAILS_ON
+
+void DoFractalDetails( SF_VertexShaderOutput i, in out float3 diffuseColor, in out float3 specular, in out float3 normal )
+{
+	float dc = simplex_turbulence( float4( i.texCoord0.xy * SF_DetailScaleOffset.xy, 0, 0 ), 25, 2, 0.95, 6 );
+
+	dc = saturate( dc * 0.3 + 0.7 );
+
+	diffuseColor.rgb *= dc;
+	specular.rgb *= dc;
+
+	float dnx = simplex_turbulence( float4( i.texCoord0.xy * SF_DetailScaleOffset.xy, 100, 0 ), 25, 2, 0.95, 6 ) * 0.25;
+	float dny = simplex_turbulence( float4( i.texCoord0.xy * SF_DetailScaleOffset.xy, 200, 0 ), 25, 2, 0.95, 6 ) * 0.25;
+
+	normal.x += dnx;
+	normal.y += dny;
+
+	normalize( normal.xyz );
+}
+
+#endif
 
 #endif

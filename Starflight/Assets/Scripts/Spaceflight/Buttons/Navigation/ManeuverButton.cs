@@ -24,6 +24,7 @@ public class ManeuverButton : ShipButton
 		switch ( playerData.m_general.m_location )
 		{
 			case PD_General.Location.DockingBay:
+			case PD_General.Location.Planetside:
 
 				// play the error sound
 				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
@@ -105,7 +106,7 @@ public class ManeuverButton : ShipButton
 						SpaceflightController.m_instance.SwitchLocation( PD_General.Location.DockingBay );
 
 						// play the docking bay door close animation
-						SpaceflightController.m_instance.m_dockingBay.CloseDockingBayDoors();
+						SpaceflightController.m_instance.m_dockingBay.StartLandingAnimation();
 
 						// turn off the maneuver function
 						SpaceflightController.m_instance.m_buttonController.ClearCurrentButton();

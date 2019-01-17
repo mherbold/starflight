@@ -8,11 +8,20 @@ public class DescendButton : ShipButton
 
 	public override bool Execute()
 	{
-		SoundController.m_instance.PlaySound( SoundController.Sound.Error );
+		// get to the player data
+		var playerData = DataController.m_instance.m_playerData;
 
-		SpaceflightController.m_instance.m_messages.ChangeText( "<color=red>Not yet implemented.</color>" );
+		// update the messages display
+		SpaceflightController.m_instance.m_messages.ChangeText( "Computing descent profile..." );
 
-		SpaceflightController.m_instance.m_buttonController.UpdateButtonSprites();
+		// set the landing coordinates
+		SpaceflightController.m_instance.m_planetside.SetLandingCoordinates( playerData.m_general.m_selectedLatitude, playerData.m_general.m_selectedLongitude );
+
+		// start the landing animation
+		SpaceflightController.m_instance.m_playerCamera.StartAnimation( "Landing (Planetside)" );
+
+		// stop the music
+		MusicController.m_instance.ChangeToTrack( MusicController.Track.None );
 
 		return false;
 	}

@@ -31,17 +31,18 @@ float4 fragClouds_SF( SF_VertexShaderOutput i ) : SV_Target
 
 	float alpha = saturate( fbm * SF_AlbedoColor.a * 2 );
 
-#if SF_ALPHATEST_ON
-
-	clip( alpha - SF_AlphaTestValue );
-
-#endif // SF_ALPHATTEST_ON
-
-	float4 diffuseColor = float4( h0, alpha );
-
+	float4 diffuseColor = ComputeDiffuseColor( i );
 	float4 specular = ComputeSpecular( i );
 	float3 normal = ComputeNormal( i );
 	float3 emissive = ComputeEmissive( i );
+
+	diffuseColor.a *= alpha;
+
+#if SF_ALPHATEST_ON
+
+	clip( diffuseColor.a - SF_AlphaTestValue );
+
+#endif // SF_ALPHATTEST_ON
 
 	return ComputeLighting( i, diffuseColor, specular, emissive, normal );
 }

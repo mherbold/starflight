@@ -245,6 +245,9 @@ public class ButtonController : MonoBehaviour
 	// update the buttons and change the current button index
 	public void ChangeButtonSet( ButtonSet buttonSet )
 	{
+		// there is no current funciton
+		ClearCurrentButton();
+
 		// get the desired button set list
 		var buttonList = m_buttonSets[ (int) buttonSet ];
 

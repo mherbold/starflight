@@ -230,7 +230,6 @@ public class Encounter : MonoBehaviour
 		m_currentDollyDistance = 1024.0f;
 
 		SpaceflightController.m_instance.m_player.DollyCamera( m_currentDollyDistance );
-		SpaceflightController.m_instance.m_player.SetClipPlanes( 512.0f, 1536.0f );
 
 		// move the ship to where we are in the encounter
 		SpaceflightController.m_instance.m_player.transform.position = playerData.m_general.m_coordinates = playerData.m_general.m_lastEncounterCoordinates;

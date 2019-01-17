@@ -1,0 +1,172 @@
+fileFormatVersion: 2
+guid: 9dd50a1a353dd014fbb7d36137f7fa65
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Bottom Door
+    100002: Bottom Frame
+    100004: //RootNode
+    100006: Left Wall
+    100008: Right Wall
+    100010: Top Door
+    100012: Top Frame
+    100014: Base
+    100016: Base 1
+    100018: Base 2
+    100020: Base 3
+    100022: Dome
+    100024: Dome 1
+    100026: Dome 2
+    100028: Dome 3
+    100030: Siren 1
+    100032: Siren 2
+    100034: Siren 3
+    100036: Siren 4
+    400000: Bottom Door
+    400002: Bottom Frame
+    400004: //RootNode
+    400006: Left Wall
+    400008: Right Wall
+    400010: Top Door
+    400012: Top Frame
+    400014: Base
+    400016: Base 1
+    400018: Base 2
+    400020: Base 3
+    400022: Dome
+    400024: Dome 1
+    400026: Dome 2
+    400028: Dome 3
+    400030: Siren 1
+    400032: Siren 2
+    400034: Siren 3
+    400036: Siren 4
+    2100000: Docking Bay
+    2300000: Bottom Door
+    2300002: Bottom Frame
+    2300004: Left Wall
+    2300006: Right Wall
+    2300008: Top Door
+    2300010: Top Frame
+    2300012: Base
+    2300014: Base 1
+    2300016: Base 2
+    2300018: Base 3
+    2300020: Dome
+    2300022: Dome 1
+    2300024: Dome 2
+    2300026: Dome 3
+    3300000: Bottom Door
+    3300002: Bottom Frame
+    3300004: Left Wall
+    3300006: Right Wall
+    3300008: Top Door
+    3300010: Top Frame
+    3300012: Base
+    3300014: Base 1
+    3300016: Base 2
+    3300018: Base 3
+    3300020: Dome
+    3300022: Dome 1
+    3300024: Dome 2
+    3300026: Dome 3
+    4300000: Bottom Door
+    4300002: Bottom Frame
+    4300004: Left Wall
+    4300006: Right Wall
+    4300008: Top Door
+    4300010: Top Frame
+    4300012: Base
+    4300014: Dome
+    4300016: Dome
+    4300018: Base
+    4300020: Base
+    4300022: Dome
+    4300024: Base
+    4300026: Dome
+  externalObjects: {}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

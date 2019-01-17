@@ -31,9 +31,6 @@ public class Player : MonoBehaviour
 	public Texture[] m_gazurtoidSkyboxTextureList;
 	public Texture[] m_uhlekSkyboxTextureList;
 
-	// the space warp effect
-	public SpaceWarp m_spaceWarp;
-
 	// the maximum speed of the player
 	public float m_maximumSpeed;
 
@@ -401,16 +398,6 @@ public class Player : MonoBehaviour
 
 		// set it on the camera
 		m_camera.transform.localPosition = cameraPosition;
-
-		// update the far clip plane
-		m_camera.farClipPlane = Mathf.Max( distance + 512.0f, 1024.0f + 512.0f );
-	}
-
-	// call this to update the clip planes for the camera
-	public void SetClipPlanes( float nearClipPlane, float farClipPlane )
-	{
-		m_camera.nearClipPlane = nearClipPlane;
-		m_camera.farClipPlane = farClipPlane;
 	}
 
 	// call this to get the current position of the player
@@ -442,13 +429,13 @@ public class Player : MonoBehaviour
 	// start the space warp effect
 	public void StartSpaceWarp()
 	{
-		m_spaceWarp.EnterWarp();
+		SpaceflightController.m_instance.m_playerCamera.EnterWarp();
 	}
 
 	// stop the space warp effect
 	public void StopSpaceWarp()
 	{
-		m_spaceWarp.ExitWarp();
+		SpaceflightController.m_instance.m_playerCamera.ExitWarp();
 	}
 
 	// call this to rotate the skybox by a certain amount in the given direction

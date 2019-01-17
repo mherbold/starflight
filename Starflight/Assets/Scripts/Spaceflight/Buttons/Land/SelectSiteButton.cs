@@ -8,12 +8,24 @@ public class SelectSiteButton : ShipButton
 
 	public override bool Execute()
 	{
-		SoundController.m_instance.PlaySound( SoundController.Sound.Error );
+		SpaceflightController.m_instance.m_displayController.m_terrainMapDisplay.ShowSelectSite();
 
-		SpaceflightController.m_instance.m_messages.ChangeText( "<color=red>Not yet implemented.</color>" );
+		return true;
+	}
 
-		SpaceflightController.m_instance.m_buttonController.UpdateButtonSprites();
+	public override bool Update()
+	{
+		SpaceflightController.m_instance.m_displayController.m_terrainMapDisplay.MoveCrosshairs();
 
-		return false;
+		if ( InputController.m_instance.m_submit )
+		{
+			InputController.m_instance.Debounce();
+
+			SpaceflightController.m_instance.m_buttonController.DeactivateButton();
+
+			SpaceflightController.m_instance.m_displayController.m_terrainMapDisplay.HideSelectSite();
+		}
+
+		return true;
 	}
 }

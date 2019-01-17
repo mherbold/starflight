@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 public class PG_SpecularMap
 {
-	public Color[,] Process( float[,] sourceElevation, Color[,] albedoMap, float waterHeight, int reductionScale )
+	public Color[,] Process( float[,] sourceElevation, Color[,] albedoMap, float waterHeight, Color waterSpecularColor, float waterSpecularPower, int reductionScale )
 	{
 		// UnityEngine.Debug.Log( "*** Specular Map Process ***" );
 
@@ -47,14 +47,14 @@ public class PG_SpecularMap
 
 					if ( height < waterHeight )
 					{
-						var shallowColor = Color.Lerp( specular, Color.white, 0.25f );
+						var shallowColor = Color.Lerp( specular, waterSpecularColor, 0.25f );
 
 						var waterDepth = waterHeight - height;
 
-						specular = Color.Lerp( shallowColor, Color.white, waterDepth * 16.0f );
+						specular = Color.Lerp( shallowColor, waterSpecularColor, waterDepth * 16.0f );
 
-						specular.a = Mathf.Lerp( specular.a, 0.75f, 0.25f );
-						specular.a = Mathf.Lerp( specular.a, 0.75f, waterDepth * 16.0f );
+						specular.a = Mathf.Lerp( specular.a, waterSpecularPower, 0.25f );
+						specular.a = Mathf.Lerp( specular.a, waterSpecularPower, waterDepth * 16.0f );
 					}
 					else
 					{

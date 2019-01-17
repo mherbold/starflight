@@ -6,6 +6,7 @@ Shader "Starflight/Z Prepass"
 		/* UV1 Maps */
 
 		SF_AlbedoMap( "Albedo Map", 2D ) = "white" {}
+		SF_DetailAlbedoMap( "Detail Albedo Map", 2D ) = "white" {}
 		SF_AlbedoColor( "Albedo Color", Color ) = ( 1, 1, 1, 1 )
 
 		SF_SpecularMap( "Specular Map", 2D ) = "gray" {}
@@ -52,6 +53,9 @@ Shader "Starflight/Z Prepass"
 
 		[MaterialToggle] SF_OrthonormalizeOn( "Orthonormalize", Float ) = 0
 		[MaterialToggle] SF_ForwardShadowsOn( "Forward Shadows", Float ) = 1
+
+		/* Render Queue Offset */
+
 		SF_RenderQueueOffset( "Render Queue Offset", Int ) = 0
 	}
 

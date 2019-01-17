@@ -6,7 +6,7 @@
 
 SF_VertexShaderOutput vertShadowCaster_SF( SF_VertexShaderInput v )
 {
-    SF_VertexShaderOutput o;
+	SF_VertexShaderOutput o;
 
 	o = ComputeVertexShaderOutput( v );
 
@@ -17,21 +17,21 @@ SF_VertexShaderOutput vertShadowCaster_SF( SF_VertexShaderInput v )
 
 float4 fragShadowCaster_SF( float4 svPosition : SV_POSITION, SF_VertexShaderOutput i ) : SV_Target
 {
-#if SF_ALPHA_ON
+	#if SF_ALPHA_ON
 
-	float4 diffuseColor = ComputeDiffuseColor( i );
+		float4 diffuseColor = ComputeDiffuseColor( i );
 
-#if SF_ALPHATEST_ON
+		#if SF_ALPHATEST_ON
 
-	clip( diffuseColor.a - SF_AlphaTestValue );
+			clip( diffuseColor.a - SF_AlphaTestValue );
 
-#endif // SF_ALPHATTEST_ON
+		#endif // SF_ALPHATTEST_ON
 
-	float alphaRef = tex3D( _DitherMaskLOD, float3( svPosition.xy * 0.25, diffuseColor.a * 0.9375 ) ).a;
+		float alphaRef = tex3D( _DitherMaskLOD, float3( svPosition.xy * 0.25, diffuseColor.a * 0.9375 ) ).a;
 
-	clip( alphaRef - 0.01 );
+		clip( alphaRef - 0.01 );
 
-#endif // SF_ALPHA_ON
+	#endif // SF_ALPHA_ON
 
 	return 1;
 }

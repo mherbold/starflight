@@ -33,6 +33,9 @@ Shader "Starflight/Unlit"
 		/* Misc Rendering Options */
 
 		[MaterialToggle] SF_ForwardShadowsOn( "Forward Shadows", Float ) = 1
+
+		/* Render Queue Offset */
+
 		SF_RenderQueueOffset( "Render Queue Offset", Int ) = 0
 	}
 

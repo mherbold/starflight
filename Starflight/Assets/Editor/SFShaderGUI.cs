@@ -22,6 +22,7 @@ class SFShaderGUI : ShaderGUI
 
 		public static readonly GUIContent waterMaskText = EditorGUIUtility.TrTextContent( "Water Mask", "R=Opacity" );
 		public static readonly GUIContent albedoText = EditorGUIUtility.TrTextContent( "Albedo", "RGB=Color, A=Transparency" );
+		public static readonly GUIContent detailAlbedoText = EditorGUIUtility.TrTextContent( "Detail Albedo", "RGB=Color, A=Transparency" );
 		public static readonly GUIContent specularText = EditorGUIUtility.TrTextContent( "Specular", "RGB=Color, A=Smoothness" );
 		public static readonly GUIContent normalText = EditorGUIUtility.TrTextContent( "Normal", "RGB=Uncompressed Normal, GA=DXT5 Compressed Normal; Strength" );
 		public static readonly GUIContent detailNormalText = EditorGUIUtility.TrTextContent( "Detail Normal", "RGB=Uncompressed Normal, GA=DXT5 Compressed Normal; Strength" );
@@ -56,6 +57,7 @@ class SFShaderGUI : ShaderGUI
 		public static readonly GUIContent orthonormalizeText = EditorGUIUtility.TrTextContent( "Orthonormalize", "" );
 		public static readonly GUIContent emissiveProjectionText = EditorGUIUtility.TrTextContent( "Emissive Projection", "When turned on, UV coordinates for the emissive map are generated from a projection matrix." );
 		public static readonly GUIContent forwardShadowsText = EditorGUIUtility.TrTextContent( "Forward Shadows", "Receive shadows when forward rendering (only works for opaque materials)." );
+		public static readonly GUIContent fractalDetailsText = EditorGUIUtility.TrTextContent( "Fractal Details", "Applies fractal details to the surface for extreme close ups." );
 		public static readonly GUIContent renderQueueOffsetText = EditorGUIUtility.TrTextContent( "Render Queue Offset", "" );
 	}
 
@@ -68,6 +70,7 @@ class SFShaderGUI : ShaderGUI
 	MaterialProperty m_waterMaskMap = null;
 
 	MaterialProperty m_albedoMap = null;
+	MaterialProperty m_detailAlbedoMap = null;
 	MaterialProperty m_albedoColor = null;
 
 	MaterialProperty m_specularMap = null;
@@ -103,6 +106,7 @@ class SFShaderGUI : ShaderGUI
 	MaterialProperty m_orthonormalizeOn = null;
 	MaterialProperty m_emissiveProjectionOn = null;
 	MaterialProperty m_forwardShadowsOn = null;
+	MaterialProperty m_fractalDetailsOn = null;
 	MaterialProperty m_renderQueueOffset = null;
 
 	MaterialEditor m_materialEditor;
@@ -165,7 +169,7 @@ class SFShaderGUI : ShaderGUI
 		}
 
 		// uv1 map options
-		if ( ( m_albedoMap != null && m_albedoColor != null ) || ( m_specularMap != null && m_specularColor != null && m_smoothness != null ) || ( m_normalMap != null && m_normalMapStrength != null ) || ( m_detailNormalMap != null && m_detailNormalMapStrength != null ) )
+		if ( ( m_albedoMap != null && m_albedoColor != null ) || ( m_detailAlbedoMap != null ) || ( m_specularMap != null && m_specularColor != null && m_smoothness != null ) || ( m_normalMap != null && m_normalMapStrength != null ) || ( m_detailNormalMap != null && m_detailNormalMapStrength != null ) )
 		{
 			GUILayout.Label( Styles.uv1MapsText, EditorStyles.boldLabel );
 
@@ -177,6 +181,11 @@ class SFShaderGUI : ShaderGUI
 			if ( m_albedoMap != null && m_albedoColor != null )
 			{
 				m_materialEditor.TexturePropertySingleLine( Styles.albedoText, m_albedoMap, m_albedoColor );
+			}
+
+			if ( m_detailAlbedoMap != null )
+			{
+				m_materialEditor.TexturePropertySingleLine( Styles.detailAlbedoText, m_detailAlbedoMap );
 			}
 
 			if ( m_specularMap != null && m_specularColor != null && m_smoothness != null )
@@ -271,6 +280,11 @@ class SFShaderGUI : ShaderGUI
 			m_materialEditor.ShaderProperty( m_forwardShadowsOn, Styles.forwardShadowsText );
 		}
 
+		if ( m_fractalDetailsOn != null )
+		{
+			m_materialEditor.ShaderProperty( m_fractalDetailsOn, Styles.fractalDetailsText );
+		}
+
 		m_materialEditor.ShaderProperty( m_renderQueueOffset, Styles.renderQueueOffsetText );
 
 		// call material changed function if something was updated
@@ -291,6 +305,7 @@ class SFShaderGUI : ShaderGUI
 		m_waterMaskMap = FindProperty( "SF_WaterMaskMap", materialPropertyList, false );
 
 		m_albedoMap = FindProperty( "SF_AlbedoMap", materialPropertyList, false );
+		m_detailAlbedoMap = FindProperty( "SF_DetailAlbedoMap", materialPropertyList, false );
 		m_albedoColor = FindProperty( "SF_AlbedoColor", materialPropertyList, false );
 
 		m_specularMap = FindProperty( "SF_SpecularMap", materialPropertyList, false );
@@ -326,6 +341,8 @@ class SFShaderGUI : ShaderGUI
 		m_orthonormalizeOn = FindProperty( "SF_OrthonormalizeOn", materialPropertyList, false );
 		m_emissiveProjectionOn = FindProperty( "SF_EmissiveProjectionOn", materialPropertyList, false );
 		m_forwardShadowsOn = FindProperty( "SF_ForwardShadowsOn", materialPropertyList, false );
+		m_fractalDetailsOn = FindProperty( "SF_FractalDetailsOn", materialPropertyList, false );
+
 		m_renderQueueOffset = FindProperty( "SF_RenderQueueOffset", materialPropertyList );
 	}
 
@@ -334,6 +351,7 @@ class SFShaderGUI : ShaderGUI
 		// texture maps on/off
 		bool waterMaskMapOn = HasTextureMap( material, "SF_WaterMaskMap" );
 		bool albedoMapOn = HasTextureMap( material, "SF_AlbedoMap" );
+		bool detailAlbedoMapOn = HasTextureMap( material, "SF_DetailAlbedoMap" );
 		bool specularMapOn = HasTextureMap( material, "SF_SpecularMap" );
 		bool occlusionMapOn = HasTextureMap( material, "SF_OcclusionMap" );
 		bool normalMapOn = HasTextureMap( material, "SF_NormalMap" );
@@ -349,6 +367,7 @@ class SFShaderGUI : ShaderGUI
 		bool orthonormalizeOn = IsSwitchedOn( material, "SF_OrthonormalizeOn" );
 		bool emissiveProjectionOn = IsSwitchedOn( material, "SF_EmissiveProjectionOn" );
 		bool forwardShadowsOn = IsSwitchedOn( material, "SF_ForwardShadowsOn" );
+		bool fractalDetailsOn = IsSwitchedOn( material, "SF_FractalDetailsOn" );
 
 		// enable alpha testing if alpha test value > 0
 		bool alphaTestOn = false;
@@ -392,6 +411,7 @@ class SFShaderGUI : ShaderGUI
 		// set all the material keywords
 		SetKeyword( material, "SF_WATERMASKMAP_ON", waterMaskMapOn );
 		SetKeyword( material, "SF_ALBEDOMAP_ON", albedoMapOn );
+		SetKeyword( material, "SF_DETAILALBEDOMAP_ON", detailAlbedoMapOn );
 		SetKeyword( material, "SF_SPECULARMAP_ON", specularMapOn );
 		SetKeyword( material, "SF_NORMALMAP_ON", normalMapOn );
 		SetKeyword( material, "SF_NORMALMAP_ISCOMPRESSED", normalMapIsCompressed );
@@ -406,6 +426,7 @@ class SFShaderGUI : ShaderGUI
 		SetKeyword( material, "SF_ORTHONORMALIZE_ON", orthonormalizeOn );
 		SetKeyword( material, "SF_EMISSIVEPROJECTION_ON", emissiveProjectionOn );
 		SetKeyword( material, "SF_FORWARDSHADOWS_ON", forwardShadowsOn );
+		SetKeyword( material, "SF_FRACTALDETAILS_ON", fractalDetailsOn );
 
 		// if blending is on then force material to be transparent (this also disables the deferred pass automatically)
 		if ( blendOn )

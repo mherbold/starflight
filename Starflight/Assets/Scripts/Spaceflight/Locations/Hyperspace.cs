@@ -228,7 +228,6 @@ public class Hyperspace : MonoBehaviour
 
 		// make sure the camera is at the right height above the zero plane
 		SpaceflightController.m_instance.m_player.DollyCamera( 1024.0f );
-		SpaceflightController.m_instance.m_player.SetClipPlanes( 512.0f, 1536.0f );
 
 		// get to the player data
 		var playerData = DataController.m_instance.m_playerData;

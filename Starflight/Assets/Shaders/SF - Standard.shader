@@ -6,6 +6,7 @@ Shader "Starflight/Standard"
 		/* UV1 Maps */
 
 		SF_AlbedoMap( "Albedo Map", 2D ) = "white" {}
+		SF_DetailAlbedoMap( "Detail Albedo Map", 2D ) = "white" {}
 		SF_AlbedoColor( "Albedo Color", Color ) = ( 1, 1, 1, 1 )
 
 		SF_SpecularMap( "Specular Map", 2D ) = "gray" {}
@@ -53,6 +54,10 @@ Shader "Starflight/Standard"
 		[MaterialToggle] SF_OrthonormalizeOn( "Orthonormalize", Float ) = 0
 		[MaterialToggle] SF_EmissiveProjectionOn( "Emissive Projection", Float ) = 0
 		[MaterialToggle] SF_ForwardShadowsOn( "Forward Shadows", Float ) = 1
+		[MaterialToggle] SF_FractalDetailsOn( "Fractal Details", Float ) = 0
+
+		/* Render Queue Offset */
+
 		SF_RenderQueueOffset( "Render Queue Offset", Int ) = 0
 	}
 
@@ -76,6 +81,7 @@ Shader "Starflight/Standard"
 				#pragma target 3.0
 
 				#pragma shader_feature SF_ALBEDOMAP_ON
+				#pragma shader_feature SF_DETAILALBEDOMAP_ON
 				#pragma shader_feature SF_ALPHA_ON
 				#pragma shader_feature SF_ALPHATEST_ON
 
@@ -105,6 +111,7 @@ Shader "Starflight/Standard"
 				#pragma target 3.0
 
 				#pragma shader_feature SF_ALBEDOMAP_ON
+				#pragma shader_feature SF_DETAILALBEDOMAP_ON
 				#pragma shader_feature SF_ALPHA_ON
 				#pragma shader_feature SF_ALPHATEST_ON
 				#pragma shader_feature SF_SPECULARMAP_ON
@@ -117,6 +124,7 @@ Shader "Starflight/Standard"
 				#pragma shader_feature SF_ORTHONORMALIZE_ON
 				#pragma shader_feature SF_EMISSIVEMAP_ON
 				#pragma shader_feature SF_EMISSIVEPROJECTION_ON
+				#pragma shader_feature SF_FRACTALDETAILS_ON
 
 				#pragma vertex vertDeferred_SF
 				#pragma fragment fragDeferred_SF
@@ -146,6 +154,7 @@ Shader "Starflight/Standard"
 				#pragma target 3.0
 
 				#pragma shader_feature SF_ALBEDOMAP_ON
+				#pragma shader_feature SF_DETAILALBEDOMAP_ON
 				#pragma shader_feature SF_ALPHA_ON
 				#pragma shader_feature SF_ALPHATEST_ON
 				#pragma shader_feature SF_SPECULARMAP_ON
@@ -160,6 +169,7 @@ Shader "Starflight/Standard"
 				#pragma shader_feature SF_EMISSIVEMAP_ON
 				#pragma shader_feature SF_EMISSIVEPROJECTION_ON
 				#pragma shader_feature SF_FORWARDSHADOWS_ON
+				#pragma shader_feature SF_FRACTALDETAILS_ON
 
 				#pragma vertex vertForwardBase_SF
 				#pragma fragment fragForwardBase_SF

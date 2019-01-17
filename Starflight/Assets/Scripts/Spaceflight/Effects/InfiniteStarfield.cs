@@ -5,9 +5,13 @@ public class InfiniteStarfield : MonoBehaviour
 {
 	public float m_maximumDistanceOfStars = 10.0f;
 
-	private ParticleSystem m_particleSystem;
-	private Material m_material;
-	private ParticleSystem.Particle[] m_particles;
+	ParticleSystem m_particleSystem;
+
+	Material m_material;
+
+	ParticleSystem.Particle[] m_particles;
+
+	Vector3 m_lastPosition;
 
 	void Start()
 	{
@@ -17,7 +21,7 @@ public class InfiniteStarfield : MonoBehaviour
 
 		m_particles = new ParticleSystem.Particle[ m_particleSystem.main.maxParticles ];
 
-		for ( int i = 0; i < m_particles.Length; i++ )
+		for ( var i = 0; i < m_particles.Length; i++ )
 		{
 			m_particles[ i ].position = ( new Vector3( Random.value, Random.value, Random.value ) * 2.0f - Vector3.one ) * m_maximumDistanceOfStars + transform.position;
 			m_particles[ i ].startColor = m_particleSystem.main.startColor.Evaluate( 0.0f );
@@ -32,7 +36,9 @@ public class InfiniteStarfield : MonoBehaviour
 	{
 		var playerData = DataController.m_instance.m_playerData;
 
-		float speed = playerData.m_general.m_currentSpeed;
+		float speed = Vector3.Magnitude( transform.position - m_lastPosition ) / Time.deltaTime;
+
+		m_lastPosition = transform.position;
 
 		float alpha = Mathf.Clamp( Mathf.Pow( speed / playerData.m_general.m_currentMaximumSpeed, 0.4f ), 0.0f, 1.0f );
 

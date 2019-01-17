@@ -245,8 +245,8 @@ public class DataController : MonoBehaviour
 			case PD_General.Location.DockingBay:
 			case PD_General.Location.Hyperspace:
 			case PD_General.Location.InOrbit:
+			case PD_General.Location.Planetside:
 			case PD_General.Location.JustLaunched:
-			case PD_General.Location.OnPlanet:
 			case PD_General.Location.StarSystem:
 			case PD_General.Location.Encounter:
 				return "Spaceflight";

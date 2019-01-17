@@ -19,17 +19,23 @@ float4 fragForwardBase_SF( SF_VertexShaderOutput i ) : SV_Target
 	float3 normal = ComputeNormal( i );
 	float3 emissive = ComputeEmissive( i );
 
-#if SF_ALPHATEST_ON
+	#ifdef SF_FRACTALDETAILS_ON
 
-	clip( diffuseColor.a - SF_AlphaTestValue );
+		DoFractalDetails( i, diffuseColor.rgb, specular.rgb, normal );
 
-#endif // SF_ALPHATTEST_ON
+	#endif // SF_FRACTALDETAILS_ON
 
-#if SF_ALBEDOOCCLUSION_ON
+	#if SF_ALPHATEST_ON
 
-	diffuseColor.rgb *= occlusion;
+		clip( diffuseColor.a - SF_AlphaTestValue );
 
-#endif
+	#endif // SF_ALPHATTEST_ON
+
+	#if SF_ALBEDOOCCLUSION_ON
+
+		diffuseColor.rgb *= occlusion;
+
+	#endif // SF_ALBEDOOCCLUSION_ON
 
 	return ComputeLighting( i, diffuseColor, specular, emissive, normal );
 }

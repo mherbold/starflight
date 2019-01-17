@@ -15,6 +15,7 @@ public class CommandButton : ShipButton
 		switch ( playerData.m_general.m_location )
 		{
 			case PD_General.Location.DockingBay:
+			case PD_General.Location.Planetside:
 				SpaceflightController.m_instance.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.CommandA );
 				break;
 

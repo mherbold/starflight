@@ -5,7 +5,6 @@ using System.IO;
 using System.IO.Compression;
 
 using System.Diagnostics;
-using System.Threading.Tasks;
 
 public class PlanetGenerator
 {
@@ -31,13 +30,13 @@ public class PlanetGenerator
 	ResourceRequest m_resourceRequest;
 
 	// the texture map size
-	int m_textureMapWidth;
-	int m_textureMapHeight;
+	public int m_textureMapWidth;
+	public int m_textureMapHeight;
 
 	// misc planet map data
-	float m_minimumHeight;
-	float m_waterHeight;
-	float m_snowHeight;
+	public float m_minimumHeight;
+	public float m_waterHeight;
+	public float m_snowHeight;
 
 	Color m_waterColor;
 	Color m_snowColor;
@@ -55,7 +54,7 @@ public class PlanetGenerator
 	byte[] m_differenceBuffer;
 
 	// the elevation buffer
-	float[,] m_elevation;
+	public float[,] m_elevation;
 
 	// the generated maps
 	Color[,] m_albedoMap;
@@ -98,17 +97,11 @@ public class PlanetGenerator
 
 			case 2:
 				DecompressPlanetData();
-				return 0.2f;
-
-			case 3:
 				DoBicubicScale();
 				return 0.3f;
 
 			case 4:
 				ApplyDifferenceBuffer();
-				return 0.4f;
-
-			case 5:
 				CreateAlbedoBuffer();
 				return 0.5f;
 
@@ -118,29 +111,14 @@ public class PlanetGenerator
 
 			case 7:
 				CreateSpecularBuffer();
-				return 0.7f;
-
-			case 8:
 				CreateSpecularTexture();
-				return 0.8f;
-
-			case 9:
 				CreateWaterMaskBuffer();
-				return 0.9f;
-
-			case 10:
 				CreateWaterMaskTexture();
 				return 1.0f;
 
 			case 11:
 				CreateNormalBuffer();
-				return 1.1f;
-
-			case 12:
 				CreateNormalTexture();
-				return 1.2f;
-
-			case 13:
 				CleanUp();
 				return 1.3f;
 
@@ -410,9 +388,13 @@ public class PlanetGenerator
 		}
 		else
 		{
+			var waterSpecularColor = m_planet.IsMolten() ? new Color( 0.75f, 0.125f, 0.125f ) : new Color( 1.0f, 1.0f, 1.0f );
+
+			var waterSpecularPower = m_planet.IsMolten() ? 0.4f : 0.75f;
+
 			var specularMap = new PG_SpecularMap();
 
-			m_specularMap = specularMap.Process( m_elevation, m_albedoMap, m_waterHeight, 4 );
+			m_specularMap = specularMap.Process( m_elevation, m_albedoMap, m_waterHeight, waterSpecularColor, waterSpecularPower, 4 );
 		}
 
 		m_currentStep++;
@@ -604,11 +586,10 @@ public class PlanetGenerator
 		// all done
 		m_mapsGenerated = true;
 
-		// free up memory
+		// free up memory (but keep the elevation buffer)
 		m_preparedHeightMap = null;
 		m_preparedColorMap = null;
 		m_differenceBuffer = null;
-		m_elevation = null;
 		m_albedoMap = null;
 		m_specularMap = null;
 		m_normalMap = null;

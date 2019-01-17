@@ -16,16 +16,13 @@ public class SystemDisplay : ShipDisplay
 	// the ship
 	public Image m_player;
 
+	// remember whether or not we have been initialized
+	bool m_alreadyInitialized;
+
 	// unity start
 	public override void Start()
 	{
-		// clone materials so they don't get saved out when running in the editor
-		m_star.material = new Material( m_star.material );
-
-		foreach ( var planet in m_planetList )
-		{
-			planet.material = new Material( planet.material );
-		}
+		Initialize();
 	}
 
 	// unity update
@@ -74,9 +71,30 @@ public class SystemDisplay : ShipDisplay
 		return "System Map";
 	}
 
+	public void Initialize()
+	{
+		// have we been initialized yet?
+		if ( !m_alreadyInitialized )
+		{
+			// no - clone materials so they don't get saved out when running in the editor
+			m_star.material = new Material( m_star.material );
+
+			foreach ( var planet in m_planetList )
+			{
+				planet.material = new Material( planet.material );
+			}
+
+			// remember that we have been initialized
+			m_alreadyInitialized = true;
+		}
+	}
+
 	// call this to change the system currently being displayed
 	public void ChangeSystem()
 	{
+		// make sure we have been initialized
+		Initialize();
+
 		// get to the game data
 		var gameData = DataController.m_instance.m_gameData;
 

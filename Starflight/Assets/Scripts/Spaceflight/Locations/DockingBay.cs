@@ -3,19 +3,17 @@ using UnityEngine;
 
 public class DockingBay : MonoBehaviour
 {
-	// the docking bay doors
-	public Animator m_dockingBayDoorTop;
-	public Animator m_dockingBayDoorBottom;
-
 	// particle systems
 	public ParticleSystem m_decompressionParticleSystem;
 
-	// the distance from the doors we want to park the ship
-	float m_parkedPosition;
+	// the animator
+	Animator m_animator;
 
 	// unity awake
 	void Awake()
 	{
+		// get the animator
+		m_animator = GetComponent<Animator>();
 	}
 
 	// unity start
@@ -61,18 +59,6 @@ public class DockingBay : MonoBehaviour
 		// put us in the right spot for the docking bay launch sequence
 		SpaceflightController.m_instance.m_player.transform.position = playerData.m_general.m_coordinates = new Vector3( 0.0f, 0.0f, 0.0f );
 
-		// recalculate what the starting camera distance from the doors should be
-		var verticalFieldOfView = SpaceflightController.m_instance.m_viewport.m_playerCamera.fieldOfView;
-		var horizontalFieldOfView = 2.0f * Mathf.Atan( Mathf.Tan( verticalFieldOfView * Mathf.Deg2Rad * 0.5f ) * SpaceflightController.m_instance.m_viewport.m_playerCamera.aspect );
-		var angle = Mathf.Deg2Rad * ( 180.0f - 90.0f - horizontalFieldOfView * Mathf.Rad2Deg * 0.5f );
-		var tanAngle = Mathf.Tan( angle );
-		var halfDoorWidth = 276.5f;
-
-		m_parkedPosition = Mathf.Min( 1024.0f, halfDoorWidth * tanAngle );
-
-		SpaceflightController.m_instance.m_player.DollyCamera( m_parkedPosition );
-		SpaceflightController.m_instance.m_player.SetClipPlanes( 1.0f, 2048.0f );
-
 		// freeze the player
 		SpaceflightController.m_instance.m_player.Freeze();
 
@@ -87,43 +73,41 @@ public class DockingBay : MonoBehaviour
 
 		// play the docking bay music track
 		MusicController.m_instance.ChangeToTrack( MusicController.Track.DockingBay );
+
+		// fudge the maximum speed of the player to make the starfield particles appear
+		playerData.m_general.m_currentMaximumSpeed = 128.0f;
 	}
 
-	// call this to open the docking bay doors
-	public void OpenDockingBayDoors()
+	// call this to start the launch animation
+	public void StartLaunchAnimation()
 	{
-		// open the top docking bay door
-		m_dockingBayDoorTop.Play( "Open" );
+		m_animator.Play( "Docking Bay Launch" );
 
-		// open the bottom docking bay door
-		m_dockingBayDoorBottom.Play( "Open" );
-
-		// fire up the particle system
-		m_decompressionParticleSystem.Play();
+		// play the launch sound
+		SoundController.m_instance.PlaySound( SoundController.Sound.Launch );
 
 		// play the docking bay door open sound
 		SoundController.m_instance.PlaySound( SoundController.Sound.DockingBayDoorOpen );
 
 		// play the decompression sound
 		SoundController.m_instance.PlaySound( SoundController.Sound.Decompression );
+
+		// run the launching camera animation
+		SpaceflightController.m_instance.m_playerCamera.StartAnimation( "Launching (Docking Bay)" );
+
+		// fire up the particle system
+		m_decompressionParticleSystem.Play();
 	}
 
-	// call this to close the docking bay doors
-	public void CloseDockingBayDoors()
+	// call this to start the landing animation
+	public void StartLandingAnimation()
 	{
-		// open the top docking bay door
-		m_dockingBayDoorTop.Play( "Close" );
-
-		// open the bottom docking bay door
-		m_dockingBayDoorBottom.Play( "Close" );
+		m_animator.Play( "Docking Bay Landing" );
 
 		// play the docking bay door open sound
 		SoundController.m_instance.PlaySound( SoundController.Sound.DockingBayDoorClose );
-	}
 
-	// return the distance from the doors the ship is parked at
-	public float GetParkedPosition()
-	{
-		return m_parkedPosition;
+		// run the landing camera animation
+		SpaceflightController.m_instance.m_playerCamera.StartAnimation( "Landing (Docking Bay)" );
 	}
 }

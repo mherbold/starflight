@@ -10,7 +10,7 @@ public class InOrbit : MonoBehaviour
 	public MeshRenderer m_planetModel;
 
 	// the planet cloud
-	public MeshRenderer m_planetClouds;
+	public MeshRenderer m_clouds;
 
 	// the planet atmosphere (front and back)
 	public GameObject[] m_planetAtmospheres;
@@ -38,7 +38,7 @@ public class InOrbit : MonoBehaviour
 		}
 
 		// slowly spin the planet
-		m_spin += Time.deltaTime * 0.1f;
+		m_spin += Time.deltaTime * SpaceflightController.m_instance.m_planetRotationSpeed;
 
 		// wrap the spin around to avoid FP issues
 		if ( m_spin >= 360.0f )
@@ -63,7 +63,7 @@ public class InOrbit : MonoBehaviour
 
 		Debug.Log( "Hiding the in orbit location." );
 
-		// hide the starsystem
+		// hide the in orbit location
 		gameObject.SetActive( false );
 	}
 
@@ -95,25 +95,27 @@ public class InOrbit : MonoBehaviour
 		// set the scale of the planet model (and clouds)
 		var scale = planetController.m_planet.GetScale();
 		m_planetModel.transform.localScale = scale * 3.0f;
-		m_planetClouds.transform.localScale = m_planetModel.transform.localScale * 1.01f;
+		m_clouds.transform.localScale = m_planetModel.transform.localScale * 1.01f;
 
 		// move the planet down below the zero plane (because of landing / launching cinematics expect 0,0,0 to be the landing point)
-		var position = Vector3.up * -m_planetModel.transform.localScale.y * 1.02f;
+		var position = Vector3.up * -m_planetModel.transform.localScale.y * 1.01f;
 		m_planetModel.transform.localPosition = position;
-		m_planetClouds.transform.localPosition = position;
+		m_clouds.transform.localPosition = position;
 
 		// move the player object
 		SpaceflightController.m_instance.m_player.transform.position = playerData.m_general.m_coordinates = new Vector3( 0.0f, 0.0f, 0.0f );
 
 		// make sure the camera dolly is the right distance
 		SpaceflightController.m_instance.m_player.DollyCamera( 1024.0f );
-		SpaceflightController.m_instance.m_player.SetClipPlanes( 1.0f, 2048.0f );
 
 		// freeze the player
 		SpaceflightController.m_instance.m_player.Freeze();
 
-		// reset the buttons
-		SpaceflightController.m_instance.m_buttonController.RestoreBridgeButtons();
+		// reset the buttons (only if we aren't in the middle of launching)
+		if ( playerData.m_general.m_lastLocation != PD_General.Location.Planetside )
+		{
+			SpaceflightController.m_instance.m_buttonController.RestoreBridgeButtons();
+		}
 
 		// fade in the map
 		SpaceflightController.m_instance.m_viewport.StartFade( 1.0f, 2.0f );
@@ -128,7 +130,7 @@ public class InOrbit : MonoBehaviour
 		SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Orbit established.</color>" );
 
 		// set up the clouds and atmosphere
-		planetController.SetupClouds( m_planetClouds, m_planetAtmospheres );
+		planetController.SetupClouds( m_clouds, m_planetAtmospheres );
 
 		// apply the material to the planet model
 		MaterialUpdated();

@@ -34,41 +34,16 @@ public class StarSystem : MonoBehaviour
 	// unity update
 	void Update()
 	{
+		// get to the player data
+		var playerData = DataController.m_instance.m_playerData;
+
 		// don't do anything if the game is paused
 		if ( SpaceflightController.m_instance.m_gameIsPaused )
 		{
 			return;
 		}
 
-		// get to the player data
-		var playerData = DataController.m_instance.m_playerData;
-
-		// calculate the time to next flare (in FP days)
-		var timeToFlare = m_currentStar.m_daysToNextFlare - playerData.m_general.m_gameTime;
-
-		// did we flare already?
-		if ( timeToFlare <= 0.0f )
-		{
-			// yes - the sun is stable again
-			m_shine.SetSize( 128.0f, 129.0f );
-		}
-		else if ( timeToFlare <= 1.0f ) // are we flaring NOW?
-		{
-			// TODO: fuck up the player
-		}
-		else
-		{
-			var size = 1.0f / timeToFlare;
-
-			var minSize = 128.0f + size * 64.0f;
-			var maxSize = 129.0f + size * 128.0f;
-
-			m_shine.SetSize( minSize, maxSize );
-
-			//Debug.Log( "The star will flare in " + timeToFlare + " days - minSize = " + minSize + ", maxSize = " + maxSize );
-		}
-
-		// yes - did we just leave it?
+		// did we just leave the star system?
 		if ( Vector3.Magnitude( playerData.m_general.m_coordinates ) >= 8192.0f )
 		{
 			Debug.Log( "Player leaving the star system - switching to the hyperspace location." );
@@ -204,7 +179,6 @@ public class StarSystem : MonoBehaviour
 
 		// make sure the camera is at the right height above the zero plane
 		SpaceflightController.m_instance.m_player.DollyCamera( 1024.0f );
-		SpaceflightController.m_instance.m_player.SetClipPlanes( 512.0f, 1536.0f );
 
 		// move the player object
 		SpaceflightController.m_instance.m_player.transform.position = playerData.m_general.m_coordinates = playerData.m_general.m_lastStarSystemCoordinates;
@@ -265,6 +239,31 @@ public class StarSystem : MonoBehaviour
 			{
 				m_planetController[ planet.m_orbitPosition - 1 ].EnablePlanet();
 			}
+		}
+
+		// calculate the time to next flare (in FP days)
+		var timeToFlare = m_currentStar.m_daysToNextFlare - playerData.m_general.m_gameTime;
+
+		// did we flare already?
+		if ( timeToFlare <= 0.0f )
+		{
+			// yes - the sun is stable again
+			m_shine.SetSize( 128.0f, 129.0f );
+		}
+		else if ( timeToFlare <= 1.0f ) // are we flaring NOW?
+		{
+			// TODO: fuck up the player
+		}
+		else
+		{
+			var size = 1.0f / timeToFlare;
+
+			var minSize = 128.0f + size * 64.0f;
+			var maxSize = 129.0f + size * 128.0f;
+
+			m_shine.SetSize( minSize, maxSize );
+
+			Debug.Log( "The star will flare in " + timeToFlare + " days - minSize = " + minSize + ", maxSize = " + maxSize );
 		}
 	}
 
@@ -361,6 +360,15 @@ public class StarSystem : MonoBehaviour
 
 			// unpause the game
 			SpaceflightController.m_instance.m_gameIsPaused = false;
+
+			// get to the player data
+			var playerData = DataController.m_instance.m_playerData;
+
+			if ( playerData.m_general.m_location == PD_General.Location.Planetside )
+			{
+				// if we are currently planetside the go ahead and create the terraing grid now
+				SpaceflightController.m_instance.m_planetside.SetLandingCoordinates( playerData.m_general.m_selectedLatitude, playerData.m_general.m_selectedLongitude );
+			}
 		}
 
 		// return the total progress

@@ -14,6 +14,7 @@ public class SpaceflightController : MonoBehaviour
 	public DockingBay m_dockingBay;
 	public StarSystem m_starSystem;
 	public InOrbit m_inOrbit;
+	public Planetside m_planetside;
 	public Hyperspace m_hyperspace;
 	public Encounter m_encounter;
 	public Messages m_messages;
@@ -28,11 +29,13 @@ public class SpaceflightController : MonoBehaviour
 	public Radar m_radar;
 	public Scanner m_scanner;
 	public Starmap m_starmap;
+	public PlayerCamera m_playerCamera;
 
 	// some settings
 	public float m_alienHyperspaceRadarDistance;
 	public float m_alienStarSystemRadarDistance;
 	public float m_encounterRange;
+	public float m_planetRotationSpeed;
 
 	// true if the game is paused
 	public bool m_gameIsPaused;
@@ -56,13 +59,16 @@ public class SpaceflightController : MonoBehaviour
 	// unity awake
 	void Awake()
 	{
-		// immediately hide any game objects that we might have left visible in the editor
-		m_player.HideShip();
+		// hide all of the locations
 		m_dockingBay.Hide();
 		m_starSystem.Hide();
 		m_inOrbit.Hide();
+		m_planetside.Hide();
 		m_hyperspace.Hide();
 		m_encounter.Hide();
+
+		// immediately hide any game objects that we might have left visible in the editor
+		m_player.HideShip();
 		m_countdown.Hide();
 		m_radar.Hide();
 		m_scanner.Hide();
@@ -229,6 +235,7 @@ public class SpaceflightController : MonoBehaviour
 					m_player.HideShip();
 					m_starSystem.Hide();
 					m_inOrbit.Hide();
+					m_planetside.Hide();
 					m_hyperspace.Hide();
 					m_encounter.Hide();
 					m_dockingBay.Show();
@@ -239,6 +246,7 @@ public class SpaceflightController : MonoBehaviour
 					m_dockingBay.Hide();
 					m_starSystem.Hide();
 					m_inOrbit.Hide();
+					m_planetside.Hide();
 					m_hyperspace.Hide();
 					m_encounter.Hide();
 					m_viewport.StartFade( 0.0f, 0.0f );
@@ -249,6 +257,7 @@ public class SpaceflightController : MonoBehaviour
 					m_starSystem.Initialize();
 					m_dockingBay.Hide();
 					m_inOrbit.Hide();
+					m_planetside.Hide();
 					m_hyperspace.Hide();
 					m_encounter.Hide();
 					m_starSystem.Show();
@@ -259,16 +268,29 @@ public class SpaceflightController : MonoBehaviour
 					m_starSystem.Initialize();
 					m_player.HideShip();
 					m_dockingBay.Hide();
+					m_planetside.Hide();
 					m_starSystem.Hide();
 					m_hyperspace.Hide();
 					m_encounter.Hide();
 					m_inOrbit.Show();
 					break;
 
+				case PD_General.Location.Planetside:
+					m_starSystem.Initialize();
+					m_player.HideShip();
+					m_dockingBay.Hide();
+					m_inOrbit.Hide();
+					m_starSystem.Hide();
+					m_hyperspace.Hide();
+					m_encounter.Hide();
+					m_planetside.Show();
+					break;
+
 				case PD_General.Location.Hyperspace:
 					m_dockingBay.Hide();
 					m_starSystem.Hide();
 					m_inOrbit.Hide();
+					m_planetside.Hide();
 					m_encounter.Hide();
 					m_hyperspace.Show();
 					m_player.ShowShip();
@@ -278,6 +300,7 @@ public class SpaceflightController : MonoBehaviour
 					m_dockingBay.Hide();
 					m_starSystem.Hide();
 					m_inOrbit.Hide();
+					m_planetside.Hide();
 					m_hyperspace.Hide();
 					m_encounter.Show();
 					m_player.ShowShip();

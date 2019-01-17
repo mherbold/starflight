@@ -14,7 +14,7 @@ public class PD_General
 		StarSystem,
 		Hyperspace,
 		InOrbit,
-		OnPlanet,
+		Planetside,
 		Encounter,
 	}
 
@@ -32,6 +32,10 @@ public class PD_General
 	public Vector3 m_lastHyperspaceCoordinates;
 	public Vector3 m_lastStarSystemCoordinates;
 	public Vector3 m_lastEncounterCoordinates;
+
+	// crosshair position
+	public float m_selectedLatitude;
+	public float m_selectedLongitude;
 
 	// game time stuff
 	public string m_currentStardateYMD;
