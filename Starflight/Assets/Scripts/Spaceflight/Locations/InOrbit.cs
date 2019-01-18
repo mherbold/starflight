@@ -12,8 +12,8 @@ public class InOrbit : MonoBehaviour
 	// the planet cloud
 	public MeshRenderer m_clouds;
 
-	// the planet atmosphere (front and back)
-	public GameObject[] m_planetAtmospheres;
+	// the planet atmosphere
+	public GameObject m_planetAtmosphere;
 
 	// current planet spin
 	float m_spin;
@@ -130,7 +130,7 @@ public class InOrbit : MonoBehaviour
 		SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Orbit established.</color>" );
 
 		// set up the clouds and atmosphere
-		planetController.SetupClouds( m_clouds, m_planetAtmospheres );
+		planetController.SetupClouds( m_clouds, m_planetAtmosphere );
 
 		// apply the material to the planet model
 		MaterialUpdated();

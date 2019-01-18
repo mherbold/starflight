@@ -13,7 +13,7 @@ public class Planet : MonoBehaviour
 	public MeshRenderer m_planetClouds;
 
 	// access to the planet atmosphere
-	public GameObject[] m_planetAtmospheres;
+	public GameObject m_planetAtmosphere;
 
 	// access to the starport model
 	public GameObject m_starportModel;
@@ -137,7 +137,7 @@ public class Planet : MonoBehaviour
 		m_planetClouds.transform.localPosition = m_planetModel.transform.localPosition;
 
 		// set up the clouds and atmosphere
-		SetupClouds( m_planetClouds, m_planetAtmospheres );
+		SetupClouds( m_planetClouds, m_planetAtmosphere );
 	}
 
 	// call this to get the distance to the player
@@ -206,7 +206,7 @@ public class Planet : MonoBehaviour
 	}
 
 	// sets up the clouds based on planet properties
-	public void SetupClouds( MeshRenderer planetClouds, GameObject [] planetAtmospheres )
+	public void SetupClouds( MeshRenderer planetClouds, GameObject planetAtmosphere )
 	{
 		// does the planet have an atmosphere?
 		if ( m_planet.HasAtmosphere() )
@@ -215,8 +215,7 @@ public class Planet : MonoBehaviour
 			planetClouds.gameObject.SetActive( true );
 
 			// show the atmosphere
-			planetAtmospheres[ 0 ].SetActive( true );
-			planetAtmospheres[ 1 ].SetActive( true );
+			planetAtmosphere.SetActive( true );
 
 			// get the atmosphere density
 			var atmosphereDensity = m_planet.GetAtmosphereDensity();
@@ -242,9 +241,8 @@ public class Planet : MonoBehaviour
 			// pick the color for the atmosphere
 			var color = new Color( atmosphere.m_colorR / 255.0f, atmosphere.m_colorG / 255.0f, atmosphere.m_colorB / 255.0f );
 
-			// apply the color to the atmosphere (make the camera facing one a little darker)
-			planetAtmospheres[ 0 ].GetComponent<MeshRenderer>().material.SetColor( "SF_AlbedoColor", color * 0.80f );
-			planetAtmospheres[ 1 ].GetComponent<MeshRenderer>().material.SetColor( "SF_AlbedoColor", color * 1.00f );
+			// apply the color to the atmosphere
+			planetAtmosphere.GetComponent<MeshRenderer>().material.SetColor( "SF_AlbedoColor", color );
 		}
 		else
 		{
@@ -252,8 +250,7 @@ public class Planet : MonoBehaviour
 			planetClouds.gameObject.SetActive( false );
 
 			// hide the atmosphere
-			planetAtmospheres[ 0 ].SetActive( false );
-			planetAtmospheres[ 1 ].SetActive( false );
+			planetAtmosphere.SetActive( false );
 		}
 	}
 }

@@ -1,6 +1,5 @@
-﻿// Unity built-in shader source. Copyright (c) 2016 Unity Technologies. MIT license (see license.txt)
-
-Shader "Custom/Starflight Skybox"
+﻿
+Shader "Starflight/Skybox"
 {
 	Properties
 	{
@@ -37,9 +36,8 @@ Shader "Custom/Starflight Skybox"
 
 		#include "UnityCG.cginc"
 
-		matrix _ModelMatrix;
-		matrix _ProjectionMatrix;
-		float _BlendFactor;
+		matrix SF_ModelMatrix;
+		float SF_BlendFactor;
 
 		struct vertex_data
 		{
@@ -62,17 +60,10 @@ Shader "Custom/Starflight Skybox"
 			UNITY_SETUP_INSTANCE_ID( vd );
 			UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( o );
 
-			float3 worldPosition = mul( _ModelMatrix, vd.position );
+			float3 worldPosition = mul( SF_ModelMatrix, vd.position );
 			float3 viewPosition = mul( UNITY_MATRIX_MV, worldPosition );
 
 			float4x4 projectionMatrix = UNITY_MATRIX_P;
-
-			//float halfFov = atan( 1.0 / projectionMatrix._11 );
-
-			//halfFov *= 1.5;
-
-			//projectionMatrix._11 = 1 / tan( halfFov );
-			//projectionMatrix._22 = -projectionMatrix._11;
 
 			o.position = mul( projectionMatrix, viewPosition );
 			o.texcoord = vd.texcoord;
@@ -82,12 +73,12 @@ Shader "Custom/Starflight Skybox"
 
 		half4 skybox_frag( vs_out i, sampler2D smpA, sampler2D smpB )
 		{
-			half3 texA = tex2D( smpA, i.texcoord );
-			half3 texB = tex2D( smpB, i.texcoord );
+			float3 texA = tex2D( smpA, i.texcoord );
+			float3 texB = tex2D( smpB, i.texcoord );
 
-			half3 tex = lerp( texA, texB, _BlendFactor );
+			float3 tex = lerp( texA, texB, SF_BlendFactor );
 
-			return half4( tex, 1 );
+			return float4( tex, 1 );
 		}
 
 		ENDCG

@@ -107,6 +107,9 @@ public class PD_Encounter : IComparable
 
 		// allocate the shown comm list
 		m_shownCommList = new List<int>();
+
+		// initialize the encounter distance
+		m_currentDistance = float.MaxValue;
 	}
 
 	public PD_General.Location GetLocation()

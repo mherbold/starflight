@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: c476198c43bb28840875bb3f3548a66d, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: d16efed88e50d4847b6bbeb3a5b2d603, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0022555746, g: 0.0027416507, b: 0.008405303, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -12032,6 +12032,7 @@ GameObject:
   m_Component:
   - component: {fileID: 530509416}
   - component: {fileID: 530509415}
+  - component: {fileID: 530509417}
   m_Layer: 0
   m_Name: Main Directional Light
   m_TagString: Untagged
@@ -12091,6 +12092,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 45, y: 50, z: 0}
+--- !u!114 &530509417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 530509414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: caa4e4de78da4e949a7e37994c9f3e9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_rotationSpeed: {x: 0, y: -1, z: 0}
+  m_worldSpace: 0
 --- !u!1 &534396972
 GameObject:
   m_ObjectHideFlags: 0
@@ -22287,6 +22302,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1103932350}
   - component: {fileID: 1103932352}
+  - component: {fileID: 1103932351}
   m_Layer: 0
   m_Name: Controllers
   m_TagString: Untagged
@@ -22308,6 +22324,39 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1103932351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1103932349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bba703970a75bf4098015753cfecd6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_autoblendSkyboxes: 0
+  m_autorotateSkybox: 0
+  m_playerObject: {fileID: 0}
+  m_constantRotation: {x: 0, y: -1, z: 0}
+  m_humanTextureList:
+  - {fileID: 2800000, guid: c0f5a89cf7b72224499b0b1df0a48e5b, type: 3}
+  - {fileID: 2800000, guid: 0c07f9e66804c1244afd1d4f79f553f5, type: 3}
+  - {fileID: 2800000, guid: 70320bc88a0062e44b28f97c6f146257, type: 3}
+  - {fileID: 2800000, guid: 24438b83823f46e41a5cf6d85676c490, type: 3}
+  - {fileID: 2800000, guid: 0197314bfed388841ba18864e7a16826, type: 3}
+  - {fileID: 2800000, guid: 6ad9367a8da50ee4a8c22d9d5bcb7032, type: 3}
+  m_elowanTextureList: []
+  m_thrynnTextureList: []
+  m_veloxiTextureList: []
+  m_speminTextureList: []
+  m_gazurtoidTextureList: []
+  m_uhlekTextureList: []
+  m_material: {fileID: 0}
+  m_currentBlendFactor: 0
+  m_currentSkyboxA: 
+  m_currentSkyboxB: 
 --- !u!114 &1103932352
 MonoBehaviour:
   m_ObjectHideFlags: 0

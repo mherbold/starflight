@@ -9,6 +9,7 @@ public class TerrainGrid : MonoBehaviour
 	public int m_baseSize = 100;
 	public int m_detail = 9;
 	public float m_elevationScale = 100.0f;
+	public float m_elevationOffset = 16.0f;
 
 	Mesh m_mesh;
 	MeshFilter m_meshFilter;
@@ -121,7 +122,7 @@ public class TerrainGrid : MonoBehaviour
 			}
 		}
 
-		maxElevation += 10.0f;
+		maxElevation += m_elevationOffset;
 		 
 		// update the vertices with the elevation data
 		for ( var i = 0; i < m_vertices.Count; i++ )

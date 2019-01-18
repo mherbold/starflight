@@ -63,4 +63,10 @@ public class StarportController : MonoBehaviour
 		canvas.worldCamera = camera;
 		canvas.planeDistance = 15.0f;
 	}
+
+	// unity update
+	void Update()
+	{
+		
+	}
 }

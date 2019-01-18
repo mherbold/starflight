@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Planet Atmosphere - Facing Away
+  m_Name: Planet Atmosphere (Star System)
   m_Shader: {fileID: 4800000, guid: f67073489be24934c9032d00068b6661, type: 3}
   m_ShaderKeywords: ALBEDOMAP_ON ALPHA_ON FORWARDSHADOWSON_ON FORWARDSHADOWS_ON NORMALMAP_ISCOMPRESSED
     NORMALMAP_ON ORTHONORMALIZEON_ON ORTHONORMALIZE_ON SF_ALBEDOMAP_ON SF_ALPHA_ON
@@ -42,6 +42,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - SF_DensityMap:
         m_Texture: {fileID: 2800000, guid: 779866668e015bc4c9c39d404c6e22da, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - SF_DetailAlbedoMap:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - SF_DetailNormalMap:
@@ -156,13 +160,14 @@ Material:
     - SF_DetailNormalMapStrength: 1
     - SF_EmissiveProjectionOn: 0
     - SF_ForwardShadowsOn: 0
-    - SF_NormalMapStrength: 0.5
+    - SF_FractalDetailsOn: 0
+    - SF_NormalMapStrength: 0.1
     - SF_OcclusionPower: 1
     - SF_OrthonormalizeOn: 1
     - SF_RenderQueueOffset: -1
     - SF_Smoothness: 0.25
     - SF_Speed: 0.025
-    - SF_ZTest: 0
+    - SF_ZTest: 4
     - SF_ZWriteOn: 0
     - Smoothness: 0.4
     - Speed: 0.005

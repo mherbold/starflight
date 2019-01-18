@@ -104,10 +104,6 @@ public class Hyperspace : MonoBehaviour
 			// update the ship position
 			playerData.m_general.m_coordinates = SpaceflightController.m_instance.m_player.transform.position = newPosition;
 
-			// rotate the skybox in the direction of the flux travel
-			var direction = Vector3.Normalize( m_fluxTravelStartPosition - m_fluxTravelEndPosition );
-			SpaceflightController.m_instance.m_player.RotateSkybox( -direction, Time.deltaTime * 5.0f );
-
 			// have we arrived?
 			if ( m_timer >= m_fluxTravelDuration )
 			{

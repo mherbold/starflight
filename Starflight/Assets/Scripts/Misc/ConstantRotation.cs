@@ -4,34 +4,26 @@ using UnityEngine;
 public class ConstantRotation : MonoBehaviour
 {
 	public Vector3 m_rotationSpeed;
+	public bool m_worldSpace;
 
-	Vector3 m_currentRotation;
-	Quaternion m_originalRotation;
+	Quaternion m_currentRotation;
 
 	void Start()
 	{
-		m_originalRotation = transform.localRotation;
+		m_currentRotation = ( m_worldSpace ) ? transform.rotation : transform.localRotation;
 	}
 
 	void Update()
 	{
-		m_currentRotation += m_rotationSpeed * Time.deltaTime;
+		m_currentRotation = Quaternion.Euler( m_rotationSpeed * Time.deltaTime ) * m_currentRotation;
 
-		if ( m_currentRotation.x >= 360.0f )
+		if ( m_worldSpace )
 		{
-			m_currentRotation.x -= 360.0f;
+			transform.rotation = m_currentRotation;
 		}
-
-		if ( m_currentRotation.y >= 360.0f )
+		else
 		{
-			m_currentRotation.y -= 360.0f;
+			transform.localRotation = m_currentRotation;
 		}
-
-		if ( m_currentRotation.z >= 360.0f )
-		{
-			m_currentRotation.z -= 360.0f;
-		}
-
-		transform.localRotation = m_originalRotation * Quaternion.Euler( m_currentRotation.x, m_currentRotation.y, m_currentRotation.z );
 	}
 }
