@@ -5,7 +5,7 @@ using UnityEditor;
 using System.IO;
 
 [ExecuteInEditMode]
-public class BuildAtmosphereMaps : EditorWindow
+public class BuildAtmosphereNormalMap : EditorWindow
 {
 	const int c_size = 512;
 	const float c_atmosphereThickness = 0.05f;
@@ -18,21 +18,21 @@ public class BuildAtmosphereMaps : EditorWindow
 		m_filename = Application.dataPath + "/Image.png";
 	}
 
-	[MenuItem( "Starflight Remake/Build Atmosphere Maps" )]
+	[MenuItem( "Starflight Remake/Build Atmosphere Normal Map" )]
 	public static void ShowWindow()
 	{
-		EditorWindow editorWindow = EditorWindow.GetWindow( typeof( BuildAtmosphereMaps ) );
+		EditorWindow editorWindow = EditorWindow.GetWindow( typeof( BuildAtmosphereNormalMap ) );
 
 		editorWindow.autoRepaintOnSceneChange = true;
 
 		editorWindow.Show();
 
-		editorWindow.titleContent = new GUIContent( "Build Atmosphere Maps" );
+		editorWindow.titleContent = new GUIContent( "Build Atmosphere Normal Map" );
 	}
 
 	void OnGUI()
 	{
-		if ( GUILayout.Button( "Build Atmosphere Maps", GUILayout.MinHeight( 60 ) ) )
+		if ( GUILayout.Button( "Build Atmosphere Normal Map", GUILayout.MinHeight( 60 ) ) )
 		{
 			m_filename = EditorUtility.SaveFilePanel( "Image File Name", Path.GetDirectoryName( m_filename ), Path.GetFileName( m_filename ), "png" );
 
