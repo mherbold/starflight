@@ -18,6 +18,9 @@ Shader "Starflight/Skybox"
 		[NoScaleOffset] _DownTexB( "Down [-Y]", 2D ) = "grey" {}
 
 		_BlendFactor( "Blend Factor", Float ) = 0
+		
+		_ColorTintA( "Color Tint A", Color ) = ( 1, 1, 1, 1 )
+		_ColorTintB( "Color Tint B", Color ) = ( 1, 1, 1, 1 )
 	}
 
 	SubShader
@@ -37,7 +40,11 @@ Shader "Starflight/Skybox"
 		#include "UnityCG.cginc"
 
 		matrix SF_ModelMatrix;
+
 		float SF_BlendFactor;
+
+		float3 SF_ColorTintA;
+		float3 SF_ColorTintB;
 
 		struct vertex_data
 		{
@@ -73,8 +80,8 @@ Shader "Starflight/Skybox"
 
 		half4 skybox_frag( vs_out i, sampler2D smpA, sampler2D smpB )
 		{
-			float3 texA = tex2D( smpA, i.texcoord );
-			float3 texB = tex2D( smpB, i.texcoord );
+			float3 texA = tex2D( smpA, i.texcoord ) * SF_ColorTintA;
+			float3 texB = tex2D( smpB, i.texcoord ) * SF_ColorTintB;
 
 			float3 tex = lerp( texA, texB, SF_BlendFactor );
 

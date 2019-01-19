@@ -7,7 +7,13 @@ public class Planetside : MonoBehaviour
 	public TerrainGrid m_terrainGrid;
 
 	// the clouds
-	public GameObject m_clouds;
+	public MeshRenderer m_clouds;
+
+	// the player camera (for getting altitude)
+	public Camera m_playerCamera;
+
+	// at what altitude should clouds become completely transparent
+	public float m_cloudFadeAltitude;
 
 	// unity awake
 	void Awake()
@@ -27,6 +33,15 @@ public class Planetside : MonoBehaviour
 		{
 			return;
 		}
+
+		//  calculate the opacity of the clouds based on altitude
+		var opacity = Mathf.SmoothStep( 1, 0, m_playerCamera.transform.position.y / m_cloudFadeAltitude );
+
+		// update the material
+		Tools.SetOpacity( m_clouds.material, opacity );
+
+		// do the same for the skybox blend factor
+		StarflightSkybox.m_instance.m_currentBlendFactor = Mathf.Lerp( 0.0f, 0.75f, opacity );
 	}
 
 	// call this to hide the in orbit objects
@@ -38,6 +53,9 @@ public class Planetside : MonoBehaviour
 		}
 
 		Debug.Log( "Hiding the planetside location." );
+
+		// turn off the fog
+		RenderSettings.fog = false;
 
 		// hide the planetside location
 		gameObject.SetActive( false );
@@ -87,10 +105,10 @@ public class Planetside : MonoBehaviour
 		MusicController.m_instance.ChangeToTrack( MusicController.Track.InOrbit );
 
 		// set up the clouds and atmosphere
-		// planetController.SetupClouds( m_clouds, null );
+		planetController.SetupClouds( m_clouds, null, true, true );
 
-		// apply the material to the planet model
-		// MaterialUpdated();
+		// make sure we're blended 3/4 way to the planet skybox
+		StarflightSkybox.m_instance.m_currentBlendFactor = 0.75f;
 	}
 
 	// set the landing coordinates

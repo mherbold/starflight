@@ -130,7 +130,10 @@ public class InOrbit : MonoBehaviour
 		SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Orbit established.</color>" );
 
 		// set up the clouds and atmosphere
-		planetController.SetupClouds( m_clouds, m_planetAtmosphere );
+		planetController.SetupClouds( m_clouds, m_planetAtmosphere, true, false );
+
+		// make sure skybox blend is off
+		StarflightSkybox.m_instance.m_currentBlendFactor = 0.0f;
 
 		// apply the material to the planet model
 		MaterialUpdated();

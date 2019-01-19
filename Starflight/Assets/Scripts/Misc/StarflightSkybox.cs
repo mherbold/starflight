@@ -25,6 +25,7 @@ public class StarflightSkybox : MonoBehaviour
 	public Texture[] m_speminTextureList;
 	public Texture[] m_gazurtoidTextureList;
 	public Texture[] m_uhlekTextureList;
+	public Texture[] m_planetTextureList;
 
 	// the skybox material
 	public Material m_material;
@@ -36,8 +37,22 @@ public class StarflightSkybox : MonoBehaviour
 	public string m_currentSkyboxA;
 	public string m_currentSkyboxB;
 
+	// the color to tint the skybox by
+	public Color m_colorTintA = Color.white;
+	public Color m_colorTintB = Color.white;
+
 	// keep track of the skybox rotation
 	Quaternion m_currentRotation = Quaternion.identity;
+
+	// static instance to this skybox controller
+	static public StarflightSkybox m_instance;
+
+	// constructor
+	StarflightSkybox()
+	{
+		// make me accessible to everyone
+		m_instance = this;
+	}
 
 	// unity awake
 	void Awake()
@@ -88,52 +103,57 @@ public class StarflightSkybox : MonoBehaviour
 		// apply constant rotation
 		m_currentRotation = Quaternion.Euler( m_constantRotation * Time.deltaTime ) * m_currentRotation;
 
-		// check if skybox autoblending is enabled
-		if ( m_autoblendSkyboxes )
+		// yes - get the current hyperspace coordinates (if in hyperspace get it from the player transform due to flux travel not updating m_hyperspaceCoordinates)
+		var hyperspaceCoordinates = ( playerData.m_general.m_location == PD_General.Location.Hyperspace ) ? m_playerObject.transform.position : playerData.m_general.m_lastHyperspaceCoordinates;
+
+		// figure out how far we are from each territory
+		foreach ( var territory in gameData.m_territoryList )
 		{
-			// yes - get the current hyperspace coordinates (if in hyperspace get it from the player transform due to flux travel not updating m_hyperspaceCoordinates)
-			var hyperspaceCoordinates = ( playerData.m_general.m_location == PD_General.Location.Hyperspace ) ? m_playerObject.transform.position : playerData.m_general.m_lastHyperspaceCoordinates;
+			territory.Update( hyperspaceCoordinates );
+		}
 
-			// figure out how far we are from each territory
-			foreach ( var territory in gameData.m_territoryList )
+		// sort the results
+		Array.Sort( gameData.m_territoryList );
+
+		// situation A - we are not in any other race's territory
+		// situation B - we are in one alien race's territory
+		// situation C - we are in two alien race's territories
+		if ( gameData.m_territoryList[ 0 ].GetCurrentDistance() > 0.0f )
+		{
+			// switch the skybox A texture maps to human
+			SwitchSkyboxTextures( "A", "human" );
+
+			// set the blend factor to 0 (show full human skybox)
+			if ( m_autoblendSkyboxes )
 			{
-				territory.Update( hyperspaceCoordinates );
-			}
-
-			// sort the results
-			Array.Sort( gameData.m_territoryList );
-
-			// situation A - we are not in any other race's territory
-			// situation B - we are in one alien race's territory
-			// situation C - we are in two alien race's territories
-			if ( gameData.m_territoryList[ 0 ].GetCurrentDistance() > 0.0f )
-			{
-				// switch the skybox A texture maps to human
-				SwitchSkyboxTextures( "A", "human" );
-
-				// set the blend factor to 0 (show full human skybox)
 				m_currentBlendFactor = 0.0f;
 			}
-			else if ( gameData.m_territoryList[ 1 ].GetCurrentDistance() > 0.0f )
+		}
+		else if ( gameData.m_territoryList[ 1 ].GetCurrentDistance() > 0.0f )
+		{
+			// switch the skybox A texture maps to human
+			SwitchSkyboxTextures( "A", "human" );
+
+			// switch the skybox B texture maps to that alien race
+			SwitchSkyboxTextures( "B", gameData.m_territoryList[ 0 ].m_name );
+
+			// the blend factor is simply how much we are penetrating into the alien territory
+			if ( m_autoblendSkyboxes )
 			{
-				// switch the skybox A texture maps to human
-				SwitchSkyboxTextures( "A", "human" );
-
-				// switch the skybox B texture maps to that alien race
-				SwitchSkyboxTextures( "B", gameData.m_territoryList[ 0 ].m_name );
-
-				// the blend factor is simply how much we are penetrating into the alien territory
 				m_currentBlendFactor = Mathf.Min( 1.0f, gameData.m_territoryList[ 0 ].GetPenetrationDistance() / 1024.0f );
 			}
-			else
+		}
+		else
+		{
+			// switch the skybox A texture maps to the first alien race
+			SwitchSkyboxTextures( "A", gameData.m_territoryList[ 0 ].m_name );
+
+			// switch the skybox B texture maps to that second alien race
+			SwitchSkyboxTextures( "B", gameData.m_territoryList[ 1 ].m_name );
+
+			// blend factor is the ratio of penetration distances
+			if ( m_autoblendSkyboxes )
 			{
-				// switch the skybox A texture maps to the first alien race
-				SwitchSkyboxTextures( "A", gameData.m_territoryList[ 0 ].m_name );
-
-				// switch the skybox B texture maps to that second alien race
-				SwitchSkyboxTextures( "B", gameData.m_territoryList[ 1 ].m_name );
-
-				// blend factor is the ratio of penetration distances
 				var blendFactorA = Mathf.Min( 1.0f, gameData.m_territoryList[ 0 ].GetPenetrationDistance() / 1024.0f );
 				var blendFactorB = Mathf.Min( 1.0f, gameData.m_territoryList[ 1 ].GetPenetrationDistance() / 1024.0f );
 
@@ -141,15 +161,25 @@ public class StarflightSkybox : MonoBehaviour
 			}
 		}
 
+		if ( m_autoblendSkyboxes )
+		{
+			m_colorTintA = Color.white;
+			m_colorTintB = Color.white;
+		}
+
 		// update the skybox rotation on the material
 		m_material.SetMatrix( "SF_ModelMatrix", Matrix4x4.Rotate( m_currentRotation ) );
 
 		// update the material with the new blend factor
 		m_material.SetFloat( "SF_BlendFactor", m_currentBlendFactor );
+
+		// update the material with the new color tints
+		m_material.SetColor( "SF_ColorTintA", m_colorTintA );
+		m_material.SetColor( "SF_ColorTintB", m_colorTintB );
 	}
 
 	// utility to switch a set of skybox textures (which = "A" or "B")
-	void SwitchSkyboxTextures( string which, string race )
+	public void SwitchSkyboxTextures( string which, string race )
 	{
 		// which skybox texture set?
 		if ( which == "A" )
@@ -188,6 +218,7 @@ public class StarflightSkybox : MonoBehaviour
 			case "spemin": textureList = m_speminTextureList; break;
 			case "gazurtoid": textureList = m_gazurtoidTextureList; break;
 			case "uhlek": textureList = m_uhlekTextureList; break;
+			case "planet": textureList = m_planetTextureList; break;
 
 			default:
 				textureList = m_humanTextureList;

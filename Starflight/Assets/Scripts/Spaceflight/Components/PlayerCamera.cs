@@ -260,6 +260,10 @@ public class PlayerCamera : MonoBehaviour
 		SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
 	}
 
+	public void StartingAscent()
+	{
+	}
+
 	public void StartingDescent()
 	{
 		SpaceflightController.m_instance.m_messages.ChangeText( "Autopilot engaged. Descending..." );
@@ -277,6 +281,9 @@ public class PlayerCamera : MonoBehaviour
 	public void SwitchToPlanetsideLocation()
 	{
 		SpaceflightController.m_instance.SwitchLocation( PD_General.Location.Planetside );
+
+		// override what the planetside show() does for the skybox blend factor (avoid momentary flash)
+		StarflightSkybox.m_instance.m_currentBlendFactor = 0.0f;
 	}
 
 	public void SwitchToInOrbitLocation()

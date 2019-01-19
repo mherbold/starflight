@@ -205,6 +205,9 @@ public class Hyperspace : MonoBehaviour
 
 		Debug.Log( "Hiding the hyperspace location." );
 
+		// turn off auto skybox blending
+		StarflightSkybox.m_instance.m_autoblendSkyboxes = false;
+
 		// hide the hyperspace objects
 		gameObject.SetActive( false );
 	}
@@ -251,5 +254,8 @@ public class Hyperspace : MonoBehaviour
 
 		// play the star system music track
 		MusicController.m_instance.ChangeToTrack( MusicController.Track.Hyperspace );
+
+		// turn on auto skybox blending
+		StarflightSkybox.m_instance.m_autoblendSkyboxes = true;
 	}
 }

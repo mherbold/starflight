@@ -137,7 +137,7 @@ public class Planet : MonoBehaviour
 		m_planetClouds.transform.localPosition = m_planetModel.transform.localPosition;
 
 		// set up the clouds and atmosphere
-		SetupClouds( m_planetClouds, m_planetAtmosphere );
+		SetupClouds( m_planetClouds, m_planetAtmosphere, false, false );
 	}
 
 	// call this to get the distance to the player
@@ -206,7 +206,7 @@ public class Planet : MonoBehaviour
 	}
 
 	// sets up the clouds based on planet properties
-	public void SetupClouds( MeshRenderer planetClouds, GameObject planetAtmosphere )
+	public void SetupClouds( MeshRenderer planetClouds, GameObject planetAtmosphere, bool updateSkybox, bool enableFog )
 	{
 		// does the planet have an atmosphere?
 		if ( m_planet.HasAtmosphere() )
@@ -215,7 +215,10 @@ public class Planet : MonoBehaviour
 			planetClouds.gameObject.SetActive( true );
 
 			// show the atmosphere
-			planetAtmosphere.SetActive( true );
+			if ( planetAtmosphere != null )
+			{
+				planetAtmosphere.SetActive( true );
+			}
 
 			// get the atmosphere density
 			var atmosphereDensity = m_planet.GetAtmosphereDensity();
@@ -242,7 +245,31 @@ public class Planet : MonoBehaviour
 			var color = new Color( atmosphere.m_colorR / 255.0f, atmosphere.m_colorG / 255.0f, atmosphere.m_colorB / 255.0f );
 
 			// apply the color to the atmosphere
-			planetAtmosphere.GetComponent<MeshRenderer>().material.SetColor( "SF_AlbedoColor", color );
+			if ( planetAtmosphere != null )
+			{
+				planetAtmosphere.GetComponent<MeshRenderer>().material.SetColor( "SF_AlbedoColor", color );
+			}
+
+			// update the skybox if needed
+			if ( updateSkybox )
+			{
+				// blend to the the planet skybox
+				StarflightSkybox.m_instance.SwitchSkyboxTextures( "B", "planet" );
+
+				// set the color tint
+				StarflightSkybox.m_instance.m_colorTintB = color;
+			}
+
+			// also do fog settings
+			if ( enableFog )
+			{
+				RenderSettings.fog = true;
+				RenderSettings.fogColor = color;
+				RenderSettings.fogMode = FogMode.Linear;
+				RenderSettings.fogDensity = 1.0f;
+				RenderSettings.fogStartDistance = 450.0f;
+				RenderSettings.fogEndDistance = 750.0f;
+			}
 		}
 		else
 		{
@@ -250,7 +277,31 @@ public class Planet : MonoBehaviour
 			planetClouds.gameObject.SetActive( false );
 
 			// hide the atmosphere
-			planetAtmosphere.SetActive( false );
+			if ( planetAtmosphere != null )
+			{
+				planetAtmosphere.SetActive( false );
+			}
+
+			if ( updateSkybox )
+			{
+				StarflightSkybox.m_instance.SwitchSkyboxTextures( "B", "planet" );
+
+				StarflightSkybox.m_instance.m_colorTintB = Color.black;
+			}
+
+			// we want to turn off the fog
+			enableFog = false;
+		}
+
+		// turn off the fog if it is not enabled
+		if ( !enableFog )
+		{
+			RenderSettings.fog = false;
+			RenderSettings.fogColor = Color.magenta;
+			RenderSettings.fogMode = FogMode.Linear;
+			RenderSettings.fogDensity = 0.0f;
+			RenderSettings.fogStartDistance = 450.0f;
+			RenderSettings.fogEndDistance = 750.0f;
 		}
 	}
 }

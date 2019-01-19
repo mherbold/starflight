@@ -80,6 +80,12 @@ struct SF_VertexShaderOutput
 #endif // SF_NORMALMAP_ON || SF_DETAILNORMALMAP_ON
 };
 
+struct SF_FragmentShaderOutput
+{
+	half4 color : SV_Target;
+	float depth : SV_Depth;
+};
+
 SF_VertexShaderOutput ComputeVertexShaderOutput( SF_VertexShaderInput v )
 {
 	SF_VertexShaderOutput o;
@@ -361,11 +367,11 @@ float4 ComputeLighting( SF_VertexShaderOutput i, float4 diffuseColor, float4 spe
 
 		float3 halfAngle = normalize( lightDirectionWorld - normalize( i.eyeDir ) );
 
-		float blinnTerm = pow( saturate( dot( normal, halfAngle ) ), pow( specular.w, 6 ) * 1000 );
+		float blinnTerm = pow( saturate( dot( normal, halfAngle ) ), pow( specular.a, 6 ) * 1000 );
 
-		float3 lightSpecular = lightColor * blinnTerm * lerp( 1, 4, saturate( specular.w * 1.5 - 0.5 ) );
+		float3 lightSpecular = lightColor * blinnTerm * lerp( 1, 4, saturate( specular.a * 1.5 - 0.5 ) );
 
-		color += lightDiffuse * lightSpecular * specular.xyz;
+		color += lightDiffuse * lightSpecular * specular.rgb;
 
 	#endif // SF_SPECULAR_ON
 
@@ -378,6 +384,26 @@ float4 ComputeLighting( SF_VertexShaderOutput i, float4 diffuseColor, float4 spe
 		return float4( ( color * shadow + emissive ), 1 );
 
 	#endif // SF_ALPHA_ON
+}
+
+float4 ApplyFog( SF_VertexShaderOutput i, float4 litFragment )
+{
+	if ( unity_FogParams.x == 0 )
+	{
+		return litFragment;
+	}
+	else
+	{
+		float3 distanceFromEye = distance( i.positionWorld, _WorldSpaceCameraPos.xyz );
+
+		float fogAmount = 1 - saturate( distanceFromEye * unity_FogParams.z + unity_FogParams.w );
+	
+		// the below is for exp2 mode
+		// float fogAmount = unity_FogParams.x * distanceFromEye;
+		// fogAmount = 1 - saturate( exp2( -fogAmount * fogAmount ) );
+
+		return float4( lerp( litFragment.rgb, unity_FogColor.rgb, fogAmount ), litFragment.a );
+	}
 }
 
 #endif // SF_IS_FORWARD
@@ -403,5 +429,48 @@ void DoFractalDetails( SF_VertexShaderOutput i, in out float3 diffuseColor, in o
 }
 
 #endif
+
+SF_VertexShaderOutput ComputeCloudsVertexShaderOutput( SF_VertexShaderInput v )
+{
+	SF_VertexShaderOutput o;
+
+	o = ComputeVertexShaderOutput( v );
+
+	o.positionClip = UnityApplyLinearShadowBias( UnityClipSpaceShadowCasterPos( v.position, v.normal ) );
+
+	float2 baseTexCoord = o.texCoord0.xy;
+
+	o.texCoord0.xy = baseTexCoord * float2( 10.6, 10 ) + _Time.x * SF_Speed * float2( 0.5, 0.6 ) * SF_BaseScaleOffset.xy;
+	o.texCoord0.zw = baseTexCoord * float2( 10, 10.5 ) + _Time.x * SF_Speed * float2( 0.75, 0.5 ) * SF_BaseScaleOffset.xy;
+	o.texCoord1.xy = baseTexCoord * float2( 2, 2 ) + _Time.x * SF_Speed * float2( 1.5, 1 ) * SF_BaseScaleOffset.xy;
+	o.texCoord1.zw = baseTexCoord * float2( 2, 2 ) + _Time.x * SF_Speed * float2( 1, 1.2 ) * SF_BaseScaleOffset.xy;
+
+	return o;
+}
+
+void ComputeCloudsFragmentShaderOutput( SF_VertexShaderOutput i, out float4 diffuseColor, out float4 specular, out float3 normal, out float3 emissive )
+{
+	float3 h0 = tex2D( SF_AlbedoMap, i.texCoord0.xy );
+	float3 h1 = tex2D( SF_DensityMap, i.texCoord0.zw );
+	float3 h2 = tex2D( SF_ScatterMapA, i.texCoord1.xy );
+	float3 h3 = tex2D( SF_ScatterMapB, i.texCoord1.zw );
+
+	float3 fbm = saturate( h0 + h1 + h2 + h3 - SF_Density );
+
+	float alpha = saturate( fbm * SF_AlbedoColor.a * 2 );
+
+	diffuseColor = ComputeDiffuseColor( i );
+	specular = ComputeSpecular( i );
+	normal = ComputeNormal( i );
+	emissive = ComputeEmissive( i );
+
+	diffuseColor.a *= alpha;
+
+	#if SF_ALPHATEST_ON
+
+		clip( diffuseColor.a - SF_AlphaTestValue );
+
+	#endif // SF_ALPHATTEST_ON
+}
 
 #endif

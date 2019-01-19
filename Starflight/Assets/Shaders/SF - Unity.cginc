@@ -14,6 +14,8 @@ float4		_Time;
 float4		_LightColor0;
 float4		_WorldSpaceLightPos0;
 float4		_LightShadowData;
+float4		unity_FogColor;
+float4		unity_FogParams;
 
 #define UNITY_DECLARE_SHADOWMAP( tex ) Texture2D tex; SamplerComparisonState sampler##tex
 #define UNITY_SAMPLE_SHADOW( tex, coord ) tex.SampleCmpLevelZero( sampler##tex, (coord).xy, (coord).z )
