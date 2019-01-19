@@ -154,7 +154,7 @@ Material:
     - OrthonormalizeOn: 1
     - SF_AlbedoOcclusionOn: 0
     - SF_AlphaTestValue: 0
-    - SF_BlendDst: 6
+    - SF_BlendDst: 10
     - SF_BlendSrc: 1
     - SF_CullMode: 0
     - SF_Density: 1.5

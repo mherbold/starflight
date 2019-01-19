@@ -80,8 +80,8 @@ Shader "Starflight/Skybox"
 
 		half4 skybox_frag( vs_out i, sampler2D smpA, sampler2D smpB )
 		{
-			float3 texA = tex2D( smpA, i.texcoord ) * SF_ColorTintA;
-			float3 texB = tex2D( smpB, i.texcoord ) * SF_ColorTintB;
+			float3 texA = tex2D( smpA, i.texcoord ) * GammaToLinearSpace( SF_ColorTintA );
+			float3 texB = tex2D( smpB, i.texcoord ) * GammaToLinearSpace( SF_ColorTintB );
 
 			float3 tex = lerp( texA, texB, SF_BlendFactor );
 

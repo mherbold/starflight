@@ -342,7 +342,7 @@ float3 ComputeEmissive( SF_VertexShaderOutput i )
 
 #if SF_IS_FORWARD
 
-float4 ComputeLighting( SF_VertexShaderOutput i, float4 diffuseColor, float4 specular, float3 emissive, float3 normal )
+float4 ComputeLighting( SF_VertexShaderOutput i, float4 diffuseColor, float4 specular, float3 emissive, float3 normal, float fogAmount )
 {
 	float3 lightDirectionWorld = _WorldSpaceLightPos0.xyz;
 	float3 lightColor = _LightColor0;
@@ -375,22 +375,24 @@ float4 ComputeLighting( SF_VertexShaderOutput i, float4 diffuseColor, float4 spe
 
 	#endif // SF_SPECULAR_ON
 
+	color = lerp( color * shadow + emissive, unity_FogColor.rgb, fogAmount );
+
 	#if SF_ALPHA_ON
 
-		return float4( ( color * shadow + emissive ) * diffuseColor.a, diffuseColor.a );
+		return float4( color * diffuseColor.a, diffuseColor.a );
 
 	#else // !SF_ALPHA_ON
 
-		return float4( ( color * shadow + emissive ), 1 );
+		return float4( color, 1 );
 
 	#endif // SF_ALPHA_ON
 }
 
-float4 ApplyFog( SF_VertexShaderOutput i, float4 litFragment )
+float ComputeFogAmount( SF_VertexShaderOutput i )
 {
 	if ( unity_FogParams.x == 0 )
 	{
-		return litFragment;
+		return 0;
 	}
 	else
 	{
@@ -402,7 +404,7 @@ float4 ApplyFog( SF_VertexShaderOutput i, float4 litFragment )
 		// float fogAmount = unity_FogParams.x * distanceFromEye;
 		// fogAmount = 1 - saturate( exp2( -fogAmount * fogAmount ) );
 
-		return float4( lerp( litFragment.rgb, unity_FogColor.rgb, fogAmount ), litFragment.a );
+		return fogAmount;
 	}
 }
 

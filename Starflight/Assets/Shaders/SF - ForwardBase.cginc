@@ -37,7 +37,7 @@ float4 fragForwardBase_SF( SF_VertexShaderOutput i ) : SV_Target
 
 	#endif // SF_ALBEDOOCCLUSION_ON
 
-	return ComputeLighting( i, diffuseColor, specular, emissive, normal );
+	return ComputeLighting( i, diffuseColor, specular, emissive, normal, 0 );
 }
 
 #endif

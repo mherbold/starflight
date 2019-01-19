@@ -41,7 +41,7 @@ public class Planetside : MonoBehaviour
 		Tools.SetOpacity( m_clouds.material, opacity );
 
 		// do the same for the skybox blend factor
-		StarflightSkybox.m_instance.m_currentBlendFactor = Mathf.Lerp( 0.0f, 0.75f, opacity );
+		StarflightSkybox.m_instance.m_currentBlendFactor = Mathf.Lerp( 0.0f, 1.0f, opacity );
 	}
 
 	// call this to hide the in orbit objects
