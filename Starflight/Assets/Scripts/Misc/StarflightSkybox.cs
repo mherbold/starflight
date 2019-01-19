@@ -42,7 +42,7 @@ public class StarflightSkybox : MonoBehaviour
 	public Color m_colorTintB = Color.white;
 
 	// keep track of the skybox rotation
-	Quaternion m_currentRotation = Quaternion.identity;
+	public Quaternion m_currentRotation = Quaternion.identity;
 
 	// static instance to this skybox controller
 	static public StarflightSkybox m_instance;
@@ -131,31 +131,33 @@ public class StarflightSkybox : MonoBehaviour
 		}
 		else if ( gameData.m_territoryList[ 1 ].GetCurrentDistance() > 0.0f )
 		{
-			// switch the skybox A texture maps to human
-			SwitchSkyboxTextures( "A", "human" );
+			// switch the skybox A texture maps to that alien race
+			SwitchSkyboxTextures( "A", gameData.m_territoryList[ 0 ].m_name );
 
-			// switch the skybox B texture maps to that alien race
-			SwitchSkyboxTextures( "B", gameData.m_territoryList[ 0 ].m_name );
-
-			// the blend factor is simply how much we are penetrating into the alien territory
+			// touch skybox b only if autoblend is on (meaning only in hyperspace)
 			if ( m_autoblendSkyboxes )
 			{
-				m_currentBlendFactor = Mathf.Min( 1.0f, gameData.m_territoryList[ 0 ].GetPenetrationDistance() / 1024.0f );
+				// switch the skybox B texture maps to human
+				SwitchSkyboxTextures( "B", "human" );
+
+				// the blend factor is simply how much we are penetrating into the alien territory
+				m_currentBlendFactor = Mathf.Lerp( 1.0f, 0.0f, gameData.m_territoryList[ 0 ].GetPenetrationDistance() / 1024.0f );
 			}
 		}
 		else
 		{
-			// switch the skybox A texture maps to the first alien race
+			// switch the skybox A texture maps to the nearest alien race
 			SwitchSkyboxTextures( "A", gameData.m_territoryList[ 0 ].m_name );
 
-			// switch the skybox B texture maps to that second alien race
-			SwitchSkyboxTextures( "B", gameData.m_territoryList[ 1 ].m_name );
-
-			// blend factor is the ratio of penetration distances
+			// touch skybox b only if autoblend is on (meaning only in hyperspace)
 			if ( m_autoblendSkyboxes )
 			{
-				var blendFactorA = Mathf.Min( 1.0f, gameData.m_territoryList[ 0 ].GetPenetrationDistance() / 1024.0f );
-				var blendFactorB = Mathf.Min( 1.0f, gameData.m_territoryList[ 1 ].GetPenetrationDistance() / 1024.0f );
+				// switch the skybox B texture maps to that second nearest alien race
+				SwitchSkyboxTextures( "B", gameData.m_territoryList[ 1 ].m_name );
+
+				// blend factor is the ratio of penetration distances
+				var blendFactorA = Mathf.Lerp( 0.0f, 1.0f, gameData.m_territoryList[ 0 ].GetPenetrationDistance() / 1024.0f );
+				var blendFactorB = Mathf.Lerp( 0.0f, 1.0f, gameData.m_territoryList[ 1 ].GetPenetrationDistance() / 1024.0f );
 
 				m_currentBlendFactor = ( blendFactorB * 0.5f ) - ( blendFactorA * 0.5f ) + 0.5f;
 			}
@@ -206,6 +208,8 @@ public class StarflightSkybox : MonoBehaviour
 			// remember what we switched to
 			m_currentSkyboxB = race;
 		}
+
+		Debug.Log( "Switching skybox " + which + " texture set to " + race + "." );
 
 		// get the set of textures we want to use now
 		Texture[] textureList;
