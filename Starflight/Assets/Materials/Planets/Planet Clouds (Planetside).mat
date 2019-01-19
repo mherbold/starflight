@@ -165,7 +165,7 @@ Material:
     - SF_OrthonormalizeOn: 1
     - SF_OverrideDepthOutput: 1
     - SF_RenderQueueOffset: 0
-    - SF_Smoothness: 0.5
+    - SF_Smoothness: 0.3
     - SF_Speed: 0.15
     - SF_ZTest: 4
     - SF_ZWriteOn: 1
