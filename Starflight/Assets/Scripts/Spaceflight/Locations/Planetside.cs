@@ -107,8 +107,14 @@ public class Planetside : MonoBehaviour
 		// set up the clouds and atmosphere
 		planetController.SetupClouds( m_clouds, null, true, true );
 
-		// make sure we're blended 3/4 way to the planet skybox
-		StarflightSkybox.m_instance.m_currentBlendFactor = 0.75f;
+		// make sure we're blended all the way to the planet skybox
+		StarflightSkybox.m_instance.m_currentBlendFactor = 1.0f;
+
+		// turn skybox autorotate off
+		StarflightSkybox.m_instance.m_autorotateSkybox = false;
+
+		// make sure skybox rotation is reset
+		StarflightSkybox.m_instance.m_currentRotation = Quaternion.identity;
 	}
 
 	// set the landing coordinates

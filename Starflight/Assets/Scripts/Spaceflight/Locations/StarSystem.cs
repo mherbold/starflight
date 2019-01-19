@@ -207,6 +207,9 @@ public class StarSystem : MonoBehaviour
 		// play the star system music track
 		MusicController.m_instance.ChangeToTrack( MusicController.Track.StarSystem );
 
+		// turn skybox autorotate back on
+		StarflightSkybox.m_instance.m_autorotateSkybox = true;
+
 		// change the color of the sun
 		Color color;
 

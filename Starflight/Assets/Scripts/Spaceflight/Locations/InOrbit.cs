@@ -135,6 +135,12 @@ public class InOrbit : MonoBehaviour
 		// make sure skybox blend is off
 		StarflightSkybox.m_instance.m_currentBlendFactor = 0.0f;
 
+		// turn skybox autorotate off
+		StarflightSkybox.m_instance.m_autorotateSkybox = false;
+
+		// make sure skybox rotation is reset
+		StarflightSkybox.m_instance.m_currentRotation = Quaternion.identity;
+
 		// apply the material to the planet model
 		MaterialUpdated();
 	}
