@@ -92,14 +92,16 @@ public class InOrbit : MonoBehaviour
 		// get the planet controller
 		var planetController = SpaceflightController.m_instance.m_starSystem.GetPlanetController( playerData.m_general.m_currentPlanetId );
 
-		// set the scale of the planet model (and clouds)
+		// set the scale of the planet model (and clouds and atmosphere)
 		var scale = planetController.m_planet.GetScale();
 		m_planetModel.transform.localScale = scale * 3.0f;
+		m_planetAtmosphere.transform.localScale = m_planetModel.transform.localScale * 1.055f;
 		m_clouds.transform.localScale = m_planetModel.transform.localScale * 1.01f;
 
-		// move the planet down below the zero plane (because of landing / launching cinematics expect 0,0,0 to be the landing point)
-		var position = Vector3.up * -m_planetModel.transform.localScale.y * 1.01f;
+		// position the planet (and clouds and atmosphere)
+		var position = Vector3.up * -m_planetModel.transform.localScale.y;
 		m_planetModel.transform.localPosition = position;
+		m_planetAtmosphere.transform.localPosition = position * 0.85f;
 		m_clouds.transform.localPosition = position;
 
 		// move the player object

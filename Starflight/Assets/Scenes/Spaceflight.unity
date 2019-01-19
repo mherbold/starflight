@@ -5542,7 +5542,6 @@ GameObject:
   - component: {fileID: 52701464}
   - component: {fileID: 52701463}
   - component: {fileID: 52701462}
-  - component: {fileID: 52701461}
   m_Layer: 9
   m_Name: Atmosphere
   m_TagString: Untagged
@@ -5550,25 +5549,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1818360609 &52701461
-RotationConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 52701460}
-  m_Enabled: 1
-  m_Weight: 1
-  m_RotationAtRest: {x: 90, y: 0, z: 0}
-  m_RotationOffset: {x: 0, y: 0, z: 0}
-  m_AffectRotationX: 1
-  m_AffectRotationY: 1
-  m_AffectRotationZ: 1
-  m_IsContraintActive: 1
-  m_IsLocked: 1
-  m_Sources:
-  - sourceTransform: {fileID: 839097933}
-    weight: 1
 --- !u!23 &52701462
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5621,13 +5601,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 52701460}
-  m_LocalRotation: {x: 0.8660255, y: -0, z: -0, w: 0.4999999}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.05, y: 1.05, z: 1.05}
   m_Children: []
-  m_Father: {fileID: 1347341636}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 896306015}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &54195826
 GameObject:
   m_ObjectHideFlags: 0
@@ -5889,6 +5869,7 @@ Transform:
   m_Children:
   - {fileID: 1136308535}
   - {fileID: 1720985573}
+  - {fileID: 1750335895}
   m_Father: {fileID: 626356945}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6926,7 +6907,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 0b7c772b5e064d746a02130191893d4b, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 0b7c772b5e064d746a02130191893d4b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -7085,7 +7066,6 @@ GameObject:
   - component: {fileID: 146930750}
   - component: {fileID: 146930749}
   - component: {fileID: 146930748}
-  - component: {fileID: 146930747}
   m_Layer: 9
   m_Name: Atmosphere
   m_TagString: Untagged
@@ -7093,25 +7073,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1818360609 &146930747
-RotationConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 146930746}
-  m_Enabled: 1
-  m_Weight: 1
-  m_RotationAtRest: {x: 90, y: 0, z: 0}
-  m_RotationOffset: {x: 0, y: 0, z: 0}
-  m_AffectRotationX: 1
-  m_AffectRotationY: 1
-  m_AffectRotationZ: 1
-  m_IsContraintActive: 1
-  m_IsLocked: 1
-  m_Sources:
-  - sourceTransform: {fileID: 839097933}
-    weight: 1
 --- !u!23 &146930748
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7164,13 +7125,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 146930746}
-  m_LocalRotation: {x: 0.8660255, y: -0, z: -0, w: 0.4999999}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.05, y: 1.05, z: 1.05}
   m_Children: []
-  m_Father: {fileID: 1302927161}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 384467686}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &150687723
 GameObject:
   m_ObjectHideFlags: 0
@@ -11278,7 +11239,6 @@ GameObject:
   - component: {fileID: 320415748}
   - component: {fileID: 320415747}
   - component: {fileID: 320415746}
-  - component: {fileID: 320415745}
   m_Layer: 9
   m_Name: Atmosphere
   m_TagString: Untagged
@@ -11286,25 +11246,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1818360609 &320415745
-RotationConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 320415744}
-  m_Enabled: 1
-  m_Weight: 1
-  m_RotationAtRest: {x: 90, y: 0, z: 0}
-  m_RotationOffset: {x: 0, y: 0, z: 0}
-  m_AffectRotationX: 1
-  m_AffectRotationY: 1
-  m_AffectRotationZ: 1
-  m_IsContraintActive: 1
-  m_IsLocked: 1
-  m_Sources:
-  - sourceTransform: {fileID: 839097933}
-    weight: 1
 --- !u!23 &320415746
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -11357,13 +11298,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 320415744}
-  m_LocalRotation: {x: 0.8660255, y: -0, z: -0, w: 0.4999999}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.05, y: 1.05, z: 1.05}
   m_Children: []
-  m_Father: {fileID: 1215887725}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 715853581}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &324297158
 GameObject:
   m_ObjectHideFlags: 0
@@ -12345,6 +12286,7 @@ Transform:
   m_Children:
   - {fileID: 1302927161}
   - {fileID: 1061761303}
+  - {fileID: 146930750}
   m_Father: {fileID: 626356945}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -15044,7 +14986,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &626356945
 Transform:
   m_ObjectHideFlags: 0
@@ -16077,6 +16019,7 @@ Transform:
   m_Children:
   - {fileID: 1215887725}
   - {fileID: 891134804}
+  - {fileID: 320415748}
   m_Father: {fileID: 626356945}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -16201,6 +16144,7 @@ Transform:
   m_Children:
   - {fileID: 1964326728}
   - {fileID: 1242965111}
+  - {fileID: 1991818976}
   m_Father: {fileID: 626356945}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -17622,6 +17566,7 @@ Transform:
   m_Children:
   - {fileID: 1347341636}
   - {fileID: 339162914}
+  - {fileID: 52701464}
   m_Father: {fileID: 626356945}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -18503,7 +18448,6 @@ GameObject:
   - component: {fileID: 928032121}
   - component: {fileID: 928032120}
   - component: {fileID: 928032119}
-  - component: {fileID: 928032118}
   m_Layer: 9
   m_Name: Atmosphere
   m_TagString: Untagged
@@ -18511,25 +18455,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1818360609 &928032118
-RotationConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 928032117}
-  m_Enabled: 1
-  m_Weight: 1
-  m_RotationAtRest: {x: 90, y: 0, z: 0}
-  m_RotationOffset: {x: 0, y: 0, z: 0}
-  m_AffectRotationX: 1
-  m_AffectRotationY: 1
-  m_AffectRotationZ: 1
-  m_IsContraintActive: 1
-  m_IsLocked: 1
-  m_Sources:
-  - sourceTransform: {fileID: 839097933}
-    weight: 1
 --- !u!23 &928032119
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -18582,13 +18507,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 928032117}
-  m_LocalRotation: {x: 0.8660255, y: -0, z: -0, w: 0.4999999}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.05, y: 1.05, z: 1.05}
   m_Children: []
-  m_Father: {fileID: 276947947}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 1765483161}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &929265524
 GameObject:
   m_ObjectHideFlags: 0
@@ -19297,6 +19222,7 @@ Transform:
   m_Children:
   - {fileID: 524147449}
   - {fileID: 1232146323}
+  - {fileID: 2038974022}
   - {fileID: 161016317}
   m_Father: {fileID: 626356945}
   m_RootOrder: 4
@@ -22098,7 +22024,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1138512982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27430,7 +27356,6 @@ GameObject:
   - component: {fileID: 1180962819}
   - component: {fileID: 1180962818}
   - component: {fileID: 1180962817}
-  - component: {fileID: 1180962816}
   m_Layer: 9
   m_Name: Atmosphere
   m_TagString: Untagged
@@ -27438,25 +27363,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1818360609 &1180962816
-RotationConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1180962815}
-  m_Enabled: 1
-  m_Weight: 1
-  m_RotationAtRest: {x: 90, y: 0, z: 0}
-  m_RotationOffset: {x: 0, y: 0, z: 0}
-  m_AffectRotationX: 1
-  m_AffectRotationY: 1
-  m_AffectRotationZ: 1
-  m_IsContraintActive: 1
-  m_IsLocked: 1
-  m_Sources:
-  - sourceTransform: {fileID: 839097933}
-    weight: 1
 --- !u!23 &1180962817
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -27509,13 +27415,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1180962815}
-  m_LocalRotation: {x: 0.8660255, y: -0, z: -0, w: 0.4999999}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.05, y: 1.05, z: 1.05}
   m_Children: []
-  m_Father: {fileID: 210579331}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 1269729262}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1185046863
 GameObject:
   m_ObjectHideFlags: 0
@@ -30547,6 +30453,7 @@ Transform:
   m_Children:
   - {fileID: 210579331}
   - {fileID: 97330597}
+  - {fileID: 1180962819}
   m_Father: {fileID: 626356945}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -35909,7 +35816,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: a5b6fe2ba4eb23c48b41cff2182c627d, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: a5b6fe2ba4eb23c48b41cff2182c627d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -51013,7 +50920,6 @@ GameObject:
   - component: {fileID: 1750335895}
   - component: {fileID: 1750335894}
   - component: {fileID: 1750335893}
-  - component: {fileID: 1750335892}
   m_Layer: 9
   m_Name: Atmosphere
   m_TagString: Untagged
@@ -51021,25 +50927,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1818360609 &1750335892
-RotationConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1750335891}
-  m_Enabled: 1
-  m_Weight: 1
-  m_RotationAtRest: {x: 90, y: 0, z: 0}
-  m_RotationOffset: {x: 0, y: 0, z: 0}
-  m_AffectRotationX: 1
-  m_AffectRotationY: 1
-  m_AffectRotationZ: 1
-  m_IsContraintActive: 1
-  m_IsLocked: 1
-  m_Sources:
-  - sourceTransform: {fileID: 839097933}
-    weight: 1
 --- !u!23 &1750335893
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -51092,13 +50979,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1750335891}
-  m_LocalRotation: {x: 0.8660255, y: -0, z: -0, w: 0.4999999}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.05, y: 1.05, z: 1.05}
   m_Children: []
-  m_Father: {fileID: 1136308535}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 79470278}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1762176028
 GameObject:
   m_ObjectHideFlags: 0
@@ -51169,6 +51056,7 @@ Transform:
   m_Children:
   - {fileID: 276947947}
   - {fileID: 1796920182}
+  - {fileID: 928032121}
   m_Father: {fileID: 626356945}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -51727,6 +51615,7 @@ Transform:
   m_Children:
   - {fileID: 935210466}
   - {fileID: 459761065}
+  - {fileID: 1818656949}
   - {fileID: 422423180}
   - {fileID: 1882980894}
   m_Father: {fileID: 0}
@@ -51759,7 +51648,6 @@ GameObject:
   - component: {fileID: 1818656949}
   - component: {fileID: 1818656952}
   - component: {fileID: 1818656951}
-  - component: {fileID: 1818656950}
   m_Layer: 10
   m_Name: Atmosphere
   m_TagString: Untagged
@@ -51775,31 +51663,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1818656948}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.05, y: 1.05, z: 1.05}
+  m_LocalPosition: {x: 0, y: -110, z: 0}
+  m_LocalScale: {x: 135, y: 135, z: 135}
   m_Children: []
-  m_Father: {fileID: 459761065}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1818360609 &1818656950
-RotationConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1818656948}
-  m_Enabled: 1
-  m_Weight: 1
-  m_RotationAtRest: {x: 90, y: 0, z: 0}
-  m_RotationOffset: {x: 0, y: 0, z: 0}
-  m_AffectRotationX: 1
-  m_AffectRotationY: 1
-  m_AffectRotationZ: 1
-  m_IsContraintActive: 1
-  m_IsLocked: 1
-  m_Sources:
-  - sourceTransform: {fileID: 839097933}
-    weight: 1
+  m_Father: {fileID: 1812997202}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!23 &1818656951
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -52627,7 +52496,7 @@ Transform:
   m_LocalScale: {x: 65536, y: 65536, z: 1}
   m_Children: []
   m_Father: {fileID: 1812997202}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!23 &1882980895
 MeshRenderer:
@@ -53971,7 +53840,6 @@ GameObject:
   - component: {fileID: 1991818976}
   - component: {fileID: 1991818975}
   - component: {fileID: 1991818974}
-  - component: {fileID: 1991818973}
   m_Layer: 9
   m_Name: Atmosphere
   m_TagString: Untagged
@@ -53979,25 +53847,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1818360609 &1991818973
-RotationConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1991818972}
-  m_Enabled: 1
-  m_Weight: 1
-  m_RotationAtRest: {x: 90, y: 0, z: 0}
-  m_RotationOffset: {x: 0, y: 0, z: 0}
-  m_AffectRotationX: 1
-  m_AffectRotationY: 1
-  m_AffectRotationZ: 1
-  m_IsContraintActive: 1
-  m_IsLocked: 1
-  m_Sources:
-  - sourceTransform: {fileID: 839097933}
-    weight: 1
 --- !u!23 &1991818974
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -54050,13 +53899,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1991818972}
-  m_LocalRotation: {x: 0.8660255, y: -0, z: -0, w: 0.4999999}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.05, y: 1.05, z: 1.05}
   m_Children: []
-  m_Father: {fileID: 1964326728}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 729301838}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1995873194
 GameObject:
   m_ObjectHideFlags: 0
@@ -55395,7 +55244,6 @@ GameObject:
   - component: {fileID: 2038974022}
   - component: {fileID: 2038974025}
   - component: {fileID: 2038974024}
-  - component: {fileID: 2038974023}
   m_Layer: 9
   m_Name: Atmosphere
   m_TagString: Untagged
@@ -55410,32 +55258,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2038974021}
-  m_LocalRotation: {x: 0.8660255, y: -0, z: -0, w: 0.4999999}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.05, y: 1.05, z: 1.05}
   m_Children: []
-  m_Father: {fileID: 524147449}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1818360609 &2038974023
-RotationConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2038974021}
-  m_Enabled: 1
-  m_Weight: 1
-  m_RotationAtRest: {x: 90, y: 0, z: 0}
-  m_RotationOffset: {x: 0, y: 0, z: 0}
-  m_AffectRotationX: 1
-  m_AffectRotationY: 1
-  m_AffectRotationZ: 1
-  m_IsContraintActive: 1
-  m_IsLocked: 1
-  m_Sources:
-  - sourceTransform: {fileID: 839097933}
-    weight: 1
+  m_Father: {fileID: 972233045}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!23 &2038974024
 MeshRenderer:
   m_ObjectHideFlags: 0
