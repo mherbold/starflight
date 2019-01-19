@@ -249,7 +249,7 @@ public class PlanetGenerator
 
 		m_currentStep++;
 
-		UnityEngine.Debug.Log( "DecompressPlanetData - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
+		// UnityEngine.Debug.Log( "DecompressPlanetData - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
 	}
 
 	void DoBicubicScale()
@@ -279,7 +279,7 @@ public class PlanetGenerator
 			m_currentStep++;
 		}
 
-		UnityEngine.Debug.Log( "DoBicubicScale - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
+		// UnityEngine.Debug.Log( "DoBicubicScale - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
 	}
 
 	void ApplyDifferenceBuffer()
@@ -302,7 +302,7 @@ public class PlanetGenerator
 
 		m_currentStep++;
 
-		UnityEngine.Debug.Log( "ApplyDifferenceBuffer - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
+		// UnityEngine.Debug.Log( "ApplyDifferenceBuffer - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
 	}
 
 	void CreateAlbedoBuffer()
@@ -317,7 +317,7 @@ public class PlanetGenerator
 
 		m_currentStep++;
 
-		UnityEngine.Debug.Log( "CreateAlbedoBuffer - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
+		// UnityEngine.Debug.Log( "CreateAlbedoBuffer - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
 	}
 
 	void CreateAlbedoTexture()
@@ -355,7 +355,7 @@ public class PlanetGenerator
 
 		m_currentStep++;
 
-		UnityEngine.Debug.Log( "CreateAlbedoTexture - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
+		// UnityEngine.Debug.Log( "CreateAlbedoTexture - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
 	}
 
 	void CreateSpecularBuffer()
@@ -399,7 +399,7 @@ public class PlanetGenerator
 
 		m_currentStep++;
 
-		UnityEngine.Debug.Log( "CreateSpecularBuffer - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
+		// UnityEngine.Debug.Log( "CreateSpecularBuffer - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
 	}
 
 	void CreateSpecularTexture()
@@ -440,7 +440,7 @@ public class PlanetGenerator
 
 		m_currentStep++;
 
-		UnityEngine.Debug.Log( "CreateSpecularTexture - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
+		// UnityEngine.Debug.Log( "CreateSpecularTexture - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
 	}
 
 	void CreateWaterMaskBuffer()
@@ -470,7 +470,7 @@ public class PlanetGenerator
 
 		m_currentStep++;
 
-		UnityEngine.Debug.Log( "CreateWaterMaskBuffer - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
+		// UnityEngine.Debug.Log( "CreateWaterMaskBuffer - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
 	}
 
 	void CreateWaterMaskTexture()
@@ -508,7 +508,7 @@ public class PlanetGenerator
 
 		m_currentStep++;
 
-		UnityEngine.Debug.Log( "CreateWaterMaskTexture - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
+		// UnityEngine.Debug.Log( "CreateWaterMaskTexture - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
 	}
 
 	void CreateNormalBuffer()
@@ -540,7 +540,7 @@ public class PlanetGenerator
 
 		m_currentStep++;
 
-		UnityEngine.Debug.Log( "CreateNormalBuffer - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
+		// UnityEngine.Debug.Log( "CreateNormalBuffer - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
 	}
 
 	void CreateNormalTexture()
@@ -578,7 +578,7 @@ public class PlanetGenerator
 
 		m_currentStep++;
 
-		UnityEngine.Debug.Log( "CreateNormalTexture - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
+		// UnityEngine.Debug.Log( "CreateNormalTexture - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
 	}
 
 	void CleanUp()
