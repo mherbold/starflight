@@ -267,8 +267,10 @@ public class Planet : MonoBehaviour
 				RenderSettings.fogColor = color;
 				RenderSettings.fogMode = FogMode.Linear;
 				RenderSettings.fogDensity = 1.0f;
-				RenderSettings.fogStartDistance = 450.0f;
+				RenderSettings.fogStartDistance = 450.0f - atmosphereDensity * 400.0f;
 				RenderSettings.fogEndDistance = 750.0f;
+
+				Debug.Log( "Fog enabled, atmospheric density = " + atmosphereDensity );
 			}
 		}
 		else
@@ -300,7 +302,7 @@ public class Planet : MonoBehaviour
 			RenderSettings.fogColor = Color.magenta;
 			RenderSettings.fogMode = FogMode.Linear;
 			RenderSettings.fogDensity = 0.0f;
-			RenderSettings.fogStartDistance = 450.0f;
+			RenderSettings.fogStartDistance = 50.0f;
 			RenderSettings.fogEndDistance = 750.0f;
 		}
 	}
