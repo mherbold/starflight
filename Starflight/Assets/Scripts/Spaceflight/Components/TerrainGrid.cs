@@ -129,13 +129,7 @@ public class TerrainGrid : MonoBehaviour
 		{
 			var position = GetVertexPosition( i, xScale, yScale, xOffset, yOffset );
 
-			var flatPosition = new Vector2( position.x - m_gridSize * 0.5f, position.z - m_gridSize * 0.5f );
-
-			var distance = flatPosition.magnitude;
-
-			var curve = Mathf.Min( m_elevationScale, Mathf.Pow( 1.0f - Mathf.Cos( distance / m_gridSize * Mathf.PI ), 8.0f ) * m_elevationScale * 0.5f );
-
-			m_vertices[ i ] = new Vector3( position.x, position.y - maxElevation - curve, position.z );
+			m_vertices[ i ] = new Vector3( position.x, position.y - maxElevation, position.z );
 		}
 
 		// update the mesh

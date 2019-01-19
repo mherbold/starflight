@@ -259,11 +259,7 @@ public class PlayerCamera : MonoBehaviour
 
 		SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
 	}
-
-	public void StartingAscent()
-	{
-	}
-
+	
 	public void StartingDescent()
 	{
 		SpaceflightController.m_instance.m_messages.ChangeText( "Autopilot engaged. Descending..." );
