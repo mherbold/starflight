@@ -12104,7 +12104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caa4e4de78da4e949a7e37994c9f3e9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_rotationSpeed: {x: 0, y: -1, z: 0}
+  m_rotationSpeed: {x: 0, y: -0.5, z: 0}
   m_worldSpace: 0
 --- !u!1 &534396972
 GameObject:
@@ -22339,7 +22339,7 @@ MonoBehaviour:
   m_autoblendSkyboxes: 0
   m_autorotateSkybox: 0
   m_playerObject: {fileID: 0}
-  m_constantRotation: {x: 0, y: -1, z: 0}
+  m_constantRotation: {x: 0, y: -0.5, z: 0}
   m_humanTextureList:
   - {fileID: 2800000, guid: c0f5a89cf7b72224499b0b1df0a48e5b, type: 3}
   - {fileID: 2800000, guid: 0c07f9e66804c1244afd1d4f79f553f5, type: 3}
@@ -22353,10 +22353,13 @@ MonoBehaviour:
   m_speminTextureList: []
   m_gazurtoidTextureList: []
   m_uhlekTextureList: []
+  m_planetTextureList: []
   m_material: {fileID: 0}
   m_currentBlendFactor: 0
   m_currentSkyboxA: 
   m_currentSkyboxB: 
+  m_colorTintA: {r: 1, g: 1, b: 1, a: 1}
+  m_colorTintB: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &1103932352
 MonoBehaviour:
   m_ObjectHideFlags: 0
