@@ -56,6 +56,7 @@ Shader "Starflight/Clouds"
 
 		[MaterialToggle] SF_ZWriteOn( "Z Write", Float ) = 1
 		[Enum(UnityEngine.Rendering.CompareFunction)] SF_ZTest( "Z Test", Float ) = 4
+		[MaterialToggle] SF_OverrideDepthOutput( "Override Depth Output", Float ) = 0
 
 		/* Misc Rendering Options */
 
@@ -125,6 +126,7 @@ Shader "Starflight/Clouds"
 				#pragma shader_feature SF_SPECULAR_ON
 				#pragma shader_feature SF_NORMALMAP_ON
 				#pragma shader_feature SF_NORMALMAP_ISCOMPRESSED
+				#pragma shader_feature SF_OVERRIDEDEPTHOUTPUT_ON
 				#pragma shader_feature SF_ORTHONORMALIZE_ON
 				#pragma shader_feature SF_FORWARDSHADOWS_ON
 

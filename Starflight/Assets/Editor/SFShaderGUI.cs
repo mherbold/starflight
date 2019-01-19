@@ -51,6 +51,7 @@ class SFShaderGUI : ShaderGUI
 
 		public static readonly GUIContent zWriteText = EditorGUIUtility.TrTextContent( "Z Write", "" );
 		public static readonly GUIContent zTestText = EditorGUIUtility.TrTextContent( "Z Test", "" );
+		public static readonly GUIContent overrideDepthOutputText = EditorGUIUtility.TrTextContent( "Override Depth Output", "Turn this on to write maximum Z to the depth buffer instead of the actual Z." );
 
 		public static readonly string miscRenderingOptionsText = "\nMisc Rendering Options";
 
@@ -102,6 +103,7 @@ class SFShaderGUI : ShaderGUI
 
 	MaterialProperty m_zWriteOn = null;
 	MaterialProperty m_zTest = null;
+	MaterialProperty m_overrideDepthOutput = null;
 
 	MaterialProperty m_orthonormalizeOn = null;
 	MaterialProperty m_emissiveProjectionOn = null;
@@ -253,13 +255,24 @@ class SFShaderGUI : ShaderGUI
 		}
 
 		// depth buffer options
-		if ( m_zWriteOn != null && m_zTest != null )
+		if ( m_zWriteOn != null || m_zTest != null || m_overrideDepthOutput != null )
 		{
 			GUILayout.Label( Styles.depthBufferOptionsText, EditorStyles.boldLabel );
 
-			m_materialEditor.ShaderProperty( m_zWriteOn, Styles.zWriteText );
+			if ( m_zWriteOn != null )
+			{
+				m_materialEditor.ShaderProperty( m_zWriteOn, Styles.zWriteText );
+			}
 
-			m_materialEditor.ShaderProperty( m_zTest, Styles.zTestText );
+			if ( m_zTest != null )
+			{
+				m_materialEditor.ShaderProperty( m_zTest, Styles.zTestText );
+			}
+
+			if ( m_overrideDepthOutput != null )
+			{
+				m_materialEditor.ShaderProperty( m_overrideDepthOutput, Styles.overrideDepthOutputText );
+			}
 		}
 
 		// misc rendering options
@@ -337,6 +350,7 @@ class SFShaderGUI : ShaderGUI
 
 		m_zWriteOn = FindProperty( "SF_ZWriteOn", materialPropertyList, false );
 		m_zTest = FindProperty( "SF_ZTest", materialPropertyList, false );
+		m_overrideDepthOutput = FindProperty( "SF_OverrideDepthOutput", materialPropertyList, false );
 
 		m_orthonormalizeOn = FindProperty( "SF_OrthonormalizeOn", materialPropertyList, false );
 		m_emissiveProjectionOn = FindProperty( "SF_EmissiveProjectionOn", materialPropertyList, false );
@@ -364,6 +378,7 @@ class SFShaderGUI : ShaderGUI
 
 		// toggle switches on/off
 		bool albedoOcclusionOn = IsSwitchedOn( material, "SF_AlbedoOcclusionOn" );
+		bool overrideDepthOutputOn = IsSwitchedOn( material, "SF_OverrideDepthOutput" );
 		bool orthonormalizeOn = IsSwitchedOn( material, "SF_OrthonormalizeOn" );
 		bool emissiveProjectionOn = IsSwitchedOn( material, "SF_EmissiveProjectionOn" );
 		bool forwardShadowsOn = IsSwitchedOn( material, "SF_ForwardShadowsOn" );
@@ -423,6 +438,7 @@ class SFShaderGUI : ShaderGUI
 		SetKeyword( material, "SF_SPECULAR_ON", specularOn );
 		SetKeyword( material, "SF_ALPHA_ON", blendOn || alphaTestOn );
 		SetKeyword( material, "SF_ALPHATEST_ON", alphaTestOn );
+		SetKeyword( material, "SF_OVERRIDEDEPTHOUTPUT_ON", overrideDepthOutputOn );
 		SetKeyword( material, "SF_ORTHONORMALIZE_ON", orthonormalizeOn );
 		SetKeyword( material, "SF_EMISSIVEPROJECTION_ON", emissiveProjectionOn );
 		SetKeyword( material, "SF_FORWARDSHADOWS_ON", forwardShadowsOn );
