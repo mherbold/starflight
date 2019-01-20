@@ -121,7 +121,7 @@ public class GD_Planet
 	// return the atmosphere density as a float
 	public float GetAtmosphereDensity()
 	{
-		return ( m_atmosphereDensityId - 1.0f ) / 4.0f;
+		return m_atmosphereDensityId / 5.0f;
 	}
 
 	// return the primary atmosphere of the planet

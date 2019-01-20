@@ -86,6 +86,8 @@ public class Planetside : MonoBehaviour
 		// get the planet controller
 		var planetController = SpaceflightController.m_instance.m_starSystem.GetPlanetController( playerData.m_general.m_currentPlanetId );
 
+		Debug.Log( "Showing planet number " + planetController.m_planet.m_id + "." );
+
 		// move the player object
 		SpaceflightController.m_instance.m_player.transform.position = playerData.m_general.m_coordinates = new Vector3( 0.0f, 0.0f, 0.0f );
 
@@ -103,9 +105,6 @@ public class Planetside : MonoBehaviour
 
 		// play the docking bay music track
 		MusicController.m_instance.ChangeToTrack( MusicController.Track.InOrbit );
-
-		// fudge the maximum speed of the player to make the starfield particles appear
-		playerData.m_general.m_currentMaximumSpeed = 128.0f;
 
 		// set up the clouds and atmosphere
 		planetController.SetupClouds( m_clouds, null, true, true );

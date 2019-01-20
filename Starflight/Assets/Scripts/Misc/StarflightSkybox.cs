@@ -209,7 +209,7 @@ public class StarflightSkybox : MonoBehaviour
 			m_currentSkyboxB = race;
 		}
 
-		Debug.Log( "Switching skybox " + which + " texture set to " + race + "." );
+		// Debug.Log( "Switching skybox " + which + " texture set to " + race + "." );
 
 		// get the set of textures we want to use now
 		Texture[] textureList;

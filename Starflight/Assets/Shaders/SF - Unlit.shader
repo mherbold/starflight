@@ -10,8 +10,6 @@ Shader "Starflight/Unlit"
 
 		SF_BaseScaleOffset( "Base Scale Offset", Vector ) = ( 1, 1, 0, 0 )
 
-		/* UV2 Maps */
-
 		/* Culling Options */
 
 		[Enum(UnityEngine.Rendering.CullMode)] SF_CullMode( "Cull Mode", Float ) = 2
@@ -30,9 +28,14 @@ Shader "Starflight/Unlit"
 		[MaterialToggle] SF_ZWriteOn( "Z Write", Float ) = 1
 		[Enum(UnityEngine.Rendering.CompareFunction)] SF_ZTest( "Z Test", Float ) = 4
 
+		/* Depth Fade */
+
+		[MaterialToggle] SF_DepthFadeOn( "Depth Fade", Float ) = 0
+		SF_DepthFadeParams( "Depth Fade Params", Vector ) = ( 0, 0, 0, 0 )
+
 		/* Misc Rendering Options */
 
-		[MaterialToggle] SF_ForwardShadowsOn( "Forward Shadows", Float ) = 1
+		[MaterialToggle] SF_BehindEverythingOn( "Behind Everything", Float ) = 1
 
 		/* Render Queue Offset */
 
@@ -91,6 +94,8 @@ Shader "Starflight/Unlit"
 				#pragma shader_feature SF_ALBEDOMAP_ON
 				#pragma shader_feature SF_ALPHA_ON
 				#pragma shader_feature SF_ALPHATEST_ON
+				#pragma shader_feature SF_DEPTHFADE_ON
+				#pragma shader_feature SF_BEHINDEVERYTHING_ON
 
 				#pragma vertex vertUnlit_SF
 				#pragma fragment fragUnlit_SF

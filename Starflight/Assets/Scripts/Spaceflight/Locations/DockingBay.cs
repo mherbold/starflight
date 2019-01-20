@@ -73,9 +73,6 @@ public class DockingBay : MonoBehaviour
 
 		// play the docking bay music track
 		MusicController.m_instance.ChangeToTrack( MusicController.Track.DockingBay );
-
-		// fudge the maximum speed of the player to make the starfield particles appear
-		playerData.m_general.m_currentMaximumSpeed = 128.0f;
 	}
 
 	// call this to start the launch animation

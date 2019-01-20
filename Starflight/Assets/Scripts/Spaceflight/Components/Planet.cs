@@ -227,7 +227,7 @@ public class Planet : MonoBehaviour
 			var atmosphereDensity = m_planet.GetAtmosphereDensity();
 
 			// set the density of the clouds
-			planetClouds.material.SetFloat( "SF_Density", 1.75f - atmosphereDensity * 0.75f );
+			planetClouds.material.SetFloat( "SF_Density", 2.0f - atmosphereDensity * 1.25f );
 
 			// pick the color for the clouds
 			if ( m_planet.IsMolten() )
@@ -246,6 +246,9 @@ public class Planet : MonoBehaviour
 
 			// pick the color for the atmosphere
 			var color = new Color( atmosphere.m_colorR / 255.0f, atmosphere.m_colorG / 255.0f, atmosphere.m_colorB / 255.0f );
+
+			// modulate the color by the atmosphere density (thinner = closer to black)
+			color *= atmosphereDensity;
 
 			// apply the color to the atmosphere
 			if ( planetAtmosphere != null )
@@ -270,10 +273,10 @@ public class Planet : MonoBehaviour
 				RenderSettings.fogColor = color;
 				RenderSettings.fogMode = FogMode.Linear;
 				RenderSettings.fogDensity = 1.0f;
-				RenderSettings.fogStartDistance = 450.0f - atmosphereDensity * 400.0f;
+				RenderSettings.fogStartDistance = 1000.0f - atmosphereDensity * 950.0f;
 				RenderSettings.fogEndDistance = 1000.0f;
 
-				Debug.Log( "Fog enabled, atmospheric density = " + atmosphereDensity );
+				// Debug.Log( "Fog enabled, atmospheric density = " + atmosphereDensity );
 			}
 		}
 		else

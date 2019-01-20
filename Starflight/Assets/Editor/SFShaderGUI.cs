@@ -53,11 +53,16 @@ class SFShaderGUI : ShaderGUI
 		public static readonly GUIContent zTestText = EditorGUIUtility.TrTextContent( "Z Test", "" );
 		public static readonly GUIContent overrideDepthOutputText = EditorGUIUtility.TrTextContent( "Override Depth Output", "Turn this on to write maximum Z to the depth buffer instead of the actual Z." );
 
+		public static readonly string depthFadeOptionsText = "\nDepth Fade Options";
+		public static readonly GUIContent depthFadeText = EditorGUIUtility.TrTextContent( "Depth Fade", "" );
+		public static readonly GUIContent depthFadeParamsText = EditorGUIUtility.TrTextContent( "Depth Fade Params", "X=Near Transparent, Y=Near Opaque, Z=Far Opaque, W=Far Transparent" );
+
 		public static readonly string miscRenderingOptionsText = "\nMisc Rendering Options";
 
-		public static readonly GUIContent orthonormalizeText = EditorGUIUtility.TrTextContent( "Orthonormalize", "" );
+		public static readonly GUIContent orthonormalizeText = EditorGUIUtility.TrTextContent( "Orthonormalize", "Orthonormalize the normal at every pixel." );
 		public static readonly GUIContent emissiveProjectionText = EditorGUIUtility.TrTextContent( "Emissive Projection", "When turned on, UV coordinates for the emissive map are generated from a projection matrix." );
 		public static readonly GUIContent forwardShadowsText = EditorGUIUtility.TrTextContent( "Forward Shadows", "Receive shadows when forward rendering (only works for opaque materials)." );
+		public static readonly GUIContent behindEverythingText = EditorGUIUtility.TrTextContent( "Behind Everything", "Forces this material to render into the background like a skybox." );
 		public static readonly GUIContent fractalDetailsText = EditorGUIUtility.TrTextContent( "Fractal Details", "Applies fractal details to the surface for extreme close ups." );
 		public static readonly GUIContent renderQueueOffsetText = EditorGUIUtility.TrTextContent( "Render Queue Offset", "" );
 	}
@@ -105,9 +110,13 @@ class SFShaderGUI : ShaderGUI
 	MaterialProperty m_zTest = null;
 	MaterialProperty m_overrideDepthOutput = null;
 
+	MaterialProperty m_depthFadeOn = null;
+	MaterialProperty m_depthFadeParams = null;
+
 	MaterialProperty m_orthonormalizeOn = null;
 	MaterialProperty m_emissiveProjectionOn = null;
 	MaterialProperty m_forwardShadowsOn = null;
+	MaterialProperty m_behindEverythingOn = null;
 	MaterialProperty m_fractalDetailsOn = null;
 	MaterialProperty m_renderQueueOffset = null;
 
@@ -275,6 +284,19 @@ class SFShaderGUI : ShaderGUI
 			}
 		}
 
+		// depth fade options
+		if ( m_depthFadeOn != null && m_depthFadeParams != null )
+		{
+			GUILayout.Label( Styles.depthFadeOptionsText, EditorStyles.boldLabel );
+
+			m_materialEditor.ShaderProperty( m_depthFadeOn, Styles.depthFadeText );
+
+			if ( IsSwitchedOn( material, "SF_DepthFadeOn" ) )
+			{
+				m_materialEditor.ShaderProperty( m_depthFadeParams, Styles.depthFadeParamsText );
+			}
+		}
+
 		// misc rendering options
 		GUILayout.Label( Styles.miscRenderingOptionsText, EditorStyles.boldLabel );
 
@@ -291,6 +313,11 @@ class SFShaderGUI : ShaderGUI
 		if ( m_forwardShadowsOn != null )
 		{
 			m_materialEditor.ShaderProperty( m_forwardShadowsOn, Styles.forwardShadowsText );
+		}
+
+		if ( m_behindEverythingOn != null )
+		{
+			m_materialEditor.ShaderProperty( m_behindEverythingOn, Styles.behindEverythingText );
 		}
 
 		if ( m_fractalDetailsOn != null )
@@ -352,9 +379,13 @@ class SFShaderGUI : ShaderGUI
 		m_zTest = FindProperty( "SF_ZTest", materialPropertyList, false );
 		m_overrideDepthOutput = FindProperty( "SF_OverrideDepthOutput", materialPropertyList, false );
 
+		m_depthFadeOn = FindProperty( "SF_DepthFadeOn", materialPropertyList, false );
+		m_depthFadeParams = FindProperty( "SF_DepthFadeParams", materialPropertyList, false );
+
 		m_orthonormalizeOn = FindProperty( "SF_OrthonormalizeOn", materialPropertyList, false );
 		m_emissiveProjectionOn = FindProperty( "SF_EmissiveProjectionOn", materialPropertyList, false );
 		m_forwardShadowsOn = FindProperty( "SF_ForwardShadowsOn", materialPropertyList, false );
+		m_behindEverythingOn = FindProperty( "SF_BehindEverythingOn", materialPropertyList, false );
 		m_fractalDetailsOn = FindProperty( "SF_FractalDetailsOn", materialPropertyList, false );
 
 		m_renderQueueOffset = FindProperty( "SF_RenderQueueOffset", materialPropertyList );
@@ -379,9 +410,11 @@ class SFShaderGUI : ShaderGUI
 		// toggle switches on/off
 		bool albedoOcclusionOn = IsSwitchedOn( material, "SF_AlbedoOcclusionOn" );
 		bool overrideDepthOutputOn = IsSwitchedOn( material, "SF_OverrideDepthOutput" );
+		bool depthFadeOn = IsSwitchedOn( material, "SF_DepthFadeOn" );
 		bool orthonormalizeOn = IsSwitchedOn( material, "SF_OrthonormalizeOn" );
 		bool emissiveProjectionOn = IsSwitchedOn( material, "SF_EmissiveProjectionOn" );
 		bool forwardShadowsOn = IsSwitchedOn( material, "SF_ForwardShadowsOn" );
+		bool behindEverythingOn = IsSwitchedOn( material, "SF_BehindEverythingOn" );
 		bool fractalDetailsOn = IsSwitchedOn( material, "SF_FractalDetailsOn" );
 
 		// enable alpha testing if alpha test value > 0
@@ -439,9 +472,11 @@ class SFShaderGUI : ShaderGUI
 		SetKeyword( material, "SF_ALPHA_ON", blendOn || alphaTestOn );
 		SetKeyword( material, "SF_ALPHATEST_ON", alphaTestOn );
 		SetKeyword( material, "SF_OVERRIDEDEPTHOUTPUT_ON", overrideDepthOutputOn );
+		SetKeyword( material, "SF_DEPTHFADE_ON", depthFadeOn );
 		SetKeyword( material, "SF_ORTHONORMALIZE_ON", orthonormalizeOn );
 		SetKeyword( material, "SF_EMISSIVEPROJECTION_ON", emissiveProjectionOn );
 		SetKeyword( material, "SF_FORWARDSHADOWS_ON", forwardShadowsOn );
+		SetKeyword( material, "SF_BEHINDEVERYTHING_ON", behindEverythingOn );
 		SetKeyword( material, "SF_FRACTALDETAILS_ON", fractalDetailsOn );
 
 		// if blending is on then force material to be transparent (this also disables the deferred pass automatically)

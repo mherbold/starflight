@@ -2,10 +2,6 @@
 #ifndef SF_SHADER_CORE
 #define SF_SHADER_CORE
 
-#include "UnityCG.cginc"
-#include "Lighting.cginc"
-#include "AutoLight.cginc"
-
 #include "SF - Unity.cginc"
 #include "SF - SimplexNoise.cginc"
 
@@ -44,6 +40,8 @@ sampler2D SF_OcclusionMap;
 float SF_OcclusionPower;
 
 float SF_AlphaTestValue;
+
+float4 SF_DepthFadeParams;
 
 struct SF_VertexShaderInput
 {
@@ -117,6 +115,12 @@ SF_VertexShaderOutput ComputeVertexShaderOutput( SF_VertexShaderInput v )
 		o.binormalWorld = binormalWorld;
 
 	#endif // SF_NORMALMAP_ON || SF_DETAILNORMALMAP_ON
+	
+	#if SF_BEHINDEVERYTHING_ON
+
+		o.texCoord1 = ComputeScreenPos( o.positionClip );
+
+	#endif // SF_BEHINDEVERYTHING_ON
 
 	return o;
 }
@@ -143,7 +147,22 @@ float4 ComputeDiffuseColor( SF_VertexShaderOutput i )
 
 	#endif // SF_DETAILALBEDOMAP_ON
 
-	return i.color * SF_AlbedoColor * albedoMap * detailAlbedoMap;
+	#if SF_DEPTHFADE_ON
+
+		float d = distance( i.positionWorld, _WorldSpaceCameraPos );
+
+		float nearFade = saturate( ( d - SF_DepthFadeParams.x ) / ( SF_DepthFadeParams.y - SF_DepthFadeParams.x ) );
+		float farFade = saturate( ( d - SF_DepthFadeParams.z ) / ( SF_DepthFadeParams.w - SF_DepthFadeParams.z ) );
+
+		float depthFadeAmount = smoothstep( 0, 1, nearFade ) * smoothstep( 1, 0, farFade );
+
+	#else // !SF_DEPTHFADE_ON
+
+		float depthFadeAmount = 1;
+
+	#endif // SF_DEPTHFADE_ON
+
+	return i.color * SF_AlbedoColor * albedoMap * detailAlbedoMap * float4( 1, 1, 1, depthFadeAmount );
 }
 
 float ComputeOcclusion( SF_VertexShaderOutput i )
