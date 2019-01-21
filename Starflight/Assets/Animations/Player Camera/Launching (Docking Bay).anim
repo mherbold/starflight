@@ -39,11 +39,11 @@ AnimationClip:
       - serializedVersion: 3
         time: 30
         value: {x: 0, y: 0, z: 0}
-        inSlope: {x: 0, y: -280.98532, z: 0}
-        outSlope: {x: 0, y: -280.98532, z: 0}
+        inSlope: {x: 0, y: -143.3557, z: 0}
+        outSlope: {x: 0, y: -143.3557, z: 0}
         tangentMode: 0
         weightedMode: 0
-        inWeight: {x: 0.33333334, y: 0.043391608, z: 0.33333334}
+        inWeight: {x: 0.33333334, y: 0.057002068, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -140,11 +140,11 @@ AnimationClip:
       - serializedVersion: 3
         time: 30
         value: 0
-        inSlope: -280.98532
-        outSlope: -280.98532
+        inSlope: -143.3557
+        outSlope: -143.3557
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.043391608
+        inWeight: 0.057002068
         outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -192,7 +192,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 20.5
+  - time: 24.5
     functionName: PlayerIsLaunching
     data: 
     objectReferenceParameter: {fileID: 0}
