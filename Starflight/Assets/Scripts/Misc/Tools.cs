@@ -108,12 +108,20 @@ class Tools
 		return Mathf.Abs( a - b ) <= threshold;
 	}
 
+	// get the opacity of a material using a SF shader
+	public static float GetOpacity( Material material )
+	{
+		var color = material.GetColor( "SF_AlbedoColor" );
+
+		return Mathf.LinearToGammaSpace( color.a );
+	}
+
 	// set the opacity of a material using a SF shader
 	public static void SetOpacity( Material material, float opacity )
 	{
 		var color = material.GetColor( "SF_AlbedoColor" );
 
-		color.a = opacity * opacity; // square it since we are using linear color space
+		color.a = Mathf.GammaToLinearSpace( opacity );
 
 		material.SetColor( "SF_AlbedoColor", color );
 	}
