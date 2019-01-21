@@ -212,7 +212,7 @@ public class PlayerCamera : MonoBehaviour
 	public void PlayerIsLaunching()
 	{
 		// yes - start fading the map out
-		SpaceflightController.m_instance.m_viewport.StartFade( 0.0f, 7.0f );
+		SpaceflightController.m_instance.m_viewport.StartFade( 0.0f, 5.0f );
 
 		// yes - update the messages text
 		SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Leaving starport...</color>" );
