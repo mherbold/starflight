@@ -11,8 +11,7 @@ Material:
   m_Shader: {fileID: 4800000, guid: adcfa929f3b97d549ad0a8faba72a091, type: 3}
   m_ShaderKeywords: ALBEDOMAP_ON ALPHA_ON FORWARDSHADOWSON_ON FORWARDSHADOWS_ON NORMALMAP_ISCOMPRESSED
     NORMALMAP_ON ORTHONORMALIZEON_ON ORTHONORMALIZE_ON SF_ALBEDOMAP_ON SF_ALPHA_ON
-    SF_FORWARDSHADOWS_ON SF_NORMALMAP_ISCOMPRESSED SF_NORMALMAP_ON SF_ORTHONORMALIZEON_ON
-    SF_ORTHONORMALIZE_ON SF_SPECULARMAP_ON SF_SPECULAR_ON SPECULAR_ON
+    SF_NORMALMAP_ISCOMPRESSED SF_NORMALMAP_ON SF_SPECULARMAP_ON SF_SPECULAR_ON SPECULAR_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -158,12 +157,13 @@ Material:
     - SF_CullMode: 2
     - SF_Density: 1.5
     - SF_DetailNormalMapStrength: 1
-    - SF_ForwardShadowsOn: 1
+    - SF_ForwardShadowsOn: 0
     - SF_NormalMapStrength: 3
     - SF_OcclusionPower: 1
-    - SF_OrthonormalizeOn: 1
+    - SF_OrthonormalizeOn: 0
+    - SF_OverrideDepthOutput: 0
     - SF_RenderQueueOffset: 0
-    - SF_Smoothness: 0.275
+    - SF_Smoothness: 0.33
     - SF_Speed: 0.15
     - SF_ZTest: 4
     - SF_ZWriteOn: 0

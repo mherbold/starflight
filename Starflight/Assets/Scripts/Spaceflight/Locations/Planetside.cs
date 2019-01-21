@@ -15,6 +15,9 @@ public class Planetside : MonoBehaviour
 	// at what altitude should clouds become completely transparent
 	public float m_cloudFadeAltitude;
 
+	// the opacity of the clouds
+	float m_cloudOpacity;
+
 	// unity awake
 	void Awake()
 	{
@@ -35,10 +38,10 @@ public class Planetside : MonoBehaviour
 		}
 
 		//  calculate the opacity of the clouds based on altitude
-		var opacity = Mathf.SmoothStep( 1, 0, m_playerCamera.transform.position.y / m_cloudFadeAltitude );
+		var opacity = Mathf.SmoothStep( 1.0f, 0.0f, m_playerCamera.transform.position.y / m_cloudFadeAltitude );
 
 		// update the material
-		Tools.SetOpacity( m_clouds.material, opacity );
+		Tools.SetOpacity( m_clouds.material, opacity * m_cloudOpacity );
 
 		// do the same for the skybox blend factor
 		StarflightSkybox.m_instance.m_currentBlendFactor = Mathf.Lerp( 0.0f, 1.0f, opacity );
@@ -108,6 +111,9 @@ public class Planetside : MonoBehaviour
 
 		// set up the clouds and atmosphere
 		planetController.SetupClouds( m_clouds, null, true, true );
+
+		// save the opacity of the clouds
+		m_cloudOpacity = Tools.GetOpacity( m_clouds.material );
 
 		// make sure we're blended all the way to the planet skybox
 		StarflightSkybox.m_instance.m_currentBlendFactor = 1.0f;

@@ -23376,129 +23376,97 @@
       "m_id": "0",
       "m_name": "Ammonia",
       "m_habitable": "",
-      "m_colorR": 96,
-      "m_colorG": 96,
-      "m_colorB": 96
+      "m_hue": 70
     },
     {
       "m_id": "1",
       "m_name": "Ammonia Compounds",
       "m_habitable": "",
-      "m_colorR": 176,
-      "m_colorG": 0,
-      "m_colorB": 176
+      "m_hue": 80
     },
     {
       "m_id": "2",
       "m_name": "Argon",
       "m_habitable": "",
-      "m_colorR": 0,
-      "m_colorG": 0,
-      "m_colorB": 255
+      "m_hue": 310
     },
     {
       "m_id": "3",
       "m_name": "Carbon Dioxide",
       "m_habitable": "",
-      "m_colorR": 96,
-      "m_colorG": 96,
-      "m_colorB": 96
+      "m_hue": 200
     },
     {
       "m_id": "4",
       "m_name": "Chlorine",
       "m_habitable": "",
-      "m_colorR": 192,
-      "m_colorG": 255,
-      "m_colorB": 0
+      "m_hue": 90
     },
     {
       "m_id": "5",
       "m_name": "Chlorine Compounds",
       "m_habitable": "",
-      "m_colorR": 192,
-      "m_colorG": 255,
-      "m_colorB": 0
+      "m_hue": 130
     },
     {
       "m_id": "6",
       "m_name": "Fluorine",
       "m_habitable": "",
-      "m_colorR": 255,
-      "m_colorG": 255,
-      "m_colorB": 160
+      "m_hue": 60
     },
     {
       "m_id": "7",
       "m_name": "Fluorine Compounds",
       "m_habitable": "",
-      "m_colorR": 255,
-      "m_colorG": 255,
-      "m_colorB": 160
+      "m_hue": 50
     },
     {
       "m_id": "8",
       "m_name": "Helium",
       "m_habitable": "",
-      "m_colorR": 255,
-      "m_colorG": 192,
-      "m_colorB": 128
+      "m_hue": 255
     },
     {
       "m_id": "9",
       "m_name": "Hydrogen",
       "m_habitable": "",
-      "m_colorR": 96,
-      "m_colorG": 96,
-      "m_colorB": 96
+      "m_hue": 290
     },
     {
       "m_id": "10",
       "m_name": "Hydrogen Cyanide",
       "m_habitable": "",
-      "m_colorR": 240,
-      "m_colorG": 240,
-      "m_colorB": 255
+      "m_hue": 330
     },
     {
       "m_id": "11",
       "m_name": "Metal Compounds",
       "m_habitable": "",
-      "m_colorR": 128,
-      "m_colorG": 128,
-      "m_colorB": 128
+      "m_hue": 0
     },
     {
       "m_id": "12",
       "m_name": "Methane",
       "m_habitable": "",
-      "m_colorR": 128,
-      "m_colorG": 255,
-      "m_colorB": 224
+      "m_hue": 30
     },
     {
       "m_id": "13",
       "m_name": "Nitrogen",
       "m_habitable": "",
-      "m_colorR": 96,
-      "m_colorG": 96,
-      "m_colorB": 96
+      "m_hue": 320
     },
     {
       "m_id": "14",
       "m_name": "None",
       "m_habitable": "",
-      "m_colorR": 0,
-      "m_colorG": 0,
-      "m_colorB": 0
+      "m_hue": 0
     },
     {
       "m_id": "15",
       "m_name": "Oxygen",
       "m_habitable": true,
-      "m_colorR": 0,
-      "m_colorG": 0,
-      "m_colorB": 255
+      "m_hue": 240
     }
   ],
   "m_atmosphereDensityList": [

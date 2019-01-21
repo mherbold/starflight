@@ -124,12 +124,40 @@ public class GD_Planet
 		return m_atmosphereDensityId / 5.0f;
 	}
 
-	// return the primary atmosphere of the planet
-	public GD_Atmosphere GetPrimaryAtmosphere()
+	// return the blended atmosphere color of the planet
+	public Color GetAtmosphereColor()
 	{
 		var gameData = DataController.m_instance.m_gameData;
 
-		return gameData.m_atmosphereList[ m_atmosphereIdA ];
+		var atmosphereA = gameData.m_atmosphereList[ m_atmosphereIdA ];
+
+		var color = Color.HSVToRGB( atmosphereA.m_hue / 360.0f, 1.0f, 1.0f );
+
+		Debug.Log( "Atmosphere A = " + atmosphereA.m_name + ", hue = " + atmosphereA.m_hue );
+
+		if ( m_atmosphereIdB != -1 )
+		{
+			var atmosphereB = gameData.m_atmosphereList[ m_atmosphereIdB ];
+
+			color += Color.HSVToRGB( atmosphereB.m_hue / 360.0f, 1.0f, 1.0f ) * 0.5f;
+
+			Debug.Log( "Atmosphere B = " + atmosphereB.m_name + ", hue = " + atmosphereB.m_hue );
+		}
+
+		if ( m_atmosphereIdC != -1 )
+		{
+			var atmosphereC = gameData.m_atmosphereList[ m_atmosphereIdC ];
+
+			color += Color.HSVToRGB( atmosphereC.m_hue / 360.0f, 1.0f, 1.0f ) * 0.25f;
+
+			Debug.Log( "Atmosphere C = " + atmosphereC.m_name + ", hue = " + atmosphereC.m_hue );
+		}
+
+		Color.RGBToHSV( color, out var hue, out var saturation, out var value );
+
+		var density = GetAtmosphereDensity();
+
+		return Color.HSVToRGB( hue, 1.0f, density );
 	}
 
 	// get the atmosphere text

@@ -7,7 +7,5 @@ public class GD_Atmosphere
 	public int m_id;
 	public string m_name;
 	public bool m_habitable;
-	public int m_colorR;
-	public int m_colorG;
-	public int m_colorB;
+	public int m_hue;
 }

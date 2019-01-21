@@ -223,6 +223,9 @@ public class Planet : MonoBehaviour
 				planetAtmosphere.SetActive( true );
 			}
 
+			// get the primary atmosphere of the planet
+			var color = m_planet.GetAtmosphereColor();
+
 			// get the atmosphere density
 			var atmosphereDensity = m_planet.GetAtmosphereDensity();
 
@@ -233,22 +236,16 @@ public class Planet : MonoBehaviour
 			if ( m_planet.IsMolten() )
 			{
 				planetClouds.material.SetColor( "SF_AlbedoColor", new Color( 0.01f, 0.01f, 0.01f ) );
-				planetClouds.material.SetColor( "SF_SpecularColor", new Color( 0.5f, 0.25f, 0.25f ) );
+				planetClouds.material.SetColor( "SF_SpecularColor", new Color( 0.25f, 0.01f, 0.01f ) );
 			}
 			else
 			{
-				planetClouds.material.SetColor( "SF_AlbedoColor", new Color( 0.95f, 0.95f, 0.95f ) );
-				planetClouds.material.SetColor( "SF_SpecularColor", new Color( 1.0f, 1.0f, 1.0f ) );
+				planetClouds.material.SetColor( "SF_AlbedoColor", new Color( 1.0f, 1.0f, 1.0f ) );
+				planetClouds.material.SetColor( "SF_SpecularColor", color );
 			}
 
-			// get the primary atmosphere of the planet
-			var atmosphere = m_planet.GetPrimaryAtmosphere();
-
-			// pick the color for the atmosphere
-			var color = new Color( atmosphere.m_colorR / 255.0f, atmosphere.m_colorG / 255.0f, atmosphere.m_colorB / 255.0f );
-
-			// modulate the color by the atmosphere density (thinner = closer to black)
-			color *= atmosphereDensity;
+			// set the opacity of the clouds based on the density
+			Tools.SetOpacity( planetClouds.material, atmosphereDensity * 0.5f + 0.5f );
 
 			// apply the color to the atmosphere
 			if ( planetAtmosphere != null )
