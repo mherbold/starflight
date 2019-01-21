@@ -28,11 +28,17 @@ public class InfiniteStarfield : MonoBehaviour
 		m_particleSystem.SetParticles( m_particles, m_particles.Length );
 	}
 
-	void Update()
+	void LateUpdate()
 	{
 		if ( m_lastPosition != transform.position )
 		{
+			var travelVector = transform.position - m_lastPosition;
+
 			m_lastPosition = transform.position;
+
+			var xMultiplier = Mathf.Ceil( Mathf.Abs( travelVector.x / m_starfieldCubeSize ) );
+			var yMultiplier = Mathf.Ceil( Mathf.Abs( travelVector.y / m_starfieldCubeSize ) );
+			var zMultiplier = Mathf.Ceil( Mathf.Abs( travelVector.z / m_starfieldCubeSize ) );
 
 			var centerToCorner = Vector3.one * m_starfieldCubeSize * 0.5f;
 
@@ -47,39 +53,69 @@ public class InfiniteStarfield : MonoBehaviour
 
 				if ( position.x < min.x )
 				{
-					position.x += m_starfieldCubeSize;
+					position.x += m_starfieldCubeSize * xMultiplier;
+
+					if ( position.x > max.x )
+					{
+						position.x -= m_starfieldCubeSize;
+					}
 
 					somethingChanged = true;
 				}
 				else if ( position.x > max.x )
 				{
-					position.x -= m_starfieldCubeSize;
+					position.x -= m_starfieldCubeSize * xMultiplier;
+
+					if ( position.x < min.x )
+					{
+						position.x += m_starfieldCubeSize;
+					}
 
 					somethingChanged = true;
 				}
 
 				if ( position.y < min.y )
 				{
-					position.y += m_starfieldCubeSize;
+					position.y += m_starfieldCubeSize * yMultiplier;
+
+					if ( position.y > max.y )
+					{
+						position.y -= m_starfieldCubeSize;
+					}
 
 					somethingChanged = true;
 				}
 				else if ( position.y > max.y )
 				{
-					position.y -= m_starfieldCubeSize;
+					position.y -= m_starfieldCubeSize * yMultiplier;
+
+					if ( position.y < min.y )
+					{
+						position.y += m_starfieldCubeSize;
+					}
 
 					somethingChanged = true;
 				}
 
 				if ( position.z < min.z )
 				{
-					position.z += m_starfieldCubeSize;
+					position.z += m_starfieldCubeSize * zMultiplier;
+
+					if ( position.z > max.z )
+					{
+						position.z -= m_starfieldCubeSize;
+					}
 
 					somethingChanged = true;
 				}
 				else if ( position.z > max.z )
 				{
-					position.z -= m_starfieldCubeSize;
+					position.z -= m_starfieldCubeSize * zMultiplier;
+
+					if ( position.z < min.z )
+					{
+						position.z += m_starfieldCubeSize;
+					}
 
 					somethingChanged = true;
 				}
