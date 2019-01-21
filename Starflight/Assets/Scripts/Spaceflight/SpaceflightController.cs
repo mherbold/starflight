@@ -5,10 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class SpaceflightController : MonoBehaviour
 {
-	// set this to true to skip cinematics
-	public bool m_skipCinematics;
-	public bool m_forceResetToDockingBay;
-
 	// the different components of the spaceflight scene
 	public Player m_player;
 	public DockingBay m_dockingBay;
