@@ -74,7 +74,7 @@ public class TerrainMapDisplay : ShipDisplay
 
 		// copy some of the material maps over
 		m_mapMaterial.SetTexture( "SF_WaterMaskMap", planetMaterial.GetTexture( "SF_WaterMaskMap" ) );
-		m_mapMaterial.SetTexture( "SF_AlbedoMap", planetMaterial.GetTexture( "SF_AlbedoMap" ) );
+		m_mapMaterial.SetTexture( "_MainTex", planetMaterial.GetTexture( "_MainTex" ) );
 		m_mapMaterial.SetTexture( "SF_SpecularMap", planetMaterial.GetTexture( "SF_SpecularMap" ) );
 		m_mapMaterial.SetTexture( "SF_NormalMap", planetMaterial.GetTexture( "SF_NormalMap" ) );
 

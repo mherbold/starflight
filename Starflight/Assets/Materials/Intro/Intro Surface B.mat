@@ -43,6 +43,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: cc55a3493c11ba643a7bdfb3016bf97d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - SF_DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - SF_DetailNormalMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -81,7 +85,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
         m_Texture: {fileID: 2800000, guid: 23b1db39658ec8642b90ed7a6bdbe9ef, type: 3}
-        m_Scale: {x: 3, y: 3}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailMask:
         m_Texture: {fileID: 0}
@@ -131,11 +135,13 @@ Material:
     - SF_DetailNormalMapStrength: 1
     - SF_EmissiveProjectionOn: 0
     - SF_ForwardShadowsOn: 1
+    - SF_FractalDetailsOn: 0
     - SF_NormalMapStrength: 1
     - SF_OcclusionPower: 1
     - SF_OrthonormalizeOn: 0
     - SF_RenderQueueOffset: 0
     - SF_Smoothness: 0.5
+    - SF_ZTest: 4
     - SF_ZWriteOn: 1
     - ShadowCasterOn: 1
     - Smoothness: 0.85

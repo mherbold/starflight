@@ -27,8 +27,8 @@ class SFShaderGUI : ShaderGUI
 		public static readonly GUIContent normalText = EditorGUIUtility.TrTextContent( "Normal", "RGB=Uncompressed Normal, GA=DXT5 Compressed Normal; Strength" );
 		public static readonly GUIContent detailNormalText = EditorGUIUtility.TrTextContent( "Detail Normal", "RGB=Uncompressed Normal, GA=DXT5 Compressed Normal; Strength" );
 		public static readonly GUIContent emissiveText = EditorGUIUtility.TrTextContent( "Emissive", "UV1; RGB=Color" );
-		public static readonly GUIContent baseScaleOffsetText = EditorGUIUtility.TrTextContent( "Base Scale & Offset", "XY=Scale, ZW=Offset" );
-		public static readonly GUIContent detailScaleOffsetText = EditorGUIUtility.TrTextContent( "Detail Scale & Offset", "XY=Scale, ZW=Offset" );
+
+		public static readonly string scaleOffsetText = "\nTexture Scale and Offset";
 
 		public static readonly string uv2MapsText = "\nUV2 Maps";
 
@@ -64,7 +64,6 @@ class SFShaderGUI : ShaderGUI
 		public static readonly GUIContent forwardShadowsText = EditorGUIUtility.TrTextContent( "Forward Shadows", "Receive shadows when forward rendering (only works for opaque materials)." );
 		public static readonly GUIContent behindEverythingText = EditorGUIUtility.TrTextContent( "Behind Everything", "Forces this material to render into the background like a skybox." );
 		public static readonly GUIContent fractalDetailsText = EditorGUIUtility.TrTextContent( "Fractal Details", "Applies fractal details to the surface for extreme close ups." );
-		public static readonly GUIContent renderQueueOffsetText = EditorGUIUtility.TrTextContent( "Render Queue Offset", "" );
 	}
 
 	MaterialProperty m_scatterMapA = null;
@@ -92,9 +91,6 @@ class SFShaderGUI : ShaderGUI
 	MaterialProperty m_emissiveMap = null;
 	MaterialProperty m_emissiveColor = null;
 
-	MaterialProperty m_baseScaleOffset = null;
-	MaterialProperty m_detailScaleOffset = null;
-
 	MaterialProperty m_occlusionMap = null;
 	MaterialProperty m_occlusionPower = null;
 	MaterialProperty m_albedoOcclusionOn = null;
@@ -118,7 +114,6 @@ class SFShaderGUI : ShaderGUI
 	MaterialProperty m_forwardShadowsOn = null;
 	MaterialProperty m_behindEverythingOn = null;
 	MaterialProperty m_fractalDetailsOn = null;
-	MaterialProperty m_renderQueueOffset = null;
 
 	MaterialEditor m_materialEditor;
 
@@ -141,20 +136,15 @@ class SFShaderGUI : ShaderGUI
 
 		if ( m_firstTimeApply )
 		{
-			m_firstTimeApply = false;
-
 			MaterialChanged( material );
+
+			m_firstTimeApply = false;
 		}
 
-		ShaderPropertiesGUI( material );
-	}
-
-	public void ShaderPropertiesGUI( Material material )
-	{
 		// use default label width
 		EditorGUIUtility.labelWidth = 0.0f;
 
-		// fetect any changes to the material
+		// detect any changes to the material
 		EditorGUI.BeginChangeCheck();
 
 		// hello
@@ -179,63 +169,108 @@ class SFShaderGUI : ShaderGUI
 			m_materialEditor.ShaderProperty( m_speed, Styles.speedText );
 		}
 
-		// uv1 map options
-		if ( ( m_albedoMap != null && m_albedoColor != null ) || ( m_detailAlbedoMap != null ) || ( m_specularMap != null && m_specularColor != null && m_smoothness != null ) || ( m_normalMap != null && m_normalMapStrength != null ) || ( m_detailNormalMap != null && m_detailNormalMapStrength != null ) )
+		// albedo options
+		if ( m_albedoMap != null && m_albedoColor != null )
 		{
-			GUILayout.Label( Styles.uv1MapsText, EditorStyles.boldLabel );
+			GUILayout.Label( Styles.albedoText, EditorStyles.boldLabel );
 
-			if ( m_waterMaskMap != null )
+			m_materialEditor.TexturePropertySingleLine( Styles.albedoText, m_albedoMap, m_albedoColor );
+
+			if ( m_albedoMap.textureValue != null )
 			{
-				m_materialEditor.TexturePropertySingleLine( Styles.waterMaskText, m_waterMaskMap );
+				m_materialEditor.TextureScaleOffsetProperty( m_albedoMap );
 			}
+		}
 
-			if ( m_albedoMap != null && m_albedoColor != null )
+		// detail albedo options
+		if ( m_detailAlbedoMap != null )
+		{
+			GUILayout.Label( Styles.detailAlbedoText, EditorStyles.boldLabel );
+
+			m_materialEditor.TexturePropertySingleLine( Styles.detailAlbedoText, m_detailAlbedoMap );
+
+			if ( m_detailAlbedoMap.textureValue != null )
 			{
-				m_materialEditor.TexturePropertySingleLine( Styles.albedoText, m_albedoMap, m_albedoColor );
+				m_materialEditor.TextureScaleOffsetProperty( m_detailAlbedoMap );
 			}
+		}
 
-			if ( m_detailAlbedoMap != null )
+		// specular options
+		if ( m_specularMap != null && m_specularColor != null && m_smoothness != null )
+		{
+			GUILayout.Label( Styles.specularText, EditorStyles.boldLabel );
+
+			m_materialEditor.TexturePropertySingleLine( Styles.specularText, m_specularMap, m_specularColor, m_smoothness );
+
+			if ( m_specularMap.textureValue != null )
 			{
-				m_materialEditor.TexturePropertySingleLine( Styles.detailAlbedoText, m_detailAlbedoMap );
+				m_materialEditor.TextureScaleOffsetProperty( m_specularMap );
 			}
+		}
 
-			if ( m_specularMap != null && m_specularColor != null && m_smoothness != null )
+		// normal options
+		if ( m_normalMap != null && m_normalMapStrength != null )
+		{
+			GUILayout.Label( Styles.normalText, EditorStyles.boldLabel );
+
+			m_materialEditor.TexturePropertySingleLine( Styles.normalText, m_normalMap, m_normalMapStrength );
+
+			if ( m_normalMap.textureValue != null )
 			{
-				m_materialEditor.TexturePropertySingleLine( Styles.specularText, m_specularMap, m_specularColor, m_smoothness );
+				m_materialEditor.TextureScaleOffsetProperty( m_normalMap );
 			}
+		}
 
-			if ( m_normalMap != null && m_normalMapStrength != null )
+		// detail normal options
+		if ( m_detailNormalMap != null && m_detailNormalMapStrength != null )
+		{
+			GUILayout.Label( Styles.detailNormalText, EditorStyles.boldLabel );
+
+			m_materialEditor.TexturePropertySingleLine( Styles.detailNormalText, m_detailNormalMap, m_detailNormalMapStrength );
+
+			if ( m_detailNormalMap.textureValue != null )
 			{
-				m_materialEditor.TexturePropertySingleLine( Styles.normalText, m_normalMap, m_normalMapStrength );
+				m_materialEditor.TextureScaleOffsetProperty( m_detailNormalMap );
 			}
+		}
 
-			if ( m_detailNormalMap != null && m_detailNormalMapStrength != null )
+		// emissive options
+		if ( m_emissiveMap != null && m_emissiveColor != null )
+		{
+			GUILayout.Label( Styles.emissiveText, EditorStyles.boldLabel );
+
+			m_materialEditor.TexturePropertySingleLine( Styles.emissiveText, m_emissiveMap, m_emissiveColor );
+
+			if ( m_emissiveMap.textureValue != null )
 			{
-				m_materialEditor.TexturePropertySingleLine( Styles.detailNormalText, m_detailNormalMap, m_detailNormalMapStrength );
+				m_materialEditor.TextureScaleOffsetProperty( m_emissiveMap );
 			}
+		}
 
-			if ( m_emissiveMap != null && m_emissiveColor != null )
-			{
-				m_materialEditor.TexturePropertySingleLine( Styles.emissiveText, m_emissiveMap, m_emissiveColor );
-			}
+		// water mask map options
+		if ( m_waterMaskMap != null )
+		{
+			GUILayout.Label( Styles.waterMaskText, EditorStyles.boldLabel );
 
-			if ( m_baseScaleOffset != null )
-			{
-				m_materialEditor.ShaderProperty( m_baseScaleOffset, Styles.baseScaleOffsetText );
-			}
+			m_materialEditor.TexturePropertySingleLine( Styles.waterMaskText, m_waterMaskMap );
 
-			if ( m_detailScaleOffset != null )
+			if ( m_waterMaskMap.textureValue != null )
 			{
-				m_materialEditor.ShaderProperty( m_detailScaleOffset, Styles.detailScaleOffsetText );
+				m_materialEditor.TextureScaleOffsetProperty( m_waterMaskMap );
 			}
 		}
 
 		// uv2 map options
 		if ( m_occlusionMap != null && m_occlusionPower != null && m_albedoOcclusionOn != null )
 		{
-			GUILayout.Label( Styles.uv2MapsText, EditorStyles.boldLabel );
+			GUILayout.Label( Styles.occlusionText, EditorStyles.boldLabel );
 
 			m_materialEditor.TexturePropertySingleLine( Styles.occlusionText, m_occlusionMap, m_occlusionPower, m_albedoOcclusionOn );
+
+			if ( m_occlusionMap.textureValue != null )
+			{
+				m_materialEditor.TextureScaleOffsetProperty( m_occlusionMap );
+			}
 		}
 
 		// culling options
@@ -325,7 +360,7 @@ class SFShaderGUI : ShaderGUI
 			m_materialEditor.ShaderProperty( m_fractalDetailsOn, Styles.fractalDetailsText );
 		}
 
-		m_materialEditor.ShaderProperty( m_renderQueueOffset, Styles.renderQueueOffsetText );
+		m_materialEditor.RenderQueueField();
 
 		// call material changed function if something was updated
 		if ( EditorGUI.EndChangeCheck() )
@@ -344,8 +379,8 @@ class SFShaderGUI : ShaderGUI
 
 		m_waterMaskMap = FindProperty( "SF_WaterMaskMap", materialPropertyList, false );
 
-		m_albedoMap = FindProperty( "SF_AlbedoMap", materialPropertyList, false );
-		m_detailAlbedoMap = FindProperty( "SF_DetailAlbedoMap", materialPropertyList, false );
+		m_albedoMap = FindProperty( "_MainTex", materialPropertyList, false );
+		m_detailAlbedoMap = FindProperty( "_DetailAlbedoMap", materialPropertyList, false );
 		m_albedoColor = FindProperty( "SF_AlbedoColor", materialPropertyList, false );
 
 		m_specularMap = FindProperty( "SF_SpecularMap", materialPropertyList, false );
@@ -360,9 +395,6 @@ class SFShaderGUI : ShaderGUI
 
 		m_emissiveMap = FindProperty( "SF_EmissiveMap", materialPropertyList, false );
 		m_emissiveColor = FindProperty( "SF_EmissiveColor", materialPropertyList, false );
-
-		m_baseScaleOffset = FindProperty( "SF_BaseScaleOffset", materialPropertyList, false );
-		m_detailScaleOffset = FindProperty( "SF_DetailScaleOffset", materialPropertyList, false );
 
 		m_occlusionMap = FindProperty( "SF_OcclusionMap", materialPropertyList, false );
 		m_occlusionPower = FindProperty( "SF_OcclusionPower", materialPropertyList, false );
@@ -387,16 +419,134 @@ class SFShaderGUI : ShaderGUI
 		m_forwardShadowsOn = FindProperty( "SF_ForwardShadowsOn", materialPropertyList, false );
 		m_behindEverythingOn = FindProperty( "SF_BehindEverythingOn", materialPropertyList, false );
 		m_fractalDetailsOn = FindProperty( "SF_FractalDetailsOn", materialPropertyList, false );
-
-		m_renderQueueOffset = FindProperty( "SF_RenderQueueOffset", materialPropertyList );
 	}
 
 	void MaterialChanged( Material material )
 	{
+		// copy old albedo map property to new albedo map property
+		if ( material.HasProperty( "SF_AlbedoMap" ) && material.HasProperty( "_MainTex" ) )
+		{
+			if ( HasTextureMap( material, "SF_AlbedoMap" ) )
+			{
+				if ( !HasTextureMap( material, "_MainTex" ) )
+				{
+					var textureMap = material.GetTexture( "SF_AlbedoMap" );
+
+					material.SetTexture( "_MainTex", textureMap );
+
+					m_albedoMap.textureValue = textureMap;
+
+					Debug.Log( "Transferred albedo map for material " + material.name + "." );
+				}
+			}
+		}
+
+		// copy old detail albedo map property to new detail albedo map property
+		if ( material.HasProperty( "SF_DetailAlbedoMap" ) && material.HasProperty( "_DetailAlbedoMap" ) )
+		{
+			if ( HasTextureMap( material, "SF_DetailAlbedoMap" ) )
+			{
+				if ( !HasTextureMap( material, "_DetailAlbedoMap" ) )
+				{
+					var textureMap = material.GetTexture( "SF_DetailAlbedoMap" );
+
+					material.SetTexture( "_DetailAlbedoMap", textureMap );
+
+					m_detailAlbedoMap.textureValue = textureMap;
+
+					Debug.Log( "Transferred detail albedo map for material " + material.name + "." );
+				}
+			}
+		}
+
+		// copy old base scale transform property
+		if ( material.HasProperty( "SF_BaseScaleOffset" ) )
+		{
+			var scaleAndOffset = material.GetVector( "SF_BaseScaleOffset" );
+
+			if ( m_albedoMap != null )
+			{
+				if ( m_albedoMap.textureScaleAndOffset != scaleAndOffset )
+				{
+					material.SetVector( "_MainTex_ST", scaleAndOffset );
+
+					m_albedoMap.textureScaleAndOffset = scaleAndOffset;
+
+					Debug.Log( "Transferred albedo map scale and offset for material " + material.name + "." );
+				}
+			}
+
+			if ( m_specularMap != null )
+			{
+				if ( m_specularMap.textureScaleAndOffset != scaleAndOffset )
+				{
+					material.SetVector( "SF_SpecularMap_ST", scaleAndOffset );
+
+					m_specularMap.textureScaleAndOffset = scaleAndOffset;
+
+					Debug.Log( "Transferred specular map scale and offset for material " + material.name + "." );
+				}
+			}
+
+			if ( m_normalMap != null )
+			{
+				if ( m_normalMap.textureScaleAndOffset != scaleAndOffset )
+				{
+					material.SetVector( "SF_NormalMap_ST", scaleAndOffset );
+
+					m_normalMap.textureScaleAndOffset = scaleAndOffset;
+
+					Debug.Log( "Transferred normal map scale and offset for material " + material.name + "." );
+				}
+			}
+
+			if ( m_emissiveMap != null )
+			{
+				if ( m_emissiveMap.textureScaleAndOffset != scaleAndOffset )
+				{
+					material.SetVector( "SF_EmissiveMap_ST", scaleAndOffset );
+
+					m_emissiveMap.textureScaleAndOffset = scaleAndOffset;
+
+					Debug.Log( "Transferred emissive map scale and offset for material " + material.name + "." );
+				}
+			}
+		}
+
+		// copy old detail scale transform property
+		if ( material.HasProperty( "SF_DetailScaleOffset" ) )
+		{
+			var scaleAndOffset = material.GetVector( "SF_DetailScaleOffset" );
+
+			if ( m_detailAlbedoMap != null )
+			{
+				if ( m_detailAlbedoMap.textureScaleAndOffset != scaleAndOffset )
+				{
+					material.SetVector( "_DetailAlbedoMap_ST", scaleAndOffset );
+
+					m_detailAlbedoMap.textureScaleAndOffset = scaleAndOffset;
+
+					Debug.Log( "Transferred detail albedo map scale and offset for material " + material.name + "." );
+				}
+			}
+
+			if ( m_detailNormalMap != null )
+			{
+				if ( m_detailNormalMap.textureScaleAndOffset != scaleAndOffset )
+				{
+					material.SetVector( "_DetailNormalMap_ST", scaleAndOffset );
+
+					m_detailNormalMap.textureScaleAndOffset = scaleAndOffset;
+
+					Debug.Log( "Transferred detail normal map scale and offset for material " + material.name + "." );
+				}
+			}
+		}
+
 		// texture maps on/off
 		bool waterMaskMapOn = HasTextureMap( material, "SF_WaterMaskMap" );
-		bool albedoMapOn = HasTextureMap( material, "SF_AlbedoMap" );
-		bool detailAlbedoMapOn = HasTextureMap( material, "SF_DetailAlbedoMap" );
+		bool albedoMapOn = HasTextureMap( material, "_MainTex" );
+		bool detailAlbedoMapOn = HasTextureMap( material, "_DetailAlbedoMap" );
 		bool specularMapOn = HasTextureMap( material, "SF_SpecularMap" );
 		bool occlusionMapOn = HasTextureMap( material, "SF_OcclusionMap" );
 		bool normalMapOn = HasTextureMap( material, "SF_NormalMap" );
@@ -483,21 +633,18 @@ class SFShaderGUI : ShaderGUI
 		if ( blendOn )
 		{
 			material.SetOverrideTag( "RenderType", "Transparent" );
-			material.renderQueue = (int) UnityEngine.Rendering.RenderQueue.Transparent + Mathf.RoundToInt( m_renderQueueOffset.floatValue );
 
 			m_debugLogMessage[ 1 ] += " TYPE:TRANSPARENT QUEUE:" + material.renderQueue;
 		}
 		else if ( alphaTestOn )
 		{
 			material.SetOverrideTag( "RenderType", "TransparentCutout" );
-			material.renderQueue = (int) UnityEngine.Rendering.RenderQueue.AlphaTest + Mathf.RoundToInt( m_renderQueueOffset.floatValue );
 
 			m_debugLogMessage[ 1 ] += " TYPE:TRANSPARENTCUTOUT QUEUE:" + material.renderQueue;
 		}
 		else
 		{
 			material.SetOverrideTag( "RenderType", "" );
-			material.renderQueue = (int) UnityEngine.Rendering.RenderQueue.Geometry + Mathf.RoundToInt( m_renderQueueOffset.floatValue );
 
 			m_debugLogMessage[ 1 ] += " TYPE:OPAQUE QUEUE:" + material.renderQueue;
 		}

@@ -5,7 +5,8 @@ Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: Shader Test - Water
   m_Shader: {fileID: 4800000, guid: 849a7cd20752bf1468db9741c66c8bcd, type: 3}
   m_ShaderKeywords: SF_ALBEDOMAP_ON SF_DETAILNORMALMAP_ISCOMPRESSED SF_DETAILNORMALMAP_ON
@@ -14,7 +15,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2001
+  m_CustomRenderQueue: 2000
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -28,17 +29,21 @@ Material:
         m_Texture: {fileID: 2800000, guid: 779866668e015bc4c9c39d404c6e22da, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - SF_DetailNormalMap:
-        m_Texture: {fileID: 2800000, guid: 09566a7b73d0eea4286c5260120780c2, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - SF_EmissiveMap:
+    - SF_DetailAlbedoMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - SF_DetailNormalMap:
+        m_Texture: {fileID: 2800000, guid: 09566a7b73d0eea4286c5260120780c2, type: 3}
+        m_Scale: {x: 10, y: 10}
+        m_Offset: {x: 0, y: 0}
+    - SF_EmissiveMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 2, y: 2}
+        m_Offset: {x: 0, y: 0}
     - SF_NormalMap:
         m_Texture: {fileID: 2800000, guid: b87bf71531621604a966cd72c9414830, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: 2, y: 2}
         m_Offset: {x: 0, y: 0}
     - SF_OcclusionMap:
         m_Texture: {fileID: 0}
@@ -54,7 +59,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - SF_SpecularMap:
         m_Texture: {fileID: 2800000, guid: 9339f982091ec334ca015b495d6f233f, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: 2, y: 2}
         m_Offset: {x: 0, y: 0}
     - SF_WaterMaskMap:
         m_Texture: {fileID: 0}
@@ -66,7 +71,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: 10, y: 10}
         m_Offset: {x: 0, y: 0}
     - _DetailMask:
         m_Texture: {fileID: 0}
@@ -81,8 +86,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: 9339f982091ec334ca015b495d6f233f, type: 3}
+        m_Scale: {x: 2, y: 2}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
@@ -101,15 +106,18 @@ Material:
     - SF_AlphaTestValue: 0
     - SF_BlendDst: 0
     - SF_BlendSrc: 1
+    - SF_CullMode: 2
     - SF_Density: 1.451
     - SF_DetailNormalMapStrength: 1
     - SF_ForwardShadowsOn: 1
+    - SF_FractalDetailsOn: 0
     - SF_NormalMapStrength: 0.15
     - SF_OcclusionPower: 1
     - SF_OrthonormalizeOn: 0
     - SF_RenderQueueOffset: 1
     - SF_Smoothness: 0.5
     - SF_Speed: 1
+    - SF_ZTest: 4
     - SF_ZWriteOn: 1
     - _BumpScale: 1
     - _Cutoff: 0.5

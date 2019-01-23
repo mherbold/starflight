@@ -7,20 +7,18 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Planet (Landing Grid)
+  m_Name: Planet (Terrain Map)
   m_Shader: {fileID: 4800000, guid: 849a7cd20752bf1468db9741c66c8bcd, type: 3}
   m_ShaderKeywords: ALBEDOMAP_ON NORMALMAP_COMPRESSED NORMALMAP_ISCOMPRESSED NORMALMAP_ON
     ORTHONORMALIZEON_ON ORTHONORMALIZETEXTURESPACE_ON ORTHONORMALIZE_ON SF_ALBEDOMAP_ON
-    SF_DETAILNORMALMAP_ISCOMPRESSED SF_DETAILNORMALMAP_ON SF_FORWARDSHADOWSON_ON SF_FORWARDSHADOWS_ON
-    SF_FRACTALDETAILSON_ON SF_FRACTALDETAILS_ON SF_NORMALMAP_ISCOMPRESSED SF_NORMALMAP_ON
-    SF_ORTHONORMALIZEON_ON SF_ORTHONORMALIZE_ON SF_SPECULARMAP_ON SF_SPECULAR_ON SF_WATERMAP_ISCOMPRESSED
-    SF_WATERMAP_ON SF_WATERMASKMAP_ON SF_ZWRITEON_ON SPECULARMAP_ON SPECULAR_ON TEXTURESPACE_ON
-    TEXTURESPACE_ORTHONORMALIZE WATERMAP_COMPRESSED WATERMAP_ISCOMPRESSED WATERMAP_ON
-    WATERMASKMAP_ON
+    SF_DETAILNORMALMAP_ISCOMPRESSED SF_DETAILNORMALMAP_ON SF_NORMALMAP_ISCOMPRESSED
+    SF_NORMALMAP_ON SF_SPECULARMAP_ON SF_SPECULAR_ON SF_WATERMAP_ISCOMPRESSED SF_WATERMAP_ON
+    SF_WATERMASKMAP_ON SPECULARMAP_ON SPECULAR_ON TEXTURESPACE_ON TEXTURESPACE_ORTHONORMALIZE
+    WATERMAP_COMPRESSED WATERMAP_ISCOMPRESSED WATERMAP_ON WATERMASKMAP_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
+  m_CustomRenderQueue: 3000
   stringTagMap: {}
   disabledShaderPasses:
   - BlendPrePass
@@ -53,24 +51,24 @@ Material:
         m_Offset: {x: 0, y: 0}
     - SF_DetailNormalMap:
         m_Texture: {fileID: 2800000, guid: ce9499b177542434bad7b78d0ca8b3ee, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: 10, y: 5}
         m_Offset: {x: 0, y: 0}
     - SF_EmissiveMap:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+        m_Scale: {x: 1, y: 0.75}
+        m_Offset: {x: 0, y: 0.125}
     - SF_NormalMap:
         m_Texture: {fileID: 2800000, guid: 519deb867c8e2b946ac87b9879819f4d, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+        m_Scale: {x: 1, y: 0.75}
+        m_Offset: {x: 0, y: 0.125}
     - SF_OcclusionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - SF_SpecularMap:
         m_Texture: {fileID: 2800000, guid: cbd47355c8f158a488727e536f29f5d3, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+        m_Scale: {x: 1, y: 0.75}
+        m_Offset: {x: 0, y: 0.125}
     - SF_WaterMap:
         m_Texture: {fileID: 2800000, guid: 1c02fb725a1e02548839c30b7e357156, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -105,7 +103,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 3, y: 3}
+        m_Scale: {x: 10, y: 5}
         m_Offset: {x: 0, y: 0}
     - _DetailMask:
         m_Texture: {fileID: 0}
@@ -132,9 +130,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: faea95160c244b640bfcdc1cedb44aba, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+        m_Texture: {fileID: 2800000, guid: 3548162412063b042abef8931b8d03d2, type: 3}
+        m_Scale: {x: 1, y: 0.75}
+        m_Offset: {x: 0, y: 0.125}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -197,19 +195,18 @@ Material:
     - SF_AlphaTestValue: 0
     - SF_BlendDst: 0
     - SF_BlendSrc: 1
-    - SF_CullMode: 2
-    - SF_DetailNormalMapStrength: 2
-    - SF_EmissiveProjectionOn: 0
-    - SF_ForwardShadowsOn: 1
-    - SF_FractalDetailsOn: 1
+    - SF_CullMode: 0
+    - SF_DetailNormalMapStrength: 1
+    - SF_ForwardShadowsOn: 0
+    - SF_FractalDetailsOn: 0
     - SF_NormalMapStrength: 2
     - SF_OcclusionPower: 1
-    - SF_OrthonormalizeOn: 1
-    - SF_RenderQueueOffset: 0
-    - SF_Smoothness: 1
-    - SF_Speed: 0.04
-    - SF_ZTest: 4
-    - SF_ZWriteOn: 1
+    - SF_OrthonormalizeOn: 0
+    - SF_RenderQueueOffset: 1000
+    - SF_Smoothness: 0.75
+    - SF_Speed: 0.2
+    - SF_ZTest: 0
+    - SF_ZWriteOn: 0
     - ShadowCasterOn: 1
     - Smoothness: 0.9
     - UIToggle: 0
@@ -249,8 +246,8 @@ Material:
     - LightOverrideDirection: {r: 0, g: 0, b: 1, a: 0}
     - NormalMapScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SF_AlbedoColor: {r: 1, g: 1, b: 1, a: 1}
-    - SF_BaseScaleOffset: {r: 1, g: 1, b: 0, a: 0}
-    - SF_DetailScaleOffset: {r: 24, g: 12, b: 0, a: 0}
+    - SF_BaseScaleOffset: {r: 1, g: 0.75, b: 0, a: 0.125}
+    - SF_DetailScaleOffset: {r: 10, g: 5, b: 0, a: 0}
     - SF_EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
     - SF_NormalMapScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SF_SpecularColor: {r: 0.25, g: 0.25, b: 0.25, a: 1}

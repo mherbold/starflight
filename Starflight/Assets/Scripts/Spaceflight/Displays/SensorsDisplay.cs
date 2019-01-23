@@ -335,7 +335,7 @@ public class SensorsDisplay : ShipDisplay
 		m_soundStopped = false;
 
 		// set the correct background texture for the scan type
-		m_backgroundMaterial.SetTexture( "SF_AlbedoMap", m_backgroundTextures[ (int) m_scanType ] );
+		m_backgroundMaterial.SetTexture( "_MainTex", m_backgroundTextures[ (int) m_scanType ] );
 
 		// set the correct mask texture for the scan type
 		m_maskMaterial.SetTexture( "_MaskTex", m_maskTextures[ (int) m_scanType ] );

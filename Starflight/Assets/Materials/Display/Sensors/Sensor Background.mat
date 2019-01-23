@@ -9,8 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Sensor Background
   m_Shader: {fileID: 4800000, guid: 0cfd5caef9a7f0a4b9cbc1d319476789, type: 3}
-  m_ShaderKeywords: SF_ALBEDOMAP_ON SF_ALPHA_ON SF_FORWARDSHADOWSON_ON SF_FORWARDSHADOWS_ON
-    SF_ZWRITEON_ON
+  m_ShaderKeywords: SF_ALBEDOMAP_ON SF_ALPHA_ON SF_FORWARDSHADOWSON_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -62,7 +61,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 71223abb9b753e741afabfecd88ce6ec, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskTex:
@@ -84,15 +83,18 @@ Material:
     m_Floats:
     - SF_AlbedoOcclusionOn: 0
     - SF_AlphaTestValue: 0
+    - SF_BehindEverythingOn: 0
     - SF_BlendDst: 0
     - SF_BlendSrc: 2
-    - SF_CullMode: 2
+    - SF_CullMode: 0
+    - SF_DepthFadeOn: 0
     - SF_ForwardShadowsOn: 1
     - SF_OcclusionPower: 1
     - SF_OrthonormalizeOn: 0
     - SF_RenderQueueOffset: 0
     - SF_Smoothness: 0.5
-    - SF_ZWriteOn: 1
+    - SF_ZTest: 0
+    - SF_ZWriteOn: 0
     - _BumpScale: 1
     - _ColorMask: 15
     - _Cutoff: 0.5
@@ -120,6 +122,7 @@ Material:
     - SF_AlbedoColor: {r: 1, g: 1, b: 1, a: 1}
     - SF_AlbedoMapScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SF_BaseScaleOffset: {r: 1, g: 1, b: 0, a: 0}
+    - SF_DepthFadeParams: {r: 0, g: 0, b: 0, a: 0}
     - SF_EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
     - SF_NormalMapScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SF_SpecularColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}

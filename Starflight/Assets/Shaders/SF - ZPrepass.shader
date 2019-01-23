@@ -5,8 +5,10 @@ Shader "Starflight/Z Prepass"
 	{
 		/* UV1 Maps */
 
-		SF_AlbedoMap( "Albedo Map", 2D ) = "white" {}
-		SF_DetailAlbedoMap( "Detail Albedo Map", 2D ) = "white" {}
+		//SF_AlbedoMap( "Albedo Map", 2D ) = "white" {}
+		_MainTex( "Albedo Map", 2D ) = "white" {}
+		//SF_DetailAlbedoMap( "Detail Albedo Map", 2D ) = "white" {}
+		_DetailAlbedoMap( "Detail Albedo Map", 2D ) = "white" {}
 		SF_AlbedoColor( "Albedo Color", Color ) = ( 1, 1, 1, 1 )
 
 		SF_SpecularMap( "Specular Map", 2D ) = "gray" {}
@@ -22,8 +24,8 @@ Shader "Starflight/Z Prepass"
 		SF_EmissiveMap( "Emissive Map", 2D ) = "black" {}
 		SF_EmissiveColor( "Emissive Color", Color ) = ( 0, 0, 0, 1 )
 
-		SF_BaseScaleOffset( "Base Scale Offset", Vector ) = ( 1, 1, 0, 0 )
-		SF_DetailScaleOffset( "Detail Scale Offset", Vector ) = ( 1, 1, 0, 0 )
+		//SF_BaseScaleOffset( "Base Scale Offset", Vector ) = ( 1, 1, 0, 0 )
+		//SF_DetailScaleOffset( "Detail Scale Offset", Vector ) = ( 1, 1, 0, 0 )
 
 		/* UV2 Maps */
 
@@ -53,10 +55,6 @@ Shader "Starflight/Z Prepass"
 
 		[MaterialToggle] SF_OrthonormalizeOn( "Orthonormalize", Float ) = 0
 		[MaterialToggle] SF_ForwardShadowsOn( "Forward Shadows", Float ) = 1
-
-		/* Render Queue Offset */
-
-		SF_RenderQueueOffset( "Render Queue Offset", Int ) = 0
 	}
 
 	SubShader

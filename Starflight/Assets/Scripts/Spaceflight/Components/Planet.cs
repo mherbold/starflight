@@ -189,7 +189,7 @@ public class Planet : MonoBehaviour
 		{
 			m_mapsGenerated = true;
 
-			m_material.SetTexture( "SF_AlbedoMap", m_planetGenerator.m_albedoTexture );
+			m_material.SetTexture( "_MainTex", m_planetGenerator.m_albedoTexture );
 			m_material.SetTexture( "SF_SpecularMap", m_planetGenerator.m_specularTexture );
 			m_material.SetTexture( "SF_NormalMap", m_planetGenerator.m_normalTexture );
 			m_material.SetTexture( "SF_WaterMaskMap", m_planetGenerator.m_waterMaskTexture );

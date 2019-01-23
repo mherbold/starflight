@@ -25,9 +25,13 @@ Material:
         m_Texture: {fileID: 2800000, guid: 9339f982091ec334ca015b495d6f233f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - SF_DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - SF_DetailNormalMap:
         m_Texture: {fileID: 2800000, guid: ce8977add0ab7474b8bed2613d8dfe99, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: 1.5, y: 1.5}
         m_Offset: {x: 0, y: 0}
     - SF_EmissiveMap:
         m_Texture: {fileID: 0}
@@ -51,7 +55,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: 1.5, y: 1.5}
         m_Offset: {x: 0, y: 0}
     - _DetailMask:
         m_Texture: {fileID: 0}
@@ -66,7 +70,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 9339f982091ec334ca015b495d6f233f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -91,11 +95,13 @@ Material:
     - SF_DetailNormalMapStrength: 0.5
     - SF_EmissiveProjectionOn: 0
     - SF_ForwardShadowsOn: 1
+    - SF_FractalDetailsOn: 0
     - SF_NormalMapStrength: 4
     - SF_OcclusionPower: 1
     - SF_OrthonormalizeOn: 0
     - SF_RenderQueueOffset: 0
     - SF_Smoothness: 0.7
+    - SF_ZTest: 4
     - SF_ZWriteOn: 1
     - _BumpScale: 1
     - _Cutoff: 0.5

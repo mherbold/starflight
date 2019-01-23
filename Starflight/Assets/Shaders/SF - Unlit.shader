@@ -5,10 +5,11 @@ Shader "Starflight/Unlit"
 	{
 		/* UV1 Maps */
 
-		SF_AlbedoMap( "Albedo Map", 2D ) = "white" {}
+		//SF_AlbedoMap( "Albedo Map", 2D ) = "white" {}
+		_MainTex( "Albedo Map", 2D ) = "white" {}
 		SF_AlbedoColor( "Albedo Color", Color ) = ( 1, 1, 1, 1 )
 
-		SF_BaseScaleOffset( "Base Scale Offset", Vector ) = ( 1, 1, 0, 0 )
+		//SF_BaseScaleOffset( "Base Scale Offset", Vector ) = ( 1, 1, 0, 0 )
 
 		/* Culling Options */
 
@@ -35,11 +36,7 @@ Shader "Starflight/Unlit"
 
 		/* Misc Rendering Options */
 
-		[MaterialToggle] SF_BehindEverythingOn( "Behind Everything", Float ) = 1
-
-		/* Render Queue Offset */
-
-		SF_RenderQueueOffset( "Render Queue Offset", Int ) = 0
+		[MaterialToggle] SF_BehindEverythingOn( "Behind Everything", Float ) = 0
 	}
 
 	SubShader

@@ -89,14 +89,17 @@ Material:
     - BlendSrc: 5
     - SF_AlbedoOcclusionOn: 0
     - SF_AlphaTestValue: 0
+    - SF_BehindEverythingOn: 0
     - SF_BlendDst: 1
     - SF_BlendSrc: 5
-    - SF_CullMode: 2
+    - SF_CullMode: 0
+    - SF_DepthFadeOn: 0
     - SF_ForwardShadowsOn: 0
     - SF_OcclusionPower: 1
     - SF_OrthonormalizeOn: 0
     - SF_RenderQueueOffset: 0
     - SF_Smoothness: 0
+    - SF_ZTest: 0
     - SF_ZWriteOn: 0
     - _BumpScale: 1
     - _Cutoff: 0.5
@@ -118,6 +121,7 @@ Material:
     - AlbedoColor: {r: 1, g: 1, b: 1, a: 1}
     - SF_AlbedoColor: {r: 1, g: 1, b: 1, a: 1}
     - SF_BaseScaleOffset: {r: 1, g: 1, b: 0, a: 0}
+    - SF_DepthFadeParams: {r: 0, g: 0, b: 0, a: 0}
     - SF_EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
     - SF_NormalMapScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SF_SpecularColor: {r: 0, g: 0, b: 0, a: 1}

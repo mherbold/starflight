@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Starmap - Class O Systems
   m_Shader: {fileID: 4800000, guid: 0cfd5caef9a7f0a4b9cbc1d319476789, type: 3}
-  m_ShaderKeywords: ALPHA_ON SF_FORWARDSHADOWS_ON SF_ZWRITEON_ON UITOGGLE_ON
+  m_ShaderKeywords: ALPHA_ON SF_ZWRITEON_ON UITOGGLE_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -103,11 +103,14 @@ Material:
     - OcclusionPower: 1
     - OrthonormalizeTextureSpace: 0
     - SF_AlphaTestValue: 0
+    - SF_BehindEverythingOn: 0
     - SF_BlendDst: 0
     - SF_BlendSrc: 1
-    - SF_CullMode: 2
+    - SF_CullMode: 0
+    - SF_DepthFadeOn: 0
     - SF_ForwardShadowsOn: 1
     - SF_RenderQueueOffset: 0
+    - SF_ZTest: 4
     - SF_ZWriteOn: 1
     - Smoothness: 0.5
     - UIToggle: 1
@@ -141,6 +144,7 @@ Material:
     - NormalMapScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SF_AlbedoColor: {r: 0.019738827, g: 0, b: 0.6415094, a: 1}
     - SF_BaseScaleOffset: {r: 1, g: 1, b: 0, a: 0}
+    - SF_DepthFadeParams: {r: 0, g: 0, b: 0, a: 0}
     - SpecularColor: {r: 0, g: 0, b: 0, a: 1}
     - UILightColor: {r: 1, g: 1, b: 1, a: 1}
     - UILightDirection: {r: 0, g: 0, b: 0, a: 0}

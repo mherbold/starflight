@@ -106,7 +106,7 @@ public class TerrainGrid : MonoBehaviour
 		// calculate scale and offset
 		var scaleOffset = new Vector4( xScale, yScale, xOffset, yOffset );
 
-		m_material.SetVector( "SF_BaseScaleOffset", scaleOffset );
+		m_material.SetVector( "_MainTex_ST", scaleOffset );
 
 		// get the maximum height of the area we are landing on top of
 		var centerGridCount = m_detail * m_detail;
@@ -145,7 +145,7 @@ public class TerrainGrid : MonoBehaviour
 		m_mesh.RecalculateBounds();
 
 		// update the textures on the material
-		m_material.SetTexture( "SF_AlbedoMap", planetGenerator.m_albedoTexture );
+		m_material.SetTexture( "_MainTex", planetGenerator.m_albedoTexture );
 		m_material.SetTexture( "SF_SpecularMap", planetGenerator.m_specularTexture );
 		m_material.SetTexture( "SF_NormalMap", planetGenerator.m_normalTexture );
 		m_material.SetTexture( "SF_WaterMaskMap", planetGenerator.m_waterMaskTexture );

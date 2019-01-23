@@ -15,28 +15,34 @@ float SF_Density;
 float SF_Speed;
 
 sampler2D SF_WaterMaskMap;
+float4 SF_WaterMaskMap_ST;
 
-sampler2D SF_AlbedoMap;
-sampler2D SF_DetailAlbedoMap;
+sampler2D _MainTex;
+float4 _MainTex_ST;
+
+sampler2D _DetailAlbedoMap;
+float4 _DetailAlbedoMap_ST;
 float4 SF_AlbedoColor;
 
 sampler2D SF_SpecularMap;
+float4 SF_SpecularMap_ST;
 float3 SF_SpecularColor;
 float SF_Smoothness;
 
 sampler2D SF_NormalMap;
+float4 SF_NormalMap_ST;
 float SF_NormalMapStrength;
 
 sampler2D SF_DetailNormalMap;
+float4 SF_DetailNormalMap_ST;
 float SF_DetailNormalMapStrength;
 
 sampler2D SF_EmissiveMap;
+float4 SF_EmissiveMap_ST;
 float3 SF_EmissiveColor;
 
-float4 SF_BaseScaleOffset;
-float4 SF_DetailScaleOffset;
-
 sampler2D SF_OcclusionMap;
+float4 SF_OcclusionMap_ST;
 float SF_OcclusionPower;
 
 float SF_AlphaTestValue;
@@ -93,7 +99,7 @@ SF_VertexShaderOutput ComputeVertexShaderOutput( SF_VertexShaderInput v )
 
 	o.positionClip = mul( UNITY_MATRIX_VP, positionWorld );
 	o.color = v.color;
-	o.texCoord0 = float4( v.texCoord0 * SF_BaseScaleOffset.xy + SF_BaseScaleOffset.zw, 0, 1 );
+	o.texCoord0 = float4( v.texCoord0, 0, 1 );
 	o.texCoord1 = float4( v.texCoord1, 0, 1 );
 	o.positionWorld = positionWorld;
 	o.eyeDir = normalize( positionWorld.xyz - _WorldSpaceCameraPos );
@@ -129,7 +135,7 @@ float4 ComputeDiffuseColor( SF_VertexShaderOutput i )
 {
 	#if SF_ALBEDOMAP_ON
 
-		float4 albedoMap = tex2D( SF_AlbedoMap, i.texCoord0.xy );
+		float4 albedoMap = tex2D( _MainTex, TRANSFORM_TEX( i.texCoord0, _MainTex ) );
 
 	#else // !SF_ALBEDOMAP_ON
 
@@ -139,7 +145,7 @@ float4 ComputeDiffuseColor( SF_VertexShaderOutput i )
 
 	#if SF_DETAILALBEDOMAP_ON
 
-		float4 detailAlbedoMap = tex2D( SF_DetailAlbedoMap, i.texCoord0.xy * SF_DetailScaleOffset.xy + SF_DetailScaleOffset.zw );
+		float4 detailAlbedoMap = tex2D( _DetailAlbedoMap, TRANSFORM_TEX( i.texCoord0, _DetailAlbedoMap ) );
 
 	#else // !SF_DETAILALBEDOMAP_ON
 
@@ -169,7 +175,7 @@ float ComputeOcclusion( SF_VertexShaderOutput i )
 {
 	#if SF_OCCLUSIONMAP_ON
 
-		float occlusionMap = tex2D( SF_OcclusionMap, i.texCoord1.xy );
+		float occlusionMap = tex2D( SF_OcclusionMap, TRANSFORM_TEX( i.texCoord1, SF_OcclusionMap ) );
 
 		occlusionMap = pow( occlusionMap, SF_OcclusionPower );
 
@@ -186,7 +192,7 @@ float4 ComputeSpecular( SF_VertexShaderOutput i )
 {
 	#if SF_SPECULARMAP_ON
 
-		float4 specularMap = tex2D( SF_SpecularMap, i.texCoord0.xy );
+		float4 specularMap = tex2D( SF_SpecularMap, TRANSFORM_TEX( i.texCoord0, SF_SpecularMap ) );
 
 	#else // !SF_SPECULARMAP_ON
 
@@ -203,7 +209,7 @@ float3 ComputeNormal( SF_VertexShaderOutput i )
 
 		#if SF_NORMALMAP_ON
 
-			float4 normalMap = tex2D( SF_NormalMap, i.texCoord0.xy );
+			float4 normalMap = tex2D( SF_NormalMap, TRANSFORM_TEX( i.texCoord0, SF_NormalMap ) );
 
 			#if SF_NORMALMAP_ISCOMPRESSED
 
@@ -226,7 +232,7 @@ float3 ComputeNormal( SF_VertexShaderOutput i )
 
 		#if SF_DETAILNORMALMAP_ON
 
-			float4 detailNormalMap = tex2D( SF_DetailNormalMap, i.texCoord0.xy * SF_DetailScaleOffset.xy + SF_DetailScaleOffset.zw );
+			float4 detailNormalMap = tex2D( SF_DetailNormalMap, TRANSFORM_TEX( i.texCoord0, SF_DetailNormalMap ) );
 
 			#if SF_DETAILNORMALMAP_ISCOMPRESSED
 
@@ -246,9 +252,9 @@ float3 ComputeNormal( SF_VertexShaderOutput i )
 				const float2x2 plus120 = float2x2( -0.5, -0.866, 0.866, -0.5 );
 				const float2x2 minus120 = float2x2( -0.5, 0.866, -0.866, -0.5 );
 
-				float2 waterOffset = float2( 0, _Time.x * SF_Speed ) * SF_DetailScaleOffset.xy;
+				float2 waterOffset = float2( 0, _Time.x * SF_Speed ) * SF_DetailNormalMap_ST.xy;
 
-				float2 baseTexCoord = i.texCoord0.xy * SF_DetailScaleOffset.xy + SF_DetailScaleOffset.zw;
+				float2 baseTexCoord = TRANSFORM_TEX( i.texCoord0, SF_DetailNormalMap );
 
 				float2 texCoord = baseTexCoord + waterOffset;
 				float4 waterNormalMapA = tex2D( SF_DetailNormalMap, texCoord );
@@ -282,7 +288,7 @@ float3 ComputeNormal( SF_VertexShaderOutput i )
 
 				#if SF_WATERMASKMAP_ON
 
-					float waterMaskMap = tex2D( SF_WaterMaskMap, i.texCoord0.xy );
+					float waterMaskMap = tex2D( SF_WaterMaskMap, TRANSFORM_TEX( i.texCoord0, SF_WaterMaskMap ) );
 
 					detailNormalMap.xyz = lerp( detailNormalMap.xyz, waterNormalMap.xyz, waterMaskMap );
 
@@ -346,7 +352,7 @@ float3 ComputeEmissive( SF_VertexShaderOutput i )
 
 		#else // !SF_EMISSIVEPROJECTION_ON
 
-			float3 emissiveMap = tex2D( SF_EmissiveMap, i.texCoord0.xy );
+			float3 emissiveMap = tex2D( SF_EmissiveMap, TRANSFORM_TEX( i.texCoord0, SF_EmissiveMap ) );
 
 		#endif // SF_EMISSIVEPROJECTION_ON
 
@@ -433,15 +439,15 @@ float ComputeFogAmount( SF_VertexShaderOutput i )
 
 void DoFractalDetails( SF_VertexShaderOutput i, in out float3 diffuseColor, in out float3 specular, in out float3 normal )
 {
-	float dc = simplex_turbulence( float4( i.texCoord0.xy * SF_DetailScaleOffset.xy, 0, 0 ), 25, 2, 0.95, 6 );
+	float dc = simplex_turbulence( float4( i.texCoord0.xy * _DetailAlbedoMap_ST.xy, 0, 0 ), 25, 2, 0.95, 6 );
 
 	dc = saturate( dc * 0.3 + 0.7 );
 
 	diffuseColor.rgb *= dc;
 	specular.rgb *= dc;
 
-	float dnx = simplex_turbulence( float4( i.texCoord0.xy * SF_DetailScaleOffset.xy, 100, 0 ), 25, 2, 0.95, 6 ) * 0.25;
-	float dny = simplex_turbulence( float4( i.texCoord0.xy * SF_DetailScaleOffset.xy, 200, 0 ), 25, 2, 0.95, 6 ) * 0.25;
+	float dnx = simplex_turbulence( float4( i.texCoord0.xy * _DetailAlbedoMap_ST.xy, 100, 0 ), 25, 2, 0.95, 6 ) * 0.25;
+	float dny = simplex_turbulence( float4( i.texCoord0.xy * _DetailAlbedoMap_ST.xy, 200, 0 ), 25, 2, 0.95, 6 ) * 0.25;
 
 	normal.x += dnx;
 	normal.y += dny;
@@ -461,17 +467,17 @@ SF_VertexShaderOutput ComputeCloudsVertexShaderOutput( SF_VertexShaderInput v )
 
 	float2 baseTexCoord = o.texCoord0.xy;
 
-	o.texCoord0.xy = baseTexCoord * float2( 10.6, 10 ) + _Time.x * SF_Speed * float2( 0.5, 0.6 ) * SF_BaseScaleOffset.xy;
-	o.texCoord0.zw = baseTexCoord * float2( 10, 10.5 ) + _Time.x * SF_Speed * float2( 0.75, 0.5 ) * SF_BaseScaleOffset.xy;
-	o.texCoord1.xy = baseTexCoord * float2( 2, 2 ) + _Time.x * SF_Speed * float2( 1.5, 1 ) * SF_BaseScaleOffset.xy;
-	o.texCoord1.zw = baseTexCoord * float2( 2, 2 ) + _Time.x * SF_Speed * float2( 1, 1.2 ) * SF_BaseScaleOffset.xy;
+	o.texCoord0.xy = baseTexCoord * float2( 10.6, 10 ) + _Time.x * SF_Speed * float2( 0.5, 0.6 ) * _MainTex_ST.xy;
+	o.texCoord0.zw = baseTexCoord * float2( 10, 10.5 ) + _Time.x * SF_Speed * float2( 0.75, 0.5 ) * _MainTex_ST.xy;
+	o.texCoord1.xy = baseTexCoord * float2( 2, 2 ) + _Time.x * SF_Speed * float2( 1.5, 1 ) * _MainTex_ST.xy;
+	o.texCoord1.zw = baseTexCoord * float2( 2, 2 ) + _Time.x * SF_Speed * float2( 1, 1.2 ) * _MainTex_ST.xy;
 
 	return o;
 }
 
 void ComputeCloudsFragmentShaderOutput( SF_VertexShaderOutput i, out float4 diffuseColor, out float4 specular, out float3 normal, out float3 emissive )
 {
-	float3 h0 = tex2D( SF_AlbedoMap, i.texCoord0.xy );
+	float3 h0 = tex2D( _MainTex, i.texCoord0.xy );
 	float3 h1 = tex2D( SF_DensityMap, i.texCoord0.zw );
 	float3 h2 = tex2D( SF_ScatterMapA, i.texCoord1.xy );
 	float3 h3 = tex2D( SF_ScatterMapB, i.texCoord1.zw );
