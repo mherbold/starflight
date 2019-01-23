@@ -133,7 +133,7 @@ public class GD_Planet
 
 		var color = Color.HSVToRGB( atmosphereA.m_hue / 360.0f, 1.0f, 1.0f );
 
-		Debug.Log( "Atmosphere A = " + atmosphereA.m_name + ", hue = " + atmosphereA.m_hue );
+		// Debug.Log( "Atmosphere A = " + atmosphereA.m_name + ", hue = " + atmosphereA.m_hue );
 
 		if ( m_atmosphereIdB != -1 )
 		{
@@ -141,7 +141,7 @@ public class GD_Planet
 
 			color += Color.HSVToRGB( atmosphereB.m_hue / 360.0f, 1.0f, 1.0f ) * 0.5f;
 
-			Debug.Log( "Atmosphere B = " + atmosphereB.m_name + ", hue = " + atmosphereB.m_hue );
+			// Debug.Log( "Atmosphere B = " + atmosphereB.m_name + ", hue = " + atmosphereB.m_hue );
 		}
 
 		if ( m_atmosphereIdC != -1 )
@@ -150,7 +150,7 @@ public class GD_Planet
 
 			color += Color.HSVToRGB( atmosphereC.m_hue / 360.0f, 1.0f, 1.0f ) * 0.25f;
 
-			Debug.Log( "Atmosphere C = " + atmosphereC.m_name + ", hue = " + atmosphereC.m_hue );
+			// Debug.Log( "Atmosphere C = " + atmosphereC.m_name + ", hue = " + atmosphereC.m_hue );
 		}
 
 		Color.RGBToHSV( color, out var hue, out var saturation, out var value );
