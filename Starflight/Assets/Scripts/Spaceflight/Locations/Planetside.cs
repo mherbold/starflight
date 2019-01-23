@@ -12,8 +12,12 @@ public class Planetside : MonoBehaviour
 	// the player camera (for getting altitude)
 	public Camera m_playerCamera;
 
-	// at what altitude should clouds become completely transparent
-	public float m_cloudFadeAltitude;
+	// the dust storm particle effect
+	public ParticleSystem m_dustStorm;
+
+	// at what altitude should clouds and planet skybox become completely transparent
+	public float m_fadeMaxAltitude;
+	public float m_fadeMinAltitude;
 
 	// the opacity of the clouds
 	float m_cloudOpacity;
@@ -31,14 +35,13 @@ public class Planetside : MonoBehaviour
 	// unity update
 	void Update()
 	{
-		// don't do anything if the game is paused
-		if ( SpaceflightController.m_instance.m_gameIsPaused )
-		{
-			return;
-		}
+	}
 
+	// unity late update
+	void LateUpdate()
+	{
 		//  calculate the opacity of the clouds based on altitude
-		var opacity = Mathf.SmoothStep( 1.0f, 0.0f, m_playerCamera.transform.position.y / m_cloudFadeAltitude );
+		var opacity = Mathf.SmoothStep( 1.0f, 0.0f, ( m_playerCamera.transform.position.y - m_fadeMinAltitude ) / ( m_fadeMaxAltitude - m_fadeMinAltitude ) );
 
 		// update the material
 		Tools.SetOpacity( m_clouds.material, opacity * m_cloudOpacity );
@@ -115,9 +118,6 @@ public class Planetside : MonoBehaviour
 		// save the opacity of the clouds
 		m_cloudOpacity = Tools.GetOpacity( m_clouds.material );
 
-		// make sure we're blended all the way to the planet skybox
-		StarflightSkybox.m_instance.m_currentBlendFactor = 1.0f;
-
 		// turn skybox autorotate off
 		StarflightSkybox.m_instance.m_autorotateSkybox = false;
 
@@ -138,5 +138,12 @@ public class Planetside : MonoBehaviour
 		var planetGenerator = planetController.GetPlanetGenerator();
 
 		m_terrainGrid.SetLandingCoordinates( latitude, longitude, planetGenerator );
+	}
+
+	// start the dust storm effect
+	public void StartDustStorm()
+	{
+		m_dustStorm.Clear();
+		m_dustStorm.Play();
 	}
 }

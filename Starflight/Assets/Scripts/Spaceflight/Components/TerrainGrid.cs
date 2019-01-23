@@ -19,6 +19,7 @@ public class TerrainGrid : MonoBehaviour
 	List<Vector3> m_vertices;
 
 	float m_gridSize;
+	float m_gridOffset;
 
 	PlanetGenerator m_planetGenerator;
 
@@ -110,15 +111,20 @@ public class TerrainGrid : MonoBehaviour
 		// get the maximum height of the area we are landing on top of
 		var centerGridCount = m_detail * m_detail;
 
+		var centerRadiusSquared = Mathf.Pow( m_baseSize * 0.25f, 2.0f );
+
 		var maxElevation = float.MinValue;
 
 		for ( var i = 0; i < centerGridCount; i++ )
 		{
 			var position = GetVertexPosition( i, xScale, yScale, xOffset, yOffset );
 
-			if ( position.y > maxElevation )
+			if ( ( ( position.x * position.x ) + ( position.z * position.z ) ) < centerRadiusSquared )
 			{
-				maxElevation = position.y;
+				if ( position.y > maxElevation )
+				{
+					maxElevation = position.y;
+				}
 			}
 		}
 
@@ -149,8 +155,8 @@ public class TerrainGrid : MonoBehaviour
 	{
 		var vertex = m_vertices[ i ];
 
-		var x = vertex.x / m_gridSize * xScale + xOffset;
-		var z = vertex.z / m_gridSize * yScale + yOffset;
+		var x = ( vertex.x + m_gridOffset ) / m_gridSize * xScale + xOffset;
+		var z = ( vertex.z + m_gridOffset ) / m_gridSize * yScale + yOffset;
 
 		x *= m_planetGenerator.m_textureMapWidth;
 		z *= m_planetGenerator.m_textureMapHeight;
@@ -270,6 +276,7 @@ public class TerrainGrid : MonoBehaviour
 
 		// save our physical grid size
 		m_gridSize = currentSize;
+		m_gridOffset = m_gridSize * 0.5f;
 
 		// generate the vertex list
 		var vertexIndex = 0;
@@ -291,7 +298,7 @@ public class TerrainGrid : MonoBehaviour
 
 					var px = x * (float) currentSize / ( m_detail - 1 ) + offset;
 
-					m_vertices.Add( new Vector3( px, 0.0f, py ) );
+					m_vertices.Add( new Vector3( px - m_gridOffset, 0.0f, py - m_gridOffset ) );
 
 					texCoords.Add( new Vector2( px / m_gridSize, py / m_gridSize ) );
 

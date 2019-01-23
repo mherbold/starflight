@@ -25,6 +25,9 @@ public class PlayerCamera : MonoBehaviour
 	// the frequency of the rumble shake effect
 	public float m_rumbleFrequency;
 
+	// the flame stream particle system
+	public ParticleSystem m_flameStream;
+
 	// material we will create for the space warp
 	Material m_material;
 
@@ -277,9 +280,16 @@ public class PlayerCamera : MonoBehaviour
 	public void SwitchToPlanetsideLocation()
 	{
 		SpaceflightController.m_instance.SwitchLocation( PD_General.Location.Planetside );
+	}
 
-		// override what the planetside show() does for the skybox blend factor (avoid momentary flash)
-		StarflightSkybox.m_instance.m_currentBlendFactor = 0.0f;
+	public void StartFlameStream()
+	{
+		m_flameStream.Play();
+	}
+
+	public void StopFlameStream()
+	{
+		m_flameStream.Stop();
 	}
 
 	public void SwitchToInOrbitLocation()
@@ -300,5 +310,10 @@ public class PlayerCamera : MonoBehaviour
 		m_rumbleExitTime = m_rumbleTimer;
 
 		m_isExitingRumble = true;
+	}
+
+	public void StartDustStorm()
+	{
+		SpaceflightController.m_instance.m_planetside.StartDustStorm();
 	}
 }
