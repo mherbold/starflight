@@ -19,7 +19,7 @@ void fragDeferred_SF( SF_VertexShaderOutput i, out half4 outGBuffer0 : SV_Target
 
 	#ifdef SF_FRACTALDETAILS_ON
 
-		DoFractalDetails( i, diffuseColor.rgb, specular.rgb, normal );
+		DoFractalDetails2( i, diffuseColor.rgb, specular.rgb, normal );
 
 	#endif // SF_FRACTALDETAILS_ON
 

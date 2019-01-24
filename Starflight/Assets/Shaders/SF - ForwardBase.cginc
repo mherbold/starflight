@@ -21,7 +21,7 @@ float4 fragForwardBase_SF( SF_VertexShaderOutput i ) : SV_Target
 
 	#ifdef SF_FRACTALDETAILS_ON
 
-		DoFractalDetails( i, diffuseColor.rgb, specular.rgb, normal );
+		DoFractalDetails2( i, diffuseColor.rgb, specular.rgb, normal );
 
 	#endif // SF_FRACTALDETAILS_ON
 

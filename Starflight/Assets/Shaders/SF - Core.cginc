@@ -437,7 +437,7 @@ float ComputeFogAmount( SF_VertexShaderOutput i )
 
 #ifdef SF_FRACTALDETAILS_ON
 
-void DoFractalDetails( SF_VertexShaderOutput i, in out float3 diffuseColor, in out float3 specular, in out float3 normal )
+void DoFractalDetails1( SF_VertexShaderOutput i, in out float3 diffuseColor, in out float3 specular, in out float3 normal )
 {
 	float dc = simplex_turbulence( float4( i.texCoord0.xy * _DetailAlbedoMap_ST.xy, 0, 0 ), 25, 2, 0.95, 6 );
 
@@ -451,6 +451,46 @@ void DoFractalDetails( SF_VertexShaderOutput i, in out float3 diffuseColor, in o
 
 	normal.x += dnx;
 	normal.y += dny;
+
+	normalize( normal.xyz );
+}
+
+float FBM( float2 texCoord, float lacunarity, float persistence, int octaves )
+{
+	texCoord = TRANSFORM_TEX( texCoord, _DetailAlbedoMap );
+
+	float value = 0;
+
+	for ( int i = 0; i < octaves; i++ )
+	{
+		value += persistence * ( tex2D( _DetailAlbedoMap, texCoord ) * 2 - 1 );
+
+		texCoord *= lacunarity;
+	}
+
+	return value;
+}
+
+void DoFractalDetails2( SF_VertexShaderOutput i, in out float3 diffuseColor, in out float3 specular, in out float3 normal )
+{
+	const float2x2 plus45 = float2x2( 0.7071, 0.7071,-0.7071, 0.7071 );
+
+	float2 texCoord = TRANSFORM_TEX( i.texCoord0, _DetailAlbedoMap );
+
+	float fbm1 = FBM( texCoord, 2, 0.95, 6 );
+
+	texCoord = TRANSFORM_TEX( mul( i.texCoord0, plus45 ), _DetailAlbedoMap );
+
+	float fbm2 = FBM( texCoord, 2, 0.95, 6 );
+
+	float colorShift = saturate( fbm1 * 0.3 + 0.7 );
+
+	diffuseColor.rgb *= colorShift;
+	specular.rgb *= colorShift;
+
+	float2 normalShift = float2( fbm1 * 0.25, fbm2 * 0.25 );
+
+	normal.xy += normalShift;
 
 	normalize( normal.xyz );
 }
