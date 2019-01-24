@@ -27,6 +27,8 @@ public class SoundController : MonoBehaviour
 		WarbleShort,
 		StaticLong,
 		StaticShort,
+		PlanetLaunching,
+		PlanetLanding,
 		Count
 	};
 
@@ -60,6 +62,8 @@ public class SoundController : MonoBehaviour
 	public AudioClip m_warbleShort;
 	public AudioClip m_staticLong;
 	public AudioClip m_staticShort;
+	public AudioClip m_planetLaunching;
+	public AudioClip m_planetLanding;
 
 	// the sound list (to use with the enum)
 	AudioClip[] m_soundList;
@@ -185,6 +189,8 @@ public class SoundController : MonoBehaviour
 		m_soundList[ (int) Sound.WarbleShort ] = m_warbleShort;
 		m_soundList[ (int) Sound.StaticLong ] = m_staticLong;
 		m_soundList[ (int) Sound.StaticShort ] = m_staticShort;
+		m_soundList[ (int) Sound.PlanetLaunching ] = m_planetLaunching;
+		m_soundList[ (int) Sound.PlanetLanding ] = m_planetLanding;
 	}
 
 	// unity start
