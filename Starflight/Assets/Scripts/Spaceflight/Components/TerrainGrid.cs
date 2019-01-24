@@ -107,6 +107,10 @@ public class TerrainGrid : MonoBehaviour
 		var scaleOffset = new Vector4( xScale, yScale, xOffset, yOffset );
 
 		m_material.SetVector( "_MainTex_ST", scaleOffset );
+		m_material.SetVector( "SF_SpecularMap_ST", scaleOffset );
+		m_material.SetVector( "SF_NormalMap_ST", scaleOffset );
+		m_material.SetVector( "SF_EmissiveMap_ST", scaleOffset );
+		m_material.SetVector( "SF_WaterMaskMap_ST", scaleOffset );
 
 		// get the maximum height of the area we are landing on top of
 		var centerGridCount = m_detail * m_detail;
