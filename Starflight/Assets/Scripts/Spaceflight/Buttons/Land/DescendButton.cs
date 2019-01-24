@@ -20,6 +20,9 @@ public class DescendButton : ShipButton
 		// start the landing animation
 		SpaceflightController.m_instance.m_playerCamera.StartAnimation( "Landing (Planetside)" );
 
+		// start the landing sound
+		SoundController.m_instance.PlaySound( SoundController.Sound.PlanetLanding );
+
 		// stop the music
 		MusicController.m_instance.ChangeToTrack( MusicController.Track.None );
 

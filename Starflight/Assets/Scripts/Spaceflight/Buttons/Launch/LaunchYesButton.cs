@@ -18,13 +18,16 @@ public class LaunchYesButton : ShipButton
 			// update the messages log
 			SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Opening docking bay doors...</color>" );
 
-			// open the docking bay doors
+			// start the launch animation from the docking bay
 			SpaceflightController.m_instance.m_dockingBay.StartLaunchAnimation();
 		}
 		else
 		{
-			// run the launching camera animation
-			SpaceflightController.m_instance.m_playerCamera.StartAnimation( "Launching (Planetside)" );
+			// update the messages log
+			SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Commencing launch sequence...</color>" );
+
+			// start the launch animation from planetside
+			SpaceflightController.m_instance.m_planetside.StartLaunchAnimation();
 		}
 
 		// stop the music

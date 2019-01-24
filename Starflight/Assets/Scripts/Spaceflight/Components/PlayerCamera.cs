@@ -13,20 +13,11 @@ public class PlayerCamera : MonoBehaviour
 	// how strong the warp effect should be
 	public float m_warpStrength;
 
-	// how quickly to ramp up the rumble effect
-	public float m_rumbleRampUpTime;
-
-	// how quickly to ramp down the rumble effect
-	public float m_rumbleRampDownTime;
-
-	// maximum strength of the rumble shake effect
-	public Vector3 m_maxRumbleStrength;
-
-	// the frequency of the rumble shake effect
+	// the frequency of the rumble effect
 	public float m_rumbleFrequency;
 
-	// the flame stream particle system
-	public ParticleSystem m_flameStream;
+	// the current rumble effect strength
+	public Vector3 m_rumbleStrength;
 
 	// material we will create for the space warp
 	Material m_material;
@@ -42,22 +33,6 @@ public class PlayerCamera : MonoBehaviour
 
 	// the animation controller
 	Animator m_animator;
-
-	// true if we are ramping up the rumble effect
-	bool m_isEnteringRumble;
-
-	// true if we ar raming down the rumble effect
-	bool m_isExitingRumble;
-
-	// the rumble timers
-	float m_rumbleTimer;
-	float m_rumbleExitTime;
-
-	// the current rumble strength
-	Vector3 m_rumbleStrength;
-
-	// give the rumble some randomness
-	float m_rumbleRandomOffset;
 
 	// fast noise
 	FastNoise m_fastNoise;
@@ -126,41 +101,16 @@ public class PlayerCamera : MonoBehaviour
 
 			m_material.SetFloat( "_WarpStrength", warpStrength );
 		}
-
-		// rumble effect
-		if ( m_isEnteringRumble || m_isExitingRumble || ( m_rumbleStrength != Vector3.zero ) )
-		{
-			m_rumbleTimer += Time.deltaTime;
-
-			if ( m_isEnteringRumble )
-			{
-				m_rumbleStrength = Vector3.Lerp( Vector3.zero, m_maxRumbleStrength, m_rumbleTimer / m_rumbleRampUpTime );
-
-				if ( m_rumbleTimer >= m_rumbleRampUpTime )
-				{
-					m_isEnteringRumble = false;
-				}
-			}
-			else if ( m_isExitingRumble )
-			{
-				m_rumbleStrength = Vector3.Lerp( m_maxRumbleStrength, Vector3.zero, ( m_rumbleTimer - m_rumbleExitTime ) / m_rumbleRampDownTime );
-
-				if ( ( m_rumbleTimer - m_rumbleExitTime ) >= m_rumbleRampDownTime )
-				{
-					m_isExitingRumble = false;
-				}
-			}
-		}
 	}
 
 	// unity late update (apply rumble additively after animation controller has run)
 	void LateUpdate()
 	{
-		if ( m_rumbleStrength != Vector3.zero )
+		if ( m_rumbleStrength.magnitude > 0.001f )
 		{
-			var shakeX = ( m_fastNoise.GetNoise( m_rumbleTimer * m_rumbleFrequency, m_rumbleRandomOffset + 1000.0f ) ) * m_rumbleStrength.x;
-			var shakeY = ( m_fastNoise.GetNoise( m_rumbleTimer * m_rumbleFrequency, m_rumbleRandomOffset + 2000.0f ) ) * m_rumbleStrength.y;
-			var shakeZ = ( m_fastNoise.GetNoise( m_rumbleTimer * m_rumbleFrequency, m_rumbleRandomOffset + 3000.0f ) ) * m_rumbleStrength.z;
+			var shakeX = ( m_fastNoise.GetNoise( Time.time * m_rumbleFrequency, 1000.0f ) ) * m_rumbleStrength.x;
+			var shakeY = ( m_fastNoise.GetNoise( Time.time * m_rumbleFrequency, 2000.0f ) ) * m_rumbleStrength.y;
+			var shakeZ = ( m_fastNoise.GetNoise( Time.time * m_rumbleFrequency, 3000.0f ) ) * m_rumbleStrength.z;
 
 			transform.localRotation *= Quaternion.Euler( shakeX, shakeY, shakeZ );
 		}
@@ -282,34 +232,9 @@ public class PlayerCamera : MonoBehaviour
 		SpaceflightController.m_instance.SwitchLocation( PD_General.Location.Planetside );
 	}
 
-	public void StartFlameStream()
-	{
-		m_flameStream.Play();
-	}
-
-	public void StopFlameStream()
-	{
-		m_flameStream.Stop();
-	}
-
 	public void SwitchToInOrbitLocation()
 	{
 		SpaceflightController.m_instance.SwitchLocation( PD_General.Location.InOrbit );
-	}
-
-	public void StartRumble()
-	{
-		m_rumbleTimer = 0.0f;
-		m_rumbleRandomOffset = Random.Range( 0.0f, 1000.0f );
-
-		m_isEnteringRumble = true;
-	}
-
-	public void StopRumble()
-	{
-		m_rumbleExitTime = m_rumbleTimer;
-
-		m_isExitingRumble = true;
 	}
 
 	public void StartDustStorm()

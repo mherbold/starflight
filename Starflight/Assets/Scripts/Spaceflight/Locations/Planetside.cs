@@ -140,6 +140,16 @@ public class Planetside : MonoBehaviour
 		m_terrainGrid.SetLandingCoordinates( latitude, longitude, planetGenerator );
 	}
 
+	// call this to start the launch animation
+	public void StartLaunchAnimation()
+	{
+		// play the planet launch sound
+		SoundController.m_instance.PlaySound( SoundController.Sound.PlanetLaunching );
+
+		// run the launching camera animation
+		SpaceflightController.m_instance.m_playerCamera.StartAnimation( "Launching (Planetside)" );
+	}
+
 	// start the dust storm effect
 	public void StartDustStorm()
 	{
