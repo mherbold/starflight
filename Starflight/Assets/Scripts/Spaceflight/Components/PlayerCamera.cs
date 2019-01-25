@@ -19,6 +19,9 @@ public class PlayerCamera : MonoBehaviour
 	// the current rumble effect strength
 	public Vector3 m_rumbleStrength;
 
+	// fire particle effects
+	public ParticleSystem[] m_fireParticleSystems;
+
 	// material we will create for the space warp
 	Material m_material;
 
@@ -240,5 +243,21 @@ public class PlayerCamera : MonoBehaviour
 	public void StartDustStorm()
 	{
 		SpaceflightController.m_instance.m_planetside.StartDustStorm();
+	}
+
+	public void StartFireParticleSystems()
+	{
+		foreach ( var particleSystem in m_fireParticleSystems )
+		{
+			particleSystem.Play();
+		}
+	}
+
+	public void StopFireParticleSystems()
+	{
+		foreach ( var particleSystem in m_fireParticleSystems )
+		{
+			particleSystem.Stop();
+		}
 	}
 }
