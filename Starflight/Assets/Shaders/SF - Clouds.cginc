@@ -24,7 +24,7 @@ SF_FragmentShaderOutput fragClouds_SF( SF_VertexShaderOutput i )
 
 	float fogAmount = ComputeFogAmount( i );
 
-	ComputeCloudsFragmentShaderOutput( i, diffuseColor, specular, normal, emissive );
+	ComputeCloudsFragmentShaderOutput( i, diffuseColor, specular, normal, emissive, SF_AlbedoColor.a );
 
 	o.color = ComputeLighting( i, diffuseColor, specular, emissive, normal, fogAmount );
 	o.depth = 0.0f;
@@ -43,7 +43,7 @@ float4 fragClouds_SF( SF_VertexShaderOutput i ) : SV_Target
 
 	float fogAmount = ComputeFogAmount( i );
 
-	ComputeCloudsFragmentShaderOutput( i, diffuseColor, specular, normal, emissive );
+	ComputeCloudsFragmentShaderOutput( i, diffuseColor, specular, normal, emissive, SF_AlbedoColor.a );
 
 	return ComputeLighting( i, diffuseColor, specular, emissive, normal, fogAmount );
 }

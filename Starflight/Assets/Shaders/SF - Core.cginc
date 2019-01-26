@@ -515,7 +515,7 @@ SF_VertexShaderOutput ComputeCloudsVertexShaderOutput( SF_VertexShaderInput v )
 	return o;
 }
 
-void ComputeCloudsFragmentShaderOutput( SF_VertexShaderOutput i, out float4 diffuseColor, out float4 specular, out float3 normal, out float3 emissive )
+void ComputeCloudsFragmentShaderOutput( SF_VertexShaderOutput i, out float4 diffuseColor, out float4 specular, out float3 normal, out float3 emissive, float alphaMultiplier )
 {
 	float3 h0 = tex2D( _MainTex, i.texCoord0.xy );
 	float3 h1 = tex2D( SF_DensityMap, i.texCoord0.zw );
@@ -524,7 +524,7 @@ void ComputeCloudsFragmentShaderOutput( SF_VertexShaderOutput i, out float4 diff
 
 	float3 fbm = saturate( h0 + h1 + h2 + h3 - SF_Density );
 
-	float alpha = saturate( fbm * SF_AlbedoColor.a * 2 );
+	float alpha = saturate( fbm * alphaMultiplier * 2 );
 
 	diffuseColor = ComputeDiffuseColor( i );
 	specular = ComputeSpecular( i );

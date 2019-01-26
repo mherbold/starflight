@@ -28,7 +28,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BackTexB:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 88aac53d50f5d3c41a89cb29c095659c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -56,7 +56,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DownTexB:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: e746fe690e796064fb3c9b1888143165, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
@@ -72,7 +72,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _FrontTexB:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 88aac53d50f5d3c41a89cb29c095659c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _LeftTex:
@@ -84,7 +84,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _LeftTexB:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 88aac53d50f5d3c41a89cb29c095659c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -112,7 +112,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RightTexB:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 88aac53d50f5d3c41a89cb29c095659c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _UpTex:
@@ -124,10 +124,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _UpTexB:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: a0eafdbf0a8554f4cb4b71aa20efefaf, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - SF_BlendFactor: 0.5
     - _BlendFactor: 0
     - _BumpScale: 1
     - _Cutoff: 0.5
@@ -148,6 +149,10 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
+    - SF_ColorTintA: {r: 1, g: 1, b: 1, a: 1}
+    - SF_ColorTintB: {r: 0.839, g: 0.8581667, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _ColorTintA: {r: 1, g: 1, b: 1, a: 1}
+    - _ColorTintB: {r: 1, g: 0.36400002, b: 0.36400002, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Tint: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
