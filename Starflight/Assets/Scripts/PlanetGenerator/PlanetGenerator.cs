@@ -614,7 +614,14 @@ public class PlanetGenerator
 		{
 			for ( var x = 0; x < textureMapWidth; x++ )
 			{
-				pixels[ index++ ] = new Color( m_elevation[ y, x ] * 0.25f, 0.0f, 0.0f );
+				var elevation = m_elevation[ y, x ];
+
+				if ( elevation < m_waterHeight )
+				{
+					elevation = m_waterHeight;
+				}
+
+				pixels[ index++ ] = new Color( elevation * 0.25f, 0.0f, 0.0f );
 			}
 		}
 

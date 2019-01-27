@@ -155,8 +155,8 @@ public class Disembarked : MonoBehaviour
 
 			var normal1 = Vector3.Cross( side1, side2 );
 
-			wheel1 = ApplyElevation( m_wheels[ 2 ].transform.position );
-			wheel2 = ApplyElevation( m_wheels[ 3 ].transform.position );
+			wheel1 = ApplyElevation( m_wheels[ 4 ].transform.position );
+			wheel2 = ApplyElevation( m_wheels[ 5 ].transform.position );
 
 			var normal2 = Vector3.Cross( side1, side2 );
 
@@ -244,7 +244,7 @@ public class Disembarked : MonoBehaviour
 		SpaceflightController.m_instance.m_playerCamera.StopAnimation();
 
 		// follow the terrain vehicle
-		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( m_terrainVehicle, new Vector3( 0.0f, 90.0f, -90.0f ), Quaternion.identity, true );
+		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( m_terrainVehicle, new Vector3( 0.0f, 75.0f, -75.0f ), Quaternion.identity, true );
 		//SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( m_terrainVehicle, new Vector3( 0.0f, 20.0f, -20.0f ), Quaternion.identity, true );
 
 		// get the planet controller
