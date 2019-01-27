@@ -177,20 +177,20 @@ public class StarSystem : MonoBehaviour
 		// show the starsystem
 		gameObject.SetActive( true );
 
-		// make sure the camera is at the right height above the zero plane
-		SpaceflightController.m_instance.m_player.DollyCamera( 1024.0f );
+		// we want the camera to follow the player ship
+		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( SpaceflightController.m_instance.m_playerShip.gameObject, Vector3.zero, Quaternion.identity, false );
 
 		// move the player object
-		SpaceflightController.m_instance.m_player.transform.position = playerData.m_general.m_coordinates = playerData.m_general.m_lastStarSystemCoordinates;
+		SpaceflightController.m_instance.m_playerShip.transform.position = playerData.m_general.m_coordinates = playerData.m_general.m_lastStarSystemCoordinates;
 
 		// calculate the new rotation of the player
 		var newRotation = Quaternion.LookRotation( playerData.m_general.m_currentDirection, Vector3.up );
 
 		// update the player rotation
-		SpaceflightController.m_instance.m_player.m_ship.rotation = newRotation;
+		SpaceflightController.m_instance.m_playerShip.m_ship.rotation = newRotation;
 
 		// unfreeze the player
-		SpaceflightController.m_instance.m_player.Unfreeze();
+		SpaceflightController.m_instance.m_playerShip.Unfreeze();
 
 		// fade in the map
 		SpaceflightController.m_instance.m_viewport.StartFade( 1.0f, 2.0f );
@@ -369,8 +369,13 @@ public class StarSystem : MonoBehaviour
 
 			if ( playerData.m_general.m_location == PD_General.Location.Planetside )
 			{
-				// if we are currently planetside the go ahead and create the terraing grid now
-				SpaceflightController.m_instance.m_planetside.SetLandingCoordinates( playerData.m_general.m_selectedLatitude, playerData.m_general.m_selectedLongitude );
+				// if we are currently planetside then go ahead and update the terraing grid now
+				SpaceflightController.m_instance.m_planetside.UpdateTerrainGridNow();
+			}
+			else if ( playerData.m_general.m_location == PD_General.Location.Disembarked )
+			{
+				// if we are currently disembarked then go ahead and update the terrain grid now
+				SpaceflightController.m_instance.m_disembarked.UpdateTerrainGridNow();
 			}
 		}
 

@@ -19,15 +19,15 @@ float4 fragShadowCaster_SF( float4 svPosition : SV_POSITION, SF_VertexShaderOutp
 {
 	#if SF_ALPHA_ON
 
-		float4 diffuseColor = ComputeDiffuseColor( i );
+		float4 albedo = ComputeAlbedo( i, SF_AlbedoColor );
 
 		#if SF_ALPHATEST_ON
 
-			clip( diffuseColor.a - SF_AlphaTestValue );
+			clip( albedo.a - SF_AlphaTestValue );
 
 		#endif // SF_ALPHATTEST_ON
 
-		float alphaRef = tex3D( _DitherMaskLOD, float3( svPosition.xy * 0.25, diffuseColor.a * 0.9375 ) ).a;
+		float alphaRef = tex3D( _DitherMaskLOD, float3( svPosition.xy * 0.25, albedo.a * 0.9375 ) ).a;
 
 		clip( alphaRef - 0.01 );
 

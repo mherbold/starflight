@@ -105,13 +105,13 @@ public class InOrbit : MonoBehaviour
 		m_clouds.transform.localPosition = position;
 
 		// move the player object
-		SpaceflightController.m_instance.m_player.transform.position = playerData.m_general.m_coordinates = new Vector3( 0.0f, 0.0f, 0.0f );
+		SpaceflightController.m_instance.m_playerShip.transform.position = playerData.m_general.m_coordinates = Vector3.zero;
 
-		// make sure the camera dolly is the right distance
-		SpaceflightController.m_instance.m_player.DollyCamera( 1024.0f );
+		// we don't want the camera to follow anything
+		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( null, Vector3.zero, Quaternion.identity, false );
 
 		// freeze the player
-		SpaceflightController.m_instance.m_player.Freeze();
+		SpaceflightController.m_instance.m_playerShip.Freeze();
 
 		// reset the buttons (only if we aren't in the middle of launching)
 		if ( playerData.m_general.m_lastLocation != PD_General.Location.Planetside )

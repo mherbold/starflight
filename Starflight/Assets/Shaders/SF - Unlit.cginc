@@ -19,15 +19,15 @@ float4 fragUnlit_SF( SF_VertexShaderOutput i ) : SV_Target
 
 	#endif // SF_BEHINDEVERYTHING_ON
 
-	float4 diffuseColor = ComputeDiffuseColor( i );
+	float4 albedo = ComputeAlbedo( i, SF_AlbedoColor );
 
 	#if SF_ALPHATEST_ON
 
-		clip( diffuseColor.a - SF_AlphaTestValue );
+		clip( albedo.a - SF_AlphaTestValue );
 
 	#endif // SF_ALPHATTEST_ON
 
-	return float4( diffuseColor.rgb * diffuseColor.a, diffuseColor.a );
+	return float4( albedo.rgb * albedo.a, albedo.a );
 }
 
 #endif

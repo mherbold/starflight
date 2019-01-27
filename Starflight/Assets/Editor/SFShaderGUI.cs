@@ -18,8 +18,6 @@ class SFShaderGUI : ShaderGUI
 
 		public static readonly GUIContent speedText = EditorGUIUtility.TrTextContent( "Speed", "" );
 
-		public static readonly string uv1MapsText = "\nUV1 Maps";
-
 		public static readonly GUIContent waterMaskText = EditorGUIUtility.TrTextContent( "Water Mask", "R=Opacity" );
 		public static readonly GUIContent albedoText = EditorGUIUtility.TrTextContent( "Albedo", "RGB=Color, A=Transparency" );
 		public static readonly GUIContent detailAlbedoText = EditorGUIUtility.TrTextContent( "Detail Albedo", "RGB=Color, A=Transparency" );
@@ -27,12 +25,10 @@ class SFShaderGUI : ShaderGUI
 		public static readonly GUIContent normalText = EditorGUIUtility.TrTextContent( "Normal", "RGB=Uncompressed Normal, GA=DXT5 Compressed Normal; Strength" );
 		public static readonly GUIContent detailNormalText = EditorGUIUtility.TrTextContent( "Detail Normal", "RGB=Uncompressed Normal, GA=DXT5 Compressed Normal; Strength" );
 		public static readonly GUIContent emissiveText = EditorGUIUtility.TrTextContent( "Emissive", "UV1; RGB=Color" );
+		public static readonly GUIContent occlusionText = EditorGUIUtility.TrTextContent( "Occlusion", "R=Intensity; Albedo Occlusion Switch" );
+		public static readonly GUIContent elevationText = EditorGUIUtility.TrTextContent( "Elevation", "R=Elevation" );
 
 		public static readonly string scaleOffsetText = "\nTexture Scale and Offset";
-
-		public static readonly string uv2MapsText = "\nUV2 Maps";
-
-		public static readonly GUIContent occlusionText = EditorGUIUtility.TrTextContent( "Occlusion", "R=Intensity; Albedo Occlusion Switch" );
 
 		public static readonly string cullingOptionsText = "\nCulling Options";
 
@@ -61,7 +57,6 @@ class SFShaderGUI : ShaderGUI
 
 		public static readonly GUIContent orthonormalizeText = EditorGUIUtility.TrTextContent( "Orthonormalize", "Orthonormalize the normal at every pixel." );
 		public static readonly GUIContent emissiveProjectionText = EditorGUIUtility.TrTextContent( "Emissive Projection", "When turned on, UV coordinates for the emissive map are generated from a projection matrix." );
-		public static readonly GUIContent forwardShadowsText = EditorGUIUtility.TrTextContent( "Forward Shadows", "Receive shadows when forward rendering (only works for opaque materials)." );
 		public static readonly GUIContent behindEverythingText = EditorGUIUtility.TrTextContent( "Behind Everything", "Forces this material to render into the background like a skybox." );
 		public static readonly GUIContent fractalDetailsText = EditorGUIUtility.TrTextContent( "Fractal Details", "Applies fractal details to the surface for extreme close ups." );
 	}
@@ -95,6 +90,9 @@ class SFShaderGUI : ShaderGUI
 	MaterialProperty m_occlusionPower = null;
 	MaterialProperty m_albedoOcclusionOn = null;
 
+	MaterialProperty m_elevationMap = null;
+	MaterialProperty m_elevationScale = null;
+
 	MaterialProperty m_cullMode = null;
 
 	MaterialProperty m_blendSrc = null;
@@ -111,7 +109,6 @@ class SFShaderGUI : ShaderGUI
 
 	MaterialProperty m_orthonormalizeOn = null;
 	MaterialProperty m_emissiveProjectionOn = null;
-	MaterialProperty m_forwardShadowsOn = null;
 	MaterialProperty m_behindEverythingOn = null;
 	MaterialProperty m_fractalDetailsOn = null;
 
@@ -260,7 +257,7 @@ class SFShaderGUI : ShaderGUI
 			}
 		}
 
-		// uv2 map options
+		// occlusion map
 		if ( m_occlusionMap != null && m_occlusionPower != null && m_albedoOcclusionOn != null )
 		{
 			GUILayout.Label( Styles.occlusionText, EditorStyles.boldLabel );
@@ -270,6 +267,19 @@ class SFShaderGUI : ShaderGUI
 			if ( m_occlusionMap.textureValue != null )
 			{
 				m_materialEditor.TextureScaleOffsetProperty( m_occlusionMap );
+			}
+		}
+
+		// elevation map
+		if ( m_elevationMap != null && m_elevationScale != null )
+		{
+			GUILayout.Label( Styles.elevationText, EditorStyles.boldLabel );
+
+			m_materialEditor.TexturePropertySingleLine( Styles.elevationText, m_elevationMap, m_elevationScale );
+
+			if ( m_elevationMap.textureValue != null )
+			{
+				m_materialEditor.TextureScaleOffsetProperty( m_elevationMap );
 			}
 		}
 
@@ -345,11 +355,6 @@ class SFShaderGUI : ShaderGUI
 			m_materialEditor.ShaderProperty( m_emissiveProjectionOn, Styles.emissiveProjectionText );
 		}
 
-		if ( m_forwardShadowsOn != null )
-		{
-			m_materialEditor.ShaderProperty( m_forwardShadowsOn, Styles.forwardShadowsText );
-		}
-
 		if ( m_behindEverythingOn != null )
 		{
 			m_materialEditor.ShaderProperty( m_behindEverythingOn, Styles.behindEverythingText );
@@ -400,6 +405,9 @@ class SFShaderGUI : ShaderGUI
 		m_occlusionPower = FindProperty( "SF_OcclusionPower", materialPropertyList, false );
 		m_albedoOcclusionOn = FindProperty( "SF_AlbedoOcclusionOn", materialPropertyList, false );
 
+		m_elevationMap = FindProperty( "SF_ElevationMap", materialPropertyList, false );
+		m_elevationScale = FindProperty( "SF_ElevationScale", materialPropertyList, false );
+
 		m_cullMode = FindProperty( "SF_CullMode", materialPropertyList, false );
 
 		m_blendSrc = FindProperty( "SF_BlendSrc", materialPropertyList, false );
@@ -416,7 +424,6 @@ class SFShaderGUI : ShaderGUI
 
 		m_orthonormalizeOn = FindProperty( "SF_OrthonormalizeOn", materialPropertyList, false );
 		m_emissiveProjectionOn = FindProperty( "SF_EmissiveProjectionOn", materialPropertyList, false );
-		m_forwardShadowsOn = FindProperty( "SF_ForwardShadowsOn", materialPropertyList, false );
 		m_behindEverythingOn = FindProperty( "SF_BehindEverythingOn", materialPropertyList, false );
 		m_fractalDetailsOn = FindProperty( "SF_FractalDetailsOn", materialPropertyList, false );
 	}
@@ -549,6 +556,7 @@ class SFShaderGUI : ShaderGUI
 		bool detailAlbedoMapOn = HasTextureMap( material, "_DetailAlbedoMap" );
 		bool specularMapOn = HasTextureMap( material, "SF_SpecularMap" );
 		bool occlusionMapOn = HasTextureMap( material, "SF_OcclusionMap" );
+		bool elevationMapOn = HasTextureMap( material, "SF_ElevationMap" );
 		bool normalMapOn = HasTextureMap( material, "SF_NormalMap" );
 		bool detailNormalMapOn = HasTextureMap( material, "SF_DetailNormalMap" );
 		bool emissiveMapOn = HasTextureMap( material, "SF_EmissiveMap" );
@@ -563,7 +571,6 @@ class SFShaderGUI : ShaderGUI
 		bool depthFadeOn = IsSwitchedOn( material, "SF_DepthFadeOn" );
 		bool orthonormalizeOn = IsSwitchedOn( material, "SF_OrthonormalizeOn" );
 		bool emissiveProjectionOn = IsSwitchedOn( material, "SF_EmissiveProjectionOn" );
-		bool forwardShadowsOn = IsSwitchedOn( material, "SF_ForwardShadowsOn" );
 		bool behindEverythingOn = IsSwitchedOn( material, "SF_BehindEverythingOn" );
 		bool fractalDetailsOn = IsSwitchedOn( material, "SF_FractalDetailsOn" );
 
@@ -617,6 +624,7 @@ class SFShaderGUI : ShaderGUI
 		SetKeyword( material, "SF_DETAILNORMALMAP_ISCOMPRESSED", detailNormalMapIsCompressed );
 		SetKeyword( material, "SF_EMISSIVEMAP_ON", emissiveMapOn );
 		SetKeyword( material, "SF_OCCLUSIONMAP_ON", occlusionMapOn );
+		SetKeyword( material, "SF_ELEVATIONMAP_ON", elevationMapOn );
 		SetKeyword( material, "SF_ALBEDOOCCLUSION_ON", albedoOcclusionOn );
 		SetKeyword( material, "SF_SPECULAR_ON", specularOn );
 		SetKeyword( material, "SF_ALPHA_ON", blendOn || alphaTestOn );
@@ -625,7 +633,6 @@ class SFShaderGUI : ShaderGUI
 		SetKeyword( material, "SF_DEPTHFADE_ON", depthFadeOn );
 		SetKeyword( material, "SF_ORTHONORMALIZE_ON", orthonormalizeOn );
 		SetKeyword( material, "SF_EMISSIVEPROJECTION_ON", emissiveProjectionOn );
-		SetKeyword( material, "SF_FORWARDSHADOWS_ON", forwardShadowsOn );
 		SetKeyword( material, "SF_BEHINDEVERYTHING_ON", behindEverythingOn );
 		SetKeyword( material, "SF_FRACTALDETAILS_ON", fractalDetailsOn );
 

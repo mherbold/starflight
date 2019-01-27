@@ -3,42 +3,29 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
-	// the warp shader we want to use
-	public Shader m_shader;
+	// the camera
+	public Camera m_camera;
 
-	// how fast to enter and exit warp
-	public float m_enterWarpTransitionTime = 1.0f;
-	public float m_exitWarpTransitionTime = 1.0f;
-
-	// how strong the warp effect should be
-	public float m_warpStrength;
-
-	// the frequency of the rumble effect
-	public float m_rumbleFrequency;
-
-	// the current rumble effect strength
-	public Vector3 m_rumbleStrength;
+	// the space warp effect
+	public SpaceWarp m_spaceWarp;
 
 	// fire particle effects
 	public ParticleSystem[] m_fireParticleSystems;
 
-	// material we will create for the space warp
-	Material m_material;
+	// the object to follow
+	public GameObject m_followGameObject;
 
-	// true if we are currently entering the space warp
-	bool m_isEnteringWarp;
+	// the follow offset
+	public Vector3 m_followOffset;
 
-	// true if we are currently exiting the space warp
-	bool m_isExitingWarp;
+	// the follow rotation
+	public Quaternion m_followRotation;
 
-	// warp effect timer
-	float m_warpTimer;
+	// whether or not we are in the terrain vehicle mode
+	public bool m_terrainVehicleMode;
 
-	// the animation controller
+	// the camera animation controller
 	Animator m_animator;
-
-	// fast noise
-	FastNoise m_fastNoise;
 
 	// true if an animation is currently playing
 	bool m_animationIsPlaying;
@@ -46,23 +33,12 @@ public class PlayerCamera : MonoBehaviour
 	// unity awake
 	void Awake()
 	{
-		// creat a new material using the given shader
-		m_material = new Material( m_shader );
-
-		// get to the animator component
+		// get the animator component
 		m_animator = GetComponent<Animator>();
-
-		// create the fast noise
-		m_fastNoise = new FastNoise();
 	}
 
-	// unity start
-	void Start()
-	{
-	}
-
-	// unity update
-	void Update()
+	// unity late update
+	void LateUpdate()
 	{
 		// update animator
 		if ( m_animationIsPlaying )
@@ -77,73 +53,64 @@ public class PlayerCamera : MonoBehaviour
 			}
 		}
 
-		// warp effect
-		if ( m_isEnteringWarp )
+		// are we following an object?
+		if ( m_followGameObject != null )
 		{
-			m_warpTimer += Time.deltaTime;
-
-			float warpStrength = Mathf.Lerp( 0.0f, m_warpStrength, m_warpTimer / m_enterWarpTransitionTime );
-
-			if ( m_warpTimer >= m_enterWarpTransitionTime )
+			// yes - are we in the terrain vehicle mode?
+			if ( m_terrainVehicleMode )
 			{
-				m_isEnteringWarp = false;
+				// yes - ok build the camera position
+				var playerCameraPosition = m_followGameObject.transform.position + m_followOffset;
+
+				// for now just use the follow offset
+				transform.localPosition = playerCameraPosition;
+				transform.localRotation = Quaternion.Euler( -45.0f, 0.0f, 0.0f );
 			}
-
-			m_material.SetFloat( "_WarpStrength", warpStrength );
-		}
-		else if ( m_isExitingWarp )
-		{
-			m_warpTimer += Time.deltaTime;
-
-			float warpStrength = Mathf.SmoothStep( m_warpStrength, 0.0f, m_warpTimer / m_exitWarpTransitionTime );
-
-			if ( m_warpTimer >= m_exitWarpTransitionTime )
+			else
 			{
-				m_isExitingWarp = false;
+				// no - ok build the camera position
+				var playerCameraPosition = m_followGameObject.transform.position + m_followOffset;
+
+				// update the player camera transform
+				transform.localPosition = playerCameraPosition;
+				transform.localRotation = m_followRotation;
+
+				// update the clipping planes
+				m_camera.farClipPlane = Mathf.Max( 2048.0f, m_followOffset.y + 1536.0f );
 			}
-
-			m_material.SetFloat( "_WarpStrength", warpStrength );
 		}
 	}
 
-	// unity late update (apply rumble additively after animation controller has run)
-	void LateUpdate()
+	// update the follow game object, follow offset, and the terrain vehicle mode flag
+	public void SetCameraFollow( GameObject followGameObject, Vector3 followOffset, Quaternion followRotation, bool terrainVehicleMode )
 	{
-		if ( m_rumbleStrength.magnitude > 0.001f )
+		m_followGameObject = followGameObject;
+		m_terrainVehicleMode = terrainVehicleMode;
+		m_followOffset = followOffset;
+		m_followRotation = followRotation;
+
+		// do we want to follow a game object?
+		if ( m_followGameObject == null )
 		{
-			var shakeX = ( m_fastNoise.GetNoise( Time.time * m_rumbleFrequency, 1000.0f ) ) * m_rumbleStrength.x;
-			var shakeY = ( m_fastNoise.GetNoise( Time.time * m_rumbleFrequency, 2000.0f ) ) * m_rumbleStrength.y;
-			var shakeZ = ( m_fastNoise.GetNoise( Time.time * m_rumbleFrequency, 3000.0f ) ) * m_rumbleStrength.z;
-
-			transform.localRotation *= Quaternion.Euler( shakeX, shakeY, shakeZ );
+			// no - are we currently playing an animation?
+			if ( !m_animationIsPlaying )
+			{
+				// no - immediately set the transform to the follow offset and reset the camera rotation to looking straight down
+				transform.localPosition = m_followOffset;
+				transform.localRotation = m_followRotation;
+			}
 		}
 	}
 
-	// unity on render image
-	void OnRenderImage( RenderTexture source, RenderTexture destination )
-	{
-		Graphics.Blit( source, destination, m_material );
-	}
-
-	// call this to start adding the warp effect
-	public void EnterWarp()
-	{
-		m_isEnteringWarp = true;
-		m_warpTimer = 0.0f;
-	}
-
-	// call this to start exiting the warp effect
-	public void ExitWarp()
-	{
-		m_isExitingWarp = true;
-		m_warpTimer = 0.0f;
-	}
-
+	// start a camera animation
 	public void StartAnimation( string animationName )
 	{
 		// are we already playing an animation?
 		if ( !m_animationIsPlaying )
 		{
+			// reset the camera to animation position
+			SetCameraFollow( null, Vector3.zero, Quaternion.identity, false );
+
 			// no - play the new animation
 			m_animator.Play( animationName );
 
@@ -153,7 +120,7 @@ public class PlayerCamera : MonoBehaviour
 	}
 
 	//
-	// everything below this point are the different animation callbacks for the player camera
+	// everything below this point are animation event callbacks
 	//
 
 	public void BeginCountdown()
@@ -215,7 +182,7 @@ public class PlayerCamera : MonoBehaviour
 
 		SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
 	}
-	
+
 	public void StartingDescent()
 	{
 		SpaceflightController.m_instance.m_messages.ChangeText( "Autopilot engaged. Descending..." );

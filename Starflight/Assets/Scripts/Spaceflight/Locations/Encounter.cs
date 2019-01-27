@@ -41,7 +41,7 @@ public class Encounter : MonoBehaviour
 	bool m_justEntered;
 
 	// current dolly distance
-	float m_currentDollyDistance;
+	float m_currentOffset;
 
 	// unity awake
 	void Awake()
@@ -226,22 +226,23 @@ public class Encounter : MonoBehaviour
 		// show the main encounter location stuff
 		m_main.SetActive( true );
 
-		// make sure the camera is at the right height above the zero plane
-		m_currentDollyDistance = 1024.0f;
+		// reset the current offset
+		m_currentOffset = 0.0f;
 
-		SpaceflightController.m_instance.m_player.DollyCamera( m_currentDollyDistance );
+		// set the initial camera follow altitude
+		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( SpaceflightController.m_instance.m_playerShip.gameObject, Vector3.zero, Quaternion.identity, false );
 
 		// move the ship to where we are in the encounter
-		SpaceflightController.m_instance.m_player.transform.position = playerData.m_general.m_coordinates = playerData.m_general.m_lastEncounterCoordinates;
+		SpaceflightController.m_instance.m_playerShip.transform.position = playerData.m_general.m_coordinates = playerData.m_general.m_lastEncounterCoordinates;
 
 		// calculate the new rotation of the player
 		var newRotation = Quaternion.LookRotation( playerData.m_general.m_currentDirection, Vector3.up );
 
 		// update the player rotation
-		SpaceflightController.m_instance.m_player.m_ship.rotation = newRotation;
+		SpaceflightController.m_instance.m_playerShip.m_ship.rotation = newRotation;
 
 		// unfreeze the player
-		SpaceflightController.m_instance.m_player.Unfreeze();
+		SpaceflightController.m_instance.m_playerShip.Unfreeze();
 
 		// fade in the map
 		SpaceflightController.m_instance.m_viewport.StartFade( 1.0f, 2.0f );
@@ -1016,19 +1017,20 @@ public class Encounter : MonoBehaviour
 		zExtent += 192.0f;
 
 		// recalculate what the camera distance from the zero plane should be
-		var verticalFieldOfView = SpaceflightController.m_instance.m_viewport.m_playerCamera.fieldOfView * Mathf.Deg2Rad;
-		var horizontalFieldOfView = 2.0f * Mathf.Atan( Mathf.Tan( verticalFieldOfView * 0.5f ) * SpaceflightController.m_instance.m_viewport.m_playerCamera.aspect );
+		var verticalFieldOfView = SpaceflightController.m_instance.m_viewport.m_camera.fieldOfView * Mathf.Deg2Rad;
+		var horizontalFieldOfView = 2.0f * Mathf.Atan( Mathf.Tan( verticalFieldOfView * 0.5f ) * SpaceflightController.m_instance.m_viewport.m_camera.aspect );
 		var horizontalAngle = Mathf.Deg2Rad * ( 180.0f - 90.0f - horizontalFieldOfView * Mathf.Rad2Deg * 0.5f );
 		var verticalAngle = Mathf.Deg2Rad * ( 180.0f - 90.0f - verticalFieldOfView * Mathf.Rad2Deg * 0.5f );
 		var tanHorizontalAngle = Mathf.Tan( horizontalAngle );
 		var tanVerticalAngle = Mathf.Tan( verticalAngle );
 
-		var targetDollyDistance = Mathf.Max( xExtent * tanHorizontalAngle, zExtent * tanVerticalAngle, 1024.0f );
+		var targetDollyDistance = Mathf.Max( xExtent * tanHorizontalAngle, zExtent * tanVerticalAngle, 1024.0f ) - 1024.0f;
 
 		// slowly dolly the camera
-		m_currentDollyDistance = Mathf.Lerp( m_currentDollyDistance, targetDollyDistance, Time.deltaTime * m_cameraDollySpeed );
+		m_currentOffset = Mathf.Lerp( m_currentOffset, targetDollyDistance, Time.deltaTime * m_cameraDollySpeed );
 
-		SpaceflightController.m_instance.m_player.DollyCamera( m_currentDollyDistance );
+		// update the camera follow altitude
+		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( SpaceflightController.m_instance.m_playerShip.gameObject, Vector3.up * m_currentOffset, Quaternion.identity, false );
 	}
 
 	// find a comm based on the subject
@@ -1447,7 +1449,7 @@ public class Encounter : MonoBehaviour
 	public void Connect()
 	{
 		// hide the player (camera and all)
-		SpaceflightController.m_instance.m_player.Hide();
+		SpaceflightController.m_instance.m_playerShip.Hide();
 
 		// hide the encounter location
 		m_main.SetActive( false );
@@ -1494,7 +1496,7 @@ public class Encounter : MonoBehaviour
 		m_main.SetActive( true );
 
 		// show the player (camera and all)
-		SpaceflightController.m_instance.m_player.Show();
+		SpaceflightController.m_instance.m_playerShip.Show();
 
 		// change the buttons
 		SpaceflightController.m_instance.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.Bridge );

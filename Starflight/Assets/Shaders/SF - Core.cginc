@@ -45,6 +45,10 @@ sampler2D SF_OcclusionMap;
 float4 SF_OcclusionMap_ST;
 float SF_OcclusionPower;
 
+sampler2D SF_ElevationMap;
+float4 SF_ElevationMap_ST;
+float SF_ElevationScale;
+
 float SF_AlphaTestValue;
 
 float4 SF_DepthFadeParams;
@@ -67,19 +71,12 @@ struct SF_VertexShaderOutput
 	float4 texCoord1		: TEXCOORD1;
 	float4 positionWorld	: TEXCOORD2;
 	float3 eyeDir			: TEXCOORD3;
-
-#if SF_IS_FORWARD && SF_FORWARDSHADOWS_ON
-
-	float4 shadowCoord		: TEXCOORD4;
-
-#endif // SF_IS_FORWARD && SF_FORWARDSHADOWS_ON
-
-	float3 normalWorld		: TEXCOORD5;
+	float3 normalWorld		: TEXCOORD4;
 
 #if SF_NORMALMAP_ON || SF_DETAILNORMALMAP_ON
 
-	float3 tangentWorld		: TEXCOORD6;
-	float3 binormalWorld	: TEXCOORD7;
+	float3 tangentWorld		: TEXCOORD5;
+	float3 binormalWorld	: TEXCOORD6;
 
 #endif // SF_NORMALMAP_ON || SF_DETAILNORMALMAP_ON
 };
@@ -103,13 +100,6 @@ SF_VertexShaderOutput ComputeVertexShaderOutput( SF_VertexShaderInput v )
 	o.texCoord1 = float4( v.texCoord1, 0, 1 );
 	o.positionWorld = positionWorld;
 	o.eyeDir = normalize( positionWorld.xyz - _WorldSpaceCameraPos );
-
-	#if SF_IS_FORWARD && SF_FORWARDSHADOWS_ON
-
-		o.shadowCoord = mul( unity_WorldToShadow[ 0 ], mul( unity_ObjectToWorld, v.position ) );
-
-	#endif // SF_IS_FORWARD && SF_FORWARDSHADOWS_ON
-
 	o.normalWorld = normalWorld;
 
 	#if SF_NORMALMAP_ON || SF_DETAILNORMALMAP_ON
@@ -131,7 +121,7 @@ SF_VertexShaderOutput ComputeVertexShaderOutput( SF_VertexShaderInput v )
 	return o;
 }
 
-float4 ComputeDiffuseColor( SF_VertexShaderOutput i )
+float4 ComputeAlbedo( SF_VertexShaderOutput i, float4 albedoColor )
 {
 	#if SF_ALBEDOMAP_ON
 
@@ -168,7 +158,7 @@ float4 ComputeDiffuseColor( SF_VertexShaderOutput i )
 
 	#endif // SF_DEPTHFADE_ON
 
-	return i.color * SF_AlbedoColor * albedoMap * detailAlbedoMap * float4( 1, 1, 1, depthFadeAmount );
+	return i.color * albedoColor * albedoMap * detailAlbedoMap * float4( 1, 1, 1, depthFadeAmount );
 }
 
 float ComputeOcclusion( SF_VertexShaderOutput i )
@@ -365,28 +355,14 @@ float3 ComputeEmissive( SF_VertexShaderOutput i )
 	return SF_EmissiveColor + emissiveMap;
 }
 
-#if SF_IS_FORWARD
-
-float4 ComputeLighting( SF_VertexShaderOutput i, float4 diffuseColor, float4 specular, float3 emissive, float3 normal, float fogAmount )
+float4 ComputeLighting( SF_VertexShaderOutput i, float4 albedo, float4 specular, float3 emissive, float3 normal, float fogAmount )
 {
 	float3 lightDirectionWorld = _WorldSpaceLightPos0.xyz;
 	float3 lightColor = _LightColor0;
 
 	float3 lightDiffuse = lightColor * saturate( dot( lightDirectionWorld, normal ) );
 
-	float3 color = lightDiffuse * diffuseColor.rgb;
-
-	#if SF_FORWARDSHADOWS_ON
-
-		float shadow = UNITY_SAMPLE_SHADOW( _ShadowMapTexture, i.shadowCoord.xyz );
-
-		shadow = _LightShadowData.r + shadow * ( 1 - _LightShadowData.r );
-
-	#else // !SF_FORWARDSHADOWS_ON
-
-		float shadow = 1;
-
-	#endif // SF_FORWARDSHADOWS_ON
+	float3 color = lightDiffuse * albedo.rgb;
 
 	#if SF_SPECULAR_ON
 
@@ -400,11 +376,11 @@ float4 ComputeLighting( SF_VertexShaderOutput i, float4 diffuseColor, float4 spe
 
 	#endif // SF_SPECULAR_ON
 
-	color = lerp( color * shadow + emissive, unity_FogColor.rgb, fogAmount );
+	color = lerp( color + emissive, unity_FogColor.rgb, fogAmount );
 
 	#if SF_ALPHA_ON
 
-		return float4( color * diffuseColor.a, diffuseColor.a );
+		return float4( color * albedo.a, albedo.a );
 
 	#else // !SF_ALPHA_ON
 
@@ -433,17 +409,13 @@ float ComputeFogAmount( SF_VertexShaderOutput i )
 	}
 }
 
-#endif // SF_IS_FORWARD
-
-#ifdef SF_FRACTALDETAILS_ON
-
-void DoFractalDetails1( SF_VertexShaderOutput i, in out float3 diffuseColor, in out float3 specular, in out float3 normal )
+void DoFractalDetails1( SF_VertexShaderOutput i, in out float3 albedo, in out float3 specular, in out float3 normal )
 {
 	float dc = simplex_turbulence( float4( i.texCoord0.xy * _DetailAlbedoMap_ST.xy, 0, 0 ), 25, 2, 0.95, 6 );
 
 	dc = saturate( dc * 0.3 + 0.7 );
 
-	diffuseColor.rgb *= dc;
+	albedo.rgb *= dc;
 	specular.rgb *= dc;
 
 	float dnx = simplex_turbulence( float4( i.texCoord0.xy * _DetailAlbedoMap_ST.xy, 100, 0 ), 25, 2, 0.95, 6 ) * 0.25;
@@ -471,7 +443,7 @@ float FBM( float2 texCoord, float lacunarity, float persistence, int octaves )
 	return value;
 }
 
-void DoFractalDetails2( SF_VertexShaderOutput i, in out float3 diffuseColor, in out float3 specular, in out float3 normal )
+void DoFractalDetails2( SF_VertexShaderOutput i, in out float3 albedo, in out float3 specular, in out float3 normal )
 {
 	const float2x2 plus45 = float2x2( 0.7071, 0.7071,-0.7071, 0.7071 );
 
@@ -479,13 +451,13 @@ void DoFractalDetails2( SF_VertexShaderOutput i, in out float3 diffuseColor, in 
 
 	float fbm1 = FBM( texCoord, 2, 0.95, 6 );
 
-	texCoord = TRANSFORM_TEX( mul( i.texCoord0, plus45 ), _DetailAlbedoMap );
+	texCoord = TRANSFORM_TEX( mul( i.texCoord0.xy, plus45 ), _DetailAlbedoMap );
 
 	float fbm2 = FBM( texCoord, 2, 0.95, 6 );
 
 	float colorShift = saturate( fbm1 * 0.3 + 0.7 );
 
-	diffuseColor.rgb *= colorShift;
+	albedo.rgb *= colorShift;
 	specular.rgb *= colorShift;
 
 	float2 normalShift = float2( fbm1 * 0.25, fbm2 * 0.25 );
@@ -494,8 +466,6 @@ void DoFractalDetails2( SF_VertexShaderOutput i, in out float3 diffuseColor, in 
 
 	normalize( normal.xyz );
 }
-
-#endif
 
 SF_VertexShaderOutput ComputeCloudsVertexShaderOutput( SF_VertexShaderInput v )
 {
@@ -515,7 +485,7 @@ SF_VertexShaderOutput ComputeCloudsVertexShaderOutput( SF_VertexShaderInput v )
 	return o;
 }
 
-void ComputeCloudsFragmentShaderOutput( SF_VertexShaderOutput i, out float4 diffuseColor, out float4 specular, out float3 normal, out float3 emissive, float alphaMultiplier )
+void ComputeCloudsFragmentShaderOutput( SF_VertexShaderOutput i, out float4 albedo, out float4 specular, out float3 normal, out float3 emissive, float4 albedoColor )
 {
 	float3 h0 = tex2D( _MainTex, i.texCoord0.xy );
 	float3 h1 = tex2D( SF_DensityMap, i.texCoord0.zw );
@@ -524,18 +494,16 @@ void ComputeCloudsFragmentShaderOutput( SF_VertexShaderOutput i, out float4 diff
 
 	float3 fbm = saturate( h0 + h1 + h2 + h3 - SF_Density );
 
-	float alpha = saturate( fbm * alphaMultiplier * 2 );
+	albedoColor.a *= saturate( fbm * 2 );
 
-	diffuseColor = ComputeDiffuseColor( i );
+	albedo = ComputeAlbedo( i, albedoColor );
 	specular = ComputeSpecular( i );
 	normal = ComputeNormal( i );
 	emissive = ComputeEmissive( i );
 
-	diffuseColor.a *= alpha;
-
 	#if SF_ALPHATEST_ON
 
-		clip( diffuseColor.a - SF_AlphaTestValue );
+		clip( albedo.a - SF_AlphaTestValue );
 
 	#endif // SF_ALPHATTEST_ON
 }

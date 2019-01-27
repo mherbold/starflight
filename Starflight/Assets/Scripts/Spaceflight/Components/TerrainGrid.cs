@@ -28,6 +28,8 @@ public class TerrainGrid : MonoBehaviour
 	// unity start
 	void Start()
 	{
+		// generate the base terrain grid
+		Initialize();
 	}
 
 	// unity update
@@ -35,20 +37,8 @@ public class TerrainGrid : MonoBehaviour
 	{
 	}
 
-	// hide the terrain
-	public void Hide()
-	{
-		gameObject.SetActive( false );
-	}
-
-	// show the terrain
-	public void Show()
-	{
-		gameObject.SetActive( true );
-	}
-
 	// initialize the terrain
-	void Initialize()
+	public void Initialize()
 	{
 		if ( m_initialized )
 		{
@@ -79,13 +69,26 @@ public class TerrainGrid : MonoBehaviour
 		m_initialized = true;
 	}
 
-	// call this to update the landing grid with the selected landing coordinates
-	public void SetLandingCoordinates( float latitude, float longitude, PlanetGenerator planetGenerator )
+	// call this to set an elevation texture and switch the mode to dynamic terrain grid
+	public void SetElevationMap( Texture2D elevationTexture )
 	{
-		// initialize the terrain grid mesh
+		// make sure the terrain grid mesh is initialized
 		Initialize();
 
-		// set the planet generator
+		// set the new elevation map
+		m_material.SetTexture( "SF_ElevationMap", elevationTexture );
+
+		// force the bounds to be the maximum possible extents
+		m_mesh.bounds = new Bounds( Vector3.zero, new Vector3( 1024.0f, 512.0f, 1024.0f ) );
+	}
+
+	// call this to bake in the elevation at the selected latitude and longitude
+	public void BakeInElevation( float latitude, float longitude, PlanetGenerator planetGenerator )
+	{
+		// make sure the terrain grid mesh is initialized
+		Initialize();
+
+		// save the planet generator
 		m_planetGenerator = planetGenerator;
 
 		// convert from -180,180 to 0,1

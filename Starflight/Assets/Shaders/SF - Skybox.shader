@@ -16,11 +16,6 @@ Shader "Starflight/Skybox"
 		[NoScaleOffset] _RightTexB( "Right [-X]", 2D ) = "grey" {}
 		[NoScaleOffset] _UpTexB( "Up [+Y]", 2D ) = "grey" {}
 		[NoScaleOffset] _DownTexB( "Down [-Y]", 2D ) = "grey" {}
-
-		SF_BlendFactor( "Blend Factor", Float ) = 0
-		
-		SF_ColorTintA( "Color Tint A", Color ) = ( 1, 1, 1, 1 )
-		SF_ColorTintB( "Color Tint B", Color ) = ( 1, 1, 1, 1 )
 	}
 
 	SubShader

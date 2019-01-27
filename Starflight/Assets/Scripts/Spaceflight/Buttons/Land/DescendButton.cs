@@ -15,7 +15,7 @@ public class DescendButton : ShipButton
 		SpaceflightController.m_instance.m_messages.ChangeText( "Computing descent profile..." );
 
 		// set the landing coordinates
-		SpaceflightController.m_instance.m_planetside.SetLandingCoordinates( playerData.m_general.m_selectedLatitude, playerData.m_general.m_selectedLongitude );
+		SpaceflightController.m_instance.m_planetside.UpdateTerrainGridNow();
 
 		// start the landing animation
 		SpaceflightController.m_instance.m_playerCamera.StartAnimation( "Landing (Planetside)" );

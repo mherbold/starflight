@@ -10,7 +10,7 @@ public class Planetside : MonoBehaviour
 	public MeshRenderer m_clouds;
 
 	// the player camera (for getting altitude)
-	public Camera m_playerCamera;
+	public Camera m_camera;
 
 	// the dust storm particle effect
 	public ParticleSystem m_dustStorm;
@@ -41,7 +41,7 @@ public class Planetside : MonoBehaviour
 	void LateUpdate()
 	{
 		//  calculate the opacity of the clouds based on altitude
-		var opacity = Mathf.SmoothStep( 1.0f, 0.0f, ( m_playerCamera.transform.position.y - m_fadeMinAltitude ) / ( m_fadeMaxAltitude - m_fadeMinAltitude ) );
+		var opacity = Mathf.SmoothStep( 1.0f, 0.0f, ( m_camera.transform.position.y - m_fadeMinAltitude ) / ( m_fadeMaxAltitude - m_fadeMinAltitude ) );
 
 		// update the material
 		Tools.SetOpacity( m_clouds.material, opacity * m_cloudOpacity );
@@ -95,13 +95,13 @@ public class Planetside : MonoBehaviour
 		Debug.Log( "Showing planet number " + planetController.m_planet.m_id + "." );
 
 		// move the player object
-		SpaceflightController.m_instance.m_player.transform.position = playerData.m_general.m_coordinates = new Vector3( 0.0f, 0.0f, 0.0f );
+		SpaceflightController.m_instance.m_playerShip.transform.position = playerData.m_general.m_coordinates = new Vector3( 0.0f, 0.0f, 0.0f );
 
 		// play an animation to move the camera to the right place
 		SpaceflightController.m_instance.m_playerCamera.StartAnimation( "On Planet" );
 
 		// freeze the player
-		SpaceflightController.m_instance.m_player.Freeze();
+		SpaceflightController.m_instance.m_playerShip.Freeze();
 
 		// reset the buttons
 		SpaceflightController.m_instance.m_buttonController.RestoreBridgeButtons();
@@ -125,8 +125,8 @@ public class Planetside : MonoBehaviour
 		StarflightSkybox.m_instance.m_currentRotation = Quaternion.identity;
 	}
 
-	// set the landing coordinates
-	public void SetLandingCoordinates( float latitude, float longitude )
+	// update the terrain grid now (after planet generator has run)
+	public void UpdateTerrainGridNow()
 	{
 		// get to the player data
 		var playerData = DataController.m_instance.m_playerData;
@@ -137,7 +137,8 @@ public class Planetside : MonoBehaviour
 		// get the planet generator
 		var planetGenerator = planetController.GetPlanetGenerator();
 
-		m_terrainGrid.SetLandingCoordinates( latitude, longitude, planetGenerator );
+		// tell the terrain grid to bake in the elevation
+		m_terrainGrid.BakeInElevation( playerData.m_general.m_selectedLatitude, playerData.m_general.m_selectedLongitude, planetGenerator );
 	}
 
 	// call this to start the launch animation

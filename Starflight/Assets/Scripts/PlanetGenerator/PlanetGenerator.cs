@@ -74,6 +74,7 @@ public class PlanetGenerator
 	public Texture2D m_normalTexture;
 	public Texture2D m_waterMaskTexture;
 	public Texture2D m_legendTexture;
+	public Texture2D m_elevationTexture;
 
 	public void Start( GD_Planet planet )
 	{
@@ -594,5 +595,41 @@ public class PlanetGenerator
 		m_specularMap = null;
 		m_normalMap = null;
 		m_waterMaskMap = null;
+	}
+
+	public Texture2D CreateElevationTexture()
+	{
+		var stopwatch = new Stopwatch();
+
+		stopwatch.Start();
+
+		var textureMapWidth = m_elevation.GetLength( 1 );
+		var textureMapHeight = m_elevation.GetLength( 0 );
+
+		var pixels = new Color[ textureMapWidth * textureMapHeight ];
+
+		var index = 0;
+
+		for ( var y = 0; y < textureMapHeight; y++ )
+		{
+			for ( var x = 0; x < textureMapWidth; x++ )
+			{
+				pixels[ index++ ] = new Color( m_elevation[ y, x ] * 0.25f, 0.0f, 0.0f );
+			}
+		}
+
+		m_elevationTexture = new Texture2D( textureMapWidth, textureMapHeight, TextureFormat.R16, false, true );
+
+		m_elevationTexture.SetPixels( pixels );
+
+		m_elevationTexture.filterMode = FilterMode.Bilinear;
+		m_elevationTexture.wrapModeU = TextureWrapMode.Repeat;
+		m_elevationTexture.wrapModeV = TextureWrapMode.Clamp;
+
+		m_elevationTexture.Apply();
+
+		UnityEngine.Debug.Log( "CreateElevationTexture - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
+
+		return m_elevationTexture;
 	}
 }

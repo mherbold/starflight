@@ -16,6 +16,7 @@ public class PD_General
 		InOrbit,
 		Planetside,
 		Encounter,
+		Disembarked,
 	}
 
 	// the player location
@@ -32,6 +33,7 @@ public class PD_General
 	public Vector3 m_lastHyperspaceCoordinates;
 	public Vector3 m_lastStarSystemCoordinates;
 	public Vector3 m_lastEncounterCoordinates;
+	public Vector3 m_lastDisembarkedCoordinates;
 
 	// crosshair position
 	public float m_selectedLatitude;

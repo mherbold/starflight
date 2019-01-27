@@ -16,16 +16,6 @@ public class DockingBay : MonoBehaviour
 		m_animator = GetComponent<Animator>();
 	}
 
-	// unity start
-	void Start()
-	{
-	}
-
-	// unity update
-	void Update()
-	{
-	}
-
 	// call this to hide the docking bay
 	public void Hide()
 	{
@@ -53,14 +43,17 @@ public class DockingBay : MonoBehaviour
 		// show the docking bay
 		gameObject.SetActive( true );
 
+		// we don't want the camera to follow anything
+		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( null, Vector3.zero, Quaternion.identity, false );
+
 		// get to the player data
 		var playerData = DataController.m_instance.m_playerData;
 
 		// put us in the right spot for the docking bay launch sequence
-		SpaceflightController.m_instance.m_player.transform.position = playerData.m_general.m_coordinates = new Vector3( 0.0f, 0.0f, 0.0f );
+		SpaceflightController.m_instance.m_playerShip.transform.position = playerData.m_general.m_coordinates = new Vector3( 0.0f, 0.0f, 0.0f );
 
 		// freeze the player
-		SpaceflightController.m_instance.m_player.Freeze();
+		SpaceflightController.m_instance.m_playerShip.Freeze();
 
 		// reset the buttons
 		SpaceflightController.m_instance.m_buttonController.RestoreBridgeButtons();

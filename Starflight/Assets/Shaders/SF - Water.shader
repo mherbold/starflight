@@ -59,7 +59,6 @@ Shader "Starflight/Water"
 		/* Misc Rendering Options */
 
 		[MaterialToggle] SF_OrthonormalizeOn( "Orthonormalize", Float ) = 0
-		[MaterialToggle] SF_ForwardShadowsOn( "Forward Shadows", Float ) = 1
 		[MaterialToggle] SF_FractalDetailsOn( "Fractal Details", Float ) = 0
 	}
 
@@ -174,7 +173,6 @@ Shader "Starflight/Water"
 				#pragma shader_feature SF_ORTHONORMALIZE_ON
 				#pragma shader_feature SF_EMISSIVEMAP_ON
 				#pragma shader_feature SF_WATERMASKMAP_ON
-				#pragma shader_feature SF_FORWARDSHADOWS_ON
 				#pragma shader_feature SF_FRACTALDETAILS_ON
 
 				#pragma vertex vertForwardBase_SF

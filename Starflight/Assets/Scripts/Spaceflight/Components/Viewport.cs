@@ -14,8 +14,8 @@ public class Viewport : MonoBehaviour
 	// the ui canvas
 	public Canvas m_canvas;
 
-	// the player camera
-	public Camera m_playerCamera;
+	// the camera
+	public Camera m_camera;
 
 	// the cameras that need to use the render texture
 	public Camera[] m_cameras;
@@ -67,7 +67,7 @@ public class Viewport : MonoBehaviour
 		var newCameraRect = new Rect( x, y, w, h );
 
 		// update the rect on the player camera
-		m_playerCamera.rect = newCameraRect;
+		m_camera.rect = newCameraRect;
 
 		// update all of the encounter cameras
 		foreach ( var camera in m_cameras )

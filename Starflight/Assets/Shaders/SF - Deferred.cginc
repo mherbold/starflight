@@ -11,7 +11,7 @@ SF_VertexShaderOutput vertDeferred_SF( SF_VertexShaderInput v )
 
 void fragDeferred_SF( SF_VertexShaderOutput i, out half4 outGBuffer0 : SV_Target0, out half4 outGBuffer1 : SV_Target1, out half4 outGBuffer2 : SV_Target2, out half4 outGBuffer3 : SV_Target3 )
 {
-	float4 diffuseColor = ComputeDiffuseColor( i );
+	float4 albedo = ComputeAlbedo( i, SF_AlbedoColor );
 	float occlusion = ComputeOcclusion( i );
 	float4 specular = ComputeSpecular( i );
 	float3 normal = ComputeNormal( i );
@@ -19,7 +19,7 @@ void fragDeferred_SF( SF_VertexShaderOutput i, out half4 outGBuffer0 : SV_Target
 
 	#ifdef SF_FRACTALDETAILS_ON
 
-		DoFractalDetails2( i, diffuseColor.rgb, specular.rgb, normal );
+		DoFractalDetails2( i, albedo.rgb, specular.rgb, normal );
 
 	#endif // SF_FRACTALDETAILS_ON
 
@@ -31,17 +31,17 @@ void fragDeferred_SF( SF_VertexShaderOutput i, out half4 outGBuffer0 : SV_Target
 
 	#if SF_ALPHATEST_ON
 
-		clip( diffuseColor.a - SF_AlphaTestValue );
+		clip( albedo.a - SF_AlphaTestValue );
 
 	#endif // SF_ALPHATTEST_ON
 
 	#if SF_ALBEDOOCCLUSION_ON
 
-		diffuseColor.rgb *= occlusion;
+		albedo.rgb *= occlusion;
 
 	#endif
 
-	outGBuffer0 = float4( diffuseColor.rgb, occlusion );
+	outGBuffer0 = float4( albedo.rgb, occlusion );
 	outGBuffer1 = specular;
 	outGBuffer2 = float4( normal * 0.5 + 0.5, 1 );
 

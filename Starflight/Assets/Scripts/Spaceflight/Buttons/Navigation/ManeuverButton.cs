@@ -145,7 +145,7 @@ public class ManeuverButton : ShipButton
 			InputController.m_instance.Debounce();
 
 			// turn off the engines
-			SpaceflightController.m_instance.m_player.TurnOffEngines();
+			SpaceflightController.m_instance.m_playerShip.TurnOffEngines();
 
 			// are we in a star system?
 			if ( playerData.m_general.m_location == PD_General.Location.StarSystem )
@@ -218,12 +218,12 @@ public class ManeuverButton : ShipButton
 				playerData.m_general.m_currentDirection = Vector3.Slerp( playerData.m_general.m_currentDirection, moveVector, Time.deltaTime * 2.0f );
 
 				// turn the engines on
-				SpaceflightController.m_instance.m_player.TurnOnEngines();
+				SpaceflightController.m_instance.m_playerShip.TurnOnEngines();
 			}
 			else
 			{
 				// turn the engines off
-				SpaceflightController.m_instance.m_player.TurnOffEngines();
+				SpaceflightController.m_instance.m_playerShip.TurnOffEngines();
 			}
 		}
 

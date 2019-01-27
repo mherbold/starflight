@@ -51,3 +51,12 @@ Communications
 		2 = hostile
 		3 = obsequious
 		
+Disembarking on Planets
+
+	45 degrees = 2048 world units
+	5 moves = 1 degree
+	45 degrees = 225 moves
+	1 move = ( 2048 / 225 ) = 9.102 world units
+	view = 9 by 17 moves
+	view = 81.9 by 154.7 units
+	

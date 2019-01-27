@@ -5,9 +5,9 @@ Shader "Starflight/Clouds"
 	{
 		/* Custom Stuff */
 
-		SF_ScatterMapA( "Scatter Map A", 2D ) = "black" {}
-		SF_ScatterMapB( "Scatter Map B", 2D ) = "black" {}
-		SF_DensityMap( "Density Map", 2D ) = "black" {}
+		[NoScaleOffset] SF_ScatterMapA( "Scatter Map A", 2D ) = "black" {}
+		[NoScaleOffset] SF_ScatterMapB( "Scatter Map B", 2D ) = "black" {}
+		[NoScaleOffset] SF_DensityMap( "Density Map", 2D ) = "black" {}
 		SF_Density( "Density", Range( 0, 2 ) ) = 1
 		SF_Speed( "Speed", Range( -1, 1 ) ) = 0.1
 
@@ -63,7 +63,6 @@ Shader "Starflight/Clouds"
 		/* Misc Rendering Options */
 
 		[MaterialToggle] SF_OrthonormalizeOn( "Orthonormalize", Float ) = 0
-		[MaterialToggle] SF_ForwardShadowsOn( "Forward Shadows", Float ) = 1
 	}
 
 	SubShader
@@ -126,7 +125,6 @@ Shader "Starflight/Clouds"
 				#pragma shader_feature SF_NORMALMAP_ISCOMPRESSED
 				#pragma shader_feature SF_OVERRIDEDEPTHOUTPUT_ON
 				#pragma shader_feature SF_ORTHONORMALIZE_ON
-				#pragma shader_feature SF_FORWARDSHADOWS_ON
 
 				#pragma vertex vertClouds_SF
 				#pragma fragment fragClouds_SF

@@ -5,27 +5,28 @@ using UnityEngine.SceneManagement;
 
 public class SpaceflightController : MonoBehaviour
 {
-	// the different components of the spaceflight scene
-	public Player m_player;
+	// the different locations
 	public DockingBay m_dockingBay;
 	public StarSystem m_starSystem;
 	public InOrbit m_inOrbit;
 	public Planetside m_planetside;
+	public Disembarked m_disembarked;
 	public Hyperspace m_hyperspace;
 	public Encounter m_encounter;
-	public Messages m_messages;
 
 	// controllers
 	public ButtonController m_buttonController;
 	public DisplayController m_displayController;
 
 	// components
+	public PlayerShip m_playerShip;
+	public PlayerCamera m_playerCamera;
 	public Viewport m_viewport;
 	public Countdown m_countdown;
 	public Radar m_radar;
 	public Scanner m_scanner;
 	public Starmap m_starmap;
-	public PlayerCamera m_playerCamera;
+	public Messages m_messages;
 
 	// some settings
 	public float m_alienHyperspaceRadarDistance;
@@ -55,20 +56,8 @@ public class SpaceflightController : MonoBehaviour
 	// unity awake
 	void Awake()
 	{
-		// hide all of the locations
-		m_dockingBay.Hide();
-		m_starSystem.Hide();
-		m_inOrbit.Hide();
-		m_planetside.Hide();
-		m_hyperspace.Hide();
-		m_encounter.Hide();
-
-		// immediately hide any game objects that we might have left visible in the editor
-		m_player.HideShip();
-		m_countdown.Hide();
-		m_radar.Hide();
-		m_scanner.Hide();
-		m_starmap.Hide();
+		// hide everything
+		HideEverything();
 
 		// check if we loaded the persistent scene
 		if ( DataController.m_instance == null )
@@ -94,7 +83,7 @@ public class SpaceflightController : MonoBehaviour
 		var playerData = DataController.m_instance.m_playerData;
 
 		// show the player in case we had it hidden in the editor
-		m_player.Show();
+		m_playerShip.Show();
 
 		// reset the buttons to default
 		m_buttonController.RestoreBridgeButtons();
@@ -189,6 +178,26 @@ public class SpaceflightController : MonoBehaviour
 		}
 	}
 
+	// call this to hide everything
+	void HideEverything()
+	{
+		// hide all of the locations
+		m_dockingBay.Hide();
+		m_starSystem.Hide();
+		m_inOrbit.Hide();
+		m_planetside.Hide();
+		m_disembarked.Hide();
+		m_hyperspace.Hide();
+		m_encounter.Hide();
+
+		// hide various components
+		m_playerShip.Hide();
+		m_countdown.Hide();
+		m_radar.Hide();
+		m_scanner.Hide();
+		m_starmap.Hide();
+	}
+
 	// call this to switch to the correct location
 	public void SwitchLocation( PD_General.Location newLocation )
 	{
@@ -208,10 +217,8 @@ public class SpaceflightController : MonoBehaviour
 		// update the player data
 		playerData.m_general.m_location = newLocation;
 
-		// hide some of the components
-		m_radar.Hide();
-		m_scanner.Hide();
-		m_starmap.Hide();
+		// hide everything
+		HideEverything();
 
 		// switching to starport is a special case
 		if ( playerData.m_general.m_location == PD_General.Location.Starport )
@@ -228,78 +235,43 @@ public class SpaceflightController : MonoBehaviour
 			switch ( playerData.m_general.m_location )
 			{
 				case PD_General.Location.DockingBay:
-					m_player.HideShip();
-					m_starSystem.Hide();
-					m_inOrbit.Hide();
-					m_planetside.Hide();
-					m_hyperspace.Hide();
-					m_encounter.Hide();
 					m_dockingBay.Show();
 					break;
 
 				case PD_General.Location.JustLaunched:
-					m_player.HideShip();
-					m_dockingBay.Hide();
-					m_starSystem.Hide();
-					m_inOrbit.Hide();
-					m_planetside.Hide();
-					m_hyperspace.Hide();
-					m_encounter.Hide();
 					m_viewport.StartFade( 0.0f, 0.0f );
 					m_messages.ChangeText( "<color=white>Starport clear.\nStanding by to maneuver.</color>" );
 					break;
 
 				case PD_General.Location.StarSystem:
 					m_starSystem.Initialize();
-					m_dockingBay.Hide();
-					m_inOrbit.Hide();
-					m_planetside.Hide();
-					m_hyperspace.Hide();
-					m_encounter.Hide();
 					m_starSystem.Show();
-					m_player.ShowShip();
+					m_playerShip.Show();
 					break;
 
 				case PD_General.Location.InOrbit:
 					m_starSystem.Initialize();
-					m_player.HideShip();
-					m_dockingBay.Hide();
-					m_planetside.Hide();
-					m_starSystem.Hide();
-					m_hyperspace.Hide();
-					m_encounter.Hide();
 					m_inOrbit.Show();
 					break;
 
 				case PD_General.Location.Planetside:
 					m_starSystem.Initialize();
-					m_player.HideShip();
-					m_dockingBay.Hide();
-					m_inOrbit.Hide();
-					m_starSystem.Hide();
-					m_hyperspace.Hide();
-					m_encounter.Hide();
 					m_planetside.Show();
 					break;
 
+				case PD_General.Location.Disembarked:
+					m_starSystem.Initialize();
+					m_disembarked.Show();
+					break;
+
 				case PD_General.Location.Hyperspace:
-					m_dockingBay.Hide();
-					m_starSystem.Hide();
-					m_inOrbit.Hide();
-					m_planetside.Hide();
-					m_encounter.Hide();
 					m_hyperspace.Show();
-					m_player.ShowShip();
+					m_playerShip.Show();
 					break;
 
 				case PD_General.Location.Encounter:
-					m_dockingBay.Hide();
-					m_starSystem.Hide();
-					m_inOrbit.Hide();
-					m_planetside.Hide();
-					m_hyperspace.Hide();
 					m_encounter.Show();
-					m_player.ShowShip();
+					m_playerShip.Show();
 					break;
 			}
 		}

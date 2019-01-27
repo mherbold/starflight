@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 public class PG_SpecularMap
 {
+	const float c_groundSpecularPowerAtWaterLevel = 0.1f;
+	const float c_groundSpecularPowerAtSnowLevel = 0.75f;
+
 	public Color[,] Process( float[,] sourceElevation, Color[,] albedoMap, float waterHeight, Color waterSpecularColor, float waterSpecularPower, int reductionScale )
 	{
 		// UnityEngine.Debug.Log( "*** Specular Map Process ***" );
@@ -41,26 +44,38 @@ public class PG_SpecularMap
 
 					Color.RGBToHSV( color, out float h, out float s, out float v );
 
-					Color specular = Color.Lerp( color, new Color( v, v, v ), 0.75f );
-
-					specular.a = height * 0.5f;
+					Color specular;
 
 					if ( height < waterHeight )
 					{
+						// desaturate terrain specular color by 75%
+						specular = Color.Lerp( color, new Color( v, v, v ), 0.75f );
+
+						// tint desaturated terrain specular color towards deep water specular color by 25%
 						var shallowColor = Color.Lerp( specular, waterSpecularColor, 0.25f );
 
-						var waterDepth = waterHeight - height;
+						// calculate how deep the water is at this point
+						var heightBelowWater = waterHeight - height;
 
-						specular = Color.Lerp( shallowColor, waterSpecularColor, waterDepth * 16.0f );
+						// blend from shallow water specular color towards deep water specular color based on water depth
+						specular = Color.Lerp( shallowColor, waterSpecularColor, heightBelowWater * 16.0f );
 
-						specular.a = Mathf.Lerp( specular.a, waterSpecularPower, 0.25f );
-						specular.a = Mathf.Lerp( specular.a, waterSpecularPower, waterDepth * 16.0f );
+						// start with ground specular power blended towards deep water specular power by 25%
+						specular.a = Mathf.Lerp( c_groundSpecularPowerAtWaterLevel, waterSpecularPower, 0.25f );
+
+						// blend from shallow water specular power towards deep water specular power based on water depth
+						specular.a = Mathf.Lerp( specular.a, waterSpecularPower, heightBelowWater * 16.0f );
 					}
 					else
 					{
+						var heightAboveWater = height - waterHeight;
+						var maximumHeightAboveWater = 2.0f - waterHeight;
+
+						// desaturate terrain specular color by 50%
 						specular = Color.Lerp( color, new Color( v, v, v ), 0.5f );
 
-						specular.a = height * 0.5f;
+						// blend from water level specular power towards snow level specular power based on height above water
+						specular.a = Mathf.Lerp( c_groundSpecularPowerAtWaterLevel, c_groundSpecularPowerAtSnowLevel, heightAboveWater / maximumHeightAboveWater );
 					}
 
 					outputColor[ y, x ] = specular;

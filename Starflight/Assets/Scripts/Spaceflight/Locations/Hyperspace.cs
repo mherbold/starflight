@@ -102,16 +102,16 @@ public class Hyperspace : MonoBehaviour
 			var newPosition = Vector3.Lerp( m_fluxTravelStartPosition, m_fluxTravelEndPosition, t );
 
 			// update the ship position
-			playerData.m_general.m_coordinates = SpaceflightController.m_instance.m_player.transform.position = newPosition;
+			playerData.m_general.m_coordinates = SpaceflightController.m_instance.m_playerShip.transform.position = newPosition;
 
 			// have we arrived?
 			if ( m_timer >= m_fluxTravelDuration )
 			{
 				// end the space warp effect
-				SpaceflightController.m_instance.m_player.StopSpaceWarp();
+				SpaceflightController.m_instance.m_playerCamera.m_spaceWarp.ExitWarp();
 
 				// let the ship move again
-				SpaceflightController.m_instance.m_player.Unfreeze();
+				SpaceflightController.m_instance.m_playerShip.Unfreeze();
 
 				// update the map coordinates
 				SpaceflightController.m_instance.m_viewport.UpdateCoordinates();
@@ -167,7 +167,7 @@ public class Hyperspace : MonoBehaviour
 					Debug.Log( "Entering flux at " + flux.m_x1 + " x " + flux.m_y1 + ", distance = " + distance );
 
 					// prevent the player from maneuvering
-					SpaceflightController.m_instance.m_player.Freeze();
+					SpaceflightController.m_instance.m_playerShip.Freeze();
 
 					// reset the timer
 					m_timer = 0.0f;
@@ -183,7 +183,7 @@ public class Hyperspace : MonoBehaviour
 					m_travelingThroughFlux = true;
 
 					// start the warp effect
-					SpaceflightController.m_instance.m_player.StartSpaceWarp();
+					SpaceflightController.m_instance.m_playerCamera.m_spaceWarp.EnterWarp();
 
 					// play the enter warp sound
 					SoundController.m_instance.PlaySound( SoundController.Sound.EnterWarp );
@@ -225,23 +225,23 @@ public class Hyperspace : MonoBehaviour
 		// show the hyperspace objects
 		gameObject.SetActive( true );
 
-		// make sure the camera is at the right height above the zero plane
-		SpaceflightController.m_instance.m_player.DollyCamera( 1024.0f );
+		// we want the camera to follow the player ship
+		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( SpaceflightController.m_instance.m_playerShip.gameObject, Vector3.zero, Quaternion.identity, false );
 
 		// get to the player data
 		var playerData = DataController.m_instance.m_playerData;
 
 		// move the ship to where we are in hyperspace
-		SpaceflightController.m_instance.m_player.transform.position = playerData.m_general.m_coordinates = playerData.m_general.m_lastHyperspaceCoordinates;
+		SpaceflightController.m_instance.m_playerShip.transform.position = playerData.m_general.m_coordinates = playerData.m_general.m_lastHyperspaceCoordinates;
 
 		// calculate the new rotation of the player
 		var newRotation = Quaternion.LookRotation( playerData.m_general.m_currentDirection, Vector3.up );
 
 		// update the player rotation
-		SpaceflightController.m_instance.m_player.m_ship.rotation = newRotation;
+		SpaceflightController.m_instance.m_playerShip.m_ship.rotation = newRotation;
 
 		// unfreeze the player
-		SpaceflightController.m_instance.m_player.Unfreeze();
+		SpaceflightController.m_instance.m_playerShip.Unfreeze();
 
 		// fade in the map
 		SpaceflightController.m_instance.m_viewport.StartFade( 1.0f, 2.0f );

@@ -54,7 +54,6 @@ Shader "Starflight/Z Prepass"
 		/* Misc Rendering Options */
 
 		[MaterialToggle] SF_OrthonormalizeOn( "Orthonormalize", Float ) = 0
-		[MaterialToggle] SF_ForwardShadowsOn( "Forward Shadows", Float ) = 1
 	}
 
 	SubShader

@@ -12,6 +12,10 @@ ModelImporter:
     100012: Wheel 4
     100014: Wheel 5
     100016: Wheel 6
+    100018: Steering - FL
+    100020: Steering - FR
+    100022: Steering - RL
+    100024: Steering - RR
     400000: Laser
     400002: Radar
     400004: //RootNode
@@ -21,6 +25,10 @@ ModelImporter:
     400012: Wheel 4
     400014: Wheel 5
     400016: Wheel 6
+    400018: Steering - FL
+    400020: Steering - FR
+    400022: Steering - RL
+    400024: Steering - RR
     2100000: Gold
     2100002: Car Paint Metallic
     2100004: 'Material #132'
