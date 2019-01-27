@@ -99,11 +99,11 @@ public class Disembarked : MonoBehaviour
 			var tvPosition = playerData.m_general.m_coordinates;
 
 			// convert from world coordinates to map coordinates
-			var mapX = Mathf.FloorToInt( tvPosition.x / 4.0f + 1024.0f );
-			var mapY = Mathf.FloorToInt( tvPosition.z / 4.0f + 512.0f );
+			var mapX = tvPosition.x * 0.25f + m_planetGenerator.m_textureMapWidth * 0.5f - 0.5f;
+			var mapY = tvPosition.z * 0.25f + m_planetGenerator.m_textureMapHeight * 0.5f - 0.5f;
 
 			// get the height of the terrain at that point
-			var elevation = m_planetGenerator.m_elevation[ mapY, mapX ];
+			var elevation = m_planetGenerator.GetBicubicSmoothedElevation( mapX, mapY );
 
 			// update the tv position
 			tvPosition.y = m_terrainGrid.m_elevationScale * elevation / 2.0f;
@@ -162,8 +162,8 @@ public class Disembarked : MonoBehaviour
 		SpaceflightController.m_instance.m_playerCamera.StopAnimation();
 
 		// follow the terrain vehicle
-		//SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( m_terrainVehicle, new Vector3( 0.0f, -640.0f, 640.0f ), Quaternion.identity, true );
 		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( m_terrainVehicle, new Vector3( 0.0f, 120.0f, -120.0f ), Quaternion.identity, true );
+		//SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( m_terrainVehicle, new Vector3( 0.0f, 30.0f, -30.0f ), Quaternion.identity, true );
 
 		// get the planet controller
 		var planetController = SpaceflightController.m_instance.m_starSystem.GetPlanetController( playerData.m_general.m_currentPlanetId );

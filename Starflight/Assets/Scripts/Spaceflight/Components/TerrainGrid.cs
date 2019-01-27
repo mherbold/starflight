@@ -168,86 +168,9 @@ public class TerrainGrid : MonoBehaviour
 		x *= m_planetGenerator.m_textureMapWidth;
 		z *= m_planetGenerator.m_textureMapHeight;
 
-		var iX = Mathf.FloorToInt( x );
-		var iZ = Mathf.FloorToInt( z );
-
-		var x0 = iX - 1;
-		var x1 = x0 + 1;
-		var x2 = x1 + 1;
-		var x3 = x2 + 1;
-
-		var z0 = iZ - 1;
-		var z1 = z0 + 1;
-		var z2 = z1 + 1;
-		var z3 = z2 + 1;
-
-		var h00 = GetElevation( x0, z0 );
-		var h01 = GetElevation( x1, z0 );
-		var h02 = GetElevation( x2, z0 );
-		var h03 = GetElevation( x3, z0 );
-
-		var h0 = InterpolateHermite( h00, h01, h02, h03, x - iX );
-
-		var h10 = GetElevation( x0, z1 );
-		var h11 = GetElevation( x1, z1 );
-		var h12 = GetElevation( x2, z1 );
-		var h13 = GetElevation( x3, z1 );
-
-		var h1 = InterpolateHermite( h10, h11, h12, h13, x - iX );
-
-		var h20 = GetElevation( x0, z2 );
-		var h21 = GetElevation( x1, z2 );
-		var h22 = GetElevation( x2, z2 );
-		var h23 = GetElevation( x3, z2 );
-
-		var h2 = InterpolateHermite( h20, h21, h22, h23, x - iX );
-
-		var h30 = GetElevation( x0, z3 );
-		var h31 = GetElevation( x1, z3 );
-		var h32 = GetElevation( x2, z3 );
-		var h33 = GetElevation( x3, z3 );
-
-		var h3 = InterpolateHermite( h30, h31, h32, h33, x - iX );
-
-		var elevation = InterpolateHermite( h0, h1, h2, h3, z - iZ );
+		var elevation = m_planetGenerator.GetBicubicSmoothedElevation( x, z );
 
 		return new Vector3( vertex.x, elevation * m_elevationScale, vertex.z );
-	}
-
-	float GetElevation( float x, float z )
-	{
-		var ix = Mathf.FloorToInt( x );
-		var iz = Mathf.FloorToInt( z );
-
-		ix = ( ix + m_planetGenerator.m_textureMapWidth ) & ( m_planetGenerator.m_textureMapWidth - 1 );
-
-		if ( iz < 0 )
-		{
-			iz = 0;
-		}
-		else if ( iz >= m_planetGenerator.m_textureMapHeight )
-		{
-			iz = m_planetGenerator.m_textureMapHeight - 1;
-		}
-
-		var elevation = m_planetGenerator.m_elevation[ iz, ix ];
-
-		if ( elevation < m_planetGenerator.m_waterHeight )
-		{
-			elevation = m_planetGenerator.m_waterHeight;
-		}
-
-		return elevation;
-	}
-
-	float InterpolateHermite( float v0, float v1, float v2, float v3, float t )
-	{
-		var a = 2.0f * v1;
-		var b = v2 - v0;
-		var c = 2.0f * v0 - 5.0f * v1 + 4.0f * v2 - v3;
-		var d = -v0 + 3.0f * v1 - 3.0f * v2 + v3;
-
-		return 0.5f * ( a + ( b * t ) + ( c * t * t ) + ( d * t * t * t ) );
 	}
 
 	// generates our terrain mesh

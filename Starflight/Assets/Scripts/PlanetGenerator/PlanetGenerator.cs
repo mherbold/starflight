@@ -632,4 +632,88 @@ public class PlanetGenerator
 
 		return m_elevationTexture;
 	}
+
+	public float GetElevation( float x, float y )
+	{
+		var iX = Mathf.FloorToInt( x );
+		var iY = Mathf.FloorToInt( y );
+
+		iX = ( iX + m_textureMapWidth ) & ( m_textureMapWidth - 1 );
+
+		if ( iY < 0 )
+		{
+			iY = 0;
+		}
+		else if ( iY >= m_textureMapHeight )
+		{
+			iY = m_textureMapHeight - 1;
+		}
+
+		var elevation = m_elevation[ iY, iX ];
+
+		if ( elevation < m_waterHeight )
+		{
+			elevation = m_waterHeight;
+		}
+
+		return elevation;
+	}
+
+	public float GetBicubicSmoothedElevation( float x, float y )
+	{
+		var iX = Mathf.FloorToInt( x );
+		var iY = Mathf.FloorToInt( y );
+
+		var x0 = iX - 1;
+		var x1 = x0 + 1;
+		var x2 = x1 + 1;
+		var x3 = x2 + 1;
+
+		var y0 = iY - 1;
+		var y1 = y0 + 1;
+		var y2 = y1 + 1;
+		var y3 = y2 + 1;
+
+		var h00 = GetElevation( x0, y0 );
+		var h01 = GetElevation( x1, y0 );
+		var h02 = GetElevation( x2, y0 );
+		var h03 = GetElevation( x3, y0 );
+
+		var h0 = InterpolateHermite( h00, h01, h02, h03, x - iX );
+
+		var h10 = GetElevation( x0, y1 );
+		var h11 = GetElevation( x1, y1 );
+		var h12 = GetElevation( x2, y1 );
+		var h13 = GetElevation( x3, y1 );
+
+		var h1 = InterpolateHermite( h10, h11, h12, h13, x - iX );
+
+		var h20 = GetElevation( x0, y2 );
+		var h21 = GetElevation( x1, y2 );
+		var h22 = GetElevation( x2, y2 );
+		var h23 = GetElevation( x3, y2 );
+
+		var h2 = InterpolateHermite( h20, h21, h22, h23, x - iX );
+
+		var h30 = GetElevation( x0, y3 );
+		var h31 = GetElevation( x1, y3 );
+		var h32 = GetElevation( x2, y3 );
+		var h33 = GetElevation( x3, y3 );
+
+		var h3 = InterpolateHermite( h30, h31, h32, h33, x - iX );
+
+		var elevation = InterpolateHermite( h0, h1, h2, h3, y - iY );
+
+		return elevation;
+	}
+
+	float InterpolateHermite( float v0, float v1, float v2, float v3, float t )
+	{
+		var a = 2.0f * v1;
+		var b = v2 - v0;
+		var c = 2.0f * v0 - 5.0f * v1 + 4.0f * v2 - v3;
+		var d = -v0 + 3.0f * v1 - 3.0f * v2 + v3;
+
+		return 0.5f * ( a + ( b * t ) + ( c * t * t ) + ( d * t * t * t ) );
+	}
 }
