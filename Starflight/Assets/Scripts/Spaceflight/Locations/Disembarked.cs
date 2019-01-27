@@ -12,6 +12,12 @@ public class Disembarked : MonoBehaviour
 	// the terrain vehicle
 	public GameObject m_terrainVehicle;
 
+	// the terrain vehicle wheels (fr, fl, mr, ml, rr, rl)
+	public GameObject[] m_wheels;
+
+	// how fast to spin the wheels
+	public float m_wheelTurnSpeed;
+
 	// the maximum speed of the player
 	public float m_maximumSpeed;
 
@@ -90,6 +96,12 @@ public class Disembarked : MonoBehaviour
 
 				// update the last known disembarked coordinates
 				playerData.m_general.m_lastDisembarkedCoordinates = playerData.m_general.m_coordinates;
+
+				// turn the wheels
+				foreach ( var wheel in m_wheels )
+				{
+					wheel.transform.localRotation *= Quaternion.Euler( 0.0f, 0.0f, playerData.m_general.m_currentSpeed * m_wheelTurnSpeed * Time.deltaTime );
+				}
 			}
 
 			// set the rotation of the terrain vehicle
@@ -167,7 +179,7 @@ public class Disembarked : MonoBehaviour
 
 		// follow the terrain vehicle
 		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( m_terrainVehicle, new Vector3( 0.0f, 120.0f, -120.0f ), Quaternion.identity, true );
-		//SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( m_terrainVehicle, new Vector3( 0.0f, 30.0f, -30.0f ), Quaternion.identity, true );
+		//SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( m_terrainVehicle, new Vector3( 0.0f, 20.0f, -20.0f ), Quaternion.identity, true );
 
 		// get the planet controller
 		var planetController = SpaceflightController.m_instance.m_starSystem.GetPlanetController( playerData.m_general.m_currentPlanetId );

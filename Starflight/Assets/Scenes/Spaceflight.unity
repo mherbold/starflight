@@ -14486,6 +14486,12 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!1 &546295329 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100010, guid: 09c6ce45639a32740a6283cbc46d2a7a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1492207792}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &551646918
 GameObject:
   m_ObjectHideFlags: 0
@@ -18093,6 +18099,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 851218157}
   m_CullTransparentMesh: 0
+--- !u!1 &852372686 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100008, guid: 09c6ce45639a32740a6283cbc46d2a7a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1492207792}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &858971517
 GameObject:
   m_ObjectHideFlags: 0
@@ -18538,6 +18550,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 898260641}
   m_CullTransparentMesh: 0
+--- !u!1 &898716857 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100014, guid: 09c6ce45639a32740a6283cbc46d2a7a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1492207792}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &911945542
 GameObject:
   m_ObjectHideFlags: 0
@@ -22632,6 +22650,12 @@ MonoBehaviour:
   m_planetClouds: {fileID: 724310311}
   m_planetAtmosphere: {fileID: 52701460}
   m_starportModel: {fileID: 0}
+--- !u!1 &1110115754 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100006, guid: 09c6ce45639a32740a6283cbc46d2a7a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1492207792}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1115364896
 GameObject:
   m_ObjectHideFlags: 0
@@ -23029,7 +23053,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1138512982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38480,7 +38504,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1425305802
 Transform:
   m_ObjectHideFlags: 0
@@ -38515,6 +38539,14 @@ MonoBehaviour:
   m_clouds: {fileID: 951799321}
   m_terrainGrid: {fileID: 1442854010}
   m_terrainVehicle: {fileID: 1546697049}
+  m_wheels:
+  - {fileID: 1110115754}
+  - {fileID: 1986386384}
+  - {fileID: 852372686}
+  - {fileID: 898716857}
+  - {fileID: 546295329}
+  - {fileID: 2087086859}
+  m_wheelTurnSpeed: 47
   m_maximumSpeed: 8
   m_minimumTimeToReachMaximumSpeed: 0.5
   m_timeToStop: 0.25
@@ -55483,6 +55515,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1983553497}
   m_CullTransparentMesh: 0
+--- !u!1 &1986386384 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100012, guid: 09c6ce45639a32740a6283cbc46d2a7a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1492207792}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1991818972
 GameObject:
   m_ObjectHideFlags: 0
@@ -57533,6 +57571,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2081018991}
   m_CullTransparentMesh: 0
+--- !u!1 &2087086859 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100016, guid: 09c6ce45639a32740a6283cbc46d2a7a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1492207792}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2090744176
 GameObject:
   m_ObjectHideFlags: 0
