@@ -111,11 +111,15 @@ public class Disembarked : MonoBehaviour
 			// update the tv game object
 			m_terrainVehicle.transform.localPosition = tvPosition;
 
-			// the terrain grid always follow the terrain vehicle
-			// TODO - add snapping to vertex points
-			var tgPosition = tvPosition;
-			tgPosition.y = 0.0f;
-			m_terrainGrid.transform.localPosition = tgPosition;
+			// the terrain grid always follow the terrain vehicle (but snap to integral positions to avoid vertex popping)
+			var gridPosition = tvPosition;
+
+			gridPosition.y = 0.0f;
+
+			gridPosition.x = Mathf.FloorToInt( gridPosition.x / 8.0f ) * 8.0f;
+			gridPosition.z = Mathf.FloorToInt( gridPosition.z / 8.0f ) * 8.0f;
+
+			m_terrainGrid.transform.localPosition = gridPosition;
 		}
 	}
 
