@@ -8630,6 +8630,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 216023361}
   m_Mesh: {fileID: 4300004, guid: 3e03e3c571a47c942afe64ba870bf4ac, type: 3}
+--- !u!1 &218759684 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100018, guid: 09c6ce45639a32740a6283cbc46d2a7a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1492207792}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &219171246
 GameObject:
   m_ObjectHideFlags: 0
@@ -9923,6 +9929,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 295145100}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &300506258 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100020, guid: 09c6ce45639a32740a6283cbc46d2a7a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1492207792}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &305070725
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17003,6 +17015,12 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 100}
   m_SizeDelta: {x: 24, y: 24}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &735248423 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100026, guid: 09c6ce45639a32740a6283cbc46d2a7a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1492207792}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &737748974
 GameObject:
   m_ObjectHideFlags: 0
@@ -17677,6 +17695,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 833494615}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &835951965 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100028, guid: 09c6ce45639a32740a6283cbc46d2a7a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1492207792}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &839097930
 GameObject:
   m_ObjectHideFlags: 0
@@ -31390,6 +31414,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1216204117}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1220393897 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100024, guid: 09c6ce45639a32740a6283cbc46d2a7a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1492207792}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1229558231
 GameObject:
   m_ObjectHideFlags: 0
@@ -38546,7 +38576,16 @@ MonoBehaviour:
   - {fileID: 898716857}
   - {fileID: 546295329}
   - {fileID: 2087086859}
+  m_steeringJoints:
+  - {fileID: 300506258}
+  - {fileID: 218759684}
+  - {fileID: 735248423}
+  - {fileID: 835951965}
+  - {fileID: 1932969756}
+  - {fileID: 1220393897}
   m_wheelTurnSpeed: 47
+  m_wheelSteerSpeed: 10
+  m_neutralSuspensionHeight: 2
   m_maximumSpeed: 8
   m_minimumTimeToReachMaximumSpeed: 0.5
   m_timeToStop: 0.25
@@ -55039,6 +55078,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1930914588}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1932969756 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100022, guid: 09c6ce45639a32740a6283cbc46d2a7a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1492207792}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1936677536
 GameObject:
   m_ObjectHideFlags: 0

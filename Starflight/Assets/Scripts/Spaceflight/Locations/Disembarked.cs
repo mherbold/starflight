@@ -15,8 +15,17 @@ public class Disembarked : MonoBehaviour
 	// the terrain vehicle wheels (fr, fl, mr, ml, rr, rl)
 	public GameObject[] m_wheels;
 
+	// the steering joints (fr, fl, mr, ml, rr, rl)
+	public GameObject[] m_steeringJoints;
+
 	// how fast to spin the wheels
 	public float m_wheelTurnSpeed;
+
+	// how fast the wheels steer
+	public float m_wheelSteerSpeed;
+
+	// the resting suspension height above the ground
+	public float m_neutralSuspensionHeight;
 
 	// the maximum speed of the player
 	public float m_maximumSpeed;
@@ -32,6 +41,9 @@ public class Disembarked : MonoBehaviour
 
 	// whether or not the tv engine is on or off
 	bool m_enginesAreOn;
+
+	// keep track of the last direction (for steering the wheels)
+	Vector3 m_lastDirection;
 
 	// unity update
 	void Update()
@@ -107,21 +119,65 @@ public class Disembarked : MonoBehaviour
 			// set the rotation of the terrain vehicle
 			m_terrainVehicle.transform.localRotation = Quaternion.LookRotation( playerData.m_general.m_currentDirection, Vector3.up ) * Quaternion.Euler( -90.0f, 0.0f, 0.0f );
 
+			// get the number of degrees we are turning the terrain vehicle (compared to the last frame)
+			var steeringAngle = Vector3.SignedAngle( playerData.m_general.m_currentDirection, m_lastDirection, Vector3.up );
+
+			// scale the angle enough so we actually see the wheels turning (but max it out at 45 degrees in either direction)
+			steeringAngle = Mathf.Max( -45.0f, Mathf.Min( 45.0f, steeringAngle * 12.0f ) );
+
+			// steer the wheels
+			m_steeringJoints[ 0 ].transform.localRotation = Quaternion.Slerp( m_steeringJoints[ 0 ].transform.localRotation, Quaternion.Euler( 0.0f, -steeringAngle, 0.0f ), Time.deltaTime * m_wheelSteerSpeed );
+			m_steeringJoints[ 1 ].transform.localRotation = Quaternion.Slerp( m_steeringJoints[ 1 ].transform.localRotation, Quaternion.Euler( 0.0f, -steeringAngle, 0.0f ), Time.deltaTime * m_wheelSteerSpeed );
+			m_steeringJoints[ 4 ].transform.localRotation = Quaternion.Slerp( m_steeringJoints[ 4 ].transform.localRotation, Quaternion.Euler( 0.0f, steeringAngle, 0.0f ), Time.deltaTime * m_wheelSteerSpeed );
+			m_steeringJoints[ 5 ].transform.localRotation = Quaternion.Slerp( m_steeringJoints[ 5 ].transform.localRotation, Quaternion.Euler( 0.0f, steeringAngle, 0.0f ), Time.deltaTime * m_wheelSteerSpeed );
+
+			// update the last direction
+			m_lastDirection = playerData.m_general.m_currentDirection;
+
 			// get the current position of the terrain vehicle
-			var tvPosition = playerData.m_general.m_coordinates;
+			var tvPosition = ApplyElevation( playerData.m_general.m_coordinates );
 
-			// convert from world coordinates to map coordinates
-			var mapX = tvPosition.x * 0.25f + m_planetGenerator.m_textureMapWidth * 0.5f - 0.5f;
-			var mapY = tvPosition.z * 0.25f + m_planetGenerator.m_textureMapHeight * 0.5f - 0.5f;
-
-			// get the height of the terrain at that point
-			var elevation = m_planetGenerator.GetBicubicSmoothedElevation( mapX, mapY );
-
-			// update the tv position
-			tvPosition.y = m_terrainGrid.m_elevationScale * elevation / 2.0f;
-
-			// update the tv game object
+			// update the tv game object position
 			m_terrainVehicle.transform.localPosition = tvPosition;
+
+			// reset the steering joints
+			foreach ( var steeringJoint in m_steeringJoints )
+			{
+				steeringJoint.transform.localPosition = Vector3.zero;
+			}
+
+			// calculate the normal of the terrain between the center and the front wheels
+			var wheel1 = ApplyElevation( m_wheels[ 1 ].transform.position );
+			var wheel2 = ApplyElevation( m_wheels[ 0 ].transform.position );
+
+			var side1 = wheel1 - tvPosition;
+			var side2 = wheel2 - tvPosition;
+
+			var normal1 = Vector3.Cross( side1, side2 );
+
+			wheel1 = ApplyElevation( m_wheels[ 2 ].transform.position );
+			wheel2 = ApplyElevation( m_wheels[ 3 ].transform.position );
+
+			var normal2 = Vector3.Cross( side1, side2 );
+
+			var averagedNormal = Vector3.Normalize( normal1 + normal2 );
+
+			// update the attitude of the body based on the average normal
+			m_terrainVehicle.transform.rotation = Quaternion.FromToRotation( Vector3.up, averagedNormal ) * m_terrainVehicle.transform.rotation;
+
+			// move the tv wheels up and down depending on the height of the terrain under the wheels
+			foreach ( var steeringJoint in m_steeringJoints )
+			{
+				var wheelPosition = ApplyElevation( steeringJoint.transform.position );
+
+				var offset = wheelPosition.y - steeringJoint.transform.position.y;
+
+				wheelPosition.x = 0.0f;
+				wheelPosition.y = offset + m_neutralSuspensionHeight;
+				wheelPosition.z = 0.0f;
+
+				steeringJoint.transform.localPosition = wheelPosition;
+			}
 
 			// the terrain grid always follow the terrain vehicle (but snap to integral positions to avoid vertex popping)
 			var gridPosition = tvPosition;
@@ -133,6 +189,16 @@ public class Disembarked : MonoBehaviour
 
 			m_terrainGrid.transform.localPosition = gridPosition;
 		}
+	}
+
+	Vector3 ApplyElevation( Vector3 worldCoordinates )
+	{
+		var x = worldCoordinates.x * 0.25f + m_planetGenerator.m_textureMapWidth * 0.5f - 0.5f;
+		var y = worldCoordinates.z * 0.25f + m_planetGenerator.m_textureMapHeight * 0.5f - 0.5f;
+
+		worldCoordinates.y = m_planetGenerator.GetBicubicSmoothedElevation( x, y ) * m_terrainGrid.m_elevationScale / 2.0f;
+
+		return worldCoordinates;
 	}
 
 	// call this to hide the in orbit objects
@@ -206,6 +272,9 @@ public class Disembarked : MonoBehaviour
 
 		// make sure skybox rotation is reset
 		StarflightSkybox.m_instance.m_currentRotation = Quaternion.identity;
+
+		// jump start the last direction
+		m_lastDirection = playerData.m_general.m_currentDirection;
 	}
 
 	// this is called when the planet generator is ready

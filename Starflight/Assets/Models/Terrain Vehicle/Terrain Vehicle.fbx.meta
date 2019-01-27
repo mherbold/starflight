@@ -16,6 +16,14 @@ ModelImporter:
     100020: Steering - FR
     100022: Steering - RL
     100024: Steering - RR
+    100026: Steering - ML
+    100028: Steering - MR
+    100030: Suspension - FL
+    100032: Suspension - FR
+    100034: Suspension - ML
+    100036: Suspension - MR
+    100038: Suspension - RL
+    100040: Suspension - RR
     400000: Laser
     400002: Radar
     400004: //RootNode
@@ -29,6 +37,14 @@ ModelImporter:
     400020: Steering - FR
     400022: Steering - RL
     400024: Steering - RR
+    400026: Steering - ML
+    400028: Steering - MR
+    400030: Suspension - FL
+    400032: Suspension - FR
+    400034: Suspension - ML
+    400036: Suspension - MR
+    400038: Suspension - RL
+    400040: Suspension - RR
     2100000: Gold
     2100002: Car Paint Metallic
     2100004: 'Material #132'
