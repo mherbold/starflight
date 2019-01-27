@@ -108,15 +108,26 @@ public class PlayerCamera : MonoBehaviour
 		// are we already playing an animation?
 		if ( !m_animationIsPlaying )
 		{
-			// reset the camera to animation position
+			// no - reset the camera to animation position
 			SetCameraFollow( null, Vector3.zero, Quaternion.identity, false );
 
-			// no - play the new animation
+			// play the new animation
 			m_animator.Play( animationName );
+
+			// let the camera animation take over again
+			m_animator.StartPlayback();
 
 			// remember that we are playing an animation now
 			m_animationIsPlaying = true;
 		}
+	}
+
+	// stop the current camera animation
+	public void StopAnimation()
+	{
+		m_animator.StopPlayback();
+
+		m_animationIsPlaying = false;
 	}
 
 	//

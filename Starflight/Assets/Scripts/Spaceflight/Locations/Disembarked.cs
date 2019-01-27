@@ -158,6 +158,9 @@ public class Disembarked : MonoBehaviour
 		// move the player to where we are in this location
 		playerData.m_general.m_coordinates = playerData.m_general.m_lastDisembarkedCoordinates;
 
+		// stop the camera animation
+		SpaceflightController.m_instance.m_playerCamera.StopAnimation();
+
 		// follow the terrain vehicle
 		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( m_terrainVehicle, new Vector3( 0.0f, -640.0f, 640.0f ), Quaternion.identity, true );
 
