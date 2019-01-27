@@ -64,7 +64,7 @@ public class PlayerCamera : MonoBehaviour
 
 				// for now just use the follow offset
 				transform.localPosition = playerCameraPosition;
-				transform.localRotation = Quaternion.Euler( -45.0f, 0.0f, 0.0f );
+				transform.localRotation = Quaternion.Euler( 45.0f, 0.0f, 0.0f );
 			}
 			else
 			{
@@ -115,7 +115,7 @@ public class PlayerCamera : MonoBehaviour
 			m_animator.Play( animationName );
 
 			// let the camera animation take over again
-			m_animator.StartPlayback();
+			m_animator.enabled = true;
 
 			// remember that we are playing an animation now
 			m_animationIsPlaying = true;
@@ -125,9 +125,12 @@ public class PlayerCamera : MonoBehaviour
 	// stop the current camera animation
 	public void StopAnimation()
 	{
-		m_animator.StopPlayback();
+		m_animator.enabled = false;
 
 		m_animationIsPlaying = false;
+
+		m_camera.transform.localPosition = Vector3.zero;
+		m_camera.transform.localRotation = Quaternion.identity;
 	}
 
 	//

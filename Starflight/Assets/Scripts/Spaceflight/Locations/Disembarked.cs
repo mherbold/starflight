@@ -162,7 +162,8 @@ public class Disembarked : MonoBehaviour
 		SpaceflightController.m_instance.m_playerCamera.StopAnimation();
 
 		// follow the terrain vehicle
-		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( m_terrainVehicle, new Vector3( 0.0f, -640.0f, 640.0f ), Quaternion.identity, true );
+		//SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( m_terrainVehicle, new Vector3( 0.0f, -640.0f, 640.0f ), Quaternion.identity, true );
+		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( m_terrainVehicle, new Vector3( 0.0f, 120.0f, -120.0f ), Quaternion.identity, true );
 
 		// get the planet controller
 		var planetController = SpaceflightController.m_instance.m_starSystem.GetPlanetController( playerData.m_general.m_currentPlanetId );
