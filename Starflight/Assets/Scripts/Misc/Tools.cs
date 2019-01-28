@@ -22,6 +22,37 @@ class Tools
 		return new Vector3( ( gameCoordinates.x - 128.0f ) * 256.0f, 0.0f, ( gameCoordinates.z - 128.0f ) * 256.0f );
 	}
 
+	// convert from unity world coordinates to terrain coordinates
+	public static void WorldToTerrainCoordinates( Vector3 worldCoordinates, out float x, out float z )
+	{
+		// unscale from world coordinates (2048x2048 = 1/8 of map surface)
+		x = worldCoordinates.x / ( 2048.0f * 4.0f );
+		z = worldCoordinates.z / ( 2048.0f * 2.0f );
+
+		// convert from -0.5,0.5 -180,180 
+		x *= 360.0f;
+
+		// convert from -0.375,0.375 to -90,90
+		z *= 180.0f / 0.75f;
+	}
+
+	// convert from terrain coordinates to unity world coordinates
+	public static Vector3 TerrainToWorldCoordinates( float latitude, float longitude )
+	{
+		// convert from -180,180 to -0.5,0.5
+		var x = latitude / 360.0f;
+
+		// convert from -90,90 to -0.375,0.375
+		var z = longitude / 180.0f * 0.75f;
+
+		// scale to world coordinates (2048x2048 = 1/8 of map surface)
+		x *= 2048.0f * 4.0f;
+		z *= 2048.0f * 2.0f;
+
+		// wrap it in a vector
+		return new Vector3( x, 0.0f, z );
+	}
+
 	// dump an object to the debug log
 	public static void Dump( string name, object someObject, int maxDepth = -1 )
 	{

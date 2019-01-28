@@ -6786,7 +6786,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: e26148b8b7a13b64d93bc449d062d5a3, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: e26148b8b7a13b64d93bc449d062d5a3, type: 3}
       propertyPath: m_Layer
@@ -6890,7 +6890,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e26148b8b7a13b64d93bc449d062d5a3, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e26148b8b7a13b64d93bc449d062d5a3, type: 3}
       propertyPath: m_LocalRotation.z
@@ -6898,7 +6898,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e26148b8b7a13b64d93bc449d062d5a3, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.8660254
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e26148b8b7a13b64d93bc449d062d5a3, type: 3}
       propertyPath: m_RootOrder
@@ -6906,7 +6906,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e26148b8b7a13b64d93bc449d062d5a3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -60
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e26148b8b7a13b64d93bc449d062d5a3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -20022,7 +20022,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: 0b7c772b5e064d746a02130191893d4b, type: 3}
       propertyPath: m_Name
-      value: Planetside Clouds
+      value: Disembarked Clouds
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 0b7c772b5e064d746a02130191893d4b, type: 3}
       propertyPath: m_Layer
@@ -20050,7 +20050,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 0b7c772b5e064d746a02130191893d4b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 512
+      value: 768
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 0b7c772b5e064d746a02130191893d4b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -20086,7 +20086,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 0b7c772b5e064d746a02130191893d4b, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1024
+      value: 1536
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 0b7c772b5e064d746a02130191893d4b, type: 3}
       propertyPath: m_LocalScale.y
@@ -20094,7 +20094,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 0b7c772b5e064d746a02130191893d4b, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1024
+      value: 1536
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 0b7c772b5e064d746a02130191893d4b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -31664,6 +31664,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1265883973}
   m_Mesh: {fileID: 4300006, guid: ba74a1eea12e2d64fa77bbb2ca13afca, type: 3}
+--- !u!1 &1267800672 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: e26148b8b7a13b64d93bc449d062d5a3,
+    type: 3}
+  m_PrefabInstance: {fileID: 105586813}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1269373902
 GameObject:
   m_ObjectHideFlags: 0
@@ -38568,6 +38574,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_clouds: {fileID: 951799321}
   m_terrainGrid: {fileID: 1442854010}
+  m_arthShip: {fileID: 1267800672}
+  m_arthShipElevationAboveGround: 10
+  m_arthShipGroundScanWidth: 1.5
+  m_arthShipGroundScanHeight: 3.5
+  m_arthShipGroundScanInterval: 0.05
   m_terrainVehicle: {fileID: 1546697049}
   m_wheels:
   - {fileID: 1110115754}
@@ -38589,6 +38600,9 @@ MonoBehaviour:
   m_maximumSpeed: 8
   m_minimumTimeToReachMaximumSpeed: 0.5
   m_timeToStop: 0.25
+  m_floatDepth: 1.6
+  m_waterBobSpeed: 0.5
+  m_waterBobAmount: 10
 --- !u!1 &1433328999
 GameObject:
   m_ObjectHideFlags: 0
@@ -38871,9 +38885,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4c86fe1204b7c84ab9204512a5c1fc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_numLevels: 5
-  m_baseSize: 128
-  m_detail: 65
+  m_numLevels: 3
+  m_baseSize: 256
+  m_detail: 129
   m_elevationScale: 384
   m_elevationOffset: 0
 --- !u!23 &1442854011
@@ -39403,6 +39417,10 @@ PrefabInstance:
     - target: {fileID: 100004, guid: 09c6ce45639a32740a6283cbc46d2a7a, type: 3}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 09c6ce45639a32740a6283cbc46d2a7a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 09c6ce45639a32740a6283cbc46d2a7a, type: 3}
       propertyPath: m_Layer
@@ -56121,7 +56139,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e26148b8b7a13b64d93bc449d062d5a3, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e26148b8b7a13b64d93bc449d062d5a3, type: 3}
       propertyPath: m_LocalScale.x
@@ -57211,7 +57229,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2052193864
 Transform:
   m_ObjectHideFlags: 0

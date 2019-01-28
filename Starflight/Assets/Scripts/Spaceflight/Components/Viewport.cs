@@ -165,12 +165,44 @@ public class Viewport : MonoBehaviour
 	{
 		var playerData = DataController.m_instance.m_playerData;
 
-		var gameCoordinates = Tools.WorldToGameCoordinates( playerData.m_general.m_lastHyperspaceCoordinates );
+		string text;
 
-		var x = Mathf.RoundToInt( gameCoordinates.x );
-		var y = Mathf.RoundToInt( gameCoordinates.z );
+		if ( playerData.m_general.m_location == PD_General.Location.Disembarked )
+		{
+			Tools.WorldToTerrainCoordinates( playerData.m_general.m_lastDisembarkedCoordinates, out var x, out var z );
 
-		var text = x.ToString() + "   " + y.ToString();
+			var latitude = Mathf.RoundToInt( x );
+			var longitude = Mathf.RoundToInt( z );
+
+			if ( latitude < 0 )
+			{
+				text = ( -latitude ).ToString() + " W";
+			}
+			else
+			{
+				text = latitude.ToString() + " E";
+			}
+
+			text += "   ";
+
+			if ( longitude < 0 )
+			{
+				text += ( -longitude ).ToString() + " S";
+			}
+			else
+			{
+				text += longitude.ToString() + " N";
+			}
+		}
+		else
+		{
+			var gameCoordinates = Tools.WorldToGameCoordinates( playerData.m_general.m_lastHyperspaceCoordinates );
+
+			var x = Mathf.RoundToInt( gameCoordinates.x );
+			var y = Mathf.RoundToInt( gameCoordinates.z );
+
+			text = x.ToString() + "   " + y.ToString();
+		}
 
 		UpdateLabel( text );
 	}

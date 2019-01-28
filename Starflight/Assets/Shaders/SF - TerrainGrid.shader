@@ -38,7 +38,7 @@ Shader "Starflight/Terrain Grid"
 		/* Special Maps */
 
 		SF_ElevationMap( "Elevation Map", 2D ) = "black" {}
-		SF_ElevationScale( "Elevation Scale", Range( 0, 1000 ) ) = 1
+		SF_ElevationScale( "Elevation Scale", Range( 0, 2048 ) ) = 1
 
 		/* Culling Options */
 

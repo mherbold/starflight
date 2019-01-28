@@ -49,11 +49,11 @@ public class DisembarkButton : ShipButton
 				// play the update sound
 				SoundController.m_instance.PlaySound( SoundController.Sound.Update );
 
+				// move the player to the arth ship coordinates on the surface
+				playerData.m_general.m_lastDisembarkedCoordinates = Tools.TerrainToWorldCoordinates( playerData.m_general.m_selectedLatitude, playerData.m_general.m_selectedLongitude );
+
 				// update the terrain grid
 				SpaceflightController.m_instance.m_disembarked.UpdateTerrainGridNow();
-
-				// move the player to the arth ship coordinates on the surface
-				playerData.m_general.m_lastDisembarkedCoordinates = new Vector3( ( 2048.0f * 4.0f ) * ( playerData.m_general.m_selectedLatitude / 360.0f ), 0.0f, ( 2048.0f * 2.0f ) * ( playerData.m_general.m_selectedLongitude / 180.0f ) );
 
 				// switch locations
 				SpaceflightController.m_instance.SwitchLocation( PD_General.Location.Disembarked );

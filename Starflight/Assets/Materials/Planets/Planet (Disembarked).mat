@@ -203,7 +203,7 @@ Material:
     - SF_BlendSrc: 1
     - SF_CullMode: 2
     - SF_DetailNormalMapStrength: 2
-    - SF_ElevationScale: 768
+    - SF_ElevationScale: 0
     - SF_EmissiveProjectionOn: 0
     - SF_ForwardShadowsOn: 1
     - SF_FractalDetailsOn: 1

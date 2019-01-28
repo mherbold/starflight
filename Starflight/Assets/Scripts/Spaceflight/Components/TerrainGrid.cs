@@ -70,16 +70,23 @@ public class TerrainGrid : MonoBehaviour
 	}
 
 	// call this to set an elevation texture and switch the mode to dynamic terrain grid
-	public void SetElevationMap( Texture2D elevationTexture )
+	public void SetElevationMap( Texture2D elevationTexture, PlanetGenerator planetGenerator )
 	{
 		// make sure the terrain grid mesh is initialized
 		Initialize();
 
 		// set the new elevation map
 		m_material.SetTexture( "SF_ElevationMap", elevationTexture );
+		m_material.SetFloat( "SF_ElevationScale", m_elevationScale * 4.0f ); // multiply by 4 because R16 tex map has elevations divided by 4
 
 		// force the bounds to be the maximum possible extents
 		m_mesh.bounds = new Bounds( Vector3.zero, new Vector3( 1024.0f, 512.0f, 1024.0f ) );
+
+		// update the textures on the material
+		m_material.SetTexture( "_MainTex", planetGenerator.m_albedoTexture );
+		m_material.SetTexture( "SF_SpecularMap", planetGenerator.m_specularTexture );
+		m_material.SetTexture( "SF_NormalMap", planetGenerator.m_normalTexture );
+		m_material.SetTexture( "SF_WaterMaskMap", planetGenerator.m_waterMaskTexture );
 	}
 
 	// call this to bake in the elevation at the selected latitude and longitude
@@ -91,10 +98,10 @@ public class TerrainGrid : MonoBehaviour
 		// save the planet generator
 		m_planetGenerator = planetGenerator;
 
-		// convert from -180,180 to 0,1
+		// convert from -180,180 to 0,1 (texture coordinates)
 		var x = ( latitude + 180.0f ) / 360.0f;
 
-		// convert from -90,90 to 0.125,0.875
+		// convert from -90,90 to 0.125,0.875 (texture coordinates)
 		var y = Mathf.Lerp( 0.125f, 0.875f, ( longitude + 90.0f ) / 180.0f );
 
 		// constant scale factors
@@ -169,6 +176,11 @@ public class TerrainGrid : MonoBehaviour
 		z *= m_planetGenerator.m_textureMapHeight;
 
 		var elevation = m_planetGenerator.GetBicubicSmoothedElevation( x, z );
+
+		if ( elevation < m_planetGenerator.m_waterHeight )
+		{
+			elevation = m_planetGenerator.m_waterHeight;
+		}
 
 		return new Vector3( vertex.x, elevation * m_elevationScale, vertex.z );
 	}

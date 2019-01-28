@@ -640,7 +640,7 @@ public class PlanetGenerator
 		return m_elevationTexture;
 	}
 
-	public float GetElevation( float x, float y )
+	float GetElevation( float x, float y )
 	{
 		var iX = Mathf.FloorToInt( x );
 		var iY = Mathf.FloorToInt( y );
@@ -656,14 +656,7 @@ public class PlanetGenerator
 			iY = m_textureMapHeight - 1;
 		}
 
-		var elevation = m_elevation[ iY, iX ];
-
-		if ( elevation < m_waterHeight )
-		{
-			elevation = m_waterHeight;
-		}
-
-		return elevation;
+		return m_elevation[ iY, iX ];
 	}
 
 	public float GetBicubicSmoothedElevation( float x, float y )

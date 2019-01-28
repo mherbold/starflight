@@ -9,6 +9,15 @@ public class Disembarked : MonoBehaviour
 	// the terrain grid
 	public TerrainGrid m_terrainGrid;
 
+	// the arth ship
+	public GameObject m_arthShip;
+
+	// how high to put the arth ship and the ground scan details
+	public float m_arthShipElevationAboveGround;
+	public float m_arthShipGroundScanWidth;
+	public float m_arthShipGroundScanHeight;
+	public float m_arthShipGroundScanInterval;
+
 	// the terrain vehicle
 	public GameObject m_terrainVehicle;
 
@@ -36,6 +45,15 @@ public class Disembarked : MonoBehaviour
 	// the time to slow down (coast) to a stop
 	public float m_timeToStop;
 
+	// how much to sink the TV in water
+	public float m_floatDepth;
+
+	// how fast to bob the TV in water
+	public float m_waterBobSpeed;
+
+	// how much to bob the TV in water
+	public float m_waterBobAmount;
+
 	// the planet generator
 	PlanetGenerator m_planetGenerator;
 
@@ -44,6 +62,25 @@ public class Disembarked : MonoBehaviour
 
 	// keep track of the last direction (for steering the wheels)
 	Vector3 m_lastDirection;
+
+	// the amount of wheel slip (reduces effiency)
+	float m_wheelEfficiency;
+
+	// how deep in water are we
+	float m_waterEffectAmount;
+
+	// for gizmo drawing
+	Vector3[] m_debugVectors;
+
+	// also for gizmo drawing
+	Vector3[] m_debugPoints;
+
+	Disembarked()
+	{
+		m_debugVectors = new Vector3[ 12 ];
+
+		m_debugPoints = new Vector3[ 10000 ];
+	}
 
 	// unity update
 	void Update()
@@ -98,7 +135,7 @@ public class Disembarked : MonoBehaviour
 			if ( playerData.m_general.m_currentSpeed >= 0.1f )
 			{
 				// calculate the new position of the player
-				var newPosition = m_terrainVehicle.transform.localPosition + (Vector3) playerData.m_general.m_currentDirection * playerData.m_general.m_currentSpeed * Time.deltaTime;
+				var newPosition = m_terrainVehicle.transform.localPosition + (Vector3) playerData.m_general.m_currentDirection * m_wheelEfficiency * playerData.m_general.m_currentSpeed * Time.deltaTime;
 
 				// update the player position
 				m_terrainVehicle.transform.localPosition = newPosition;
@@ -114,10 +151,19 @@ public class Disembarked : MonoBehaviour
 				{
 					wheel.transform.localRotation *= Quaternion.Euler( 0.0f, 0.0f, playerData.m_general.m_currentSpeed * m_wheelTurnSpeed * Time.deltaTime );
 				}
+
+				// update the map coordinates
+				SpaceflightController.m_instance.m_viewport.UpdateCoordinates();
 			}
 
 			// set the rotation of the terrain vehicle
 			m_terrainVehicle.transform.localRotation = Quaternion.LookRotation( playerData.m_general.m_currentDirection, Vector3.up ) * Quaternion.Euler( -90.0f, 0.0f, 0.0f );
+
+			// add a random bob if in water
+			var bobX = ( Mathf.PerlinNoise( Time.time * m_waterBobSpeed, 20.0f ) * 2.0f - 1.0f ) * m_waterBobAmount * m_waterEffectAmount;
+			var bobY = ( Mathf.PerlinNoise( Time.time * m_waterBobSpeed, 80.0f ) * 2.0f - 1.0f ) * m_waterBobAmount * m_waterEffectAmount;
+
+			m_terrainVehicle.transform.rotation *= Quaternion.Euler( bobX, bobY, 0.0f );
 
 			// get the number of degrees we are turning the terrain vehicle (compared to the last frame)
 			var steeringAngle = Vector3.SignedAngle( playerData.m_general.m_currentDirection, m_lastDirection, Vector3.up );
@@ -135,7 +181,7 @@ public class Disembarked : MonoBehaviour
 			m_lastDirection = playerData.m_general.m_currentDirection;
 
 			// get the current position of the terrain vehicle
-			var tvPosition = ApplyElevation( playerData.m_general.m_coordinates );
+			var tvPosition = ApplyElevation( playerData.m_general.m_coordinates, true );
 
 			// update the tv game object position
 			m_terrainVehicle.transform.localPosition = tvPosition;
@@ -147,18 +193,35 @@ public class Disembarked : MonoBehaviour
 			}
 
 			// calculate the normal of the terrain between the center and the front wheels
-			var wheel1 = ApplyElevation( m_wheels[ 1 ].transform.position );
-			var wheel2 = ApplyElevation( m_wheels[ 0 ].transform.position );
+			var wheel1 = ApplyElevation( m_wheels[ 1 ].transform.position, false );
+			var wheel2 = ApplyElevation( m_wheels[ 0 ].transform.position, false );
 
 			var side1 = wheel1 - tvPosition;
 			var side2 = wheel2 - tvPosition;
 
 			var normal1 = Vector3.Cross( side1, side2 );
 
-			wheel1 = ApplyElevation( m_wheels[ 4 ].transform.position );
-			wheel2 = ApplyElevation( m_wheels[ 5 ].transform.position );
+			m_debugVectors[ 0 ] = tvPosition;
+			m_debugVectors[ 1 ] = wheel1;
+			m_debugVectors[ 2 ] = tvPosition;
+			m_debugVectors[ 3 ] = wheel2;
+			m_debugVectors[ 4 ] = ( wheel1 + wheel2 ) * 0.5f;
+			m_debugVectors[ 5 ] = m_debugVectors[ 4 ] + normal1;
+
+			wheel1 = ApplyElevation( m_wheels[ 4 ].transform.position, false );
+			wheel2 = ApplyElevation( m_wheels[ 5 ].transform.position, false );
+
+			side1 = wheel1 - tvPosition;
+			side2 = wheel2 - tvPosition;
 
 			var normal2 = Vector3.Cross( side1, side2 );
+
+			m_debugVectors[ 6 ] = tvPosition;
+			m_debugVectors[ 7 ] = wheel1;
+			m_debugVectors[ 8 ] = tvPosition;
+			m_debugVectors[ 9 ] = wheel2;
+			m_debugVectors[ 10 ] = ( wheel1 + wheel2 ) * 0.5f;
+			m_debugVectors[ 11 ] = m_debugVectors[ 10 ] + normal2;
 
 			var averagedNormal = Vector3.Normalize( normal1 + normal2 );
 
@@ -168,7 +231,7 @@ public class Disembarked : MonoBehaviour
 			// move the tv wheels up and down depending on the height of the terrain under the wheels
 			foreach ( var steeringJoint in m_steeringJoints )
 			{
-				var wheelPosition = ApplyElevation( steeringJoint.transform.position );
+				var wheelPosition = ApplyElevation( steeringJoint.transform.position, false );
 
 				var offset = wheelPosition.y - steeringJoint.transform.position.y;
 
@@ -191,12 +254,23 @@ public class Disembarked : MonoBehaviour
 		}
 	}
 
-	Vector3 ApplyElevation( Vector3 worldCoordinates )
+	Vector3 ApplyElevation( Vector3 worldCoordinates, bool updateWheelEfficiency )
 	{
 		var x = worldCoordinates.x * 0.25f + m_planetGenerator.m_textureMapWidth * 0.5f - 0.5f;
 		var y = worldCoordinates.z * 0.25f + m_planetGenerator.m_textureMapHeight * 0.5f - 0.5f;
 
-		worldCoordinates.y = m_planetGenerator.GetBicubicSmoothedElevation( x, y ) * m_terrainGrid.m_elevationScale / 2.0f;
+		var groundElevation = m_planetGenerator.GetBicubicSmoothedElevation( x, y ) * m_terrainGrid.m_elevationScale;
+		var waterElevation = m_planetGenerator.m_waterHeight * m_terrainGrid.m_elevationScale;
+		var floatElevation = waterElevation - m_floatDepth;
+
+		worldCoordinates.y = Mathf.Max( floatElevation, groundElevation );
+
+		if ( updateWheelEfficiency )
+		{
+			m_wheelEfficiency = Mathf.Clamp( ( worldCoordinates.y - floatElevation ) / m_floatDepth, 0.0f, 1.0f );
+			m_waterEffectAmount = Mathf.Pow( 1.0f - m_wheelEfficiency, 2.0f );
+			m_wheelEfficiency = m_wheelEfficiency * 0.5f + 0.5f;
+		}
 
 		return worldCoordinates;
 	}
@@ -275,6 +349,9 @@ public class Disembarked : MonoBehaviour
 
 		// jump start the last direction
 		m_lastDirection = playerData.m_general.m_currentDirection;
+
+		// update the map coordinates
+		SpaceflightController.m_instance.m_viewport.UpdateCoordinates();
 	}
 
 	// this is called when the planet generator is ready
@@ -292,6 +369,63 @@ public class Disembarked : MonoBehaviour
 		// create the elevation texture
 		var elevationTexture = m_planetGenerator.CreateElevationTexture();
 
-		m_terrainGrid.SetElevationMap( elevationTexture );
+		m_terrainGrid.SetElevationMap( elevationTexture, m_planetGenerator );
+
+		// place the arth ship where the player landed
+		var shipPosition = playerData.m_general.m_lastDisembarkedCoordinates;
+
+		m_arthShip.transform.localPosition = shipPosition;
+
+		var maximumElevation = 0.0f;
+		var i = 0;
+
+		for ( var z = m_arthShipGroundScanHeight * -0.5f; z <= m_arthShipGroundScanHeight * 0.5f; z += m_arthShipGroundScanInterval )
+		{
+			var modifiedScanWidth = m_arthShipGroundScanWidth * ( ( z >= ( m_arthShipGroundScanHeight * -0.075f ) ) ? 0.5f : 1.0f );
+
+			for ( var x = modifiedScanWidth * -0.5f; x <= modifiedScanWidth * 0.5f; x += m_arthShipGroundScanInterval )
+			{
+				var groundScanPosition = m_arthShip.transform.TransformPoint( new Vector3( x, 0.0f, z ) );
+
+				groundScanPosition = ApplyElevation( groundScanPosition, false );
+
+				if ( groundScanPosition.y > maximumElevation )
+				{
+					maximumElevation = groundScanPosition.y;
+				}
+
+				if ( i < m_debugPoints.Length )
+				{
+					m_debugPoints[ i++ ] = groundScanPosition;
+				}
+			}
+		}
+
+		shipPosition.y = maximumElevation + m_arthShipElevationAboveGround;
+
+		m_arthShip.transform.localPosition = shipPosition;
 	}
+
+#if UNITY_EDITOR
+
+	// draw gizmos to help debug the game
+	void OnDrawGizmos()
+	{
+		Gizmos.color = Color.green;
+
+		for ( var i = 0; i < m_debugVectors.Length; i += 2 )
+		{
+			Gizmos.DrawLine( m_debugVectors[ i ], m_debugVectors[ i + 1 ] );
+		}
+
+		for ( var i = 0; i < m_debugPoints.Length; i++ )
+		{
+			if ( m_debugPoints[ i ] != null )
+			{
+				Gizmos.DrawWireCube( m_debugPoints[ i ], Vector3.one );
+			}
+		}
+	}
+
+#endif
 }
