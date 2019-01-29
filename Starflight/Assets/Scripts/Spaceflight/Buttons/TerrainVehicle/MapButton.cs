@@ -19,7 +19,7 @@ public class MapButton : ShipButton
 		var gameObject = SpaceflightController.m_instance.m_playerCamera.GetCameraFollowGameObject();
 
 		// position the camera directly above the tv
-		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( gameObject, new Vector3( 0.0f, m_followDistance, 0.0f ), Quaternion.Euler( 90.0f, 0.0f, 0.0f ) );
+		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( gameObject, Vector3.up * m_followDistance );
 
 		// return true to keep the button lit and active
 		return true;
@@ -43,7 +43,7 @@ public class MapButton : ShipButton
 			SpaceflightController.m_instance.m_buttonController.DeactivateButton();
 
 			// reset the camera follow
-			SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( gameObject, new Vector3( 0.0f, 75.0f, -75.0f ), Quaternion.Euler( 45.0f, 0.0f, 0.0f ) );
+			SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( gameObject, new Vector3( 0.0f, 75.0f, -75.0f ) );
 		}
 		else
 		{
@@ -60,7 +60,7 @@ public class MapButton : ShipButton
 				m_followDistance = Mathf.Clamp( m_followDistance, 192.0f, 512.0f );
 
 				// update the camera position
-				SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( gameObject, new Vector3( 0.0f, m_followDistance, 0.0f ), Quaternion.Euler( 90.0f, 0.0f, 0.0f ) );
+				SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( gameObject, Vector3.up * m_followDistance );
 			}
 		}
 

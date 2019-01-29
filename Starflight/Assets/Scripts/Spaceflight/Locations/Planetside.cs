@@ -97,14 +97,18 @@ public class Planetside : MonoBehaviour
 		// move the player object
 		SpaceflightController.m_instance.m_playerShip.transform.position = playerData.m_general.m_coordinates = new Vector3( 0.0f, 0.0f, 0.0f );
 
-		// play an animation to move the camera to the right place
-		SpaceflightController.m_instance.m_playerCamera.StartAnimation( "On Planet" );
-
 		// freeze the player
 		SpaceflightController.m_instance.m_playerShip.Freeze();
 
-		// reset the buttons
-		SpaceflightController.m_instance.m_buttonController.RestoreBridgeButtons();
+		// are we in the middle of the landing animation?
+		if ( !SpaceflightController.m_instance.m_playerCamera.IsCurrentlyPlaying( "Landing (Planetside)" ) )
+		{
+			// no - play the on planet animation
+			SpaceflightController.m_instance.m_playerCamera.StartAnimation( "On Planet" );
+
+			// reset the buttons
+			SpaceflightController.m_instance.m_buttonController.RestoreBridgeButtons();
+		}
 
 		// fade in the map
 		SpaceflightController.m_instance.m_viewport.StartFade( 1.0f, 2.0f );

@@ -18,14 +18,8 @@ public class PlayerCamera : MonoBehaviour
 	// the follow offset
 	public Vector3 m_followOffset;
 
-	// the follow rotation
-	public Quaternion m_followRotation;
-
 	// the camera animation controller
 	Animator m_animator;
-
-	// true if an animation is currently playing
-	bool m_animationIsPlaying;
 
 	// unity awake
 	void Awake()
@@ -34,31 +28,15 @@ public class PlayerCamera : MonoBehaviour
 		m_animator = GetComponent<Animator>();
 	}
 
-	// unity late update
+	// unity late update (because we want to do this after the follow game object has moved in update)
 	void LateUpdate()
 	{
-		// update animator
-		if ( m_animationIsPlaying )
-		{
-			// get the animator state info
-			var animatorStateInfo = m_animator.GetCurrentAnimatorStateInfo( 0 );
-
-			// check if we have finished playing the animation
-			if ( animatorStateInfo.normalizedTime >= animatorStateInfo.length )
-			{
-				m_animationIsPlaying = false;
-			}
-		}
-
 		// are we following an object?
 		if ( m_followGameObject != null )
 		{
-			// yes - ok build the camera position
-			var playerCameraPosition = m_followGameObject.transform.position + m_followOffset;
-
-			// for now just use the follow offset
-			transform.localPosition = playerCameraPosition;
-			transform.localRotation = m_followRotation;
+			// yes - update the player camera position
+			transform.localPosition = m_followGameObject.transform.position + m_followOffset;
+			transform.localRotation = Quaternion.LookRotation( -m_followOffset, Vector3.forward );
 
 			// update the clipping planes
 			m_camera.farClipPlane = Mathf.Max( 2048.0f, m_followOffset.y + 1536.0f );
@@ -72,54 +50,47 @@ public class PlayerCamera : MonoBehaviour
 	}
 
 	// update the follow game object with a follow offset and rotation
-	public void SetCameraFollow( GameObject followGameObject, Vector3 followOffset, Quaternion followRotation )
+	public void SetCameraFollow( GameObject followGameObject, Vector3 followOffset )
 	{
 		m_followGameObject = followGameObject;
 		m_followOffset = followOffset;
-		m_followRotation = followRotation;
 
 		// do we want to follow a game object?
 		if ( m_followGameObject == null )
 		{
-			// no - are we currently playing an animation?
-			if ( !m_animationIsPlaying )
-			{
-				// no - immediately set the transform to the follow offset and reset the camera rotation to looking straight down
-				transform.localPosition = m_followOffset;
-				transform.localRotation = m_followRotation;
-			}
+			// no - let the camera animation control everything
+			transform.localPosition = Vector3.zero;
+			transform.localRotation = Quaternion.identity;
 		}
+		else
+		{
+			// yes - we control it all
+			transform.localPosition = m_followGameObject.transform.position + m_followOffset;
+			transform.localRotation = Quaternion.LookRotation( -m_followOffset, Vector3.forward );
+
+			// make the camera animation do nothing
+			m_animator.Play( "Idle" );
+		}
+	}
+
+	// check if we are playing a certain animation
+	public bool IsCurrentlyPlaying( string animationName )
+	{
+		var animatorStateInfo = m_animator.GetCurrentAnimatorStateInfo( 0 );
+
+		return animatorStateInfo.IsName( animationName );
 	}
 
 	// start a camera animation
 	public void StartAnimation( string animationName )
 	{
-		// are we already playing an animation?
-		if ( !m_animationIsPlaying )
-		{
-			// no - reset the camera to animation position
-			SetCameraFollow( null, Vector3.zero, Quaternion.identity );
+		Debug.Log( "Switching to the " + animationName + " camera animation." );
 
-			// play the new animation
-			m_animator.Play( animationName );
+		// reset the camera to animation position
+		SetCameraFollow( null, Vector3.zero );
 
-			// let the camera animation take over again
-			m_animator.enabled = true;
-
-			// remember that we are playing an animation now
-			m_animationIsPlaying = true;
-		}
-	}
-
-	// stop the current camera animation
-	public void StopAnimation()
-	{
-		m_animator.enabled = false;
-
-		m_animationIsPlaying = false;
-
-		m_camera.transform.localPosition = Vector3.zero;
-		m_camera.transform.localRotation = Quaternion.identity;
+		// play the new animation
+		m_animator.Play( animationName );
 	}
 
 	//

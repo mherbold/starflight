@@ -214,12 +214,6 @@ public class Encounter : MonoBehaviour
 
 		Debug.Log( "Showing the encounter location." );
 
-		// get to the game data
-		var gameData = DataController.m_instance.m_gameData;
-
-		// get to the player data
-		var playerData = DataController.m_instance.m_playerData;
-
 		// show the hyperspace objects
 		gameObject.SetActive( true );
 
@@ -229,8 +223,11 @@ public class Encounter : MonoBehaviour
 		// reset the current offset
 		m_currentOffset = 0.0f;
 
-		// set the initial camera follow altitude
-		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( SpaceflightController.m_instance.m_playerShip.gameObject, Vector3.zero, Quaternion.identity );
+		// get to the game data
+		var gameData = DataController.m_instance.m_gameData;
+
+		// get to the player data
+		var playerData = DataController.m_instance.m_playerData;
 
 		// move the ship to where we are in the encounter
 		SpaceflightController.m_instance.m_playerShip.transform.position = playerData.m_general.m_coordinates = playerData.m_general.m_lastEncounterCoordinates;
@@ -243,6 +240,9 @@ public class Encounter : MonoBehaviour
 
 		// unfreeze the player
 		SpaceflightController.m_instance.m_playerShip.Unfreeze();
+
+		// follow the player ship
+		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( SpaceflightController.m_instance.m_playerShip.gameObject, Vector3.up * m_currentOffset );
 
 		// fade in the map
 		SpaceflightController.m_instance.m_viewport.StartFade( 1.0f, 2.0f );
@@ -1024,13 +1024,13 @@ public class Encounter : MonoBehaviour
 		var tanHorizontalAngle = Mathf.Tan( horizontalAngle );
 		var tanVerticalAngle = Mathf.Tan( verticalAngle );
 
-		var targetDollyDistance = Mathf.Max( xExtent * tanHorizontalAngle, zExtent * tanVerticalAngle, 1024.0f ) - 1024.0f;
+		var targetDollyDistance = Mathf.Max( xExtent * tanHorizontalAngle, zExtent * tanVerticalAngle, 1024.0f );
 
 		// slowly dolly the camera
 		m_currentOffset = Mathf.Lerp( m_currentOffset, targetDollyDistance, Time.deltaTime * m_cameraDollySpeed );
 
 		// update the camera follow altitude
-		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( SpaceflightController.m_instance.m_playerShip.gameObject, Vector3.up * m_currentOffset, Quaternion.identity );
+		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( SpaceflightController.m_instance.m_playerShip.gameObject, Vector3.up * m_currentOffset );
 	}
 
 	// find a comm based on the subject

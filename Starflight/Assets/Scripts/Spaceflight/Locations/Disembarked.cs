@@ -72,6 +72,9 @@ public class Disembarked : MonoBehaviour
 
 		Debug.Log( "Showing the disembarked location." );
 
+		// show the planetside objects
+		gameObject.SetActive( true );
+
 		// get to the game data
 		var gameData = DataController.m_instance.m_gameData;
 
@@ -81,18 +84,12 @@ public class Disembarked : MonoBehaviour
 		// get to the star data
 		var star = gameData.m_starList[ playerData.m_general.m_currentStarId ];
 
-		// show the planetside objects
-		gameObject.SetActive( true );
-
 		// move the player to where we are in this location
 		playerData.m_general.m_coordinates = playerData.m_general.m_lastDisembarkedCoordinates;
 
-		// stop the camera animation
-		SpaceflightController.m_instance.m_playerCamera.StopAnimation();
-
 		// follow the terrain vehicle
-		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( m_terrainVehicle, new Vector3( 0.0f, 75.0f, -75.0f ), Quaternion.Euler( 45.0f, 0.0f, 0.0f ) );
-		//SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( m_terrainVehicle, new Vector3( 0.0f, 20.0f, -20.0f ), Quaternion.Euler( 45.0f, 0.0f, 0.0f ) );
+		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( m_terrainVehicle, new Vector3( 0.0f, 75.0f, -75.0f ) );
+		//SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( m_terrainVehicle, new Vector3( 0.0f, 20.0f, -20.0f ) );
 
 		// get the planet controller
 		var planetController = SpaceflightController.m_instance.m_starSystem.GetPlanetController( playerData.m_general.m_currentPlanetId );
@@ -156,34 +153,47 @@ public class Disembarked : MonoBehaviour
 
 		m_arthShip.transform.localPosition = shipPosition;
 
-		var maximumElevation = 0.0f;
-		var i = 0;
+		var minimumElevation = float.MaxValue;
+		var chosenAngle = 0;
 
-		for ( var z = m_arthShipGroundScanHeight * -0.5f; z <= m_arthShipGroundScanHeight * 0.5f; z += m_arthShipGroundScanInterval )
+		for ( var angle = 0; angle < 360; angle += 15 )
 		{
-			var modifiedScanWidth = m_arthShipGroundScanWidth * ( ( z >= ( m_arthShipGroundScanHeight * -0.075f ) ) ? 0.5f : 1.0f );
+			m_arthShip.transform.localRotation = Quaternion.Euler( 0.0f, angle, 0.0f );
 
-			for ( var x = modifiedScanWidth * -0.5f; x <= modifiedScanWidth * 0.5f; x += m_arthShipGroundScanInterval )
+			var maximumElevation = float.MinValue;
+
+			for ( var z = m_arthShipGroundScanHeight * -0.5f; z <= m_arthShipGroundScanHeight * 0.5f; z += m_arthShipGroundScanInterval )
 			{
-				var groundScanPosition = m_arthShip.transform.TransformPoint( new Vector3( x, 0.0f, z ) );
+				var modifiedScanWidth = m_arthShipGroundScanWidth * ( ( z >= ( m_arthShipGroundScanHeight * -0.075f ) ) ? 0.5f : 1.0f );
 
-				groundScanPosition = ApplyElevation( groundScanPosition, false );
-
-				if ( groundScanPosition.y > maximumElevation )
+				for ( var x = modifiedScanWidth * -0.5f; x <= modifiedScanWidth * 0.5f; x += m_arthShipGroundScanInterval )
 				{
-					maximumElevation = groundScanPosition.y;
-				}
+					var groundScanPosition = m_arthShip.transform.TransformPoint( new Vector3( x, 0.0f, z ) );
 
-				if ( i < m_debugPoints.Length )
-				{
-					m_debugPoints[ i++ ] = groundScanPosition;
+					groundScanPosition = ApplyElevation( groundScanPosition, false );
+
+					if ( groundScanPosition.y > maximumElevation )
+					{
+						maximumElevation = groundScanPosition.y;
+					}
 				}
+			}
+
+			Debug.Log( "Angle = " + angle + ", maximum elevation = " + maximumElevation );
+
+			if ( maximumElevation < minimumElevation )
+			{
+				minimumElevation = maximumElevation;
+				chosenAngle = angle;
 			}
 		}
 
-		shipPosition.y = maximumElevation + m_arthShipElevationAboveGround;
+		Debug.Log( "Minimum elevation = " + minimumElevation + ", angle chosen = " + chosenAngle );
+
+		shipPosition.y = minimumElevation + m_arthShipElevationAboveGround;
 
 		m_arthShip.transform.localPosition = shipPosition;
+		m_arthShip.transform.localRotation = Quaternion.Euler( 0.0f, chosenAngle, 0.0f );
 	}
 
 	Vector3 ApplyElevation( Vector3 worldCoordinates, bool updateWheelEfficiency )

@@ -38,7 +38,7 @@ public class TerrainVehicle : MonoBehaviour
 	public float m_waterBobSpeed;
 
 	// how much to bob the TV in water
-	public float m_waterBobAmount;
+	public Vector2 m_waterBobAmount;
 
 	// the terrain grid elevation scale
 	public float m_elevationScale = 100.0f;
@@ -143,8 +143,8 @@ public class TerrainVehicle : MonoBehaviour
 		m_terrainVehicleModel.transform.localRotation = Quaternion.LookRotation( playerData.m_general.m_currentDirection, Vector3.up ) * Quaternion.Euler( -90.0f, 0.0f, 0.0f );
 
 		// add a random bob if in water
-		var bobX = ( Mathf.PerlinNoise( Time.time * m_waterBobSpeed, 20.0f ) * 2.0f - 1.0f ) * m_waterBobAmount * m_waterEffectAmount;
-		var bobY = ( Mathf.PerlinNoise( Time.time * m_waterBobSpeed, 80.0f ) * 2.0f - 1.0f ) * m_waterBobAmount * m_waterEffectAmount;
+		var bobX = ( Mathf.PerlinNoise( Time.time * m_waterBobSpeed, 10.0f ) * 2.0f - 1.0f ) * m_waterBobAmount.x * m_waterEffectAmount;
+		var bobY = ( Mathf.PerlinNoise( Time.time * m_waterBobSpeed, 90.0f ) * 2.0f - 1.0f ) * m_waterBobAmount.y * m_waterEffectAmount;
 
 		m_terrainVehicleModel.transform.rotation *= Quaternion.Euler( bobX, bobY, 0.0f );
 

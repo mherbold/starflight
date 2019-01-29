@@ -107,15 +107,16 @@ public class InOrbit : MonoBehaviour
 		// move the player object
 		SpaceflightController.m_instance.m_playerShip.transform.position = playerData.m_general.m_coordinates = Vector3.zero;
 
-		// we don't want the camera to follow anything
-		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( null, Vector3.zero, Quaternion.identity );
-
 		// freeze the player
 		SpaceflightController.m_instance.m_playerShip.Freeze();
 
-		// reset the buttons (only if we aren't in the middle of launching)
-		if ( playerData.m_general.m_lastLocation != PD_General.Location.Planetside )
+		// are we in the middle of the launching animation?
+		if ( !SpaceflightController.m_instance.m_playerCamera.IsCurrentlyPlaying( "Launching (Planetside)" ) )
 		{
+			// no - play the in orbit animation
+			SpaceflightController.m_instance.m_playerCamera.StartAnimation( "In Space" );
+
+			// reset the buttons
 			SpaceflightController.m_instance.m_buttonController.RestoreBridgeButtons();
 		}
 

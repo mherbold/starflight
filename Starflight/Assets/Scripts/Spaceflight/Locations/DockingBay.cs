@@ -43,9 +43,6 @@ public class DockingBay : MonoBehaviour
 		// show the docking bay
 		gameObject.SetActive( true );
 
-		// we don't want the camera to follow anything
-		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( null, Vector3.zero, Quaternion.identity );
-
 		// get to the player data
 		var playerData = DataController.m_instance.m_playerData;
 
@@ -54,6 +51,9 @@ public class DockingBay : MonoBehaviour
 
 		// freeze the player
 		SpaceflightController.m_instance.m_playerShip.Freeze();
+
+		// play the in space camera animation
+		SpaceflightController.m_instance.m_playerCamera.StartAnimation( "In Space" );
 
 		// reset the buttons
 		SpaceflightController.m_instance.m_buttonController.RestoreBridgeButtons();

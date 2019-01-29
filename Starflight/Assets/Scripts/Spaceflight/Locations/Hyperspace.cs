@@ -225,9 +225,6 @@ public class Hyperspace : MonoBehaviour
 		// show the hyperspace objects
 		gameObject.SetActive( true );
 
-		// we want the camera to follow the player ship
-		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( SpaceflightController.m_instance.m_playerShip.gameObject, Vector3.zero, Quaternion.identity );
-
 		// get to the player data
 		var playerData = DataController.m_instance.m_playerData;
 
@@ -242,6 +239,9 @@ public class Hyperspace : MonoBehaviour
 
 		// unfreeze the player
 		SpaceflightController.m_instance.m_playerShip.Unfreeze();
+
+		// follow the player ship
+		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( SpaceflightController.m_instance.m_playerShip.gameObject, Vector3.up * 1024.0f );
 
 		// fade in the map
 		SpaceflightController.m_instance.m_viewport.StartFade( 1.0f, 2.0f );
