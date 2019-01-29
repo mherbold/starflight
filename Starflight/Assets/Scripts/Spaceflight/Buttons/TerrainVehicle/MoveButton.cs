@@ -28,11 +28,8 @@ public class MoveButton : ShipButton
 			// turn off the engines
 			SpaceflightController.m_instance.m_terrainVehicle.TurnOffEngines();
 
-			// remove the "active" dot from the current button
-			SpaceflightController.m_instance.m_buttonController.UpdateButtonSprites();
-
-			// play the deactivate sound
-			SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
+			// deactivate the current button
+			SpaceflightController.m_instance.m_buttonController.DeactivateButton();
 		}
 		else
 		{
