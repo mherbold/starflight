@@ -150,7 +150,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - SF_ColorTintA: {r: 1, g: 1, b: 1, a: 1}
-    - SF_ColorTintB: {r: 0.839, g: 0.8581667, b: 1, a: 1}
+    - SF_ColorTintB: {r: 0.023529291, g: 1, b: 0, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _ColorTintA: {r: 1, g: 1, b: 1, a: 1}
     - _ColorTintB: {r: 1, g: 0.36400002, b: 0.36400002, a: 1}

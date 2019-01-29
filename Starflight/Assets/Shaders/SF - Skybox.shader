@@ -16,6 +16,11 @@ Shader "Starflight/Skybox"
 		[NoScaleOffset] _RightTexB( "Right [-X]", 2D ) = "grey" {}
 		[NoScaleOffset] _UpTexB( "Up [+Y]", 2D ) = "grey" {}
 		[NoScaleOffset] _DownTexB( "Down [-Y]", 2D ) = "grey" {}
+
+		SF_BlendFactor( "Blend Factor", Range( 0, 1 ) ) = 0
+
+		SF_ColorTintA( "Color Tint A", Color ) = ( 1, 1, 1, 1 )
+		//SF_ColorTintB( "Color Tint B", Color ) = ( 1, 1, 1, 1 )
 	}
 
 	SubShader
@@ -38,20 +43,20 @@ Shader "Starflight/Skybox"
 
 		float SF_BlendFactor;
 
-		float3 SF_ColorTintA;
-		float3 SF_ColorTintB;
+		float4 SF_ColorTintA;
+		float4 SF_ColorTintB;
 
 		struct vertex_data
 		{
-			float4 position : POSITION;
-			float2 texcoord : TEXCOORD0;
+			float4 position: POSITION;
+			float2 texcoord: TEXCOORD0;
 			UNITY_VERTEX_INPUT_INSTANCE_ID
 		};
 
 		struct vs_out
 		{
-			float4 position : SV_POSITION;
-			float2 texcoord : TEXCOORD0;
+			float4 position: SV_POSITION;
+			float2 texcoord: TEXCOORD0;
 			UNITY_VERTEX_OUTPUT_STEREO
 		};
 
