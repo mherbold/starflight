@@ -89,6 +89,12 @@ public class Messages : MonoBehaviour
 		m_messages.alignment = ( m_messages.renderedHeight > rectHeight ) ? TextAlignmentOptions.BottomLeft : TextAlignmentOptions.TopLeft;
 	}
 
+	// call this to change the message text
+	public void AddText( string newMessage )
+	{
+		ChangeText( m_messages.text + "\n" + newMessage );
+	}
+
 	// call this to slide out the messages "dock"
 	public void SlideOut()
 	{

@@ -3,6 +3,19 @@ using UnityEngine;
 
 public class DisembarkButton : ShipButton
 {
+	// if this is true we are transitioning to disembarked
+	bool m_isTransitioning;
+
+	// what are we transitioning to?
+	PD_General.Location m_nextLocation;
+
+	// the message state
+	int m_messageState;
+
+	// the message timer
+	float m_messageTimer;
+
+	// get the label for this button
 	public override string GetLabel()
 	{
 		return "Disembark";
@@ -46,19 +59,29 @@ public class DisembarkButton : ShipButton
 
 			case PD_General.Location.Planetside:
 
-				// play the update sound
-				SoundController.m_instance.PlaySound( SoundController.Sound.Update );
-
 				// move the player to the arth ship coordinates on the surface
 				playerData.m_general.m_lastDisembarkedCoordinates = Tools.TerrainToWorldCoordinates( playerData.m_general.m_selectedLatitude, playerData.m_general.m_selectedLongitude );
 
 				// update the terrain grid
 				SpaceflightController.m_instance.m_disembarked.UpdateTerrainGridNow();
 
-				// switch locations
-				SpaceflightController.m_instance.SwitchLocation( PD_General.Location.Disembarked );
+				// fade the map to black
+				SpaceflightController.m_instance.m_viewport.StartFade( 0.0f, 2.0f );
 
-				break;
+				// we are now transitioning
+				m_isTransitioning = true;
+
+				// transition to the star system
+				m_nextLocation = PD_General.Location.Disembarked;
+
+				// display message
+				SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Stand by, scanning planet...</color>" );
+
+				// reset the message state and timer
+				m_messageState = 0;
+				m_messageTimer = 0.0f;
+
+				return true;
 		}
 
 		return false;
@@ -66,6 +89,40 @@ public class DisembarkButton : ShipButton
 
 	public override bool Update()
 	{
+		// are we currently transitioning?
+		if ( m_isTransitioning )
+		{
+			m_messageTimer += Time.deltaTime;
+
+			if ( m_messageTimer >= 0.75f )
+			{
+				m_messageTimer -= 0.75f;
+
+				switch ( m_messageState )
+				{
+					case 0:
+						SpaceflightController.m_instance.m_messages.AddText( "<color=white>Auto sampling devices activated.</color>" );
+						break;
+
+					case 1:
+						SpaceflightController.m_instance.m_messages.AddText( "<color=white>Initiating hull integrity check.</color>" );
+						break;
+				}
+
+				m_messageState++;
+			}
+
+			// has the map stopped fading yet?
+			if ( !SpaceflightController.m_instance.m_viewport.IsFading() )
+			{
+				// we are not transitioning any more
+				m_isTransitioning = false;
+
+				// switch to the next location
+				SpaceflightController.m_instance.SwitchLocation( m_nextLocation );
+			}
+		}
+
 		// always return true to prevent player from chagning buttons while transitioning to the docking bay
 		return true;
 	}

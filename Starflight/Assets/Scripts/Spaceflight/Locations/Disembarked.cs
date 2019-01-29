@@ -129,6 +129,9 @@ public class Disembarked : MonoBehaviour
 
 		// update the map coordinates
 		SpaceflightController.m_instance.m_viewport.UpdateCoordinates();
+
+		// update the messages
+		SpaceflightController.m_instance.m_messages.AddText( "<color=white>Activating terrain vehicle.</color>" );
 	}
 
 	// this is called when the planet generator is ready

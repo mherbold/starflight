@@ -28,6 +28,7 @@ public class SpaceflightController : MonoBehaviour
 	public Starmap m_starmap;
 	public Messages m_messages;
 	public TerrainVehicle m_terrainVehicle;
+	public DisembarkArthShip m_disembarkArthShip;
 
 	// some settings
 	public float m_alienHyperspaceRadarDistance;

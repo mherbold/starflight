@@ -16,6 +16,7 @@ TagManager:
   - Save Game Panel
   - Persistent UI
   - UI Camera
+  - Terrain Vehicle
   layers:
   - Default
   - TransparentFX

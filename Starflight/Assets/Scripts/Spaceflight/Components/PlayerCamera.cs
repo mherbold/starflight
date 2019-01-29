@@ -152,21 +152,21 @@ public class PlayerCamera : MonoBehaviour
 	{
 		SpaceflightController.m_instance.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.CommandA );
 
-		SpaceflightController.m_instance.m_messages.ChangeText( "Safe landing, captain." );
+		SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Safe landing, captain.</color>" );
 
 		SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
 	}
 
 	public void StartingDescent()
 	{
-		SpaceflightController.m_instance.m_messages.ChangeText( "Autopilot engaged. Descending..." );
+		SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Autopilot engaged. Descending...</color>" );
 
 		SoundController.m_instance.PlaySound( SoundController.Sound.Beep );
 	}
 
 	public void RetroRocketsFiring()
 	{
-		SpaceflightController.m_instance.m_messages.ChangeText( "Retro rockets firing..." );
+		SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Retro rockets firing...</color>" );
 
 		SoundController.m_instance.PlaySound( SoundController.Sound.Beep );
 	}

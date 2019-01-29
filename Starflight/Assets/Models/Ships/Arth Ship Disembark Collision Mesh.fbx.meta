@@ -1,21 +1,15 @@
 fileFormatVersion: 2
-guid: 88e25f16b7b6dae4f82b26771777ef5b
+guid: 98141eadc31d65c41a44dcef12c69019
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: //RootNode
-    100002: Sphere001
-    100004: Sphere002
     400000: //RootNode
-    400002: Sphere001
-    400004: Sphere002
     2100000: No Name
-    2300000: Sphere001
-    2300002: Sphere002
-    3300000: Sphere001
-    3300002: Sphere002
-    4300000: Sphere002
-    4300002: Sphere001
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Disembark Collision Mesh
+    6400000: //RootNode
   externalObjects: {}
   materials:
     importMaterials: 0
@@ -49,7 +43,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     useSRGBMaterialColor: 1
     importVisibility: 1
     importBlendShapes: 1

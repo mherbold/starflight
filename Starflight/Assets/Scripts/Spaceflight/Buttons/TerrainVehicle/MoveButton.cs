@@ -3,6 +3,12 @@ using UnityEngine;
 
 public class MoveButton : ShipButton
 {
+	// if this is true we are transitioning to disembarked
+	bool m_isTransitioning;
+
+	// what are we transitioning to?
+	PD_General.Location m_nextLocation;
+
 	public override string GetLabel()
 	{
 		return "Move";
@@ -19,6 +25,25 @@ public class MoveButton : ShipButton
 		// get to the player data
 		var playerData = DataController.m_instance.m_playerData;
 
+		// are we currently transitioning?
+		if ( m_isTransitioning )
+		{
+			// has the map stopped fading yet?
+			if ( !SpaceflightController.m_instance.m_viewport.IsFading() )
+			{
+				// we are not transitioning any more
+				m_isTransitioning = false;
+
+				// switch to the next location
+				SpaceflightController.m_instance.SwitchLocation( m_nextLocation );
+
+				// turn off the maneuver function
+				SpaceflightController.m_instance.m_buttonController.ClearCurrentButton();
+			}
+
+			return true;
+		}
+
 		// check if we want to stop moving
 		if ( InputController.m_instance.m_submit )
 		{
@@ -28,8 +53,41 @@ public class MoveButton : ShipButton
 			// turn off the engines
 			SpaceflightController.m_instance.m_terrainVehicle.TurnOffEngines();
 
-			// deactivate the current button
-			SpaceflightController.m_instance.m_buttonController.DeactivateButton();
+			// are we near the ship?
+			if ( SpaceflightController.m_instance.m_disembarkArthShip.m_terrainVehicleIsInside )
+			{
+				// make sure the planetside terrain grid has been updated
+				SpaceflightController.m_instance.m_planetside.UpdateTerrainGridNow();
+
+				// fade the map to black
+				SpaceflightController.m_instance.m_viewport.StartFade( 0.0f, 2.0f );
+
+				// we are now transitioning
+				m_isTransitioning = true;
+
+				// play the activate sound
+				SoundController.m_instance.PlaySound( SoundController.Sound.Activate );
+
+				// transition to planetside
+				m_nextLocation = PD_General.Location.Planetside;
+
+				// display message
+				SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Refueling terrain vehicle and transferring all cargo...</color>" );
+			}
+
+			if ( m_isTransitioning )
+			{
+				// remove the "active" dot from the current button
+				SpaceflightController.m_instance.m_buttonController.UpdateButtonSprites();
+
+				// play the deactivate sound
+				SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
+			}
+			else
+			{
+				// deactivate the current button
+				SpaceflightController.m_instance.m_buttonController.DeactivateButton();
+			}
 		}
 		else
 		{
