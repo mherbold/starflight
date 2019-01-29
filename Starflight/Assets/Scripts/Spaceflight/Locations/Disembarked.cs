@@ -151,8 +151,8 @@ public class Disembarked : MonoBehaviour
 
 		m_terrainGrid.SetElevationMap( elevationTexture, m_planetGenerator );
 
-		// place the arth ship where the player landed
-		var shipPosition = playerData.m_general.m_lastDisembarkedCoordinates;
+		// place the arth ship at the selected landing coordinates
+		var shipPosition = Tools.TerrainToWorldCoordinates( playerData.m_general.m_selectedLatitude, playerData.m_general.m_selectedLongitude );
 
 		m_arthShip.transform.localPosition = shipPosition;
 

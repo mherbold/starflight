@@ -62,6 +62,9 @@ public class DisembarkButton : ShipButton
 				// move the player to the arth ship coordinates on the surface
 				playerData.m_general.m_lastDisembarkedCoordinates = Tools.TerrainToWorldCoordinates( playerData.m_general.m_selectedLatitude, playerData.m_general.m_selectedLongitude );
 
+				// nudge the terrain vehicle to the south a bit
+				playerData.m_general.m_lastDisembarkedCoordinates += Vector3.back * 48.0f;
+
 				// update the terrain grid
 				SpaceflightController.m_instance.m_disembarked.UpdateTerrainGridNow();
 
