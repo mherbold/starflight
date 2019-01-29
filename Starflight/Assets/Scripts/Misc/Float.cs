@@ -1,7 +1,7 @@
 ﻿
 using UnityEngine;
 
-public class GazurtoidFloat : MonoBehaviour
+public class Float : MonoBehaviour
 {
 	public float m_speed = 1.0f;
 	public float m_range = 45.0f;

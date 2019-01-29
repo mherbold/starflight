@@ -6782,7 +6782,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1425305802}
+    m_TransformParent: {fileID: 2130298430}
     m_Modifications:
     - target: {fileID: 100000, guid: e26148b8b7a13b64d93bc449d062d5a3, type: 3}
       propertyPath: m_IsActive
@@ -6792,9 +6792,17 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: e26148b8b7a13b64d93bc449d062d5a3, type: 3}
+      propertyPath: m_Name
+      value: Arth Ship Floater
+      objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: e26148b8b7a13b64d93bc449d062d5a3, type: 3}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: e26148b8b7a13b64d93bc449d062d5a3, type: 3}
+      propertyPath: m_Name
+      value: Arth Ship Model
       objectReference: {fileID: 0}
     - target: {fileID: 100012, guid: e26148b8b7a13b64d93bc449d062d5a3, type: 3}
       propertyPath: m_Layer
@@ -6890,7 +6898,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e26148b8b7a13b64d93bc449d062d5a3, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e26148b8b7a13b64d93bc449d062d5a3, type: 3}
       propertyPath: m_LocalRotation.z
@@ -6898,15 +6906,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e26148b8b7a13b64d93bc449d062d5a3, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.8660254
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e26148b8b7a13b64d93bc449d062d5a3, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e26148b8b7a13b64d93bc449d062d5a3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -60
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e26148b8b7a13b64d93bc449d062d5a3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -6918,15 +6926,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e26148b8b7a13b64d93bc449d062d5a3, type: 3}
       propertyPath: m_LocalScale.x
-      value: 25
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e26148b8b7a13b64d93bc449d062d5a3, type: 3}
       propertyPath: m_LocalScale.z
-      value: 25
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e26148b8b7a13b64d93bc449d062d5a3, type: 3}
       propertyPath: m_LocalScale.y
-      value: 25
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2300090, guid: e26148b8b7a13b64d93bc449d062d5a3, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -31670,6 +31678,20 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 105586813}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1267800673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1267800672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b775fabdb2e89144acfd8a6f6062584, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_speed: 1
+  m_range: 0.025
 --- !u!1 &1269373902
 GameObject:
   m_ObjectHideFlags: 0
@@ -38556,7 +38578,7 @@ Transform:
   - {fileID: 951799320}
   - {fileID: 1442854009}
   - {fileID: 1492207793}
-  - {fileID: 105586814}
+  - {fileID: 2130298430}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -38574,7 +38596,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_clouds: {fileID: 951799321}
   m_terrainGrid: {fileID: 1442854010}
-  m_arthShip: {fileID: 1267800672}
+  m_arthShip: {fileID: 2130298429}
   m_arthShipElevationAboveGround: 10
   m_arthShipGroundScanWidth: 1.5
   m_arthShipGroundScanHeight: 3.5
@@ -58051,6 +58073,37 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &2130298429
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2130298430}
+  m_Layer: 14
+  m_Name: Arth Ship
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2130298430
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2130298429}
+  m_LocalRotation: {x: 0, y: -0.5, z: 0, w: 0.8660254}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 25, y: 25, z: 25}
+  m_Children:
+  - {fileID: 105586814}
+  m_Father: {fileID: 1425305802}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: -60, z: 0}
 --- !u!1 &2132798894
 GameObject:
   m_ObjectHideFlags: 0
