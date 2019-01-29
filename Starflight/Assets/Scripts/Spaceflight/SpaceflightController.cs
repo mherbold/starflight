@@ -27,6 +27,7 @@ public class SpaceflightController : MonoBehaviour
 	public Scanner m_scanner;
 	public Starmap m_starmap;
 	public Messages m_messages;
+	public TerrainVehicle m_terrainVehicle;
 
 	// some settings
 	public float m_alienHyperspaceRadarDistance;
@@ -56,9 +57,6 @@ public class SpaceflightController : MonoBehaviour
 	// unity awake
 	void Awake()
 	{
-		// hide everything
-		HideEverything();
-
 		// check if we loaded the persistent scene
 		if ( DataController.m_instance == null )
 		{
@@ -76,6 +74,9 @@ public class SpaceflightController : MonoBehaviour
 	// unity start
 	void Start()
 	{
+		// hide everything
+		HideEverything();
+
 		// turn off controller navigation of the UI
 		EventSystem.current.sendNavigationEvents = false;
 

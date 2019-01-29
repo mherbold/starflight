@@ -9,6 +9,9 @@ public class Disembarked : MonoBehaviour
 	// the terrain grid
 	public TerrainGrid m_terrainGrid;
 
+	// the terrain vehicle
+	public GameObject m_terrainVehicle;
+
 	// the arth ship
 	public GameObject m_arthShip;
 
@@ -18,261 +21,28 @@ public class Disembarked : MonoBehaviour
 	public float m_arthShipGroundScanHeight;
 	public float m_arthShipGroundScanInterval;
 
-	// the terrain vehicle
-	public GameObject m_terrainVehicle;
-
-	// the terrain vehicle wheels (fr, fl, mr, ml, rr, rl)
-	public GameObject[] m_wheels;
-
-	// the steering joints (fr, fl, mr, ml, rr, rl)
-	public GameObject[] m_steeringJoints;
-
-	// how fast to spin the wheels
-	public float m_wheelTurnSpeed;
-
-	// how fast the wheels steer
-	public float m_wheelSteerSpeed;
-
-	// the resting suspension height above the ground
-	public float m_neutralSuspensionHeight;
-
-	// the maximum speed of the player
-	public float m_maximumSpeed;
-
-	// the minimum time to reach the maximum speed
-	public float m_minimumTimeToReachMaximumSpeed;
-
-	// the time to slow down (coast) to a stop
-	public float m_timeToStop;
-
-	// how much to sink the TV in water
-	public float m_floatDepth;
-
-	// how fast to bob the TV in water
-	public float m_waterBobSpeed;
-
-	// how much to bob the TV in water
-	public float m_waterBobAmount;
-
 	// the planet generator
 	PlanetGenerator m_planetGenerator;
-
-	// whether or not the tv engine is on or off
-	bool m_enginesAreOn;
-
-	// keep track of the last direction (for steering the wheels)
-	Vector3 m_lastDirection;
-
-	// the amount of wheel slip (reduces effiency)
-	float m_wheelEfficiency;
-
-	// how deep in water are we
-	float m_waterEffectAmount;
-
-	// for gizmo drawing
-	Vector3[] m_debugVectors;
 
 	// also for gizmo drawing
 	Vector3[] m_debugPoints;
 
 	Disembarked()
 	{
-		m_debugVectors = new Vector3[ 12 ];
-
 		m_debugPoints = new Vector3[ 10000 ];
 	}
 
-	// unity update
-	void Update()
+	private void Update()
 	{
-		// update only if we have a planet generator (we could still be loading)
-		if ( m_planetGenerator != null )
-		{
-			// get to the player data
-			var playerData = DataController.m_instance.m_playerData;
+		// the terrain grid always follow the terrain vehicle (but snap to integral positions to avoid vertex popping)
+		var gridPosition = m_terrainVehicle.transform.localPosition;
 
-			// get the controller stick position
-			float x = InputController.m_instance.m_x;
-			float z = InputController.m_instance.m_y;
+		gridPosition.y = 0.0f;
 
-			// create our 3d move vector from the controller position
-			Vector3 moveVector = new Vector3( x, 0.0f, z );
+		gridPosition.x = Mathf.FloorToInt( gridPosition.x / 8.0f ) * 8.0f;
+		gridPosition.z = Mathf.FloorToInt( gridPosition.z / 8.0f ) * 8.0f;
 
-			// check if the move vector will actually move the ship (that the controller is not centered)
-			if ( moveVector.magnitude > 0.5f )
-			{
-				// normalize the move vector to a length of 1.0
-				moveVector.Normalize();
-
-				// update the direction
-				playerData.m_general.m_currentDirection = Vector3.Slerp( playerData.m_general.m_currentDirection, moveVector, Time.deltaTime * 2.0f );
-
-				// turn the engines on
-				m_enginesAreOn = true;
-			}
-			else
-			{
-				// turn the engines off
-				m_enginesAreOn = false;
-			}
-
-			// are the engines turned on?
-			if ( m_enginesAreOn )
-			{
-				// calculate the acceleration
-				var acceleration = Time.deltaTime * playerData.m_playerShip.m_acceleration / ( m_minimumTimeToReachMaximumSpeed * 25.0f );
-
-				// increase the current speed
-				playerData.m_general.m_currentSpeed = Mathf.Lerp( playerData.m_general.m_currentSpeed, m_maximumSpeed, acceleration );
-			}
-			else
-			{
-				// slow the ship to a stop
-				playerData.m_general.m_currentSpeed = Mathf.Lerp( playerData.m_general.m_currentSpeed, 0.0f, Time.deltaTime / m_timeToStop );
-			}
-
-			// check if the ship is moving
-			if ( playerData.m_general.m_currentSpeed >= 0.1f )
-			{
-				// calculate the new position of the player
-				var newPosition = m_terrainVehicle.transform.localPosition + (Vector3) playerData.m_general.m_currentDirection * m_wheelEfficiency * playerData.m_general.m_currentSpeed * Time.deltaTime;
-
-				// update the player position
-				m_terrainVehicle.transform.localPosition = newPosition;
-
-				// update the player data (it will save out to disk eventually)
-				playerData.m_general.m_coordinates = newPosition;
-
-				// update the last known disembarked coordinates
-				playerData.m_general.m_lastDisembarkedCoordinates = playerData.m_general.m_coordinates;
-
-				// turn the wheels
-				foreach ( var wheel in m_wheels )
-				{
-					wheel.transform.localRotation *= Quaternion.Euler( 0.0f, 0.0f, playerData.m_general.m_currentSpeed * m_wheelTurnSpeed * Time.deltaTime );
-				}
-
-				// update the map coordinates
-				SpaceflightController.m_instance.m_viewport.UpdateCoordinates();
-			}
-
-			// set the rotation of the terrain vehicle
-			m_terrainVehicle.transform.localRotation = Quaternion.LookRotation( playerData.m_general.m_currentDirection, Vector3.up ) * Quaternion.Euler( -90.0f, 0.0f, 0.0f );
-
-			// add a random bob if in water
-			var bobX = ( Mathf.PerlinNoise( Time.time * m_waterBobSpeed, 20.0f ) * 2.0f - 1.0f ) * m_waterBobAmount * m_waterEffectAmount;
-			var bobY = ( Mathf.PerlinNoise( Time.time * m_waterBobSpeed, 80.0f ) * 2.0f - 1.0f ) * m_waterBobAmount * m_waterEffectAmount;
-
-			m_terrainVehicle.transform.rotation *= Quaternion.Euler( bobX, bobY, 0.0f );
-
-			// get the number of degrees we are turning the terrain vehicle (compared to the last frame)
-			var steeringAngle = Vector3.SignedAngle( playerData.m_general.m_currentDirection, m_lastDirection, Vector3.up );
-
-			// scale the angle enough so we actually see the wheels turning (but max it out at 45 degrees in either direction)
-			steeringAngle = Mathf.Max( -45.0f, Mathf.Min( 45.0f, steeringAngle * 12.0f ) );
-
-			// steer the wheels
-			m_steeringJoints[ 0 ].transform.localRotation = Quaternion.Slerp( m_steeringJoints[ 0 ].transform.localRotation, Quaternion.Euler( 0.0f, -steeringAngle, 0.0f ), Time.deltaTime * m_wheelSteerSpeed );
-			m_steeringJoints[ 1 ].transform.localRotation = Quaternion.Slerp( m_steeringJoints[ 1 ].transform.localRotation, Quaternion.Euler( 0.0f, -steeringAngle, 0.0f ), Time.deltaTime * m_wheelSteerSpeed );
-			m_steeringJoints[ 4 ].transform.localRotation = Quaternion.Slerp( m_steeringJoints[ 4 ].transform.localRotation, Quaternion.Euler( 0.0f, steeringAngle, 0.0f ), Time.deltaTime * m_wheelSteerSpeed );
-			m_steeringJoints[ 5 ].transform.localRotation = Quaternion.Slerp( m_steeringJoints[ 5 ].transform.localRotation, Quaternion.Euler( 0.0f, steeringAngle, 0.0f ), Time.deltaTime * m_wheelSteerSpeed );
-
-			// update the last direction
-			m_lastDirection = playerData.m_general.m_currentDirection;
-
-			// get the current position of the terrain vehicle
-			var tvPosition = ApplyElevation( playerData.m_general.m_coordinates, true );
-
-			// update the tv game object position
-			m_terrainVehicle.transform.localPosition = tvPosition;
-
-			// reset the steering joints
-			foreach ( var steeringJoint in m_steeringJoints )
-			{
-				steeringJoint.transform.localPosition = Vector3.zero;
-			}
-
-			// calculate the normal of the terrain between the center and the front wheels
-			var wheel1 = ApplyElevation( m_wheels[ 1 ].transform.position, false );
-			var wheel2 = ApplyElevation( m_wheels[ 0 ].transform.position, false );
-
-			var side1 = wheel1 - tvPosition;
-			var side2 = wheel2 - tvPosition;
-
-			var normal1 = Vector3.Cross( side1, side2 );
-
-			m_debugVectors[ 0 ] = tvPosition;
-			m_debugVectors[ 1 ] = wheel1;
-			m_debugVectors[ 2 ] = tvPosition;
-			m_debugVectors[ 3 ] = wheel2;
-			m_debugVectors[ 4 ] = ( wheel1 + wheel2 ) * 0.5f;
-			m_debugVectors[ 5 ] = m_debugVectors[ 4 ] + normal1;
-
-			wheel1 = ApplyElevation( m_wheels[ 4 ].transform.position, false );
-			wheel2 = ApplyElevation( m_wheels[ 5 ].transform.position, false );
-
-			side1 = wheel1 - tvPosition;
-			side2 = wheel2 - tvPosition;
-
-			var normal2 = Vector3.Cross( side1, side2 );
-
-			m_debugVectors[ 6 ] = tvPosition;
-			m_debugVectors[ 7 ] = wheel1;
-			m_debugVectors[ 8 ] = tvPosition;
-			m_debugVectors[ 9 ] = wheel2;
-			m_debugVectors[ 10 ] = ( wheel1 + wheel2 ) * 0.5f;
-			m_debugVectors[ 11 ] = m_debugVectors[ 10 ] + normal2;
-
-			var averagedNormal = Vector3.Normalize( normal1 + normal2 );
-
-			// update the attitude of the body based on the average normal
-			m_terrainVehicle.transform.rotation = Quaternion.FromToRotation( Vector3.up, averagedNormal ) * m_terrainVehicle.transform.rotation;
-
-			// move the tv wheels up and down depending on the height of the terrain under the wheels
-			foreach ( var steeringJoint in m_steeringJoints )
-			{
-				var wheelPosition = ApplyElevation( steeringJoint.transform.position, false );
-
-				var offset = wheelPosition.y - steeringJoint.transform.position.y;
-
-				wheelPosition.x = 0.0f;
-				wheelPosition.y = offset + m_neutralSuspensionHeight;
-				wheelPosition.z = 0.0f;
-
-				steeringJoint.transform.localPosition = wheelPosition;
-			}
-
-			// the terrain grid always follow the terrain vehicle (but snap to integral positions to avoid vertex popping)
-			var gridPosition = tvPosition;
-
-			gridPosition.y = 0.0f;
-
-			gridPosition.x = Mathf.FloorToInt( gridPosition.x / 8.0f ) * 8.0f;
-			gridPosition.z = Mathf.FloorToInt( gridPosition.z / 8.0f ) * 8.0f;
-
-			m_terrainGrid.transform.localPosition = gridPosition;
-		}
-	}
-
-	Vector3 ApplyElevation( Vector3 worldCoordinates, bool updateWheelEfficiency )
-	{
-		var x = worldCoordinates.x * 0.25f + m_planetGenerator.m_textureMapWidth * 0.5f - 0.5f;
-		var y = worldCoordinates.z * 0.25f + m_planetGenerator.m_textureMapHeight * 0.5f - 0.5f;
-
-		var groundElevation = m_planetGenerator.GetBicubicSmoothedElevation( x, y ) * m_terrainGrid.m_elevationScale;
-		var waterElevation = m_planetGenerator.m_waterHeight * m_terrainGrid.m_elevationScale;
-		var floatElevation = waterElevation - m_floatDepth;
-
-		worldCoordinates.y = Mathf.Max( floatElevation, groundElevation );
-
-		if ( updateWheelEfficiency )
-		{
-			m_wheelEfficiency = Mathf.Clamp( ( worldCoordinates.y - floatElevation ) / m_floatDepth, 0.0f, 1.0f );
-			m_waterEffectAmount = Mathf.Pow( 1.0f - m_wheelEfficiency, 2.0f );
-			m_wheelEfficiency = m_wheelEfficiency * 0.5f + 0.5f;
-		}
-
-		return worldCoordinates;
+		m_terrainGrid.transform.localPosition = gridPosition;
 	}
 
 	// call this to hide the in orbit objects
@@ -287,6 +57,9 @@ public class Disembarked : MonoBehaviour
 
 		// hide this location
 		gameObject.SetActive( false );
+
+		// reset the buttons
+		SpaceflightController.m_instance.m_buttonController.RestoreBridgeButtons();
 	}
 
 	// call this to show this location
@@ -329,8 +102,15 @@ public class Disembarked : MonoBehaviour
 		// freeze the player
 		SpaceflightController.m_instance.m_playerShip.Freeze();
 
-		// reset the buttons
-		SpaceflightController.m_instance.m_buttonController.RestoreBridgeButtons();
+		// change the button panel label
+		SpaceflightController.m_instance.m_buttonController.ChangeOfficerText( "Terrain Vehicle" );
+
+		// change to the terrain vehicle buttons
+		SpaceflightController.m_instance.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.TerrainVehicle );
+
+		// activate the move button
+		SpaceflightController.m_instance.m_buttonController.SetSelectedButton( 1 );
+		SpaceflightController.m_instance.m_buttonController.ActivateButton();
 
 		// fade in the map
 		SpaceflightController.m_instance.m_viewport.StartFade( 1.0f, 2.0f );
@@ -344,11 +124,11 @@ public class Disembarked : MonoBehaviour
 		// turn skybox autorotate off
 		StarflightSkybox.m_instance.m_autorotateSkybox = false;
 
+		// blend completely towards planet atmosphere
+		StarflightSkybox.m_instance.m_currentBlendFactor = 1.0f;
+
 		// make sure skybox rotation is reset
 		StarflightSkybox.m_instance.m_currentRotation = Quaternion.identity;
-
-		// jump start the last direction
-		m_lastDirection = playerData.m_general.m_currentDirection;
 
 		// update the map coordinates
 		SpaceflightController.m_instance.m_viewport.UpdateCoordinates();
@@ -406,17 +186,25 @@ public class Disembarked : MonoBehaviour
 		m_arthShip.transform.localPosition = shipPosition;
 	}
 
+	Vector3 ApplyElevation( Vector3 worldCoordinates, bool updateWheelEfficiency )
+	{
+		var x = worldCoordinates.x * 0.25f + m_planetGenerator.m_textureMapWidth * 0.5f - 0.5f;
+		var y = worldCoordinates.z * 0.25f + m_planetGenerator.m_textureMapHeight * 0.5f - 0.5f;
+
+		var groundElevation = m_planetGenerator.GetBicubicSmoothedElevation( x, y ) * m_terrainGrid.m_elevationScale;
+		var waterElevation = m_planetGenerator.m_waterHeight * m_terrainGrid.m_elevationScale;
+
+		worldCoordinates.y = Mathf.Max( waterElevation, groundElevation );
+
+		return worldCoordinates;
+	}
+
 #if UNITY_EDITOR
 
 	// draw gizmos to help debug the game
 	void OnDrawGizmos()
 	{
 		Gizmos.color = Color.green;
-
-		for ( var i = 0; i < m_debugVectors.Length; i += 2 )
-		{
-			Gizmos.DrawLine( m_debugVectors[ i ], m_debugVectors[ i + 1 ] );
-		}
 
 		for ( var i = 0; i < m_debugPoints.Length; i++ )
 		{

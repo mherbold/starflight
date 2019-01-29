@@ -24,6 +24,7 @@ public class ButtonController : MonoBehaviour
 		AskQuestion,
 		AnswerQuestion,
 		Posture,
+		TerrainVehicle,
 		Count
 	};
 
@@ -83,6 +84,7 @@ public class ButtonController : MonoBehaviour
 		m_buttonSets[ (int) ButtonSet.AskQuestion ] = new ShipButton[] { new ThemselvesButton(), new OtherRacesButton(), new OldEmpireButton(), new TheAncientsButton(), new GeneralInfoButton() };
 		m_buttonSets[ (int) ButtonSet.AnswerQuestion ] = new ShipButton[] { new AnswerYesButton(), new AnswerNoButton(), new TerminateButton() };
 		m_buttonSets[ (int) ButtonSet.Posture ] = new ShipButton[] { new FriendlyButton(), new HostileButton(), new ObsequiousButton() };
+		m_buttonSets[ (int) ButtonSet.TerrainVehicle ] = new ShipButton[] { new MapButton(), new MoveButton(), new CargoButton(), new LookButton(), new ScanButton(), new WeaponButton() };
 	}
 
 	// unity start
@@ -115,18 +117,7 @@ public class ButtonController : MonoBehaviour
 				m_activatingButton = false;
 				m_activatingButtonTimer = 0.0f;
 
-				// get the activated button (execute might change this so grab it now)
-				ShipButton activatedButton = m_buttonList[ m_selectedButtonIndex ];
-
-				// execute the current button and check if it returned true
-				if ( activatedButton.Execute() )
-				{
-					// update the current button
-					m_currentButton = activatedButton;
-
-					// do the first update
-					m_currentButton.Update();
-				}
+				ActivateButton();
 			}
 
 			return;
@@ -217,14 +208,14 @@ public class ButtonController : MonoBehaviour
 	// restore the bridge buttons
 	public void RestoreBridgeButtons()
 	{
+		// get to the player data
+		PlayerData playerData = DataController.m_instance.m_playerData;
+
 		// there is no current funciton
 		ClearCurrentButton();
 
 		// restore the bridge buttons
 		ChangeButtonSet( ButtonSet.Bridge );
-
-		// get to the player data
-		PlayerData playerData = DataController.m_instance.m_playerData;
 
 		// change the current officer label to the name of the ship
 		ChangeOfficerText( "ISS " + playerData.m_playerShip.m_name );
@@ -291,6 +282,35 @@ public class ButtonController : MonoBehaviour
 	public void ClearCurrentButton()
 	{
 		m_currentButton = null;
+	}
+
+	// call this to change the button that is selected
+	public void SetSelectedButton( int buttonIndex )
+	{
+		ClearCurrentButton();
+		
+		m_selectedButtonIndex = buttonIndex;
+
+		UpdateButtonSprites();
+
+		m_buttonImageList[ m_selectedButtonIndex ].sprite = m_buttonActiveSprite;
+	}
+
+	// call this to activate the selected button
+	public void ActivateButton()
+	{
+		// get the activated button (execute might change this so grab it now)
+		ShipButton activatedButton = m_buttonList[ m_selectedButtonIndex ];
+
+		// execute the current button and check if it returned true
+		if ( activatedButton.Execute() )
+		{
+			// update the current button
+			m_currentButton = activatedButton;
+
+			// do the first update
+			m_currentButton.Update();
+		}
 	}
 
 	// call this to deactivate the current button
