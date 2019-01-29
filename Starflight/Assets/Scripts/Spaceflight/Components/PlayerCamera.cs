@@ -21,9 +21,6 @@ public class PlayerCamera : MonoBehaviour
 	// the follow rotation
 	public Quaternion m_followRotation;
 
-	// whether or not we are in the terrain vehicle mode
-	public bool m_terrainVehicleMode;
-
 	// the camera animation controller
 	Animator m_animator;
 
@@ -56,36 +53,28 @@ public class PlayerCamera : MonoBehaviour
 		// are we following an object?
 		if ( m_followGameObject != null )
 		{
-			// yes - are we in the terrain vehicle mode?
-			if ( m_terrainVehicleMode )
-			{
-				// yes - ok build the camera position
-				var playerCameraPosition = m_followGameObject.transform.position + m_followOffset;
+			// yes - ok build the camera position
+			var playerCameraPosition = m_followGameObject.transform.position + m_followOffset;
 
-				// for now just use the follow offset
-				transform.localPosition = playerCameraPosition;
-				transform.localRotation = Quaternion.Euler( 45.0f, 0.0f, 0.0f );
-			}
-			else
-			{
-				// no - ok build the camera position
-				var playerCameraPosition = m_followGameObject.transform.position + m_followOffset;
+			// for now just use the follow offset
+			transform.localPosition = playerCameraPosition;
+			transform.localRotation = m_followRotation;
 
-				// update the player camera transform
-				transform.localPosition = playerCameraPosition;
-				transform.localRotation = m_followRotation;
-
-				// update the clipping planes
-				m_camera.farClipPlane = Mathf.Max( 2048.0f, m_followOffset.y + 1536.0f );
-			}
+			// update the clipping planes
+			m_camera.farClipPlane = Mathf.Max( 2048.0f, m_followOffset.y + 1536.0f );
 		}
 	}
 
-	// update the follow game object, follow offset, and the terrain vehicle mode flag
-	public void SetCameraFollow( GameObject followGameObject, Vector3 followOffset, Quaternion followRotation, bool terrainVehicleMode )
+	// get the game object we are currently following
+	public GameObject GetCameraFollowGameObject()
+	{
+		return m_followGameObject;
+	}
+
+	// update the follow game object with a follow offset and rotation
+	public void SetCameraFollow( GameObject followGameObject, Vector3 followOffset, Quaternion followRotation )
 	{
 		m_followGameObject = followGameObject;
-		m_terrainVehicleMode = terrainVehicleMode;
 		m_followOffset = followOffset;
 		m_followRotation = followRotation;
 
@@ -109,7 +98,7 @@ public class PlayerCamera : MonoBehaviour
 		if ( !m_animationIsPlaying )
 		{
 			// no - reset the camera to animation position
-			SetCameraFollow( null, Vector3.zero, Quaternion.identity, false );
+			SetCameraFollow( null, Vector3.zero, Quaternion.identity );
 
 			// play the new animation
 			m_animator.Play( animationName );

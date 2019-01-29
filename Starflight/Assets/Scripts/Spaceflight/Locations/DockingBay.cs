@@ -44,7 +44,7 @@ public class DockingBay : MonoBehaviour
 		gameObject.SetActive( true );
 
 		// we don't want the camera to follow anything
-		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( null, Vector3.zero, Quaternion.identity, false );
+		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( null, Vector3.zero, Quaternion.identity );
 
 		// get to the player data
 		var playerData = DataController.m_instance.m_playerData;

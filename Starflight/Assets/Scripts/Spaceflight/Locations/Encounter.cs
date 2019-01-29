@@ -230,7 +230,7 @@ public class Encounter : MonoBehaviour
 		m_currentOffset = 0.0f;
 
 		// set the initial camera follow altitude
-		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( SpaceflightController.m_instance.m_playerShip.gameObject, Vector3.zero, Quaternion.identity, false );
+		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( SpaceflightController.m_instance.m_playerShip.gameObject, Vector3.zero, Quaternion.identity );
 
 		// move the ship to where we are in the encounter
 		SpaceflightController.m_instance.m_playerShip.transform.position = playerData.m_general.m_coordinates = playerData.m_general.m_lastEncounterCoordinates;
@@ -1030,7 +1030,7 @@ public class Encounter : MonoBehaviour
 		m_currentOffset = Mathf.Lerp( m_currentOffset, targetDollyDistance, Time.deltaTime * m_cameraDollySpeed );
 
 		// update the camera follow altitude
-		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( SpaceflightController.m_instance.m_playerShip.gameObject, Vector3.up * m_currentOffset, Quaternion.identity, false );
+		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( SpaceflightController.m_instance.m_playerShip.gameObject, Vector3.up * m_currentOffset, Quaternion.identity );
 	}
 
 	// find a comm based on the subject

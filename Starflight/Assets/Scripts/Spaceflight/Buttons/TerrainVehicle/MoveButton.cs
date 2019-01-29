@@ -34,11 +34,11 @@ public class MoveButton : ShipButton
 		else
 		{
 			// get the controller stick position
-			float x = InputController.m_instance.m_x;
-			float z = InputController.m_instance.m_y;
+			var x = InputController.m_instance.m_x;
+			var z = InputController.m_instance.m_y;
 
 			// create our 3d move vector from the controller position
-			Vector3 moveVector = new Vector3( x, 0.0f, z );
+			var moveVector = new Vector3( x, 0.0f, z );
 
 			// check if the move vector will actually move the ship (that the controller is not centered)
 			if ( moveVector.magnitude > 0.5f )

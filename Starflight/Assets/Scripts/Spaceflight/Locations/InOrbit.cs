@@ -108,7 +108,7 @@ public class InOrbit : MonoBehaviour
 		SpaceflightController.m_instance.m_playerShip.transform.position = playerData.m_general.m_coordinates = Vector3.zero;
 
 		// we don't want the camera to follow anything
-		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( null, Vector3.zero, Quaternion.identity, false );
+		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( null, Vector3.zero, Quaternion.identity );
 
 		// freeze the player
 		SpaceflightController.m_instance.m_playerShip.Freeze();

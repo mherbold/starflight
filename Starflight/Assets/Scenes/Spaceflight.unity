@@ -11742,7 +11742,6 @@ MonoBehaviour:
   m_followGameObject: {fileID: 0}
   m_followOffset: {x: 0, y: 0, z: 0}
   m_followRotation: {x: 0, y: 0, z: 0, w: 0}
-  m_terrainVehicleMode: 0
 --- !u!95 &324297162
 Animator:
   serializedVersion: 3

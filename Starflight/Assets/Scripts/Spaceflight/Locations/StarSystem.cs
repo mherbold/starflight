@@ -178,7 +178,7 @@ public class StarSystem : MonoBehaviour
 		gameObject.SetActive( true );
 
 		// we want the camera to follow the player ship
-		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( SpaceflightController.m_instance.m_playerShip.gameObject, Vector3.zero, Quaternion.identity, false );
+		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( SpaceflightController.m_instance.m_playerShip.gameObject, Vector3.zero, Quaternion.identity );
 
 		// move the player object
 		SpaceflightController.m_instance.m_playerShip.transform.position = playerData.m_general.m_coordinates = playerData.m_general.m_lastStarSystemCoordinates;
