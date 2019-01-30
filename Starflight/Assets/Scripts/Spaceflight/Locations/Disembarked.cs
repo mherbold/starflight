@@ -112,8 +112,8 @@ public class Disembarked : MonoBehaviour
 		// fade in the map
 		SpaceflightController.m_instance.m_viewport.StartFade( 1.0f, 2.0f );
 
-		// play the music track
-		MusicController.m_instance.ChangeToTrack( MusicController.Track.InOrbit );
+		// play the planetside music track
+		MusicController.m_instance.ChangeToTrack( MusicController.Track.Planetside );
 
 		// set up the clouds and atmosphere
 		planetController.SetupClouds( m_clouds, null, true, true );

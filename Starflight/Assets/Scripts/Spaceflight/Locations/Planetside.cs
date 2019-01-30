@@ -108,13 +108,13 @@ public class Planetside : MonoBehaviour
 
 			// reset the buttons
 			SpaceflightController.m_instance.m_buttonController.RestoreBridgeButtons();
+
+			// play the planetside music track
+			MusicController.m_instance.ChangeToTrack( MusicController.Track.Planetside );
 		}
 
 		// fade in the map
 		SpaceflightController.m_instance.m_viewport.StartFade( 1.0f, 2.0f );
-
-		// play the docking bay music track
-		MusicController.m_instance.ChangeToTrack( MusicController.Track.InOrbit );
 
 		// set up the clouds and atmosphere
 		planetController.SetupClouds( m_clouds, null, true, true );

@@ -12,6 +12,7 @@ public class MusicController : MonoBehaviour
 		InOrbit,
 		Hyperspace,
 		Encounter,
+		Planetside,
 		Count
 	};
 
@@ -39,6 +40,7 @@ public class MusicController : MonoBehaviour
 	public AudioClip m_inOrbit;
 	public AudioClip m_hyperspace;
 	public AudioClip m_encounter;
+	public AudioClip m_planetside;
 
 	// the audio source
 	AudioSource m_audioSource;
@@ -86,6 +88,7 @@ public class MusicController : MonoBehaviour
 		m_trackList[ (int) Track.InOrbit ] = m_inOrbit;
 		m_trackList[ (int) Track.Hyperspace ] = m_hyperspace;
 		m_trackList[ (int) Track.Encounter ] = m_encounter;
+		m_trackList[ (int) Track.Planetside ] = m_planetside;
 	}
 
 	// unity start

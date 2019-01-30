@@ -155,6 +155,8 @@ public class PlayerCamera : MonoBehaviour
 		SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Safe landing, captain.</color>" );
 
 		SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
+
+		MusicController.m_instance.ChangeToTrack( MusicController.Track.Planetside );
 	}
 
 	public void StartingDescent()

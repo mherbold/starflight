@@ -118,7 +118,7 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - SF_AlbedoColor: {r: 0, g: 0, b: 0, a: 0.009067413}
+    - SF_AlbedoColor: {r: 0, g: 0, b: 0, a: 0}
     - SF_BaseScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SF_DetailScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SF_EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
