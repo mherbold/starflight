@@ -3,7 +3,7 @@
 #define SF_SHADER_DEFERRED
 
 #include "SF - Core.cginc"
-#include "SF - Fractals.cginc"
+#include "SF - FractalNoise.cginc"
 
 SF_VertexShaderOutput vertDeferred_SF( SF_VertexShaderInput v )
 {

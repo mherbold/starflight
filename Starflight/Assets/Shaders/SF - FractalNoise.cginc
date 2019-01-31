@@ -1,6 +1,6 @@
 
-#ifndef SF_SHADER_FRACTALS
-#define SF_SHADER_FRACTALS
+#ifndef SF_SHADER_FRACTALNOISE
+#define SF_SHADER_FRACTALNOISE
 
 #include "SF - Core.cginc"
 
@@ -27,17 +27,24 @@ void DoFractalDetails( SF_VertexShaderOutput i, in out float3 albedo, in out flo
 {
 	float2 texCoord = TRANSFORM_TEX( i.texCoord0, _DetailAlbedoMap );
 
-	float fbm1 = FBM( texCoord, 2, 0.95, 6 );
+	float fbm1 = FBM( texCoord, 2, 0.75, 8 );
 
-	albedo.rgb *= saturate( fbm1 * 0.3 + 0.7 );
+	albedo.rgb *= fbm1 * 0.4 + 0.6;
+
+//	albedo = 0.5;
+
 	specular.rgb *= saturate( fbm1 * 0.5 + 0.5 );
 
-	float fbm2 = FBM( texCoord + 0.35, 2, 0.5, 4 );
-	float fbm3 = FBM( texCoord + 0.65, 2, 0.5, 4 );
+//	specular = 0.5;
 
-	normal.xy += float2( fbm2 * 0.5, fbm3 * 0.5 );
+//	float fbm2 = FBM( texCoord + 0.35, 2, 0.75, 4 );
+//	float fbm3 = FBM( texCoord + 0.65, 2, 0.75, 4 );
 
-	normalize( normal.xyz );
+//	normal.xy += float2( fbm2 * 0.1, fbm3 * 0.1 );
+
+//	normalize( normal.xyz );
+
+//	normal.xyz = float3( 0, 1, 0 );
 }
 
 #endif

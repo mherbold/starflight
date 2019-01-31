@@ -71,7 +71,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
         m_Texture: {fileID: 2800000, guid: 341ee79bdb9687045aec2222586f5320, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: 0.125, y: 0.125}
         m_Offset: {x: 0, y: 0}
     - _DetailMask:
         m_Texture: {fileID: 0}
@@ -112,7 +112,7 @@ Material:
     - SF_EmissiveProjectionOn: 0
     - SF_ForwardShadowsOn: 1
     - SF_FractalDetailsOn: 1
-    - SF_NormalMapStrength: 1
+    - SF_NormalMapStrength: 0.001
     - SF_OcclusionPower: 1
     - SF_OrthonormalizeOn: 0
     - SF_RenderQueueOffset: 1

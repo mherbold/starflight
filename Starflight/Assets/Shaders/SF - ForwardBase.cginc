@@ -3,7 +3,7 @@
 #define SF_SHADER_FORWARD_BASE
 
 #include "SF - Core.cginc"
-#include "SF - Fractals.cginc"
+#include "SF - FractalNoise.cginc"
 
 SF_VertexShaderOutput vertForwardBase_SF( SF_VertexShaderInput v )
 {
