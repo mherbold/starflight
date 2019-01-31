@@ -37,9 +37,6 @@ public class PlayerCamera : MonoBehaviour
 			// yes - update the player camera position
 			transform.localPosition = m_followGameObject.transform.position + m_followOffset;
 			transform.localRotation = Quaternion.LookRotation( -m_followOffset, Vector3.forward );
-
-			// update the clipping planes
-			m_camera.farClipPlane = Mathf.Max( 2048.0f, m_followOffset.y + 1536.0f );
 		}
 	}
 

@@ -5,7 +5,8 @@ Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: UV Grid
   m_Shader: {fileID: 4800000, guid: f67073489be24934c9032d00068b6661, type: 3}
   m_ShaderKeywords: ALBEDOMAP_ON BLENDPREPASS_ON CASTSHADOWS_ON FORWARDSHADOWS_ON
@@ -15,7 +16,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses:
   - BlendPrePass
@@ -176,13 +177,17 @@ Material:
     - SF_AlphaTestValue: 0
     - SF_BlendDst: 0
     - SF_BlendSrc: 1
+    - SF_CullMode: 2
     - SF_DetailNormalMapStrength: 1
+    - SF_EmissiveProjectionOn: 0
     - SF_ForwardShadowsOn: 1
+    - SF_FractalDetailsOn: 0
     - SF_NormalMapStrength: 1
     - SF_OcclusionPower: 1
     - SF_OrthonormalizeOn: 0
     - SF_RenderQueueOffset: 0
     - SF_Smoothness: 0.5
+    - SF_ZTest: 4
     - SF_ZWriteOn: 1
     - ShadowCasterOn: 1
     - Smoothness: 0.5
@@ -194,7 +199,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _GlossMapScale: 1
-    - _Glossiness: 0
+    - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0

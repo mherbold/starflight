@@ -3,7 +3,6 @@
 #define SF_SHADER_CORE
 
 #include "SF - Unity.cginc"
-#include "SF - SimplexNoise.cginc"
 
 float4x4 SF_ProjectionMatrix;
 
@@ -101,6 +100,12 @@ SF_VertexShaderOutput ComputeVertexShaderOutput( SF_VertexShaderInput v )
 	o.positionWorld = positionWorld;
 	o.eyeDir = normalize( positionWorld.xyz - _WorldSpaceCameraPos );
 	o.normalWorld = normalWorld;
+	
+	#if SF_BEHINDEVERYTHING_ON
+
+		o.texCoord1 = ComputeScreenPos( o.positionClip );
+
+	#endif // SF_BEHINDEVERYTHING_ON
 
 	#if SF_NORMALMAP_ON || SF_DETAILNORMALMAP_ON
 
@@ -111,12 +116,6 @@ SF_VertexShaderOutput ComputeVertexShaderOutput( SF_VertexShaderInput v )
 		o.binormalWorld = binormalWorld;
 
 	#endif // SF_NORMALMAP_ON || SF_DETAILNORMALMAP_ON
-	
-	#if SF_BEHINDEVERYTHING_ON
-
-		o.texCoord1 = ComputeScreenPos( o.positionClip );
-
-	#endif // SF_BEHINDEVERYTHING_ON
 
 	return o;
 }
@@ -133,11 +132,11 @@ float4 ComputeAlbedo( SF_VertexShaderOutput i, float4 albedoColor )
 
 	#endif // SF_ALBEDOMAP_ON
 
-	#if SF_DETAILALBEDOMAP_ON
+	#if SF_DETAILALBEDOMAP_ON && !SF_FRACTALDETAILS_ON
 
 		float4 detailAlbedoMap = tex2D( _DetailAlbedoMap, TRANSFORM_TEX( i.texCoord0, _DetailAlbedoMap ) );
 
-	#else // !SF_DETAILALBEDOMAP_ON
+	#else // !SF_DETAILALBEDOMAP_ON || SF_FRACTALDETAILS_ON
 
 		float4 detailAlbedoMap = 1;
 
@@ -397,7 +396,7 @@ float ComputeFogAmount( SF_VertexShaderOutput i )
 	}
 	else
 	{
-		float3 distanceFromEye = distance( i.positionWorld, _WorldSpaceCameraPos.xyz );
+		float3 distanceFromEye = distance( i.positionWorld.xyz, _WorldSpaceCameraPos.xyz );
 
 		float fogAmount = 1 - saturate( distanceFromEye * unity_FogParams.z + unity_FogParams.w );
 	
@@ -409,64 +408,6 @@ float ComputeFogAmount( SF_VertexShaderOutput i )
 	}
 }
 
-void DoFractalDetails1( SF_VertexShaderOutput i, in out float3 albedo, in out float3 specular, in out float3 normal )
-{
-	float dc = simplex_turbulence( float4( i.texCoord0.xy * _DetailAlbedoMap_ST.xy, 0, 0 ), 25, 2, 0.95, 6 );
-
-	dc = saturate( dc * 0.3 + 0.7 );
-
-	albedo.rgb *= dc;
-	specular.rgb *= dc;
-
-	float dnx = simplex_turbulence( float4( i.texCoord0.xy * _DetailAlbedoMap_ST.xy, 100, 0 ), 25, 2, 0.95, 6 ) * 0.25;
-	float dny = simplex_turbulence( float4( i.texCoord0.xy * _DetailAlbedoMap_ST.xy, 200, 0 ), 25, 2, 0.95, 6 ) * 0.25;
-
-	normal.x += dnx;
-	normal.y += dny;
-
-	normalize( normal.xyz );
-}
-
-float FBM( float2 texCoord, float lacunarity, float persistence, int octaves )
-{
-	texCoord = TRANSFORM_TEX( texCoord, _DetailAlbedoMap );
-
-	float value = 0;
-
-	for ( int i = 0; i < octaves; i++ )
-	{
-		value += persistence * ( tex2D( _DetailAlbedoMap, texCoord ) * 2 - 1 );
-
-		texCoord *= lacunarity;
-	}
-
-	return value;
-}
-
-void DoFractalDetails2( SF_VertexShaderOutput i, in out float3 albedo, in out float3 specular, in out float3 normal )
-{
-	const float2x2 plus45 = float2x2( 0.7071, 0.7071,-0.7071, 0.7071 );
-
-	float2 texCoord = TRANSFORM_TEX( i.texCoord0, _DetailAlbedoMap );
-
-	float fbm1 = FBM( texCoord, 2, 0.95, 6 );
-
-	texCoord = TRANSFORM_TEX( mul( i.texCoord0.xy, plus45 ), _DetailAlbedoMap );
-
-	float fbm2 = FBM( texCoord, 2, 0.95, 6 );
-
-	float colorShift = saturate( fbm1 * 0.3 + 0.7 );
-
-	albedo.rgb *= colorShift;
-	specular.rgb *= colorShift;
-
-	float2 normalShift = float2( fbm1 * 0.25, fbm2 * 0.25 );
-
-	normal.xy += normalShift;
-
-	normalize( normal.xyz );
-}
-
 SF_VertexShaderOutput ComputeCloudsVertexShaderOutput( SF_VertexShaderInput v )
 {
 	SF_VertexShaderOutput o;
@@ -475,12 +416,12 @@ SF_VertexShaderOutput ComputeCloudsVertexShaderOutput( SF_VertexShaderInput v )
 
 	o.positionClip = UnityApplyLinearShadowBias( UnityClipSpaceShadowCasterPos( v.position, v.normal ) );
 
-	float2 baseTexCoord = o.texCoord0.xy;
+	float2 baseTexCoord = TRANSFORM_TEX( o.texCoord0.xy, _MainTex );
 
-	o.texCoord0.xy = baseTexCoord * float2( 10.6, 10 ) + _Time.x * SF_Speed * float2( 0.5, 0.6 ) * _MainTex_ST.xy;
-	o.texCoord0.zw = baseTexCoord * float2( 10, 10.5 ) + _Time.x * SF_Speed * float2( 0.75, 0.5 ) * _MainTex_ST.xy;
-	o.texCoord1.xy = baseTexCoord * float2( 2, 2 ) + _Time.x * SF_Speed * float2( 1.5, 1 ) * _MainTex_ST.xy;
-	o.texCoord1.zw = baseTexCoord * float2( 2, 2 ) + _Time.x * SF_Speed * float2( 1, 1.2 ) * _MainTex_ST.xy;
+	o.texCoord0.xy = baseTexCoord * float2( 12, 10 ) + _Time.x * SF_Speed * float2( 0.50, 0.60 );
+	o.texCoord0.zw = baseTexCoord * float2(  9, 11 ) + _Time.x * SF_Speed * float2( 0.75, 0.50 );
+	o.texCoord1.xy = baseTexCoord * float2(  2,  2 ) + _Time.x * SF_Speed * float2( 1.50, 1.00 );
+	o.texCoord1.zw = baseTexCoord * float2(  2,  2 ) + _Time.x * SF_Speed * float2( 1.00, 1.20 );
 
 	return o;
 }

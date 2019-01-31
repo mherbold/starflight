@@ -166,11 +166,13 @@ Material:
     - SF_DetailNormalMapStrength: 1
     - SF_EmissiveProjectionOn: 0
     - SF_ForwardShadowsOn: 0
+    - SF_FractalDetailsOn: 0
     - SF_NormalMapStrength: 1
     - SF_OcclusionPower: 1
     - SF_OrthonormalizeOn: 0
     - SF_RenderQueueOffset: 0
     - SF_Smoothness: 0
+    - SF_ZTest: 4
     - SF_ZWriteOn: 1
     - ShadowCasterOn: 1
     - Smoothness: 0

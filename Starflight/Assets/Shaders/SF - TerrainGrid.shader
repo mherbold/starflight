@@ -10,9 +10,7 @@ Shader "Starflight/Terrain Grid"
 
 		/* UV1 Maps */
 
-		//SF_AlbedoMap( "Albedo Map", 2D ) = "white" {}
 		_MainTex( "Albedo Map", 2D ) = "white" {}
-		//SF_DetailAlbedoMap( "Detail Albedo Map", 2D ) = "white" {}
 		_DetailAlbedoMap( "Detail Albedo Map", 2D ) = "white" {}
 		SF_AlbedoColor( "Albedo Color", Color ) = ( 1, 1, 1, 1 )
 

@@ -7,16 +7,17 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Test - Fractal Detail
+  m_Name: Shader Test - Transparent
   m_Shader: {fileID: 4800000, guid: f67073489be24934c9032d00068b6661, type: 3}
-  m_ShaderKeywords: SF_DETAILALBEDOMAP_ON SF_FORWARDSHADOWSON_ON SF_FORWARDSHADOWS_ON
-    SF_FRACTALDETAILSON_ON SF_FRACTALDETAILS_ON SF_NORMALMAP_ISCOMPRESSED SF_NORMALMAP_ON
-    SF_SPECULAR_ON SF_ZWRITEON_ON _NORMALMAP
+  m_ShaderKeywords: SF_ALBEDOMAP_ON SF_ALPHA_ON SF_DETAILNORMALMAP_ISCOMPRESSED SF_DETAILNORMALMAP_ON
+    SF_FORWARDSHADOWSON_ON SF_FORWARDSHADOWS_ON SF_NORMALMAP_ISCOMPRESSED SF_NORMALMAP_ON
+    SF_SPECULARMAP_ON SF_SPECULAR_ON SF_ZWRITEON_ON _NORMALMAP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
+  m_CustomRenderQueue: 3000
+  stringTagMap:
+    RenderType: Transparent
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -34,16 +35,16 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - SF_DetailNormalMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 10, y: 10}
+        m_Texture: {fileID: 2800000, guid: ce8977add0ab7474b8bed2613d8dfe99, type: 3}
+        m_Scale: {x: 1.5, y: 3}
         m_Offset: {x: 0, y: 0}
     - SF_EmissiveMap:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 2, y: 2}
+        m_Scale: {x: 2, y: 4}
         m_Offset: {x: 0, y: 0}
     - SF_NormalMap:
-        m_Texture: {fileID: 2800000, guid: ce9499b177542434bad7b78d0ca8b3ee, type: 3}
-        m_Scale: {x: 4, y: 4}
+        m_Texture: {fileID: 2800000, guid: b87bf71531621604a966cd72c9414830, type: 3}
+        m_Scale: {x: 2, y: 4}
         m_Offset: {x: 0, y: 0}
     - SF_OcclusionMap:
         m_Texture: {fileID: 0}
@@ -58,20 +59,16 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - SF_SpecularMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 2, y: 2}
-        m_Offset: {x: 0, y: 0}
-    - SF_WaterMaskMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: 9339f982091ec334ca015b495d6f233f, type: 3}
+        m_Scale: {x: 2, y: 4}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 2800000, guid: 0efe3a1ae6b4ee74baefb84a8fa0dcdd, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
-        m_Texture: {fileID: 2800000, guid: 341ee79bdb9687045aec2222586f5320, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1.5, y: 1.5}
         m_Offset: {x: 0, y: 0}
     - _DetailMask:
         m_Texture: {fileID: 0}
@@ -86,8 +83,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 2}
+        m_Texture: {fileID: 2800000, guid: 9339f982091ec334ca015b495d6f233f, type: 3}
+        m_Scale: {x: 2, y: 4}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
@@ -104,20 +101,20 @@ Material:
     m_Floats:
     - SF_AlbedoOcclusionOn: 0
     - SF_AlphaTestValue: 0
-    - SF_BlendDst: 0
+    - SF_BlendDst: 10
     - SF_BlendSrc: 1
     - SF_CullMode: 2
     - SF_Density: 1.451
     - SF_DetailNormalMapStrength: 1
     - SF_EmissiveProjectionOn: 0
     - SF_ForwardShadowsOn: 1
-    - SF_FractalDetailsOn: 1
-    - SF_NormalMapStrength: 1
+    - SF_FractalDetailsOn: 0
+    - SF_NormalMapStrength: 2
     - SF_OcclusionPower: 1
     - SF_OrthonormalizeOn: 0
     - SF_RenderQueueOffset: 1
-    - SF_Smoothness: 0.5
-    - SF_Speed: 1
+    - SF_Smoothness: 0.58
+    - SF_Speed: 0.25
     - SF_ZTest: 4
     - SF_ZWriteOn: 1
     - _BumpScale: 1
@@ -139,7 +136,7 @@ Material:
     m_Colors:
     - SF_AlbedoColor: {r: 1, g: 1, b: 1, a: 1}
     - SF_BaseScaleOffset: {r: 2, g: 2, b: 0, a: 0}
-    - SF_DetailScaleOffset: {r: 10, g: 10, b: 0, a: 0}
+    - SF_DetailScaleOffset: {r: 1.5, g: 1.5, b: 0, a: 0}
     - SF_EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
     - SF_SpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - SF_UV1BaseScaleOffset: {r: 1, g: 1, b: 0, a: 0}

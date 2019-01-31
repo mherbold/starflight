@@ -1,6 +1,6 @@
 
-#ifndef SF_TERRAIN_GRID
-#define SF_TERRAIN_GRID
+#ifndef SF_SHADER_TERRAIN_GRID
+#define SF_SHADER_TERRAIN_GRID
 
 #include "SF - Core.cginc"
 

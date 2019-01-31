@@ -164,7 +164,7 @@ Material:
     - SF_OverrideDepthOutput: 0
     - SF_RenderQueueOffset: 0
     - SF_Smoothness: 0.33
-    - SF_Speed: 0.15
+    - SF_Speed: 0.1
     - SF_ZTest: 4
     - SF_ZWriteOn: 0
     - Smoothness: 0.4

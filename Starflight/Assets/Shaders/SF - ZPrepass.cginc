@@ -1,6 +1,6 @@
 
-#ifndef SF_SHADER_ZPREPASS
-#define SF_SHADER_ZPREPASS
+#ifndef SF_SHADER_Z_PREPASS
+#define SF_SHADER_Z_PREPASS
 
 #include "SF - Core.cginc"
 

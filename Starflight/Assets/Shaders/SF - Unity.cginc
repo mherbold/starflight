@@ -10,5 +10,6 @@ UNITY_DECLARE_SHADOWMAP( _ShadowMapTexture );
 UNITY_DECLARE_DEPTH_TEXTURE( _CameraDepthTexture );
 
 sampler3D _DitherMaskLOD;
+float _ShadowIntensity;
 
 #endif

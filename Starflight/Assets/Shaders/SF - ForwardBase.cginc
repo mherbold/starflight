@@ -3,6 +3,7 @@
 #define SF_SHADER_FORWARD_BASE
 
 #include "SF - Core.cginc"
+#include "SF - Fractals.cginc"
 
 SF_VertexShaderOutput vertForwardBase_SF( SF_VertexShaderInput v )
 {
@@ -19,7 +20,7 @@ float4 fragForwardBase_SF( SF_VertexShaderOutput i ) : SV_Target
 
 	#ifdef SF_FRACTALDETAILS_ON
 
-		DoFractalDetails2( i, albedo.rgb, specular.rgb, normal );
+		DoFractalDetails( i, albedo.rgb, specular.rgb, normal );
 
 	#endif // SF_FRACTALDETAILS_ON
 

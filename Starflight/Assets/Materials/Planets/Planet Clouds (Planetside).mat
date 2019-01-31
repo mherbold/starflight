@@ -58,7 +58,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - SF_NormalMap:
         m_Texture: {fileID: 2800000, guid: 76ebdfff9bc22b54081eebc36b4300a4, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: 0, y: 0}
         m_Offset: {x: 0, y: 0}
     - SF_OcclusionMap:
         m_Texture: {fileID: 0}
@@ -74,7 +74,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - SF_SpecularMap:
         m_Texture: {fileID: 2800000, guid: 9b33bcedc0d330344b920874d80e05b1, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: 0, y: 0}
         m_Offset: {x: 0, y: 0}
     - ScatterMapA:
         m_Texture: {fileID: 2800000, guid: 02c3a2de36ef1614a940fbe60a4cf610, type: 3}
@@ -165,7 +165,7 @@ Material:
     - SF_OverrideDepthOutput: 1
     - SF_RenderQueueOffset: 0
     - SF_Smoothness: 0.3
-    - SF_Speed: 0.15
+    - SF_Speed: 0.1
     - SF_ZTest: 4
     - SF_ZWriteOn: 0
     - Smoothness: 0.4
