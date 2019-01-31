@@ -18,6 +18,15 @@ public class PlayerCamera : MonoBehaviour
 	// the follow offset
 	public Vector3 m_followOffset;
 
+	// the minimum elevation above the terrain
+	public float m_minimumElevation;
+
+	// how quickly to correct the camera hitting the terrain
+	public float m_elevationCorrectionTime;
+
+	// the current elevation correction
+	float m_currentElevationDelta;
+
 	// the camera animation controller
 	Animator m_animator;
 
@@ -34,9 +43,30 @@ public class PlayerCamera : MonoBehaviour
 		// are we following an object?
 		if ( m_followGameObject != null )
 		{
-			// yes - update the player camera position
-			transform.localPosition = m_followGameObject.transform.position + m_followOffset;
-			transform.localRotation = Quaternion.LookRotation( -m_followOffset, Vector3.forward );
+			// yes - get to the player data
+			var playerData = DataController.m_instance.m_playerData;
+
+			// update the player camera position
+			transform.localPosition = m_followGameObject.transform.localPosition + m_followOffset;
+
+			// are we in the disembark location?
+			if ( playerData.m_general.m_location == PD_General.Location.Disembarked )
+			{
+				// yes - get the position of the terrain below the camera
+				var terrainPosition = SpaceflightController.m_instance.m_disembarked.ApplyElevation( transform.localPosition, false );
+
+				// how far below the minimum elevation are we?
+				var delta = Mathf.Max( 0.0f, m_minimumElevation - ( transform.localPosition.y - terrainPosition.y ) );
+
+				// smoothly interpolate the elevation correction
+				m_currentElevationDelta = Mathf.Lerp( m_currentElevationDelta, delta, Time.deltaTime / m_elevationCorrectionTime );
+
+				// update the player camera position
+				transform.localPosition += Vector3.up * m_currentElevationDelta;
+			}
+
+			// update the player camera rotation
+			transform.localRotation = Quaternion.LookRotation( m_followGameObject.transform.localPosition - transform.localPosition, Vector3.forward );
 		}
 	}
 

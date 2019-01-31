@@ -11864,6 +11864,8 @@ MonoBehaviour:
   - {fileID: 718743436}
   m_followGameObject: {fileID: 0}
   m_followOffset: {x: 0, y: 0, z: 0}
+  m_minimumElevation: 32
+  m_elevationCorrectionTime: 0.5
 --- !u!95 &324297162
 Animator:
   serializedVersion: 3

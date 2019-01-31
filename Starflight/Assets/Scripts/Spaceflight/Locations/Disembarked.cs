@@ -32,7 +32,7 @@ public class Disembarked : MonoBehaviour
 		m_debugPoints = new Vector3[ 10000 ];
 	}
 
-	private void Update()
+	void Update()
 	{
 		// the terrain grid always follow the terrain vehicle (but snap to integral positions to avoid vertex popping)
 		var gridPosition = m_terrainVehicle.transform.localPosition;
@@ -60,6 +60,9 @@ public class Disembarked : MonoBehaviour
 
 		// reset the buttons
 		SpaceflightController.m_instance.m_buttonController.RestoreBridgeButtons();
+
+		// forget the planet generator
+		m_planetGenerator = null;
 	}
 
 	// call this to show this location
@@ -199,15 +202,22 @@ public class Disembarked : MonoBehaviour
 		m_arthShip.transform.localRotation = Quaternion.Euler( 0.0f, chosenAngle, 0.0f );
 	}
 
-	Vector3 ApplyElevation( Vector3 worldCoordinates, bool updateWheelEfficiency )
+	public Vector3 ApplyElevation( Vector3 worldCoordinates, bool updateWheelEfficiency )
 	{
-		var x = worldCoordinates.x * 0.25f + m_planetGenerator.m_textureMapWidth * 0.5f - 0.5f;
-		var y = worldCoordinates.z * 0.25f + m_planetGenerator.m_textureMapHeight * 0.5f - 0.5f;
+		if ( m_planetGenerator != null )
+		{
+			var x = worldCoordinates.x * 0.25f + m_planetGenerator.m_textureMapWidth * 0.5f - 0.5f;
+			var y = worldCoordinates.z * 0.25f + m_planetGenerator.m_textureMapHeight * 0.5f - 0.5f;
 
-		var groundElevation = m_planetGenerator.GetBicubicSmoothedElevation( x, y ) * m_terrainGrid.m_elevationScale;
-		var waterElevation = m_planetGenerator.m_waterHeight * m_terrainGrid.m_elevationScale;
+			var groundElevation = m_planetGenerator.GetBicubicSmoothedElevation( x, y ) * m_terrainGrid.m_elevationScale;
+			var waterElevation = m_planetGenerator.m_waterHeight * m_terrainGrid.m_elevationScale;
 
-		worldCoordinates.y = Mathf.Max( waterElevation, groundElevation );
+			worldCoordinates.y = Mathf.Max( waterElevation, groundElevation );
+		}
+		else
+		{
+			worldCoordinates.y = 0.0f;
+		}
 
 		return worldCoordinates;
 	}
