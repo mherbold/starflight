@@ -21,15 +21,14 @@ public class Disembarked : MonoBehaviour
 	public float m_arthShipGroundScanHeight;
 	public float m_arthShipGroundScanInterval;
 
+	// the elements
+	public GameObject[] m_elements;
+
 	// the planet generator
 	PlanetGenerator m_planetGenerator;
 
-	// also for gizmo drawing
-	Vector3[] m_debugPoints;
-
 	Disembarked()
 	{
-		m_debugPoints = new Vector3[ 10000 ];
 	}
 
 	void Update()
@@ -185,7 +184,7 @@ public class Disembarked : MonoBehaviour
 				}
 			}
 
-			Debug.Log( "Angle = " + angle + ", maximum elevation = " + maximumElevation );
+			// Debug.Log( "Angle = " + angle + ", maximum elevation = " + maximumElevation );
 
 			if ( maximumElevation < minimumElevation )
 			{
@@ -194,7 +193,7 @@ public class Disembarked : MonoBehaviour
 			}
 		}
 
-		Debug.Log( "Minimum elevation = " + minimumElevation + ", angle chosen = " + chosenAngle );
+		// Debug.Log( "Minimum elevation = " + minimumElevation + ", angle chosen = " + chosenAngle );
 
 		shipPosition.y = minimumElevation + m_arthShipElevationAboveGround;
 
@@ -210,7 +209,7 @@ public class Disembarked : MonoBehaviour
 			var y = worldCoordinates.z * 0.25f + m_planetGenerator.m_textureMapHeight * 0.5f - 0.5f;
 
 			var groundElevation = m_planetGenerator.GetBicubicSmoothedElevation( x, y ) * m_terrainGrid.m_elevationScale;
-			var waterElevation = m_planetGenerator.m_waterHeight * m_terrainGrid.m_elevationScale;
+			var waterElevation = m_planetGenerator.m_waterElevation * m_terrainGrid.m_elevationScale;
 
 			worldCoordinates.y = Mathf.Max( waterElevation, groundElevation );
 		}
@@ -221,22 +220,4 @@ public class Disembarked : MonoBehaviour
 
 		return worldCoordinates;
 	}
-
-#if UNITY_EDITOR
-
-	// draw gizmos to help debug the game
-	void OnDrawGizmos()
-	{
-		Gizmos.color = Color.green;
-
-		for ( var i = 0; i < m_debugPoints.Length; i++ )
-		{
-			if ( m_debugPoints[ i ] != null )
-			{
-				Gizmos.DrawWireCube( m_debugPoints[ i ], Vector3.one );
-			}
-		}
-	}
-
-#endif
 }

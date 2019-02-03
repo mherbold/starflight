@@ -1,6 +1,5 @@
 ﻿
 using UnityEngine;
-using System;
 
 public class TerrainVehicle : MonoBehaviour
 {
@@ -60,6 +59,9 @@ public class TerrainVehicle : MonoBehaviour
 
 	// for gizmo drawing
 	Vector3[] m_debugVectors;
+
+	// push back vector for collision with stuff on the terrain
+	Vector3 m_pushBackVector;
 
 	TerrainVehicle()
 	{
@@ -169,6 +171,9 @@ public class TerrainVehicle : MonoBehaviour
 		// update the tv game object position
 		transform.localPosition = tvPosition;
 
+		// apply the push back vector
+		transform.localPosition += m_pushBackVector;
+
 		// reset the steering joints
 		foreach ( var steeringJoint in m_steeringJoints )
 		{
@@ -224,6 +229,21 @@ public class TerrainVehicle : MonoBehaviour
 
 			steeringJoint.transform.localPosition = wheelPosition;
 		}
+
+		// reset the push back vector
+		m_pushBackVector = Vector3.zero;
+	}
+
+	public void AddPushBack( Vector3 pushBackNormal, float pushBackAmount )
+	{
+		// get to the player data
+		var playerData = DataController.m_instance.m_playerData;
+
+		// add to the push back vector this collision
+		m_pushBackVector += pushBackNormal * pushBackAmount;
+
+		// reduce the current speed of the terrain vehicle
+		playerData.m_general.m_currentSpeed = Mathf.Max( 0.0f, playerData.m_general.m_currentSpeed + pushBackAmount * 10.0f );
 	}
 
 	Vector3 ApplyElevation( Vector3 worldCoordinates, bool updateWheelEfficiency )
@@ -232,7 +252,7 @@ public class TerrainVehicle : MonoBehaviour
 		var y = worldCoordinates.z * 0.25f + m_planetGenerator.m_textureMapHeight * 0.5f - 0.5f;
 
 		var groundElevation = m_planetGenerator.GetBicubicSmoothedElevation( x, y ) * m_elevationScale;
-		var waterElevation = m_planetGenerator.m_waterHeight * m_elevationScale;
+		var waterElevation = m_planetGenerator.m_waterElevation * m_elevationScale;
 		var floatElevation = waterElevation - m_floatDepth;
 
 		worldCoordinates.y = Mathf.Max( floatElevation, groundElevation );
@@ -269,6 +289,41 @@ public class TerrainVehicle : MonoBehaviour
 		for ( var i = 0; i < m_debugVectors.Length; i += 2 )
 		{
 			Gizmos.DrawLine( m_debugVectors[ i ], m_debugVectors[ i + 1 ] );
+		}
+
+		if ( false && DataController.m_instance != null )
+		{
+			// get to the player data
+			var playerData = DataController.m_instance.m_playerData;
+
+			if ( ( playerData != null ) && ( m_planetGenerator != null ) )
+			{
+				for ( var z = -15; z <= 15; z++ )
+				{
+					for ( var x = -15; x <= 15; x++ )
+					{
+						var mapX = ( playerData.m_general.m_coordinates.x + x ) * 0.25f + m_planetGenerator.m_textureMapWidth * 0.5f - 0.5f;
+						var mapY = ( playerData.m_general.m_coordinates.z + z ) * 0.25f + m_planetGenerator.m_textureMapHeight * 0.5f - 0.5f;
+
+						var bilinearElevation = m_planetGenerator.GetBilinearSmoothedElevation( mapX, mapY ) * m_elevationScale;
+						var bicubicElevation = m_planetGenerator.GetBicubicSmoothedElevation( mapX, mapY ) * m_elevationScale;
+
+						var bilinearPosition = playerData.m_general.m_coordinates + new Vector3( x, 0.0f, z );
+						var bicubicPosition = bilinearPosition;
+
+						bilinearPosition.y = bilinearElevation;
+						bicubicPosition.y = bicubicElevation;
+
+						Gizmos.color = Color.blue;
+
+						Gizmos.DrawCube( bilinearPosition, Vector3.one * 0.25f );
+
+						Gizmos.color = Color.yellow;
+
+						Gizmos.DrawCube( bicubicPosition, Vector3.one * 0.20f );
+					}
+				}
+			}
 		}
 	}
 

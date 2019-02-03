@@ -34,9 +34,9 @@ public class PlanetGenerator
 	public int m_textureMapHeight;
 
 	// misc planet map data
-	public float m_minimumHeight;
-	public float m_waterHeight;
-	public float m_snowHeight;
+	public float m_minimumElevation;
+	public float m_waterElevation;
+	public float m_snowElevation;
 
 	Color m_waterColor;
 	Color m_snowColor;
@@ -82,6 +82,11 @@ public class PlanetGenerator
 		m_currentStep = 0;
 		m_mapsGenerated = false;
 		m_abort = false;
+	}
+
+	public GD_Planet GetPlanet()
+	{
+		return m_planet;
 	}
 
 	public float Process()
@@ -175,9 +180,9 @@ public class PlanetGenerator
 					}
 					else
 					{
-						m_minimumHeight = binaryReader.ReadSingle();
-						m_waterHeight = binaryReader.ReadSingle();
-						m_snowHeight = binaryReader.ReadSingle();
+						m_minimumElevation = binaryReader.ReadSingle();
+						m_waterElevation = binaryReader.ReadSingle();
+						m_snowElevation = binaryReader.ReadSingle();
 
 						var r = binaryReader.ReadSingle();
 						var g = binaryReader.ReadSingle();
@@ -314,7 +319,7 @@ public class PlanetGenerator
 
 		var albedoMap = new PG_AlbedoMap();
 
-		m_albedoMap = albedoMap.Process( m_elevation, m_preparedColorMap, m_waterHeight, m_waterColor, m_groundColor );
+		m_albedoMap = albedoMap.Process( m_elevation, m_preparedColorMap, m_waterElevation, m_waterColor, m_groundColor );
 
 		m_currentStep++;
 
@@ -395,7 +400,7 @@ public class PlanetGenerator
 
 			var specularMap = new PG_SpecularMap();
 
-			m_specularMap = specularMap.Process( m_elevation, m_albedoMap, m_waterHeight, waterSpecularColor, waterSpecularPower, 4 );
+			m_specularMap = specularMap.Process( m_elevation, m_albedoMap, m_waterElevation, waterSpecularColor, waterSpecularPower, 4 );
 		}
 
 		m_currentStep++;
@@ -466,7 +471,7 @@ public class PlanetGenerator
 		{
 			var waterMaskMap = new PG_WaterMaskMap();
 
-			m_waterMaskMap = waterMaskMap.Process( m_elevation, m_waterHeight, 4 );
+			m_waterMaskMap = waterMaskMap.Process( m_elevation, m_waterElevation, 4 );
 		}
 
 		m_currentStep++;
@@ -536,7 +541,7 @@ public class PlanetGenerator
 		{
 			var normalMap = new PG_NormalMap();
 
-			m_normalMap = normalMap.Process( m_elevation, c_normalScale, m_waterHeight, 2 );
+			m_normalMap = normalMap.Process( m_elevation, c_normalScale, m_waterElevation, 2 );
 		}
 
 		m_currentStep++;
@@ -618,9 +623,9 @@ public class PlanetGenerator
 				{
 					var elevation = m_elevation[ y, x ];
 
-					if ( elevation < m_waterHeight )
+					if ( elevation < m_waterElevation )
 					{
-						elevation = m_waterHeight;
+						elevation = m_waterElevation;
 					}
 
 					pixels[ index++ ] = new Color( elevation * 0.25f, 0.0f, 0.0f );
@@ -660,6 +665,102 @@ public class PlanetGenerator
 		}
 
 		return m_elevation[ iY, iX ];
+	}
+
+	public Vector3 GetBilinearSmoothedNormal( float x, float y, float elevationScale )
+	{
+		var v1 = new Vector3( x, 0.0f, y );
+
+		v1.y = GetBilinearSmoothedElevation( v1.x, v1.z ) * elevationScale;
+
+		var v2 = new Vector3( x - 0.1f, 0.0f, y - 0.1f );
+
+		v2.y = GetBilinearSmoothedElevation( v2.x, v2.z ) * elevationScale;
+
+		var v3 = new Vector3( x + 0.1f, 0.0f, y - 0.1f );
+
+		v3.y = GetBilinearSmoothedElevation( v3.x, v3.z ) * elevationScale;
+
+		var v4 = new Vector3( x - 0.1f, 0.0f, y + 0.1f );
+
+		v4.y = GetBilinearSmoothedElevation( v4.x, v4.z ) * elevationScale;
+
+		var v5 = new Vector3( x + 0.1f, 0.0f, y + 0.1f );
+
+		v5.y = GetBilinearSmoothedElevation( v5.x, v5.z ) * elevationScale;
+
+		var side1 = v3 - v1;
+		var side2 = v2 - v1;
+
+		var normal1 = Vector3.Cross( side1, side2 );
+
+		side1 = v4 - v1;
+		side2 = v5 - v1;
+
+		var normal2 = Vector3.Cross( side1, side2 );
+
+		return Vector3.Normalize( normal1 + normal2 );
+	}
+
+	public Vector3 GetBicubicSmoothedNormal( float x, float y, float elevationScale )
+	{
+		var v1 = new Vector3( x, 0.0f, y );
+
+		v1.y = GetBicubicSmoothedElevation( v1.x, v1.z ) * elevationScale;
+
+		var v2 = new Vector3( x - 0.1f, 0.0f, y - 0.1f );
+
+		v2.y = GetBicubicSmoothedElevation( v2.x, v2.z ) * elevationScale;
+
+		var v3 = new Vector3( x + 0.1f, 0.0f, y - 0.1f );
+
+		v3.y = GetBicubicSmoothedElevation( v3.x, v3.z ) * elevationScale;
+
+		var v4 = new Vector3( x - 0.1f, 0.0f, y + 0.1f );
+
+		v4.y = GetBicubicSmoothedElevation( v4.x, v4.z ) * elevationScale;
+
+		var v5 = new Vector3( x + 0.1f, 0.0f, y + 0.1f );
+
+		v5.y = GetBicubicSmoothedElevation( v5.x, v5.z ) * elevationScale;
+
+		var side1 = v3 - v1;
+		var side2 = v2 - v1;
+
+		var normal1 = Vector3.Cross( side1, side2 );
+
+		side1 = v4 - v1;
+		side2 = v5 - v1;
+
+		var normal2 = Vector3.Cross( side1, side2 );
+
+		return Vector3.Normalize( normal1 + normal2 );
+	}
+
+	public float GetBilinearSmoothedElevation( float x, float y )
+	{
+		var iX = Mathf.FloorToInt( x );
+		var iY = Mathf.FloorToInt( y );
+
+		var x0 = iX;
+		var x1 = x0 + 1;
+
+		var y0 = iY;
+		var y1 = y0 + 1;
+
+		var h00 = GetElevation( x0, y0 );
+		var h01 = GetElevation( x1, y0 );
+
+		var h0 = Mathf.Lerp( h00, h01, x - iX );
+
+		var h10 = GetElevation( x0, y1 );
+		var h11 = GetElevation( x1, y1 );
+
+		var h1 = Mathf.Lerp( h10, h11, x - iX );
+
+		var elevation = Mathf.Lerp( h0, h1, y - iY );
+
+		return elevation;
 	}
 
 	public float GetBicubicSmoothedElevation( float x, float y )

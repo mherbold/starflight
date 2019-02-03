@@ -10,6 +10,7 @@ public class TerrainGrid : MonoBehaviour
 	public int m_detail = 9;
 	public float m_elevationScale = 100.0f;
 	public float m_elevationOffset = 16.0f;
+	public TerrainRocks m_terrainRocks;
 
 	Mesh m_mesh;
 	MeshFilter m_meshFilter;
@@ -30,11 +31,6 @@ public class TerrainGrid : MonoBehaviour
 	{
 		// generate the base terrain grid
 		Initialize();
-	}
-
-	// unity update
-	void Update()
-	{
 	}
 
 	// initialize the terrain
@@ -72,6 +68,9 @@ public class TerrainGrid : MonoBehaviour
 	// call this to set an elevation texture and switch the mode to dynamic terrain grid
 	public void SetElevationMap( Texture2D elevationTexture, PlanetGenerator planetGenerator )
 	{
+		// save the planet generator
+		m_planetGenerator = planetGenerator;
+
 		// make sure the terrain grid mesh is initialized
 		Initialize();
 
@@ -87,6 +86,12 @@ public class TerrainGrid : MonoBehaviour
 		m_material.SetTexture( "SF_SpecularMap", planetGenerator.m_specularTexture );
 		m_material.SetTexture( "SF_NormalMap", planetGenerator.m_normalTexture );
 		m_material.SetTexture( "SF_WaterMaskMap", planetGenerator.m_waterMaskTexture );
+
+		// populate the rocks
+		if ( m_terrainRocks != null )
+		{
+			m_terrainRocks.Initialize( m_planetGenerator, m_elevationScale );
+		}
 	}
 
 	// call this to bake in the elevation at the selected latitude and longitude
@@ -177,9 +182,9 @@ public class TerrainGrid : MonoBehaviour
 
 		var elevation = m_planetGenerator.GetBicubicSmoothedElevation( x, z );
 
-		if ( elevation < m_planetGenerator.m_waterHeight )
+		if ( elevation < m_planetGenerator.m_waterElevation )
 		{
-			elevation = m_planetGenerator.m_waterHeight;
+			elevation = m_planetGenerator.m_waterElevation;
 		}
 
 		return new Vector3( vertex.x, elevation * m_elevationScale, vertex.z );
