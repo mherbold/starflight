@@ -222,7 +222,7 @@ public class Planet : MonoBehaviour
 			}
 
 			// get the primary atmosphere of the planet
-			var color = m_planet.GetAtmosphereColor();
+			var atmosphereColor = m_planet.GetAtmosphereColor();
 
 			// get the atmosphere density
 			var atmosphereDensity = m_planet.GetAtmosphereDensity();
@@ -238,8 +238,10 @@ public class Planet : MonoBehaviour
 			}
 			else
 			{
+				var cloudSpecularColor = m_planet.GetCloudSpecularColor();
+
 				planetClouds.material.SetColor( "SF_AlbedoColor", new Color( 1.0f, 1.0f, 1.0f ) );
-				planetClouds.material.SetColor( "SF_SpecularColor", color );
+				planetClouds.material.SetColor( "SF_SpecularColor", cloudSpecularColor );
 			}
 
 			// set the opacity of the clouds based on the density
@@ -248,7 +250,7 @@ public class Planet : MonoBehaviour
 			// apply the color to the atmosphere
 			if ( planetAtmosphere != null )
 			{
-				planetAtmosphere.GetComponent<MeshRenderer>().material.SetColor( "SF_AlbedoColor", color );
+				planetAtmosphere.GetComponent<MeshRenderer>().material.SetColor( "SF_AlbedoColor", atmosphereColor );
 			}
 
 			// update the skybox if needed
@@ -258,14 +260,14 @@ public class Planet : MonoBehaviour
 				StarflightSkybox.m_instance.SwitchSkyboxTextures( "B", "planet" );
 
 				// set the color tint
-				StarflightSkybox.m_instance.m_colorTintB = color;
+				StarflightSkybox.m_instance.m_colorTintB = atmosphereColor;
 			}
 
 			// also do fog settings
 			if ( enableFog )
 			{
 				RenderSettings.fog = true;
-				RenderSettings.fogColor = color;
+				RenderSettings.fogColor = atmosphereColor;
 				RenderSettings.fogMode = FogMode.Linear;
 				RenderSettings.fogDensity = 1.0f;
 				RenderSettings.fogStartDistance = 1000.0f - atmosphereDensity * 950.0f;

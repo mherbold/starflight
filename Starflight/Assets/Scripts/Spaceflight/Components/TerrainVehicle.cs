@@ -68,27 +68,6 @@ public class TerrainVehicle : MonoBehaviour
 		m_debugVectors = new Vector3[ 12 ];
 	}
 
-	// unity awake
-	void Awake()
-	{
-	}
-
-	// unity start
-	void Start()
-	{
-		// get to the player data
-		var playerData = DataController.m_instance.m_playerData;
-
-		// get the planet controller
-		var planetController = SpaceflightController.m_instance.m_starSystem.GetPlanetController( playerData.m_general.m_currentPlanetId );
-
-		// save the planet generator
-		m_planetGenerator = planetController.GetPlanetGenerator();
-
-		// jump start the last direction
-		m_lastDirection = playerData.m_general.m_currentDirection;
-	}
-
 	// unity update
 	void Update()
 	{
@@ -121,6 +100,20 @@ public class TerrainVehicle : MonoBehaviour
 		{
 			// calculate the new position of the player
 			var newPosition = transform.localPosition + (Vector3) playerData.m_general.m_currentDirection * m_wheelEfficiency * playerData.m_general.m_currentSpeed * Time.deltaTime;
+
+			// wrap player around the planet
+			var planetWidth = 2048.0f * 4.0f;
+			var maxPlanetCoordinateX = planetWidth * 0.5f;
+			var minPlanetCoordinateX = planetWidth * -0.5f;
+
+			if ( newPosition.x >= maxPlanetCoordinateX )
+			{
+				newPosition.x -= planetWidth;
+			}
+			else if ( newPosition.x < minPlanetCoordinateX )
+			{
+				newPosition.x += planetWidth;
+			}
 
 			// update the player position
 			transform.localPosition = newPosition;
@@ -232,6 +225,21 @@ public class TerrainVehicle : MonoBehaviour
 
 		// reset the push back vector
 		m_pushBackVector = Vector3.zero;
+	}
+
+	public void Initialize()
+	{
+		// get to the player data
+		var playerData = DataController.m_instance.m_playerData;
+
+		// get the planet controller
+		var planetController = SpaceflightController.m_instance.m_starSystem.GetPlanetController( playerData.m_general.m_currentPlanetId );
+
+		// save the planet generator
+		m_planetGenerator = planetController.GetPlanetGenerator();
+
+		// jump start the last direction
+		m_lastDirection = playerData.m_general.m_currentDirection;
 	}
 
 	public void AddPushBack( Vector3 pushBackNormal, float pushBackAmount )

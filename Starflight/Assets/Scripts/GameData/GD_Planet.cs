@@ -160,6 +160,18 @@ public class GD_Planet
 		return Color.HSVToRGB( hue, 1.0f, density );
 	}
 
+	// return the blended cloud specular color of the planet
+	public Color GetCloudSpecularColor()
+	{
+		var atmosphereColor = GetAtmosphereColor();
+
+		Color.RGBToHSV( atmosphereColor, out var hue, out var saturation, out var value );
+
+		value = Mathf.Max( 0.5f, value );
+
+		return Color.HSVToRGB( hue, saturation, value );
+	}
+
 	// get the atmosphere text
 	public string GetAtmosphereText()
 	{

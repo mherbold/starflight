@@ -10,7 +10,7 @@ public class Disembarked : MonoBehaviour
 	public TerrainGrid m_terrainGrid;
 
 	// the terrain vehicle
-	public GameObject m_terrainVehicle;
+	public TerrainVehicle m_terrainVehicle;
 
 	// the arth ship
 	public GameObject m_arthShip;
@@ -27,11 +27,8 @@ public class Disembarked : MonoBehaviour
 	// the planet generator
 	PlanetGenerator m_planetGenerator;
 
-	Disembarked()
-	{
-	}
-
-	void Update()
+	// unity late update
+	void LateUpdate()
 	{
 		// the terrain grid always follow the terrain vehicle (but snap to integral positions to avoid vertex popping)
 		var gridPosition = m_terrainVehicle.transform.localPosition;
@@ -41,6 +38,7 @@ public class Disembarked : MonoBehaviour
 		gridPosition.x = Mathf.FloorToInt( gridPosition.x / 8.0f ) * 8.0f;
 		gridPosition.z = Mathf.FloorToInt( gridPosition.z / 8.0f ) * 8.0f;
 
+		// update the terrain grid position (late update because we want to ensure this is done after the TV coordinates have been updated)
 		m_terrainGrid.transform.localPosition = gridPosition;
 	}
 
@@ -90,8 +88,8 @@ public class Disembarked : MonoBehaviour
 		playerData.m_general.m_coordinates = playerData.m_general.m_lastDisembarkedCoordinates;
 
 		// follow the terrain vehicle
-		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( m_terrainVehicle, new Vector3( 0.0f, 75.0f, -75.0f ) );
-		//SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( m_terrainVehicle, new Vector3( 0.0f, 20.0f, -20.0f ) );
+		SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( m_terrainVehicle.gameObject, new Vector3( 0.0f, 75.0f, -75.0f ) );
+		//SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( m_terrainVehicle.gameObject, new Vector3( 0.0f, 20.0f, -20.0f ) );
 
 		// get the planet controller
 		var planetController = SpaceflightController.m_instance.m_starSystem.GetPlanetController( playerData.m_general.m_currentPlanetId );
@@ -199,6 +197,9 @@ public class Disembarked : MonoBehaviour
 
 		m_arthShip.transform.localPosition = shipPosition;
 		m_arthShip.transform.localRotation = Quaternion.Euler( 0.0f, chosenAngle, 0.0f );
+
+		// initialize the terrain vehicle
+		m_terrainVehicle.Initialize();
 	}
 
 	public Vector3 ApplyElevation( Vector3 worldCoordinates, bool updateWheelEfficiency )
