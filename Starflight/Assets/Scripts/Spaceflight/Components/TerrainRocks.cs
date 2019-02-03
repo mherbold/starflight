@@ -81,30 +81,6 @@ public class TerrainRocks : MonoBehaviour
 			// UnityEngine.Debug.Log( "Placing rock " + i + " at " + position.x + ", " + position.y + ", " + position.z );
 
 			m_rocks[ i ] = clonedRock;
-
-			if ( i == 2043 )
-			{
-				var j = 0;
-
-				for ( var z = -5; z <= 5; z++ )
-				{
-					for ( var x = -5; x <= 5; x++ )
-					{
-						var testPosition = mapPosition;
-
-						testPosition.x += x * 0.1f;
-						testPosition.z += z * 0.1f;
-
-						testPosition.y = planetGenerator.GetBilinearSmoothedElevation( testPosition.x, testPosition.z );
-
-						position.x = ( ( testPosition.x + 0.5f ) / planetGenerator.m_textureMapWidth - 0.5f ) * 2048.0f * 4.0f;
-						position.y = testPosition.y * elevationScale;
-						position.z = ( ( testPosition.z + 0.5f ) / planetGenerator.m_textureMapHeight - 0.5f ) * 2048.0f * 2.0f;
-
-						m_debugPoints[ j++ ] = position;
-					}
-				}
-			}
 		}
 
 		UnityEngine.Debug.Log( "Time to populate rocks: " + stopwatch.ElapsedMilliseconds + " milliseconds" );
