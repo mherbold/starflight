@@ -8,9 +8,12 @@ public class TerrainGrid : MonoBehaviour
 	public int m_numLevels = 3;
 	public int m_baseSize = 100;
 	public int m_detail = 9;
+
 	public float m_elevationScale = 100.0f;
 	public float m_elevationOffset = 16.0f;
+
 	public TerrainRocks m_terrainRocks;
+	public TerrainElements m_terrainElements;
 
 	Mesh m_mesh;
 	MeshFilter m_meshFilter;
@@ -91,6 +94,12 @@ public class TerrainGrid : MonoBehaviour
 		if ( m_terrainRocks != null )
 		{
 			m_terrainRocks.Initialize( m_planetGenerator, m_elevationScale );
+		}
+
+		// populate the elements
+		if ( m_terrainElements != null )
+		{
+			m_terrainElements.Initialize( m_planetGenerator, m_elevationScale );
 		}
 	}
 

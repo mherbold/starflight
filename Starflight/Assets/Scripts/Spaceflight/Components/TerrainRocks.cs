@@ -1,8 +1,6 @@
 ﻿
 using UnityEngine;
 
-using System.Diagnostics;
-
 public class TerrainRocks : MonoBehaviour
 {
 	const int c_maxNumRocks = 10000;
@@ -13,10 +11,6 @@ public class TerrainRocks : MonoBehaviour
 	// initialize the rocks for a planet
 	public void Initialize( PlanetGenerator planetGenerator, float elevationScale )
 	{
-		// var stopwatch = new Stopwatch();
-
-		// stopwatch.Start();
-
 		// delete all of the existing rocks
 		Tools.DestroyChildrenOf( gameObject );
 
@@ -67,11 +61,33 @@ public class TerrainRocks : MonoBehaviour
 				// get a random minimum elevation
 				var minimumElevation = Random.Range( planetGenerator.m_waterElevation, planetGenerator.m_snowElevation );
 
-				// is the rock above the minimum elevation?
+				// is this spot above the minimum elevation?
 				if ( elevation >= minimumElevation )
 				{
-					// yes - we found a good spot - stop now
-					break;
+					// yes - is there another object taking up this space?
+					var position = Tools.MapToWorldCoordinates( mapX, mapY, planetGenerator.m_textureMapWidth, planetGenerator.m_textureMapHeight );
+
+					position.y = elevation * elevationScale;
+
+					var acceptThisSpot = true;
+
+					var colliders = Physics.OverlapSphere( position, 15.0f );
+
+					foreach ( var collider in colliders )
+					{
+						// yes - is it the terrain vehicle?
+						if ( collider.gameObject.tag != "Terrain Vehicle" )
+						{
+							// nope - let's not put it here
+							acceptThisSpot = false;
+							break;
+						}
+					}
+
+					if ( acceptThisSpot )
+					{
+						break;
+					}
 				}
 			}
 
@@ -88,8 +104,8 @@ public class TerrainRocks : MonoBehaviour
 
 			// tell unity to clone a rock from the selected rock template with the position and rotation we want it to have
 			var clonedRock = Instantiate( rockTemplate, rockPosition, rockRotation, transform );
-		}
 
-		// UnityEngine.Debug.Log( "Time to populate rocks: " + stopwatch.ElapsedMilliseconds + " milliseconds" );
+			clonedRock.name = "Rock #" + ( i + 1 ) + " (from " + rockTemplate.name + ")";
+		}
 	}
 }
