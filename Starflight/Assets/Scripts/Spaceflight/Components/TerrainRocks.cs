@@ -17,6 +17,9 @@ public class TerrainRocks : MonoBehaviour
 
 		// stopwatch.Start();
 
+		// delete all of the existing rocks
+		Tools.DestroyChildrenOf( gameObject );
+
 		// get to the current planet we are on
 		var planet = planetGenerator.GetPlanet();
 
