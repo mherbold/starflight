@@ -16,21 +16,6 @@ public class Countdown : MonoBehaviour
 	// whether or not we have been initialized already
 	bool m_initialized;
 
-	// unity awake
-	void Awake()
-	{
-	}
-
-	// unity start
-	void Start()
-	{
-	}
-
-	// unity update
-	void Update()
-	{
-	}
-
 	// call this to hide the countdown object
 	public void Hide()
 	{

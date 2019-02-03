@@ -22,8 +22,8 @@ class Tools
 		return new Vector3( ( gameCoordinates.x - 128.0f ) * 256.0f, 0.0f, ( gameCoordinates.z - 128.0f ) * 256.0f );
 	}
 
-	// convert from unity world coordinates to terrain coordinates
-	public static void WorldToTerrainCoordinates( Vector3 worldCoordinates, out float x, out float z )
+	// convert from unity world coordinates to latlong coordinates
+	public static void WorldToLatLongCoordinates( Vector3 worldCoordinates, out float x, out float z )
 	{
 		// unscale from world coordinates (2048x2048 = 1/8 of map surface)
 		x = worldCoordinates.x / ( 2048.0f * 4.0f );
@@ -36,8 +36,8 @@ class Tools
 		z *= 180.0f / 0.75f;
 	}
 
-	// convert from terrain coordinates to unity world coordinates
-	public static Vector3 TerrainToWorldCoordinates( float latitude, float longitude )
+	// convert from latlong coordinates to unity world coordinates
+	public static Vector3 LatLongToWorldCoordinates( float latitude, float longitude )
 	{
 		// convert from -180,180 to -0.5,0.5
 		var x = latitude / 360.0f;
@@ -51,6 +51,26 @@ class Tools
 
 		// wrap it in a vector
 		return new Vector3( x, 0.0f, z );
+	}
+
+	// convert from world coordinates to map coordinates
+	public static void WorldToMapCoordinates( Vector3 worldCoordinates, out float mapX, out float mapY, int mapWidth, int mapHeight )
+	{
+		mapX = ( worldCoordinates.x * 0.25f ) + ( mapWidth * 0.5f ) - 0.5f;
+		mapY = ( worldCoordinates.z * 0.25f ) + ( mapHeight * 0.5f ) - 0.5f;
+	}
+
+	// convert from map to world coordinates
+	public static Vector3 MapToWorldCoordinates( float mapX, float mapY, int mapWidth, int mapHeight )
+	{
+		Vector3 worldCoordinates;
+
+		worldCoordinates.x = ( ( mapX + 0.5f ) - ( mapWidth * 0.5f ) ) * 4.0f;
+		worldCoordinates.z = ( ( mapY + 0.5f ) - ( mapHeight * 0.5f ) ) * 4.0f;
+
+		worldCoordinates.y = 0.0f;
+
+		return worldCoordinates;
 	}
 
 	// dump an object to the debug log

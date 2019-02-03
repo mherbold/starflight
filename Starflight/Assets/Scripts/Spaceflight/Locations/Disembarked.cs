@@ -154,7 +154,7 @@ public class Disembarked : MonoBehaviour
 		m_terrainGrid.SetElevationMap( elevationTexture, m_planetGenerator );
 
 		// place the arth ship at the selected landing coordinates
-		var shipPosition = Tools.TerrainToWorldCoordinates( playerData.m_general.m_selectedLatitude, playerData.m_general.m_selectedLongitude );
+		var shipPosition = Tools.LatLongToWorldCoordinates( playerData.m_general.m_selectedLatitude, playerData.m_general.m_selectedLongitude );
 
 		m_arthShip.transform.localPosition = shipPosition;
 
@@ -205,10 +205,9 @@ public class Disembarked : MonoBehaviour
 	{
 		if ( m_planetGenerator != null )
 		{
-			var x = worldCoordinates.x * 0.25f + m_planetGenerator.m_textureMapWidth * 0.5f - 0.5f;
-			var y = worldCoordinates.z * 0.25f + m_planetGenerator.m_textureMapHeight * 0.5f - 0.5f;
+			Tools.WorldToMapCoordinates( worldCoordinates, out var mapX, out var mapY, m_planetGenerator.m_textureMapWidth, m_planetGenerator.m_textureMapHeight );
 
-			var groundElevation = m_planetGenerator.GetBicubicSmoothedElevation( x, y ) * m_terrainGrid.m_elevationScale;
+			var groundElevation = m_planetGenerator.GetBicubicSmoothedElevation( mapX, mapY ) * m_terrainGrid.m_elevationScale;
 			var waterElevation = m_planetGenerator.m_waterElevation * m_terrainGrid.m_elevationScale;
 
 			worldCoordinates.y = Mathf.Max( waterElevation, groundElevation );

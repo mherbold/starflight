@@ -169,7 +169,7 @@ public class Viewport : MonoBehaviour
 
 		if ( playerData.m_general.m_location == PD_General.Location.Disembarked )
 		{
-			Tools.WorldToTerrainCoordinates( playerData.m_general.m_lastDisembarkedCoordinates, out var x, out var z );
+			Tools.WorldToLatLongCoordinates( playerData.m_general.m_lastDisembarkedCoordinates, out var x, out var z );
 
 			var latitude = Mathf.RoundToInt( x );
 			var longitude = Mathf.RoundToInt( z );

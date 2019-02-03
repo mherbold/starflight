@@ -91,6 +91,8 @@ public class PlanetGenerator
 
 	public float Process()
 	{
+		// UnityEngine.Debug.Log( "Doing step " + m_currentStep + " for planet " + m_planet.m_id + "..." );
+
 		switch ( m_currentStep )
 		{
 			case 0:
