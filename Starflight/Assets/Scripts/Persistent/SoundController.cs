@@ -164,6 +164,16 @@ public class SoundController : MonoBehaviour
 		}
 	}
 
+	// stop all sounds
+	public void StopAllSounds()
+	{
+		// go through each audio source controller
+		foreach ( var audioSourceController in m_audioSourceControllerList )
+		{
+			audioSourceController.FadeOut( 0.25f );
+		}
+	}
+
 	// change the pitch of a sound (changes the pitch on all audio sources playing the given sound)
 	public void SetFrequency( Sound sound, float pitch = 1.0f )
 	{
