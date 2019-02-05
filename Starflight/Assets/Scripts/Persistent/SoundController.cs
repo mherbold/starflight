@@ -137,7 +137,7 @@ public class SoundController : MonoBehaviour
 			// is this audio source playing something?
 			if ( audioSourceController.IsFree() )
 			{
-				Debug.Log( "Playing sound " + sound );
+				// Debug.Log( "Playing sound " + sound );
 
 				// play the sound!
 				audioSourceController.Play( m_soundList[ (int) sound ], volume, pitch, loop );
