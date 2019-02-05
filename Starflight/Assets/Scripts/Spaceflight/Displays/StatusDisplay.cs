@@ -7,6 +7,15 @@ public class StatusDisplay : ShipDisplay
 	// the values text
 	public TextMeshProUGUI m_values;
 
+	// the shield outline
+	public GameObject m_shieldOutline;
+
+	// the shield gauge
+	public RectTransform m_shieldGauge;
+
+	// the armor gauge
+	public RectTransform m_armorGauge;
+
 	// the missile launcher
 	public GameObject m_missileLauncher;
 
@@ -68,11 +77,61 @@ public class StatusDisplay : ShipDisplay
 			m_values.text += energyAmount.ToString( "N1" ) + "M<sup>3</sup>\n";
 		}
 
-		// TODO: actual shields text
-		m_values.text += "Down\n";
+		// do we have shields?
+		if ( playerData.m_playerShip.m_shieldingClass == 0 )
+		{
+			// no
+			m_values.text += "None\n";
 
-		// TODO: actual weapons text
-		m_values.text += "Unarmed\n";
+			// hide the shield outline
+			m_shieldOutline.SetActive( false );
+		}
+		else
+		{
+			// are our shields up?
+			if ( playerData.m_playerShip.m_shieldsAreUp )
+			{
+				// yes
+				m_values.text += "Up\n";
+
+				// show the shield outline
+				m_shieldOutline.SetActive( true );
+			}
+			else
+			{
+				// no
+				m_values.text += "Down\n";
+
+				// hide the shield outline
+				m_shieldOutline.SetActive( false );
+			}
+		}
+
+		// do we have weapons?
+		if ( ( playerData.m_playerShip.m_missileLauncherClass == 0 ) && ( playerData.m_playerShip.m_laserCannonClass == 0 ) )
+		{
+			// no
+			m_values.text += "None\n";
+		}
+		else
+		{
+			// are the weapons armed?
+			if ( playerData.m_playerShip.m_weaponsAreArmed )
+			{
+				//
+				m_values.text += "Armed\n";
+			}
+			else
+			{
+				m_values.text += "Unarmed\n";
+			}
+		}
+
+		// update the shield gauge
+		m_shieldGauge.anchorMax = new Vector2( 1.0f, Mathf.Lerp( 0.0f, 1.0f, playerData.m_playerShip.m_shieldPoints / 2500.0f ) );
+
+		// update the armor gauge
+		m_armorGauge.anchorMax = new Vector2( 1.0f, Mathf.Lerp( 0.0f, 1.0f, playerData.m_playerShip.m_armorPoints / 1500.0f ) );
 	}
 
 	// the status display label

@@ -24,6 +24,12 @@ public class PD_PlayerShip
 	public PD_ArtifactStorage m_artifactStorage;
 	public PD_ElementStorage m_elementStorage;
 
+	public bool m_shieldsAreUp;
+	public bool m_weaponsAreArmed;
+
+	public int m_shieldPoints;
+	public int m_armorPoints;
+
 	public void Reset()
 	{
 		// reset the ship name
@@ -41,6 +47,13 @@ public class PD_PlayerShip
 
 		// reset fuel used to zero
 		m_fuelUsed = 0.0f;
+
+		// reset other stuff
+		m_shieldsAreUp = false;
+		m_weaponsAreArmed = false;
+
+		m_shieldPoints = 0;
+		m_armorPoints = 250;
 
 		// recalculate the mass of the ship
 		RecalculateMass();
