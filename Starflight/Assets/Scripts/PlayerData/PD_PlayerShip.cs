@@ -256,7 +256,7 @@ public class PD_PlayerShip
 			m_shieldsAreUp = true;
 			m_shieldPoints = shields.m_points;
 
-			SpaceflightController.m_instance.m_messages.AddText( "Shields raised." );
+			SpaceflightController.m_instance.m_messages.AddText( "<color=white>Shields raised.</color>" );
 		}
 	}
 
@@ -267,7 +267,7 @@ public class PD_PlayerShip
 			m_shieldsAreUp = false;
 			m_shieldPoints = 0;
 
-			SpaceflightController.m_instance.m_messages.AddText( "Shields dropped." );
+			SpaceflightController.m_instance.m_messages.AddText( "<color=white>Shields dropped.</color>" );
 		}
 	}
 
@@ -277,7 +277,7 @@ public class PD_PlayerShip
 		{
 			m_weaponsAreArmed = true;
 
-			SpaceflightController.m_instance.m_messages.AddText( "Weapons armed." );
+			SpaceflightController.m_instance.m_messages.AddText( "<color=white>Weapons armed.</color>" );
 		}
 	}
 
@@ -287,7 +287,7 @@ public class PD_PlayerShip
 		{
 			m_weaponsAreArmed = false;
 
-			SpaceflightController.m_instance.m_messages.AddText( "Weapons disarmed." );
+			SpaceflightController.m_instance.m_messages.AddText( "<color=white>Weapons disarmed.</color>" );
 		}
 	}
 

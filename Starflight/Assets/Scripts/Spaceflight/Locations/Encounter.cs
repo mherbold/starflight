@@ -801,7 +801,7 @@ public class Encounter : MonoBehaviour
 					SoundController.m_instance.PlaySound( SoundController.Sound.RadarBlip );
 
 					// update the message
-					SpaceflightController.m_instance.m_messages.AddText( "Captain, we're being scanned." );
+					SpaceflightController.m_instance.m_messages.AddText( "<color=white>Captain, we're being scanned.</color>" );
 
 					// update the flag
 					m_pdEncounter.m_scanTimer = 0.0f;
