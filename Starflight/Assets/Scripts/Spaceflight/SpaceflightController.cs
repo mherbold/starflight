@@ -219,8 +219,8 @@ public class SpaceflightController : MonoBehaviour
 		// update the player data
 		playerData.m_general.m_location = newLocation;
 
-		// hide everything
-		HideEverything();
+		// stop all sounds
+		SoundController.m_instance.StopAllSounds();
 
 		// switching to starport is a special case
 		if ( playerData.m_general.m_location == PD_General.Location.Starport )
@@ -230,6 +230,9 @@ public class SpaceflightController : MonoBehaviour
 		}
 		else
 		{
+			// hide everything
+			HideEverything();
+
 			// make sure the map is visible
 			m_viewport.StartFade( 1.0f, 2.0f );
 
