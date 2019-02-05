@@ -16,6 +16,9 @@ public class MoveButton : ShipButton
 
 	public override bool Execute()
 	{
+		// start playing the diesel engine sound
+		SoundController.m_instance.PlaySound( SoundController.Sound.DieselEngine, 0.75f, 1.0f, true );
+
 		// return true to keep the button lit and active
 		return true;
 	}
@@ -52,6 +55,9 @@ public class MoveButton : ShipButton
 
 			// turn off the engines
 			SpaceflightController.m_instance.m_terrainVehicle.TurnOffEngines();
+
+			// stop playing the diesel engine sound
+			SoundController.m_instance.StopSound( SoundController.Sound.DieselEngine );
 
 			// are we near the ship?
 			if ( SpaceflightController.m_instance.m_disembarkArthShip.m_terrainVehicleIsInside )

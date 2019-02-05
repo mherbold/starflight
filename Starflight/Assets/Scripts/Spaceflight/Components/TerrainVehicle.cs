@@ -95,6 +95,11 @@ public class TerrainVehicle : MonoBehaviour
 			playerData.m_general.m_currentSpeed = Mathf.Lerp( playerData.m_general.m_currentSpeed, 0.0f, Time.deltaTime / m_timeToStop );
 		}
 
+		// update the diesel engine sound
+		var enginePitch = Mathf.Lerp( 1.0f, 1.75f, playerData.m_general.m_currentSpeed / m_maximumSpeed );
+
+		SoundController.m_instance.SetFrequency( SoundController.Sound.DieselEngine, enginePitch );
+
 		// check if the ship is moving
 		if ( playerData.m_general.m_currentSpeed >= 0.1f )
 		{

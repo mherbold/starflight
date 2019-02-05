@@ -105,10 +105,6 @@ public class Disembarked : MonoBehaviour
 		// change to the terrain vehicle buttons
 		SpaceflightController.m_instance.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.TerrainVehicle );
 
-		// activate the move button
-		SpaceflightController.m_instance.m_buttonController.SetSelectedButton( 1 );
-		SpaceflightController.m_instance.m_buttonController.ActivateButton();
-
 		// fade in the map
 		SpaceflightController.m_instance.m_viewport.StartFade( 1.0f, 2.0f );
 
@@ -200,6 +196,10 @@ public class Disembarked : MonoBehaviour
 
 		// initialize the terrain vehicle
 		m_terrainVehicle.Initialize();
+
+		// activate the move button
+		SpaceflightController.m_instance.m_buttonController.SetSelectedButton( 1 );
+		SpaceflightController.m_instance.m_buttonController.ActivateButton();
 	}
 
 	public Vector3 ApplyElevation( Vector3 worldCoordinates, bool updateWheelEfficiency )
