@@ -101,9 +101,9 @@ public class DisembarkButton : ShipButton
 		{
 			m_messageTimer += Time.deltaTime;
 
-			if ( m_messageTimer >= 0.75f )
+			if ( m_messageTimer >= 0.65f )
 			{
-				m_messageTimer -= 0.75f;
+				m_messageTimer -= 0.65f;
 
 				switch ( m_messageState )
 				{
@@ -114,6 +114,11 @@ public class DisembarkButton : ShipButton
 					case 1:
 						SpaceflightController.m_instance.m_messages.AddText( "<color=white>Initiating hull integrity check.</color>" );
 						break;
+
+					case 2:
+						SpaceflightController.m_instance.m_messages.AddText( "<color=white>Activating terrain vehicle.</color>" );
+						break;
+
 				}
 
 				m_messageState++;
