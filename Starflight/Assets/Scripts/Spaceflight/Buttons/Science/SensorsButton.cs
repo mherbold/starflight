@@ -36,6 +36,7 @@ public class SensorsButton : ShipButton
 		switch ( playerData.m_general.m_location )
 		{
 			case PD_General.Location.InOrbit:
+			case PD_General.Location.Planetside:
 
 				// show the sensor display
 				SpaceflightController.m_instance.m_displayController.ChangeDisplay( SpaceflightController.m_instance.m_displayController.m_sensorsDisplay );
