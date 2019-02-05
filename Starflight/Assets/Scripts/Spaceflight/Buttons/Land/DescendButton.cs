@@ -14,7 +14,7 @@ public class DescendButton : ShipButton
 		// update the messages display
 		SpaceflightController.m_instance.m_messages.Clear();
 
-		SpaceflightController.m_instance.m_messages.AddText( "Computing descent profile..." );
+		SpaceflightController.m_instance.m_messages.AddText( "<color=white>Computing descent profile.</color>" );
 
 		// set the landing coordinates
 		SpaceflightController.m_instance.m_planetside.UpdateTerrainGridNow();
