@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Diagnostics;
 
 public class DataController : MonoBehaviour
 {
@@ -54,7 +55,7 @@ public class DataController : MonoBehaviour
 		LoadPlayerDataList();
 
 		// debug info
-		Debug.Log( "Loading scene " + m_sceneToLoad );
+		UnityEngine.Debug.Log( "Loading scene " + m_sceneToLoad );
 
 		// load the next scene
 		SceneManager.LoadScene( m_sceneToLoad );
@@ -94,7 +95,7 @@ public class DataController : MonoBehaviour
 			var nextSceneName = GetCurrentSceneName();
 
 			// debug info
-			Debug.Log( "Loading scene " + nextSceneName );
+			UnityEngine.Debug.Log( "Loading scene " + nextSceneName );
 
 			// load the next scene
 			SceneManager.LoadScene( nextSceneName );
@@ -164,7 +165,7 @@ public class DataController : MonoBehaviour
 			if ( !loadSucceeded || !m_playerDataList[ i ].IsCurrentVersion() )
 			{
 				// debug info
-				Debug.Log( "Creating and resetting player data " + i );
+				UnityEngine.Debug.Log( "Creating and resetting player data " + i );
 
 				m_playerDataList[ i ] = new PlayerData();
 
@@ -208,6 +209,11 @@ public class DataController : MonoBehaviour
 	// this saves a save game slot to disk
 	public void SavePlayerData( int saveGameSlotNumber )
 	{
+		// measure performance
+		var stopwatch = new Stopwatch();
+
+		stopwatch.Start();
+
 		// get the path to the player data file
 		var filePath = Application.persistentDataPath + "/" + m_playerDataFileName + saveGameSlotNumber + ".bin";
 
@@ -227,12 +233,15 @@ public class DataController : MonoBehaviour
 
 				// serialize and save the player data file
 				binaryFormatter.Serialize( file, m_playerDataList[ saveGameSlotNumber ] );
+
+				// report how long it tool
+				UnityEngine.Debug.Log( "Saving the player data took " + stopwatch.ElapsedMilliseconds + " milliseconds." );
 			}
 		}
 		catch ( IOException exception )
 		{
 			// report if we got an exception
-			Debug.Log( "Saving player data failed - " + exception.Message );
+			UnityEngine.Debug.Log( "Saving player data failed - " + exception.Message );
 		}
 	}
 
@@ -301,7 +310,7 @@ public class DataController : MonoBehaviour
 		var nextSceneName = GetCurrentSceneName();
 
 		// debug info
-		Debug.Log( "Loading scene " + nextSceneName );
+		UnityEngine.Debug.Log( "Loading scene " + nextSceneName );
 
 		// load the next scene
 		SceneManager.LoadScene( nextSceneName );
