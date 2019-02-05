@@ -41,12 +41,14 @@ public class Messages : MonoBehaviour
 	// unity update
 	void LateUpdate()
 	{
-		// update the display if the text has changed
+		// update the display if the text has changed (and save the game)
 		if ( m_textChanged )
 		{
 			m_textChanged = false;
 
 			UpdateDisplay();
+
+			DataController.m_instance.SaveActiveGame();
 		}
 
 		// update sliding animation
