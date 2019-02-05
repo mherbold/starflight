@@ -16,7 +16,9 @@ public class LaunchYesButton : ShipButton
 		if ( playerData.m_general.m_location == PD_General.Location.DockingBay )
 		{
 			// update the messages log
-			SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Opening docking bay doors...</color>" );
+			SpaceflightController.m_instance.m_messages.Clear();
+
+			SpaceflightController.m_instance.m_messages.AddText( "<color=white>Opening docking bay doors...</color>" );
 
 			// start the launch animation from the docking bay
 			SpaceflightController.m_instance.m_dockingBay.StartLaunchAnimation();
@@ -24,7 +26,9 @@ public class LaunchYesButton : ShipButton
 		else
 		{
 			// update the messages log
-			SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Commencing launch sequence...</color>" );
+			SpaceflightController.m_instance.m_messages.Clear();
+
+			SpaceflightController.m_instance.m_messages.AddText( "<color=white>Commencing launch sequence...</color>" );
 
 			// start the launch animation from planetside
 			SpaceflightController.m_instance.m_planetside.StartLaunchAnimation();

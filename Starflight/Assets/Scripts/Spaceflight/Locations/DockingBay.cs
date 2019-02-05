@@ -56,7 +56,7 @@ public class DockingBay : MonoBehaviour
 		SpaceflightController.m_instance.m_playerCamera.StartAnimation( "In Space" );
 
 		// reset the buttons
-		SpaceflightController.m_instance.m_buttonController.RestoreBridgeButtons();
+		SpaceflightController.m_instance.m_buttonController.SetBridgeButtons();
 
 		// fade in the map
 		SpaceflightController.m_instance.m_viewport.StartFade( 1.0f, 2.0f );

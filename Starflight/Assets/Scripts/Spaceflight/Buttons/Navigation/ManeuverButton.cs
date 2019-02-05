@@ -30,7 +30,9 @@ public class ManeuverButton : ShipButton
 				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
 				// display the error message
-				SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Standing by to launch.</color>" );
+				SpaceflightController.m_instance.m_messages.Clear();
+
+				SpaceflightController.m_instance.m_messages.AddText( "<color=white>Standing by to launch.</color>" );
 
 				// turn off the button light
 				SpaceflightController.m_instance.m_buttonController.UpdateButtonSprites();
@@ -66,7 +68,9 @@ public class ManeuverButton : ShipButton
 				m_nextLocation = PD_General.Location.StarSystem;
 
 				// display message
-				SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Leaving orbit...</color>" );
+				SpaceflightController.m_instance.m_messages.Clear();
+
+				SpaceflightController.m_instance.m_messages.AddText( "<color=white>Leaving orbit...</color>" );
 
 				break;
 		}
@@ -172,7 +176,8 @@ public class ManeuverButton : ShipButton
 						m_nextLocation = PD_General.Location.DockingBay;
 
 						// display message
-						SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Initiating docking procedure...</color>" );
+						SpaceflightController.m_instance.m_messages.Clear();
+						SpaceflightController.m_instance.m_messages.AddText( "<color=white>Initiating docking procedure...</color>" );
 					}
 					else
 					{
@@ -180,7 +185,8 @@ public class ManeuverButton : ShipButton
 						m_nextLocation = PD_General.Location.InOrbit;
 
 						// display message
-						SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Initiating orbital maneuver...</color>" );
+						SpaceflightController.m_instance.m_messages.Clear();
+						SpaceflightController.m_instance.m_messages.AddText( "<color=white>Initiating orbital maneuver...</color>" );
 					}
 				}
 			}

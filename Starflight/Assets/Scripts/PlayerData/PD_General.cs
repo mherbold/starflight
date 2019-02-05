@@ -1,6 +1,8 @@
 ﻿
 using UnityEngine;
+
 using System;
+using System.Collections.Generic;
 
 [Serializable]
 
@@ -49,6 +51,8 @@ public class PD_General
 	public int m_second;
 	public int m_millisecond;
 
+	public int m_lastHour;
+
 	public float m_gameTime;
 
 	// the current star we are in (or the last star we visited if we are in hyperspace)
@@ -72,6 +76,9 @@ public class PD_General
 
 	// keep track of responses to questions on a per race basis
 	public int[,] m_lastCommIds;
+
+	// lines of messages
+	public List<string> m_messageList;
 
 	// this resets everything to initial game state
 	public void Reset()
@@ -116,6 +123,9 @@ public class PD_General
 
 		// allocate memory for last comms
 		m_lastCommIds = new int[ 20, 16 ];
+
+		// message list
+		m_messageList = new List<string>();
 	}
 	
 	// this updates the game time
@@ -149,5 +159,18 @@ public class PD_General
 		dateTime = dateTime.AddHours( m_hour );
 		m_currentStardateYMD = dateTime.ToString( "yyyy-MM-dd" );
 		m_currentStardateDHMY = dateTime.ToString( "dd.HH-MM-yyyy" );
+
+		// if the player has shields up then deplete it every "star" hour
+		if ( m_lastHour != m_hour )
+		{
+			m_lastHour = m_hour;
+
+			var playerData = DataController.m_instance.m_playerData;
+
+			if ( playerData.m_playerShip.m_shieldsAreUp )
+			{
+				playerData.m_playerShip.UseUpFuel( 0.1f );
+			}
+		}
 	}
 }

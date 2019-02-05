@@ -96,7 +96,7 @@ public class TerrainVehicle : MonoBehaviour
 		}
 
 		// update the diesel engine sound
-		var enginePitch = Mathf.Lerp( 1.0f, 1.75f, playerData.m_general.m_currentSpeed / m_maximumSpeed );
+		var enginePitch = Mathf.Lerp( 1.0f, 1.5f, playerData.m_general.m_currentSpeed / m_maximumSpeed );
 
 		SoundController.m_instance.SetFrequency( SoundController.Sound.DieselEngine, enginePitch );
 

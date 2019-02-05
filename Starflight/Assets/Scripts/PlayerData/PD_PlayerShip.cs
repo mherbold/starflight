@@ -103,7 +103,7 @@ public class PD_PlayerShip
 		// get access to the game data
 		var gameData = DataController.m_instance.m_gameData;
 
-		// return the engines this ship has
+		// return the shields this ship has
 		return gameData.m_shieldingList[ m_shieldingClass ];
 	}
 
@@ -112,7 +112,7 @@ public class PD_PlayerShip
 		// get access to the game data
 		var gameData = DataController.m_instance.m_gameData;
 
-		// return the engines this ship has
+		// return the armor this ship has
 		return gameData.m_armorList[ m_armorClass ];
 	}
 
@@ -121,7 +121,7 @@ public class PD_PlayerShip
 		// get access to the game data
 		var gameData = DataController.m_instance.m_gameData;
 
-		// return the engines this ship has
+		// return the missile launcher this ship has
 		return gameData.m_missileLauncherList[ m_missileLauncherClass ];
 	}
 
@@ -130,7 +130,7 @@ public class PD_PlayerShip
 		// get access to the game data
 		var gameData = DataController.m_instance.m_gameData;
 
-		// return the engines this ship has
+		// return the laser cannon this ship has
 		return gameData.m_laserCannonList[ m_laserCannonClass ];
 	}
 
@@ -245,5 +245,78 @@ public class PD_PlayerShip
 	{
 		// get total volume used up for artifacts and elements
 		m_volumeUsed = m_artifactStorage.m_volumeUsed + m_elementStorage.m_volumeUsed;
+	}
+
+	public void RaiseShields()
+	{
+		if ( !m_shieldsAreUp )
+		{
+			var shields = GetSheilding();
+
+			m_shieldsAreUp = true;
+			m_shieldPoints = shields.m_points;
+
+			SpaceflightController.m_instance.m_messages.AddText( "Shields raised." );
+		}
+	}
+
+	public void DropShields()
+	{
+		if ( m_shieldsAreUp )
+		{
+			m_shieldsAreUp = false;
+			m_shieldPoints = 0;
+
+			SpaceflightController.m_instance.m_messages.AddText( "Shields dropped." );
+		}
+	}
+
+	public void ArmWeapons()
+	{
+		if ( !m_weaponsAreArmed )
+		{
+			m_weaponsAreArmed = true;
+
+			SpaceflightController.m_instance.m_messages.AddText( "Weapons armed." );
+		}
+	}
+
+	public void DisarmWeapons()
+	{
+		if ( m_weaponsAreArmed )
+		{
+			m_weaponsAreArmed = false;
+
+			SpaceflightController.m_instance.m_messages.AddText( "Weapons disarmed." );
+		}
+	}
+
+	public void UseUpFuel( float amount )
+	{
+		// add to the running amount of fuel used up
+		m_fuelUsed += amount;
+
+		// have we used up more than 0.1 units?
+		if ( m_fuelUsed >= 0.1f )
+		{
+			// yes - deduct 0.1 unit from storage
+			m_elementStorage.Remove( 5, 1 );
+
+			// recalculate the volume used up in the cargo bays
+			RecalculateVolumeUsed();
+
+			// adjust running amount of fuel used up
+			m_fuelUsed -= 0.1f;
+
+			// get the amount of enduruium remaining in storage
+			var elementReference = m_elementStorage.Find( 5 );
+
+			// are we out of fuel?
+			if ( elementReference == null )
+			{
+				// yes - lower the shields
+				DropShields();
+			}
+		}
 	}
 }

@@ -70,6 +70,16 @@ public class PlayerCamera : MonoBehaviour
 		}
 	}
 
+	public void Hide()
+	{
+		gameObject.SetActive( false );
+	}
+
+	public void Show()
+	{
+		gameObject.SetActive( true );
+	}
+
 	// get the game object we are currently following
 	public GameObject GetCameraFollowGameObject()
 	{
@@ -139,7 +149,8 @@ public class PlayerCamera : MonoBehaviour
 		SpaceflightController.m_instance.m_viewport.StartFade( 0.0f, 5.0f );
 
 		// yes - update the messages text
-		SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Leaving starport...</color>" );
+		SpaceflightController.m_instance.m_messages.Clear();
+		SpaceflightController.m_instance.m_messages.AddText( "<color=white>Leaving starport...</color>" );
 	}
 
 	public void PlayerHasLaunched()
@@ -166,7 +177,7 @@ public class PlayerCamera : MonoBehaviour
 			SpaceflightController.m_instance.SwitchLocation( PD_General.Location.JustLaunched );
 
 			// restore the bridge buttons (this also ends the launch function)
-			SpaceflightController.m_instance.m_buttonController.RestoreBridgeButtons();
+			SpaceflightController.m_instance.m_buttonController.SetBridgeButtons();
 		}
 		else
 		{
@@ -179,7 +190,8 @@ public class PlayerCamera : MonoBehaviour
 	{
 		SpaceflightController.m_instance.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.CommandA );
 
-		SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Safe landing, captain.</color>" );
+		SpaceflightController.m_instance.m_messages.Clear();
+		SpaceflightController.m_instance.m_messages.AddText( "<color=white>Safe landing, captain.</color>" );
 
 		SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
 
@@ -188,16 +200,16 @@ public class PlayerCamera : MonoBehaviour
 
 	public void StartingDescent()
 	{
-		SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Autopilot engaged. Descending...</color>" );
+		SpaceflightController.m_instance.m_messages.AddText( "<color=white>Autopilot engaged. Descending...</color>" );
 
-		SoundController.m_instance.PlaySound( SoundController.Sound.Beep );
+		SoundController.m_instance.PlaySound( SoundController.Sound.Update );
 	}
 
 	public void RetroRocketsFiring()
 	{
-		SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Retro rockets firing...</color>" );
+		SpaceflightController.m_instance.m_messages.AddText( "<color=white>Retro rockets firing...</color>" );
 
-		SoundController.m_instance.PlaySound( SoundController.Sound.Beep );
+		SoundController.m_instance.PlaySound( SoundController.Sound.Update );
 	}
 
 	public void SwitchToPlanetsideLocation()

@@ -78,7 +78,8 @@ public class MoveButton : ShipButton
 				m_nextLocation = PD_General.Location.Planetside;
 
 				// display message
-				SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Refueling terrain vehicle and transferring all cargo...</color>" );
+				SpaceflightController.m_instance.m_messages.Clear();
+				SpaceflightController.m_instance.m_messages.AddText( "<color=white>Refueling terrain vehicle and transferring all cargo...</color>" );
 			}
 
 			if ( m_isTransitioning )

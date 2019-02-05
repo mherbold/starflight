@@ -12,7 +12,9 @@ public class DescendButton : ShipButton
 		var playerData = DataController.m_instance.m_playerData;
 
 		// update the messages display
-		SpaceflightController.m_instance.m_messages.ChangeText( "Computing descent profile..." );
+		SpaceflightController.m_instance.m_messages.Clear();
+
+		SpaceflightController.m_instance.m_messages.AddText( "Computing descent profile..." );
 
 		// set the landing coordinates
 		SpaceflightController.m_instance.m_planetside.UpdateTerrainGridNow();

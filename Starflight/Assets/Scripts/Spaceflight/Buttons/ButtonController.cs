@@ -14,7 +14,10 @@ public class ButtonController : MonoBehaviour
 		CommunicationsB,
 		Engineering,
 		Medical,
-		Navigation,
+		NavigationA,
+		NavigationB,
+		NavigationC,
+		NavigationD,
 		Science,
 		Land,
 		Launch,
@@ -74,7 +77,10 @@ public class ButtonController : MonoBehaviour
 		m_buttonSets[ (int) ButtonSet.CommunicationsB ] = new ShipButton[] { new RespondButton(), new DistressButton(), new BridgeButton() };
 		m_buttonSets[ (int) ButtonSet.Engineering ] = new ShipButton[] { new DamageButton(), new RepairButton(), new BridgeButton() };
 		m_buttonSets[ (int) ButtonSet.Medical ] = new ShipButton[] { new ExamineButton(), new TreatButton(), new BridgeButton() };
-		m_buttonSets[ (int) ButtonSet.Navigation ] = new ShipButton[] { new ManeuverButton(), new StarmapButton(), new RaiseShieldsButton(), new ArmWeaponButton(), new CombatButton(), new BridgeButton() };
+		m_buttonSets[ (int) ButtonSet.NavigationA ] = new ShipButton[] { new ManeuverButton(), new StarmapButton(), new RaiseShieldsButton(), new ArmWeaponButton(), new CombatButton(), new BridgeButton() };
+		m_buttonSets[ (int) ButtonSet.NavigationB ] = new ShipButton[] { new ManeuverButton(), new StarmapButton(), new DropShieldsButton(), new ArmWeaponButton(), new CombatButton(), new BridgeButton() };
+		m_buttonSets[ (int) ButtonSet.NavigationC ] = new ShipButton[] { new ManeuverButton(), new StarmapButton(), new RaiseShieldsButton(), new DisarmWeaponButton(), new CombatButton(), new BridgeButton() };
+		m_buttonSets[ (int) ButtonSet.NavigationD ] = new ShipButton[] { new ManeuverButton(), new StarmapButton(), new DropShieldsButton(), new DisarmWeaponButton(), new CombatButton(), new BridgeButton() };
 		m_buttonSets[ (int) ButtonSet.Science ] = new ShipButton[] { new SensorsButton(), new AnalysisButton(), new StatusButton(), new BridgeButton() };
 		m_buttonSets[ (int) ButtonSet.Land ] = new ShipButton[] { new SelectSiteButton(), new DescendButton(), new AbortButton() };
 		m_buttonSets[ (int) ButtonSet.Launch ] = new ShipButton[] { new LaunchYesButton(), new LaunchNoButton() };
@@ -205,11 +211,11 @@ public class ButtonController : MonoBehaviour
 		m_currentOfficer.text = newOfficer;
 	}
 
-	// restore the bridge buttons
-	public void RestoreBridgeButtons()
+	// set the bridge buttons
+	public void SetBridgeButtons()
 	{
 		// get to the player data
-		PlayerData playerData = DataController.m_instance.m_playerData;
+		var playerData = DataController.m_instance.m_playerData;
 
 		// there is no current funciton
 		ClearCurrentButton();
@@ -224,13 +230,46 @@ public class ButtonController : MonoBehaviour
 		switch ( playerData.m_general.m_location )
 		{
 			case PD_General.Location.DockingBay:
-				SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Ship computer activated.\nPre-launch procedures complete.\nStanding by to initiate launch.</color>" );
+				SpaceflightController.m_instance.m_messages.Clear();
+				SpaceflightController.m_instance.m_messages.AddText( "<color=white>Ship computer activated.\nPre-launch procedures complete.\nStanding by to initiate launch.</color>" );
 				break;
 
 			case PD_General.Location.JustLaunched:
-				SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Starport clear.\nStanding by to maneuver.</color>" );
+				SpaceflightController.m_instance.m_messages.Clear();
+				SpaceflightController.m_instance.m_messages.AddText( "<color=white>Starport clear.\nStanding by to maneuver.</color>" );
 				break;
 		}
+	}
+
+	// set the maneuver buttons
+	public void SetManeuverButtons()
+	{
+		// get to the player data
+		var playerData = DataController.m_instance.m_playerData;
+
+		// button set to use depends on whether we have shields up and/or weapons armed
+		if ( playerData.m_playerShip.m_shieldsAreUp && playerData.m_playerShip.m_weaponsAreArmed )
+		{
+			SpaceflightController.m_instance.m_buttonController.ChangeButtonSet( ButtonSet.NavigationD );
+		}
+		else if ( playerData.m_playerShip.m_weaponsAreArmed )
+		{
+			SpaceflightController.m_instance.m_buttonController.ChangeButtonSet( ButtonSet.NavigationC );
+		}
+		else if ( playerData.m_playerShip.m_shieldsAreUp )
+		{
+			SpaceflightController.m_instance.m_buttonController.ChangeButtonSet( ButtonSet.NavigationB );
+		}
+		else
+		{
+			SpaceflightController.m_instance.m_buttonController.ChangeButtonSet( ButtonSet.NavigationA );
+		}
+
+		// get the personnel file on this officer
+		var personnelFile = playerData.m_crewAssignment.GetPersonnelFile( PD_CrewAssignment.Role.Navigator );
+
+		// set the name of the officer
+		SpaceflightController.m_instance.m_buttonController.ChangeOfficerText( "Officer " + personnelFile.m_name );
 	}
 
 	// update the buttons and change the current button index
@@ -243,7 +282,7 @@ public class ButtonController : MonoBehaviour
 		var buttonList = m_buttonSets[ (int) buttonSet ];
 
 		// go through all 6 buttons
-		for ( int i = 0; i < c_numButtons; i++ )
+		for ( var i = 0; i < c_numButtons; i++ )
 		{
 			if ( i < buttonList.Length )
 			{
@@ -272,7 +311,7 @@ public class ButtonController : MonoBehaviour
 	// go through each button image and set it to the on or off or active button sprite depending on what is currently selected
 	public void UpdateButtonSprites()
 	{
-		for ( int i = 0; i < c_numButtons; i++ )
+		for ( var i = 0; i < c_numButtons; i++ )
 		{
 			m_buttonImageList[ i ].sprite = ( m_selectedButtonIndex == i ) ? m_buttonOnSprite : m_buttonOffSprite;
 		}
@@ -300,7 +339,7 @@ public class ButtonController : MonoBehaviour
 	public void ActivateButton()
 	{
 		// get the activated button (execute might change this so grab it now)
-		ShipButton activatedButton = m_buttonList[ m_selectedButtonIndex ];
+		var activatedButton = m_buttonList[ m_selectedButtonIndex ];
 
 		// execute the current button and check if it returned true
 		if ( activatedButton.Execute() )

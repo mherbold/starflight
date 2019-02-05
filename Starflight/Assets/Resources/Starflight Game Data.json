@@ -295,42 +295,48 @@
       "m_name": "None",
       "m_buyPrice": "0",
       "m_sellPrice": "0",
-      "m_mass": "0"
+      "m_mass": "0",
+      "m_points": "0"
     },
     {
       "m_class": "1",
       "m_name": "Class 1",
       "m_buyPrice": "4000",
       "m_sellPrice": "3800",
-      "m_mass": "5"
+      "m_mass": "5",
+      "m_points": "500"
     },
     {
       "m_class": "2",
       "m_name": "Class 2",
       "m_buyPrice": "12000",
       "m_sellPrice": "11400",
-      "m_mass": "5"
+      "m_mass": "5",
+      "m_points": "1000"
     },
     {
       "m_class": "3",
       "m_name": "Class 3",
       "m_buyPrice": "32000",
       "m_sellPrice": "30400",
-      "m_mass": "5"
+      "m_mass": "5",
+      "m_points": "1500"
     },
     {
       "m_class": "4",
       "m_name": "Class 4",
       "m_buyPrice": "70000",
       "m_sellPrice": "66600",
-      "m_mass": "5"
+      "m_mass": "5",
+      "m_points": "2000"
     },
     {
       "m_class": "5",
       "m_name": "Class 5",
       "m_buyPrice": "125000",
       "m_sellPrice": "119000",
-      "m_mass": "5"
+      "m_mass": "5",
+      "m_points": "2500"
     }
   ],
   "m_armorList": [
@@ -339,42 +345,48 @@
       "m_name": "None",
       "m_buyPrice": "0",
       "m_sellPrice": "0",
-      "m_mass": "0"
+      "m_mass": "0",
+      "m_points": "0"
     },
     {
       "m_class": "1",
       "m_name": "Class 1",
       "m_buyPrice": "1500",
       "m_sellPrice": "1400",
-      "m_mass": "9"
+      "m_mass": "9",
+      "m_points": "500"
     },
     {
       "m_class": "2",
       "m_name": "Class 2",
       "m_buyPrice": "3100",
       "m_sellPrice": "2900",
-      "m_mass": "36"
+      "m_mass": "36",
+      "m_points": "750"
     },
     {
       "m_class": "3",
       "m_name": "Class 3",
       "m_buyPrice": "6200",
       "m_sellPrice": "5900",
-      "m_mass": "81"
+      "m_mass": "81",
+      "m_points": "1000"
     },
     {
       "m_class": "4",
       "m_name": "Class 4",
       "m_buyPrice": "12500",
       "m_sellPrice": "11900",
-      "m_mass": "144"
+      "m_mass": "144",
+      "m_points": "1250"
     },
     {
       "m_class": "5",
       "m_name": "Class 5",
       "m_buyPrice": "25000",
       "m_sellPrice": "23800",
-      "m_mass": "225"
+      "m_mass": "225",
+      "m_points": "1500"
     }
   ],
   "m_missileLauncherList": [

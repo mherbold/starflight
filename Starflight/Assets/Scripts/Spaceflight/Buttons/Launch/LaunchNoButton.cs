@@ -9,10 +9,10 @@ public class LaunchNoButton : ShipButton
 	public override bool Execute()
 	{
 		// restore the bridge buttons
-		SpaceflightController.m_instance.m_buttonController.RestoreBridgeButtons();
+		SpaceflightController.m_instance.m_buttonController.SetBridgeButtons();
 
 		// clear the messages
-		SpaceflightController.m_instance.m_messages.ChangeText( "" );
+		SpaceflightController.m_instance.m_messages.Clear();
 
 		// play the deactivate sound
 		SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );

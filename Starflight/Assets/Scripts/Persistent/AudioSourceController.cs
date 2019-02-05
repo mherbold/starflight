@@ -4,16 +4,19 @@ using UnityEngine;
 class AudioSourceController
 {
 	// the audio source
-	public AudioSource m_audioSource;
+	AudioSource m_audioSource;
 
 	// how loud to play the sound
-	public float m_volume;
+	float m_volume;
 
 	// are we fading this sound out?
-	public bool m_isFadingOut;
+	bool m_isFadingOut;
 
 	// the fade out time
-	public float m_fadeOutTime;
+	float m_fadeOutTime;
+
+	// remember if this sound was looping
+	bool m_looping;
 
 	// create the audio source component
 	public AudioSourceController( GameObject gameObject )
@@ -41,6 +44,20 @@ class AudioSourceController
 		return false;
 	}
 
+	// returns true if this audio source is looping
+	public bool IsLooping()
+	{
+		if ( m_audioSource.isPlaying )
+		{
+			if ( m_looping )
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	// use this audio source to play an audio clip at the given volume and pitch
 	public void Play( AudioClip clip, float volume, float pitch, bool loop )
 	{
@@ -52,6 +69,8 @@ class AudioSourceController
 		m_audioSource.loop = loop;
 
 		m_audioSource.Play();
+
+		m_looping = loop;
 	}
 
 	// start fading out this audio source

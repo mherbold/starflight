@@ -193,7 +193,8 @@ public class Radar : MonoBehaviour
 					SoundController.m_instance.PlaySound( SoundController.Sound.RadarBlip, Mathf.Pow( opacity, 2.0f ) );
 
 					// let the player know we've detected motion
-					SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Motion detected.</color>" );
+					SpaceflightController.m_instance.m_messages.Clear();
+					SpaceflightController.m_instance.m_messages.AddText( "<color=white>Motion detected.</color>" );
 				}
 			}
 		}

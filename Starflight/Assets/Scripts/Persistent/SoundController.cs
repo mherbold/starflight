@@ -137,6 +137,8 @@ public class SoundController : MonoBehaviour
 			// is this audio source playing something?
 			if ( audioSourceController.IsFree() )
 			{
+				Debug.Log( "Playing sound " + sound );
+
 				// play the sound!
 				audioSourceController.Play( m_soundList[ (int) sound ], volume, pitch, loop );
 
@@ -165,12 +167,15 @@ public class SoundController : MonoBehaviour
 	}
 
 	// stop all sounds
-	public void StopAllSounds()
+	public void StopAllLoopingSounds()
 	{
 		// go through each audio source controller
 		foreach ( var audioSourceController in m_audioSourceControllerList )
 		{
-			audioSourceController.FadeOut( 0.25f );
+			if ( audioSourceController.IsLooping() )
+			{
+				audioSourceController.FadeOut( 0.25f );
+			}
 		}
 	}
 

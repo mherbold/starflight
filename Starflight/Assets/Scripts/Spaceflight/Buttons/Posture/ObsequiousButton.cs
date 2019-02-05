@@ -32,7 +32,7 @@ public class ObsequiousButton : ShipButton
 				else
 				{
 					// no - restore the bridge buttons
-					SpaceflightController.m_instance.m_buttonController.RestoreBridgeButtons();
+					SpaceflightController.m_instance.m_buttonController.SetBridgeButtons();
 				}
 
 				return false;
@@ -43,10 +43,11 @@ public class ObsequiousButton : ShipButton
 		SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
 		// let the player know there's no one to hail
-		SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>There's no one to hail.</color>" );
+		SpaceflightController.m_instance.m_messages.Clear();
+		SpaceflightController.m_instance.m_messages.AddText( "<color=white>There's no one to hail.</color>" );
 
 		// deactivate the button
-		SpaceflightController.m_instance.m_buttonController.RestoreBridgeButtons();
+		SpaceflightController.m_instance.m_buttonController.SetBridgeButtons();
 
 		return false;
 	}

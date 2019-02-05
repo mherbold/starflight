@@ -888,6 +888,14 @@ public class ShipConfigurationPanel : Panel
 			playerData.m_playerShip.RecalculateMass();
 			playerData.m_playerShip.RecalculateAcceleration();
 
+			// if we just bought armor then update the armor points on the ship
+			if ( m_currentPartIndex == 3 )
+			{
+				var armor = playerData.m_playerShip.GetArmor();
+
+				playerData.m_playerShip.m_armorPoints = armor.m_points;
+			}
+
 			// switch back to the buy part state
 			SwitchToBuyPartState();
 

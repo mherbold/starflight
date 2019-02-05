@@ -21,7 +21,6 @@ public class PD_Encounter : IComparable
 
 	float m_currentDistance;
 
-	public string m_conversation { get; private set; }
 	public List<int> m_shownCommList;
 	public bool m_connected;
 	public bool m_disconnected;
@@ -180,20 +179,5 @@ public class PD_Encounter : IComparable
 	public PD_AlienShip[] GetAlienShipList()
 	{
 		return m_alienShipList;
-	}
-
-	public void ResetConversation()
-	{
-		m_conversation = "<color=white>Scanners indicate unidentified object!</color>";
-	}
-
-	public void AddToConversation( string text )
-	{
-		if ( m_conversation.Length != 0 )
-		{
-			m_conversation += "\n<line-height=25%>\n</line-height>";
-		}
-
-		m_conversation += text;
 	}
 }

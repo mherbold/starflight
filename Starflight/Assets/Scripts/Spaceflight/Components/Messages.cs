@@ -11,7 +11,7 @@ public class Messages : MonoBehaviour
 	public RectTransform m_frame;
 
 	// text elements
-	public TextMeshProUGUI m_messages;
+	TextMeshProUGUI m_messagesUI;
 
 	// the current state of the dock (out or in)
 	bool m_isOut;
@@ -22,6 +22,9 @@ public class Messages : MonoBehaviour
 	// the slide time
 	float m_slideTime;
 
+	// keep track of whether or not we need to update the messages ui
+	bool m_textChanged;
+
 	// unity awake
 	void Awake()
 	{
@@ -30,16 +33,22 @@ public class Messages : MonoBehaviour
 
 		// dock is not sliding
 		m_isSliding = false;
-	}
 
-	// unity start
-	void Start()
-	{
+		// get the text mesh pro component
+		m_messagesUI = GetComponent<TextMeshProUGUI>();
 	}
 
 	// unity update
-	void Update()
+	void LateUpdate()
 	{
+		// update the display if the text has changed
+		if ( m_textChanged )
+		{
+			m_textChanged = false;
+
+			UpdateDisplay();
+		}
+
 		// update sliding animation
 		if ( m_isSliding )
 		{
@@ -75,24 +84,61 @@ public class Messages : MonoBehaviour
 		}
 	}
 
-	// call this to change the message text
-	public void ChangeText( string newMessage )
+	// update the display with the current message lines
+	void UpdateDisplay()
 	{
-		m_messages.text = newMessage;
+		var playerData = DataController.m_instance.m_playerData;
 
-		m_messages.ForceMeshUpdate();
+		m_messagesUI.text = "";
+
+		for ( var i = 0; i < playerData.m_general.m_messageList.Count; i++ )
+		{
+			if ( i != 0 )
+			{
+				m_messagesUI.text += "\n<line-height=25%>\n</line-height>";
+			}
+
+			m_messagesUI.text += playerData.m_general.m_messageList[ i ];
+		}
+
+		m_messagesUI.ForceMeshUpdate();
 
 		RectTransform rectTransform = GetComponent<RectTransform>();
 
 		var rectHeight = rectTransform.rect.height;
 
-		m_messages.alignment = ( m_messages.renderedHeight > rectHeight ) ? TextAlignmentOptions.BottomLeft : TextAlignmentOptions.TopLeft;
+		m_messagesUI.alignment = ( m_messagesUI.renderedHeight > rectHeight ) ? TextAlignmentOptions.BottomLeft : TextAlignmentOptions.TopLeft;
+	}
+
+	// call this to clear out all the messages
+	public void Clear()
+	{
+		var playerData = DataController.m_instance.m_playerData;
+
+		playerData.m_general.m_messageList.Clear();
+
+		m_textChanged = true;
 	}
 
 	// call this to change the message text
 	public void AddText( string newMessage )
 	{
-		ChangeText( m_messages.text + "\n" + newMessage );
+		var playerData = DataController.m_instance.m_playerData;
+
+		if ( playerData.m_general.m_messageList.Count == 10 )
+		{
+			playerData.m_general.m_messageList.RemoveAt( 0 );
+		}
+
+		playerData.m_general.m_messageList.Add( newMessage );
+
+		m_textChanged = true;
+	}
+
+	// call this to force a refresh
+	public void Refresh()
+	{
+		m_textChanged = true;
 	}
 
 	// call this to slide out the messages "dock"

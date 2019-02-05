@@ -10,7 +10,9 @@ public class LookButton : ShipButton
 	{
 		SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
-		SpaceflightController.m_instance.m_messages.ChangeText( "<color=red>Not yet implemented.</color>" );
+		SpaceflightController.m_instance.m_messages.Clear();
+
+		SpaceflightController.m_instance.m_messages.AddText( "<color=red>Not yet implemented.</color>" );
 
 		SpaceflightController.m_instance.m_buttonController.UpdateButtonSprites();
 

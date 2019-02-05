@@ -100,7 +100,8 @@ public class AnalysisButton : ShipButton
 		}
 
 		// update the messages text
-		SpaceflightController.m_instance.m_messages.ChangeText( text );
+		SpaceflightController.m_instance.m_messages.Clear();
+		SpaceflightController.m_instance.m_messages.AddText( text );
 
 		// turn off the active button dot
 		SpaceflightController.m_instance.m_buttonController.UpdateButtonSprites();

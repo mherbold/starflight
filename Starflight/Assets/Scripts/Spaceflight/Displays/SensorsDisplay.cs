@@ -194,7 +194,8 @@ public class SensorsDisplay : ShipDisplay
 					var lithosphere = planet.GetLithosphereText();
 
 					// update the messages text
-					SpaceflightController.m_instance.m_messages.ChangeText( "Atmosphere:\n<color=white>" + atmosphere + "</color>\nHydrosphere:\n<color=white>" + hydrosphere + "</color>\nLithosphere:\n<color=white>" + lithosphere + "</color>" );
+					SpaceflightController.m_instance.m_messages.Clear();
+					SpaceflightController.m_instance.m_messages.AddText( "Atmosphere:\n<color=white>" + atmosphere + "</color>\nHydrosphere:\n<color=white>" + hydrosphere + "</color>\nLithosphere:\n<color=white>" + lithosphere + "</color>" );
 
 					break;
 				}
@@ -235,7 +236,8 @@ public class SensorsDisplay : ShipDisplay
 					}
 
 					// update the messages text
-					SpaceflightController.m_instance.m_messages.ChangeText( text );
+					SpaceflightController.m_instance.m_messages.Clear();
+					SpaceflightController.m_instance.m_messages.AddText( text );
 
 					break;
 				}

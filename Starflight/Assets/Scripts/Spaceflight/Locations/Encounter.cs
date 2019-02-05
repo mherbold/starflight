@@ -300,7 +300,7 @@ public class Encounter : MonoBehaviour
 			}
 
 			// reset the conversation
-			m_pdEncounter.ResetConversation();
+			SpaceflightController.m_instance.m_messages.AddText( "<color=white>Scanners indicate unidentified object!</color>" );
 
 			// reset the various encounter stuff
 			m_pdEncounter.m_shownCommList.Clear();
@@ -392,9 +392,6 @@ public class Encounter : MonoBehaviour
 			// yes - reconnect to the aliens immediately (reuse conversation string)
 			Connect();
 		}
-
-		// show the conversation string
-		SpaceflightController.m_instance.m_messages.ChangeText( m_pdEncounter.m_conversation );
 
 		// slide the message box out
 		SpaceflightController.m_instance.m_messages.SlideOut();
@@ -803,11 +800,8 @@ public class Encounter : MonoBehaviour
 					// yes - play the scan sound
 					SoundController.m_instance.PlaySound( SoundController.Sound.RadarBlip );
 
-					// add to the conversation
-					m_pdEncounter.AddToConversation( "Captain, we're being scanned." );
-
 					// update the message
-					SpaceflightController.m_instance.m_messages.ChangeText( m_pdEncounter.m_conversation );
+					SpaceflightController.m_instance.m_messages.AddText( "Captain, we're being scanned." );
 
 					// update the flag
 					m_pdEncounter.m_scanTimer = 0.0f;
@@ -1406,11 +1400,8 @@ public class Encounter : MonoBehaviour
 			}
 		}
 
-		// add the text
-		m_pdEncounter.AddToConversation( text );
-
 		// update the message
-		SpaceflightController.m_instance.m_messages.ChangeText( m_pdEncounter.m_conversation );
+		SpaceflightController.m_instance.m_messages.AddText( text );
 
 		// play the beep sound
 		SoundController.m_instance.PlaySound( SoundController.Sound.Beep );
@@ -1448,7 +1439,8 @@ public class Encounter : MonoBehaviour
 	// connect the aliens and the players
 	public void Connect()
 	{
-		// hide the player (camera and all)
+		// hide the player ship and camera
+		SpaceflightController.m_instance.m_playerCamera.Hide();
 		SpaceflightController.m_instance.m_playerShip.Hide();
 
 		// hide the encounter location
@@ -1495,7 +1487,8 @@ public class Encounter : MonoBehaviour
 		// show the encounter location
 		m_main.SetActive( true );
 
-		// show the player (camera and all)
+		// show the player camera and ship
+		SpaceflightController.m_instance.m_playerCamera.Show();
 		SpaceflightController.m_instance.m_playerShip.Show();
 
 		// change the buttons
@@ -1659,7 +1652,8 @@ public class Encounter : MonoBehaviour
 			// yes - let the player know
 			SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
-			SpaceflightController.m_instance.m_messages.ChangeText( "<color=red>That is your ship.</color>" );
+			SpaceflightController.m_instance.m_messages.Clear();
+			SpaceflightController.m_instance.m_messages.AddText( "<color=red>That is your ship.</color>" );
 
 			// deactivate the sensor button
 			SpaceflightController.m_instance.m_buttonController.DeactivateButton();
@@ -1675,7 +1669,8 @@ public class Encounter : MonoBehaviour
 				// yes - scanning of debris not implemented yet
 				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
-				SpaceflightController.m_instance.m_messages.ChangeText( "<color=red>Not yet implemented.</color>" );
+				SpaceflightController.m_instance.m_messages.Clear();
+				SpaceflightController.m_instance.m_messages.AddText( "<color=red>Not yet implemented.</color>" );
 
 				// deactivate the sensor button
 				SpaceflightController.m_instance.m_buttonController.DeactivateButton();

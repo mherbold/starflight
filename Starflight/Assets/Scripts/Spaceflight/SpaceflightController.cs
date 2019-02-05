@@ -88,7 +88,7 @@ public class SpaceflightController : MonoBehaviour
 		m_playerShip.Show();
 
 		// reset the buttons to default
-		m_buttonController.RestoreBridgeButtons();
+		m_buttonController.SetBridgeButtons();
 
 		// switch to the current location
 		SwitchLocation( playerData.m_general.m_location );
@@ -216,15 +216,22 @@ public class SpaceflightController : MonoBehaviour
 			playerData.m_general.m_lastLocation = playerData.m_general.m_location;
 		}
 
+		// make sure the display is updated (in case we are loading from a save game)
+		m_messages.Refresh();
+
 		// update the player data
 		playerData.m_general.m_location = newLocation;
 
-		// stop all sounds
-		SoundController.m_instance.StopAllSounds();
+		// stop all looping sounds
+		SoundController.m_instance.StopAllLoopingSounds();
 
 		// switching to starport is a special case
 		if ( playerData.m_general.m_location == PD_General.Location.Starport )
 		{
+			// force shields to lower and weapons to disarm
+			playerData.m_playerShip.DropShields();
+			playerData.m_playerShip.DisarmWeapons();
+
 			// start fading out the spaceflight scene
 			SceneFadeController.m_instance.FadeOut( "Starport" );
 		}
@@ -245,7 +252,8 @@ public class SpaceflightController : MonoBehaviour
 
 				case PD_General.Location.JustLaunched:
 					m_viewport.StartFade( 0.0f, 0.0f );
-					m_messages.ChangeText( "<color=white>Starport clear.\nStanding by to maneuver.</color>" );
+					m_messages.Clear();
+					m_messages.AddText( "<color=white>Starport clear.\nStanding by to maneuver.</color>" );
 					break;
 
 				case PD_General.Location.StarSystem:

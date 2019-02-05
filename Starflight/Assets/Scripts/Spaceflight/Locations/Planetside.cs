@@ -107,7 +107,7 @@ public class Planetside : MonoBehaviour
 			SpaceflightController.m_instance.m_playerCamera.StartAnimation( "On Planet" );
 
 			// reset the buttons
-			SpaceflightController.m_instance.m_buttonController.RestoreBridgeButtons();
+			SpaceflightController.m_instance.m_buttonController.SetBridgeButtons();
 
 			// play the planetside music track
 			MusicController.m_instance.ChangeToTrack( MusicController.Track.Planetside );

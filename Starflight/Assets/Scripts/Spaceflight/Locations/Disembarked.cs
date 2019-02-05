@@ -56,7 +56,7 @@ public class Disembarked : MonoBehaviour
 		gameObject.SetActive( false );
 
 		// reset the buttons
-		SpaceflightController.m_instance.m_buttonController.RestoreBridgeButtons();
+		SpaceflightController.m_instance.m_buttonController.SetBridgeButtons();
 
 		// forget the planet generator
 		m_planetGenerator = null;
@@ -99,12 +99,6 @@ public class Disembarked : MonoBehaviour
 		// freeze the player
 		SpaceflightController.m_instance.m_playerShip.Freeze();
 
-		// change the button panel label
-		SpaceflightController.m_instance.m_buttonController.ChangeOfficerText( "Terrain Vehicle" );
-
-		// change to the terrain vehicle buttons
-		SpaceflightController.m_instance.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.TerrainVehicle );
-
 		// fade in the map
 		SpaceflightController.m_instance.m_viewport.StartFade( 1.0f, 2.0f );
 
@@ -128,6 +122,16 @@ public class Disembarked : MonoBehaviour
 
 		// update the messages
 		SpaceflightController.m_instance.m_messages.AddText( "<color=white>Activating terrain vehicle.</color>" );
+
+		// change the button panel label
+		SpaceflightController.m_instance.m_buttonController.ChangeOfficerText( "Terrain Vehicle" );
+
+		// change to the terrain vehicle buttons
+		SpaceflightController.m_instance.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.TerrainVehicle );
+
+		// activate the move button
+		SpaceflightController.m_instance.m_buttonController.SetSelectedButton( 1 );
+		SpaceflightController.m_instance.m_buttonController.ActivateButton();
 	}
 
 	// this is called when the planet generator is ready
@@ -196,10 +200,6 @@ public class Disembarked : MonoBehaviour
 
 		// initialize the terrain vehicle
 		m_terrainVehicle.Initialize();
-
-		// activate the move button
-		SpaceflightController.m_instance.m_buttonController.SetSelectedButton( 1 );
-		SpaceflightController.m_instance.m_buttonController.ActivateButton();
 	}
 
 	public Vector3 ApplyElevation( Vector3 worldCoordinates, bool updateWheelEfficiency )

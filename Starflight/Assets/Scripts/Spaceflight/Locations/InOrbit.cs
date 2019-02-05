@@ -115,7 +115,7 @@ public class InOrbit : MonoBehaviour
 			SpaceflightController.m_instance.m_playerCamera.StartAnimation( "In Space" );
 
 			// reset the buttons
-			SpaceflightController.m_instance.m_buttonController.RestoreBridgeButtons();
+			SpaceflightController.m_instance.m_buttonController.SetBridgeButtons();
 		}
 
 		// fade in the map
@@ -128,7 +128,8 @@ public class InOrbit : MonoBehaviour
 		MusicController.m_instance.ChangeToTrack( MusicController.Track.InOrbit );
 
 		// let the player know we've established orbit
-		SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Orbit established.</color>" );
+		SpaceflightController.m_instance.m_messages.Clear();
+		SpaceflightController.m_instance.m_messages.AddText( "<color=white>Orbit established.</color>" );
 
 		// set up the clouds and atmosphere
 		planetController.SetupClouds( m_clouds, m_planetAtmosphere, true, false );

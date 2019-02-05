@@ -51,7 +51,9 @@ public class DisembarkButton : ShipButton
 
 				SoundController.m_instance.PlaySound( SoundController.Sound.Error );
 
-				SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>We can't disembark in space!</color>" );
+				SpaceflightController.m_instance.m_messages.Clear();
+
+				SpaceflightController.m_instance.m_messages.AddText( "<color=white>We can't disembark in space!</color>" );
 
 				SpaceflightController.m_instance.m_buttonController.UpdateButtonSprites();
 
@@ -78,7 +80,9 @@ public class DisembarkButton : ShipButton
 				m_nextLocation = PD_General.Location.Disembarked;
 
 				// display message
-				SpaceflightController.m_instance.m_messages.ChangeText( "<color=white>Stand by, scanning planet...</color>" );
+				SpaceflightController.m_instance.m_messages.Clear();
+
+				SpaceflightController.m_instance.m_messages.AddText( "<color=white>Stand by, scanning planet...</color>" );
 
 				// reset the message state and timer
 				m_messageState = 0;

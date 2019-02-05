@@ -111,20 +111,10 @@ public class PlayerShip : MonoBehaviour
 					var engines = playerData.m_playerShip.GetEngines();
 
 					// calculate the amount of fuel used up
-					playerData.m_playerShip.m_fuelUsed += ( playerData.m_general.m_currentSpeed * engines.m_fuelUsedPerCoordinate / 256.0f ) * Time.deltaTime;
+					var fuelAmount = ( playerData.m_general.m_currentSpeed * engines.m_fuelUsedPerCoordinate / 256.0f ) * Time.deltaTime;
 
-					// have we used up more than 0.1 units?
-					if ( playerData.m_playerShip.m_fuelUsed >= 0.1f )
-					{
-						// yes - deduct 0.1 unit from storage
-						playerData.m_playerShip.m_elementStorage.Remove( 5, 1 );
-
-						// recalculate the volume used up in the cargo bays
-						playerData.m_playerShip.RecalculateVolumeUsed();
-
-						// adjust fuel use
-						playerData.m_playerShip.m_fuelUsed -= 0.1f;
-					}
+					// use it up
+					playerData.m_playerShip.UseUpFuel( fuelAmount );
 				}
 			}
 			else
