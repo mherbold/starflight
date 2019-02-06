@@ -14,7 +14,7 @@ public class PD_CrewAssignment
 		Engineer,
 		CommunicationsOfficer,
 		Doctor,
-		Length
+		Count
 	};
 
 	public int m_captainFileId;
@@ -86,7 +86,7 @@ public class PD_CrewAssignment
 		var gameData = DataController.m_instance.m_gameData;
 		
 		// go through each role
-		for ( var role = Role.First; role < Role.Length; role++ )
+		for ( var role = Role.First; role < Role.Count; role++ )
 		{
 			if ( IsAssigned( role ) )
 			{

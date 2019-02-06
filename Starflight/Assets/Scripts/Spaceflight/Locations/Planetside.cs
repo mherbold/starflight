@@ -127,6 +127,9 @@ public class Planetside : MonoBehaviour
 
 		// make sure skybox rotation is reset
 		StarflightSkybox.m_instance.m_currentRotation = Quaternion.identity;
+
+		// change the ship display
+		SpaceflightController.m_instance.m_displayController.ChangeDisplay( SpaceflightController.m_instance.m_displayController.m_statusDisplay );
 	}
 
 	// update the terrain grid now (after planet generator has run)

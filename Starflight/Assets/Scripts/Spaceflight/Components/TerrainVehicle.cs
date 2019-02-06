@@ -57,11 +57,11 @@ public class TerrainVehicle : MonoBehaviour
 	// how deep in water are we
 	float m_waterEffectAmount;
 
-	// for gizmo drawing
-	Vector3[] m_debugVectors;
-
 	// push back vector for collision with stuff on the terrain
 	Vector3 m_pushBackVector;
+
+	// for gizmo drawing
+	Vector3[] m_debugVectors;
 
 	TerrainVehicle()
 	{

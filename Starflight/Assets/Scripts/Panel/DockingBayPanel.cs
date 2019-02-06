@@ -49,7 +49,7 @@ public class DockingBayPanel : Panel
 		m_errorText.text = "";
 
 		// do we have all of the crew positions assigned?
-		for ( var role = PD_CrewAssignment.Role.First; role < PD_CrewAssignment.Role.Length; role++ )
+		for ( var role = PD_CrewAssignment.Role.First; role < PD_CrewAssignment.Role.Count; role++ )
 		{
 			if ( !playerData.m_crewAssignment.IsAssigned( role ) )
 			{

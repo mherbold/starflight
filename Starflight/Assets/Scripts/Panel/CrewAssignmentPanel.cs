@@ -141,7 +141,7 @@ public class CrewAssignmentPanel : Panel
 				{
 					m_ignoreControllerTimer = 0.3f;
 
-					if ( m_currentRole < ( PD_CrewAssignment.Role.Length - 1 ) )
+					if ( m_currentRole < ( PD_CrewAssignment.Role.Count - 1 ) )
 					{
 						ChangeCurrentRole( m_currentRole + 1 );
 
@@ -296,7 +296,7 @@ public class CrewAssignmentPanel : Panel
 		m_positionValuesText.text = "";
 
 		// go through each position
-		for ( PD_CrewAssignment.Role role = PD_CrewAssignment.Role.First; role < PD_CrewAssignment.Role.Length; role++ )
+		for ( PD_CrewAssignment.Role role = PD_CrewAssignment.Role.First; role < PD_CrewAssignment.Role.Count; role++ )
 		{
 			// get the file id for the assigned crewmember
 			if ( crewAssignment.IsAssigned( role ) )
@@ -313,7 +313,7 @@ public class CrewAssignmentPanel : Panel
 				m_positionValuesText.text += "[Not Assigned]";
 			}
 
-			if ( role < ( PD_CrewAssignment.Role.Length - 1 ) )
+			if ( role < ( PD_CrewAssignment.Role.Count - 1 ) )
 			{
 				m_positionValuesText.text += Environment.NewLine;
 			}
@@ -384,10 +384,10 @@ public class CrewAssignmentPanel : Panel
 		m_upArrowImage.gameObject.SetActive( m_currentRole != PD_CrewAssignment.Role.First );
 
 		// show the down arrow only if we are not at the last position index
-		m_downArrowImage.gameObject.SetActive( m_currentRole != ( PD_CrewAssignment.Role.Length - 1 ) );
+		m_downArrowImage.gameObject.SetActive( m_currentRole != ( PD_CrewAssignment.Role.Count - 1 ) );
 
 		// put the position selection box in the right place
-		float offset = (int) m_currentRole * m_positionValuesText.renderedHeight / (int) PD_CrewAssignment.Role.Length;
+		float offset = (int) m_currentRole * m_positionValuesText.renderedHeight / (int) PD_CrewAssignment.Role.Count;
 
 		RectTransform rectTransform = m_selectionXform.GetComponent<RectTransform>();
 		rectTransform.offsetMin = m_baseSelectionOffsetMin + new Vector3( 0.0f, -offset, 0.0f );

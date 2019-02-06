@@ -15,6 +15,15 @@ public class Disembarked : MonoBehaviour
 	// the arth ship
 	public GameObject m_arthShip;
 
+	// the missile launcher
+	public GameObject m_missileLauncher;
+
+	// the laser cannon
+	public GameObject m_laserCannon;
+
+	// the cargo pods
+	public GameObject[] m_cargoPods;
+
 	// how high to put the arth ship and the ground scan details
 	public float m_arthShipElevationAboveGround;
 	public float m_arthShipGroundScanWidth;
@@ -26,6 +35,25 @@ public class Disembarked : MonoBehaviour
 
 	// the planet generator
 	PlanetGenerator m_planetGenerator;
+
+	// unity start
+	void Start()
+	{
+		// get to the player data
+		var playerData = DataController.m_instance.m_playerData;
+
+		// show only as many cargo pods as we have purchased
+		for ( int cargoPodId = 0; cargoPodId < m_cargoPods.Length; cargoPodId++ )
+		{
+			m_cargoPods[ cargoPodId ].SetActive( cargoPodId < playerData.m_playerShip.m_numCargoPods );
+		}
+
+		// hide or show the missile launchers depending on if we have them
+		m_missileLauncher.SetActive( playerData.m_playerShip.m_missileLauncherClass > 0 );
+
+		// hide or show the missile launchers depending on if we have them
+		m_laserCannon.SetActive( playerData.m_playerShip.m_laserCannonClass > 0 );
+	}
 
 	// unity late update
 	void LateUpdate()
@@ -129,6 +157,9 @@ public class Disembarked : MonoBehaviour
 		// activate the move button
 		SpaceflightController.m_instance.m_buttonController.SetSelectedButton( 1 );
 		SpaceflightController.m_instance.m_buttonController.ActivateButton();
+
+		// change the ship display
+		SpaceflightController.m_instance.m_displayController.ChangeDisplay( SpaceflightController.m_instance.m_displayController.m_terrainVehicleDisplay );
 	}
 
 	// this is called when the planet generator is ready

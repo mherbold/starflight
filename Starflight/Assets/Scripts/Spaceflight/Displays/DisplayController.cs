@@ -12,6 +12,7 @@ public class DisplayController : MonoBehaviour
 	public SystemDisplay m_systemDisplay;
 	public SensorsDisplay m_sensorsDisplay;
 	public TerrainMapDisplay m_terrainMapDisplay;
+	public TerrainVehicleDisplay m_terrainVehicleDisplay;
 
 	// the current display
 	ShipDisplay m_currentDisplay;
