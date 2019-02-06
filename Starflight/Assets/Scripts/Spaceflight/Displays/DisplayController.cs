@@ -37,6 +37,7 @@ public class DisplayController : MonoBehaviour
 		m_systemDisplay.Hide();
 		m_sensorsDisplay.Hide();
 		m_terrainMapDisplay.Hide();
+		m_terrainVehicleDisplay.Hide();
 
 		// change the current display
 		m_currentDisplay = newDisplay;
