@@ -42,6 +42,9 @@ public class TerrainVehicle : MonoBehaviour
 	// the terrain grid elevation scale
 	public float m_elevationScale = 100.0f;
 
+	// the fuel consumption rate
+	public float m_fuelConsumptionRate = 1.0f;
+
 	// the planet generator
 	PlanetGenerator m_planetGenerator;
 
@@ -53,6 +56,9 @@ public class TerrainVehicle : MonoBehaviour
 
 	// the amount of wheel slip (reduces effiency)
 	float m_wheelEfficiency;
+
+	// the current fuel efficiency
+	float m_fuelEfficiency;
 
 	// how deep in water are we
 	float m_waterEffectAmount;
@@ -88,6 +94,11 @@ public class TerrainVehicle : MonoBehaviour
 
 			// increase the current speed
 			playerData.m_general.m_currentSpeed = Mathf.Lerp( playerData.m_general.m_currentSpeed, m_maximumSpeed, acceleration );
+
+			// use up fuel
+			var fuelAmount = Time.deltaTime * ( m_fuelConsumptionRate * playerData.m_general.m_currentSpeed / m_fuelEfficiency );
+
+			playerData.m_terrainVehicle.UseUpFuel( fuelAmount );
 		}
 		else
 		{
@@ -178,6 +189,19 @@ public class TerrainVehicle : MonoBehaviour
 			steeringJoint.transform.localPosition = Vector3.zero;
 		}
 
+		// update the fuel efficiency
+		var maximumElevation = m_planetGenerator.m_maximumElevation * m_elevationScale;
+		var waterElevation = m_planetGenerator.m_waterElevation * m_elevationScale;
+
+		if ( tvPosition.y < waterElevation )
+		{
+			m_fuelEfficiency = Mathf.SmoothStep( 1.0f, 0.14f, ( waterElevation - tvPosition.y ) / m_floatDepth );
+		}
+		else
+		{
+			m_fuelEfficiency = Mathf.Pow( Mathf.Lerp( 1.0f, 0.5f, ( tvPosition.y - waterElevation ) / ( maximumElevation - waterElevation ) ), 3.0f );
+		}
+
 		// calculate the normal of the terrain between the center and the front wheels
 		var wheel1 = ApplyElevation( m_wheels[ 1 ].transform.position, false );
 		var wheel2 = ApplyElevation( m_wheels[ 0 ].transform.position, false );
@@ -245,6 +269,12 @@ public class TerrainVehicle : MonoBehaviour
 
 		// jump start the last direction
 		m_lastDirection = playerData.m_general.m_currentDirection;
+	}
+
+	// return the current fuel efficiency
+	public float GetFuelEfficiency()
+	{
+		return m_fuelEfficiency;
 	}
 
 	public void AddPushBack( Vector3 pushBackNormal, float pushBackAmount )

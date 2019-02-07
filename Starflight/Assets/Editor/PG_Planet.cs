@@ -13,9 +13,9 @@ public class PG_Planet
 	public int m_id;
 	public int m_surfaceId;
 
-	public float m_minimumHeight;
-	public float m_waterHeight;
-	public float m_snowHeight;
+	public float m_minimumElevation;
+	public float m_waterElevation;
+	public float m_snowElevation;
 
 	public Color m_waterColor = Color.black;
 	public Color m_groundColor = Color.black;
@@ -50,9 +50,9 @@ public class PG_Planet
 		m_id = gdPlanet.m_id;
 		m_surfaceId = gdPlanet.m_surfaceId;
 
-		m_minimumHeight = 1.0f;
-		m_waterHeight = 1.0f;
-		m_snowHeight = 0.0f;
+		m_minimumElevation = 1.0f;
+		m_waterElevation = 1.0f;
+		m_snowElevation = 0.0f;
 
 		m_height = new float[ c_height, c_width ];
 		m_color = new Color[ c_height, c_width ];
@@ -72,29 +72,29 @@ public class PG_Planet
 
 				if ( m_waterColor == color )
 				{
-					if ( height > m_waterHeight )
+					if ( height > m_waterElevation )
 					{
-						m_waterHeight = height;
+						m_waterElevation = height;
 					}
 				}
 				else
 				{
-					if ( height < m_waterHeight )
+					if ( height < m_waterElevation )
 					{
-						m_waterHeight = height;
+						m_waterElevation = height;
 						m_waterColor = color;
 					}
 				}
 
-				if ( height > m_snowHeight )
+				if ( height > m_snowElevation )
 				{
-					m_snowHeight = height;
+					m_snowElevation = height;
 					m_snowColor = color;
 				}
 
-				if ( height < m_minimumHeight )
+				if ( height < m_minimumElevation )
 				{
-					m_minimumHeight = height;
+					m_minimumElevation = height;
 				}
 			}
 		}
@@ -108,7 +108,7 @@ public class PG_Planet
 			{
 				if ( m_height[ y, x ] < groundHeight )
 				{
-					if ( m_height[ y, x ] > m_waterHeight )
+					if ( m_height[ y, x ] > m_waterElevation )
 					{
 						groundHeight = m_height[ y, x ];
 						m_groundColor = m_color[ y, x ];
@@ -121,13 +121,13 @@ public class PG_Planet
 		switch ( m_id )
 		{
 			case 5: // earth
-				m_waterHeight += 0.005f;
+				m_waterElevation += 0.005f;
 
 				for ( var y = 0; y < c_height; y++ )
 				{
 					for ( var x = 0; x < c_width; x++ )
 					{
-						if ( m_height[ y, x ] < m_waterHeight )
+						if ( m_height[ y, x ] < m_waterElevation )
 						{
 							m_height[ y, x ] = 0;
 						}

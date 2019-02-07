@@ -312,7 +312,7 @@ public class PG_EditorWindow : EditorWindow
 
 				var contourMap = new PG_ContourMap();
 
-				var tempBuffer = contourMap.Process( elevation, pgPlanet.m_waterHeight );
+				var tempBuffer = contourMap.Process( elevation, pgPlanet.m_waterElevation );
 
 				PG_Tools.SaveAsEXR( tempBuffer, Application.dataPath + "/Editor/Debug - Bicubic Scale.exr" );
 			}
@@ -325,7 +325,7 @@ public class PG_EditorWindow : EditorWindow
 
 			var mountains = new PG_Mountains();
 
-			elevation = mountains.Process( elevation, pgPlanet.m_id, m_octaves, m_mountainScalePowerOfTwo, m_mountainPersistence, m_mountainGain, pgPlanet.m_waterHeight );
+			elevation = mountains.Process( elevation, pgPlanet.m_id, m_octaves, m_mountainScalePowerOfTwo, m_mountainPersistence, m_mountainGain, pgPlanet.m_waterElevation );
 
 			if ( m_debugMode )
 			{
@@ -333,7 +333,7 @@ public class PG_EditorWindow : EditorWindow
 
 				var contourMap = new PG_ContourMap();
 
-				var tempBuffer = contourMap.Process( elevation, pgPlanet.m_waterHeight );
+				var tempBuffer = contourMap.Process( elevation, pgPlanet.m_waterElevation );
 
 				PG_Tools.SaveAsEXR( tempBuffer, Application.dataPath + "/Editor/Debug - Mountains.exr" );
 			}
@@ -343,7 +343,7 @@ public class PG_EditorWindow : EditorWindow
 			{
 				EditorUtility.DisplayProgressBar( "Planet " + ( pgPlanet.m_id + 1 ), "Hydraulic erosion pass...", (float) currentStep++ / totalSteps );
 
-				var minimumElevation = pgPlanet.m_waterHeight - ( 1.0f / 16.0f );
+				var minimumElevation = pgPlanet.m_waterElevation - ( 1.0f / 16.0f );
 
 				var hydraulicErosion = new PG_HydraulicErosion();
 
@@ -360,7 +360,7 @@ public class PG_EditorWindow : EditorWindow
 
 					var contourMap = new PG_ContourMap();
 
-					var tempBuffer = contourMap.Process( elevation, pgPlanet.m_waterHeight );
+					var tempBuffer = contourMap.Process( elevation, pgPlanet.m_waterElevation );
 
 					PG_Tools.SaveAsEXR( tempBuffer, Application.dataPath + "/Editor/Debug - Hydraulic Erosion.exr" );
 				}
@@ -377,7 +377,7 @@ public class PG_EditorWindow : EditorWindow
 
 				var albedoMap = new PG_AlbedoMap();
 
-				var albedoBuffer = albedoMap.Process( elevation, preparedColorMap, pgPlanet.m_waterHeight, pgPlanet.m_waterColor, pgPlanet.m_groundColor );
+				var albedoBuffer = albedoMap.Process( elevation, preparedColorMap, pgPlanet.m_waterElevation, pgPlanet.m_waterColor, pgPlanet.m_groundColor );
 
 				PG_Tools.SaveAsPNG( albedoBuffer, Application.dataPath + "/Editor/Debug - Albedo Map.png" );
 
@@ -386,7 +386,7 @@ public class PG_EditorWindow : EditorWindow
 
 				var normalMap = new PG_NormalMap();
 
-				var normalsBuffer = normalMap.Process( elevation, 256.0f, pgPlanet.m_waterHeight, 1 );
+				var normalsBuffer = normalMap.Process( elevation, 256.0f, pgPlanet.m_waterElevation, 1 );
 
 				PG_Tools.SaveAsPNG( normalsBuffer, Application.dataPath + "/Editor/Debug - Normal Map.png" );
 
@@ -397,7 +397,7 @@ public class PG_EditorWindow : EditorWindow
 
 				var specularMap = new PG_SpecularMap();
 
-				var specularBuffer = specularMap.Process( elevation, albedoBuffer, pgPlanet.m_waterHeight, waterSpecularColor, 0.75f, 1 );
+				var specularBuffer = specularMap.Process( elevation, albedoBuffer, pgPlanet.m_waterElevation, waterSpecularColor, 0.75f, 1 );
 
 				PG_Tools.SaveAsPNG( specularBuffer, Application.dataPath + "/Editor/Debug - Specular Map.png", true );
 
@@ -406,7 +406,7 @@ public class PG_EditorWindow : EditorWindow
 
 				var waterMaskMap = new PG_WaterMaskMap();
 
-				var waterMaskBuffer = waterMaskMap.Process( elevation, pgPlanet.m_waterHeight, 1 );
+				var waterMaskBuffer = waterMaskMap.Process( elevation, pgPlanet.m_waterElevation, 1 );
 
 				PG_Tools.SaveAsPNG( waterMaskBuffer, Application.dataPath + "/Editor/Debug - Water Mask Map.png", true );
 			}
@@ -481,9 +481,9 @@ public class PG_EditorWindow : EditorWindow
 				binaryWriter.Write( c_versionNumber );
 
 				// misc data
-				binaryWriter.Write( pgPlanet.m_minimumHeight );
-				binaryWriter.Write( pgPlanet.m_waterHeight );
-				binaryWriter.Write( pgPlanet.m_snowHeight );
+				binaryWriter.Write( pgPlanet.m_minimumElevation );
+				binaryWriter.Write( pgPlanet.m_waterElevation );
+				binaryWriter.Write( pgPlanet.m_snowElevation );
 
 				binaryWriter.Write( pgPlanet.m_waterColor.r );
 				binaryWriter.Write( pgPlanet.m_waterColor.g );

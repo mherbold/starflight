@@ -6,6 +6,9 @@ public class MoveButton : ShipButton
 	// if this is true we are transitioning to disembarked
 	bool m_isTransitioning;
 
+	// this is set to true if we are out of fuel
+	bool m_outOfFuel;
+
 	// what are we transitioning to?
 	PD_General.Location m_nextLocation;
 
@@ -16,6 +19,9 @@ public class MoveButton : ShipButton
 
 	public override bool Execute()
 	{
+		// reset the out of fuel warning
+		m_outOfFuel = false;
+
 		// start playing the diesel engine sound
 		SoundController.m_instance.PlaySound( SoundController.Sound.DieselEngine, 0.75f, 1.0f, true );
 
@@ -98,29 +104,56 @@ public class MoveButton : ShipButton
 		}
 		else
 		{
-			// get the controller stick position
-			var x = InputController.m_instance.m_x;
-			var z = InputController.m_instance.m_y;
-
-			// create our 3d move vector from the controller position
-			var moveVector = new Vector3( x, 0.0f, z );
-
-			// check if the move vector will actually move the ship (that the controller is not centered)
-			if ( moveVector.magnitude > 0.5f )
+			// check if we are out of fuel
+			if ( playerData.m_terrainVehicle.GetPercentFuelRemaining() < -5 )
 			{
-				// normalize the move vector to a length of 1.0
-				moveVector.Normalize();
+				if ( !m_outOfFuel )
+				{
+					// remember we already did this
+					m_outOfFuel = true;
 
-				// update the direction
-				playerData.m_general.m_currentDirection = Vector3.Slerp( playerData.m_general.m_currentDirection, moveVector, Time.deltaTime * 2.0f );
+					// turn the engines off
+					SpaceflightController.m_instance.m_terrainVehicle.TurnOffEngines();
 
-				// turn the engines on
-				SpaceflightController.m_instance.m_terrainVehicle.TurnOnEngines();
+					// play the error sound
+					SoundController.m_instance.PlaySound( SoundController.Sound.Error );
+
+					// stop playing the diesel engine sound
+					SoundController.m_instance.StopSound( SoundController.Sound.DieselEngine );
+
+					// remove the "active" dot from the current button
+					SpaceflightController.m_instance.m_buttonController.UpdateButtonSprites();
+
+					// play the deactivate sound
+					SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
+				}
 			}
 			else
 			{
-				// turn the engines off
-				SpaceflightController.m_instance.m_terrainVehicle.TurnOffEngines();
+				// get the controller stick position
+				var x = InputController.m_instance.m_x;
+				var z = InputController.m_instance.m_y;
+
+				// create our 3d move vector from the controller position
+				var moveVector = new Vector3( x, 0.0f, z );
+
+				// check if the move vector will actually move the ship (that the controller is not centered)
+				if ( moveVector.magnitude > 0.5f )
+				{
+					// normalize the move vector to a length of 1.0
+					moveVector.Normalize();
+
+					// update the direction
+					playerData.m_general.m_currentDirection = Vector3.Slerp( playerData.m_general.m_currentDirection, moveVector, Time.deltaTime * 2.0f );
+
+					// turn the engines on
+					SpaceflightController.m_instance.m_terrainVehicle.TurnOnEngines();
+				}
+				else
+				{
+					// turn the engines off
+					SpaceflightController.m_instance.m_terrainVehicle.TurnOffEngines();
+				}
 			}
 		}
 

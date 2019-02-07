@@ -1,7 +1,7 @@
 ﻿
 using UnityEngine;
 
-public class RockCollider : MonoBehaviour
+public class TerrainVehicleCollider : MonoBehaviour
 {
 	public TerrainVehicle m_terrainVehicle;
 

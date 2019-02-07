@@ -190,7 +190,6 @@ public class PlayerCamera : MonoBehaviour
 	{
 		SpaceflightController.m_instance.m_buttonController.ChangeButtonSet( ButtonController.ButtonSet.CommandA );
 
-		SpaceflightController.m_instance.m_messages.Clear();
 		SpaceflightController.m_instance.m_messages.AddText( "<color=white>Safe landing, captain.</color>" );
 
 		SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );

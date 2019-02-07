@@ -161,7 +161,7 @@ public class SpaceflightController : MonoBehaviour
 		{
 			m_timer -= 30.0f;
 
-			DataController.m_instance.SaveActiveGame();
+			// DataController.m_instance.SaveActiveGame();
 		}
 
 		// when player hits cancel (esc) show the save game panel (except when using the starmap)

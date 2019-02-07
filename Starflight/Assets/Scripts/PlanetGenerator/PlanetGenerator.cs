@@ -37,6 +37,7 @@ public class PlanetGenerator
 	public float m_minimumElevation;
 	public float m_waterElevation;
 	public float m_snowElevation;
+	public float m_maximumElevation;
 
 	Color m_waterColor;
 	Color m_snowColor;
@@ -296,6 +297,8 @@ public class PlanetGenerator
 
 		stopwatch.Start();
 
+		m_maximumElevation = 0.0f;
+
 		var elevationScale = ( m_maximumDifference - m_minimumDifference ) / 255.0f;
 
 		for ( var y = 0; y < m_textureMapHeight; y++ )
@@ -305,6 +308,8 @@ public class PlanetGenerator
 				var difference = m_differenceBuffer[ y * m_textureMapWidth + x ];
 
 				m_elevation[ y, x ] += ( difference * elevationScale ) + m_minimumDifference;
+
+				m_maximumElevation = Mathf.Max( m_maximumElevation, m_elevation[ y, x ] );
 			}
 		}
 

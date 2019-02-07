@@ -84,6 +84,9 @@ public class DisembarkButton : ShipButton
 
 				SpaceflightController.m_instance.m_messages.AddText( "<color=white>Stand by, scanning planet...</color>" );
 
+				// refuel the terrain vehicle
+				playerData.m_terrainVehicle.Refuel();
+
 				// reset the message state and timer
 				m_messageState = 0;
 				m_messageTimer = 0.0f;

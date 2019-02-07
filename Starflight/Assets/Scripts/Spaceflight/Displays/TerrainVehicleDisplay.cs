@@ -24,7 +24,7 @@ public class TerrainVehicleDisplay : ShipDisplay
 	// for gizmo drawing
 	Vector3[] m_debugVectors;
 
-	public static readonly string[] c_cardinalDirections = { "South", "Southwest", "West", "Northwest", "North", "Northeast", "East", "Southeast", "South" };
+	public static readonly string[] c_cardinalDirections = { "N", "NE", "E", "SE", "S", "SW", "W", "NW", "N" };
 
 	TerrainVehicleDisplay()
 	{
@@ -126,10 +126,34 @@ public class TerrainVehicleDisplay : ShipDisplay
 
 		var direction = c_cardinalDirections[ index ];
 
-		m_statusValues.text = "\n";
-		m_statusValues.text += "\n";
-		m_statusValues.text += "\n";
-		m_statusValues.text += "\n";
+		// date and time
+		m_statusValues.text = playerData.m_general.m_currentStardateDHMY + "\n";
+
+		// get the amount of fuel remaining as a percent
+		var percentFuelRemaining = playerData.m_terrainVehicle.GetPercentFuelRemaining();
+
+		if ( percentFuelRemaining <= -5 )
+		{
+			m_statusValues.text += "<color=yellow>None</color>\n";
+		}
+		else if ( percentFuelRemaining <= 0 )
+		{
+			m_statusValues.text += "<color=red>Reserve</color>\n";
+		}
+		else
+		{
+			m_statusValues.text += percentFuelRemaining + "%\n";
+		}
+
+		// get the current terrain vehicle efficiency at this elevation
+		var fuelEfficiency = SpaceflightController.m_instance.m_terrainVehicle.GetFuelEfficiency();
+
+		m_statusValues.text += Mathf.RoundToInt( fuelEfficiency * 100.0f ) + "%\n";
+
+		// get the amount of cargo space left as a percentage
+		var percentRemainingVolume = playerData.m_terrainVehicle.GetPercentRemainingVolume();
+
+		m_statusValues.text += ( 100 - percentRemainingVolume ) + "% Full\n";
 
 		m_statusValues.text += Mathf.RoundToInt( distanceInKm ) + " KM. " + direction;
 

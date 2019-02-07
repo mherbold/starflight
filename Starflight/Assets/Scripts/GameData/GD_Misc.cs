@@ -18,4 +18,6 @@ public class GD_Misc
 	public int m_cargoPodSellPrice;
 	public int m_cargoPodMass;
 	public int m_cargoPodVolume;
+
+	public int m_terrainVehicleVolume;
 }
