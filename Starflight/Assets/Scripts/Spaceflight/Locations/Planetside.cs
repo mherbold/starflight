@@ -22,21 +22,6 @@ public class Planetside : MonoBehaviour
 	// the opacity of the clouds
 	float m_cloudOpacity;
 
-	// unity awake
-	void Awake()
-	{
-	}
-
-	// unity start
-	void Start()
-	{
-	}
-
-	// unity update
-	void Update()
-	{
-	}
-
 	// unity late update
 	void LateUpdate()
 	{

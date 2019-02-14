@@ -10,10 +10,10 @@ public class TerrainGrid : MonoBehaviour
 	public int m_detail = 9;
 
 	public float m_elevationScale = 100.0f;
-	public float m_elevationOffset = 16.0f;
 
 	public TerrainRocks m_terrainRocks;
 	public TerrainElements m_terrainElements;
+	public TerrainTrees m_terrainTrees;
 
 	Mesh m_mesh;
 	MeshFilter m_meshFilter;
@@ -81,8 +81,8 @@ public class TerrainGrid : MonoBehaviour
 		m_material.SetTexture( "SF_ElevationMap", elevationTexture );
 		m_material.SetFloat( "SF_ElevationScale", m_elevationScale * 4.0f ); // multiply by 4 because R16 tex map has elevations divided by 4
 
-		// force the bounds to be the maximum possible extents
-		m_mesh.bounds = new Bounds( Vector3.zero, new Vector3( 1024.0f, 512.0f, 1024.0f ) );
+		// force the bounds to be the maximum possible extents (force y to 512.0f)
+		m_mesh.bounds = new Bounds( Vector3.zero, new Vector3( m_mesh.bounds.extents.x, 512.0f, m_mesh.bounds.extents.z ) * 2.0f );
 
 		// update the textures on the material
 		m_material.SetTexture( "_MainTex", planetGenerator.m_albedoTexture );
@@ -90,16 +90,30 @@ public class TerrainGrid : MonoBehaviour
 		m_material.SetTexture( "SF_NormalMap", planetGenerator.m_normalTexture );
 		m_material.SetTexture( "SF_WaterMaskMap", planetGenerator.m_waterMaskTexture );
 
+		// get to the planet
+		var planet = planetGenerator.GetPlanet();
+
+		Debug.Log( "Populating planet " + planet.m_id + "..." );
+
+		// reset the spawn lists
+		TerrainGridPopulator.ResetSpawnLists( m_planetGenerator );
+
 		// populate the rocks
 		if ( m_terrainRocks != null )
 		{
-			m_terrainRocks.Initialize( m_planetGenerator, m_elevationScale );
+			m_terrainRocks.Initialize( m_planetGenerator, m_elevationScale, planet.m_id + 1 );
 		}
 
 		// populate the elements
 		if ( m_terrainElements != null )
 		{
-			m_terrainElements.Initialize( m_planetGenerator, m_elevationScale );
+			m_terrainElements.Initialize( m_planetGenerator, m_elevationScale, planet.m_id + 2 );
+		}
+
+		// populate the trees
+		if ( m_terrainTrees != null )
+		{
+			m_terrainTrees.Initialize( m_planetGenerator, m_elevationScale, planet.m_id + 3 );
 		}
 	}
 
@@ -119,7 +133,7 @@ public class TerrainGrid : MonoBehaviour
 		var y = Mathf.Lerp( 0.125f, 0.875f, ( longitude + 90.0f ) / 180.0f );
 
 		// constant scale factors
-		var zoom = 2.0f;
+		var zoom = 4.0f;
 
 		var xScale = 0.5f / zoom;
 		var yScale = 1.0f / zoom;
@@ -156,8 +170,6 @@ public class TerrainGrid : MonoBehaviour
 			}
 		}
 
-		maxElevation += m_elevationOffset;
-		 
 		// update the vertices with the elevation data
 		for ( var i = 0; i < m_vertices.Count; i++ )
 		{
@@ -457,5 +469,10 @@ public class TerrainGrid : MonoBehaviour
 
 		// recalculate the bounds
 		m_mesh.RecalculateBounds();
+
+		// force the bounds to be the maximum possible extents (force y to 512.0f)
+		m_mesh.bounds = new Bounds( Vector3.zero, new Vector3( m_mesh.bounds.extents.x, 512.0f, m_mesh.bounds.extents.z ) * 2.0f );
+
+		Debug.Log( "Terrain grid bounding box = " + m_mesh.bounds.extents.x + ", " + m_mesh.bounds.extents.y + ", " + m_mesh.bounds.extents.z );
 	}
 }

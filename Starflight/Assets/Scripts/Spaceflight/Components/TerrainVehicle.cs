@@ -190,7 +190,7 @@ public class TerrainVehicle : MonoBehaviour
 		}
 
 		// update the fuel efficiency
-		var maximumElevation = m_planetGenerator.m_maximumElevation * m_elevationScale;
+		var maximumElevation = 1.25f * m_elevationScale;
 		var waterElevation = m_planetGenerator.m_waterElevation * m_elevationScale;
 
 		if ( tvPosition.y < waterElevation )

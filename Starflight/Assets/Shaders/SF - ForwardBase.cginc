@@ -17,6 +17,7 @@ float4 fragForwardBase_SF( SF_VertexShaderOutput i ) : SV_Target
 	float4 specular = ComputeSpecular( i );
 	float3 normal = ComputeNormal( i );
 	float3 emissive = ComputeEmissive( i );
+    float3 reflection = ComputeReflection( i, normal );
 
 	#ifdef SF_FRACTALDETAILS_ON
 
@@ -36,7 +37,9 @@ float4 fragForwardBase_SF( SF_VertexShaderOutput i ) : SV_Target
 
 	#endif // SF_ALBEDOOCCLUSION_ON
 
-	return ComputeLighting( i, albedo, specular, emissive, normal, 0 );
+	float fogAmount = ComputeFogAmount( i );
+
+	return ComputeLighting( i, albedo, specular, emissive + reflection, normal, fogAmount );
 }
 
 #endif

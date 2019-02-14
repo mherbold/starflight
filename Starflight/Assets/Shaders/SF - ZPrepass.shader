@@ -21,6 +21,9 @@ Shader "Starflight/Z Prepass"
 
 		SF_EmissiveMap( "Emissive Map", 2D ) = "black" {}
 		SF_EmissiveColor( "Emissive Color", Color ) = ( 0, 0, 0, 1 )
+			
+		SF_ReflectionMap( "Reflection Map", 2D ) = "black" {}
+		SF_ReflectionColor( "Reflection Color", Color ) = ( 1, 1, 1, 1 )
 
 		/* UV2 Maps */
 

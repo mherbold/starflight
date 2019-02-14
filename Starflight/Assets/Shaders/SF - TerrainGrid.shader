@@ -66,6 +66,37 @@ Shader "Starflight/Terrain Grid"
 	{
 		Pass
 		{
+			Name "SHADOWCASTER"
+
+			Tags
+			{
+				"LightMode" = "ShadowCaster"
+			}
+
+			Cull [SF_CullMode]
+			ZWrite On
+			ZTest LEqual
+
+			CGPROGRAM
+
+				#pragma target 3.0
+
+				#pragma shader_feature SF_ALBEDOMAP_ON
+				#pragma shader_feature SF_DETAILALBEDOMAP_ON
+				#pragma shader_feature SF_ALPHA_ON
+				#pragma shader_feature SF_ALPHATEST_ON
+
+				#pragma vertex vertTerrainGridShadowCaster_SF
+				#pragma fragment fragShadowCaster_SF
+
+				#include "SF - TerrainGrid.cginc"
+				#include "SF - ShadowCaster.cginc"
+
+			ENDCG
+		}
+
+		Pass
+		{
 			Name "DEFERRED"
 
 			Tags

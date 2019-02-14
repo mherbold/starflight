@@ -23,7 +23,7 @@ public class MoveButton : ShipButton
 		m_outOfFuel = false;
 
 		// start playing the diesel engine sound
-		SoundController.m_instance.PlaySound( SoundController.Sound.DieselEngine, 0.75f, 1.0f, true );
+		SoundController.m_instance.PlaySound( SoundController.Sound.DieselEngine, 0.5f, 1.0f, true );
 
 		// return true to keep the button lit and active
 		return true;
@@ -65,10 +65,21 @@ public class MoveButton : ShipButton
 			// stop playing the diesel engine sound
 			SoundController.m_instance.StopSound( SoundController.Sound.DieselEngine );
 
+			// calculate ship coordinates
+			var shipCoordinates = Tools.LatLongToWorldCoordinates( playerData.m_general.m_selectedLatitude, playerData.m_general.m_selectedLongitude );
+
+			shipCoordinates = SpaceflightController.m_instance.m_disembarked.ApplyElevation( shipCoordinates, false );
+
+			// calculate vector from TV to ship coordinates
+			var vectorToShip = shipCoordinates - playerData.m_general.m_lastDisembarkedCoordinates;
+
+			// how far is it in kilometers?
+			var distanceInKm = vectorToShip.magnitude * 225.0f / 2048.0f - 2.0f;
+
 			// are we near the ship?
-			if ( SpaceflightController.m_instance.m_disembarkArthShip.m_terrainVehicleIsInside )
+			if ( distanceInKm <= 0.0f )
 			{
-				// make sure the planetside terrain grid has been updated
+				// yes - make sure the planetside terrain grid has been updated
 				SpaceflightController.m_instance.m_planetside.UpdateTerrainGridNow();
 
 				// fade the map to black
@@ -105,7 +116,7 @@ public class MoveButton : ShipButton
 		else
 		{
 			// check if we are out of fuel
-			if ( playerData.m_terrainVehicle.GetPercentFuelRemaining() < -5 )
+			if ( playerData.m_terrainVehicle.GetPercentFuelRemaining() <= -3 )
 			{
 				if ( !m_outOfFuel )
 				{

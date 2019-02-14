@@ -17,6 +17,7 @@ void fragDeferred_SF( SF_VertexShaderOutput i, out half4 outGBuffer0 : SV_Target
 	float4 specular = ComputeSpecular( i );
 	float3 normal = ComputeNormal( i );
 	float3 emissive = ComputeEmissive( i );
+	float3 reflection = ComputeReflection( i, normal );
 
 	#ifdef SF_FRACTALDETAILS_ON
 
@@ -48,11 +49,11 @@ void fragDeferred_SF( SF_VertexShaderOutput i, out half4 outGBuffer0 : SV_Target
 
 	#if !defined( UNITY_HDR_ON )
 
-		outGBuffer3 = float4( exp2( -emissive ), 1 );
+		outGBuffer3 = float4( exp2( -( emissive + reflection ) ), 1 );
 
 	#else
 
-		outGBuffer3 = float4( emissive, 1 );
+		outGBuffer3 = float4( emissive + reflection, 1 );
 
 	#endif
 }

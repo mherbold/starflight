@@ -132,7 +132,7 @@ public class TerrainVehicleDisplay : ShipDisplay
 		// get the amount of fuel remaining as a percent
 		var percentFuelRemaining = playerData.m_terrainVehicle.GetPercentFuelRemaining();
 
-		if ( percentFuelRemaining <= -5 )
+		if ( percentFuelRemaining <= -3 )
 		{
 			m_statusValues.text += "<color=yellow>None</color>\n";
 		}

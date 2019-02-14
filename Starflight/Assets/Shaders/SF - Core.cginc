@@ -40,6 +40,10 @@ sampler2D SF_EmissiveMap;
 float4 SF_EmissiveMap_ST;
 float3 SF_EmissiveColor;
 
+sampler2D SF_ReflectionMap;
+float4 SF_ReflectionMap_ST;
+float3 SF_ReflectionColor;
+
 sampler2D SF_OcclusionMap;
 float4 SF_OcclusionMap_ST;
 float SF_OcclusionPower;
@@ -352,6 +356,25 @@ float3 ComputeEmissive( SF_VertexShaderOutput i )
 	#endif // SF_EMISSIVEMAP_ON
 
 	return SF_EmissiveColor + emissiveMap;
+}
+
+float3 ComputeReflection( SF_VertexShaderOutput i, float3 normal )
+{
+	#if SF_REFLECTIONMAP_ON
+
+		float3 reflectionVector = reflect( i.eyeDir, normal );
+
+		float3 reflectionMap = tex2D( SF_ReflectionMap, TRANSFORM_TEX( reflectionVector.xy, SF_ReflectionMap ) );
+
+		reflectionMap *= SF_ReflectionColor;
+
+	#else // !SF_REFLECTIONMAP_ON
+
+		float3 reflectionMap = 0;
+
+	#endif // SF_REFLECTIONMAP_ON
+
+	return reflectionMap;
 }
 
 float4 ComputeLighting( SF_VertexShaderOutput i, float4 albedo, float4 specular, float3 emissive, float3 normal, float fogAmount )

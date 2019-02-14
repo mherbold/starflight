@@ -189,4 +189,39 @@ class Tools
 
 		children.ForEach( child => GameObject.Destroy( child ) );
 	}
+
+	// saves a texture map to file as a png image
+	public static void SaveAsPNG( Texture2D textureMap, string filename )
+	{
+		var data = textureMap.EncodeToPNG();
+
+		var directory = Path.GetDirectoryName( filename );
+
+		Directory.CreateDirectory( directory );
+
+		File.WriteAllBytes( filename, data );
+	}
+
+	// saves a float array to file as a png image
+	public static void SaveAsPNG( float[,] values, string filename )
+	{
+		var width = values.GetLength( 1 );
+		var height = values.GetLength( 0 );
+
+		var textureMap = new Texture2D( width, height, TextureFormat.RGB24, false );
+
+		for ( var y = 0; y < height; y++ )
+		{
+			for ( var x = 0; x < width; x++ )
+			{
+				float value = values[ y, x ];
+
+				textureMap.SetPixel( x, y, new Color( value, value, value, 1.0f ) );
+			}
+		}
+
+		textureMap.Apply();
+
+		SaveAsPNG( textureMap, filename );
+	}
 }

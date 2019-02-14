@@ -22,6 +22,9 @@ Shader "Starflight/Standard"
 		SF_EmissiveMap( "Emissive Map", 2D ) = "black" {}
 		SF_EmissiveColor( "Emissive Color", Color ) = ( 0, 0, 0, 1 )
 
+		SF_ReflectionMap( "Reflection Map", 2D ) = "black" {}
+		SF_ReflectionColor( "Reflection Color", Color ) = ( 1, 1, 1, 1 )
+
 		/* UV2 Maps */
 
 		SF_OcclusionMap( "Occlusion Map", 2D ) = "white" {}
@@ -116,6 +119,7 @@ Shader "Starflight/Standard"
 				#pragma shader_feature SF_ORTHONORMALIZE_ON
 				#pragma shader_feature SF_EMISSIVEMAP_ON
 				#pragma shader_feature SF_EMISSIVEPROJECTION_ON
+				#pragma shader_feature SF_REFLECTIONMAP_ON
 				#pragma shader_feature SF_FRACTALDETAILS_ON
 
 				#pragma vertex vertDeferred_SF
@@ -160,6 +164,7 @@ Shader "Starflight/Standard"
 				#pragma shader_feature SF_ORTHONORMALIZE_ON
 				#pragma shader_feature SF_EMISSIVEMAP_ON
 				#pragma shader_feature SF_EMISSIVEPROJECTION_ON
+				#pragma shader_feature SF_REFLECTIONMAP_ON
 				#pragma shader_feature SF_FRACTALDETAILS_ON
 
 				#pragma vertex vertForwardBase_SF

@@ -1,0 +1,174 @@
+fileFormatVersion: 2
+guid: 5f5b8cc4302c92b408d40e6e408d2e66
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Addis
+    100002: Carmae
+    100004: //RootNode
+    100006: Pyrite
+    100008: Vediant
+    100010: Endurium
+    100012: Mercury
+    100014: Rock 1
+    100016: Rock 2
+    100018: Rock 3
+    100020: Rock 4
+    100022: Rock 5
+    100024: Rock 6
+    100026: Rock 7
+    100028: Rock 8
+    100030: Rock 9
+    400000: Addis
+    400002: Carmae
+    400004: //RootNode
+    400006: Pyrite
+    400008: Vediant
+    400010: Endurium
+    400012: Mercury
+    400014: Rock 1
+    400016: Rock 2
+    400018: Rock 3
+    400020: Rock 4
+    400022: Rock 5
+    400024: Rock 6
+    400026: Rock 7
+    400028: Rock 8
+    400030: Rock 9
+    2100000: Addis
+    2100002: Carmae
+    2100004: Pyrite
+    2100006: Vediant
+    2300000: Addis
+    2300002: Carmae
+    2300004: Pyrite
+    2300006: Vediant
+    2300008: //RootNode
+    2300010: Endurium
+    2300012: Mercury
+    2300014: Rock 1
+    2300016: Rock 2
+    2300018: Rock 3
+    2300020: Rock 4
+    2300022: Rock 5
+    2300024: Rock 6
+    2300026: Rock 7
+    2300028: Rock 8
+    2300030: Rock 9
+    3300000: Addis
+    3300002: Carmae
+    3300004: Pyrite
+    3300006: Vediant
+    3300008: //RootNode
+    3300010: Endurium
+    3300012: Mercury
+    3300014: Rock 1
+    3300016: Rock 2
+    3300018: Rock 3
+    3300020: Rock 4
+    3300022: Rock 5
+    3300024: Rock 6
+    3300026: Rock 7
+    3300028: Rock 8
+    3300030: Rock 9
+    4300000: Addis
+    4300002: Carmae
+    4300004: Pyrite
+    4300006: Vediant
+    4300008: Endurium
+    4300010: Rock 1
+    4300012: Rock 2
+    4300014: Rock 3
+    4300016: Rock 4
+    4300018: Rock 5
+    4300020: Rock 6
+    4300022: Rock 7
+    4300024: Rock 8
+    4300026: Rock 9
+    4300028: Mercury
+  externalObjects: {}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
