@@ -5,6 +5,8 @@ using System.IO;
 using System.IO.Compression;
 
 using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
 
 public class PlanetGenerator
 {
@@ -25,9 +27,6 @@ public class PlanetGenerator
 
 	// the planet
 	GD_Planet m_planet;
-
-	// remember where we were in the maps generation process
-	int m_currentStep;
 
 	// resource request handle
 	ResourceRequest m_resourceRequest;
@@ -66,6 +65,21 @@ public class PlanetGenerator
 	Color[,] m_normalMap;
 	Color[,] m_waterMaskMap;
 
+	// the pixels
+	Color[] m_albedoPixels;
+	Color[] m_specularPixels;
+	Color[] m_normalPixels;
+	Color[] m_waterMaskPixels;
+
+	// the current step
+	int m_step;
+
+	// the async task
+	Task m_asyncTask;
+
+	// generation progress from 0.0 to 1.0
+	public float m_progress;
+
 	// remember if we are done
 	public bool m_mapsGenerated;
 
@@ -83,7 +97,8 @@ public class PlanetGenerator
 	public void Start( GD_Planet planet )
 	{
 		m_planet = planet;
-		m_currentStep = 0;
+		m_step = 0;
+		m_progress = 0.0f;
 		m_mapsGenerated = false;
 		m_abort = false;
 	}
@@ -95,203 +110,289 @@ public class PlanetGenerator
 
 	public float Process()
 	{
-		var stopwatch = new Stopwatch();
-
-		stopwatch.Start();
-
-		while ( !m_mapsGenerated )
+		switch ( m_step )
 		{
-			UnityEngine.Debug.Log( "Doing step " + m_currentStep + " for planet " + m_planet.m_id + "... (" + stopwatch.ElapsedMilliseconds + ")" );
-
-			switch ( m_currentStep )
-			{
-				case 0: StartLoadingPlanetData(); break;
-				case 1: WaitForPlanetData(); break;
-				case 2: DecompressPlanetData(); break;
-				case 3: DoBicubicScale(); break;
-				case 4: DoCraters(); break;
-				case 5: ApplyDifferenceBuffer(); break;
-				case 6: CreateAlbedoBuffer(); break;
-				case 7: CreateAlbedoTexture(); break;
-				case 8: CreateSpecularBuffer(); break;
-				case 9: CreateSpecularTexture(); break;
-				case 10: CreateWaterMaskBuffer(); break;
-				case 11: CreateWaterMaskTexture(); break;
-				case 12: CreateNormalBuffer(); break;
-				case 13: CreateNormalTexture(); break;
-				case 14: CleanUp(); break;
-			}
-
-			if ( ( m_currentStep == 1 ) || ( stopwatch.ElapsedMilliseconds >= 100 ) )
-			{
-				UnityEngine.Debug.Log( "Breaking here... (" + stopwatch.ElapsedMilliseconds + ")" );
+			case 0:
+				m_step = 1;
+				m_progress = 0.0f;
+				m_resourceRequest = Resources.LoadAsync( "Planets/" + m_planet.m_id, typeof( TextAsset ) );
 				break;
-			}
-		}
 
-		return m_currentStep / 14.0f;
-	}
+			case 1:
 
-	void StartLoadingPlanetData()
-	{
-		m_resourceRequest = Resources.LoadAsync( "Planets/" + m_planet.m_id, typeof( TextAsset ) );
-
-		m_currentStep++;
-	}
-
-	void WaitForPlanetData()
-	{
-		if ( m_resourceRequest.isDone )
-		{
-			m_currentStep++;
-		}
-	}
-
-	void DecompressPlanetData()
-	{
-		var compressedPlanetData = m_resourceRequest.asset as TextAsset;
-
-		if ( compressedPlanetData == null )
-		{
-			UnityEngine.Debug.Log( "Missing planet map data for planet " + m_planet.m_id );
-
-			m_abort = true;
-		}
-		else
-		{
-			using ( var memoryStream = new MemoryStream( compressedPlanetData.bytes ) )
-			{
-				using ( var gZipStream = new GZipStream( memoryStream, CompressionMode.Decompress, false ) )
+				if ( m_resourceRequest.isDone )
 				{
-					var binaryReader = new BinaryReader( gZipStream );
+					var compressedPlanetData = m_resourceRequest.asset as TextAsset;
 
-					var version = binaryReader.ReadInt32();
-
-					if ( version != c_versionNumber )
+					if ( compressedPlanetData == null )
 					{
-						UnityEngine.Debug.Log( "Planet map data for planet " + m_planet.m_id + " is the wrong version." );
-
+						// abort - we have no planet data for this planet!
+						m_step = -1;
 						m_abort = true;
 					}
 					else
 					{
-						m_minimumElevation = binaryReader.ReadSingle();
-						m_waterElevation = binaryReader.ReadSingle();
-						m_snowElevation = binaryReader.ReadSingle();
+						m_step = 2;
 
-						var r = binaryReader.ReadSingle();
-						var g = binaryReader.ReadSingle();
-						var b = binaryReader.ReadSingle();
+						// can't get bytes asynchronously - stupid unity
+						var bytes = compressedPlanetData.bytes;
 
-						m_waterColor = new Color( r, g, b );
+						// the secret sauce
+						m_asyncTask = Task.Run( () => AsyncProcess( bytes ) );
+					}
+				}
 
-						r = binaryReader.ReadSingle();
-						g = binaryReader.ReadSingle();
-						b = binaryReader.ReadSingle();
+				break;
 
-						m_groundColor = new Color( r, g, b );
+			case 2:
+				m_asyncTask.Wait();
+				break;
 
-						r = binaryReader.ReadSingle();
-						g = binaryReader.ReadSingle();
-						b = binaryReader.ReadSingle();
+			// the stuff below cannot be done asynchronously - stupid unity.
 
-						m_snowColor = new Color( r, g, b );
+			case 20:
+				m_step = 30;
+				m_progress = 0.6f;
+				CreateAlbedoTexture();
+				break;
 
-						var preparedMapWidth = binaryReader.ReadInt32();
-						var preparedMapHeight = binaryReader.ReadInt32();
+			case 30:
+				m_step = 40;
+				m_progress = 0.7f;
+				CreateSpecularTexture();
+				break;
 
-						m_preparedHeightMap = new float[ preparedMapHeight, preparedMapWidth ];
+			case 40:
+				m_step = 50;
+				m_progress = 0.8f;
+				CreateWaterMaskTexture();
+				break;
 
-						for ( var y = 0; y < preparedMapHeight; y++ )
+			case 50:
+				m_step = 99;
+				m_progress = 0.9f;
+				CreateNormalTexture();
+				break;
+
+			// all done
+
+			case 99:
+
+				m_step = -1;
+				m_progress = 1.0f;
+				m_mapsGenerated = true;
+
+				// free up memory (but keep the elevation buffer)
+				m_preparedHeightMap = null;
+				m_preparedColorMap = null;
+
+				m_differenceBuffer = null;
+
+				m_albedoMap = null;
+				m_specularMap = null;
+				m_normalMap = null;
+				m_waterMaskMap = null;
+
+				m_albedoPixels = null;
+				m_specularPixels = null;
+				m_normalPixels = null;
+				m_waterMaskPixels = null;
+
+				break;
+		}
+
+		return m_progress;
+	}
+
+	public void AsyncProcess( byte[] bytes )
+	{
+		var progressStepSize = 0.5f / 12.0f;
+
+		m_progress += progressStepSize;
+
+		// decompress the planet data
+		using ( var memoryStream = new MemoryStream( bytes ) )
+		{
+			using ( var gZipStream = new GZipStream( memoryStream, CompressionMode.Decompress, false ) )
+			{
+				var binaryReader = new BinaryReader( gZipStream );
+
+				var version = binaryReader.ReadInt32();
+
+				if ( version != c_versionNumber )
+				{
+					m_abort = true;
+				}
+				else
+				{
+					m_minimumElevation = binaryReader.ReadSingle();
+					m_waterElevation = binaryReader.ReadSingle();
+					m_snowElevation = binaryReader.ReadSingle();
+
+					var r = binaryReader.ReadSingle();
+					var g = binaryReader.ReadSingle();
+					var b = binaryReader.ReadSingle();
+
+					m_waterColor = new Color( r, g, b );
+
+					r = binaryReader.ReadSingle();
+					g = binaryReader.ReadSingle();
+					b = binaryReader.ReadSingle();
+
+					m_groundColor = new Color( r, g, b );
+
+					r = binaryReader.ReadSingle();
+					g = binaryReader.ReadSingle();
+					b = binaryReader.ReadSingle();
+
+					m_snowColor = new Color( r, g, b );
+
+					var preparedMapWidth = binaryReader.ReadInt32();
+					var preparedMapHeight = binaryReader.ReadInt32();
+
+					m_preparedHeightMap = new float[ preparedMapHeight, preparedMapWidth ];
+
+					for ( var y = 0; y < preparedMapHeight; y++ )
+					{
+						for ( var x = 0; x < preparedMapWidth; x++ )
 						{
-							for ( var x = 0; x < preparedMapWidth; x++ )
-							{
-								m_preparedHeightMap[ y, x ] = binaryReader.ReadSingle();
-							}
+							m_preparedHeightMap[ y, x ] = binaryReader.ReadSingle();
 						}
+					}
 
-						m_preparedColorMap = new Color[ preparedMapHeight, preparedMapWidth ];
+					m_preparedColorMap = new Color[ preparedMapHeight, preparedMapWidth ];
 
-						for ( var y = 0; y < preparedMapHeight; y++ )
+					for ( var y = 0; y < preparedMapHeight; y++ )
+					{
+						for ( var x = 0; x < preparedMapWidth; x++ )
 						{
-							for ( var x = 0; x < preparedMapWidth; x++ )
-							{
-								r = binaryReader.ReadSingle();
-								g = binaryReader.ReadSingle();
-								b = binaryReader.ReadSingle();
+							r = binaryReader.ReadSingle();
+							g = binaryReader.ReadSingle();
+							b = binaryReader.ReadSingle();
 
-								m_preparedColorMap[ y, x ] = new Color( r, g, b );
-							}
+							m_preparedColorMap[ y, x ] = new Color( r, g, b );
 						}
+					}
 
-						if ( m_planet.IsGasGiant() )
-						{
-							m_textureMapWidth = c_gasGiantTextureMapWidth;
-							m_textureMapHeight = c_gasGiantTextureMapHeight;
-						}
-						else
-						{
-							m_textureMapWidth = c_nonGasGiantTextureMapWidth;
-							m_textureMapHeight = c_nonGasGiantTextureMapHeight;
+					if ( m_planet.IsGasGiant() )
+					{
+						m_textureMapWidth = c_gasGiantTextureMapWidth;
+						m_textureMapHeight = c_gasGiantTextureMapHeight;
+					}
+					else
+					{
+						m_textureMapWidth = c_nonGasGiantTextureMapWidth;
+						m_textureMapHeight = c_nonGasGiantTextureMapHeight;
 
-							m_minimumDifference = binaryReader.ReadSingle();
-							m_maximumDifference = binaryReader.ReadSingle();
+						m_minimumDifference = binaryReader.ReadSingle();
+						m_maximumDifference = binaryReader.ReadSingle();
 
-							var differenceBufferSize = m_textureMapWidth * m_textureMapHeight;
+						var differenceBufferSize = m_textureMapWidth * m_textureMapHeight;
 
-							m_differenceBuffer = new byte[ differenceBufferSize ];
+						m_differenceBuffer = new byte[ differenceBufferSize ];
 
-							gZipStream.Read( m_differenceBuffer, 0, differenceBufferSize );
-						}
+						gZipStream.Read( m_differenceBuffer, 0, differenceBufferSize );
 					}
 				}
 			}
 		}
 
-		m_currentStep++;
-	}
-
-	void DoBicubicScale()
-	{
+		// gas giant or not?
 		if ( m_planet.IsGasGiant() )
 		{
+			// yes - do color bicubic scale
+			m_progress += progressStepSize;
+
 			var bicubicScaleColor = new PG_BicubicScaleColor();
 
 			m_albedoMap = bicubicScaleColor.Process( m_preparedColorMap, m_textureMapWidth, m_textureMapHeight );
 
+			// do color gaussian blur (this becomes our albedo map)
+			m_progress += progressStepSize;
+
 			var gaussianBlurColor = new PG_GaussianBlurColor();
 
 			m_albedoMap = gaussianBlurColor.Process( m_albedoMap, c_xBlurRadiusGasGiant, c_yBlurRadiusGasGiant );
-		}
-		else
-		{
+
+			// do elevation bicubic scale
+			m_progress += progressStepSize;
+
 			var bicubicScaleElevation = new PG_BicubicScaleElevation();
 
 			m_elevation = bicubicScaleElevation.Process( m_preparedHeightMap, m_textureMapWidth, m_textureMapHeight );
+
+			// do elevation gaussian blur
+			m_progress += progressStepSize;
+
+			var gaussianBlurElevation = new PG_GaussianBlurElevation();
+
+			m_elevation = gaussianBlurElevation.Process( m_elevation, c_xBlurRadiusGasGiant, c_yBlurRadiusGasGiant );
+
+			// build specular map
+			m_progress += progressStepSize;
+
+			m_specularMap = new Color[ m_textureMapHeight, m_textureMapWidth ];
+
+			for ( var y = 0; y < m_textureMapHeight; y++ )
+			{
+				for ( var x = 0; x < m_textureMapWidth; x++ )
+				{
+					var elevation = m_elevation[ y, x ];
+
+					m_specularMap[ y, x ] = new Color( elevation, elevation, elevation, 0.25f );
+				}
+			}
+
+			// build water mask map
+			m_progress += progressStepSize;
+
+			m_waterMaskMap = new Color[ 4, 4 ];
+
+			for ( var y = 0; y < 4; y++ )
+			{
+				for ( var x = 0; x < 4; x++ )
+				{
+					m_waterMaskMap[ y, x ] = Color.black;
+				}
+			}
+
+			// build normal map
+			m_progress += progressStepSize;
+
+			m_normalMap = new Color[ 4, 4 ];
+
+			var defaultNormal = new Color( 0.5f, 0.5f, 1.0f );
+
+			for ( var y = 0; y < 4; y++ )
+			{
+				for ( var x = 0; x < 4; x++ )
+				{
+					m_normalMap[ y, x ] = defaultNormal;
+				}
+			}
 		}
-
-		m_currentStep++;
-	}
-
-	void DoCraters()
-	{
-		if ( !m_planet.IsGasGiant() )
+		else
 		{
+			// do elevation bicubic scale
+			m_progress += progressStepSize;
+
+			var bicubicScaleElevation = new PG_BicubicScaleElevation();
+
+			m_elevation = bicubicScaleElevation.Process( m_preparedHeightMap, m_textureMapWidth, m_textureMapHeight );
+
+			// do craters
+			m_progress += progressStepSize;
+
 			if ( m_planet.m_atmosphereDensityId == 0 )
 			{
 				var craters = new PG_Craters();
 
 				m_elevation = craters.Process( m_elevation, m_planet.m_id, 0.2f, m_waterElevation );
 			}
-		}
 
-		m_currentStep++;
-	}
+			// factor in elevation difference map
+			m_progress += progressStepSize;
 
-	void ApplyDifferenceBuffer()
-	{
-		if ( !m_planet.IsGasGiant() )
-		{
 			m_maximumElevation = 0.0f;
 
 			var elevationScale = ( m_maximumDifference - m_minimumDifference ) / 255.0f;
@@ -307,26 +408,44 @@ public class PlanetGenerator
 					m_maximumElevation = Mathf.Max( m_maximumElevation, m_elevation[ y, x ] );
 				}
 			}
-		}
 
-		m_currentStep++;
-	}
+			// build albedo map
+			m_progress += progressStepSize;
 
-	void CreateAlbedoBuffer()
-	{
-		if ( !m_planet.IsGasGiant() )
-		{
 			var albedoMap = new PG_AlbedoMap();
 
 			m_albedoMap = albedoMap.Process( m_elevation, m_preparedColorMap, m_waterElevation, m_waterColor, m_groundColor );
+
+			// build specular map
+			m_progress += progressStepSize;
+
+			var waterSpecularColor = m_planet.IsMolten() ? new Color( 0.75f, 0.125f, 0.125f ) : new Color( 1.0f, 1.0f, 1.0f );
+
+			var waterSpecularPower = m_planet.IsMolten() ? 0.4f : 0.75f;
+
+			var specularMap = new PG_SpecularMap();
+
+			m_specularMap = specularMap.Process( m_elevation, m_albedoMap, m_waterElevation, waterSpecularColor, waterSpecularPower, 4 );
+
+			// build water mask map
+			m_progress += progressStepSize;
+
+			var waterMaskMap = new PG_WaterMaskMap();
+
+			m_waterMaskMap = waterMaskMap.Process( m_elevation, m_waterElevation, 4 );
+
+			// build normal map
+			m_progress += progressStepSize;
+
+			var normalMap = new PG_NormalMap();
+
+			m_normalMap = normalMap.Process( m_elevation, c_normalScale, m_waterElevation, 2 );
 		}
 
-		m_currentStep++;
-	}
+		// get albedo pixels
+		m_progress += progressStepSize;
 
-	void CreateAlbedoTexture()
-	{
-		var pixels = new Color[ m_textureMapWidth * m_textureMapHeight ];
+		m_albedoPixels = new Color[ m_textureMapWidth * m_textureMapHeight ];
 
 		var index = 0;
 
@@ -334,13 +453,72 @@ public class PlanetGenerator
 		{
 			for ( var x = 0; x < m_textureMapWidth; x++ )
 			{
-				pixels[ index++ ] = m_albedoMap[ y, x ];
+				m_albedoPixels[ index++ ] = m_albedoMap[ y, x ];
 			}
 		}
 
+		// get specular pixels
+		m_progress += progressStepSize;
+
+		var textureMapWidth = m_specularMap.GetLength( 1 );
+		var textureMapHeight = m_specularMap.GetLength( 0 );
+
+		m_specularPixels = new Color[ textureMapWidth * textureMapHeight ];
+
+		index = 0;
+
+		for ( var y = 0; y < textureMapHeight; y++ )
+		{
+			for ( var x = 0; x < textureMapWidth; x++ )
+			{
+				m_specularPixels[ index++ ] = m_specularMap[ y, x ];
+			}
+		}
+
+		// get water mask pixels
+		m_progress += progressStepSize;
+
+		textureMapWidth = m_waterMaskMap.GetLength( 1 );
+		textureMapHeight = m_waterMaskMap.GetLength( 0 );
+
+		m_waterMaskPixels = new Color[ textureMapWidth * textureMapHeight ];
+
+		index = 0;
+
+		for ( var y = 0; y < textureMapHeight; y++ )
+		{
+			for ( var x = 0; x < textureMapWidth; x++ )
+			{
+				m_waterMaskPixels[ index++ ] = m_waterMaskMap[ y, x ];
+			}
+		}
+
+		// get normal pixels
+		m_progress += progressStepSize;
+
+		textureMapWidth = m_normalMap.GetLength( 1 );
+		textureMapHeight = m_normalMap.GetLength( 0 );
+
+		m_normalPixels = new Color[ textureMapWidth * textureMapHeight ];
+
+		index = 0;
+
+		for ( var y = 0; y < textureMapHeight; y++ )
+		{
+			for ( var x = 0; x < textureMapWidth; x++ )
+			{
+				m_normalPixels[ index++ ] = new Color( 0.0f, m_normalMap[ y, x ].g, 0.0f, m_normalMap[ y, x ].r );
+			}
+		}
+
+		m_step = 20;
+	}
+
+	void CreateAlbedoTexture()
+	{
 		m_albedoTexture = new Texture2D( m_textureMapWidth, m_textureMapHeight, TextureFormat.RGB24, true );
 
-		m_albedoTexture.SetPixels( pixels );
+		m_albedoTexture.SetPixels( m_albedoPixels );
 
 		m_albedoTexture.filterMode = FilterMode.Trilinear;
 		m_albedoTexture.wrapModeU = TextureWrapMode.Repeat;
@@ -352,46 +530,6 @@ public class PlanetGenerator
 		{
 			m_albedoTexture.Compress( true );
 		}
-
-		m_currentStep++;
-	}
-
-	void CreateSpecularBuffer()
-	{
-		if ( m_planet.IsGasGiant() )
-		{
-			var bicubicScaleElevation = new PG_BicubicScaleElevation();
-
-			m_elevation = bicubicScaleElevation.Process( m_preparedHeightMap, m_textureMapWidth, m_textureMapHeight );
-
-			var gaussianBlurElevation = new PG_GaussianBlurElevation();
-
-			m_elevation = gaussianBlurElevation.Process( m_elevation, c_xBlurRadiusGasGiant, c_yBlurRadiusGasGiant );
-
-			m_specularMap = new Color[ m_textureMapHeight, m_textureMapWidth ];
-
-			for ( var y = 0; y < m_textureMapHeight; y++ )
-			{
-				for ( var x = 0; x < m_textureMapWidth; x++ )
-				{
-					var elevation = m_elevation[ y, x ];
-
-					m_specularMap[ y, x ] = new Color( elevation, elevation, elevation, 0.25f );
-				}
-			}
-		}
-		else
-		{
-			var waterSpecularColor = m_planet.IsMolten() ? new Color( 0.75f, 0.125f, 0.125f ) : new Color( 1.0f, 1.0f, 1.0f );
-
-			var waterSpecularPower = m_planet.IsMolten() ? 0.4f : 0.75f;
-
-			var specularMap = new PG_SpecularMap();
-
-			m_specularMap = specularMap.Process( m_elevation, m_albedoMap, m_waterElevation, waterSpecularColor, waterSpecularPower, 4 );
-		}
-
-		m_currentStep++;
 	}
 
 	void CreateSpecularTexture()
@@ -399,21 +537,9 @@ public class PlanetGenerator
 		var textureMapWidth = m_specularMap.GetLength( 1 );
 		var textureMapHeight = m_specularMap.GetLength( 0 );
 
-		var pixels = new Color[ textureMapWidth * textureMapHeight ];
-
-		var index = 0;
-
-		for ( var y = 0; y < textureMapHeight; y++ )
-		{
-			for ( var x = 0; x < textureMapWidth; x++ )
-			{
-				pixels[ index++ ] = m_specularMap[ y, x ];
-			}
-		}
-
 		m_specularTexture = new Texture2D( textureMapWidth, textureMapHeight, TextureFormat.RGBA32, true, true );
 
-		m_specularTexture.SetPixels( pixels );
+		m_specularTexture.SetPixels( m_specularPixels );
 
 		m_specularTexture.filterMode = FilterMode.Trilinear;
 		m_specularTexture.wrapModeU = TextureWrapMode.Repeat;
@@ -425,32 +551,6 @@ public class PlanetGenerator
 		{
 			m_specularTexture.Compress( true );
 		}
-
-		m_currentStep++;
-	}
-
-	void CreateWaterMaskBuffer()
-	{
-		if ( m_planet.IsGasGiant() )
-		{
-			m_waterMaskMap = new Color[ 4, 4 ];
-
-			for ( var y = 0; y < 4; y++ )
-			{
-				for ( var x = 0; x < 4; x++ )
-				{
-					m_waterMaskMap[ y, x ] = Color.black;
-				}
-			}
-		}
-		else
-		{
-			var waterMaskMap = new PG_WaterMaskMap();
-
-			m_waterMaskMap = waterMaskMap.Process( m_elevation, m_waterElevation, 4 );
-		}
-
-		m_currentStep++;
 	}
 
 	void CreateWaterMaskTexture()
@@ -458,21 +558,9 @@ public class PlanetGenerator
 		var textureMapWidth = m_waterMaskMap.GetLength( 1 );
 		var textureMapHeight = m_waterMaskMap.GetLength( 0 );
 
-		var pixels = new Color[ textureMapWidth * textureMapHeight ];
-
-		var index = 0;
-
-		for ( var y = 0; y < textureMapHeight; y++ )
-		{
-			for ( var x = 0; x < textureMapWidth; x++ )
-			{
-				pixels[ index++ ] = m_waterMaskMap[ y, x ];
-			}
-		}
-
 		m_waterMaskTexture = new Texture2D( textureMapWidth, textureMapHeight, TextureFormat.RGB24, true, true );
 
-		m_waterMaskTexture.SetPixels( pixels );
+		m_waterMaskTexture.SetPixels( m_waterMaskPixels );
 
 		m_waterMaskTexture.filterMode = FilterMode.Trilinear;
 		m_waterMaskTexture.wrapModeU = TextureWrapMode.Repeat;
@@ -481,34 +569,6 @@ public class PlanetGenerator
 		m_waterMaskTexture.Apply();
 
 		m_waterMaskTexture.Compress( true );
-
-		m_currentStep++;
-	}
-
-	void CreateNormalBuffer()
-	{
-		if ( m_planet.IsGasGiant() )
-		{
-			m_normalMap = new Color[ 4, 4 ];
-
-			var defaultNormal = new Color( 0.5f, 0.5f, 1.0f );
-
-			for ( var y = 0; y < 4; y++ )
-			{
-				for ( var x = 0; x < 4; x++ )
-				{
-					m_normalMap[ y, x ] = defaultNormal;
-				}
-			}
-		}
-		else
-		{
-			var normalMap = new PG_NormalMap();
-
-			m_normalMap = normalMap.Process( m_elevation, c_normalScale, m_waterElevation, 2 );
-		}
-
-		m_currentStep++;
 	}
 
 	void CreateNormalTexture()
@@ -516,21 +576,9 @@ public class PlanetGenerator
 		var textureMapWidth = m_normalMap.GetLength( 1 );
 		var textureMapHeight = m_normalMap.GetLength( 0 );
 
-		var pixels = new Color[ textureMapWidth * textureMapHeight ];
-
-		var index = 0;
-
-		for ( var y = 0; y < textureMapHeight; y++ )
-		{
-			for ( var x = 0; x < textureMapWidth; x++ )
-			{
-				pixels[ index++ ] = new Color( 0.0f, m_normalMap[ y, x ].g, 0.0f, m_normalMap[ y, x ].r );
-			}
-		}
-
 		m_normalTexture = new Texture2D( textureMapWidth, textureMapHeight, TextureFormat.RGBA32, true, true );
 
-		m_normalTexture.SetPixels( pixels );
+		m_normalTexture.SetPixels( m_normalPixels );
 
 		m_normalTexture.filterMode = FilterMode.Trilinear;
 		m_normalTexture.wrapModeU = TextureWrapMode.Repeat;
@@ -539,23 +587,6 @@ public class PlanetGenerator
 		m_normalTexture.Apply();
 
 		m_normalTexture.Compress( true );
-
-		m_currentStep++;
-	}
-
-	void CleanUp()
-	{
-		// all done
-		m_mapsGenerated = true;
-
-		// free up memory (but keep the elevation buffer)
-		m_preparedHeightMap = null;
-		m_preparedColorMap = null;
-		m_differenceBuffer = null;
-		m_albedoMap = null;
-		m_specularMap = null;
-		m_normalMap = null;
-		m_waterMaskMap = null;
 	}
 
 	public Texture2D CreateElevationTexture()

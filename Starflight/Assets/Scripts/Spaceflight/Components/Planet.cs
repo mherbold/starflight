@@ -177,7 +177,7 @@ public class Planet : MonoBehaviour
 	// continue generating maps for this planet
 	public float GenerateMaps()
 	{
-		float progress = m_planetGenerator.Process();
+		var progress = m_planetGenerator.Process();
 
 		if ( m_planetGenerator.m_abort )
 		{

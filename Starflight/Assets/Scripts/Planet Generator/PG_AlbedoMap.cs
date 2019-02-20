@@ -6,7 +6,30 @@ using System.Threading.Tasks;
 
 public class PG_AlbedoMap
 {
-	public Color[,] Process( float[,] sourceElevation, Color[,] sourceColor, float waterHeight, Color waterColor, Color groundColor )
+	const int c_numRandomPoints = 1 << 8;
+	const int c_maxHeight = 1024;
+
+	static Vector2[] m_randomPoints;
+	static int[] m_randomNumbers;
+
+	static public void Initialize()
+	{
+		m_randomPoints = new Vector2[ c_numRandomPoints ];
+
+		for ( var i = 0; i < c_numRandomPoints; i++ )
+		{
+			m_randomPoints[ i ] = Random.insideUnitCircle;
+		}
+
+		m_randomNumbers = new int[ c_maxHeight ];
+
+		for ( var i = 0; i < c_maxHeight; i++ )
+		{
+			m_randomNumbers[ i ] = Random.Range( 0, c_numRandomPoints );
+		}
+	}
+
+	public Color[,] Process( float[,] sourceElevation, Color[,] sourceColor, float waterElevation, Color waterColor, Color groundColor )
 	{
 		// UnityEngine.Debug.Log( "*** Albedo Map Process ***" );
 
@@ -31,35 +54,19 @@ public class PG_AlbedoMap
 		var rowsPerThread = outputColorHeight / numParallelThreads;
 		var columnsPerThread = outputColorWidth / numParallelThreads;
 
-		var numRandomPoints = 1 << 8;
-
-		var randomPoints = new Vector2[ numRandomPoints ];
-
-		for ( var i = 0; i < numRandomPoints; i++ )
-		{
-			randomPoints[ i ] = Random.insideUnitCircle;
-		}
-
-		var randomNumbers = new int[ outputColorHeight ];
-
-		for ( var i = 0; i < outputColorHeight; i++ )
-		{
-			randomNumbers[ i ] = Random.Range( 0, numRandomPoints );
-		}
-
 		Parallel.For( 0, numParallelThreads, parallelOptions, j =>
 		{
 			for ( var row = 0; row < rowsPerThread; row++ )
 			{
 				var y = j * rowsPerThread + row;
 
-				var randomIndex = randomNumbers[ y ];
+				var randomIndex = m_randomNumbers[ y ];
 
 				for ( var x = 0; x < outputColorWidth; x++ )
 				{
-					var randomPoint = randomPoints[ randomIndex ];
+					var randomPoint = m_randomPoints[ randomIndex ];
 
-					randomIndex = ( randomIndex + 1 ) & ( numRandomPoints - 1 );
+					randomIndex = ( randomIndex + 1 ) & ( c_numRandomPoints - 1 );
 
 					var cx = Mathf.FloorToInt( x * xScale + randomPoint.x );
 					var cy = Mathf.FloorToInt( y * yScale + randomPoint.y );
@@ -206,11 +213,11 @@ public class PG_AlbedoMap
 				{
 					var height = sourceElevation[ y, x ];
 
-					if ( height <= waterHeight )
+					if ( height <= waterElevation )
 					{
 						var shallowColor = Color.Lerp( waterColor, outputColor[ y, x ], 0.75f );
 
-						var waterDepth = waterHeight - height;
+						var waterDepth = waterElevation - height;
 
 						outputColor[ y, x ] = Color.Lerp( shallowColor, waterColor, waterDepth * 16.0f );
 					}
