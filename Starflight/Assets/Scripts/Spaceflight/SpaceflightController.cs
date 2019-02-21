@@ -76,6 +76,7 @@ public class SpaceflightController : MonoBehaviour
 	{
 		// initialize some static stuff
 		PG_AlbedoMap.Initialize();
+		PG_Craters.Initialize();
 
 		// hide everything
 		HideEverything();
