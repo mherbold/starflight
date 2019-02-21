@@ -234,7 +234,7 @@ public class DataController : MonoBehaviour
 				// serialize and save the player data file
 				binaryFormatter.Serialize( file, m_playerDataList[ saveGameSlotNumber ] );
 
-				// report how long it tool
+				// report how long it took
 				UnityEngine.Debug.Log( "Saving the player data took " + stopwatch.ElapsedMilliseconds + " milliseconds." );
 			}
 		}
