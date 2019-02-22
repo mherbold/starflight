@@ -56,12 +56,12 @@ public class PG_Craters
         var craterLen = m_craterTextureMaps.Length;
         var texture = m_craterTextureMaps[ planetId % craterLen ];
 
+        // we'll flip half of the crater textures horizontally, and half of them vertically, which will give us more variation
         var flipHorizontal = planetId % ( craterLen * 2 ) >= craterLen;
         var flipVertical = planetId % ( craterLen * 4 ) >= craterLen * 2;
 
-        // Well flip half of the crater textures horizontally, and half of them vertically, which will give us more variation
-        var startingY = flipVertical ? outputElevationHeight -1 : 0;
-        var startingX = flipHorizontal ? outputElevationWidth -1 : 0;
+        var startingY = flipVertical ? outputElevationHeight - 1 : 0;
+        var startingX = flipHorizontal ? outputElevationWidth - 1 : 0;
 
         Parallel.For( 0, numParallelThreads, parallelOptions, j =>
 		{
@@ -72,9 +72,9 @@ public class PG_Craters
 
 				for ( var x = 0; x < outputElevationWidth; x++ )
                 { 
-                    var craterX = Mathf.Abs( startingX - x);
+                    var craterX = Mathf.Abs( startingX - x );
 					var craterMultiplier = Mathf.Sqrt( Mathf.Lerp( 0.0f, 1.0f, ( sourceElevation[ y, x ] - craterStart ) / craterRange ) );
-					outputElevation[ y, x ] = sourceElevation[ y, x ] + texture[craterY, craterX] * craterMultiplier * craterGain;
+					outputElevation[ y, x ] = sourceElevation[ y, x ] + texture[ craterY, craterX ] * craterMultiplier * craterGain;
 				}
 			}
 		} );
