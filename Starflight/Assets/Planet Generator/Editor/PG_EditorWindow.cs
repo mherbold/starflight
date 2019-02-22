@@ -216,6 +216,10 @@ public class PG_EditorWindow : EditorWindow
 		// initialize the game data
 		gameData.Initialize();
 
+		// initialize static components of planet generator
+		PG_AlbedoMap.Initialize();
+		PG_Craters.Initialize();
+
 		// calculate the texture map scale (and it must be an even number)
 		m_textureMapScaleX = Mathf.FloorToInt( (float) m_textureMapWidth / (float) PG_Planet.c_width );
 		m_textureMapScaleY = Mathf.FloorToInt( (float) m_textureMapHeight / (float) ( PG_Planet.c_height + m_numPolePaddingRows * 2 ) );
