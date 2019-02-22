@@ -8,14 +8,19 @@ using System.Collections.Generic;
 
 public class PG_EditorWindow : EditorWindow
 {
-	// version number
-	const int c_versionNumber = 4;
+    // version number
+    const int c_versionNumber = 4;
 
 	// number of planets
 	const int c_numPlanets = 811;
 
-	// other settings
-	string m_gameDataFileName;
+    // initial paths
+    const string c_initialFileName = "Starflight Game Data";
+    const string c_initialImagesPath = "Assets/Planet Generator/Data";
+    const string c_initialResourcesPath = "Resources";
+
+    // other settings
+    string m_gameDataFileName;
 	string m_planetImagesPath;
 	string m_resourcesPath;
 	bool m_debugMode;
@@ -70,16 +75,31 @@ public class PG_EditorWindow : EditorWindow
 	}
 
 	void OnEnable()
-	{
-		// other settings
-		m_gameDataFileName = EditorPrefs.GetString( "PlanetGenerator_GameDataFileName" );
-		m_planetImagesPath = EditorPrefs.GetString( "PlanetGenerator_PlanetImagesPath" );
-		m_resourcesPath = EditorPrefs.GetString( "PlanetGenerator_ResourcesPath" );
-		m_debugMode = EditorPrefs.GetBool( "PlanetGenerator_DebugMode" );
-		m_debugPlanetID = EditorPrefs.GetInt( "PlanetGenerator_DebugPlanetID" );
+    {
+        // other settings
+        m_gameDataFileName = EditorPrefs.GetString("PlanetGenerator_GameDataFileName");
+        if ( string.IsNullOrEmpty( m_gameDataFileName ) )
+        {
+            m_gameDataFileName = c_initialFileName;
+        }
 
-		// non-gas giant planet settings
-		m_numPolePaddingRows = EditorPrefs.GetInt( "PlanetGenerator_NumPolePaddingRows", 3 );
+        m_planetImagesPath = EditorPrefs.GetString("PlanetGenerator_PlanetImagesPath");
+        if ( string.IsNullOrEmpty(m_planetImagesPath) )
+        {
+            m_planetImagesPath = c_initialImagesPath;
+        }
+
+        m_resourcesPath = EditorPrefs.GetString("PlanetGenerator_ResourcesPath");
+        if ( string.IsNullOrEmpty(m_resourcesPath) )
+        {
+            m_resourcesPath = c_initialResourcesPath;
+        }
+
+        m_debugMode = EditorPrefs.GetBool("PlanetGenerator_DebugMode");
+        m_debugPlanetID = EditorPrefs.GetInt("PlanetGenerator_DebugPlanetID");
+
+        // non-gas giant planet settings
+        m_numPolePaddingRows = EditorPrefs.GetInt( "PlanetGenerator_NumPolePaddingRows", 3 );
 
 		int textureMapHeight = EditorPrefs.GetInt( "PlanetGenerator_TextureMapHeight", 1024 );
 
