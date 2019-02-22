@@ -4937,7 +4937,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caa4e4de78da4e949a7e37994c9f3e9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_rotationSpeed: {x: 0, y: 0, z: 10}
+  m_rotationSpeed: {x: 0, y: 10, z: 0}
   m_worldSpace: 0
 --- !u!1 &12672835
 GameObject:
@@ -18309,7 +18309,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &672353219
 Transform:
   m_ObjectHideFlags: 0
@@ -22450,7 +22450,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caa4e4de78da4e949a7e37994c9f3e9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_rotationSpeed: {x: 0, y: 0, z: 125}
+  m_rotationSpeed: {x: 0, y: 125, z: 0}
   m_worldSpace: 0
 --- !u!1001 &951799319
 PrefabInstance:
@@ -42912,7 +42912,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1425305802
 Transform:
   m_ObjectHideFlags: 0
