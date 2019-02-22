@@ -4,8 +4,6 @@ using UnityEngine;
 using System.IO;
 using System.IO.Compression;
 
-using System.Diagnostics;
-using System.Threading;
 using System.Threading.Tasks;
 
 public class PlanetGenerator
