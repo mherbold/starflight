@@ -47,8 +47,6 @@ public class Messages : MonoBehaviour
 			m_textChanged = false;
 
 			UpdateDisplay();
-
-			DataController.m_instance.SaveActiveGame();
 		}
 
 		// update sliding animation

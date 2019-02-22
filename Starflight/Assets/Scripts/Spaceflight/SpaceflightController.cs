@@ -217,6 +217,9 @@ public class SpaceflightController : MonoBehaviour
 		{
 			// yes - remember the last location
 			playerData.m_general.m_lastLocation = playerData.m_general.m_location;
+
+			// save the player data (since the location was most likely changed)
+			DataController.m_instance.SaveActiveGame();
 		}
 
 		// make sure the display is updated (in case we are loading from a save game)
@@ -291,9 +294,6 @@ public class SpaceflightController : MonoBehaviour
 					break;
 			}
 		}
-
-		// save the player data (since the location was most likely changed)
-		// DataController.m_instance.SaveActiveGame();
 	}
 	
 	// call this when a the save game panel was closed
