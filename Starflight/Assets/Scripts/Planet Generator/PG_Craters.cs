@@ -33,11 +33,11 @@ public class PG_Craters
 
 	public float[,] Process( float[,] sourceElevation, int planetId, float craterGain, float waterElevation )
 	{
-		// UnityEngine.Debug.Log( "*** Craters Process ***" );
+		 UnityEngine.Debug.Log( "*** Craters Process ***" );
 
-		// var stopwatch = new Stopwatch();
+		 var stopwatch = new Stopwatch();
 
-		// stopwatch.Start();
+		 stopwatch.Start();
 
 		var outputElevationWidth = sourceElevation.GetLength( 1 );
 		var outputElevationHeight = sourceElevation.GetLength( 0 );
@@ -47,29 +47,39 @@ public class PG_Craters
 		var parallelOptions = new ParallelOptions() { MaxDegreeOfParallelism = -1 };
 
 		var numParallelThreads = 32;
-		var rowsPerThread = outputElevationHeight / numParallelThreads;
+
+        var rowsPerThread = outputElevationHeight / numParallelThreads;
 
 		var craterStart = waterElevation;
 		var craterRange = 1.0f - craterStart;
 
-		var texture = m_craterTextureMaps[ planetId % 3 ];
+        var craterLen = m_craterTextureMaps.Length;
+        var texture = m_craterTextureMaps[ planetId % craterLen ];
 
-		Parallel.For( 0, numParallelThreads, parallelOptions, j =>
+        var flipHorizontal = planetId % ( craterLen * 2 ) >= craterLen;
+        var flipVertical = planetId % ( craterLen * 4 ) >= craterLen * 2;
+
+        // Well flip half of the crater textures horizontally, and half of them vertically, which will give us more variation
+        var startingY = flipVertical ? outputElevationHeight -1 : 0;
+        var startingX = flipHorizontal ? outputElevationWidth -1 : 0;
+
+        Parallel.For( 0, numParallelThreads, parallelOptions, j =>
 		{
 			for ( var row = 0; row < rowsPerThread; row++ )
-			{
-				var y = j * rowsPerThread + row;
+            {
+                var y = j * rowsPerThread + row;
+                var craterY = Mathf.Abs( startingY - y );
 
 				for ( var x = 0; x < outputElevationWidth; x++ )
-				{
+                { 
+                    var craterX = Mathf.Abs( startingX - x);
 					var craterMultiplier = Mathf.Sqrt( Mathf.Lerp( 0.0f, 1.0f, ( sourceElevation[ y, x ] - craterStart ) / craterRange ) );
-
-					outputElevation[ y, x ] = sourceElevation[ y, x ] + texture[ y, x ] * craterMultiplier * craterGain;
+					outputElevation[ y, x ] = sourceElevation[ y, x ] + texture[craterY, craterX] * craterMultiplier * craterGain;
 				}
 			}
 		} );
 
-		// UnityEngine.Debug.Log( "Output - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
+		UnityEngine.Debug.Log( "Output - " + stopwatch.ElapsedMilliseconds + " milliseconds" );
 
 		return outputElevation;
 	}

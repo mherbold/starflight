@@ -77,26 +77,26 @@ public class PG_EditorWindow : EditorWindow
 	void OnEnable()
     {
         // other settings
-        m_gameDataFileName = EditorPrefs.GetString("PlanetGenerator_GameDataFileName");
+        m_gameDataFileName = EditorPrefs.GetString( "PlanetGenerator_GameDataFileName" );
         if ( string.IsNullOrEmpty( m_gameDataFileName ) )
         {
             m_gameDataFileName = c_initialFileName;
         }
 
-        m_planetImagesPath = EditorPrefs.GetString("PlanetGenerator_PlanetImagesPath");
-        if ( string.IsNullOrEmpty(m_planetImagesPath) )
+        m_planetImagesPath = EditorPrefs.GetString( "PlanetGenerator_PlanetImagesPath" );
+        if ( string.IsNullOrEmpty( m_planetImagesPath) )
         {
             m_planetImagesPath = c_initialImagesPath;
         }
 
-        m_resourcesPath = EditorPrefs.GetString("PlanetGenerator_ResourcesPath");
-        if ( string.IsNullOrEmpty(m_resourcesPath) )
+        m_resourcesPath = EditorPrefs.GetString( "PlanetGenerator_ResourcesPath" );
+        if ( string.IsNullOrEmpty( m_resourcesPath) )
         {
             m_resourcesPath = c_initialResourcesPath;
         }
 
-        m_debugMode = EditorPrefs.GetBool("PlanetGenerator_DebugMode");
-        m_debugPlanetID = EditorPrefs.GetInt("PlanetGenerator_DebugPlanetID");
+        m_debugMode = EditorPrefs.GetBool( "PlanetGenerator_DebugMode" );
+        m_debugPlanetID = EditorPrefs.GetInt( "PlanetGenerator_DebugPlanetID" );
 
         // non-gas giant planet settings
         m_numPolePaddingRows = EditorPrefs.GetInt( "PlanetGenerator_NumPolePaddingRows", 3 );
