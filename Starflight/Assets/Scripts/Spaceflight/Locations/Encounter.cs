@@ -1400,7 +1400,7 @@ public class Encounter : MonoBehaviour
 			}
 
 			// was this an answer?
-			if ( ( subject >= GD_Comm.Subject.Themselves ) && ( subject <= GD_Comm.Subject.TheAncients ) )
+			if ( ( comm.m_subject >= GD_Comm.Subject.Themselves ) && ( comm.m_subject <= GD_Comm.Subject.TheAncients ) )
 			{
 				// yes -add it to the ships log
 				playerData.m_shipsLog.AddAlienComm( comm, commText );
