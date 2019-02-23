@@ -14,7 +14,7 @@ public class TerrainGridPopulator : MonoBehaviour
 
 	static List<Vector3>[,] m_spawnLists;
 
-	static public void ResetSpawnLists( PlanetGenerator planetGenerator )
+	public static void ResetSpawnLists( PlanetGenerator planetGenerator )
 	{
 		// remember the planet generator
 		m_planetGenerator = planetGenerator;

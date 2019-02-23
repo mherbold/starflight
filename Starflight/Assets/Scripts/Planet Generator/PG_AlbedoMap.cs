@@ -12,7 +12,7 @@ public class PG_AlbedoMap
 	static Vector2[] m_randomPoints;
 	static int[] m_randomNumbers;
 
-	static public void Initialize()
+	public static void Initialize()
 	{
 		m_randomPoints = new Vector2[ c_numRandomPoints ];
 

@@ -45,7 +45,7 @@ public class StarflightSkybox : MonoBehaviour
 	public Quaternion m_currentRotation = Quaternion.identity;
 
 	// static instance to this skybox controller
-	static public StarflightSkybox m_instance;
+	public static StarflightSkybox m_instance;
 
 	// constructor
 	StarflightSkybox()

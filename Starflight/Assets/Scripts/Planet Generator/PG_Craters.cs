@@ -8,7 +8,7 @@ public class PG_Craters
 {
 	static float[][,] m_craterTextureMaps;
 
-	static public void Initialize()
+	public static void Initialize()
 	{
 		// load crater texture maps
 		m_craterTextureMaps = new float[ 3 ][,];

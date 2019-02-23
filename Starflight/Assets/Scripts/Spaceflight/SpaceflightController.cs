@@ -45,7 +45,7 @@ public class SpaceflightController : MonoBehaviour
 	bool m_alreadyFadedIn;
 
 	// static instance to this spaceflight controller
-	static public SpaceflightController m_instance;
+	public static SpaceflightController m_instance;
 
 	// constructor
 	SpaceflightController()
