@@ -122,6 +122,9 @@ public class Hyperspace : MonoBehaviour
 				// play the exit warp sound
 				SoundController.m_instance.PlaySound( SoundController.Sound.ExitWarp );
 
+				// turn the radar back on and reset it
+				SpaceflightController.m_instance.m_radar.Show();
+
 				// not travelling through the flux any more
 				m_travelingThroughFlux = false;
 			}
@@ -181,6 +184,9 @@ public class Hyperspace : MonoBehaviour
 
 					// start the warp cinematics
 					m_travelingThroughFlux = true;
+
+					// turn off the radar
+					SpaceflightController.m_instance.m_radar.Hide();
 
 					// start the warp effect
 					SpaceflightController.m_instance.m_playerCamera.m_spaceWarp.EnterWarp();
