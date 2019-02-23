@@ -20,8 +20,8 @@ public class Starmap : MonoBehaviour
 	// unity update
 	void Update()
 	{
-		// if the player hits cancel (esc) close the starmap
-		if ( InputController.m_instance.m_cancel )
+		// if the player hits cancel (esc) or submit (enter) close the starmap
+		if ( InputController.m_instance.m_cancel || InputController.m_instance.m_submit )
 		{
 			Hide();
 
