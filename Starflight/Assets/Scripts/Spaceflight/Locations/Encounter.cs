@@ -1398,6 +1398,13 @@ public class Encounter : MonoBehaviour
 				// remember the question from the aliens
 				m_pdEncounter.m_lastQuestionFromAliens = comm.m_id;
 			}
+
+			// was this an answer?
+			if ( ( subject >= GD_Comm.Subject.Themselves ) && ( subject <= GD_Comm.Subject.TheAncients ) )
+			{
+				// yes -add it to the ships log
+				playerData.m_shipsLog.AddAlienComm( comm, commText );
+			}
 		}
 
 		// update the message

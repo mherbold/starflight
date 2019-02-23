@@ -91,6 +91,9 @@ public class Starmap : MonoBehaviour
 
 		// make this game object not active
 		gameObject.SetActive( false );
+
+		// show the radar
+		SpaceflightController.m_instance.m_radar.Show();
 	}
 
 	// show the starmap
@@ -101,6 +104,9 @@ public class Starmap : MonoBehaviour
 
 		// make this game object active
 		gameObject.SetActive( true );
+
+		// hide the radar
+		SpaceflightController.m_instance.m_radar.Hide();
 
 		// play a sound
 		SoundController.m_instance.PlaySound( SoundController.Sound.Beep );
