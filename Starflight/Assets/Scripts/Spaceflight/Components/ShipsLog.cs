@@ -34,6 +34,9 @@ public class ShipsLog : MonoBehaviour
 	// unity update
 	void Update()
 	{
+		// get to the player data
+		var playerData = DataController.m_instance.m_playerData;
+
 		// update the ignore controller timer
 		m_ignoreControllerTimer = Mathf.Max( 0.0f, m_ignoreControllerTimer - Time.deltaTime );
 
@@ -45,6 +48,12 @@ public class ShipsLog : MonoBehaviour
 			InputController.m_instance.Debounce();
 
 			SpaceflightController.m_instance.m_buttonController.DeactivateButton();
+
+			// show the radar (if we are in star system or hyperspace)
+			if ( ( playerData.m_general.m_location == PD_General.Location.StarSystem ) || ( playerData.m_general.m_location == PD_General.Location.Hyperspace ) )
+			{
+				SpaceflightController.m_instance.m_radar.Hide();
+			}
 		}
 		else
 		{
@@ -117,20 +126,11 @@ public class ShipsLog : MonoBehaviour
 	// hide the ships log
 	public void Hide()
 	{
-		// get to the player data
-		var playerData = DataController.m_instance.m_playerData;
-
 		// unpause the game
 		SpaceflightController.m_instance.m_gameIsPaused = false;
 
 		// make this game object not active
 		gameObject.SetActive( false );
-
-		// show the radar (if we are in star system or hyperspace)
-		if ( ( playerData.m_general.m_location == PD_General.Location.StarSystem ) || ( playerData.m_general.m_location == PD_General.Location.Hyperspace ) )
-		{
-			SpaceflightController.m_instance.m_radar.Hide();
-		}
 	}
 
 	// show the ships log

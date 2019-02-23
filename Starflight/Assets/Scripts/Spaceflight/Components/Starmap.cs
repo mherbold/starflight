@@ -28,6 +28,9 @@ public class Starmap : MonoBehaviour
 			InputController.m_instance.Debounce();
 
 			SpaceflightController.m_instance.m_buttonController.DeactivateButton();
+
+			// show the radar (we are in hyperspace)
+			SpaceflightController.m_instance.m_radar.Show();
 		}
 		else
 		{
@@ -91,9 +94,6 @@ public class Starmap : MonoBehaviour
 
 		// make this game object not active
 		gameObject.SetActive( false );
-
-		// show the radar
-		SpaceflightController.m_instance.m_radar.Show();
 	}
 
 	// show the starmap
