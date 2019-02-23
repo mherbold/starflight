@@ -52,7 +52,7 @@ public class ShipsLog : MonoBehaviour
 			// show the radar (if we are in star system or hyperspace)
 			if ( ( playerData.m_general.m_location == PD_General.Location.StarSystem ) || ( playerData.m_general.m_location == PD_General.Location.Hyperspace ) )
 			{
-				SpaceflightController.m_instance.m_radar.Hide();
+				SpaceflightController.m_instance.m_radar.Show();
 			}
 		}
 		else
