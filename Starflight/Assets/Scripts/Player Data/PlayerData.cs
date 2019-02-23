@@ -6,7 +6,7 @@ using System;
 public class PlayerData
 {
 	// the current save game version - increment this to invalidate obsolete save game files
-	const int c_currentVersion = 22;
+	const int c_currentVersion = 23;
 
 	// the current version of this player data file
 	public int m_version;
@@ -24,6 +24,7 @@ public class PlayerData
 	public PD_KnownArtifacts m_knownArtifacts;
 	public PD_Encounter[] m_encounterList;
 	public PD_TerrainVehicle m_terrainVehicle;
+	public PD_ShipsLog m_shipsLog;
 
 	// this resets our player progress to the new game state
 	public void Reset()
@@ -42,6 +43,7 @@ public class PlayerData
 		m_knownArtifacts = new PD_KnownArtifacts();
 		m_encounterList = new PD_Encounter[ gameData.m_encounterList.Length ];
 		m_terrainVehicle = new PD_TerrainVehicle();
+		m_shipsLog = new PD_ShipsLog();
 
 		m_general.Reset();
 		m_starport.Reset();
@@ -50,6 +52,7 @@ public class PlayerData
 		m_bank.Reset();
 		m_playerShip.Reset();
 		m_knownArtifacts.Reset();
+		m_shipsLog.Reset();
 
 		for ( var i = 0; i < gameData.m_encounterList.Length; i++ )
 		{

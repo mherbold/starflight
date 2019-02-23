@@ -274,6 +274,9 @@ public class OperationsPanel : Panel
 	// call this to start displaying the current message
 	void ShowCurrentMessage()
 	{
+		// get to the player data
+		var playerData = DataController.m_instance.m_playerData;
+
 		// reset some variables
 		m_currentLine = 0;
 		m_currentOffset = 0;
@@ -284,6 +287,9 @@ public class OperationsPanel : Panel
 
 		// update the buttons
 		UpdateButtons();
+
+		// add the current notice to the ships log
+		playerData.m_shipsLog.AddStarportNotice( m_currentNoticeId );
 	}
 
 	// update which buttons are enabled and selected
