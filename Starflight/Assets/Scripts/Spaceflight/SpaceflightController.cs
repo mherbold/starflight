@@ -28,12 +28,14 @@ public class SpaceflightController : MonoBehaviour
 	public Starmap m_starmap;
 	public Messages m_messages;
 	public TerrainVehicle m_terrainVehicle;
+	public ShipsLog m_shipsLog;
 
 	// some settings
 	public float m_alienHyperspaceRadarDistance;
 	public float m_alienStarSystemRadarDistance;
 	public float m_encounterRange;
 	public float m_planetRotationSpeed;
+	public float m_starportRotationSpeedMultiplier;
 
 	// true if the game is paused
 	public bool m_gameIsPaused;
@@ -167,8 +169,8 @@ public class SpaceflightController : MonoBehaviour
 			// DataController.m_instance.SaveActiveGame();
 		}
 
-		// when player hits cancel (esc) show the save game panel (except when using the starmap)
-		if ( !m_starmap.IsOpen() )
+		// when player hits cancel (esc) show the save game panel (except when using the starmap or the ships log)
+		if ( !m_starmap.IsOpen() && !m_shipsLog.IsOpen() )
 		{
 			if ( InputController.m_instance.m_cancel )
 			{
@@ -201,6 +203,7 @@ public class SpaceflightController : MonoBehaviour
 		m_radar.Hide();
 		m_scanner.Hide();
 		m_starmap.Hide();
+		m_shipsLog.Hide();
 	}
 
 	// call this to switch to the correct location
@@ -218,15 +221,15 @@ public class SpaceflightController : MonoBehaviour
 			// yes - remember the last location
 			playerData.m_general.m_lastLocation = playerData.m_general.m_location;
 
+			// update the player location
+			playerData.m_general.m_location = newLocation;
+
 			// save the player data (since the location was most likely changed)
 			DataController.m_instance.SaveActiveGame();
 		}
 
 		// make sure the display is updated (in case we are loading from a save game)
 		m_messages.Refresh();
-
-		// update the player data
-		playerData.m_general.m_location = newLocation;
 
 		// stop all looping sounds
 		SoundController.m_instance.StopAllLoopingSounds();

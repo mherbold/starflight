@@ -8,13 +8,8 @@ public class StarportNoticesButton : ShipButton
 
 	public override bool Execute()
 	{
-		SoundController.m_instance.PlaySound( SoundController.Sound.Error );
-
-		SpaceflightController.m_instance.m_messages.Clear();
-
-		SpaceflightController.m_instance.m_messages.AddText( "<color=red>Not yet implemented.</color>" );
-
-		SpaceflightController.m_instance.m_buttonController.UpdateButtonSprites();
+		// show the ships log
+		SpaceflightController.m_instance.m_shipsLog.Show();
 
 		return false;
 	}

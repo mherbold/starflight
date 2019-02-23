@@ -60,7 +60,7 @@ public class Planet : MonoBehaviour
 		// update the rotation of the starport
 		if ( m_starportModel != null )
 		{
-			m_starportModel.transform.localRotation = Quaternion.Euler( -90.0f, 0.0f, m_currentRotationAngle * 20.0f );
+			m_starportModel.transform.localRotation = Quaternion.Euler( -90.0f, 0.0f, m_currentRotationAngle * SpaceflightController.m_instance.m_starportRotationSpeedMultiplier );
 		}
 	}
 
