@@ -216,6 +216,8 @@ public class SpaceflightController : MonoBehaviour
 		var playerData = DataController.m_instance.m_playerData;
 
 		// are we switching to a new location?
+		bool locationIsDifferent = false;
+
 		if ( playerData.m_general.m_location != newLocation )
 		{
 			// yes - remember the last location
@@ -224,8 +226,8 @@ public class SpaceflightController : MonoBehaviour
 			// update the player location
 			playerData.m_general.m_location = newLocation;
 
-			// save the player data (since the location was most likely changed)
-			DataController.m_instance.SaveActiveGame();
+			// remember that the new location is different
+			locationIsDifferent = true;
 		}
 
 		// make sure the display is updated (in case we are loading from a save game)
@@ -296,6 +298,13 @@ public class SpaceflightController : MonoBehaviour
 					m_playerShip.Show();
 					break;
 			}
+		}
+
+		// did we switch to a new location?
+		if ( locationIsDifferent )
+		{
+			// yes - save the player data since the location was changed
+			DataController.m_instance.SaveActiveGame();
 		}
 	}
 	
