@@ -28,6 +28,8 @@ public class ButtonController : MonoBehaviour
 		AnswerQuestion,
 		Posture,
 		TerrainVehicle,
+		ShipsLog,
+		AlienComms,
 		Count
 	};
 
@@ -67,30 +69,35 @@ public class ButtonController : MonoBehaviour
 		// reset the ignore controller timer
 		m_ignoreControllerTimer = 0.0f;
 
+		// common bridge button
+		var bridgeButton = new ChangeMenuButton( "Bridge", ButtonSet.Bridge );
+
 		// allocate memory for button sets
 		m_buttonSets = new ShipButton[ (int) ButtonSet.Count ][];
 
 		m_buttonSets[ (int) ButtonSet.Bridge ] = new ShipButton[] { new CommandButton(), new ScienceButton(), new NavigationButton(), new EngineeringButton(), new CommunicationsButton(), new MedicalButton() };
-		m_buttonSets[ (int) ButtonSet.CommandA ] = new ShipButton[] { new LaunchButton(), new DisembarkButton(), new CargoButton(), new LogPlanetButton(), new ShipsLogButton(), new BridgeButton() };
-		m_buttonSets[ (int) ButtonSet.CommandB ] = new ShipButton[] { new LandButton(), new DisembarkButton(), new CargoButton(), new LogPlanetButton(), new ShipsLogButton(), new BridgeButton() };
-		m_buttonSets[ (int) ButtonSet.CommunicationsA ] = new ShipButton[] { new HailButton(), new DistressButton(), new BridgeButton() };
-		m_buttonSets[ (int) ButtonSet.CommunicationsB ] = new ShipButton[] { new RespondButton(), new DistressButton(), new BridgeButton() };
-		m_buttonSets[ (int) ButtonSet.Engineering ] = new ShipButton[] { new DamageButton(), new RepairButton(), new BridgeButton() };
-		m_buttonSets[ (int) ButtonSet.Medical ] = new ShipButton[] { new ExamineButton(), new TreatButton(), new BridgeButton() };
-		m_buttonSets[ (int) ButtonSet.NavigationA ] = new ShipButton[] { new ManeuverButton(), new StarmapButton(), new RaiseShieldsButton(), new ArmWeaponButton(), new CombatButton(), new BridgeButton() };
-		m_buttonSets[ (int) ButtonSet.NavigationB ] = new ShipButton[] { new ManeuverButton(), new StarmapButton(), new DropShieldsButton(), new ArmWeaponButton(), new CombatButton(), new BridgeButton() };
-		m_buttonSets[ (int) ButtonSet.NavigationC ] = new ShipButton[] { new ManeuverButton(), new StarmapButton(), new RaiseShieldsButton(), new DisarmWeaponButton(), new CombatButton(), new BridgeButton() };
-		m_buttonSets[ (int) ButtonSet.NavigationD ] = new ShipButton[] { new ManeuverButton(), new StarmapButton(), new DropShieldsButton(), new DisarmWeaponButton(), new CombatButton(), new BridgeButton() };
-		m_buttonSets[ (int) ButtonSet.Science ] = new ShipButton[] { new SensorsButton(), new AnalysisButton(), new StatusButton(), new BridgeButton() };
+		m_buttonSets[ (int) ButtonSet.CommandA ] = new ShipButton[] { new LaunchButton(), new DisembarkButton(), new CargoButton(), new LogPlanetButton(), new ShipsLogButton(), bridgeButton };
+		m_buttonSets[ (int) ButtonSet.CommandB ] = new ShipButton[] { new LandButton(), new DisembarkButton(), new CargoButton(), new LogPlanetButton(), new ShipsLogButton(), bridgeButton };
+		m_buttonSets[ (int) ButtonSet.CommunicationsA ] = new ShipButton[] { new HailButton(), new DistressButton(), bridgeButton };
+		m_buttonSets[ (int) ButtonSet.CommunicationsB ] = new ShipButton[] { new RespondButton(), new DistressButton(), bridgeButton };
+		m_buttonSets[ (int) ButtonSet.Engineering ] = new ShipButton[] { new DamageButton(), new RepairButton(), bridgeButton };
+		m_buttonSets[ (int) ButtonSet.Medical ] = new ShipButton[] { new ExamineButton(), new TreatButton(), bridgeButton };
+		m_buttonSets[ (int) ButtonSet.NavigationA ] = new ShipButton[] { new ManeuverButton(), new StarmapButton(), new RaiseShieldsButton(), new ArmWeaponButton(), new CombatButton(), bridgeButton };
+		m_buttonSets[ (int) ButtonSet.NavigationB ] = new ShipButton[] { new ManeuverButton(), new StarmapButton(), new DropShieldsButton(), new ArmWeaponButton(), new CombatButton(), bridgeButton };
+		m_buttonSets[ (int) ButtonSet.NavigationC ] = new ShipButton[] { new ManeuverButton(), new StarmapButton(), new RaiseShieldsButton(), new DisarmWeaponButton(), new CombatButton(), bridgeButton };
+		m_buttonSets[ (int) ButtonSet.NavigationD ] = new ShipButton[] { new ManeuverButton(), new StarmapButton(), new DropShieldsButton(), new DisarmWeaponButton(), new CombatButton(), bridgeButton };
+		m_buttonSets[ (int) ButtonSet.Science ] = new ShipButton[] { new SensorsButton(), new AnalysisButton(), new StatusButton(), bridgeButton };
 		m_buttonSets[ (int) ButtonSet.Land ] = new ShipButton[] { new SelectSiteButton(), new DescendButton(), new AbortButton() };
 		m_buttonSets[ (int) ButtonSet.Launch ] = new ShipButton[] { new LaunchYesButton(), new LaunchNoButton() };
 		m_buttonSets[ (int) ButtonSet.Hail ] = new ShipButton[] { new FriendlyButton(), new HostileButton(), new ObsequiousButton() };
 		m_buttonSets[ (int) ButtonSet.Respond ] = new ShipButton[] { new FriendlyButton(), new HostileButton(), new ObsequiousButton() };
 		m_buttonSets[ (int) ButtonSet.Comm ] = new ShipButton[] { new StatementButton(), new QuestionButton(), new PostureButton(), new TerminateButton() };
-		m_buttonSets[ (int) ButtonSet.AskQuestion ] = new ShipButton[] { new ThemselvesButton(), new OtherRacesButton(), new OldEmpireButton(), new TheAncientsButton(), new GeneralInfoButton() };
+		m_buttonSets[ (int) ButtonSet.AskQuestion ] = new ShipButton[] { new QThemselvesButton(), new QOtherRacesButton(), new QOldEmpireButton(), new QTheAncientsButton(), new QGeneralInfoButton() };
 		m_buttonSets[ (int) ButtonSet.AnswerQuestion ] = new ShipButton[] { new AnswerYesButton(), new AnswerNoButton(), new TerminateButton() };
 		m_buttonSets[ (int) ButtonSet.Posture ] = new ShipButton[] { new FriendlyButton(), new HostileButton(), new ObsequiousButton() };
 		m_buttonSets[ (int) ButtonSet.TerrainVehicle ] = new ShipButton[] { new MapButton(), new MoveButton(), new CargoButton(), new LookButton(), new ScanButton(), new WeaponButton() };
+		m_buttonSets[ (int) ButtonSet.ShipsLog ] = new ShipButton[] { new StarportNoticesButton(), new AlienCommsButton(), new MessagesButton(), bridgeButton };
+		m_buttonSets[ (int) ButtonSet.AlienComms ] = new ShipButton[] { new ACThemselvesButton(), new ACOtherRacesButton(), new ACOldEmpireButton(), new ACTheAncientsButton(), new ACGeneralInfoButton(), new ChangeMenuButton( "Cancel", ButtonSet.ShipsLog ) };
 	}
 
 	// unity start

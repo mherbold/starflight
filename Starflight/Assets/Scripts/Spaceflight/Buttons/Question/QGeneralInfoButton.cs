@@ -1,5 +1,5 @@
 ﻿
-public class GeneralInfoButton : ShipButton
+public class QGeneralInfoButton : ShipButton
 {
 	public override string GetLabel()
 	{

@@ -1,5 +1,5 @@
 ﻿
-public class ThemselvesButton : ShipButton
+public class QThemselvesButton : ShipButton
 {
 	public override string GetLabel()
 	{

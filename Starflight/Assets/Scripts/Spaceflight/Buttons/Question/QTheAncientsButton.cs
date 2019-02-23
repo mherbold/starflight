@@ -1,5 +1,5 @@
 ﻿
-public class TheAncientsButton : ShipButton
+public class QTheAncientsButton : ShipButton
 {
 	public override string GetLabel()
 	{
