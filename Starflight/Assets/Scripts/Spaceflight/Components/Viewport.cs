@@ -78,10 +78,10 @@ public class Viewport : MonoBehaviour
 		// are we fading the viewport?
 		if ( m_isFading )
 		{
-			// make sure the pop up dialog is not visible
-			if ( !PopupController.m_instance.IsActive() )
+			// is the game paused?
+			if ( !SpaceflightController.m_instance.m_gameIsPaused )
 			{
-				// update the timer
+				// no - ok update the timer
 				m_fadeTimer += Time.deltaTime;
 
 				// are we done?

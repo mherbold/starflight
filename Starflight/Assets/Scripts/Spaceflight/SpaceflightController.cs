@@ -121,7 +121,7 @@ public class SpaceflightController : MonoBehaviour
 		// are we generating planets?
 		if ( m_starSystem.GeneratingPlanets() )
 		{
-			// yes - continue generating planets
+			// continue generating planets
 			var totalProgress = m_starSystem.GeneratePlanets();
 
 			// show / update the pop up dialog
