@@ -192,6 +192,30 @@ public class Planet : MonoBehaviour
 			m_material.SetTexture( "SF_NormalMap", m_planetGenerator.m_normalTexture );
 			m_material.SetTexture( "SF_WaterMaskMap", m_planetGenerator.m_waterMaskTexture );
 
+			// is this a gas giant?
+			if ( m_planet.IsGasGiant() )
+			{
+				// yes - turn off the detail normal map
+				m_material.DisableKeyword( "SF_DETAILNORMALMAP_ON" );
+			}
+			else
+			{
+				// no - turn on the detail normal map
+				m_material.EnableKeyword( "SF_DETAILNORMALMAP_ON" );
+			}
+
+			// does this planet have an atmosphere?
+			if ( m_planet.HasAtmosphere() )
+			{
+				// yes - allow full detail normal map strength
+				m_material.SetFloat( "SF_DetailNormalMapStrength", 1.0f );
+			}
+			else
+			{
+				// no - make detail normal map strength weak so craters are more apparent
+				m_material.SetFloat( "SF_DetailNormalMapStrength", 0.05f );
+			}
+
 			m_meshRenderer.material = m_material;
 
 			SpaceflightController.m_instance.m_inOrbit.MaterialUpdated();

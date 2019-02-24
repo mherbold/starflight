@@ -84,19 +84,43 @@ public class TerrainGrid : MonoBehaviour
 		// force the bounds to be the maximum possible extents (force y to 512.0f)
 		m_mesh.bounds = new Bounds( Vector3.zero, new Vector3( m_mesh.bounds.extents.x, 512.0f, m_mesh.bounds.extents.z ) * 2.0f );
 
+		// get to the planet
+		var planet = m_planetGenerator.GetPlanet();
+
 		// update the textures on the material
 		m_material.SetTexture( "_MainTex", planetGenerator.m_albedoTexture );
 		m_material.SetTexture( "SF_SpecularMap", planetGenerator.m_specularTexture );
 		m_material.SetTexture( "SF_NormalMap", planetGenerator.m_normalTexture );
 		m_material.SetTexture( "SF_WaterMaskMap", planetGenerator.m_waterMaskTexture );
 
-		// get to the planet
-		var planet = planetGenerator.GetPlanet();
+		// is this a gas giant?
+		if ( planet.IsGasGiant() )
+		{
+			// yes - turn off the detail normal map
+			m_material.DisableKeyword( "SF_DETAILNORMALMAP_ON" );
+		}
+		else
+		{
+			// no - turn on the detail normal map
+			m_material.EnableKeyword( "SF_DETAILNORMALMAP_ON" );
+		}
 
-		Debug.Log( "Populating planet " + planet.m_id + "..." );
+		// does this planet have an atmosphere?
+		if ( planet.HasAtmosphere() )
+		{
+			// yes - allow full detail normal map strength
+			m_material.SetFloat( "SF_DetailNormalMapStrength", 1.0f );
+		}
+		else
+		{
+			// no - make detail normal map strength weak so craters are more apparent
+			m_material.SetFloat( "SF_DetailNormalMapStrength", 0.05f );
+		}
 
 		// reset the spawn lists
 		TerrainGridPopulator.ResetSpawnLists( m_planetGenerator );
+
+		Debug.Log( "Populating planet " + planet.m_id + "..." );
 
 		// populate the rocks
 		if ( m_terrainRocks != null )
@@ -149,6 +173,33 @@ public class TerrainGrid : MonoBehaviour
 		m_material.SetVector( "SF_NormalMap_ST", scaleOffset );
 		m_material.SetVector( "SF_EmissiveMap_ST", scaleOffset );
 		m_material.SetVector( "SF_WaterMaskMap_ST", scaleOffset );
+
+		// get to the planet
+		var planet = m_planetGenerator.GetPlanet();
+
+		// is this a gas giant?
+		if ( planet.IsGasGiant() )
+		{
+			// yes - turn off the detail normal map
+			m_material.DisableKeyword( "SF_DETAILNORMALMAP_ON" );
+		}
+		else
+		{
+			// no - turn on the detail normal map
+			m_material.EnableKeyword( "SF_DETAILNORMALMAP_ON" );
+		}
+
+		// does this planet have an atmosphere?
+		if ( planet.HasAtmosphere() )
+		{
+			// yes - allow full detail normal map strength
+			m_material.SetFloat( "SF_DetailNormalMapStrength", 1.0f );
+		}
+		else
+		{
+			// no - make detail normal map strength weak so craters are more apparent
+			m_material.SetFloat( "SF_DetailNormalMapStrength", 0.05f );
+		}
 
 		// get the maximum height of the area we are landing on top of
 		var centerGridCount = m_detail * m_detail;

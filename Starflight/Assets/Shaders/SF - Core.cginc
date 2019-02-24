@@ -15,6 +15,7 @@ float SF_Speed;
 
 sampler2D SF_WaterMaskMap;
 float4 SF_WaterMaskMap_ST;
+float SF_WaterNormalMapStrength;
 
 sampler2D _MainTex;
 float4 _MainTex_ST;
@@ -277,7 +278,7 @@ float3 ComputeNormal( SF_VertexShaderOutput i )
 
 				#endif // SF_DETAILNORMALMAP_ISCOMPRESSED
 
-				float4 waterNormalMap = float4( normalize( ( waterNormalMapA.xyz + waterNormalMapB.xyz + waterNormalMapC.xyz ) * float3( SF_DetailNormalMapStrength.xx, 1 ) ), 1 );
+				float4 waterNormalMap = float4( normalize( ( waterNormalMapA.xyz + waterNormalMapB.xyz + waterNormalMapC.xyz ) * float3( SF_WaterNormalMapStrength.xx, 1 ) ), 1 );
 
 				#if SF_WATERMASKMAP_ON
 

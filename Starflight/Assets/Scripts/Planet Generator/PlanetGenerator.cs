@@ -385,7 +385,7 @@ public class PlanetGenerator
 			{
 				var craters = new PG_Craters();
 
-				m_elevation = craters.Process( m_elevation, m_planet.m_id, 0.2f, m_waterElevation );
+				m_elevation = craters.Process( m_elevation, m_planet.m_id, 0.1f, m_waterElevation );
 			}
 
 			// factor in elevation difference map

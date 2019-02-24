@@ -7,6 +7,7 @@ Shader "Starflight/Water"
 
 		SF_Speed( "Speed", Range( 0, 10 ) ) = 1
 		SF_WaterMaskMap( "Water Mask", 2D ) = "white" {}
+		SF_WaterNormalMapStrength( "Water Normal Map Strength", Range( 0, 10 ) ) = 1
 
 		/* UV1 Maps */
 
