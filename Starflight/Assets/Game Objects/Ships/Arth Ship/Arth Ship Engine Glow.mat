@@ -210,7 +210,7 @@ Material:
     - SF_AlbedoColor: {r: 0, g: 0, b: 0, a: 1}
     - SF_BaseScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SF_DetailScaleOffset: {r: 1, g: 1, b: 0, a: 0}
-    - SF_EmissiveColor: {r: 1, g: 0.3845019, b: 0.14699996, a: 1}
+    - SF_EmissiveColor: {r: 0.45098042, g: 0.7411765, b: 1, a: 1}
     - SF_NormalMapScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SF_ReflectionColor: {r: 1, g: 1, b: 1, a: 1}
     - SF_SpecularColor: {r: 0, g: 0, b: 0, a: 1}

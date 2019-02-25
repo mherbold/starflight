@@ -7,6 +7,9 @@ public class PlayerShip : MonoBehaviour
 	// the ship
 	public Transform m_ship;
 
+	// the engine exhaust
+	public MeshRenderer m_engineExhaust;
+
 	// the missile launcher
 	public GameObject m_missileLauncher;
 
@@ -37,16 +40,14 @@ public class PlayerShip : MonoBehaviour
 	// keep track of the last banking angle (for interpolation)
 	float m_currentBankingAngle;
 
-	// unity awake
-	void Awake()
-	{
-	}
-
 	// unity start
 	void Start()
 	{
 		// get to the player data
 		var playerData = DataController.m_instance.m_playerData;
+
+		// instantiate the material on the engine exhaust
+		m_engineExhaust.material = new Material( m_engineExhaust.material );
 
 		// show only as many cargo pods as we have purchased
 		for ( int cargoPodId = 0; cargoPodId < m_cargoPods.Length; cargoPodId++ )
@@ -176,6 +177,9 @@ public class PlayerShip : MonoBehaviour
 			// update the last direction
 			m_lastDirection = playerData.m_general.m_currentDirection;
 		}
+
+		// adjust the engine exhaust opacity based on the current speed
+		Tools.SetOpacity( m_engineExhaust.material, playerData.m_general.m_currentSpeed / playerData.m_general.m_currentMaximumSpeed );
 
 		// get the current hyperspace coordinates (if in hyperspace get it from the player transform due to flux travel not updating m_hyperspaceCoordinates)
 		var hyperspaceCoordinates = ( playerData.m_general.m_location == PD_General.Location.Hyperspace ) ? transform.position : playerData.m_general.m_lastHyperspaceCoordinates;
