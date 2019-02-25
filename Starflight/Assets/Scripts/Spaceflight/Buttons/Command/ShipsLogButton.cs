@@ -3,7 +3,7 @@ public class ShipsLogButton : ShipButton
 {
 	public override string GetLabel()
 	{
-		return "Ships Log";
+		return "Ship's Log";
 	}
 
 	public override bool Execute()
