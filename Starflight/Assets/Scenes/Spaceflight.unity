@@ -6992,7 +6992,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caa4e4de78da4e949a7e37994c9f3e9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_rotationSpeed: {x: 0, y: 0, z: 50}
+  m_rotationSpeed: {x: 0, y: 50, z: 0}
   m_worldSpace: 0
 --- !u!1 &96975505
 GameObject:
@@ -42704,6 +42704,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Nomad Probe
       objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: eeb3d091fec22bc40aac0833c772813b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: eeb3d091fec22bc40aac0833c772813b, type: 3}
       propertyPath: m_Layer
       value: 13
@@ -44046,7 +44050,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caa4e4de78da4e949a7e37994c9f3e9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_rotationSpeed: {x: 0, y: 0, z: 5}
+  m_rotationSpeed: {x: 0, y: 5, z: 0}
   m_worldSpace: 0
 --- !u!1001 &1383652815
 PrefabInstance:
