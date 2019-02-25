@@ -44914,9 +44914,9 @@ MonoBehaviour:
   m_maskImage: {fileID: 290923541}
   m_backgroundTextures:
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 2800000, guid: 7a706c15a1de4584fb3c6a56ba75197b, type: 3}
+  - {fileID: 2800000, guid: bb72dbdcf24185f4e90b0496ce32dcf9, type: 3}
+  - {fileID: 2800000, guid: 09fc4c2353b59294daa6985b1da3bc40, type: 3}
   - {fileID: 2800000, guid: 71223abb9b753e741afabfecd88ce6ec, type: 3}
   - {fileID: 0}
   - {fileID: 0}
@@ -44942,9 +44942,9 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 3548162412063b042abef8931b8d03d2, type: 3}
   m_maskTextures:
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 2800000, guid: 24ed52c0312b1e649af5426b97395b6c, type: 3}
+  - {fileID: 2800000, guid: d35b757cfb75f474e9693d1173e176ab, type: 3}
+  - {fileID: 2800000, guid: ba50be6657b763e48bb95a2be335cb5b, type: 3}
   - {fileID: 2800000, guid: fba4c2b1988696743a0cfbbf6cdf4113, type: 3}
   - {fileID: 0}
   - {fileID: 0}
