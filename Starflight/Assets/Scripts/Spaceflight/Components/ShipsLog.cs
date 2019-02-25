@@ -55,7 +55,7 @@ public class ShipsLog : MonoBehaviour
 				SpaceflightController.m_instance.m_radar.Show();
 			}
 		}
-		else
+		else if ( m_entryList.Count > 0 )
 		{
 			// do we want to ignore the controls?
 			if ( m_ignoreControllerTimer == 0.0f )
