@@ -11,8 +11,8 @@ Material:
   m_Shader: {fileID: 4800000, guid: adcfa929f3b97d549ad0a8faba72a091, type: 3}
   m_ShaderKeywords: ALBEDOMAP_ON ALPHA_ON FORWARDSHADOWSON_ON FORWARDSHADOWS_ON NORMALMAP_ISCOMPRESSED
     NORMALMAP_ON ORTHONORMALIZEON_ON ORTHONORMALIZE_ON SF_ALBEDOMAP_ON SF_ALPHA_ON
-    SF_NORMALMAP_ISCOMPRESSED SF_NORMALMAP_ON SF_OVERRIDEDEPTHOUTPUT_ON SF_SPECULARMAP_ON
-    SF_SPECULAR_ON SPECULAR_ON
+    SF_NORMALMAP_ISCOMPRESSED SF_NORMALMAP_ON SF_SPECULARMAP_ON SF_SPECULAR_ON SPECULAR_ON
+    _ALPHAPREMULTIPLY_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -64,6 +64,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - SF_ReflectionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - SF_ScatterMapA:
         m_Texture: {fileID: 2800000, guid: 02c3a2de36ef1614a940fbe60a4cf610, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -88,6 +92,14 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _BackTexA:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BackTexB:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -108,7 +120,31 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _DownTexA:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DownTexB:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FrontTexA:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FrontTexB:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _LeftTexA:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _LeftTexB:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -128,6 +164,14 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _RightTexA:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RightTexB:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _ScatterMap0:
         m_Texture: {fileID: 2800000, guid: baad7a7a551467f40971f262f976a1c2, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -144,6 +188,14 @@ Material:
         m_Texture: {fileID: 2800000, guid: 76ebdfff9bc22b54081eebc36b4300a4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _UpTexA:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _UpTexB:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - BlendDst: 10
     - BlendPrePassOn: 0
@@ -153,16 +205,21 @@ Material:
     - OrthonormalizeOn: 1
     - SF_AlbedoOcclusionOn: 0
     - SF_AlphaTestValue: 0
+    - SF_BehindEverythingOn: 0
     - SF_BlendDst: 10
+    - SF_BlendFactor: 0
     - SF_BlendSrc: 1
     - SF_CullMode: 0
     - SF_Density: 1.5
+    - SF_DepthFadeOn: 0
     - SF_DetailNormalMapStrength: 1
+    - SF_EmissiveProjectionOn: 0
     - SF_ForwardShadowsOn: 0
+    - SF_FractalDetailsOn: 0
     - SF_NormalMapStrength: 2
     - SF_OcclusionPower: 1
     - SF_OrthonormalizeOn: 0
-    - SF_OverrideDepthOutput: 1
+    - SF_OverrideDepthOutput: 0
     - SF_RenderQueueOffset: 0
     - SF_Smoothness: 0.3
     - SF_Speed: 0.1
@@ -176,14 +233,14 @@ Material:
     - _Cutoff: 0.5
     - _Density: 1
     - _DetailNormalMapScale: 1
-    - _DstBlend: 0
+    - _DstBlend: 10
     - _Frequency: 16
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _Lacunarity: 1
     - _Metallic: 0
-    - _Mode: 0
+    - _Mode: 3
     - _OcclusionStrength: 1
     - _Octaves: 1
     - _Offset: 0
@@ -197,15 +254,18 @@ Material:
     - _Transparency: 1
     - _UVSec: 0
     - _WaveScale: 10
-    - _ZWrite: 1
+    - _ZWrite: 0
     m_Colors:
     - AlbedoColor: {r: 1, g: 1, b: 1, a: 0.9490196}
     - NormalMapScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SF_AlbedoColor: {r: 1, g: 1, b: 1, a: 1}
     - SF_BaseScaleOffset: {r: 1, g: 1, b: 0, a: 0}
+    - SF_ColorTintA: {r: 1, g: 1, b: 1, a: 1}
+    - SF_DepthFadeParams: {r: 0, g: 0, b: 0, a: 0}
     - SF_DetailScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SF_EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
     - SF_NormalMapScaleOffset: {r: 1, g: 1, b: 0, a: 0}
+    - SF_ReflectionColor: {r: 1, g: 1, b: 1, a: 1}
     - SF_SpecularColor: {r: 0.8679245, g: 0.8679245, b: 0.8679245, a: 1}
     - SpecularColor: {r: 0.75, g: 0.75, b: 0.75, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}

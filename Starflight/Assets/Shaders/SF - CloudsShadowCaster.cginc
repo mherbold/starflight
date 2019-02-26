@@ -6,7 +6,13 @@
 
 SF_VertexShaderOutput vertCloudsShadowCaster_SF( SF_VertexShaderInput v )
 {
-	return ComputeCloudsVertexShaderOutput( v );
+	SF_VertexShaderOutput o;
+
+	o = ComputeCloudsVertexShaderOutput( v );
+
+	o.positionClip = UnityApplyLinearShadowBias( UnityClipSpaceShadowCasterPos( v.position, v.normal ) );
+
+	return o;
 }
 
 float4 fragCloudsShadowCaster_SF( float4 svPosition : SV_POSITION, SF_VertexShaderOutput i ) : SV_Target

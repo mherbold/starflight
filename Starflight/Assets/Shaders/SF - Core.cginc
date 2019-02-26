@@ -438,8 +438,6 @@ SF_VertexShaderOutput ComputeCloudsVertexShaderOutput( SF_VertexShaderInput v )
 
 	o = ComputeVertexShaderOutput( v );
 
-	o.positionClip = UnityApplyLinearShadowBias( UnityClipSpaceShadowCasterPos( v.position, v.normal ) );
-
 	float2 baseTexCoord = TRANSFORM_TEX( o.texCoord0.xy, _MainTex );
 
 	o.texCoord0.xy = baseTexCoord * float2( 12, 10 ) + _Time.x * SF_Speed * float2( 0.50, 0.60 );
