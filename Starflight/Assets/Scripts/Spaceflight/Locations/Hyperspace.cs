@@ -24,10 +24,8 @@ public class Hyperspace : MonoBehaviour
 	// the ending point
 	Vector3 m_fluxTravelEndPosition;
 
-	// unity awake
-	void Awake()
-	{
-	}
+	// remember the maximum speed of the player before flux travel
+	float m_oldMaximumSpeed;
 
 	// unity start
 	void Start()
@@ -97,7 +95,7 @@ public class Hyperspace : MonoBehaviour
 
 			// calculate a smoothed curve for moving our position to the other end of the flux
 			float t = Mathf.SmoothStep( 0.0f, 1.0f, m_timer / m_fluxTravelDuration );
-			
+
 			// update the position of the ship
 			var newPosition = Vector3.Lerp( m_fluxTravelStartPosition, m_fluxTravelEndPosition, t );
 
@@ -127,6 +125,9 @@ public class Hyperspace : MonoBehaviour
 
 				// not travelling through the flux any more
 				m_travelingThroughFlux = false;
+
+				// restore the maximum speed of the player
+				playerData.m_general.m_currentMaximumSpeed = m_oldMaximumSpeed;
 			}
 		}
 		else
@@ -184,6 +185,11 @@ public class Hyperspace : MonoBehaviour
 
 					// start the warp cinematics
 					m_travelingThroughFlux = true;
+
+					// save the maximum speed of the player and cut it by a large amount so the skybox rotation seems wild
+					m_oldMaximumSpeed = playerData.m_general.m_currentMaximumSpeed;
+
+					playerData.m_general.m_currentMaximumSpeed *= 0.1f;
 
 					// turn off the radar
 					SpaceflightController.m_instance.m_radar.Hide();

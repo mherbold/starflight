@@ -47,6 +47,9 @@ public class StarflightSkybox : MonoBehaviour
 	// static instance to this skybox controller
 	public static StarflightSkybox m_instance;
 
+	// keep track of the player coordinates of the previous frame
+	Vector3 m_lastCoordinates;
+
 	// constructor
 	StarflightSkybox()
 	{
@@ -64,13 +67,8 @@ public class StarflightSkybox : MonoBehaviour
 		RenderSettings.skybox = m_material;
 	}
 
-	// unity start
-	void Start()
-	{
-	}
-
-	// unity update
-	void Update()
+	// unity late update
+	void LateUpdate()
 	{
 		// get to the game data
 		var gameData = DataController.m_instance.m_gameData;
@@ -84,8 +82,11 @@ public class StarflightSkybox : MonoBehaviour
 			// yes - figure out how fast to rotate the skybox
 			var multiplier = ( playerData.m_general.m_location != PD_General.Location.Encounter ) ? 8.0f : 0.5f;
 
+			// compute the speed of the player (don't use playerData.m_general.m_currentSpeed because the player could be locked during animations or flux warping)
+			var currentSpeed = Vector3.Distance( m_lastCoordinates, playerData.m_general.m_coordinates );
+
 			// calculate the amount to rotate the skybox by
-			var amount = playerData.m_general.m_currentSpeed / playerData.m_general.m_currentMaximumSpeed * Time.deltaTime * multiplier;
+			var amount = currentSpeed / playerData.m_general.m_currentMaximumSpeed * Time.deltaTime * multiplier;
 
 			// compute the rotation quaternion
 			var deltaRotation = Quaternion.LookRotation( playerData.m_general.m_currentDirection, Vector3.up );
@@ -178,6 +179,9 @@ public class StarflightSkybox : MonoBehaviour
 		// update the material with the new color tints
 		m_material.SetColor( "SF_ColorTintA", m_colorTintA );
 		m_material.SetColor( "SF_ColorTintB", m_colorTintB );
+
+		// remember the coordinates for the next update
+		m_lastCoordinates = playerData.m_general.m_coordinates;
 	}
 
 	// utility to switch a set of skybox textures (which = "A" or "B")
