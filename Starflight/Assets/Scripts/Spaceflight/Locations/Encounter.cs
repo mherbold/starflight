@@ -43,11 +43,6 @@ public class Encounter : MonoBehaviour
 	// current dolly distance
 	float m_currentOffset;
 
-	// unity awake
-	void Awake()
-	{
-	}
-
 	// unity start
 	void Start()
 	{
@@ -221,7 +216,7 @@ public class Encounter : MonoBehaviour
 		m_main.SetActive( true );
 
 		// reset the current offset
-		m_currentOffset = 0.0f;
+		m_currentOffset = 1024.0f;
 
 		// get to the game data
 		var gameData = DataController.m_instance.m_gameData;
