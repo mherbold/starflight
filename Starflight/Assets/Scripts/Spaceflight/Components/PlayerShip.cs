@@ -14,6 +14,12 @@ public class PlayerShip : MonoBehaviour
 	// the engine glow light
 	public Light m_engineGlowLight;
 
+	// the engine glow flicker frequency
+	public float m_engineGlowFlickerFrequency;
+
+	// the engine glow flicker strength
+	public float m_engineGlowFlickerStrength;
+
 	// the missile launcher
 	public GameObject m_missileLauncher;
 
@@ -44,6 +50,9 @@ public class PlayerShip : MonoBehaviour
 	// keep track of the last banking angle (for interpolation)
 	float m_currentBankingAngle;
 
+	// fast noise for the exhaust glow flicker
+	FastNoise m_fastNoise;
+
 	// unity start
 	void Start()
 	{
@@ -68,6 +77,11 @@ public class PlayerShip : MonoBehaviour
 
 		// jump start the last direction
 		m_lastDirection = playerData.m_general.m_currentDirection;
+
+		// set up the exaust glow flicker fast noise
+		m_fastNoise = new FastNoise();
+
+		m_fastNoise.SetNoiseType( FastNoise.NoiseType.SimplexFractal );
 	}
 
 	// unity update
@@ -185,6 +199,11 @@ public class PlayerShip : MonoBehaviour
 
 		// adjust the engine exhaust glow opacity based on the current speed
 		var opacity = playerData.m_general.m_currentSpeed / playerData.m_general.m_currentMaximumSpeed;
+
+		// flicker the opacity
+		m_fastNoise.SetFrequency( m_engineGlowFlickerFrequency );
+
+		opacity += m_fastNoise.GetSimplex( Time.time, 0.0f ) * m_engineGlowFlickerStrength;
 
 		Tools.SetOpacity( m_engineExhaust.material, opacity );
 		Tools.SetOpacity( m_engineExhaustGlow.material, opacity );

@@ -72545,6 +72545,8 @@ MonoBehaviour:
   m_engineExhaust: {fileID: 986173501}
   m_engineExhaustGlow: {fileID: 173285023}
   m_engineGlowLight: {fileID: 297200515}
+  m_engineGlowFlickerFrequency: 10
+  m_engineGlowFlickerStrength: 0.06
   m_missileLauncher: {fileID: 2005001691}
   m_laserCannon: {fileID: 2005001692}
   m_cargoPods:
