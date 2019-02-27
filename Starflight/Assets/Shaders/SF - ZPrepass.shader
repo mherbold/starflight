@@ -20,6 +20,7 @@ Shader "Starflight/Z Prepass"
 		SF_DetailNormalMapStrength( "Detail Normal Map Strength", Range( 0, 10 ) ) = 1
 
 		SF_EmissiveMap( "Emissive Map", 2D ) = "black" {}
+		SF_EmissiveTint( "Emissive Tint", Color ) = ( 1, 1, 1, 1 )
 		SF_EmissiveColor( "Emissive Color", Color ) = ( 0, 0, 0, 1 )
 			
 		SF_ReflectionMap( "Reflection Map", 2D ) = "black" {}

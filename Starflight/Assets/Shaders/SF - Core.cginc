@@ -39,6 +39,7 @@ float SF_DetailNormalMapStrength;
 
 sampler2D SF_EmissiveMap;
 float4 SF_EmissiveMap_ST;
+float3 SF_EmissiveTint;
 float3 SF_EmissiveColor;
 
 sampler2D SF_ReflectionMap;
@@ -356,7 +357,7 @@ float3 ComputeEmissive( SF_VertexShaderOutput i )
 
 	#endif // SF_EMISSIVEMAP_ON
 
-	return SF_EmissiveColor + emissiveMap;
+	return SF_EmissiveColor + emissiveMap * SF_EmissiveTint;
 }
 
 float3 ComputeReflection( SF_VertexShaderOutput i, float3 normal )

@@ -85,6 +85,7 @@ class SFShaderGUI : ShaderGUI
 	MaterialProperty m_detailNormalMapStrength = null;
 
 	MaterialProperty m_emissiveMap = null;
+	MaterialProperty m_emissiveTint = null;
 	MaterialProperty m_emissiveColor = null;
 
 	MaterialProperty m_reflectionMap = null;
@@ -236,11 +237,11 @@ class SFShaderGUI : ShaderGUI
 		}
 
 		// emissive options
-		if ( m_emissiveMap != null && m_emissiveColor != null )
+		if ( m_emissiveMap != null && m_emissiveTint != null && m_emissiveColor != null )
 		{
 			GUILayout.Label( Styles.emissiveText, EditorStyles.boldLabel );
 
-			m_materialEditor.TexturePropertySingleLine( Styles.emissiveText, m_emissiveMap, m_emissiveColor );
+			m_materialEditor.TexturePropertySingleLine( Styles.emissiveText, m_emissiveMap, m_emissiveTint, m_emissiveColor );
 
 			if ( m_emissiveMap.textureValue != null )
 			{
@@ -416,6 +417,7 @@ class SFShaderGUI : ShaderGUI
 		m_detailNormalMapStrength = FindProperty( "SF_DetailNormalMapStrength", materialPropertyList, false );
 
 		m_emissiveMap = FindProperty( "SF_EmissiveMap", materialPropertyList, false );
+		m_emissiveTint = FindProperty( "SF_EmissiveTint", materialPropertyList, false );
 		m_emissiveColor = FindProperty( "SF_EmissiveColor", materialPropertyList, false );
 
 		m_reflectionMap = FindProperty( "SF_ReflectionMap", materialPropertyList, false );
