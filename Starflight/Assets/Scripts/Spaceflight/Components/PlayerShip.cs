@@ -7,8 +7,12 @@ public class PlayerShip : MonoBehaviour
 	// the ship
 	public Transform m_ship;
 
-	// the engine exhaust
+	// the engine exhaust and exhaust glow
 	public MeshRenderer m_engineExhaust;
+	public MeshRenderer m_engineExhaustGlow;
+
+	// the engine glow light
+	public Light m_engineGlowLight;
 
 	// the missile launcher
 	public GameObject m_missileLauncher;
@@ -46,8 +50,9 @@ public class PlayerShip : MonoBehaviour
 		// get to the player data
 		var playerData = DataController.m_instance.m_playerData;
 
-		// instantiate the material on the engine exhaust
+		// instantiate the material on the engine exhaust and engine exhaust glow
 		m_engineExhaust.material = new Material( m_engineExhaust.material );
+		m_engineExhaustGlow.material = new Material( m_engineExhaustGlow.material );
 
 		// show only as many cargo pods as we have purchased
 		for ( int cargoPodId = 0; cargoPodId < m_cargoPods.Length; cargoPodId++ )
@@ -178,8 +183,13 @@ public class PlayerShip : MonoBehaviour
 			m_lastDirection = playerData.m_general.m_currentDirection;
 		}
 
-		// adjust the engine exhaust opacity based on the current speed
-		Tools.SetOpacity( m_engineExhaust.material, playerData.m_general.m_currentSpeed / playerData.m_general.m_currentMaximumSpeed );
+		// adjust the engine exhaust glow opacity based on the current speed
+		var opacity = playerData.m_general.m_currentSpeed / playerData.m_general.m_currentMaximumSpeed;
+
+		Tools.SetOpacity( m_engineExhaust.material, opacity );
+		Tools.SetOpacity( m_engineExhaustGlow.material, opacity );
+
+		m_engineGlowLight.intensity = opacity * 2.0f;
 
 		// get the current hyperspace coordinates (if in hyperspace get it from the player transform due to flux travel not updating m_hyperspaceCoordinates)
 		var hyperspaceCoordinates = ( playerData.m_general.m_location == PD_General.Location.Hyperspace ) ? transform.position : playerData.m_general.m_lastHyperspaceCoordinates;
