@@ -83,7 +83,7 @@ public class StarflightSkybox : MonoBehaviour
 			var multiplier = ( playerData.m_general.m_location != PD_General.Location.Encounter ) ? 8.0f : 0.5f;
 
 			// compute the speed of the player (don't use playerData.m_general.m_currentSpeed because the player could be locked during animations or flux warping)
-			var currentSpeed = Vector3.Distance( m_lastCoordinates, playerData.m_general.m_coordinates );
+			var currentSpeed = Vector3.Distance( m_lastCoordinates, playerData.m_general.m_coordinates ) / Time.deltaTime;
 
 			// calculate the amount to rotate the skybox by
 			var amount = currentSpeed / playerData.m_general.m_currentMaximumSpeed * Time.deltaTime * multiplier;
@@ -104,8 +104,16 @@ public class StarflightSkybox : MonoBehaviour
 		// apply constant rotation
 		m_currentRotation = Quaternion.Euler( m_constantRotation * Time.deltaTime ) * m_currentRotation;
 
-		// yes - get the current hyperspace coordinates (if in hyperspace get it from the player transform due to flux travel not updating m_hyperspaceCoordinates)
-		var hyperspaceCoordinates = ( playerData.m_general.m_location == PD_General.Location.Hyperspace ) ? m_playerObject.transform.position : playerData.m_general.m_lastHyperspaceCoordinates;
+		// get the current hyperspace coordinates (if in hyperspace get it from the player transform due to flux travel not updating m_hyperspaceCoordinates)
+		var hyperspaceCoordinates = playerData.m_general.m_lastHyperspaceCoordinates;
+
+		if ( playerData.m_general.m_location == PD_General.Location.Hyperspace )
+		{
+			if ( m_playerObject != null )
+			{
+				hyperspaceCoordinates = m_playerObject.transform.position;
+			}
+		}
 
 		// figure out how far we are from each territory
 		foreach ( var territory in gameData.m_territoryList )
@@ -234,11 +242,14 @@ public class StarflightSkybox : MonoBehaviour
 		}
 
 		// switch the textures
-		m_material.SetTexture( "_FrontTex" + which, textureList[ 0 ] );
-		m_material.SetTexture( "_BackTex" + which, textureList[ 1 ] );
-		m_material.SetTexture( "_LeftTex" + which, textureList[ 2 ] );
-		m_material.SetTexture( "_RightTex" + which, textureList[ 3 ] );
-		m_material.SetTexture( "_UpTex" + which, textureList[ 4 ] );
-		m_material.SetTexture( "_DownTex" + which, textureList[ 5 ] );
+		if ( textureList.Length == 6 )
+		{
+			m_material.SetTexture( "_FrontTex" + which, textureList[ 0 ] );
+			m_material.SetTexture( "_BackTex" + which, textureList[ 1 ] );
+			m_material.SetTexture( "_LeftTex" + which, textureList[ 2 ] );
+			m_material.SetTexture( "_RightTex" + which, textureList[ 3 ] );
+			m_material.SetTexture( "_UpTex" + which, textureList[ 4 ] );
+			m_material.SetTexture( "_DownTex" + which, textureList[ 5 ] );
+		}
 	}
 }
