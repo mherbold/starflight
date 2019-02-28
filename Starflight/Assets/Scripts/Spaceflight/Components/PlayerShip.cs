@@ -187,6 +187,20 @@ public class PlayerShip : MonoBehaviour
 			var emission = m_exhaustParticleSystem.emission;
 
 			emission.enabled = m_enginesAreOn;
+
+			// adjust opacity of start color of contrails based on speed of the ship
+			var opacity = Mathf.Lerp( -1.0f, 2.0f, playerData.m_general.m_currentSpeed / playerData.m_general.m_currentMaximumSpeed );
+
+			foreach ( var particleSystem in m_contrailParticleSystem )
+			{
+				var main = particleSystem.main;
+				var startColor = main.startColor;
+				var color = startColor.color;
+
+				color.a = opacity;
+				startColor.color = color;
+				main.startColor = startColor;
+			}
 		}
 
 		// get the current hyperspace coordinates (if in hyperspace get it from the player transform due to flux travel not updating m_hyperspaceCoordinates)
