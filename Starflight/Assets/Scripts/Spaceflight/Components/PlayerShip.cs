@@ -7,18 +7,11 @@ public class PlayerShip : MonoBehaviour
 	// the ship
 	public Transform m_ship;
 
-	// the engine exhaust and exhaust glow
-	public MeshRenderer m_engineExhaust;
-	public MeshRenderer m_engineExhaustGlow;
+	// the contrail particle systems
+	public ParticleSystem[] m_contrailParticleSystem;
 
-	// the engine glow light
-	public Light m_engineGlowLight;
-
-	// the engine glow flicker frequency
-	public float m_engineGlowFlickerFrequency;
-
-	// the engine glow flicker strength
-	public float m_engineGlowFlickerStrength;
+	// the exhaust particle system
+	public ParticleSystem m_exhaustParticleSystem;
 
 	// the missile launcher
 	public GameObject m_missileLauncher;
@@ -50,18 +43,14 @@ public class PlayerShip : MonoBehaviour
 	// keep track of the last banking angle (for interpolation)
 	float m_currentBankingAngle;
 
-	// fast noise for the exhaust glow flicker
-	FastNoise m_fastNoise;
+	// keep track of whether we allow particles to emit or not
+	bool m_particlesAreEnabled = true;
 
 	// unity start
 	void Start()
 	{
 		// get to the player data
 		var playerData = DataController.m_instance.m_playerData;
-
-		// instantiate the material on the engine exhaust and engine exhaust glow
-		m_engineExhaust.material = new Material( m_engineExhaust.material );
-		m_engineExhaustGlow.material = new Material( m_engineExhaustGlow.material );
 
 		// show only as many cargo pods as we have purchased
 		for ( int cargoPodId = 0; cargoPodId < m_cargoPods.Length; cargoPodId++ )
@@ -77,11 +66,6 @@ public class PlayerShip : MonoBehaviour
 
 		// jump start the last direction
 		m_lastDirection = playerData.m_general.m_currentDirection;
-
-		// set up the exaust glow flicker fast noise
-		m_fastNoise = new FastNoise();
-
-		m_fastNoise.SetNoiseType( FastNoise.NoiseType.SimplexFractal );
 	}
 
 	// unity update
@@ -191,24 +175,19 @@ public class PlayerShip : MonoBehaviour
 			m_currentBankingAngle = Mathf.Lerp( m_currentBankingAngle, bankingAngle, Time.deltaTime * 4.0f );
 
 			// bank the ship based on the calculated angle
-			m_ship.rotation = Quaternion.AngleAxis( m_currentBankingAngle, playerData.m_general.m_currentDirection ) * m_ship.rotation;
+			m_ship.rotation = Quaternion.AngleAxis( m_currentBankingAngle, playerData.m_general.m_currentDirection ) * m_ship.rotation * Quaternion.Euler( -90.0f, 0.0f, 0.0f );
 
 			// update the last direction
 			m_lastDirection = playerData.m_general.m_currentDirection;
 		}
 
-		// adjust the engine exhaust glow opacity based on the current speed
-		var opacity = playerData.m_general.m_currentSpeed / playerData.m_general.m_currentMaximumSpeed;
+		// adjust the engine exhaust glow opacity and scale based on the current speed
+		if ( m_particlesAreEnabled )
+		{
+			var emission = m_exhaustParticleSystem.emission;
 
-		// flicker the opacity
-		m_fastNoise.SetFrequency( m_engineGlowFlickerFrequency );
-
-		opacity += m_fastNoise.GetSimplex( Time.time, 0.0f ) * m_engineGlowFlickerStrength;
-
-		Tools.SetOpacity( m_engineExhaust.material, opacity );
-		Tools.SetOpacity( m_engineExhaustGlow.material, opacity );
-
-		m_engineGlowLight.intensity = opacity * 2.0f;
+			emission.enabled = m_enginesAreOn;
+		}
 
 		// get the current hyperspace coordinates (if in hyperspace get it from the player transform due to flux travel not updating m_hyperspaceCoordinates)
 		var hyperspaceCoordinates = ( playerData.m_general.m_location == PD_General.Location.Hyperspace ) ? transform.position : playerData.m_general.m_lastHyperspaceCoordinates;
@@ -261,6 +240,23 @@ public class PlayerShip : MonoBehaviour
 	public void TurnOffEngines()
 	{
 		m_enginesAreOn = false;
+	}
+
+	// call this to enable or disable the ship particle systems
+	public void EnableParticles( bool enabled )
+	{
+		m_particlesAreEnabled = enabled;
+
+		var emission = m_exhaustParticleSystem.emission;
+
+		emission.enabled = m_particlesAreEnabled;
+
+		foreach ( var particleSystem in m_contrailParticleSystem )
+		{
+			emission = particleSystem.emission;
+
+			emission.enabled = m_particlesAreEnabled;
+		}
 	}
 
 	// call this to get the current position of the player ship

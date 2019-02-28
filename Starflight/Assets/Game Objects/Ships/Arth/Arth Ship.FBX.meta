@@ -73,6 +73,11 @@ ModelImporter:
     100134: Laser Base
     100136: Missile Launchers
     100138: Light
+    100140: Exhaust
+    100142: Exhaust Dome
+    100144: Exhaust Inner Cone
+    100146: Exhaust Outer Cone
+    100148: Hull
     400000: //RootNode
     400002: Arth Ship
     400004: Cargo Pods - Left
@@ -143,6 +148,11 @@ ModelImporter:
     400134: Laser Base
     400136: Missile Launchers
     400138: Light
+    400140: Exhaust
+    400142: Exhaust Dome
+    400144: Exhaust Inner Cone
+    400146: Exhaust Outer Cone
+    400148: Hull
     2100000: Hull
     2100002: Cockpit Top
     2100004: Trim
@@ -215,6 +225,10 @@ ModelImporter:
     2300118: Laser Base
     2300120: Missile Launcher - Left
     2300122: Missile Launcher - Right
+    2300124: Exhaust Dome
+    2300126: Exhaust Inner Cone
+    2300128: Exhaust Outer Cone
+    2300130: Hull
     3300000: Arth Ship
     3300002: Laser Barrel - Left
     3300004: Laser Barrel - Right
@@ -277,6 +291,10 @@ ModelImporter:
     3300118: Laser Base
     3300120: Missile Launcher - Left
     3300122: Missile Launcher - Right
+    3300124: Exhaust Dome
+    3300126: Exhaust Inner Cone
+    3300128: Exhaust Outer Cone
+    3300130: Hull
     4300000: Arth Ship
     4300002: Pod Cube 02
     4300004: Pod Socket 02
@@ -339,6 +357,10 @@ ModelImporter:
     4300118: Laser Base
     4300120: Missile Launcher - Left
     4300122: Missile Launcher - Right
+    4300124: Hull
+    4300126: Exhaust Dome
+    4300128: Exhaust Inner Cone
+    4300130: Exhaust Outer Cone
   externalObjects: {}
   materials:
     importMaterials: 0
@@ -373,6 +395,7 @@ ModelImporter:
     globalScale: 1
     meshCompression: 0
     addColliders: 0
+    useSRGBMaterialColor: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
@@ -397,6 +420,9 @@ ModelImporter:
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
   importAnimation: 0
   copyAvatar: 0
   humanDescription:

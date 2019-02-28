@@ -128,6 +128,9 @@ public class Hyperspace : MonoBehaviour
 
 				// restore the maximum speed of the player
 				playerData.m_general.m_currentMaximumSpeed = m_oldMaximumSpeed;
+
+				// turn back on the ship particle systems
+				SpaceflightController.m_instance.m_playerShip.EnableParticles( true );
 			}
 		}
 		else
@@ -185,6 +188,9 @@ public class Hyperspace : MonoBehaviour
 
 					// start the warp cinematics
 					m_travelingThroughFlux = true;
+
+					// disable the ship particle systems
+					SpaceflightController.m_instance.m_playerShip.EnableParticles( false );
 
 					// save the maximum speed of the player and cut it by a large amount so the skybox rotation seems wild
 					m_oldMaximumSpeed = playerData.m_general.m_currentMaximumSpeed;
