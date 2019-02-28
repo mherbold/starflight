@@ -126,6 +126,7 @@ Material:
     - SF_BaseScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SF_DetailScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SF_EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
+    - SF_EmissiveTint: {r: 1, g: 1, b: 1, a: 1}
     - SF_ReflectionColor: {r: 1, g: 1, b: 1, a: 1}
     - SF_SpecularColor: {r: 0, g: 0, b: 0, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
