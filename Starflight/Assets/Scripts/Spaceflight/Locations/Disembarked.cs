@@ -30,9 +30,6 @@ public class Disembarked : MonoBehaviour
 	public float m_arthShipGroundScanHeight;
 	public float m_arthShipGroundScanInterval;
 
-	// the elements
-	public GameObject[] m_elements;
-
 	// the planet generator
 	PlanetGenerator m_planetGenerator;
 

@@ -7,46 +7,18 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Brown
-  m_Shader: {fileID: 4800000, guid: f67073489be24934c9032d00068b6661, type: 3}
-  m_ShaderKeywords: SF_FORWARDSHADOWSON_ON SF_FORWARDSHADOWS_ON SF_ZWRITEON_ON
+  m_Name: Cross04
+  m_Shader: {fileID: 10606, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - SF_AlbedoMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - SF_DetailNormalMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - SF_EmissiveMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - SF_NormalMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - SF_OcclusionMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - SF_ReflectionMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - SF_SpecularMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -68,7 +40,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 36855f8e812bfb944872c8bde6ef1528, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -84,22 +56,6 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - SF_AlbedoOcclusionOn: 0
-    - SF_AlphaTestValue: 0
-    - SF_BlendDst: 0
-    - SF_BlendSrc: 1
-    - SF_CullMode: 2
-    - SF_DetailNormalMapStrength: 1
-    - SF_EmissiveProjectionOn: 0
-    - SF_ForwardShadowsOn: 1
-    - SF_FractalDetailsOn: 0
-    - SF_NormalMapStrength: 1
-    - SF_OcclusionPower: 1
-    - SF_OrthonormalizeOn: 0
-    - SF_RenderQueueOffset: 0
-    - SF_Smoothness: 0.5
-    - SF_ZTest: 4
-    - SF_ZWriteOn: 1
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
@@ -111,18 +67,17 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _ShadowStrength: 1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
+    - _SquashAmount: 1
     - _SrcBlend: 1
+    - _TranslucencyViewDependency: 0.7
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - SF_AlbedoColor: {r: 0.5, g: 0.25, b: 0, a: 1}
-    - SF_BaseScaleOffset: {r: 1, g: 1, b: 0, a: 0}
-    - SF_DetailScaleOffset: {r: 1, g: 1, b: 0, a: 0}
-    - SF_EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
-    - SF_EmissiveTint: {r: 1, g: 1, b: 1, a: 1}
-    - SF_ReflectionColor: {r: 1, g: 1, b: 1, a: 1}
-    - SF_SpecularColor: {r: 0, g: 0, b: 0, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _TranslucencyColor: {r: 0.73, g: 0.85, b: 0.40999997, a: 1}
+    - _TreeInstanceColor: {r: 1, g: 1, b: 1, a: 1}
+    - _TreeInstanceScale: {r: 1, g: 1, b: 1, a: 1}
