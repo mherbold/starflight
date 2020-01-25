@@ -69,6 +69,7 @@ class SFShaderGUI : ShaderGUI
 	MaterialProperty m_speed = null;
 
 	MaterialProperty m_waterMaskMap = null;
+	MaterialProperty m_waterNormalMapStrength = null;
 
 	MaterialProperty m_albedoMap = null;
 	MaterialProperty m_detailAlbedoMap = null;
@@ -263,11 +264,11 @@ class SFShaderGUI : ShaderGUI
 		}
 
 		// water mask map options
-		if ( m_waterMaskMap != null )
+		if ( m_waterMaskMap != null && m_waterNormalMapStrength != null )
 		{
 			GUILayout.Label( Styles.waterMaskText, EditorStyles.boldLabel );
 
-			m_materialEditor.TexturePropertySingleLine( Styles.waterMaskText, m_waterMaskMap );
+			m_materialEditor.TexturePropertySingleLine( Styles.waterMaskText, m_waterMaskMap, m_waterNormalMapStrength );
 
 			if ( m_waterMaskMap.textureValue != null )
 			{
@@ -401,6 +402,7 @@ class SFShaderGUI : ShaderGUI
 		m_speed = FindProperty( "SF_Speed", materialPropertyList, false );
 
 		m_waterMaskMap = FindProperty( "SF_WaterMaskMap", materialPropertyList, false );
+		m_waterNormalMapStrength = FindProperty( "SF_WaterNormalMapStrength", materialPropertyList, false );
 
 		m_albedoMap = FindProperty( "_MainTex", materialPropertyList, false );
 		m_detailAlbedoMap = FindProperty( "_DetailAlbedoMap", materialPropertyList, false );
