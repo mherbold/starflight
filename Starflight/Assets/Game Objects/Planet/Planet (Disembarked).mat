@@ -213,7 +213,7 @@ Material:
     - SF_RenderQueueOffset: 0
     - SF_Smoothness: 1
     - SF_Speed: 0.015
-    - SF_WaterNormalMapStrength: 2
+    - SF_WaterNormalMapStrength: 1
     - SF_ZTest: 4
     - SF_ZWriteOn: 1
     - ShadowCasterOn: 1

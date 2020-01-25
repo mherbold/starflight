@@ -19,9 +19,26 @@ float4 fragForwardBase_SF( SF_VertexShaderOutput i ) : SV_Target
 	float3 emissive = ComputeEmissive( i );
     float3 reflection = ComputeReflection( i, normal );
 
-	#ifdef SF_FRACTALDETAILS_ON
+	#if SF_FRACTALDETAILS_ON
 
-		DoFractalDetails( i, albedo.rgb, specular.rgb, normal );
+		float noise = GetFractalNoise( i );
+
+		float albedoModifier = noise * 0.4 + 0.6;
+		float specularModifier = saturate( noise * 0.5 + 0.5 );
+
+		#if SF_WATER_ON && SF_WATERMASKMAP_ON
+
+			float waterMaskMap = tex2D( SF_WaterMaskMap, TRANSFORM_TEX(i.texCoord0, SF_WaterMaskMap ) );
+
+			waterMaskMap *= 0.75;
+
+			albedoModifier = lerp( albedoModifier, 1, waterMaskMap );
+			specularModifier = lerp( specularModifier, 1, waterMaskMap );
+
+		#endif
+
+		albedo.rgb *= albedoModifier;
+		specular.rgb *= specularModifier;
 
 	#endif // SF_FRACTALDETAILS_ON
 
