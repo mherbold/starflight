@@ -213,6 +213,7 @@ Material:
     - SF_RenderQueueOffset: 0
     - SF_Smoothness: 1
     - SF_Speed: 0.015
+    - SF_WaterNormalMapStrength: 2
     - SF_ZTest: 4
     - SF_ZWriteOn: 1
     - ShadowCasterOn: 1
@@ -257,6 +258,7 @@ Material:
     - SF_BaseScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SF_DetailScaleOffset: {r: 24, g: 12, b: 0, a: 0}
     - SF_EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
+    - SF_EmissiveTint: {r: 1, g: 1, b: 1, a: 1}
     - SF_NormalMapScaleOffset: {r: 1, g: 1, b: 0, a: 0}
     - SF_SpecularColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - SF_WaterScale: {r: 4, g: 4, b: 0.2, a: 0.2}
