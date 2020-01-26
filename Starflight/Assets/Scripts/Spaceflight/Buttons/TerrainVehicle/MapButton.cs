@@ -30,27 +30,27 @@ public class MapButton : ShipButton
 		// get the terrain vehicle game object
 		var gameObject = SpaceflightController.m_instance.m_playerCamera.GetCameraFollowGameObject();
 
-		// check if we want to stop moving
+		// check if we want to turn off the map
 		if ( InputController.m_instance.m_submit )
 		{
 			// debounce the input
 			InputController.m_instance.Debounce();
-
-			// turn off the engines
-			SpaceflightController.m_instance.m_terrainVehicle.TurnOffEngines();
 
 			// deactivate the current button
 			SpaceflightController.m_instance.m_buttonController.DeactivateButton();
 
 			// reset the camera follow
 			SpaceflightController.m_instance.m_playerCamera.SetCameraFollow( gameObject, new Vector3( 0.0f, 75.0f, -75.0f ) );
+
+			// play the deactivate sound
+			SoundController.m_instance.PlaySound( SoundController.Sound.Deactivate );
 		}
 		else
 		{
 			// get the controller stick position
 			float z = InputController.m_instance.m_y;
 
-			// check if the move vector will actually move the ship (that the controller is not centered)
+			// check if the zoom vector will actually zoom the camera (that the controller is not centered)
 			if ( ( z < -0.5f ) || ( z > 0.5f ) )
 			{
 				// change the follow distance
