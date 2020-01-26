@@ -1,5 +1,5 @@
 ﻿
-public class CargoButton : ShipButton
+public class ShipCargoButton : ShipButton
 {
 	public override string GetLabel()
 	{
