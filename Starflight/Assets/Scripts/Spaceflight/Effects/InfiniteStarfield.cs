@@ -1,131 +1,155 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class InfiniteStarfield : MonoBehaviour
 {
-	public float m_starfieldCubeSize = 100.0f;
+	[System.Serializable]
+	public struct Starfield
+	{
+		public Material m_mat;
+		public Color m_color;
+		public int m_maxParticles;
+		public float m_startSize;
+		public float m_height;
+		public float m_heightBounds;
+		public float m_2dBounds;
+	}
 
-	ParticleSystem m_particleSystem;
-
-	ParticleSystem.Particle[] m_particles;
-
+	[SerializeField] bool m_yIsUp;
+	[SerializeField] Starfield[] m_starfields;
+	
+	ParticleSystem[] m_particleSystems;
+	ParticleSystem.Particle[][] m_particles;
 	Vector3 m_lastPosition;
 
 	void Start()
 	{
-		m_particleSystem = GetComponent<ParticleSystem>();
-
-		m_particles = new ParticleSystem.Particle[ m_particleSystem.main.maxParticles ];
-
-		for ( var i = 0; i < m_particles.Length; i++ )
-		{
-			m_particles[ i ].position = ( new Vector3( Random.value, Random.value, Random.value ) * 1.0f - Vector3.one * 0.5f ) * m_starfieldCubeSize + transform.position;
-			m_particles[ i ].startColor = m_particleSystem.main.startColor.Evaluate( 0.0f );
-			m_particles[ i ].startSize = m_particleSystem.main.startSize.Evaluate( 0.0f );
-			m_particles[ i ].velocity = Vector3.zero;
-		}
-
-		m_particleSystem.SetParticles( m_particles, m_particles.Length );
+		InitStarField();
 	}
 
+	public void InitFromUnityButton()
+	{
+		InitStarField();
+	}
+	
+	public void InitStarField(params Starfield[] starfields)
+	{
+		foreach ( Transform child in transform )
+			Destroy( child.gameObject );
+
+		if ( starfields.Length > 0 )
+			m_starfields = starfields;
+
+		var cameraPos = transform.position;
+		var aspect = Camera.main.aspect;
+		
+		int count = m_starfields.Length;
+		m_particleSystems = new ParticleSystem[ count ];
+		m_particles = new ParticleSystem.Particle[ count ][];
+
+		for ( int i = 0; i < count; i++ )
+		{
+			var starfield = m_starfields[ i ];
+			var psHolder = new GameObject($"starfield {i}");
+			psHolder.transform.SetParent(transform, false);
+			var ps = m_particleSystems[ i ] = psHolder.AddComponent<ParticleSystem>();
+			var emission = ps.emission;
+			emission.enabled = false;
+			var shape = ps.shape;
+			shape.enabled = false;
+			var main = ps.main;
+			main.simulationSpace = ParticleSystemSimulationSpace.World;
+			main.cullingMode = ParticleSystemCullingMode.AlwaysSimulate;
+			main.playOnAwake = false;
+			main.loop = false;
+			main.maxParticles = starfield.m_maxParticles;
+			main.startSize = starfield.m_startSize;
+			main.startColor = starfield.m_color;
+			var partRend = ps.GetComponent<Renderer>();
+			partRend.material = starfield.m_mat;
+
+			Vector3 startingPosition, bounds;
+			if (m_yIsUp)
+			{
+				startingPosition = new Vector3( cameraPos.x, starfield.m_height, cameraPos.z );
+				bounds = new Vector3( starfield.m_2dBounds * aspect, starfield.m_heightBounds, starfield.m_2dBounds );
+			}
+			else
+			{
+				startingPosition = new Vector3( cameraPos.x, cameraPos.y, starfield.m_height );
+				bounds = new Vector3( starfield.m_2dBounds * aspect, starfield.m_2dBounds, starfield.m_heightBounds );
+			}
+			
+			m_particles[ i ] = new ParticleSystem.Particle[ ( int )( starfield.m_maxParticles * aspect ) ];
+			for ( var j = 0; j < m_particles[ i ].Length; j++ )
+			{
+				m_particles[ i ][ j ].position = startingPosition + Vector3.Scale( new Vector3( Random.value - 0.5f, Random.value - 0.5f, Random.value - 0.5f ), bounds );
+				m_particles[ i ][ j ].startColor = main.startColor.Evaluate( 0.0f );
+				m_particles[ i ][ j ].startSize = main.startSize.Evaluate( 0.0f );
+				m_particles[ i ][ j ].rotation = Random.value * 360f;
+				m_particles[ i ][ j ].startLifetime = m_particles[ i ][ j ].remainingLifetime = float.MaxValue;
+			}
+			
+			ps.SetParticles( m_particles[ i ],  m_particles[ i ].Length );
+		}
+	}
+	
 	void LateUpdate()
 	{
 		if ( m_lastPosition != transform.position )
 		{
-			var travelVector = transform.position - m_lastPosition;
+			var aspect = Camera.main.aspect;
+			var cameraPos = transform.position;
+			m_lastPosition = cameraPos;
 
-			m_lastPosition = transform.position;
-
-			var xMultiplier = Mathf.Ceil( Mathf.Abs( travelVector.x / m_starfieldCubeSize ) );
-			var yMultiplier = Mathf.Ceil( Mathf.Abs( travelVector.y / m_starfieldCubeSize ) );
-			var zMultiplier = Mathf.Ceil( Mathf.Abs( travelVector.z / m_starfieldCubeSize ) );
-
-			var centerToCorner = Vector3.one * m_starfieldCubeSize * 0.5f;
-
-			var min = transform.position - centerToCorner;
-			var max = transform.position + centerToCorner;
-
-			var somethingChanged = false;
-
-			for ( var i = 0; i < m_particles.Length; i++ )
+			for ( int i = 0; i < m_particleSystems.Length; i++ )
 			{
-				var position = m_particles[ i ].position;
+				var starfield = m_starfields[ i ];
+				var ps = m_particleSystems[ i ];
 
-				if ( position.x < min.x )
+				Vector3 startingPosition, bounds;
+				if (m_yIsUp)
 				{
-					position.x += m_starfieldCubeSize * xMultiplier;
-
-					if ( position.x > max.x )
-					{
-						position.x -= m_starfieldCubeSize;
-					}
-
-					somethingChanged = true;
+					startingPosition = new Vector3( cameraPos.x, starfield.m_height, cameraPos.z );
+					bounds = new Vector3( starfield.m_2dBounds * aspect, starfield.m_heightBounds, starfield.m_2dBounds );
 				}
-				else if ( position.x > max.x )
+				else
 				{
-					position.x -= m_starfieldCubeSize * xMultiplier;
-
-					if ( position.x < min.x )
-					{
-						position.x += m_starfieldCubeSize;
-					}
-
-					somethingChanged = true;
+					startingPosition = new Vector3( cameraPos.x, cameraPos.y, starfield.m_height );
+					bounds = new Vector3( starfield.m_2dBounds * aspect, starfield.m_2dBounds, starfield.m_heightBounds );
 				}
 
-				if ( position.y < min.y )
+				var minCorner = startingPosition + Vector3.Scale( new Vector3( -0.5f, -0.5f, -0.5f ), bounds );
+				var maxCorner = startingPosition + Vector3.Scale( new Vector3( 0.5f, 0.5f, 0.5f ), bounds );
+				
+				for ( var j = 0; j < m_particles[ i ].Length; j++ )
 				{
-					position.y += m_starfieldCubeSize * yMultiplier;
+					var position = m_particles[ i ][ j ].position;
 
-					if ( position.y > max.y )
+					if ( position.x < minCorner.x )
+						position.x += bounds.x;
+					else if ( position.x > maxCorner.x )
+						position.x -= bounds.x;
+
+					if ( !m_yIsUp )
 					{
-						position.y -= m_starfieldCubeSize;
+						if ( position.y < minCorner.y )
+							position.y += bounds.y;
+						else if ( position.x > maxCorner.x )
+							position.y -= bounds.y;
 					}
-
-					somethingChanged = true;
-				}
-				else if ( position.y > max.y )
-				{
-					position.y -= m_starfieldCubeSize * yMultiplier;
-
-					if ( position.y < min.y )
+					else
 					{
-						position.y += m_starfieldCubeSize;
+						if ( position.z < minCorner.z )
+							position.z += bounds.z;
+						else if ( position.z > maxCorner.z )
+							position.z -= bounds.z;
 					}
-
-					somethingChanged = true;
+					
+					m_particles[ i ][ j ].position = position;
 				}
-
-				if ( position.z < min.z )
-				{
-					position.z += m_starfieldCubeSize * zMultiplier;
-
-					if ( position.z > max.z )
-					{
-						position.z -= m_starfieldCubeSize;
-					}
-
-					somethingChanged = true;
-				}
-				else if ( position.z > max.z )
-				{
-					position.z -= m_starfieldCubeSize * zMultiplier;
-
-					if ( position.z < min.z )
-					{
-						position.z += m_starfieldCubeSize;
-					}
-
-					somethingChanged = true;
-				}
-
-				m_particles[ i ].position = position;
-			}
-
-			if ( somethingChanged )
-			{
-				GetComponent<ParticleSystem>().SetParticles( m_particles, m_particles.Length );
+				
+				ps.SetParticles( m_particles[ i ], m_particles[ i ].Length );
 			}
 		}
 	}
