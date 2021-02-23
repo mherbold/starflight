@@ -28,7 +28,10 @@ public class PD_Bank
 	public void Reset()
 	{
 		// reset the bank balance
-		m_currentBalance = 12000;
+		//m_currentBalance = 12000;
+
+		// hack - make the player rich for now
+		m_currentBalance = 1000000;
 
 		// create a new transactions list
 		m_transactionList = new List<Transaction>
