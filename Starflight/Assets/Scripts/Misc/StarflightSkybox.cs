@@ -5,6 +5,10 @@ using System;
 
 public class StarflightSkybox : MonoBehaviour
 {
+	// rotation speeds
+	public float m_regularRotationsSpeed = 8f;
+	public float m_encounterRotationSpeed = 0.5f;
+	
 	// enable this to automatically blend between skyboxes based on territory
 	public bool m_autoblendSkyboxes;
 
@@ -46,6 +50,7 @@ public class StarflightSkybox : MonoBehaviour
 
 	// static instance to this skybox controller
 	public static StarflightSkybox m_instance;
+	
 
 	// keep track of the player coordinates of the previous frame
 	Vector3 m_lastCoordinates;
@@ -80,7 +85,7 @@ public class StarflightSkybox : MonoBehaviour
 		if ( m_autorotateSkybox )
 		{
 			// yes - figure out how fast to rotate the skybox
-			var multiplier = ( playerData.m_general.m_location != PD_General.Location.Encounter ) ? 8.0f : 0.5f;
+			var multiplier = playerData.m_general.m_location != PD_General.Location.Encounter ? m_regularRotationsSpeed : m_encounterRotationSpeed;
 
 			// compute the speed of the player (don't use playerData.m_general.m_currentSpeed because the player could be locked during animations or flux warping)
 			var currentSpeed = Vector3.Distance( m_lastCoordinates, playerData.m_general.m_coordinates ) / Time.deltaTime;
