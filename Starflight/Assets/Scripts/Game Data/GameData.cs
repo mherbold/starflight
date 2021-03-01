@@ -31,7 +31,7 @@ public class GameData
 	public GD_Notice[] m_noticeList;
 	public GD_CrewRace[] m_crewRaceList;
 	public GD_Engines[] m_enginesList;
-	public GD_Sheilding[] m_shieldingList;
+	public GD_Shielding[] m_shieldingList;
 	public GD_Armor[] m_armorList;
 	public GD_MissileLauncher[] m_missileLauncherList;
 	public GD_LaserCannon[] m_laserCannonList;
