@@ -1,5 +1,6 @@
 ﻿
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class Messages : MonoBehaviour
@@ -116,7 +117,7 @@ public class Messages : MonoBehaviour
 		var playerData = DataController.m_instance.m_playerData;
 
 		playerData.m_general.m_messageList.Clear();
-
+		HideTable();
 		m_textChanged = true;
 	}
 
@@ -176,4 +177,38 @@ public class Messages : MonoBehaviour
 			m_slideTime = 0.0f;
 		}
 	}
+
+	public void RenderTable(string[] data, int[] percent, TextAlignmentOptions[] alignments)
+    {
+		HorizontalLayoutGroup table = GetComponentInChildren<HorizontalLayoutGroup>();
+		int idxColumn = 0;
+		float thisWidth = GetComponent<RectTransform>().rect.width;
+		foreach (Transform column in table.transform)
+        {
+			LayoutElement layoutElement = column.GetComponent<LayoutElement>();
+			TextMeshProUGUI text = column.GetComponent<TextMeshProUGUI>();
+			if (idxColumn < percent.Length) { 
+				layoutElement.preferredWidth = thisWidth * percent[idxColumn] / 100f;
+			}
+			if (idxColumn < data.Length)
+			{
+				text.text = data[idxColumn];
+			}
+			if (alignments != null && idxColumn < alignments.Length)
+			{
+				text.alignment = alignments[idxColumn];
+			}
+			idxColumn++;
+		}
+	}
+
+	public void HideTable()
+	{
+		HorizontalLayoutGroup table = GetComponentInChildren<HorizontalLayoutGroup>();
+		foreach (Transform column in table.transform)
+		{
+			column.GetComponent<TextMeshProUGUI>().text = "";
+		}
+	}
+
 }
