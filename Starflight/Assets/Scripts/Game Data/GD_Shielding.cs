@@ -2,7 +2,7 @@
 
 [Serializable]
 
-public class GD_Sheilding : GD_ShipPart
+public class GD_Shielding : GD_ShipPart
 {
 	public int m_points;
 }

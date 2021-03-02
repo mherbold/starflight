@@ -360,7 +360,7 @@ public class SaveGamePanel : Panel
 
 			// ship part classes
 			description += "Engines: <color=\"blue\">" + playerData.m_playerShip.GetEngines().m_name + "</color>";
-			description += "   Shields: <color=\"blue\">" + playerData.m_playerShip.GetSheilding().m_name + "</color>";
+			description += "   Shields: <color=\"blue\">" + playerData.m_playerShip.GetShielding().m_name + "</color>";
 			description += "   Armor: <color=\"blue\">" + playerData.m_playerShip.GetArmor().m_name + "</color>";
 			description += "   Missle Launcher: <color=\"blue\">" + playerData.m_playerShip.GetMissileLauncher().m_name + "</color>";
 			description += "   Laser Cannon: <color=\"blue\">" + playerData.m_playerShip.GetLaserCannon().m_name + "</color>";

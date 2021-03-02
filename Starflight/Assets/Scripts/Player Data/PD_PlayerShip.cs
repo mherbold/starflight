@@ -98,7 +98,7 @@ public class PD_PlayerShip
 		return gameData.m_enginesList[ m_enginesClass ];
 	}
 
-	public GD_Sheilding GetSheilding()
+	public GD_Shielding GetShielding()
 	{
 		// get access to the game data
 		var gameData = DataController.m_instance.m_gameData;
@@ -147,7 +147,7 @@ public class PD_PlayerShip
 
 		// add in the mass of all the add on ship components
 		m_mass += GetEngines().m_mass;
-		m_mass += GetSheilding().m_mass;
+		m_mass += GetShielding().m_mass;
 		m_mass += GetArmor().m_mass;
 		m_mass += GetMissileLauncher().m_mass;
 		m_mass += GetLaserCannon().m_mass;
@@ -248,7 +248,7 @@ public class PD_PlayerShip
 	{
 		if ( !m_shieldsAreUp )
 		{
-			var shields = GetSheilding();
+			var shields = GetShielding();
 
 			m_shieldsAreUp = true;
 			m_shieldPoints = shields.m_points;

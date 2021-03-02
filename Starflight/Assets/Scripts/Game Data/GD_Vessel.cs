@@ -22,7 +22,7 @@ public class GD_Vessel
 	public int m_shields;
 
 	public float m_armorClass;
-	public int m_sheildClass;
+	public int m_shieldClass;
 
 	public bool m_immuneToMissiles;
 	public bool m_immuneToLasers;

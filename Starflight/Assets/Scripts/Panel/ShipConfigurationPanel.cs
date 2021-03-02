@@ -506,7 +506,7 @@ public class ShipConfigurationPanel : Panel
 		m_configurationValuesText.text = ship.m_numCargoPods.ToString() + Environment.NewLine;
 		m_configurationValuesText.text += Environment.NewLine;
 		m_configurationValuesText.text += ship.GetEngines().m_name + Environment.NewLine;
-		m_configurationValuesText.text += ship.GetSheilding().m_name + Environment.NewLine;
+		m_configurationValuesText.text += ship.GetShielding().m_name + Environment.NewLine;
 		m_configurationValuesText.text += ship.GetArmor().m_name + Environment.NewLine;
 		m_configurationValuesText.text += ship.GetMissileLauncher().m_name + Environment.NewLine;
 		m_configurationValuesText.text += ship.GetLaserCannon().m_name + Environment.NewLine;
